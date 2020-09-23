@@ -3,7 +3,7 @@
 ## Branches
 
 1. Working on `master` is **forbidden**.
-You should always work *on your own branches.*
+You should always work **on your own branches.**
 2. Each branch name will begin with the type of changes:
 * `feat/` - Adding new features to the project.
 * `fix/` - Bug fixes.
