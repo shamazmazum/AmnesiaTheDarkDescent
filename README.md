@@ -3,7 +3,7 @@
 This is a fork of the Amnesia the Dark Descent repository from FrictionalGames. We will mostly play with different parts of the engine and perhaps even fix some bugs :)
 
 ## Project Overview
-The game is built from two separate solutions: The HPL2 Engine
+The game is built from two separate solutions: The HPL2 Engine and the game itself.
 
 ## Prerequisites
 
