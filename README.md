@@ -40,7 +40,7 @@ In order to build the game on Windows, you will first need to compile and build 
 4. `Build -> Build Lux`.  There won't be any errors, but some warning messages will appear.
 5. The game executable should be created in `amnesia/redist`.
 
-### Playing the game
+### Playing the Game
 Copy `Amnesia.exe` into your Amnesia game folder and launch it. The main menu should appear normally with no errors.
 
 ### Building the Editors
@@ -51,7 +51,7 @@ Copy `Amnesia.exe` into your Amnesia game folder and launch it. The main menu sh
 
 ### Building the Game
 
-### Playing the game
+### Playing the Game
 
 ### Building the Editors
 
@@ -61,7 +61,7 @@ Copy `Amnesia.exe` into your Amnesia game folder and launch it. The main menu sh
 
 ### Building the Game
 
-### Playing the game
+### Playing the Game
 
 ### Building the Editors
 
