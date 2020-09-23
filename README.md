@@ -14,6 +14,7 @@ The game is built from two separate solutions: The HPL2 Engine and the game itse
 
 ## Project Overview
 The game is built from two separate solutions: The engine solution named `HPL2_2010` and the main game solution named `Lux`.
+The project also includes all the different editors and additional tools, such as the Level Editor and the Model Editor.
 
 ### Engine Overview
 Todo: Add some descriptions about what kind of files we have in the engine solution.
@@ -42,6 +43,8 @@ In order to build the game on Windows, you will first need to compile and build 
 ### Playing the game
 Copy `Amnesia.exe` into your Amnesia game folder and launch it. The main menu should appear normally with no errors.
 
+### Building the Editors
+
 ## Building & Playing (Mac)
 
 ### Building the Engine 
@@ -50,6 +53,8 @@ Copy `Amnesia.exe` into your Amnesia game folder and launch it. The main menu sh
 
 ### Playing the game
 
+### Building the Editors
+
 ## Building & Playing (Linux)
 
 ### Building the Engine 
@@ -57,6 +62,8 @@ Copy `Amnesia.exe` into your Amnesia game folder and launch it. The main menu sh
 ### Building the Game
 
 ### Playing the game
+
+### Building the Editors
 
 ## License Information
 All code is under the GPL Version 3 license. Read the LICENSE file for terms of use of the license.
