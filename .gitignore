@@ -296,6 +296,9 @@ _Pvt_Extensions
 .paket/paket.exe
 paket-files/
 
+# Extracted Dependencies folder
+HPL2/dependencies/
+
 # FAKE - F# Make
 .fake/
 
