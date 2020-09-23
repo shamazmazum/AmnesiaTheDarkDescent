@@ -9,7 +9,7 @@ purposes.
 
 ### Prerequisites
 
-- Visual Studio 2005
+- Visual Studio 2003
 - Visual Studio 2010
 - CMake
 
