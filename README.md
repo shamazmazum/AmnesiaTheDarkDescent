@@ -1,11 +1,19 @@
-Amnesia: The Dark Descent Source Code
-=======================
-Here is everything you need to build Amnesia: The Dark Descent. Included are project files for Visual Studio 2010 and CMake for Linux & macOS.
+# Amnesia: The Dark Descent Source Code - HPL Chad Gang Fork
 
-Contributing Code
------------------
-We encourage everyone to contribute code to this project, so just sign up for a github account, create a fork and hack away at the codebase.
+This is a fork of the Amnesia the Dark Descent repository from FrictionalGames. 
 
-License Information
--------------------
+## Getting Started
+
+These instructions will get you an up and running project on your local machine for development and testing 
+purposes.
+
+### Prerequisites
+
+- Visual Studio 2005
+- Visual Studio 2010
+- CMake
+
+Depency libraries can be located in `HPL2/dependencies.zip.`
+
+## License Information
 All code is under the GPL Version 3 license. Read the LICENSE file for terms of use of the license.
