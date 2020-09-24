@@ -65,9 +65,12 @@ Copy `Amnesia.exe` into your Amnesia game folder and launch it. The main menu sh
 
 ### Building the Editors
 
-### Toubleshooting
-* **When I compile `Lux`, I get an error message "fatal error RC1015: cannot open include file 'afxres.h'".**
+## Toubleshooting
+* **"When I compile `Lux`, I get an error message "fatal error RC1015: cannot open include file 'afxres.h'".**"
 * You need to install the `Microsoft Foundation Classes for C++`. If it still doesn't work, change `afxres.h` to `windows.h`. It should compile then.
+
+* **"When I compile the level editor, I get error message about vc70 not found.**"
+* Try turning the Pre-Link Event off. Go to `Project Properties -> Build Events -> Pre-Link Event`, set `Use In Build` to `No` and build again.
 
 ## License Information
 All code is under the GPL Version 3 license. Read the LICENSE file for terms of use of the license.
