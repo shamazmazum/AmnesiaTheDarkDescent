@@ -23,6 +23,7 @@
 #include "graphics/VertexBuffer.h"
 
 #include "system/LowLevelSystem.h"
+#include "system/String.h"
 
 #include <stdlib.h>
 #include <math.h>
@@ -125,6 +126,272 @@ namespace hpl {
 		case 15:	return eFlagBit_15;
 		}
 		return 0x1 << alBitNum;
+	}
+
+	//-----------------------------------------------------------------------
+
+	cVector3f cMath::RGBToHSB(const cColor& aRGB)
+	{
+		cVector3f vHSB;
+		RGBToHSBHelper(aRGB, vHSB);
+
+		return vHSB;
+	}
+
+	void cMath::RGBToHSBHelper(const cColor& aRGB, cVector3f& avX)
+	{
+		/////////////////////////////////////////////////////////////
+		// Conversion algorithm taken from : 
+
+		float r = aRGB.r;
+		float g = aRGB.g;
+		float b = aRGB.b;
+
+		float min, max, delta;
+		min = Min(r, Min(g, b));
+		max = Max(r, Max(g, b));
+
+		delta = max - min;
+
+		avX.z = max;
+		if (max == 0)
+			avX.y = 0;
+		else
+			avX.y = delta / max;
+
+		if (avX.y == 0)
+		{
+			avX.x = -1;
+
+			return;
+		}
+
+		if (r == max)
+			avX.x = (g - b) / delta;		// between yellow & magenta
+		else if (g == max)
+			avX.x = 2 + (b - r) / delta;	// between cyan & yellow
+		else
+			avX.x = 4 + (r - g) / delta;	// between magenta & cyan
+		avX.x *= 60;					// degrees
+		if (avX.x < 0)
+			avX.x += 360;
+	}
+
+	//-----------------------------------------------------------------------
+
+	cColor cMath::HSBToRGB(const cVector3f& avHSB)
+	{
+		cColor c;
+		HSBToRGBHelper(avHSB, c);
+
+		return c;
+	}
+	void cMath::HSBToRGBHelper(const cVector3f& avHSB, cColor& aX)
+	{
+		/////////////////////////////////////////////////////////////
+		// Conversion algorithm taken from : 
+
+		int sextant;
+		float h = avHSB.x;
+		float s = avHSB.y;
+		float b = avHSB.z;
+		float fract, p, q, t;
+
+		if (s == 0)
+		{
+			aX.r = aX.g = aX.b = b;
+		}
+		else
+		{
+			if (h == 360)	h = 0;
+			else		h /= 60;
+
+			sextant = floor(h);
+			fract = h - sextant;
+
+			p = b * (1 - s);
+			q = b * (1 - s * fract);
+			t = b * (1 - s * (1 - fract));
+
+			switch (sextant)
+			{
+			case 0:			aX.r = b;	aX.g = t;	aX.b = p;	break;
+			case 1:			aX.r = q;	aX.g = b;	aX.b = p;	break;
+			case 2:			aX.r = p;	aX.g = b;	aX.b = t;	break;
+			case 3:			aX.r = p;	aX.g = q;	aX.b = b;	break;
+			case 4:			aX.r = t;	aX.g = p;	aX.b = b;	break;
+			case 5:			aX.r = b;	aX.g = p;	aX.b = q;	break;
+			}
+		}
+	}
+
+	//-----------------------------------------------------------------------
+
+	cColor cMath::HexToRGB(const tString& asHex)
+	{
+		cColor c;
+		HexToRGBHelper(asHex, c);
+
+		return c;
+	}
+
+	void cMath::HexToRGBHelper(const tString& asHex, cColor& aCol)
+	{
+		aCol.r = UCharColorToFloat(HexStringToUChar(cString::Sub(asHex, 0, 2)));
+		aCol.g = UCharColorToFloat(HexStringToUChar(cString::Sub(asHex, 2, 2)));
+		aCol.b = UCharColorToFloat(HexStringToUChar(cString::Sub(asHex, 4, 2)));
+	}
+
+	cColor cMath::HexWToRGB(const tWString& asHex)
+	{
+		cColor c;
+		HexWToRGBHelper(asHex, c);
+
+		return c;
+	}
+
+	void cMath::HexWToRGBHelper(const tWString& asHex, cColor& aCol)
+	{
+		aCol.r = UCharColorToFloat(HexStringToUChar(cString::SubW(asHex, 0, 2)));
+		aCol.g = UCharColorToFloat(HexStringToUChar(cString::SubW(asHex, 2, 2)));
+		aCol.b = UCharColorToFloat(HexStringToUChar(cString::SubW(asHex, 4, 2)));
+	}
+
+	cColor cMath::HexToRGBA(const tString& asHex)
+	{
+		cColor c;
+		HexToRGBAHelper(asHex, c);
+
+		return c;
+	}
+
+	void cMath::HexToRGBAHelper(const tString& asHex, cColor& aCol)
+	{
+		HexToRGBHelper(asHex, aCol);
+		aCol.a = UCharColorToFloat(HexStringToUChar(cString::Sub(asHex, 6, 2)));
+	}
+
+	cColor cMath::HexWToRGBA(const tWString& asHex)
+	{
+		cColor c;
+		HexWToRGBAHelper(asHex, c);
+
+		return c;
+	}
+
+	void cMath::HexWToRGBAHelper(const tWString& asHex, cColor& aCol)
+	{
+		HexWToRGBHelper(asHex, aCol);
+		aCol.a = UCharColorToFloat(HexStringToUChar(cString::SubW(asHex, 6, 2)));
+	}
+
+	//-----------------------------------------------------------------------
+
+	tString cMath::RGBToHex(const cColor& aRGB)
+	{
+		tString s;
+		s += UCharToHexString(FloatColorToUChar(aRGB.r));
+		s += UCharToHexString(FloatColorToUChar(aRGB.g));
+		s += UCharToHexString(FloatColorToUChar(aRGB.b));
+
+		return s;
+	}
+
+	tWString cMath::RGBToHexW(const cColor& aRGB)
+	{
+		tWString s;
+		s += UCharToHexStringW(FloatColorToUChar(aRGB.r));
+		s += UCharToHexStringW(FloatColorToUChar(aRGB.g));
+		s += UCharToHexStringW(FloatColorToUChar(aRGB.b));
+
+		return s;
+	}
+
+	tString cMath::RGBAToHex(const cColor& aRGB)
+	{
+		tString s = RGBToHex(aRGB);
+		s += UCharToHexString(FloatColorToUChar(aRGB.a));
+
+		return s;
+	}
+
+	tWString cMath::RGBAToHexW(const cColor& aRGB)
+	{
+		tWString s = RGBToHexW(aRGB);
+		s += UCharToHexStringW(FloatColorToUChar(aRGB.a));
+
+		return s;
+	}
+
+	//-----------------------------------------------------------------------
+
+	unsigned char cMath::HexStringToUChar(const tString& asHexStr)
+	{
+		/*
+		Alternate algo (they say the strtoul method is more portable anyway, I wonder how fast it is though)
+
+		for(size_t i=0; i<2 && i<asHexStr.length(); ++i)
+		{
+			if(asHexStr[i]>='0' && asHexStr[i]<='9')
+				value = (value << 4) + asHexStr[i]-'0';
+			else if(asHexStr[i]>='A' && asHexStr[i]<='F')
+				value = (value << 4) + asHexStr[i]-'A'+10;
+			else if(asHexStr[i]>='a' && asHexStr[i]<='f')
+				value = (value << 4) + asHexStr[i]-'a'+10;
+		}*/
+
+		unsigned long lTemp = strtoul(asHexStr.c_str(), NULL, 16);
+
+		return (unsigned char)lTemp;
+	}
+
+	unsigned char cMath::HexStringToUChar(const tWString& asHexStr)
+	{
+		unsigned long lTemp = wcstoul(asHexStr.c_str(), NULL, 16);
+
+		return (unsigned char)lTemp;
+	}
+
+	//-----------------------------------------------------------------------
+
+	tString cMath::UCharToHexString(unsigned char alValue)
+	{
+		tString s;
+
+		for (int i = 0; i < 2; ++i)
+		{
+			unsigned char nibble = (alValue & 0xF);
+			if (nibble < 10)
+				nibble += '0';
+			else
+				nibble += 'A' - 10;
+
+			s.insert(s.begin(), nibble);
+
+			alValue = alValue >> 4;
+		}
+
+		return s;
+	}
+
+	tWString cMath::UCharToHexStringW(unsigned char alValue)
+	{
+		tWString s;
+
+		for (int i = 0; i < 2; ++i)
+		{
+			wchar_t nibble = (alValue & 0xF);
+			if (nibble < 10)
+				nibble += _W('0');
+			else
+				nibble += _W('A') - 10;
+
+			s.insert(s.begin(), nibble);
+
+			alValue = alValue >> 4;
+		}
+
+		return s;
 	}
 
 	//-----------------------------------------------------------------------

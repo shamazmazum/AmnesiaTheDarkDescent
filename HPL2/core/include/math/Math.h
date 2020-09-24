@@ -85,6 +85,60 @@ namespace hpl {
 		//////////////////////////////////////////////////////
 		
 		static int GetFlagBit(int alBitNum);
+		
+		//////////////////////////////////////////////////////
+		////////// COLOR CONVERSION //////////////////////////
+		//////////////////////////////////////////////////////
+
+		/**
+		* Gets HSB values for a RGB color
+		* \param Color in RGB format
+		* \return Vector with HSB values
+		*/
+		static cVector3f RGBToHSB(const cColor& aRGB);
+		static void RGBToHSBHelper(const cColor& aRGB, cVector3f& avX);
+		/**
+		* Gets a RGB color given HSB values (H : [0, 360], S&B : [0, 1])
+		* \param Vector with HSB values
+		* \return Color in RGB format
+		*/
+		static cColor HSBToRGB(const cVector3f& avHSB);
+		static void	HSBToRGBHelper(const cVector3f& avHSB, cColor& aX);
+
+		/**
+		* Creates a cColor from a Hexcode string (8 and 16 bit chars)
+		* \param Color in Hex string format (XXYYZZ, with XX hex pair for R, YY hex pair for G and ZZ hex pair for B)
+		* \return cColor with given values
+		*/
+		static cColor	HexToRGB(const tString& asHex);
+		static void		HexToRGBHelper(const tString& asHex, cColor& aCol);
+
+		static cColor	HexWToRGB(const tWString& asHex);
+		static void		HexWToRGBHelper(const tWString& asHex, cColor& aCol);
+
+		static cColor	HexToRGBA(const tString& asHex);
+		static void		HexToRGBAHelper(const tString& asHex, cColor& aCol);
+
+		static cColor	HexWToRGBA(const tWString& asHex);
+		static void		HexWToRGBAHelper(const tWString& asHex, cColor& aCol);
+
+		/**
+		* Returns a hex encoded RGB value string (8 and 16 bit chars) given a cColor
+		* \param cColor
+		* \return string (XXYYZZ, with XX hex pair for R, YY hex pair for G and ZZ hex pair for B)
+		*/
+		static tString RGBToHex(const cColor& aRGB);
+		static tWString RGBToHexW(const cColor& aRGB);
+
+		static tString RGBAToHex(const cColor& aRGB);
+		static tWString RGBAToHexW(const cColor& aRGB);
+
+		// Helpers
+		static unsigned char HexStringToUChar(const tString& asHexStr);
+		static unsigned char HexStringToUChar(const tWString& asHexStr);
+
+		static tString UCharToHexString(unsigned char aValue);
+		static tWString UCharToHexStringW(unsigned char alValue);
 
 
 		/////////////////////////////////////////////////////
