@@ -9,7 +9,8 @@ The game is built from two separate solutions: The HPL2 Engine and the game itse
 
 - A copy of Amnesia: the Dark Descent (For playing the game)
 - Visual Studio 2010 (For compiling the engine)
-- Visual Studio 2015 (For compiling the game)
+- Visual Studio 2017 (For compiling the game)
+- Make sure you install the C++ Microsoft Foundation Classes for Visual Studio 2017
 - CMake
 
 ## Project Overview
