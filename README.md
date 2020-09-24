@@ -66,7 +66,7 @@ Copy `Amnesia.exe` into your Amnesia game folder and launch it. The main menu sh
 ### Building the Editors
 
 ### Toubleshooting
-* **When I compile `Lux`, I get an error message "fatal error RC1015: cannot open include file 'afxres.h'".
+* **When I compile `Lux`, I get an error message "fatal error RC1015: cannot open include file 'afxres.h'".**
 * You need to install the `Microsoft Foundation Classes for C++`. If it still doesn't work, change `afxres.h` to `windows.h`. It should compile then.
 
 ## License Information
