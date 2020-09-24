@@ -10,7 +10,6 @@ The game is built from two separate solutions: The HPL2 Engine and the game itse
 - A copy of Amnesia: the Dark Descent (For playing the game)
 - Visual Studio 2010 (For compiling the engine)
 - Visual Studio 2017 (For compiling the game)
-- Make sure you install the C++ Microsoft Foundation Classes for Visual Studio 2017
 - CMake
 
 ## Project Overview
@@ -65,6 +64,10 @@ Copy `Amnesia.exe` into your Amnesia game folder and launch it. The main menu sh
 ### Playing the Game
 
 ### Building the Editors
+
+### Toubleshooting
+* **When I compile `Lux`, I get an error message "fatal error RC1015: cannot open include file 'afxres.h'".
+* You need to install the `Microsoft Foundation Classes for C++`. If it still doesn't work, change `afxres.h` to `windows.h`. It should compile then.
 
 ## License Information
 All code is under the GPL Version 3 license. Read the LICENSE file for terms of use of the license.
