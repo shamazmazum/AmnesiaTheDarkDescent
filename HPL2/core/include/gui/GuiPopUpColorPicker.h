@@ -1,20 +1,20 @@
 /*
- * Copyright © 2009-2020 Frictional Games
+ * Copyright © 2011-2020 Frictional Games
  * 
- * This file is part of Amnesia: The Dark Descent.
+ * This file is part of Amnesia: A Machine For Pigs.
  * 
- * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
+ * Amnesia: A Machine For Pigs is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version. 
 
- * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
+ * Amnesia: A Machine For Pigs is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
+ * along with Amnesia: A Machine For Pigs.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef HPL_GUI_POP_UP_COLOR_PICKER_H
@@ -26,7 +26,7 @@
 namespace hpl {
 
 	class cGuiSet;
-
+	
 	class cGuiPopUpColorPicker;
 
 	class cWidgetWindow;
@@ -63,27 +63,27 @@ namespace hpl {
 		virtual void OnSetSlider(float afValue);
 		virtual void OnInputEnter(cWidgetTextBox* apInput);
 
-		virtual void RebuildBox() = 0;
-		virtual void RebuildSlider() = 0;
+		virtual void RebuildBox()=0;
+		virtual void RebuildSlider()=0;
 
 		void UpdateMarkers();
 
 		void OnDrawBox(iWidget* apWidget);
 		void OnDrawSlider(iWidget* apWidget);
 
-		virtual float GetSliderParamValue() = 0;
+		virtual float GetSliderParamValue()=0;
 
 	protected:
-		virtual void OnInputEnterSpecific(cWidgetTextBox* apInput) = 0;
-		virtual cVector2f GetPosInMap() = 0;
-		virtual float GetPosInSlider() = 0;
+		virtual void OnInputEnterSpecific(cWidgetTextBox* apInput)=0;
+		virtual cVector2f GetPosInMap()=0;
+		virtual float GetPosInSlider()=0;
 
-		bool SetHSBValue(int alIndex, float afX, bool afUpdateInput = true);
-		bool SetRGBValue(int alIndex, float afX, bool afUpdateInput = true);
+		bool SetHSBValue(int alIndex, float afX, bool afUpdateInput=true);
+		bool SetRGBValue(int alIndex, float afX, bool afUpdateInput=true);
 		void SetRGB(float afR, float afG, float afB);
 
 		void SaveSliderValue(float afX) { mfOldSliderParamValue = afX; }
-		bool SliderValueChanged(float afX) { return mfOldSliderParamValue != afX; }
+		bool SliderValueChanged(float afX) { return mfOldSliderParamValue!=afX; }
 
 		void UpdateSliderMarkerColor();
 
@@ -95,7 +95,7 @@ namespace hpl {
 
 		cGuiPopUpColorPicker* mpPicker;
 		tWString msName;
-
+		 
 		cBitmap* mpBoxBmp;
 		iTexture* mpBoxTex;
 		cBitmap* mpSliderBmp;
@@ -122,7 +122,7 @@ namespace hpl {
 
 		void OnSetBox(const cVector2f& avX);
 		void OnSetSlider(float afX);
-
+		
 		void RebuildBox();
 		void RebuildSlider();
 
@@ -135,7 +135,7 @@ namespace hpl {
 	};
 
 	//---------------------------------------------------------------
-
+	
 	class cRGBMode : public iGraphicPickerMode
 	{
 	public:
@@ -143,7 +143,7 @@ namespace hpl {
 
 		void OnSetBox(const cVector2f& avPos);
 		void OnSetSlider(float afX);
-
+		
 		void RebuildBox();
 		void RebuildSlider();
 
@@ -161,10 +161,10 @@ namespace hpl {
 	{
 		friend class iGraphicPickerMode;
 	public:
-		cGuiPopUpColorPicker(cGraphics* apGraphics, cGuiSet* apSet, cColor* apDestColor,
-			void *apCallbackObject, tGuiCallbackFunc apCallback,
-			void *apUpdateColorCallbackObject, tGuiCallbackFunc apUpdateColorCallback);
-		virtual ~cGuiPopUpColorPicker();
+		cGuiPopUpColorPicker(cGraphics* apGraphics, cGuiSet* apSet, cColor* apDestColor, 
+								void *apCallbackObject, tGuiCallbackFunc apCallback, 
+								void *apUpdateColorCallbackObject, tGuiCallbackFunc apUpdateColorCallback);
+		virtual ~cGuiPopUpColorPicker();		
 
 		void SetUpdateColorCallback(void* apCallbackObject, tGuiCallbackFunc apCallback);
 
@@ -200,8 +200,8 @@ namespace hpl {
 		void CreateHSBInputs(iWidget* apParent, cVector3f& avPos);
 		void CreateRGBInputs(iWidget* apParent, cVector3f& avPos);
 		void CreateInputs(iWidget* apParent, cVector3f& avPos, tGuiCallbackFunc apCallback,
-			const tFloatVec& avMin, const tFloatVec& avMax, std::vector<cWidgetTextBox*>& avContainer,
-			tBoolVec& avUpdatedContainer, tColorPickerModeVec avModes);
+							const tFloatVec& avMin, const tFloatVec& avMax, std::vector<cWidgetTextBox*>& avContainer, 
+							tBoolVec& avUpdatedContainer, tColorPickerModeVec avModes);
 
 		bool Button_Pressed(iWidget* apWidget, const cGuiMessageData& aData);
 		kGuiCallbackDeclarationEnd(Button_Pressed);
@@ -214,7 +214,7 @@ namespace hpl {
 
 		bool Color_InputValueEnter(iWidget* apWidget, const cGuiMessageData& aData);
 		kGuiCallbackDeclarationEnd(Color_InputValueEnter);
-
+ 
 		bool Alpha_InputValueEnter(iWidget* apWidget, const cGuiMessageData& aData);
 		kGuiCallbackDeclarationEnd(Alpha_InputValueEnter);
 
@@ -231,7 +231,7 @@ namespace hpl {
 
 		bool Slider_OnMouseMove(iWidget* apWidget, const cGuiMessageData& aData);
 		kGuiCallbackDeclarationEnd(Slider_OnMouseMove);
-
+		
 		bool ColorBox_OnMouseMove(iWidget* apWidget, const cGuiMessageData& aData);
 		kGuiCallbackDeclarationEnd(ColorBox_OnMouseMove);
 		bool ColorBox_OnDraw(iWidget* apWidget, const cGuiMessageData& aData);
@@ -261,12 +261,12 @@ namespace hpl {
 
 		void ClosePopUp();
 
-		void UpdateHSBInputs(bool abForce = false);
-		void UpdateRGBInputs(bool abForce = false);
+		void UpdateHSBInputs(bool abForce=false);
+		void UpdateRGBInputs(bool abForce=false);
 
-		void UpdateColor(bool abForce = false);
-		void UpdateColorHSB(bool abForce = false);
-		void UpdateColorRGB(bool abForce = false);
+		void UpdateColor(bool abForce=false);
+		void UpdateColorHSB(bool abForce=false);
+		void UpdateColorRGB(bool abForce=false);
 
 		void AddRecentColor(const cColor& aX);
 
@@ -300,11 +300,11 @@ namespace hpl {
 
 		cWidgetImage* mpImgAlphaSliderBG;
 		cWidgetImage* mpImgAlphaSlider;
-
+		
 		cGuiGfxElement* mpGfxBGPattern;
 		cGuiGfxElement* mpGfxColorPointer;
 		cGuiGfxElement* mpGfxSliderPointer;
-
+		
 		cGuiGfxElement* mpGfxHMarker;
 		cGuiGfxElement* mpGfxVMarker;
 
@@ -324,7 +324,7 @@ namespace hpl {
 		cWidgetTextBox* mpInpHexAlpha;
 		cWidgetTextBox* mpInpHexRGBA;
 		cWidgetTextBox* mpInpVecRGBA;
-
+		
 		cWidgetButton* mvButtons[3];
 
 		void * mpCallbackObject;

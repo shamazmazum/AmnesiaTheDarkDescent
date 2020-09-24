@@ -1,20 +1,20 @@
 /*
- * Copyright © 2009-2020 Frictional Games
+ * Copyright © 2011-2020 Frictional Games
  * 
- * This file is part of Amnesia: The Dark Descent.
+ * This file is part of Amnesia: A Machine For Pigs.
  * 
- * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
+ * Amnesia: A Machine For Pigs is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version. 
 
- * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
+ * Amnesia: A Machine For Pigs is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
+ * along with Amnesia: A Machine For Pigs.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "math/Math.h"
@@ -84,6 +84,19 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
+	cVector3f cMath::RandomSphereSurfacePoint(float afRadius)
+	{
+		return Vector3SphereSurfacePoint(cVector2f(cMath::RandRectf(0,1),cMath::RandRectf(0,1)) ,afRadius);
+	}
+
+	cVector3f cMath::RandomSphereInsidePoint(float afRadius)
+	{
+		float fR = powf(cMath::RandRectf(0, 1), 1.0f / 3.0f); //Need uniform distribution
+		return Vector3SphereSurfacePoint(cVector2f(cMath::RandRectf(0,1),cMath::RandRectf(0,1)),afRadius*fR);
+	}
+
+	//-----------------------------------------------------------------------
+
 	void cMath::Randomize(int alSeed)
 	{
 		if(alSeed==-1)
@@ -128,6 +141,7 @@ namespace hpl {
 		return 0x1 << alBitNum;
 	}
 
+	
 	//-----------------------------------------------------------------------
 
 	cVector3f cMath::RGBToHSB(const cColor& aRGB)
@@ -142,38 +156,38 @@ namespace hpl {
 	{
 		/////////////////////////////////////////////////////////////
 		// Conversion algorithm taken from : 
-
+		
 		float r = aRGB.r;
 		float g = aRGB.g;
 		float b = aRGB.b;
 
 		float min, max, delta;
-		min = Min(r, Min(g, b));
-		max = Max(r, Max(g, b));
+		min = Min( r, Min(g, b));
+		max = Max( r, Max(g, b));
 
-		delta = max - min;
-
+		delta = max-min;
+		
 		avX.z = max;
-		if (max == 0)
+		if(max == 0)
 			avX.y = 0;
 		else
-			avX.y = delta / max;
+			avX.y = delta/max;
 
-		if (avX.y == 0)
+		if(avX.y == 0)
 		{
 			avX.x = -1;
-
+			
 			return;
 		}
 
-		if (r == max)
-			avX.x = (g - b) / delta;		// between yellow & magenta
-		else if (g == max)
-			avX.x = 2 + (b - r) / delta;	// between cyan & yellow
+		if(r == max)
+			avX.x = (g - b)/delta;		// between yellow & magenta
+		else if(g == max)
+			avX.x = 2 + (b - r)/delta;	// between cyan & yellow
 		else
-			avX.x = 4 + (r - g) / delta;	// between magenta & cyan
+			avX.x = 4 + (r - g)/delta;	// between magenta & cyan
 		avX.x *= 60;					// degrees
-		if (avX.x < 0)
+		if(avX.x < 0)
 			avX.x += 360;
 	}
 
@@ -197,23 +211,23 @@ namespace hpl {
 		float b = avHSB.z;
 		float fract, p, q, t;
 
-		if (s == 0)
+		if(s==0)
 		{
 			aX.r = aX.g = aX.b = b;
 		}
 		else
 		{
-			if (h == 360)	h = 0;
+			if(h==360)	h = 0;
 			else		h /= 60;
 
 			sextant = floor(h);
-			fract = h - sextant;
+			fract = h-sextant;
 
-			p = b * (1 - s);
-			q = b * (1 - s * fract);
-			t = b * (1 - s * (1 - fract));
+			p = b*(1-s);
+			q = b*(1-s*fract);
+			t = b*(1-s*(1-fract));
 
-			switch (sextant)
+			switch(sextant)
 			{
 			case 0:			aX.r = b;	aX.g = t;	aX.b = p;	break;
 			case 1:			aX.r = q;	aX.g = b;	aX.b = p;	break;
@@ -237,9 +251,9 @@ namespace hpl {
 
 	void cMath::HexToRGBHelper(const tString& asHex, cColor& aCol)
 	{
-		aCol.r = UCharColorToFloat(HexStringToUChar(cString::Sub(asHex, 0, 2)));
-		aCol.g = UCharColorToFloat(HexStringToUChar(cString::Sub(asHex, 2, 2)));
-		aCol.b = UCharColorToFloat(HexStringToUChar(cString::Sub(asHex, 4, 2)));
+		aCol.r = UCharColorToFloat( HexStringToUChar(cString::Sub(asHex, 0, 2)) );
+		aCol.g = UCharColorToFloat( HexStringToUChar(cString::Sub(asHex, 2, 2)) );
+		aCol.b = UCharColorToFloat( HexStringToUChar(cString::Sub(asHex, 4, 2)) );
 	}
 
 	cColor cMath::HexWToRGB(const tWString& asHex)
@@ -252,9 +266,9 @@ namespace hpl {
 
 	void cMath::HexWToRGBHelper(const tWString& asHex, cColor& aCol)
 	{
-		aCol.r = UCharColorToFloat(HexStringToUChar(cString::SubW(asHex, 0, 2)));
-		aCol.g = UCharColorToFloat(HexStringToUChar(cString::SubW(asHex, 2, 2)));
-		aCol.b = UCharColorToFloat(HexStringToUChar(cString::SubW(asHex, 4, 2)));
+		aCol.r = UCharColorToFloat( HexStringToUChar(cString::SubW(asHex, 0, 2)) );
+		aCol.g = UCharColorToFloat( HexStringToUChar(cString::SubW(asHex, 2, 2)) );
+		aCol.b = UCharColorToFloat( HexStringToUChar(cString::SubW(asHex, 4, 2)) );
 	}
 
 	cColor cMath::HexToRGBA(const tString& asHex)
@@ -268,7 +282,7 @@ namespace hpl {
 	void cMath::HexToRGBAHelper(const tString& asHex, cColor& aCol)
 	{
 		HexToRGBHelper(asHex, aCol);
-		aCol.a = UCharColorToFloat(HexStringToUChar(cString::Sub(asHex, 6, 2)));
+		aCol.a = UCharColorToFloat( HexStringToUChar(cString::Sub(asHex, 6, 2)) );
 	}
 
 	cColor cMath::HexWToRGBA(const tWString& asHex)
@@ -282,7 +296,7 @@ namespace hpl {
 	void cMath::HexWToRGBAHelper(const tWString& asHex, cColor& aCol)
 	{
 		HexWToRGBHelper(asHex, aCol);
-		aCol.a = UCharColorToFloat(HexStringToUChar(cString::SubW(asHex, 6, 2)));
+		aCol.a = UCharColorToFloat( HexStringToUChar(cString::SubW(asHex, 6, 2)) );
 	}
 
 	//-----------------------------------------------------------------------
@@ -290,9 +304,9 @@ namespace hpl {
 	tString cMath::RGBToHex(const cColor& aRGB)
 	{
 		tString s;
-		s += UCharToHexString(FloatColorToUChar(aRGB.r));
-		s += UCharToHexString(FloatColorToUChar(aRGB.g));
-		s += UCharToHexString(FloatColorToUChar(aRGB.b));
+		s += UCharToHexString( FloatColorToUChar(aRGB.r) );
+		s += UCharToHexString( FloatColorToUChar(aRGB.g) );
+		s += UCharToHexString( FloatColorToUChar(aRGB.b) );
 
 		return s;
 	}
@@ -300,9 +314,9 @@ namespace hpl {
 	tWString cMath::RGBToHexW(const cColor& aRGB)
 	{
 		tWString s;
-		s += UCharToHexStringW(FloatColorToUChar(aRGB.r));
-		s += UCharToHexStringW(FloatColorToUChar(aRGB.g));
-		s += UCharToHexStringW(FloatColorToUChar(aRGB.b));
+		s += UCharToHexStringW( FloatColorToUChar(aRGB.r) );
+		s += UCharToHexStringW( FloatColorToUChar(aRGB.g) );
+		s += UCharToHexStringW( FloatColorToUChar(aRGB.b) );
 
 		return s;
 	}
@@ -310,7 +324,7 @@ namespace hpl {
 	tString cMath::RGBAToHex(const cColor& aRGB)
 	{
 		tString s = RGBToHex(aRGB);
-		s += UCharToHexString(FloatColorToUChar(aRGB.a));
+		s += UCharToHexString( FloatColorToUChar(aRGB.a) );
 
 		return s;
 	}
@@ -318,7 +332,7 @@ namespace hpl {
 	tWString cMath::RGBAToHexW(const cColor& aRGB)
 	{
 		tWString s = RGBToHexW(aRGB);
-		s += UCharToHexStringW(FloatColorToUChar(aRGB.a));
+		s += UCharToHexStringW( FloatColorToUChar(aRGB.a) );
 
 		return s;
 	}
@@ -358,17 +372,17 @@ namespace hpl {
 	{
 		tString s;
 
-		for (int i = 0; i < 2; ++i)
+		for(int i=0; i<2; ++i)
 		{
 			unsigned char nibble = (alValue & 0xF);
-			if (nibble < 10)
+			if(nibble<10)
 				nibble += '0';
 			else
-				nibble += 'A' - 10;
+				nibble += 'A'-10;
 
-			s.insert(s.begin(), nibble);
+			s.insert(s.begin(),nibble);
 
-			alValue = alValue >> 4;
+			alValue = alValue>>4;
 		}
 
 		return s;
@@ -378,21 +392,23 @@ namespace hpl {
 	{
 		tWString s;
 
-		for (int i = 0; i < 2; ++i)
+		for(int i=0; i<2; ++i)
 		{
 			wchar_t nibble = (alValue & 0xF);
-			if (nibble < 10)
+			if(nibble<10)
 				nibble += _W('0');
 			else
-				nibble += _W('A') - 10;
+				nibble += _W('A')-10;
 
-			s.insert(s.begin(), nibble);
+			s.insert(s.begin(),nibble);
 
-			alValue = alValue >> 4;
+			alValue = alValue>>4;
 		}
 
 		return s;
 	}
+
+	//-----------------------------------------------------------------------
 
 	//-----------------------------------------------------------------------
 
@@ -1872,6 +1888,26 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
+	float cMath::Vector3SignedAngle(const cVector3f& avVecA,const cVector3f& avVecB, const cVector3f& avVecN)
+	{
+		float fCos = Vector3Dot(avVecA,avVecB);
+
+		if(std::abs(fCos - 1) <= kEpsilonf) return 0;
+
+		float angle = acos(fCos);
+		
+		float signValue = Vector3Dot( avVecN, Vector3Cross(avVecA,avVecB) );
+
+		if ( signValue < 0 )
+		{
+			angle *= -1;
+		}
+
+		return angle;
+	}
+
+	//-----------------------------------------------------------------------
+
 	cVector3f cMath::Vector3UnProject(const cVector3f& avVec,const cRect2f &aScreenRect, 
 										cMatrixf a_mtxViewProj)
 	{
@@ -2003,6 +2039,19 @@ namespace hpl {
 		float fInvLen3 = 1/u3.Length();
 		avDst3 = u3*fInvLen3;
 		*/
+	}
+
+	//-----------------------------------------------------------------------
+	cVector3f cMath::Vector3SphereSurfacePoint(const cVector2f& avSeed, float afRadius)
+	{
+		cVector3f vOut;
+		vOut.x = avSeed.x*2.0f - 1.0;
+		float fT = k2Pif * avSeed.y;
+		float fW = sqrt( 1 - vOut.x*vOut.x );
+		vOut.y = fW * sin( fT );
+		vOut.z = fW * cos( fT );
+
+		return vOut*afRadius;
 	}
 
 	//-----------------------------------------------------------------------
@@ -2460,7 +2509,7 @@ namespace hpl {
 		cQuaternion qA; qA.FromRotationMatrix(a_mtxA);
 		cQuaternion qB; qB.FromRotationMatrix(a_mtxB);
 
-		cQuaternion qFinal = cMath::QuaternionSlerp(afT,qA,qB,true);
+		cQuaternion qFinal = cMath::QuaternionSlerp(afT,qA,qB,abShortestPath);
 
 		cMatrixf mtxFinal = cMath::MatrixQuaternion(qFinal);
 		mtxFinal.SetTranslation(vPos);
