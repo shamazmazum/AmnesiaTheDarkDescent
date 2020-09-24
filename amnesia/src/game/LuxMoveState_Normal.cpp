@@ -112,6 +112,10 @@ cLuxMoveState_Normal::cLuxMoveState_Normal(cLuxPlayer *apPlayer) : iLuxMoveState
 	mvWalkBobMax = gpBase->mpGameCfg->GetVector2f("Player_Movement_Normal","WalkBobMax",0);
 	mvRunBobMax = gpBase->mpGameCfg->GetVector2f("Player_Movement_Normal","RunBobMax",0);
 
+	mfHeadBobMul = gpBase->mpGameCfg->GetFloat("Player_Movement_Normal", "HeadBobMul", 0);
+	mfHeadBobMulSpeed = gpBase->mpGameCfg->GetFloat("Player_Movement_Normal", "HeadBobMulSpeed", 0);
+	mfHeadBobMulTarget = gpBase->mpGameCfg->GetFloat("Player_Movement_Normal", "HeadBobMulTarget", 0);
+
 	mfCrouchMinBobSpeed = gpBase->mpGameCfg->GetFloat("Player_Movement_Normal","CrouchMinBobSpeed",0);
 	mfCrouchMaxBobSpeed = gpBase->mpGameCfg->GetFloat("Player_Movement_Normal","CrouchMaxBobSpeed",0);
 	
@@ -203,7 +207,27 @@ void cLuxMoveState_Normal::OnEnterState(eLuxMoveState aPrevState)
 	
 	mfBounceSizeMul = 1.0f;
 	mfBounceSpeedMul = 1.0f;
-	
+
+	////////////////////////////////////////
+	// Head Bob
+	mfHeadBobMul = 1.0f;
+	mfHeadBobMulSpeed = 0.0f;
+	mfHeadBobMulTarget = 1.0f;
+
+	mvEnergyBobSize = cVector2f(0.1f, 0.2f);
+	mvRunBobMax = cVector2f(0.05, 0.06);
+	mvWalkBobMax = cVector2f(0.03, 0.03);
+	mvCrouchBobMax = cVector2f(0.06, 0.04);
+
+	mfCrouchMinBobSpeed = 0.2;
+	mfCrouchMaxBobSpeed = 1.2;
+
+	mfWalkMinBobSpeed = 0.4;
+	mfWalkMaxBobSpeed = 1.8;
+
+	mfRunMinBobSpeed = 0.5;
+	mfRunMaxBobSpeed = 2.5;
+
 	mvHeadBob =0;
 	mfPrevHeadBobCount =0;
 	mfHeadBobCount = 0;
@@ -577,11 +601,19 @@ void cLuxMoveState_Normal::UpdateHeadBob(float afTimeStep)
 {
 	iCharacterBody *pCharBody = mpPlayer->GetCharacterBody();
 
+	///////////////////////////////////////
+	// Fade
+	mfHeadBobMul = cMath::IncreaseTo(mfHeadBobMul, mfHeadBobMulSpeed * afTimeStep, mfHeadBobMulTarget);
+
 	/////////////////////////
 	//Get the current bob max
 	mvBobMaxGoal = mvWalkBobMax;
 	float fMinBobSpeed = mfWalkMinBobSpeed;
 	float fMaxBobSpeed = mfWalkMaxBobSpeed;
+
+	float fHealth = mpPlayer->GetHealth() / 100;
+	float fHealthMul = 1.0f - fHealth;
+
 	if(mbCrouching)
 	{
 		mvBobMaxGoal = mvCrouchBobMax;
@@ -595,9 +627,11 @@ void cLuxMoveState_Normal::UpdateHeadBob(float afTimeStep)
 		fMaxBobSpeed = mfRunMaxBobSpeed;
 	}
 
+	mvBobMaxGoal *= (1.0f + fHealthMul);
+
 	float fPlayerSpeed = pCharBody->GetVelocity(afTimeStep).Length();
 	float fMaxPlayerSpeed = mfMaxForwardSpeed * mfDefaultForwardMul;
-	float fBobSpeed = fMinBobSpeed + (fPlayerSpeed/fMaxPlayerSpeed) * (fMaxBobSpeed - fMinBobSpeed);
+	float fBobSpeed = fMinBobSpeed + (fPlayerSpeed / cMath::Max(fMaxPlayerSpeed, 0.001f)) * (fMaxBobSpeed - fMinBobSpeed);
 	
 	/////////////////////
 	// Check if moving
@@ -611,7 +645,7 @@ void cLuxMoveState_Normal::UpdateHeadBob(float afTimeStep)
 	
 	//Fade into the new max
 	float fAdd = 0.1f;
-	mvCurrentBobMax = cMath::Vector2IncreaseTo(mvCurrentBobMax, fAdd * afTimeStep, mvBobMaxGoal);
+	mvCurrentBobMax = cMath::Vector2IncreaseTo(mvCurrentBobMax, cVector2f(fAdd * afTimeStep), mvBobMaxGoal);
 	
 
 	/////////////////////////
@@ -626,22 +660,13 @@ void cLuxMoveState_Normal::UpdateHeadBob(float afTimeStep)
 			float fAdd;
 			if(fX <= cMath::ToRad(90)) fAdd = 1;
 			else						fAdd = -1;
-
-			float fPrevCos = cos(mfHeadBobCount);
+			
+			float fDist = cMath::ToRad(90) - fX;
 
 			mfPrevHeadBobCount = mfHeadBobCount;
-			mfHeadBobCount += afTimeStep * k2Pif * fAdd * 3.1f;
-			
-			float fCos = cos(mfHeadBobCount);
-			float fSin = cos(mfHeadBobCount);
+			mfHeadBobCount += afTimeStep * k2Pif * fAdd * 6.1f * fDist * 0.05;
 
-			//See if count passed a cos =0 and that sin is above 1.
-			if(fSin > 0 && ((fCos <=0 && fPrevCos >= 0) || (fCos >=0 && fPrevCos <= 0)))
-			{
-				mbBobbing = false;
-				mvHeadBob.y = 0;
-				mvHeadBob.x = 0;
-			}
+			float fSin = sin(mfHeadBobCount) + sin(mfHeadBobCount / 2.3) * fHealthMul;
 		}
 	}
 	/////////////////////////
@@ -650,6 +675,7 @@ void cLuxMoveState_Normal::UpdateHeadBob(float afTimeStep)
 	{
 		//Set and update variables
 		mbBobbing = true;
+
 		mfPrevHeadBobCount = mfHeadBobCount;
 		mfHeadBobCount += fBobSpeed * afTimeStep * k2Pif;
 
@@ -667,14 +693,16 @@ void cLuxMoveState_Normal::UpdateHeadBob(float afTimeStep)
 	
 	if(mbBobbing)
 	{
+		mvHeadBob.x = sin(mfHeadBobCount / 2 - kPi4f) * mvCurrentBobMax.x;
 		mvHeadBob.y = sin(mfHeadBobCount) * mvCurrentBobMax.y - mvCurrentBobMax.y;
-		mvHeadBob.x = sin(mfHeadBobCount/2 - kPi4f) * mvCurrentBobMax.x;
+
+		mvHeadBob.x += fHealthMul*cos(mfHeadBobCount / 1.4)*mvEnergyBobSize.x;
+		mvHeadBob.y += fHealthMul*sin(mfHeadBobCount / 2.3)*mvEnergyBobSize.y; -fHealthMul * mvEnergyBobSize.y;
 	}
 	else
 	{
 		mvHeadBob =0;
 	}
-
 
 	/////////////////////////
 	//Ground bounce
@@ -695,8 +723,9 @@ void cLuxMoveState_Normal::UpdateHeadBob(float afTimeStep)
 		}
 	}
 	
-	
-	mpPlayer->SetHeadPosAdd(eLuxHeadPosAdd_Bob,mvHeadBob);
+	//mpPlayer->GetCamera()->SetPosition(mvHeadBob * mfHeadBobMul);
+	mpPlayer->SetHeadPosAdd(eLuxHeadPosAdd_Bob, mvHeadBob * mfHeadBobMul);
+	mpPlayer->GetCamera()->SetRoll(cMath::ToRad(3 * mvHeadBob.y * mfHeadBobMul + 15 * mvHeadBob.y * fHealthMul * mfHeadBobMul));
 }
 
 

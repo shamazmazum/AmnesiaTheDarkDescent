@@ -136,8 +136,12 @@ private:
 	float mfJumpCount;
 
 	cVector3f mvHeadBob;
+	cVector2f mvEnergyBobSize;
 	float mfPrevHeadBobCount;
 	float mfHeadBobCount;
+	float mfHeadBobMul;
+	float mfHeadBobMulTarget;
+	float mfHeadBobMulSpeed;
 	bool mbBobbing;
 
 	bool mbWasOnGround;
