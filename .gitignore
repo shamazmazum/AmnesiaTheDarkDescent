@@ -3,6 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+*.exe
+HPL2_2010.lib
+
 # User-specific files
 *.rsuser
 *.suo
@@ -30,6 +33,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+amnesia/_temp/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
