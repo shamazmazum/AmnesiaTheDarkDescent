@@ -41,6 +41,11 @@ public:
 
 	int mlCurrentMeshEntity;
 
+    float mfGoalOpenAmount;
+    bool mbOpeningTowardsMaxAngle;
+    float mfCurrentOpenAmount;
+	float mfOpenSpeed;
+	bool mbIsUpdatingOpenAmount;
 
     cEngineMeshEntity_SaveData mDamageMesh1;	
 	cEngineMeshEntity_SaveData mDamageMesh2;
@@ -55,6 +60,7 @@ public:
 	iPhysicsBody *mpChildBody;
 
     float mfMaxAngle;
+    float mfMinAngle;
 };
 
 
@@ -79,6 +85,7 @@ public:
 	void OnResetProperties();
 
 	void UpdatePropSpecific(float afTimeStep);
+    void UpdateOpening(float afTimeStep);
 	
 	void BeforePropDestruction();
 
@@ -107,6 +114,8 @@ public:
 	void SetDisableAutoClose(bool abX){ mbDisableAutoClose=abX;}
 	bool GetDisableAutoClose(){ return mbDisableAutoClose;}
 
+    void SetOpenAmount( float afOpenAmount, float afDuration, bool abGoTowardsMaxAngle );
+
 	void SetCurrentDamageLevel(int alX);
 
 	cMeshEntity* GetEffectMeshEntity();
@@ -126,7 +135,7 @@ public:
 	void SetupSaveData(iLuxEntity_SaveData *apSaveData);
 
 private:
-	void SetupDoorPhysics(float afOpenAmount);
+	void SetupDoorPhysics(float afOpenAmount, bool abOpenTowardsMaxAngle);
 
 	cLuxSwingDoorJointData* GetJointDataFromBody(iPhysicsBody *apBody);
 	cLuxSwingDoorJointData* GetJointDataFromJoint(iPhysicsJoint *apJoint);
@@ -136,6 +145,14 @@ private:
 	std::vector<cLuxSwingDoorJointData> mvJointData;
 
 	cLuxInteractData_SwingDoor mSwingDoorData;
+
+    bool
+        mbIsUpdatingOpenAmount,
+        mbOpeningTowardsMaxAngle;
+    float
+        mfGoalOpenAmount,
+        mfOpenSpeed,
+        mfCurrentOpenAmount;
 
 	bool mbCanInteractWithStaticBody;
 	tString msCloseOnSound;

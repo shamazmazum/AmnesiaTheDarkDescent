@@ -99,6 +99,7 @@ namespace hpl {
 	class iPhysicsRayCallback
 	{
 	public:
+		virtual ~iPhysicsRayCallback() {}
 		virtual bool BeforeIntersect(iPhysicsBody *pBody){return true;}
 		virtual bool OnIntersect(iPhysicsBody *pBody,cPhysicsRayParams *apParams)=0;
 	};
@@ -110,6 +111,7 @@ namespace hpl {
 	class iPhysicsWorldCollisionCallback
 	{
 	public:
+		virtual ~iPhysicsWorldCollisionCallback() {}
 		virtual void OnCollision(iPhysicsBody *apBody, cCollideData *apCollideData)=0;
 	};
 
