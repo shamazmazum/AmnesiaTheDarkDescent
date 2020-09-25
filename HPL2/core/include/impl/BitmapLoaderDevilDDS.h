@@ -24,18 +24,18 @@
 
 namespace hpl {
 
-	class cBitmapLoaderDevilDDS : public iBitmapLoaderDevil
-	{
-	public:
-		cBitmapLoaderDevilDDS();
-		~cBitmapLoaderDevilDDS();
+    class cBitmapLoaderDevilDDS : public iBitmapLoaderDevil {
+    public:
+        cBitmapLoaderDevilDDS();
 
-		cBitmap* LoadBitmap(const tWString& asFile, tBitmapLoadFlag aFlags);
+        ~cBitmapLoaderDevilDDS();
 
-		
-	protected:
-		ePixelFormat GetPixelFormatFromILDXT(int alDxtFormat);
-	};
+        cBitmap *LoadBitmap(const tWString &asFile, tBitmapLoadFlag aFlags);
 
-};
+
+    protected:
+        ePixelFormat GetPixelFormatFromILDXT(int alDxtFormat);
+    };
+
+}
 #endif // HPL_BITMAP_LOADER_DEVIL_DDS_H

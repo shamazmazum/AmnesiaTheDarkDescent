@@ -159,5 +159,5 @@ namespace hpl {
 		bool mbScreenIsSetup;
 	};
 
-};
+}
 #endif // HPL_GRAPHICS_H

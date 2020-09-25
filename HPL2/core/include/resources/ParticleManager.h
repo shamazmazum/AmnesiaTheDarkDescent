@@ -67,5 +67,5 @@ namespace hpl {
 		std::list<cParticleSystem*> mlstSystems;
 	};
 
-};
+}
 #endif // HPL_PARTICLE_SYSTEM_MANAGER_H

@@ -155,5 +155,5 @@ namespace hpl {
 	//------------------------------------
 
 
-};
+}
 #endif // HPL_MEMORY_MANAGER_H

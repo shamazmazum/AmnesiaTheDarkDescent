@@ -49,5 +49,5 @@ namespace hpl {
 		cResources *mpResources;
 	};
 
-};
+}
 #endif // HPL_SCRIPT_MANAGER_H

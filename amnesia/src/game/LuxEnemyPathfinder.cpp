@@ -117,7 +117,7 @@ bool cLuxEnemyPathfinder::MoveTo(const cVector3f& avPos)
 	//Get the nodes of the path
 	bool bRet = mpAStar->GetPath(vStartPos,mvMoveGoalPos,&mlstPathNodes);
 
-	if(bRet==false)
+	if(!bRet)
 	{
 		//Log("Could not find path!\n");
 		//TODO: Debug output
@@ -261,7 +261,7 @@ void cLuxEnemyPathfinder::OnRenderSolid(cRendererCallbackFunctions* apFunctions)
 
 	///////////////////////
 	//Render current goal position
-	if(mbMoving==false) return;
+	if(!mbMoving) return;
 
 	//////////////////////////////
 	//GoalPos
@@ -333,7 +333,7 @@ const cVector3f& cLuxEnemyPathfinder::GetFinalGoalPos()
 
 void cLuxEnemyPathfinder::UpdateMoving(float afTimeStep)
 {
-	if(mbMoving==false) return;
+	if(!mbMoving) return;
 
 	iCharacterBody *pCharBody = mpEnemy->mpCharBody;
 	cAINode *pCurrentNode = NULL;

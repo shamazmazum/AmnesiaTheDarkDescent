@@ -30,674 +30,717 @@ class cLuxPlayer;
 
 //----------------------------------------------
 
-class cLuxPlayerInsanityCollapse : public iLuxPlayerHelper
-{
-friend class cLuxPlayer_SaveData;
+class cLuxPlayerInsanityCollapse : public iLuxPlayerHelper {
+    friend class cLuxPlayer_SaveData;
+
 public:
-	cLuxPlayerInsanityCollapse(cLuxPlayer *apPlayer);
-	~cLuxPlayerInsanityCollapse();
+    cLuxPlayerInsanityCollapse(cLuxPlayer *apPlayer);
 
-	void Reset();
+    ~cLuxPlayerInsanityCollapse();
 
-	void Start();
-	void Stop();
-	bool IsActive(){ return mbActive; }
+    void Reset();
 
-	void Update(float afTimeStep);
+    void Start();
+
+    void Stop();
+
+    bool IsActive() { return mbActive; }
+
+    void Update(float afTimeStep);
 
 private:
-	bool mbActive;
+    bool mbActive;
 
-	int mlState;
+    int mlState;
 
-	float mfHeightAddCollapseSpeed;
-	float mfHeightAddAwakeSpeed;
-	float mfRollCollapseSpeed;
-	float mfRollAwakeSpeed;
+    float mfHeightAddCollapseSpeed;
+    float mfHeightAddAwakeSpeed;
+    float mfRollCollapseSpeed;
+    float mfRollAwakeSpeed;
 
-	float mfHeightAddGoal;
-	
-	float mfAwakenSanity;
-    
-	float mfSleepTime;
+    float mfHeightAddGoal;
 
-	float mfSleepSpeedMul;
-	float mfWakeUpSpeedMul;
-	
-	tString msStartSound;
-	tString msAwakenSound;
-	tString msSleepLoopSound;
-	float mfSleepLoopSoundVolume;
+    float mfAwakenSanity;
 
-	tString msSleepRandomSound;
-	float mfSleepRandomMinTime;
-	float mfSleepRandomMaxTime;
-	
-	float mfHeightAdd;
-	float mfRoll;
+    float mfSleepTime;
 
-	float mfT;
-	float mfRandomCount;
+    float mfSleepSpeedMul;
+    float mfWakeUpSpeedMul;
 
-	cSoundEntry *mpLoopSound;
-	int mlLoopSoundID;
+    tString msStartSound;
+    tString msAwakenSound;
+    tString msSleepLoopSound;
+    float mfSleepLoopSoundVolume;
+
+    tString msSleepRandomSound;
+    float mfSleepRandomMinTime;
+    float mfSleepRandomMaxTime;
+
+    float mfHeightAdd;
+    float mfRoll;
+
+    float mfT;
+    float mfRandomCount;
+
+    cSoundEntry *mpLoopSound;
+    int mlLoopSoundID;
 };
 
 //----------------------------------------------
 
-class cLuxPlayerCamDirEffects : public iLuxPlayerHelper
-{
+class cLuxPlayerCamDirEffects : public iLuxPlayerHelper {
 public:
-	cLuxPlayerCamDirEffects(cLuxPlayer *apPlayer);
-	~cLuxPlayerCamDirEffects();
+    cLuxPlayerCamDirEffects(cLuxPlayer *apPlayer);
 
-	void Reset();
+    ~cLuxPlayerCamDirEffects();
 
-	void Update(float afTimeStep);
+    void Reset();
 
-	float AddAndGetYawAdd(float afX);
-	float AddAndGetPitchAdd(float afX);
+    void Update(float afTimeStep);
+
+    float AddAndGetYawAdd(float afX);
+
+    float AddAndGetPitchAdd(float afX);
 
 private:
-	void SetSwayActive(bool abX);
-	void UpdateSway(float afTimeStep);
+    void SetSwayActive(bool abX);
 
-	float mfStartSwayMaxSanity;
+    void UpdateSway(float afTimeStep);
 
-	bool mbSwayActive;
+    float mfStartSwayMaxSanity;
 
-	tVector2fList mlstPrevAdd;
-	cVector2f mvSwayAdd;
-	int mlMaxPositions;
+    bool mbSwayActive;
 
-	float mfSwayAlpha;
+    tVector2fList mlstPrevAdd;
+    cVector2f mvSwayAdd;
+    int mlMaxPositions;
 
-	cVector2f mvNextAdd;
+    float mfSwayAlpha;
+
+    cVector2f mvNextAdd;
 };
 
 //----------------------------------------------
 
-class cLuxPlayerSpawnPS_SpawnPos
-{
+class cLuxPlayerSpawnPS_SpawnPos {
 public:
-	cParticleSystem *mpPS;
-	cVector3f mvPos;
-	cVector3f mvLastLocalPos;
+    cParticleSystem *mpPS;
+    cVector3f mvPos;
+    cVector3f mvLastLocalPos;
 };
 
-class cLuxPlayerSpawnPS : public iLuxPlayerHelper
-{
+class cLuxPlayerSpawnPS : public iLuxPlayerHelper {
 public:
-	cLuxPlayerSpawnPS (cLuxPlayer *apPlayer);
-	~cLuxPlayerSpawnPS();
+    cLuxPlayerSpawnPS(cLuxPlayer *apPlayer);
 
-	void Reset();
+    ~cLuxPlayerSpawnPS();
 
-	void Start(const tString& asFileName);
-	void Stop();
+    void Reset();
 
-	void RespawnAll();
+    void Start(const tString &asFileName);
 
-	bool IsActive(){ return mbActive;}
-	const tString& GetFileName(){ return msFileName;}
+    void Stop();
 
-	void Update(float afTimeStep);
+    void RespawnAll();
+
+    bool IsActive() { return mbActive; }
+
+    const tString &GetFileName() { return msFileName; }
+
+    void Update(float afTimeStep);
+
 private:
-	void GenerateAllSpawnPos();
-	cParticleSystem* CreatePS(cLuxPlayerSpawnPS_SpawnPos *apSpawnPos);
+    void GenerateAllSpawnPos();
 
-	void DestroyAllSpawnPoints();
+    cParticleSystem *CreatePS(cLuxPlayerSpawnPS_SpawnPos *apSpawnPos);
 
-	bool LoadSpawnPSFile(const tString& asFileName);
+    void DestroyAllSpawnPoints();
 
-	bool mbActive;
-	tString msFileName;
-	
-	tString msParticleSystem;
-	float mfHeightFromFeet;
-	float mfHeightAddMin;
-	float mfHeightAddMax;
-	float mfDensity;
-	float mfRadius;
-	cColor mPSColor;
-	bool mbFadePS;
-	float mfPSMinFadeStart;
-	float mfPSMinFadeEnd;
-	float mfPSMaxFadeStart;
-	float mfPSMaxFadeEnd;
+    bool LoadSpawnPSFile(const tString &asFileName);
 
-	std::vector<cLuxPlayerSpawnPS_SpawnPos> mvSpawnPos;
+    bool mbActive;
+    tString msFileName;
+
+    tString msParticleSystem;
+    float mfHeightFromFeet;
+    float mfHeightAddMin;
+    float mfHeightAddMax;
+    float mfDensity;
+    float mfRadius;
+    cColor mPSColor;
+    bool mbFadePS;
+    float mfPSMinFadeStart;
+    float mfPSMinFadeEnd;
+    float mfPSMaxFadeStart;
+    float mfPSMaxFadeEnd;
+
+    std::vector <cLuxPlayerSpawnPS_SpawnPos> mvSpawnPos;
 };
 
 //----------------------------------------------
 
-class cLuxPlayerHurt : public iLuxPlayerHelper
-{
+class cLuxPlayerHurt : public iLuxPlayerHelper {
 public:
-	cLuxPlayerHurt (cLuxPlayer *apPlayer);
-	~cLuxPlayerHurt();
+    cLuxPlayerHurt(cLuxPlayer *apPlayer);
 
-	void Reset();
+    ~cLuxPlayerHurt();
 
-	void Update(float afTimeStep);
+    void Reset();
 
-	void OnDraw(float afFrameTime);
+    void Update(float afTimeStep);
+
+    void OnDraw(float afFrameTime);
 
 private:
-	std::vector<cGuiGfxElement*> mvNoiseGfx;
-	float mfEffectStartHealth;	
-	float mfMinMoveMul;
-	float mfMaxPantCount;
-	float mfPantSpeed;
-	float mfPantSize;
+    std::vector<cGuiGfxElement *> mvNoiseGfx;
+    float mfEffectStartHealth;
+    float mfMinMoveMul;
+    float mfMaxPantCount;
+    float mfPantSpeed;
+    float mfPantSize;
 
-	int mlCurrentNoise;
-	float mfNoiseUpdateCount;
+    int mlCurrentNoise;
+    float mfNoiseUpdateCount;
 
-	float mfNoiseAlpha;
-	float mfNoiseFreq;
-	cColor mNoiseColor;
-	
-	float mfPantCount;
-	float mfPantPosAdd;
-	float mfPantPosAddVel;
-	float mfPantPosAddDir;
-	float mfAlpha;
+    float mfNoiseAlpha;
+    float mfNoiseFreq;
+    cColor mNoiseColor;
 
-	float mfHealthRegainSpeed;
-	float mfHealthRegainLimit;
+    float mfPantCount;
+    float mfPantPosAdd;
+    float mfPantPosAddVel;
+    float mfPantPosAddDir;
+    float mfAlpha;
+
+    float mfHealthRegainSpeed;
+    float mfHealthRegainLimit;
 };
 
 //----------------------------------------------
 
-class cLuxFlashbackData
-{
+class cLuxFlashbackData {
 public:
-	cLuxFlashbackData(){}
-	cLuxFlashbackData(const tString &asFile, const tString &asCallback) : msFile(asFile), msCallback(asCallback) {}
+    cLuxFlashbackData() {}
 
-	tString msFile;
-	tString msCallback;
+    cLuxFlashbackData(const tString &asFile, const tString &asCallback) : msFile(asFile), msCallback(asCallback) {}
+
+    tString msFile;
+    tString msCallback;
 };
 
-typedef std::list<cLuxFlashbackData> tLuxFlashbackDataList;
+typedef std::list <cLuxFlashbackData> tLuxFlashbackDataList;
 typedef tLuxFlashbackDataList::iterator tLuxFlashbackDataListIt;
 
 //----------------------------------------------
 
-class cLuxPlayerFlashback : public iLuxPlayerHelper
-{
-friend class cLuxPlayer_SaveData;
+class cLuxPlayerFlashback : public iLuxPlayerHelper {
+    friend class cLuxPlayer_SaveData;
+
 public:
-	cLuxPlayerFlashback (cLuxPlayer *apPlayer);
-	~cLuxPlayerFlashback ();
+    cLuxPlayerFlashback(cLuxPlayer *apPlayer);
 
-	void Reset();
-	
-	void Start(const tString &asFlashbackFile, const tString &asCallback);
+    ~cLuxPlayerFlashback();
 
-	void Update(float afTimeStep);
+    void Reset();
 
-	void OnDraw(float afFrameTime);
+    void Start(const tString &asFlashbackFile, const tString &asCallback);
 
-	bool IsActive(){ return mbActive; }
+    void Update(float afTimeStep);
+
+    void OnDraw(float afFrameTime);
+
+    bool IsActive() { return mbActive; }
 
 private:
-	void LoadAndPlayFlashbackFile(const tString& asFlashbackFile);
+    void LoadAndPlayFlashbackFile(const tString &asFlashbackFile);
 
-	//Data
-	float mfRadialBlurSize;
-	float mfRadialBlurStartDist;
-	float mfWorldSoundVolume;
-	float mfMoveSpeedMul;
-	float mfRunSpeedMul;
+    //Data
+    float mfRadialBlurSize;
+    float mfRadialBlurStartDist;
+    float mfWorldSoundVolume;
+    float mfMoveSpeedMul;
+    float mfRunSpeedMul;
 
-	//Variables
-	float mfFlashDelay;
-	bool mbActive;
-	float mfFlashbackStartCount;
-	tString msFlashbackFile;
-	tString msCallback;
-	tLuxFlashbackDataList mlstFlashbackQueue;
-	
+    //Variables
+    float mfFlashDelay;
+    bool mbActive;
+    float mfFlashbackStartCount;
+    tString msFlashbackFile;
+    tString msCallback;
+    tLuxFlashbackDataList mlstFlashbackQueue;
+
 };
 
 //---------------------------------------------
 
-class cLuxPlayerLookAt : public iLuxPlayerHelper
-{
-friend class cLuxPlayer_SaveData;
+class cLuxPlayerLookAt : public iLuxPlayerHelper {
+    friend class cLuxPlayer_SaveData;
+
 public:
-	cLuxPlayerLookAt(cLuxPlayer *apPlayer);
-	~cLuxPlayerLookAt();
+    cLuxPlayerLookAt(cLuxPlayer *apPlayer);
 
-	void Update(float afTimeStep);
+    ~cLuxPlayerLookAt();
 
-	void Reset();
+    void Update(float afTimeStep);
 
-	void SetTarget(const cVector3f &avTargetPos, float afSpeedMul, float afMaxSpeed, const tString& asAtTargetCallback);
-	
-	void SetActive(bool abX);
-	bool IsActive(){ return mbActive;}
+    void Reset();
+
+    void SetTarget(const cVector3f &avTargetPos, float afSpeedMul, float afMaxSpeed, const tString &asAtTargetCallback);
+
+    void SetActive(bool abX);
+
+    bool IsActive() { return mbActive; }
 
 private:
-	bool mbActive;
-	cVector3f mvTargetPos;
+    bool mbActive;
+    cVector3f mvTargetPos;
 
-	cVector3f mvCurrentSpeed;
-	float mfSpeedMul;
-	float mfMaxSpeed;
+    cVector3f mvCurrentSpeed;
+    float mfSpeedMul;
+    float mfMaxSpeed;
 
-	tString msAtTargetCallback;
+    tString msAtTargetCallback;
 
-	float mfDestFovMul;
-	float mfFov;
-	float mfFovSpeed;
-	float mfFovMaxSpeed;
+    float mfDestFovMul;
+    float mfFov;
+    float mfFovSpeed;
+    float mfFovMaxSpeed;
 };
 
 //----------------------------------------------
 
-class cLuxPlayerSanity : public iLuxPlayerHelper
-{
-friend class cLuxPlayer_SaveData;
+class cLuxPlayerSanity : public iLuxPlayerHelper {
+    friend class cLuxPlayer_SaveData;
+
 public:
-	cLuxPlayerSanity(cLuxPlayer *apPlayer);
-	~cLuxPlayerSanity();
+    cLuxPlayerSanity(cLuxPlayer *apPlayer);
 
-	void Reset();
+    ~cLuxPlayerSanity();
 
-	void StartHit();
-	void SetSanityLost();
+    void Reset();
 
-	void Update(float afTimeStep);
+    void StartHit();
 
-	void OnDraw(float afFrameTime);
+    void SetSanityLost();
 
-	float GetAtLowSanityCount(){ return mfAtLowSanityCount;}
+    void Update(float afTimeStep);
+
+    void OnDraw(float afFrameTime);
+
+    float GetAtLowSanityCount() { return mfAtLowSanityCount; }
 
 private:
-	float GetCurrentSizeMul();
+    float GetCurrentSizeMul();
 
-	void UpdateInsaneEffects(float afTimeStep);
-	void UpdateCheckEnemySeen(float afTimeStep);
-	void UpdateHit(float afTimeStep);
-	
-	void UpdateInsanityVisuals(float afTimeStep);
-	void UpdateEnemySeenEffect(float afTimeStep);
-	void UpdateLosingSanity(float afTimeStep);
-	void UpdateLowSanity(float afTimeStep);
-	
-	float mfHitAlpha;
-	bool mbHitActive;
-	float mfSanityLostCount;
+    void UpdateInsaneEffects(float afTimeStep);
 
-	float mfAtLowSanityCount;
+    void UpdateCheckEnemySeen(float afTimeStep);
 
-	bool mbHitIsUpdated;
-	bool mbSanityLostIsUpdated;
+    void UpdateHit(float afTimeStep);
 
-	float mfPantCount;
+    void UpdateInsanityVisuals(float afTimeStep);
 
-	float mfCheckEnemySeenCount;
+    void UpdateEnemySeenEffect(float afTimeStep);
 
-	bool mbSanityEffectUpdated;
+    void UpdateLosingSanity(float afTimeStep);
 
-	float mfT;
-	float mfInsaneWaveAlpha;
+    void UpdateLowSanity(float afTimeStep);
 
-	float mfSanityDrainCount;
-	float mfSanityDrainVolume;
-	float mfSanityHeartbeatCount;
+    float mfHitAlpha;
+    bool mbHitActive;
+    float mfSanityLostCount;
 
-	float mfSeenEnemyCount;
-	bool mbEnemyIsSeen;
+    float mfAtLowSanityCount;
 
-	float mfShowHintTimer;
+    bool mbHitIsUpdated;
+    bool mbSanityLostIsUpdated;
 
-	//////////////
-	// Data
-	float mfHitZoomInSpeed;
-	float mfHitZoomOutSpeed;
-	float mfHitZoomInFOVMul;
-	float mfHitZoomInAspectMul;
+    float mfPantCount;
 
-	float mfSanityRegainSpeed;
-	float mfSanityRegainLimit;
-	float mfSanityVeryLowLimit;
-	float mfSanityEffectsStart;
+    float mfCheckEnemySeenCount;
 
-	float mfSanityWaveAlphaMul;
-	float mfSanityWaveSpeedMul;
+    bool mbSanityEffectUpdated;
 
-	float mfSanityLowLimit;
-	float mfSanityLowLimitMaxTime;
-	float mfSanityLowNewSanityAmount;
+    float mfT;
+    float mfInsaneWaveAlpha;
 
-	float mfCheckNearEnemyInterval;
-	float mfNearEnemyDecrease;
-	float mfNearCritterDecrease;
+    float mfSanityDrainCount;
+    float mfSanityDrainVolume;
+    float mfSanityHeartbeatCount;
+
+    float mfSeenEnemyCount;
+    bool mbEnemyIsSeen;
+
+    float mfShowHintTimer;
+
+    //////////////
+    // Data
+    float mfHitZoomInSpeed;
+    float mfHitZoomOutSpeed;
+    float mfHitZoomInFOVMul;
+    float mfHitZoomInAspectMul;
+
+    float mfSanityRegainSpeed;
+    float mfSanityRegainLimit;
+    float mfSanityVeryLowLimit;
+    float mfSanityEffectsStart;
+
+    float mfSanityWaveAlphaMul;
+    float mfSanityWaveSpeedMul;
+
+    float mfSanityLowLimit;
+    float mfSanityLowLimitMaxTime;
+    float mfSanityLowNewSanityAmount;
+
+    float mfCheckNearEnemyInterval;
+    float mfNearEnemyDecrease;
+    float mfNearCritterDecrease;
 };
 
 //----------------------------------------------
 
-class cLuxPlayerLantern : public iLuxPlayerHelper
-{
-public:	
-	cLuxPlayerLantern(cLuxPlayer *apPlayer);
-	~cLuxPlayerLantern();
+class cLuxPlayerLantern : public iLuxPlayerHelper {
+public:
+    cLuxPlayerLantern(cLuxPlayer *apPlayer);
 
-	void OnStart();
-	void Update(float afTimeStep);
-	void Reset();
+    ~cLuxPlayerLantern();
 
-	void OnMapEnter(cLuxMap *apMap);
-	void OnMapLeave(cLuxMap *apMap);
+    void OnStart();
 
-	void CreateWorldEntities(cLuxMap *apMap);
-	void DestroyWorldEntities(cLuxMap *apMap);
+    void Update(float afTimeStep);
 
-	void SetActive(bool abX, bool abUseEffects, bool abCheckForOilAndItems=true, bool abCheckIfAllowed=true);
-	bool IsActive(){ return mbActive;}
+    void Reset();
 
-	void SetDisabled(bool abX);
-	bool GetDisabled(){ return mbDisabled;}
+    void OnMapEnter(cLuxMap *apMap);
 
-	iLight* GetLight(){ return mpLight;}
+    void OnMapLeave(cLuxMap *apMap);
+
+    void CreateWorldEntities(cLuxMap *apMap);
+
+    void DestroyWorldEntities(cLuxMap *apMap);
+
+    void SetActive(bool abX, bool abUseEffects, bool abCheckForOilAndItems = true, bool abCheckIfAllowed = true);
+
+    bool IsActive() { return mbActive; }
+
+    void SetDisabled(bool abX);
+
+    bool GetDisabled() { return mbDisabled; }
+
+    iLight *GetLight() { return mpLight; }
 
 private:
-	cColor mDefaultColor;
-	float mfRadius;
-	tString msGobo;
-	bool mbCastShadows;
-	cVector3f mvLocalOffset;
-	tString msTurnOnSound;
-	tString msTurnOffSound;
-	tString msOutOfOilSound;
-	tString msDisabledSound;
-	float mfLowerOilSpeed;
-	float mfFadeLightOilAmount;
-	
-	bool mbDisabled;
-	bool mbActive;
-	float mfAlpha;
-	cLightPoint *mpLight;
-	
+    cColor mDefaultColor;
+    float mfRadius;
+    tString msGobo;
+    bool mbCastShadows;
+    cVector3f mvLocalOffset;
+    tString msTurnOnSound;
+    tString msTurnOffSound;
+    tString msOutOfOilSound;
+    tString msDisabledSound;
+    float mfLowerOilSpeed;
+    float mfFadeLightOilAmount;
+
+    bool mbDisabled;
+    bool mbActive;
+    float mfAlpha;
+    cLightPoint *mpLight;
+
 };
 
 //----------------------------------------------
 
-class cLuxPlayerDeath : public iLuxPlayerHelper
-{
+class cLuxPlayerDeath : public iLuxPlayerHelper {
 public:
-	cLuxPlayerDeath(cLuxPlayer *apPlayer);
-	~cLuxPlayerDeath();
+    cLuxPlayerDeath(cLuxPlayer *apPlayer);
 
-	void LoadFonts();
-	void LoadUserConfig();
-	void SaveUserConfig();
+    ~cLuxPlayerDeath();
 
-	void Reset();
+    void LoadFonts();
 
-	void Start();
+    void LoadUserConfig();
 
-	void Update(float afTimeStep);
-	void PostUpdate(float afTimeStep);
+    void SaveUserConfig();
+
+    void Reset();
+
+    void Start();
+
+    void Update(float afTimeStep);
+
+    void PostUpdate(float afTimeStep);
 
 
-	void OnDraw(float afFrameTime);
+    void OnDraw(float afFrameTime);
 
-	void OnPressButton();
+    void OnPressButton();
 
-	float GetFadeAlpha(){ return mfFadeAlpha;}
+    float GetFadeAlpha() { return mfFadeAlpha; }
 
-	void DisableStartSound(){ mbSkipStartSound = true; }
+    void DisableStartSound() { mbSkipStartSound = true; }
 
-	bool ShowHint(){ return mbShowHint;}
-	void SetShowHint(bool abX){ mbShowHint=abX;}
+    bool ShowHint() { return mbShowHint; }
 
-	void SetHint(const tString& asCat, const tString& asEntry);
-	const tString& GetHintCat(){ return msHintCat; }
-	const tString& GetHintEntry(){ return msHintEntry; }
+    void SetShowHint(bool abX) { mbShowHint = abX; }
 
+    void SetHint(const tString &asCat, const tString &asEntry);
+
+    const tString &GetHintCat() { return msHintCat; }
+
+    const tString &GetHintEntry() { return msHintEntry; }
 
 
 private:
-	void ResetGame();
+    void ResetGame();
 
-	bool mbToMainMenu;
-	bool mbActive;
+    bool mbToMainMenu;
+    bool mbActive;
 
-	bool mbShowHint;
+    bool mbShowHint;
 
-	int mlState;
+    int mlState;
 
-	tString msStartSound;
-	tString msAwakenSound;
+    tString msStartSound;
+    tString msAwakenSound;
 
-	bool mbSkipStartSound;
+    bool mbSkipStartSound;
 
-	float mfHeightAddSpeed;
-	float mfRollSpeed;
+    float mfHeightAddSpeed;
+    float mfRollSpeed;
 
-	float mfHeightAddGoal;
-	float mfHeightAddGoalCrouch;
-	float mfFadeOutTime;
+    float mfHeightAddGoal;
+    float mfHeightAddGoalCrouch;
+    float mfFadeOutTime;
 
-	float mfMaxSanityGain;
-	float mfMaxHealthGain;
-	float mfMaxOilGain;
-	float mfMinSanityGain;
-	float mfMinHealthGain;
-	float mfMinOilGain;
+    float mfMaxSanityGain;
+    float mfMaxHealthGain;
+    float mfMaxOilGain;
+    float mfMinSanityGain;
+    float mfMinHealthGain;
+    float mfMinOilGain;
 
-	float mfHeightAdd;
-	float mfRoll;
+    float mfHeightAdd;
+    float mfRoll;
 
-	float mfT;
+    float mfT;
 
-	float mfMinHeightAdd;
+    float mfMinHeightAdd;
 
-	tString msHintCat;
-	tString msHintEntry;
+    tString msHintCat;
+    tString msHintEntry;
 
-	tWString msCurrentHintText;
+    tWString msCurrentHintText;
 
-	cGuiGfxElement *mpWhiteModGfx;
+    cGuiGfxElement *mpWhiteModGfx;
 
-	iFontData *mpFont;
-    	
-	float mfFadeAlpha;
-	float mfTextAlpha1;
-	float mfTextAlpha2;
-	float mfTextOnScreenCount;
-	float mfWhiteCount;
-	
-	cLinearOscillation mFlashOscill;
+    iFontData *mpFont;
 
-	cSoundEntry *mpVoiceEntry;
-	int mlVoiceEntryId;
+    float mfFadeAlpha;
+    float mfTextAlpha1;
+    float mfTextAlpha2;
+    float mfTextOnScreenCount;
+    float mfWhiteCount;
+
+    cLinearOscillation mFlashOscill;
+
+    cSoundEntry *mpVoiceEntry;
+    int mlVoiceEntryId;
 };
 
 
 //----------------------------------------------
 
-class cLuxPlayerLean : public iLuxPlayerHelper
-{
-public:	
-	cLuxPlayerLean(cLuxPlayer *apPlayer);
-	~cLuxPlayerLean();
-	
-	void CreateWorldEntities(cLuxMap *apMap);
-	void DestroyWorldEntities(cLuxMap *apMap);
+class cLuxPlayerLean : public iLuxPlayerHelper {
+public:
+    cLuxPlayerLean(cLuxPlayer *apPlayer);
 
-	void Update(float afTimeStep);
+    ~cLuxPlayerLean();
 
-	void SetLean(float afMul);
-	void AddLean(float afAdd);
+    void CreateWorldEntities(cLuxMap *apMap);
 
-	void Reset();
+    void DestroyWorldEntities(cLuxMap *apMap);
+
+    void Update(float afTimeStep);
+
+    void SetLean(float afMul);
+
+    void AddLean(float afAdd);
+
+    void Reset();
+
 private:
-	iCollideShape *mpHeadShape;
+    iCollideShape *mpHeadShape;
 
-	float mfDir;
-	float mfDirAdd;
-	float mfMovement;
-	float mfRotation;
+    float mfDir;
+    float mfDirAdd;
+    float mfMovement;
+    float mfRotation;
 
-	float mfMaxMovement;
-	float mfMaxRotation;
-	float mfMaxTime;
+    float mfMaxMovement;
+    float mfMaxRotation;
+    float mfMaxTime;
 
-	float mfMoveSpeed;
+    float mfMoveSpeed;
 
-	bool mbIntersect;
+    bool mbIntersect;
 
-	bool mbPressed;
+    bool mbPressed;
 };
 
 //----------------------------------------------
 
-class cLuxPlayerDamageData
-{
+class cLuxPlayerDamageData {
 public:
-	std::vector<cGuiGfxElement*> mvImages;
+    std::vector<cGuiGfxElement *> mvImages;
 };
 
-class cLuxPlayerHudEffect_Splash
-{
+class cLuxPlayerHudEffect_Splash {
 public:
-	cGuiGfxElement *mpImage;	
-	cVector3f mvPos;
-	cVector2f mvSize;
-	float mfAlpha;
-	float mfAlphaMul;
+    cGuiGfxElement *mpImage;
+    cVector3f mvPos;
+    cVector2f mvSize;
+    float mfAlpha;
+    float mfAlphaMul;
 
-	cVector3f mvPosVel;
-	cVector2f mvSizeVel;
-	float mfAlphaVel;
-	float mfAlphaMoveStart;
+    cVector3f mvPosVel;
+    cVector2f mvSizeVel;
+    float mfAlphaVel;
+    float mfAlphaMoveStart;
 };
 
-typedef std::list<cLuxPlayerHudEffect_Splash> cLuxPlayerHudEffect_SplashList;
+typedef std::list <cLuxPlayerHudEffect_Splash> cLuxPlayerHudEffect_SplashList;
 typedef cLuxPlayerHudEffect_SplashList::iterator cLuxPlayerHudEffect_SplashListIt;
 
-class cLuxPlayerHudEffect : public iLuxPlayerHelper
-{
+class cLuxPlayerHudEffect : public iLuxPlayerHelper {
 public:
-	cLuxPlayerHudEffect(cLuxPlayer *apPlayer);
-	~cLuxPlayerHudEffect();
+    cLuxPlayerHudEffect(cLuxPlayer *apPlayer);
 
-	void AddDamageSplash(eLuxDamageType aType);
-	void Flash(const cColor& aColor, eGuiMaterial aFlashMaterial, float afInTime, float afOutTime);
+    ~cLuxPlayerHudEffect();
 
-	void OnDraw(float afFrameTime);
-	void Update(float afTimeStep);
-	void Reset();
-	
+    void AddDamageSplash(eLuxDamageType aType);
+
+    void Flash(const cColor &aColor, eGuiMaterial aFlashMaterial, float afInTime, float afOutTime);
+
+    void OnDraw(float afFrameTime);
+
+    void Update(float afTimeStep);
+
+    void Reset();
+
 private:
-	void DrawSplashes(float afFrameTime);
-	void UpdateSplashes(float afTimeStep);
+    void DrawSplashes(float afFrameTime);
 
-	void DrawFlash(float afFrameTime);
-	void UpdateFlash(float afTimeStep);
+    void UpdateSplashes(float afTimeStep);
 
-	void LoadDamageData(cLuxPlayerDamageData *apData, const tString& asName);
+    void DrawFlash(float afFrameTime);
 
-	std::vector<cLuxPlayerDamageData> mvDamageTypes;
-	cLuxPlayerHudEffect_SplashList mlstSplashes;
+    void UpdateFlash(float afTimeStep);
 
-	cGuiGfxElement *mpFlashGfx;
-	cColor mFlashColor;
-	eGuiMaterial mFlashMaterial;
-	float mfFlashAlphaSpeed;
-	float mfFlashAlphaOutSpeed;
-	float mfFlashAlpha;
-	bool mbFlashActive;
+    void LoadDamageData(cLuxPlayerDamageData *apData, const tString &asName);
+
+    std::vector <cLuxPlayerDamageData> mvDamageTypes;
+    cLuxPlayerHudEffect_SplashList mlstSplashes;
+
+    cGuiGfxElement *mpFlashGfx;
+    cColor mFlashColor;
+    eGuiMaterial mFlashMaterial;
+    float mfFlashAlphaSpeed;
+    float mfFlashAlphaOutSpeed;
+    float mfFlashAlpha;
+    bool mbFlashActive;
 };
 
 
 //----------------------------------------------
 
-class cLuxPlayerLightLevel : public iLuxPlayerHelper
-{
-public:	
-	cLuxPlayerLightLevel(cLuxPlayer *apPlayer);
-	~cLuxPlayerLightLevel();
-	
-	void OnStart();
-	void Update(float afTimeStep);
-	void Reset();
+class cLuxPlayerLightLevel : public iLuxPlayerHelper {
+public:
+    cLuxPlayerLightLevel(cLuxPlayer *apPlayer);
 
-	void OnMapEnter(cLuxMap *apMap);
+    ~cLuxPlayerLightLevel();
 
-	float GetExtendedLightLevel(){ return mfExtendedLightLevel;}
-	float GetNormalLightLevel(){ return mfNormalLightLevel;}
+    void OnStart();
+
+    void Update(float afTimeStep);
+
+    void Reset();
+
+    void OnMapEnter(cLuxMap *apMap);
+
+    float GetExtendedLightLevel() { return mfExtendedLightLevel; }
+
+    float GetNormalLightLevel() { return mfNormalLightLevel; }
 
 private:
-	float mfExtendedLightLevel;	//Uses longer range on point lights
-	float mfNormalLightLevel;	//Uses normal radius
-	float mfUpdateCount;
+    float mfExtendedLightLevel;    //Uses longer range on point lights
+    float mfNormalLightLevel;    //Uses normal radius
+    float mfUpdateCount;
 
-	float mfRadiusAdd;
+    float mfRadiusAdd;
 };
 
 //----------------------------------------------
 
-class cLuxPlayerInDarkness : public iLuxPlayerHelper
-{
-friend class cLuxPlayer_SaveData;
-public:	
-	cLuxPlayerInDarkness(cLuxPlayer *apPlayer);
-	~cLuxPlayerInDarkness();
+class cLuxPlayerInDarkness : public iLuxPlayerHelper {
+    friend class cLuxPlayer_SaveData;
 
-	void OnStart();
-	void Update(float afTimeStep);
-	void Reset();
+public:
+    cLuxPlayerInDarkness(cLuxPlayer *apPlayer);
 
-	void OnMapEnter(cLuxMap *apMap);
-	void OnMapLeave(cLuxMap *apMap);
+    ~cLuxPlayerInDarkness();
 
-	void CreateWorldEntities(cLuxMap *apMap);
-	void DestroyWorldEntities(cLuxMap *apMap);
+    void OnStart();
 
-	cLightPoint* GetAmbientLight(){ return mpAmbientLight;}
+    void Update(float afTimeStep);
 
-	bool InDarkness();
+    void Reset();
 
-	void SetActive(bool abX);
+    void OnMapEnter(cLuxMap *apMap);
+
+    void OnMapLeave(cLuxMap *apMap);
+
+    void CreateWorldEntities(cLuxMap *apMap);
+
+    void DestroyWorldEntities(cLuxMap *apMap);
+
+    cLightPoint *GetAmbientLight() { return mpAmbientLight; }
+
+    bool InDarkness();
+
+    void SetActive(bool abX);
 
 private:
-	cSoundHandler *mpSoundHandler;
+    cSoundHandler *mpSoundHandler;
 
-	float mfMinDarknessLightLevel;
-	
-	float mfAmbientLightMinLightLevel;
-	float mfAmbientLightRadius;
-	float mfAmbientLightIntensity;
-	float mfAmbientLightFadeInTime;
-	float mfAmbientLightFadeOutTime;
-	cColor mAmbientLightColor;
+    float mfMinDarknessLightLevel;
 
-	tString msLoopSoundFile;
-	float mfLoopSoundVolume;
-	float mfLoopSoundStartupTime;
-	float mfLoopSoundFadeInSpeed;
-	float mfLoopSoundFadeOutSpeed;
+    float mfAmbientLightMinLightLevel;
+    float mfAmbientLightRadius;
+    float mfAmbientLightIntensity;
+    float mfAmbientLightFadeInTime;
+    float mfAmbientLightFadeOutTime;
+    cColor mAmbientLightColor;
 
-	float mfSanityLossPerSecond;
-	float mfSanityLossMul;
+    tString msLoopSoundFile;
+    float mfLoopSoundVolume;
+    float mfLoopSoundStartupTime;
+    float mfLoopSoundFadeInSpeed;
+    float mfLoopSoundFadeOutSpeed;
 
-	bool mbInDarkness;
-	float mfShowHintTimer;
+    float mfSanityLossPerSecond;
+    float mfSanityLossMul;
 
-	cSoundEntry *mpLoopSound;
-	float mfLoopSoundCount;
+    bool mbInDarkness;
+    float mfShowHintTimer;
 
-	cLightPoint *mpAmbientLight;
-	bool mbAmbientLightIsOn;
+    cSoundEntry *mpLoopSound;
+    float mfLoopSoundCount;
 
-	bool mbActive;
+    cLightPoint *mpAmbientLight;
+    bool mbAmbientLightIsOn;
+
+    bool mbActive;
 };
 
 //----------------------------------------------

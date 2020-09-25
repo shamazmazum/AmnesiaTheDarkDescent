@@ -67,7 +67,7 @@ void iLuxPlayerState_InteractRotateBase::OnEnterState(eLuxPlayerState aPrevState
 
 	/////////////////////////////////
 	//Clear smoothing
-	if(gpBase->mpInputHandler->GetSmoothMouse()==false)
+	if(!gpBase->mpInputHandler->GetSmoothMouse())
 		gpBase->mpInputHandler->ResetSmoothMousePos();
 
 	/////////////////////////////////
@@ -287,7 +287,7 @@ bool iLuxPlayerState_InteractRotateBase::OnDoAction(eLuxPlayerAction aAction,boo
 	if(aAction == eLuxPlayerAction_Interact)
 	{
 		// Released
-		if(abPressed==false)
+		if(!abPressed)
 		{
 			mpPlayer->ChangeState(mPreviousState);
 

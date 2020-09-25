@@ -26,14 +26,14 @@
 
 namespace hpl {
 
-	class cNodeState
-	{
-	public:
-		cNodeState(const tString& asName);
-		~cNodeState();
-		
-	private:
-	};
+    class cNodeState {
+    public:
+        cNodeState(const tString &asName);
 
-};
+        ~cNodeState();
+
+    private:
+    };
+
+}
 #endif // HPL_NODE_STATE_H

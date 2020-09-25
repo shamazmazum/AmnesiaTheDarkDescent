@@ -63,5 +63,5 @@ namespace hpl {
 		iLowLevelGraphics *mpLowLevelGraphics;
 	};
 
-};
+}
 #endif // HPL_MESH_LOADER_H

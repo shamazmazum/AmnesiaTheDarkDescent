@@ -67,5 +67,5 @@ namespace hpl {
 		cResources *mpResources;
 	};
 
-};
+}
 #endif // HPL_ENT_FILE_MANAGER_H

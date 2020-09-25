@@ -32,84 +32,104 @@
 
 namespace hpl {
 
-	class cLowLevelInputSDL;
-	
-	class cGamepadSDL : public iGamepad
-	{
-	public:
-		cGamepadSDL(cLowLevelInputSDL *apLowLevelInputSDL, int alIndex);
+    class cLowLevelInputSDL;
 
-		tString GetGamepadName() { return msGamepadName; }
+    class cGamepadSDL : public iGamepad {
+    public:
+        cGamepadSDL(cLowLevelInputSDL *apLowLevelInputSDL, int alIndex);
 
-		int GetNumButtons();
-		int GetNumAxes();
-		int GetNumHats();
-		int GetNumBalls();
+        tString GetGamepadName() { return msGamepadName; }
 
-		void Update();
+        int GetNumButtons();
 
-		//Gamepad specific
-		bool HasInputUpdates();
-		cGamepadInputData GetInputUpdate();
-		
-		bool ButtonIsDown(eGamepadButton aButton);
-		cGamepadInputData GetButton();
-		bool ButtonIsPressed();
-		bool ButtonIsReleased();
-		cGamepadInputData GetReleasedButton();
+        int GetNumAxes();
 
-		float GetAxisValue(eGamepadAxis aAxis);
-		float GetAxisDeadZoneRadiusValue();
-		void SetAxisDeadZoneRadiusValue(float afValue);
-		bool AxesUpdated();
-		cGamepadInputData GetUpdatedAxis();
+        int GetNumHats();
 
-		eGamepadHatState GetHatCurrentState(eGamepadHat aHat);
-		bool HatIsInState(eGamepadHat aHat, eGamepadHatState aState);
-		bool HatsChanged();
-		cGamepadInputData GetHatState();
+        int GetNumBalls();
 
-		cVector2l GetBallAbsPos(eGamepadBall aBall);
-		cVector2l GetBallRelPos(eGamepadBall aBall);
+        void Update();
 
-	private:
-		eGamepadButton		SDLToButton(Uint8 alButton);
-		eGamepadAxis		SDLToAxis(Uint8 alAxis);
-		float				SDLToAxisValue(Sint16 alAxisValue);
-		eGamepadHat			SDLToHat(Uint8 alHat);
-		eGamepadHatState	SDLToHatState(Uint8 alHat);
-		eGamepadBall		SDLToBall(Uint8 alBall);
+        //Gamepad specific
+        bool HasInputUpdates();
+
+        cGamepadInputData GetInputUpdate();
+
+        bool ButtonIsDown(eGamepadButton aButton);
+
+        cGamepadInputData GetButton();
+
+        bool ButtonIsPressed();
+
+        bool ButtonIsReleased();
+
+        cGamepadInputData GetReleasedButton();
+
+        float GetAxisValue(eGamepadAxis aAxis);
+
+        float GetAxisDeadZoneRadiusValue();
+
+        void SetAxisDeadZoneRadiusValue(float afValue);
+
+        bool AxesUpdated();
+
+        cGamepadInputData GetUpdatedAxis();
+
+        eGamepadHatState GetHatCurrentState(eGamepadHat aHat);
+
+        bool HatIsInState(eGamepadHat aHat, eGamepadHatState aState);
+
+        bool HatsChanged();
+
+        cGamepadInputData GetHatState();
+
+        cVector2l GetBallAbsPos(eGamepadBall aBall);
+
+        cVector2l GetBallRelPos(eGamepadBall aBall);
+
+    private:
+        eGamepadButton SDLToButton(Uint8 alButton);
+
+        eGamepadAxis SDLToAxis(Uint8 alAxis);
+
+        float SDLToAxisValue(Sint16 alAxisValue);
+
+        eGamepadHat SDLToHat(Uint8 alHat);
+
+        eGamepadHatState SDLToHatState(Uint8 alHat);
+
+        eGamepadBall SDLToBall(Uint8 alBall);
         //void ClearKeyList();
-		//eKey AsciiToKey(int alChar);
+        //eKey AsciiToKey(int alChar);
 
-		//void AddKeyToList(int alSDLMod, eKey aKey, int alUnicode, std::list<cKeyPress>& alstKeys);
+        //void AddKeyToList(int alSDLMod, eKey aKey, int alUnicode, std::list<cKeyPress>& alstKeys);
 
-		tString msGamepadName;
+        tString msGamepadName;
 
-		std::vector<float>				mvAxisArray;
-		std::vector<eGamepadAxisRange>	mvAxisRange;
-		std::vector<bool>				mvButtonArray;
-		std::vector<eGamepadHatState>	mvHatArray;
-		std::vector<cVector2l>			mvBallAbsPosArray;
-		std::vector<cVector2l>			mvBallRelPosArray;
+        std::vector<float> mvAxisArray;
+        std::vector <eGamepadAxisRange> mvAxisRange;
+        std::vector<bool> mvButtonArray;
+        std::vector <eGamepadHatState> mvHatArray;
+        std::vector <cVector2l> mvBallAbsPosArray;
+        std::vector <cVector2l> mvBallRelPosArray;
 
-		std::list<cGamepadInputData> mlstInputUpdates;
+        std::list <cGamepadInputData> mlstInputUpdates;
 
-		std::list<cGamepadInputData> mlstButtonsPressed;
-		std::list<cGamepadInputData> mlstButtonsReleased;
+        std::list <cGamepadInputData> mlstButtonsPressed;
+        std::list <cGamepadInputData> mlstButtonsReleased;
 
-		std::list<cGamepadInputData> mlstAxisChanges;
+        std::list <cGamepadInputData> mlstAxisChanges;
 
-		std::list<cGamepadInputData> mlstHatStateChanges;
+        std::list <cGamepadInputData> mlstHatStateChanges;
 
-		SDL_Joystick		*mpHandle;
-		cLowLevelInputSDL	*mpLowLevelInputSDL;
+        SDL_Joystick *mpHandle;
+        cLowLevelInputSDL *mpLowLevelInputSDL;
 
-		static float mfInvAxisMax;
-		static float mfDeadZoneRadius;
-	};
+        static float mfInvAxisMax;
+        static float mfDeadZoneRadius;
+    };
 
-};
+}
 
 #endif // USE_SDL2
 

@@ -24,102 +24,117 @@
 
 namespace hpl {
 
-	class cGuiSkinFont;
+    class cGuiSkinFont;
 
-	class cWidgetButton;
+    class cWidgetButton;
 
-	//---------------------------------------------
+    //---------------------------------------------
 
-	class cWidgetSlider : public iWidget
-	{
-	public:
-		cWidgetSlider(cGuiSet *apSet, cGuiSkin *apSkin, eWidgetSliderOrientation aOrientation);
-		virtual ~cWidgetSlider();
+    class cWidgetSlider : public iWidget {
+    public:
+        cWidgetSlider(cGuiSet *apSet, cGuiSkin *apSkin, eWidgetSliderOrientation aOrientation);
 
-		int GetValue(){ return mlValue;}
-		void SetValue(int alValue, bool abGenCallback=true);
-		
-		int GetMaxValue(){ return mlMaxValue;}
-		void SetMaxValue(int alMax);
-		
-		int GetButtonValueAdd(){ return mlButtonValueAdd; }
-		void SetButtonValueAdd(int alAdd);
+        virtual ~cWidgetSlider();
 
-		int GetBarClickValueAdd() { return mlBarClickValueAdd; }
-		void SetBarClickValueAdd(int alAdd);
+        int GetValue() { return mlValue; }
 
-		int GetBarValueSize(){ return mlBarValueSize;}
-		void SetBarValueSize(int alSize);
+        void SetValue(int alValue, bool abGenCallback = true);
 
-		float GetButtonSize() const{return mfButtonSize;}
+        int GetMaxValue() { return mlMaxValue; }
 
-	protected:
-		/////////////////////////
-		// Own functions
-		void UpdateBarProperties();
+        void SetMaxValue(int alMax);
 
-		bool ArrowButtonDown(iWidget* apWidget, const cGuiMessageData& aData);
-		kGuiCallbackDeclarationEnd(ArrowButtonDown);		
+        int GetButtonValueAdd() { return mlButtonValueAdd; }
 
-		/////////////////////////
-		// Implemented functions
-		void OnInit();
-		void OnLoadGraphics();
-		void OnChangeSize();
-		void OnChangePosition();
+        void SetButtonValueAdd(int alAdd);
 
-		
-		void OnDraw(float afTimeStep, cGuiClipRegion *apClipRegion);
+        int GetBarClickValueAdd() { return mlBarClickValueAdd; }
 
-		bool OnMouseMove(const cGuiMessageData& aData);
-		bool OnMouseDown(const cGuiMessageData& aData);
-		bool OnMouseUp(const cGuiMessageData& aData);
-		bool OnMouseEnter(const cGuiMessageData& aData);
-		bool OnMouseLeave(const cGuiMessageData& aData);
+        void SetBarClickValueAdd(int alAdd);
 
-		bool OnMouseDoubleClick(const cGuiMessageData& aData);
+        int GetBarValueSize() { return mlBarValueSize; }
 
-		bool OnLostFocus(const cGuiMessageData& aData);
+        void SetBarValueSize(int alSize);
 
-		bool OnUIArrowPress(const cGuiMessageData& aData);
-		bool OnUIArrowRelease(const cGuiMessageData& aData);
+        float GetButtonSize() const { return mfButtonSize; }
 
-		bool OnUIButtonPress(const cGuiMessageData& aData);
-		bool OnUIButtonRelease(const cGuiMessageData& aData);
+    protected:
+        /////////////////////////
+        // Own functions
+        void UpdateBarProperties();
 
-		/////////////////////////
-		// Data
-		eWidgetSliderOrientation mOrientation;
+        bool ArrowButtonDown(iWidget *apWidget, const cGuiMessageData &aData);
 
-		bool mbPressed;
+        kGuiCallbackDeclarationEnd(ArrowButtonDown);
 
-		float mfButtonSize;
+        /////////////////////////
+        // Implemented functions
+        void OnInit();
 
-		int mlValue;
-		int mlMaxValue;
-		int mlButtonValueAdd;
-		int mlBarClickValueAdd;
-		int mlBarValueSize; //This is how big the bar is compared to the max value of the slider
-		float mfValueStep;
+        void OnLoadGraphics();
 
-		cVector3f mvBarPos;
-		cVector2f mvBarSize;
-		float mfSliderSize;
-		cRect2f mBarRect;
-		float mfMaxPos;
-		float mfMinPos;
+        void OnChangeSize();
 
-		cVector2f mvRelMousePos;
+        void OnChangePosition();
 
-		cWidgetButton* mvButtons[2];
 
-		cGuiGfxElement *mpGfxButtonBackground;
-		cGuiGfxElement *mvGfxBorders[4];
-		cGuiGfxElement *mvGfxCorners[4];
+        void OnDraw(float afTimeStep, cGuiClipRegion *apClipRegion);
 
-		cGuiGfxElement *mvGfxArrow[2];
-		cGuiGfxElement *mpGfxBackground;
-	};
+        bool OnMouseMove(const cGuiMessageData &aData);
 
-};
+        bool OnMouseDown(const cGuiMessageData &aData);
+
+        bool OnMouseUp(const cGuiMessageData &aData);
+
+        bool OnMouseEnter(const cGuiMessageData &aData);
+
+        bool OnMouseLeave(const cGuiMessageData &aData);
+
+        bool OnMouseDoubleClick(const cGuiMessageData &aData);
+
+        bool OnLostFocus(const cGuiMessageData &aData);
+
+        bool OnUIArrowPress(const cGuiMessageData &aData);
+
+        bool OnUIArrowRelease(const cGuiMessageData &aData);
+
+        bool OnUIButtonPress(const cGuiMessageData &aData);
+
+        bool OnUIButtonRelease(const cGuiMessageData &aData);
+
+        /////////////////////////
+        // Data
+        eWidgetSliderOrientation mOrientation;
+
+        bool mbPressed;
+
+        float mfButtonSize;
+
+        int mlValue;
+        int mlMaxValue;
+        int mlButtonValueAdd;
+        int mlBarClickValueAdd;
+        int mlBarValueSize; //This is how big the bar is compared to the max value of the slider
+        float mfValueStep;
+
+        cVector3f mvBarPos;
+        cVector2f mvBarSize;
+        float mfSliderSize;
+        cRect2f mBarRect;
+        float mfMaxPos;
+        float mfMinPos;
+
+        cVector2f mvRelMousePos;
+
+        cWidgetButton *mvButtons[2];
+
+        cGuiGfxElement *mpGfxButtonBackground;
+        cGuiGfxElement *mvGfxBorders[4];
+        cGuiGfxElement *mvGfxCorners[4];
+
+        cGuiGfxElement *mvGfxArrow[2];
+        cGuiGfxElement *mpGfxBackground;
+    };
+
+}
 #endif // HPL_WIDGET_SLIDER_H

@@ -24,73 +24,82 @@
 
 namespace hpl {
 
-	class cGuiSkinFont;
+    class cGuiSkinFont;
 
-	class cWidgetButton : public iWidget
-	{
-	public:
-		cWidgetButton(cGuiSet *apSet, cGuiSkin *apSkin);
-		virtual ~cWidgetButton();
+    class cWidgetButton : public iWidget {
+    public:
+        cWidgetButton(cGuiSet *apSet, cGuiSkin *apSkin);
 
-		void SetImage(cGuiGfxElement *apImage, bool abDestroyImage=true);
-		cGuiGfxElement *GetImage(){return mpImage;}
+        virtual ~cWidgetButton();
 
-		void SetRepeatActive(bool abX) { mbRepeatActive = abX; }
-		bool GetRepeatActive() { return mbRepeatActive; }
-		
-		void SetRepeatFreq(float afFreq);
-		
-		void SetToggleable(bool abX) { mbToggleable = abX; }
-		bool IsToggleable() { return mbToggleable; }
+        void SetImage(cGuiGfxElement *apImage, bool abDestroyImage = true);
 
-		void SetPressed(bool abX, bool abGenCallback=true);
-		bool IsPressed() { return mbPressed; }
-		
-	protected:
-		/////////////////////////
-		// Implemented functions
-		void OnLoadGraphics();
-		
-		void OnDraw(float afTimeStep, cGuiClipRegion *apClipRegion);
+        cGuiGfxElement *GetImage() { return mpImage; }
 
-		void OnUpdate(float afTimeStep);
+        void SetRepeatActive(bool abX) { mbRepeatActive = abX; }
 
-		bool OnMouseMove(const cGuiMessageData& aData);
-		bool OnMouseDown(const cGuiMessageData& aData);
-		bool OnMouseUp(const cGuiMessageData& aData);
-		bool OnMouseEnter(const cGuiMessageData& aData);
-		bool OnMouseLeave(const cGuiMessageData& aData);
+        bool GetRepeatActive() { return mbRepeatActive; }
 
-		bool OnMouseDoubleClick(const cGuiMessageData& aData) { return true; }
+        void SetRepeatFreq(float afFreq);
 
-		bool OnLostFocus(const cGuiMessageData& aData);
+        void SetToggleable(bool abX) { mbToggleable = abX; }
 
-		bool OnUIButtonPress(const cGuiMessageData& aData);
-		bool OnUIButtonRelease(const cGuiMessageData& aData);
+        bool IsToggleable() { return mbToggleable; }
 
-		/////////////////////////
-		// Data
-		bool mbPressed;
+        void SetPressed(bool abX, bool abGenCallback = true);
 
-		bool mbToggleable;
+        bool IsPressed() { return mbPressed; }
 
-		cGuiGfxElement *mpImage;
-		bool mbDestroyImage;
+    protected:
+        /////////////////////////
+        // Implemented functions
+        void OnLoadGraphics();
 
-		float mfTimer;
-		bool mbRepeatActive;
-		float mfRepeatPeriod;
-		int mlRepeatTimes;
-		cGuiMessageData mPressedData;
+        void OnDraw(float afTimeStep, cGuiClipRegion *apClipRegion);
 
-		cGuiGfxElement *mpGfxBackgroundUp;
-		cGuiGfxElement *mvGfxBordersUp[4];
-		cGuiGfxElement *mvGfxCornersUp[4];
+        void OnUpdate(float afTimeStep);
 
-		cGuiGfxElement *mpGfxBackgroundDown;
-		cGuiGfxElement *mvGfxBordersDown[4];
-		cGuiGfxElement *mvGfxCornersDown[4];
-	};
+        bool OnMouseMove(const cGuiMessageData &aData);
 
-};
+        bool OnMouseDown(const cGuiMessageData &aData);
+
+        bool OnMouseUp(const cGuiMessageData &aData);
+
+        bool OnMouseEnter(const cGuiMessageData &aData);
+
+        bool OnMouseLeave(const cGuiMessageData &aData);
+
+        bool OnMouseDoubleClick(const cGuiMessageData &aData) { return true; }
+
+        bool OnLostFocus(const cGuiMessageData &aData);
+
+        bool OnUIButtonPress(const cGuiMessageData &aData);
+
+        bool OnUIButtonRelease(const cGuiMessageData &aData);
+
+        /////////////////////////
+        // Data
+        bool mbPressed;
+
+        bool mbToggleable;
+
+        cGuiGfxElement *mpImage;
+        bool mbDestroyImage;
+
+        float mfTimer;
+        bool mbRepeatActive;
+        float mfRepeatPeriod;
+        int mlRepeatTimes;
+        cGuiMessageData mPressedData;
+
+        cGuiGfxElement *mpGfxBackgroundUp;
+        cGuiGfxElement *mvGfxBordersUp[4];
+        cGuiGfxElement *mvGfxCornersUp[4];
+
+        cGuiGfxElement *mpGfxBackgroundDown;
+        cGuiGfxElement *mvGfxBordersDown[4];
+        cGuiGfxElement *mvGfxCornersDown[4];
+    };
+
+}
 #endif // HPL_WIDGET_BUTTON_H

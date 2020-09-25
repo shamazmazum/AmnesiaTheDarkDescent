@@ -60,5 +60,5 @@ namespace hpl {
 		bool mbUseFastloadMaterial;
 	};
 
-};
+}
 #endif // HPL_MESH_MANAGER_H

@@ -266,7 +266,7 @@ void cLuxMessageHandler::SetPauseMessageActive(bool abX)
 
 	mbPauseMessageActive = abX;
 
-	gpBase->mpMapHandler->SetUpdateActive(mbPauseMessageActive? false : true);
+	gpBase->mpMapHandler->SetUpdateActive(!mbPauseMessageActive);
 }
 
 //-----------------------------------------------------------------------

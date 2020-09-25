@@ -26,47 +26,48 @@
 
 namespace hpl {
 
-	class cWidgetMainMenu : public iWidgetMenu
-	{
-	public:
-		cWidgetMainMenu(cGuiSet *apSet, cGuiSkin *apSkin);
-		~cWidgetMainMenu();
+    class cWidgetMainMenu : public iWidgetMenu {
+    public:
+        cWidgetMainMenu(cGuiSet *apSet, cGuiSkin *apSkin);
 
-		//////////////////////////////
-		// Implemented iWidgetMenu functions
-		void Hide();
+        ~cWidgetMainMenu();
 
-	protected:
+        //////////////////////////////
+        // Implemented iWidgetMenu functions
+        void Hide();
 
-		//////////////////////////////
-		// Implemented iWidgetMenu functions
+    protected:
 
-		void UpdateMenuItemsPos(cWidgetMenuItem* apNewItem);
-		void UpdateMenuItemsSize(cWidgetMenuItem* apNewItem);
+        //////////////////////////////
+        // Implemented iWidgetMenu functions
 
-		void OnChildMenuHide();
+        void UpdateMenuItemsPos(cWidgetMenuItem *apNewItem);
 
-		//////////////////////////////
-		// Implemented iWidget functions
-		void OnDraw(float afTimeStep, cGuiClipRegion *apClipRegion);
+        void UpdateMenuItemsSize(cWidgetMenuItem *apNewItem);
 
-		void OnUpdate(float afTimeStep);
+        void OnChildMenuHide();
 
-		void OnInit();
+        //////////////////////////////
+        // Implemented iWidget functions
+        void OnDraw(float afTimeStep, cGuiClipRegion *apClipRegion);
 
-		void OnLoadGraphics();
+        void OnUpdate(float afTimeStep);
 
-		/////////////////////////////
-		// Data
+        void OnInit();
 
-		float mfItemSeparation;
-		float mfItemVPadding;
-		float mfItemTextPadding;
+        void OnLoadGraphics();
 
-		cGuiGfxElement* mpGfxBackground;
-		
-	};
-};
+        /////////////////////////////
+        // Data
+
+        float mfItemSeparation;
+        float mfItemVPadding;
+        float mfItemTextPadding;
+
+        cGuiGfxElement *mpGfxBackground;
+
+    };
+}
 
 #endif // HPL_WIDGET_MAIN_MENU
 

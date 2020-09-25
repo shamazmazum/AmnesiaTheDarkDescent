@@ -51,7 +51,7 @@ namespace hpl {
 		cResources *mpResources;
 	};
 
-};
+}
 #endif // HPL_TEXTURE_CREATOR_H
 
 

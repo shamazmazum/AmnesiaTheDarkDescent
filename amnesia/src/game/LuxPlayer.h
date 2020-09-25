@@ -27,438 +27,548 @@
 //----------------------------------------------
 
 class iLuxMoveState;
+
 class iLuxPlayerState;
 
 class cLuxPlayerLightLevel;
+
 class cLuxPlayerInDarkness;
+
 class cLuxPlayerHudEffect;
+
 class cLuxPlayerLean;
+
 class cLuxPlayerDeath;
+
 class cLuxPlayerLantern;
+
 class cLuxPlayerSanity;
+
 class cLuxPlayerLookAt;
+
 class cLuxPlayerFlashback;
+
 class cLuxPlayerHurt;
+
 class cLuxPlayerSpawnPS;
+
 class cLuxPlayerCamDirEffects;
+
 class cLuxPlayerInsanityCollapse;
+
 class cLuxNode_PlayerStart;
 
 class cLuxPlayerHands;
 
 //----------------------------------------------
 
-enum eLuxFocusIconStyle
-{
-	eLuxFocusIconStyle_Default,
-	eLuxFocusIconStyle_Simple,
+enum eLuxFocusIconStyle {
+    eLuxFocusIconStyle_Default,
+    eLuxFocusIconStyle_Simple,
 
-	eFocusIconStyle_LastEnum,
+    eFocusIconStyle_LastEnum,
 };
 
 //----------------------------------------------
 
-class cLuxPlayer : public iLuxUpdateable, public iLuxCollideCallbackContainer
-{
-friend class cLuxPlayer_SaveData;
-friend class cLuxHelpFuncs;
-public:	
-	cLuxPlayer();
-	~cLuxPlayer();
-	
-	///////////////////
-	//Main callbacks
-	void LoadFonts();
-	void OnStart();
-	void Update(float afTimeStep);
-	void PostUpdate(float afTimeStep);
-	void Reset();
-	void OnDraw(float afFrameTime);
+class cLuxPlayer : public iLuxUpdateable, public iLuxCollideCallbackContainer {
+    friend class cLuxPlayer_SaveData;
 
-	void LoadUserConfig();
-	void SaveUserConfig();
+    friend class cLuxHelpFuncs;
 
-	void OnMapEnter(cLuxMap *apMap);
-	void OnMapLeave(cLuxMap *apMap);
+public:
+    cLuxPlayer();
 
-	void CreateWorldEntities(cLuxMap *apMap);
-	void DestroyWorldEntities(cLuxMap *apMap);
+    ~cLuxPlayer();
 
-	void OnEnterContainer(const tString& asOldContainer);
-	void OnLeaveContainer(const tString& asNewContainer);
-	
-	void RenderSolid(cRendererCallbackFunctions* apFunctions);
-	void RenderTrans(cRendererCallbackFunctions* apFunctions);
+    ///////////////////
+    //Main callbacks
+    void LoadFonts();
 
-	////////////////////
-	// Actions
-	void GiveDamage(float afAmount, int alStrength, eLuxDamageType aType, bool abSpinHead, bool abLethal);
-	
-	void GiveSanityDamage(float afAmount);
-	void LowerSanity(float afAmount, bool abUseEffect);
+    void OnStart();
 
-	void Move(eCharDir aDir, float afMul);
-	void AddYaw(float afAmount);
-	void AddPitch(float afAmount);
-	void SetLean(float afMul);
-	void AddLean(float afAdd);
-	
-	void Scroll(float afAmount);
-	
-	void DoAction(eLuxPlayerAction aAction, bool abPressed);
-	
-	void Run(bool abPressed);
-	void Jump(bool abPressed);
-	void Crouch(bool abPressed);
-	
-	void ChangeState(eLuxPlayerState aState);
-	eLuxPlayerState GetCurrentState(){ return mState;}
-	iLuxPlayerState* GetStateData(eLuxPlayerState aState){ return mvStates[aState];}
-	iLuxPlayerState* GetCurrentStateData(){ return mvStates[mState];}
+    void Update(float afTimeStep);
 
-	void ChangeMoveState(eLuxMoveState aState);
-	eLuxMoveState GetCurrentMoveState(){ return mMoveState;}
-	iLuxMoveState* GetMoveStateData(eLuxMoveState aState){ return mvMoveStates[aState];}
-	iLuxMoveState* GetCurrentMoveStateData(){ return mvMoveStates[mMoveState];}
-	
-	void MoveHeadPosAdd(eLuxHeadPosAdd aType, const cVector3f& avGoal, float afSpeed, float afSlowdownDist);
+    void PostUpdate(float afTimeStep);
 
-	void PlaceAtStartNode(cLuxNode_PlayerStart *apNode);
+    void Reset();
 
-	////////////////////
-	// Data
-	cCamera* GetCamera(){ return mpCamera;}
-	iCharacterBody* GetCharacterBody(){ return mpCharBody; }
+    void OnDraw(float afFrameTime);
 
-	////////////////////
-	// Variables Properties
-	void SetHeadPosAdd(eLuxHeadPosAdd aType, const cVector3f& avVector);
-	const cVector3f& GetHeadPosAdd(eLuxHeadPosAdd aType);
-	const cVector3f& GetHeadPosAddSum(){ return mvHeadPosAddSum; }
+    void LoadUserConfig();
 
-	////////////////////
-	// Properties
-	void SetActive(bool abX);
-	bool IsActive(){ return mbActive;}
+    void SaveUserConfig();
 
-	void SetUsePermaDeath(bool abX){mbUsePermaDeath = abX;}
-	bool UsePermaDeath(){ return mbUsePermaDeath;}
+    void OnMapEnter(cLuxMap *apMap);
 
-	void SetCurrentPermaDeathSound(const tString& asSound){ msCurrentPermaDeathSound = asSound;}
-	const tString& GetCurrentPermaDeathSound(){ return msCurrentPermaDeathSound;}
+    void OnMapLeave(cLuxMap *apMap);
 
-	void SetHealth(float afX);
-	void SetSanity(float afX);
-	void SetLampOil(float afX);
+    void CreateWorldEntities(cLuxMap *apMap);
 
-	void AddHealth(float afX);
-	void AddSanity(float afX, bool abShowEffect=true);
-	void AddLampOil(float afX);
+    void DestroyWorldEntities(cLuxMap *apMap);
 
-	float GetHealth(){ return mfHealth; }
-	float GetSanity(){ return mfSanity; }
-	float GetLampOil(){ return mfLampOil; }
+    void OnEnterContainer(const tString &asOldContainer);
 
-	float GetTerror(){ return mfTerror; }
-	
-	void SetTerror(float afX){ mfTerror=afX; }
-	void AddTerrorEnemy(iLuxEnemy *apEnemy);
-	void RemoveTerrorEnemy(iLuxEnemy *apEnemy);
-	void ClearTerrorEnemies();
-	void StopTerrorSound();
+    void OnLeaveContainer(const tString &asNewContainer);
 
-	int GetBodyNum(){ return 1;}
-	iPhysicsBody* GetBody(int alIdx){ return mpCharBody->GetCurrentBody();};
+    void RenderSolid(cRendererCallbackFunctions *apFunctions);
 
-	bool IsInWater(){ return mbIsInWater;}
-	void SetIsInWater(bool abX){ mbIsInWater = abX;}
-	void SetWaterStepSound(const tString& asStepSound){ msWaterStepSound = asStepSound; }
-	const tString& GetWaterStepSound(){ return msWaterStepSound; }
-	void SetWaterSpeedMul(float afX){ mfWaterSpeedMul = afX;}
-	float GetWaterSpeedMul(){ return mfWaterSpeedMul;}
+    void RenderTrans(cRendererCallbackFunctions *apFunctions);
 
-	void SetLookSpeedMul(float afX){ mfLookSpeedMul = afX;}
-	float GetLookSpeedMul() { return mfLookSpeedMul;}
+    ////////////////////
+    // Actions
+    void GiveDamage(float afAmount, int alStrength, eLuxDamageType aType, bool abSpinHead, bool abLethal);
 
-	void SetFocusText(const tWString &asText);
+    void GiveSanityDamage(float afAmount);
 
-	int GetCoins(){ return mlCoins;}
-	void SetCoins(int alX){ mlCoins = alX;}
-	void AddCoins(int alX);
+    void LowerSanity(float afAmount, bool abUseEffect);
 
-	int GetTinderboxes(){ return mlTinderboxes;}
-	void SetTinderboxes(int alX){ mlTinderboxes = alX; }
-	void AddTinderboxes(int alX){ mlTinderboxes += alX; }
-	
-	bool IsDead(){ return mfHealth <=0;}
+    void Move(eCharDir aDir, float afMul);
 
-	float GetDefaultMass() {return mfDefaultMass;}
+    void AddYaw(float afAmount);
 
-	const cVector3f& GetCameraPosAdd() { return mvCameraPosAdd;}
+    void AddPitch(float afAmount);
 
-	const cVector3f& GetBodySize(){ return mvBodySize;}
-	const cVector3f& GetBodyCrouchSize(){ return mvBodyCrouchSize;}
-	
-	bool GetPressedMove(){ return mbPressedMove;}
-	bool IsPressingRun(){ return mbPressingRun;}
-	bool IsPressingJump(){ return mbPressingJump;}
+    void SetLean(float afMul);
 
-	void SetJumpDisabled(bool abX){ mbJumpDisabled = abX;}
-	bool GetJumpDisabled(){ return mbJumpDisabled;}
+    void AddLean(float afAdd);
 
-	void SetCrouchDisabled(bool abX){ mbCrouchDisabled = abX; }
-	bool GetCrouchDisabled() { return mbCrouchDisabled; }
+    void Scroll(float afAmount);
 
-	void SetSanityDrainDisabled(bool abX){ mbSanityDrainDisabled = abX;}
-	bool GetSanityDrainDisabled(){ return mbSanityDrainDisabled;}
+    void DoAction(eLuxPlayerAction aAction, bool abPressed);
 
-	float GetInteractionMoveSpeedMul(){ return mfInteractionMoveSpeedMul;}
-	void SetInteractionMoveSpeedMul(float afX){ mfInteractionMoveSpeedMul = afX;}
+    void Run(bool abPressed);
 
-	void SetEventMoveSpeedMul(float afX){ mfEventMoveSpeedMul = afX;}
-	void SetEventRunSpeedMul(float afX){ mfEventRunSpeedMul = afX;}
-	float GetEventMoveSpeedMul(){ return mfEventMoveSpeedMul;}
-	float GetEventRunSpeedMul(){ return mfEventRunSpeedMul;}
-	
-	void SetScriptMoveSpeedMul(float afX){ mfScriptMoveSpeedMul = afX;}
-	void SetScriptRunSpeedMul(float afX){ mfScriptRunSpeedMul = afX;}
-	float GetScriptMoveSpeedMul(){ return mfScriptMoveSpeedMul;}
-	float GetScriptRunSpeedMul(){ return mfScriptRunSpeedMul;}
+    void Jump(bool abPressed);
 
-	void SetHurtMoveSpeedMul(float afX){ mfHurtMoveSpeedMul = afX;}
-	float GetHurtMoveSpeedMul(){ return mfHurtMoveSpeedMul;}
+    void Crouch(bool abPressed);
 
-	void SetInsanityCollapseSpeedMul(float afX){ mfInsanityCollapseSpeedMul = afX;}
-	float GetInsanityCollapseSpeedMul(){ return mfInsanityCollapseSpeedMul;}
-	
-	void SetScriptJumpForceMul(float afX){ mfScriptJumpForceMul = afX;}
-	float GetScriptJumpForceMul(){ return mfScriptJumpForceMul;}
+    void ChangeState(eLuxPlayerState aState);
 
-	void SetCurrentFocusDistance(float afX){ mfCurrentFocusDistance = afX;}
-	
-	void SetEntityInFocus(iLuxEntity *apEntity){ mpEntityInFocus =apEntity;}
-	iLuxEntity* GetEntityInFocus(){ return mpEntityInFocus;}
+    eLuxPlayerState GetCurrentState() { return mState; }
+
+    iLuxPlayerState *GetStateData(eLuxPlayerState aState) { return mvStates[aState]; }
+
+    iLuxPlayerState *GetCurrentStateData() { return mvStates[mState]; }
+
+    void ChangeMoveState(eLuxMoveState aState);
+
+    eLuxMoveState GetCurrentMoveState() { return mMoveState; }
+
+    iLuxMoveState *GetMoveStateData(eLuxMoveState aState) { return mvMoveStates[aState]; }
+
+    iLuxMoveState *GetCurrentMoveStateData() { return mvMoveStates[mMoveState]; }
+
+    void MoveHeadPosAdd(eLuxHeadPosAdd aType, const cVector3f &avGoal, float afSpeed, float afSlowdownDist);
+
+    void PlaceAtStartNode(cLuxNode_PlayerStart *apNode);
+
+    ////////////////////
+    // Data
+    cCamera *GetCamera() { return mpCamera; }
+
+    iCharacterBody *GetCharacterBody() { return mpCharBody; }
+
+    ////////////////////
+    // Variables Properties
+    void SetHeadPosAdd(eLuxHeadPosAdd aType, const cVector3f &avVector);
+
+    const cVector3f &GetHeadPosAdd(eLuxHeadPosAdd aType);
+
+    const cVector3f &GetHeadPosAddSum() { return mvHeadPosAddSum; }
+
+    ////////////////////
+    // Properties
+    void SetActive(bool abX);
+
+    bool IsActive() { return mbActive; }
+
+    void SetUsePermaDeath(bool abX) { mbUsePermaDeath = abX; }
+
+    bool UsePermaDeath() { return mbUsePermaDeath; }
+
+    void SetCurrentPermaDeathSound(const tString &asSound) { msCurrentPermaDeathSound = asSound; }
+
+    const tString &GetCurrentPermaDeathSound() { return msCurrentPermaDeathSound; }
+
+    void SetHealth(float afX);
+
+    void SetSanity(float afX);
+
+    void SetLampOil(float afX);
+
+    void AddHealth(float afX);
+
+    void AddSanity(float afX, bool abShowEffect = true);
+
+    void AddLampOil(float afX);
+
+    float GetHealth() { return mfHealth; }
+
+    float GetSanity() { return mfSanity; }
+
+    float GetLampOil() { return mfLampOil; }
+
+    float GetTerror() { return mfTerror; }
+
+    void SetTerror(float afX) { mfTerror = afX; }
+
+    void AddTerrorEnemy(iLuxEnemy *apEnemy);
+
+    void RemoveTerrorEnemy(iLuxEnemy *apEnemy);
+
+    void ClearTerrorEnemies();
+
+    void StopTerrorSound();
+
+    int GetBodyNum() { return 1; }
+
+    iPhysicsBody *GetBody(int alIdx) { return mpCharBody->GetCurrentBody(); };
+
+    bool IsInWater() { return mbIsInWater; }
+
+    void SetIsInWater(bool abX) { mbIsInWater = abX; }
+
+    void SetWaterStepSound(const tString &asStepSound) { msWaterStepSound = asStepSound; }
+
+    const tString &GetWaterStepSound() { return msWaterStepSound; }
+
+    void SetWaterSpeedMul(float afX) { mfWaterSpeedMul = afX; }
+
+    float GetWaterSpeedMul() { return mfWaterSpeedMul; }
+
+    void SetLookSpeedMul(float afX) { mfLookSpeedMul = afX; }
+
+    float GetLookSpeedMul() { return mfLookSpeedMul; }
+
+    void SetFocusText(const tWString &asText);
+
+    int GetCoins() { return mlCoins; }
+
+    void SetCoins(int alX) { mlCoins = alX; }
+
+    void AddCoins(int alX);
+
+    int GetTinderboxes() { return mlTinderboxes; }
+
+    void SetTinderboxes(int alX) { mlTinderboxes = alX; }
+
+    void AddTinderboxes(int alX) { mlTinderboxes += alX; }
+
+    bool IsDead() { return mfHealth <= 0; }
+
+    float GetDefaultMass() { return mfDefaultMass; }
+
+    const cVector3f &GetCameraPosAdd() { return mvCameraPosAdd; }
+
+    const cVector3f &GetBodySize() { return mvBodySize; }
+
+    const cVector3f &GetBodyCrouchSize() { return mvBodyCrouchSize; }
+
+    bool GetPressedMove() { return mbPressedMove; }
+
+    bool IsPressingRun() { return mbPressingRun; }
+
+    bool IsPressingJump() { return mbPressingJump; }
+
+    void SetJumpDisabled(bool abX) { mbJumpDisabled = abX; }
+
+    bool GetJumpDisabled() { return mbJumpDisabled; }
+
+    void SetCrouchDisabled(bool abX) { mbCrouchDisabled = abX; }
+
+    bool GetCrouchDisabled() { return mbCrouchDisabled; }
+
+    void SetSanityDrainDisabled(bool abX) { mbSanityDrainDisabled = abX; }
+
+    bool GetSanityDrainDisabled() { return mbSanityDrainDisabled; }
+
+    float GetInteractionMoveSpeedMul() { return mfInteractionMoveSpeedMul; }
+
+    void SetInteractionMoveSpeedMul(float afX) { mfInteractionMoveSpeedMul = afX; }
+
+    void SetEventMoveSpeedMul(float afX) { mfEventMoveSpeedMul = afX; }
+
+    void SetEventRunSpeedMul(float afX) { mfEventRunSpeedMul = afX; }
+
+    float GetEventMoveSpeedMul() { return mfEventMoveSpeedMul; }
+
+    float GetEventRunSpeedMul() { return mfEventRunSpeedMul; }
+
+    void SetScriptMoveSpeedMul(float afX) { mfScriptMoveSpeedMul = afX; }
+
+    void SetScriptRunSpeedMul(float afX) { mfScriptRunSpeedMul = afX; }
+
+    float GetScriptMoveSpeedMul() { return mfScriptMoveSpeedMul; }
+
+    float GetScriptRunSpeedMul() { return mfScriptRunSpeedMul; }
+
+    void SetHurtMoveSpeedMul(float afX) { mfHurtMoveSpeedMul = afX; }
+
+    float GetHurtMoveSpeedMul() { return mfHurtMoveSpeedMul; }
+
+    void SetInsanityCollapseSpeedMul(float afX) { mfInsanityCollapseSpeedMul = afX; }
+
+    float GetInsanityCollapseSpeedMul() { return mfInsanityCollapseSpeedMul; }
+
+    void SetScriptJumpForceMul(float afX) { mfScriptJumpForceMul = afX; }
+
+    float GetScriptJumpForceMul() { return mfScriptJumpForceMul; }
+
+    void SetCurrentFocusDistance(float afX) { mfCurrentFocusDistance = afX; }
+
+    void SetEntityInFocus(iLuxEntity *apEntity) { mpEntityInFocus = apEntity; }
+
+    iLuxEntity *GetEntityInFocus() { return mpEntityInFocus; }
 
 
-	void SetBodyInFocus(iPhysicsBody *apBody){ mpBodyInFocus =apBody;}
-	iPhysicsBody* GetBodyInFocus(){ return mpBodyInFocus;}
+    void SetBodyInFocus(iPhysicsBody *apBody) { mpBodyInFocus = apBody; }
 
-	void SetScriptShowFocusIconAndCrossHair(bool abX){ mbScriptShowFocusIconAndCrossHair = abX;}
-	
-	void SetCurrentHandObjectDrawn(bool abX);
+    iPhysicsBody *GetBodyInFocus() { return mpBodyInFocus; }
 
-	float GetAvgSpeed(){ return mfAvgSpeed; }
+    void SetScriptShowFocusIconAndCrossHair(bool abX) { mbScriptShowFocusIconAndCrossHair = abX; }
 
-	void FadeFOVMulTo(float afX, float afSpeed);
-	void FadeAspectMulTo(float afX, float afSpeed);
-	void FadeRollTo(float afX, float afSpeedMul, float afMaxSpeed);
-	void FadeLeanRollTo(float afX, float afSpeedMul, float afMaxSpeed);
-	void SetRoll(float afX);
+    void SetCurrentHandObjectDrawn(bool abX);
 
-	bool GetNoFallDamage(){ return mbNoFallDamage;}
-	void SetNoFallDamage(bool abX){ mbNoFallDamage = abX;}
+    float GetAvgSpeed() { return mfAvgSpeed; }
 
-	bool GetShowCrosshair() { return mbShowCrossHair; }
-	void SetShowCrosshair(bool abX) { mbShowCrossHair = abX; }
+    void FadeFOVMulTo(float afX, float afSpeed);
 
-	eLuxFocusIconStyle GetFocusIconStyle() { return mFocusIconStyle; }
-	void SetFocusIconStyle(eLuxFocusIconStyle aX) { mFocusIconStyle = aX; }
+    void FadeAspectMulTo(float afX, float afSpeed);
 
-	static eLuxFocusIconStyle StringToFocusIconStyle(const tString& asX);
-	static tString FocusIconStyleToString(eLuxFocusIconStyle aX);
-	
-	////////////////////
-	// Free cam
-	void SetFreeCamActive(bool abX);
-	void SetFreeCamSpeed(float afSpeed);
-	
-	////////////////////
-	// Helpers
-	cLuxPlayerLightLevel *GetHelperLightLevel(){ return mpHelperLightLevel;}
-	cLuxPlayerInDarkness *GetHelperInDarkness(){ return mpHelperInDarkness;}
-	cLuxPlayerHudEffect *GetHelperHudEffect(){ return mpHudEffect;}
-	cLuxPlayerLantern *GetHelperLantern(){ return mpLantern;}
-	cLuxPlayerSanity *GetHelperSanity(){ return mpSanity; }
-	cLuxPlayerLookAt *GetHelperLookAt(){ return mpLookAt; }
-	cLuxPlayerDeath *GetHelperDeath(){ return mpDeath; }
-	cLuxPlayerFlashback *GetHelperFlashback(){ return mpFlashback; }
-	cLuxPlayerSpawnPS* GetHelperSpawnPS(){ return mpSpawnPS;}
-	cLuxPlayerCamDirEffects* GetCamDirEffects(){ return mpCamDirEffects;}
-	cLuxPlayerInsanityCollapse* GetInsanityCollapse(){ return mpInsanityCollapse;}
+    void FadeRollTo(float afX, float afSpeedMul, float afMaxSpeed);
 
-	cLuxPlayerHands* GetHands(){ return mpHands;}
+    void FadeLeanRollTo(float afX, float afSpeedMul, float afMaxSpeed);
 
-	void RunHelperMessage(eUpdateableMessage aMessage, float afX);
-	void RunHelperLuxMessage(eLuxUpdateableMessage aMessage, void *apData);
+    void SetRoll(float afX);
 
-	
+    bool GetNoFallDamage() { return mbNoFallDamage; }
+
+    void SetNoFallDamage(bool abX) { mbNoFallDamage = abX; }
+
+    bool GetShowCrosshair() { return mbShowCrossHair; }
+
+    void SetShowCrosshair(bool abX) { mbShowCrossHair = abX; }
+
+    eLuxFocusIconStyle GetFocusIconStyle() { return mFocusIconStyle; }
+
+    void SetFocusIconStyle(eLuxFocusIconStyle aX) { mFocusIconStyle = aX; }
+
+    static eLuxFocusIconStyle StringToFocusIconStyle(const tString &asX);
+
+    static tString FocusIconStyleToString(eLuxFocusIconStyle aX);
+
+    ////////////////////
+    // Free cam
+    void SetFreeCamActive(bool abX);
+
+    void SetFreeCamSpeed(float afSpeed);
+
+    ////////////////////
+    // Helpers
+    cLuxPlayerLightLevel *GetHelperLightLevel() { return mpHelperLightLevel; }
+
+    cLuxPlayerInDarkness *GetHelperInDarkness() { return mpHelperInDarkness; }
+
+    cLuxPlayerHudEffect *GetHelperHudEffect() { return mpHudEffect; }
+
+    cLuxPlayerLantern *GetHelperLantern() { return mpLantern; }
+
+    cLuxPlayerSanity *GetHelperSanity() { return mpSanity; }
+
+    cLuxPlayerLookAt *GetHelperLookAt() { return mpLookAt; }
+
+    cLuxPlayerDeath *GetHelperDeath() { return mpDeath; }
+
+    cLuxPlayerFlashback *GetHelperFlashback() { return mpFlashback; }
+
+    cLuxPlayerSpawnPS *GetHelperSpawnPS() { return mpSpawnPS; }
+
+    cLuxPlayerCamDirEffects *GetCamDirEffects() { return mpCamDirEffects; }
+
+    cLuxPlayerInsanityCollapse *GetInsanityCollapse() { return mpInsanityCollapse; }
+
+    cLuxPlayerHands *GetHands() { return mpHands; }
+
+    void RunHelperMessage(eUpdateableMessage aMessage, float afX);
+
+    void RunHelperLuxMessage(eLuxUpdateableMessage aMessage, void *apData);
+
+
 private:
-	bool CanDrawCrossHair();
-	void DrawHud(float afFrameTime);
+    bool CanDrawCrossHair();
 
-	void UpdateHeadPosAdd(float afTimeStep);
-	void UpdateCamera(float afTimeStep);
-	void UpdateTerror(float afTimeStep);
-	void UpdateLean(float afTimeStep);
-	void UpdateFocusText(float afTimeStep);
-	void UpdateAvgSpeed(float afTimeStep);
-	
-	void SpinHead(float afSpeed);
-	void UpdateHeadSpin(float afTimeStep);
+    void DrawHud(float afFrameTime);
 
-	void CreateCharacterBody(iPhysicsWorld *apPhysicsWorld);
+    void UpdateHeadPosAdd(float afTimeStep);
 
-	cCamera *mpCamera;
-	iCharacterBody *mpCharBody;
+    void UpdateCamera(float afTimeStep);
 
-	///////////////////////////////
-	// Variables
-	bool mbActive;
+    void UpdateTerror(float afTimeStep);
 
-	bool mbUsePermaDeath;
-	tString msCurrentPermaDeathSound;
+    void UpdateLean(float afTimeStep);
 
-	bool mbNoFallDamage;
+    void UpdateFocusText(float afTimeStep);
 
-	eLuxPlayerState mState;
-	eLuxMoveState mMoveState;
+    void UpdateAvgSpeed(float afTimeStep);
 
-	float mfHealth;
-	float mfSanity;
-	float mfLampOil;
-	float mfTerror;
-	int mlCoins;
-	int mlTinderboxes;
+    void SpinHead(float afSpeed);
 
-	bool mbPressedMove;
-	bool mbPressingRun;
-	bool mbPressingJump;
+    void UpdateHeadSpin(float afTimeStep);
 
-	bool mbIsInWater;
-	tString msWaterStepSound;
-	float mfWaterSpeedMul;
+    void CreateCharacterBody(iPhysicsWorld *apPhysicsWorld);
 
-	float mfInteractionMoveSpeedMul;
+    cCamera *mpCamera;
+    iCharacterBody *mpCharBody;
 
-	float mfLookSpeedMul;
+    ///////////////////////////////
+    // Variables
+    bool mbActive;
 
-	bool mbJumpDisabled;
-	bool mbCrouchDisabled;
-	bool mbSanityDrainDisabled;
+    bool mbUsePermaDeath;
+    tString msCurrentPermaDeathSound;
 
-	float mfEventMoveSpeedMul;
-	float mfEventRunSpeedMul;
+    bool mbNoFallDamage;
 
-	float mfScriptMoveSpeedMul;
-	float mfScriptRunSpeedMul;
+    eLuxPlayerState mState;
+    eLuxMoveState mMoveState;
 
-	float mfHurtMoveSpeedMul;
+    float mfHealth;
+    float mfSanity;
+    float mfLampOil;
+    float mfTerror;
+    int mlCoins;
+    int mlTinderboxes;
 
-	float mfInsanityCollapseSpeedMul;
+    bool mbPressedMove;
+    bool mbPressingRun;
+    bool mbPressingJump;
 
-	float mfScriptJumpForceMul;
+    bool mbIsInWater;
+    tString msWaterStepSound;
+    float mfWaterSpeedMul;
 
-	cVector2f mvHeadSpinSpeed;
+    float mfInteractionMoveSpeedMul;
 
-	cVector3f mvHeadPosAddSum;
-	
-	float mfCurrentFocusDistance;
-	iLuxEntity *mpEntityInFocus;
-	iPhysicsBody* mpBodyInFocus;
+    float mfLookSpeedMul;
 
-	tLuxEnemySet m_setTerrorEnemies;
+    bool mbJumpDisabled;
+    bool mbCrouchDisabled;
+    bool mbSanityDrainDisabled;
 
-	cSoundEntry *mpTerrorSound;
-	int mlTerrorSoundID;
+    float mfEventMoveSpeedMul;
+    float mfEventRunSpeedMul;
 
-	float mfAspectMul;
-	float mfFOVMul;
-	float mfAspectMulGoal;
-	float mfFOVMulGoal;
-	float mfAspectMulSpeed;
-	float mfFOVMulSpeed;
-	
-	float mfRoll;
-	float mfRollGoal;
-	float mfRollSpeedMul;
-	float mfRollMaxSpeed;
+    float mfScriptMoveSpeedMul;
+    float mfScriptRunSpeedMul;
 
-	float mfLeanRoll;
-	float mfLeanRollGoal;
-	float mfLeanRollSpeedMul;
-	float mfLeanRollMaxSpeed;
+    float mfHurtMoveSpeedMul;
 
-	cVector3f mvCamAnimPos;
-	cVector3f mvCamAnimPosGoal;
-	float mfCamAnimPosSpeedMul;
-	float mfCamAnimPosMaxSpeed;
-	
-	tWString msFocusText;
-	tWString msLastFocusText;
-	float mfFocusTextAlpha;
+    float mfInsanityCollapseSpeedMul;
 
-	bool mbShowCrossHair;
-	bool mbScriptShowFocusIconAndCrossHair;
+    float mfScriptJumpForceMul;
 
-	eLuxFocusIconStyle mFocusIconStyle;
+    cVector2f mvHeadSpinSpeed;
 
-	std::list<float> mlstPrevSpeeds;
-	int mlMaxPrevSpeeds;
-	float mfAvgSpeed;
+    cVector3f mvHeadPosAddSum;
 
-	///////////////////////////////
-	// Data
-	cVector3f mvBodySize;
-	cVector3f mvBodyCrouchSize;
-	cVector3f mvCameraPosAdd;
+    float mfCurrentFocusDistance;
+    iLuxEntity *mpEntityInFocus;
+    iPhysicsBody *mpBodyInFocus;
 
-	float mfHeadSpinDamageSpeed;
-	float mfHeadSpinDeacc;
+    tLuxEnemySet m_setTerrorEnemies;
 
-	float mfDefaultMass;
+    cSoundEntry *mpTerrorSound;
+    int mlTerrorSoundID;
 
-	float mfAspect;
-	float mfFOV;
+    float mfAspectMul;
+    float mfFOVMul;
+    float mfAspectMulGoal;
+    float mfFOVMulGoal;
+    float mfAspectMulSpeed;
+    float mfFOVMulSpeed;
 
-	float mfTerrorIncSpeed;
-	float mfTerrorDecSpeed;
+    float mfRoll;
+    float mfRollGoal;
+    float mfRollSpeedMul;
+    float mfRollMaxSpeed;
 
-	float mfAutoKillYPos;
+    float mfLeanRoll;
+    float mfLeanRollGoal;
+    float mfLeanRollSpeedMul;
+    float mfLeanRollMaxSpeed;
 
-	cVector2f mvHeadSpeed;
+    cVector3f mvCamAnimPos;
+    cVector3f mvCamAnimPosGoal;
+    float mfCamAnimPosSpeedMul;
+    float mfCamAnimPosMaxSpeed;
 
-	tString msTerrorSound;
+    tWString msFocusText;
+    tWString msLastFocusText;
+    float mfFocusTextAlpha;
 
-	iFontData *mpFocusFont;
+    bool mbShowCrossHair;
+    bool mbScriptShowFocusIconAndCrossHair;
 
-	std::vector<cLuxHeadPosAdd> mvHeadPosAdds;
+    eLuxFocusIconStyle mFocusIconStyle;
 
-	cLuxPlayerLightLevel *mpHelperLightLevel;
-	cLuxPlayerInDarkness *mpHelperInDarkness;
-	cLuxPlayerLantern *mpLantern;
-	cLuxPlayerHudEffect *mpHudEffect;
-	cLuxPlayerLean *mpLean;
-	cLuxPlayerDeath *mpDeath;
-	cLuxPlayerSanity *mpSanity;
-	cLuxPlayerLookAt *mpLookAt;
-	cLuxPlayerFlashback *mpFlashback;
-	cLuxPlayerHurt *mpHurt;
-	cLuxPlayerSpawnPS *mpSpawnPS;
-	cLuxPlayerCamDirEffects *mpCamDirEffects;
-	cLuxPlayerInsanityCollapse *mpInsanityCollapse;
-	
+    std::list<float> mlstPrevSpeeds;
+    int mlMaxPrevSpeeds;
+    float mfAvgSpeed;
 
-	cLuxPlayerHands *mpHands;
+    ///////////////////////////////
+    // Data
+    cVector3f mvBodySize;
+    cVector3f mvBodyCrouchSize;
+    cVector3f mvCameraPosAdd;
 
-	std::vector<iLuxPlayerHelper*> mvHelpers;
-	std::vector<iLuxMoveState*> mvMoveStates;
-	std::vector<iLuxPlayerState*> mvStates;
+    float mfHeadSpinDamageSpeed;
+    float mfHeadSpinDeacc;
+
+    float mfDefaultMass;
+
+    float mfAspect;
+    float mfFOV;
+
+    float mfTerrorIncSpeed;
+    float mfTerrorDecSpeed;
+
+    float mfAutoKillYPos;
+
+    cVector2f mvHeadSpeed;
+
+    tString msTerrorSound;
+
+    iFontData *mpFocusFont;
+
+    std::vector <cLuxHeadPosAdd> mvHeadPosAdds;
+
+    cLuxPlayerLightLevel *mpHelperLightLevel;
+    cLuxPlayerInDarkness *mpHelperInDarkness;
+    cLuxPlayerLantern *mpLantern;
+    cLuxPlayerHudEffect *mpHudEffect;
+    cLuxPlayerLean *mpLean;
+    cLuxPlayerDeath *mpDeath;
+    cLuxPlayerSanity *mpSanity;
+    cLuxPlayerLookAt *mpLookAt;
+    cLuxPlayerFlashback *mpFlashback;
+    cLuxPlayerHurt *mpHurt;
+    cLuxPlayerSpawnPS *mpSpawnPS;
+    cLuxPlayerCamDirEffects *mpCamDirEffects;
+    cLuxPlayerInsanityCollapse *mpInsanityCollapse;
 
 
-	//////////////////////
-	// Free camera
-	bool mbFreeCameraActive;
-	float mfFreeCameraSpeed;
+    cLuxPlayerHands *mpHands;
+
+    std::vector<iLuxPlayerHelper *> mvHelpers;
+    std::vector<iLuxMoveState *> mvMoveStates;
+    std::vector<iLuxPlayerState *> mvStates;
+
+
+    //////////////////////
+    // Free camera
+    bool mbFreeCameraActive;
+    float mfFreeCameraSpeed;
 };
 
 //----------------------------------------------

@@ -26,18 +26,18 @@
 
 namespace hpl {
 
-	class cHapticForceHaptX_SawWave : public iHapticForceHaptX
-	{
-	public:
-		cHapticForceHaptX_SawWave(	HaptX::HaptXInterface *apInterface,
-									HaptX::iHapticDeviceID	aDeviceID,
-									const cVector3f& avDirection, 
-									float afAmp, float afFreq);
-		~cHapticForceHaptX_SawWave();
+    class cHapticForceHaptX_SawWave : public iHapticForceHaptX {
+    public:
+        cHapticForceHaptX_SawWave(HaptX::HaptXInterface *apInterface,
+                                  HaptX::iHapticDeviceID aDeviceID,
+                                  const cVector3f &avDirection,
+                                  float afAmp, float afFreq);
 
-	protected:
-		HaptX::ForceModelSawWaveInfo *mpSawWaveForce;		
-	};
+        ~cHapticForceHaptX_SawWave();
 
-};
+    protected:
+        HaptX::ForceModelSawWaveInfo *mpSawWaveForce;
+    };
+
+}
 #endif // HPL_HAPTIC_FORCE_SAWWAVE_H

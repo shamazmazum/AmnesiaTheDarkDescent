@@ -27,112 +27,133 @@
 
 namespace hpl {
 
-	class cGuiSkinFont;
-	
-	class cWidgetTextBox;
-	class cWidgetButton;
-	class cWidgetSlider;
+    class cGuiSkinFont;
 
-	class cWidgetComboBox : public iWidget, public iWidgetItemContainer
-	{
-	public:
-		cWidgetComboBox(cGuiSet *apSet, cGuiSkin *apSkin);
-		virtual ~cWidgetComboBox();
+    class cWidgetTextBox;
 
-		void SetSelectedItem(int alX,bool abMoveList=false, bool abGenCallback=true);
-		int GetSelectedItem(){ return mlSelectedItem;}
+    class cWidgetButton;
 
-		void SetCanEdit(bool abX);
-		bool GetCanEdit();
+    class cWidgetSlider;
 
-		void SetMaxShownItems(int alX);
-		int GetMaxShownItems(){ return mlMaxItems;}
+    class cWidgetComboBox : public iWidget, public iWidgetItemContainer {
+    public:
+        cWidgetComboBox(cGuiSet *apSet, cGuiSkin *apSkin);
 
-		void SetDefaultFontSize(const cVector2f& avSize);
-		
-	protected:
-		/////////////////////////
-		// Own functions
-		void UpdateProperties();
+        virtual ~cWidgetComboBox();
 
-		void OpenMenu();
-		void CloseMenu();
+        void SetSelectedItem(int alX, bool abMoveList = false, bool abGenCallback = true);
 
-		bool ButtonPress(iWidget* apWidget, const cGuiMessageData& aData);
-		kGuiCallbackDeclarationEnd(ButtonPress);
+        int GetSelectedItem() { return mlSelectedItem; }
 
-		bool DrawText(iWidget* apWidget, const cGuiMessageData& aData);
-		kGuiCallbackDeclarationEnd(DrawText);	
+        void SetCanEdit(bool abX);
 
-		bool SliderMove(iWidget* apWidget, const cGuiMessageData& aData);
-		kGuiCallbackDeclarationEnd(SliderMove);
+        bool GetCanEdit();
 
-		bool SliderLostFocus(iWidget* apWidget, const cGuiMessageData& aData);
-		kGuiCallbackDeclarationEnd(SliderLostFocus);
+        void SetMaxShownItems(int alX);
 
-		/////////////////////////
-		// Implemented functions
-		void OnLoadGraphics();
-		void OnChangeSize();
-		void OnChangeText();
-		void OnInit();
-		
-		void OnDraw(float afTimeStep, cGuiClipRegion *apClipRegion);
+        int GetMaxShownItems() { return mlMaxItems; }
 
-		bool OnMouseMove(const cGuiMessageData& aData);
-		bool OnMouseDown(const cGuiMessageData& aData);
-		bool OnMouseUp(const cGuiMessageData& aData);
-		bool OnMouseEnter(const cGuiMessageData& aData);
-		bool OnMouseLeave(const cGuiMessageData& aData);
+        void SetDefaultFontSize(const cVector2f &avSize);
 
-		bool OnUIArrowPress(const cGuiMessageData& aData);
+    protected:
+        /////////////////////////
+        // Own functions
+        void UpdateProperties();
 
-		bool OnUIButtonPress(const cGuiMessageData& aData);
-		bool OnUIButtonRelease(const cGuiMessageData& aData);
-		
-		bool OnLostFocus(const cGuiMessageData& aData);
+        void OpenMenu();
 
-		bool PointIsInside(const cVector2f& avPoint, bool abOnlyClipped);
+        void CloseMenu();
 
-		bool SliderOnUIArrowPress(iWidget* apWidget, const cGuiMessageData& aData);
-		kGuiCallbackDeclarationEnd(SliderOnUIArrowPress);
+        bool ButtonPress(iWidget *apWidget, const cGuiMessageData &aData);
 
-		bool SliderOnUIButtonPress(iWidget* apWidget, const cGuiMessageData& aData);
-		kGuiCallbackDeclarationEnd(SliderOnUIButtonPress);
+        kGuiCallbackDeclarationEnd(ButtonPress);
 
-		bool SliderOnUIButtonRelease(iWidget* apWidget, const cGuiMessageData& aData);
-		kGuiCallbackDeclarationEnd(SliderOnUIButtonRelease);
+        bool DrawText(iWidget *apWidget, const cGuiMessageData &aData);
 
-		/////////////////////////
-		// Data
-		
-		cWidgetTextBox *mpText;
-		cWidgetButton *mpButton;
-		cWidgetSlider *mpSlider;
+        kGuiCallbackDeclarationEnd(DrawText);
 
-		bool mbMenuOpen;
-		bool mbClickedAfterOpen;
-		float mfMenuHeight;
-		cVector3f mvMenuPos;
+        bool SliderMove(iWidget *apWidget, const cGuiMessageData &aData);
 
-		float mfButtonWidth;
-		float mfSliderWidth;
+        kGuiCallbackDeclarationEnd(SliderMove);
 
-		int mlMouseOverSelection;
-		int mlSelectedItem;
-		int mlFirstItem;
-		int mlMaxItems;
-		int mlItemsShown;
+        bool SliderLostFocus(iWidget *apWidget, const cGuiMessageData &aData);
 
-		cGuiGfxElement *mpGfxBackground;
+        kGuiCallbackDeclarationEnd(SliderLostFocus);
 
-		cGuiGfxElement *mpGfxSelection;
-		
-		cGuiGfxElement *mvGfxBorders[4];
-		cGuiGfxElement *mvGfxCorners[4];
-		
-		bool mbOpenByUIButton;
-	};
+        /////////////////////////
+        // Implemented functions
+        void OnLoadGraphics();
 
-};
+        void OnChangeSize();
+
+        void OnChangeText();
+
+        void OnInit();
+
+        void OnDraw(float afTimeStep, cGuiClipRegion *apClipRegion);
+
+        bool OnMouseMove(const cGuiMessageData &aData);
+
+        bool OnMouseDown(const cGuiMessageData &aData);
+
+        bool OnMouseUp(const cGuiMessageData &aData);
+
+        bool OnMouseEnter(const cGuiMessageData &aData);
+
+        bool OnMouseLeave(const cGuiMessageData &aData);
+
+        bool OnUIArrowPress(const cGuiMessageData &aData);
+
+        bool OnUIButtonPress(const cGuiMessageData &aData);
+
+        bool OnUIButtonRelease(const cGuiMessageData &aData);
+
+        bool OnLostFocus(const cGuiMessageData &aData);
+
+        bool PointIsInside(const cVector2f &avPoint, bool abOnlyClipped);
+
+        bool SliderOnUIArrowPress(iWidget *apWidget, const cGuiMessageData &aData);
+
+        kGuiCallbackDeclarationEnd(SliderOnUIArrowPress);
+
+        bool SliderOnUIButtonPress(iWidget *apWidget, const cGuiMessageData &aData);
+
+        kGuiCallbackDeclarationEnd(SliderOnUIButtonPress);
+
+        bool SliderOnUIButtonRelease(iWidget *apWidget, const cGuiMessageData &aData);
+
+        kGuiCallbackDeclarationEnd(SliderOnUIButtonRelease);
+
+        /////////////////////////
+        // Data
+
+        cWidgetTextBox *mpText;
+        cWidgetButton *mpButton;
+        cWidgetSlider *mpSlider;
+
+        bool mbMenuOpen;
+        bool mbClickedAfterOpen;
+        float mfMenuHeight;
+        cVector3f mvMenuPos;
+
+        float mfButtonWidth;
+        float mfSliderWidth;
+
+        int mlMouseOverSelection;
+        int mlSelectedItem;
+        int mlFirstItem;
+        int mlMaxItems;
+        int mlItemsShown;
+
+        cGuiGfxElement *mpGfxBackground;
+
+        cGuiGfxElement *mpGfxSelection;
+
+        cGuiGfxElement *mvGfxBorders[4];
+        cGuiGfxElement *mvGfxCorners[4];
+
+        bool mbOpenByUIButton;
+    };
+
+}
 #endif // HPL_WIDGET_COMBO_BOX_H

@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <string.h> // strstr
-#include <stdio.h>  // sprintf
+#include <stdio.h>  // sprintf_s
 #include "impl/scriptstring.h"
 using namespace std;
 
@@ -161,7 +161,7 @@ static void ConcatenateStrings_Generic(asIScriptGeneric *gen)
 static CScriptString &AssignUIntToString(unsigned int i, CScriptString &dest)
 {
 	char buf[100];
-	sprintf(buf, "%u", i);
+	sprintf_s_s(buf, "%u", i);
 	dest.buffer = buf;
 	return dest;
 }
@@ -177,7 +177,7 @@ static void AssignUIntToString_Generic(asIScriptGeneric *gen)
 static CScriptString &AssignIntToString(int i, CScriptString &dest)
 {
 	char buf[100];
-	sprintf(buf, "%d", i);
+	sprintf_s(buf, "%d", i);
 	dest.buffer = buf;
 	return dest;
 }
@@ -193,7 +193,7 @@ static void AssignIntToString_Generic(asIScriptGeneric *gen)
 static CScriptString &AssignFloatToString(float f, CScriptString &dest)
 {
 	char buf[100];
-	sprintf(buf, "%g", f);
+	sprintf_s(buf, "%g", f);
 	dest.buffer = buf;
 	return dest;
 }
@@ -209,7 +209,7 @@ static void AssignFloatToString_Generic(asIScriptGeneric *gen)
 static CScriptString &AssignDoubleToString(double f, CScriptString &dest)
 {
 	char buf[100];
-	sprintf(buf, "%g", f);
+	sprintf_s(buf, "%g", f);
 	dest.buffer = buf;
 	return dest;
 }
@@ -225,7 +225,7 @@ static void AssignDoubleToString_Generic(asIScriptGeneric *gen)
 static CScriptString &AssignBoolToString(bool b, CScriptString &dest)
 {
 	char buf[100];
-	sprintf(buf, "%s", b ? "true" : "false");
+	sprintf_s(buf, "%s", b ? "true" : "false");
 	dest.buffer = buf;
 	return dest;
 }
@@ -245,7 +245,7 @@ static void AssignBoolToString_Generic(asIScriptGeneric *gen)
 static CScriptString &AddAssignUIntToString(unsigned int i, CScriptString &dest)
 {
 	char buf[100];
-	sprintf(buf, "%u", i);
+	sprintf_s(buf, "%u", i);
 	dest.buffer += buf;
 	return dest;
 }
@@ -261,7 +261,7 @@ static void AddAssignUIntToString_Generic(asIScriptGeneric *gen)
 static CScriptString &AddAssignIntToString(int i, CScriptString &dest)
 {
 	char buf[100];
-	sprintf(buf, "%d", i);
+	sprintf_s(buf, "%d", i);
 	dest.buffer += buf;
 	return dest;
 }
@@ -277,7 +277,7 @@ static void AddAssignIntToString_Generic(asIScriptGeneric *gen)
 static CScriptString &AddAssignFloatToString(float f, CScriptString &dest)
 {
 	char buf[100];
-	sprintf(buf, "%g", f);
+	sprintf_s(buf, "%g", f);
 	dest.buffer += buf;
 	return dest;
 }
@@ -293,7 +293,7 @@ static void AddAssignFloatToString_Generic(asIScriptGeneric *gen)
 static CScriptString &AddAssignDoubleToString(double f, CScriptString &dest)
 {
 	char buf[100];
-	sprintf(buf, "%g", f);
+	sprintf_s(buf, "%g", f);
 	dest.buffer += buf;
 	return dest;
 }
@@ -309,7 +309,7 @@ static void AddAssignDoubleToString_Generic(asIScriptGeneric *gen)
 static CScriptString &AddAssignBoolToString(bool b, CScriptString &dest)
 {
 	char buf[100];
-	sprintf(buf, "%s", b ? "true" : "false");
+	sprintf_s(buf, "%s", b ? "true" : "false");
 	dest.buffer += buf;
 	return dest;
 }
@@ -329,7 +329,7 @@ static void AddAssignBoolToString_Generic(asIScriptGeneric *gen)
 static CScriptString *AddStringUInt(const CScriptString &str, unsigned int i)
 {
 	char buf[100];
-	sprintf(buf, "%u", i);
+	sprintf_s(buf, "%u", i);
 	return new CScriptString(str.buffer + buf);
 }
 
@@ -344,7 +344,7 @@ static void AddStringUInt_Generic(asIScriptGeneric *gen)
 static CScriptString *AddStringInt(const CScriptString &str, int i)
 {
 	char buf[100];
-	sprintf(buf, "%d", i);
+	sprintf_s(buf, "%d", i);
 	return new CScriptString(str.buffer + buf);
 }
 
@@ -359,7 +359,7 @@ static void AddStringInt_Generic(asIScriptGeneric *gen)
 static CScriptString *AddStringFloat(const CScriptString &str, float f)
 {
 	char buf[100];
-	sprintf(buf, "%g", f);
+	sprintf_s(buf, "%g", f);
 	return new CScriptString(str.buffer + buf);
 }
 
@@ -374,7 +374,7 @@ static void AddStringFloat_Generic(asIScriptGeneric *gen)
 static CScriptString *AddStringDouble(const CScriptString &str, double f)
 {
 	char buf[100];
-	sprintf(buf, "%g", f);
+	sprintf_s(buf, "%g", f);
 	return new CScriptString(str.buffer + buf);
 }
 
@@ -389,7 +389,7 @@ static void AddStringDouble_Generic(asIScriptGeneric *gen)
 static CScriptString *AddStringBool(const CScriptString &str, bool b)
 {
 	char buf[100];
-	sprintf(buf, "%s", b ? "true" : "false");
+	sprintf_s(buf, "%s", b ? "true" : "false");
 	return new CScriptString(str.buffer + buf);
 }
 
@@ -408,7 +408,7 @@ static void AddStringBool_Generic(asIScriptGeneric *gen)
 static CScriptString *AddIntString(int i, const CScriptString &str)
 {
 	char buf[100];
-	sprintf(buf, "%d", i);
+	sprintf_s(buf, "%d", i);
 	return new CScriptString(buf + str.buffer);
 }
 
@@ -423,7 +423,7 @@ static void AddIntString_Generic(asIScriptGeneric *gen)
 static CScriptString *AddUIntString(unsigned int i, const CScriptString &str)
 {
 	char buf[100];
-	sprintf(buf, "%u", i);
+	sprintf_s(buf, "%u", i);
 	return new CScriptString(buf + str.buffer);
 }
 
@@ -438,7 +438,7 @@ static void AddUIntString_Generic(asIScriptGeneric *gen)
 static CScriptString *AddFloatString(float f, const CScriptString &str)
 {
 	char buf[100];
-	sprintf(buf, "%g", f);
+	sprintf_s(buf, "%g", f);
 	return new CScriptString(buf + str.buffer);
 }
 
@@ -453,7 +453,7 @@ static void AddFloatString_Generic(asIScriptGeneric *gen)
 static CScriptString *AddDoubleString(double f, const CScriptString &str)
 {
 	char buf[100];
-	sprintf(buf, "%g", f);
+	sprintf_s(buf, "%g", f);
 	return new CScriptString(buf + str.buffer);
 }
 
@@ -468,7 +468,7 @@ static void AddDoubleString_Generic(asIScriptGeneric *gen)
 static CScriptString *AddBoolString(bool b, const CScriptString &str)
 {
 	char buf[100];
-	sprintf(buf, "%s", b ? "true" : "false");
+	sprintf_s(buf, "%s", b ? "true" : "false");
 	return new CScriptString(buf + str.buffer);
 }
 
@@ -658,16 +658,11 @@ void RegisterScriptString_Native(asIScriptEngine *engine)
 	r = engine->RegisterObjectMethod("string", "const uint8 &opIndex(uint) const", asFUNCTION(StringCharAt), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 
 	// Register the object methods
-	if( sizeof(size_t) == 4 )
-	{
-		r = engine->RegisterObjectMethod("string", "uint length() const", asMETHOD(string,size), asCALL_THISCALL); assert( r >= 0 );
-		r = engine->RegisterObjectMethod("string", "void resize(uint)", asMETHODPR(string,resize,(size_t),void), asCALL_THISCALL); assert( r >= 0 );
-	}
-	else
-	{
-		r = engine->RegisterObjectMethod("string", "uint64 length() const", asMETHOD(string,size), asCALL_THISCALL); assert( r >= 0 );
-		r = engine->RegisterObjectMethod("string", "void resize(uint64)", asMETHODPR(string,resize,(size_t),void), asCALL_THISCALL); assert( r >= 0 );
-	}
+    r = engine->RegisterObjectMethod("string", "uint64 length() const", asMETHOD(string, size), asCALL_THISCALL);
+    assert(r >= 0);
+    r = engine->RegisterObjectMethod("string", "void resize(uint64)", asMETHODPR(string, resize, (size_t), void),
+                                     asCALL_THISCALL);
+    assert(r >= 0);
 
     // TODO: Add factory  string(const string &in str, int repeatCount)
 
@@ -732,18 +727,13 @@ void RegisterScriptString_Generic(asIScriptEngine *engine)
 	r = engine->RegisterObjectMethod("string", "const uint8 &opIndex(uint) const", asFUNCTION(StringCharAt_Generic), asCALL_GENERIC); assert( r >= 0 );
 
 	// Register the object methods
-	if( sizeof(size_t) == 4 )
-	{
-		r = engine->RegisterObjectMethod("string", "uint length() const", asFUNCTION(StringLength_Generic), asCALL_GENERIC); assert( r >= 0 );
-		r = engine->RegisterObjectMethod("string", "void resize(uint)", asFUNCTION(StringResize_Generic), asCALL_GENERIC); assert( r >= 0 );
-	}
-	else
-	{
-		r = engine->RegisterObjectMethod("string", "uint64 length() const", asFUNCTION(StringLength_Generic), asCALL_GENERIC); assert( r >= 0 );
-		r = engine->RegisterObjectMethod("string", "void resize(uint64)", asFUNCTION(StringResize_Generic), asCALL_GENERIC); assert( r >= 0 );
-	}
+    r = engine->RegisterObjectMethod("string", "uint64 length() const", asFUNCTION(StringLength_Generic),
+                                     asCALL_GENERIC);
+    assert(r >= 0);
+    r = engine->RegisterObjectMethod("string", "void resize(uint64)", asFUNCTION(StringResize_Generic), asCALL_GENERIC);
+    assert(r >= 0);
 
-	// Automatic conversion from values
+    // Automatic conversion from values
 	r = engine->RegisterObjectMethod("string", "string &opAssign(double)", asFUNCTION(AssignDoubleToString_Generic), asCALL_GENERIC); assert( r >= 0 );
 	r = engine->RegisterObjectMethod("string", "string &opAddAssign(double)", asFUNCTION(AddAssignDoubleToString_Generic), asCALL_GENERIC); assert( r >= 0 );
 	r = engine->RegisterObjectMethod("string", "string@ opAdd(double) const", asFUNCTION(AddStringDouble_Generic), asCALL_GENERIC); assert( r >= 0 );

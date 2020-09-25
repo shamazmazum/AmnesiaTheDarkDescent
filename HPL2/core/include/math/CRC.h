@@ -23,53 +23,50 @@
 #include <cstddef>
 
 namespace hpl {
-	//----------------------------------------
+    //----------------------------------------
 
-	typedef unsigned int tCRCKey;
+    typedef unsigned int tCRCKey;
 
-	//----------------------------------------
+    //----------------------------------------
 
-	class cCRCTable
-	{
-	public:
-		cCRCTable () : mKey (0) {}
-		
-		void Init (tCRCKey key);
-		
-		tCRCKey operator [] (unsigned i){return mTable [i];}
+    class cCRCTable {
+    public:
+        cCRCTable() : mKey(0) {}
 
-	private:
-		tCRCKey mTable [256];
-		tCRCKey mKey;
-	};
+        void Init(tCRCKey key);
 
-	//----------------------------------------
+        tCRCKey operator[](unsigned i) { return mTable[i]; }
 
-	class cCRC
-	{
-	public:
-		cCRC (tCRCKey key) : mKey (key), mRegister(0)
-		{
-			mTable.Init (key);
-		}
+    private:
+        tCRCKey mTable[256];
+        tCRCKey mKey;
+    };
 
-		void PutByte (unsigned aByte);
-		void PutData(char *apData, size_t alSize);
+    //----------------------------------------
 
-		tCRCKey Done ()
-		{
-			tCRCKey temp = mRegister;
-			mRegister = 0;
-			return temp;
-		}
+    class cCRC {
+    public:
+        cCRC(tCRCKey key) : mKey(key), mRegister(0) {
+            mTable.Init(key);
+        }
 
-	private:
-		static cCRCTable mTable;
-		tCRCKey mKey;	
-		tCRCKey mRegister;
-	};
+        void PutByte(unsigned aByte);
 
-	//----------------------------------------
+        void PutData(char *apData, size_t alSize);
+
+        tCRCKey Done() {
+            tCRCKey temp = mRegister;
+            mRegister = 0;
+            return temp;
+        }
+
+    private:
+        static cCRCTable mTable;
+        tCRCKey mKey;
+        tCRCKey mRegister;
+    };
+
+    //----------------------------------------
 }
 
 #endif // HPL_CRC_H

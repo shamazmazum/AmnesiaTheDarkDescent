@@ -23,127 +23,144 @@
 #include "gui/GuiTypes.h"
 
 namespace hpl {
-	
-	class iGuiMaterial;
-	class iTexture;
-	class cFrameSubImage;
-	class cResources;
 
-	class cGui;
+    class iGuiMaterial;
 
-	#define kMaxGuiTextures (4)
+    class iTexture;
 
-	//------------------------------------------
+    class cFrameSubImage;
 
-	enum eGuiGfxAnimationType
-	{
-		eGuiGfxAnimationType_Loop,
-		eGuiGfxAnimationType_StopAtEnd,
-		eGuiGfxAnimationType_Oscillate,
-		eGuiGfxAnimationType_Random,
-		eGuiGfxAnimationType_LastEnum
-	};
-	
-	class cGuiGfxAnimation
-	{
-	friend class cGuiGfxElement;
-	public:
-		cGuiGfxAnimation(): mfFrameLength(1), mType(eGuiGfxAnimationType_Loop){}
+    class cResources;
 
-		void AddFrame(int alNum);
-		void SetType(eGuiGfxAnimationType aType);
-		void SetFrameLength(float afLength);
+    class cGui;
 
-	private:
-		tString msName;
-		std::vector<int> mvFrames;
+#define kMaxGuiTextures (4)
+
+    //------------------------------------------
+
+    enum eGuiGfxAnimationType {
+        eGuiGfxAnimationType_Loop,
+        eGuiGfxAnimationType_StopAtEnd,
+        eGuiGfxAnimationType_Oscillate,
+        eGuiGfxAnimationType_Random,
+        eGuiGfxAnimationType_LastEnum
+    };
+
+    class cGuiGfxAnimation {
+        friend class cGuiGfxElement;
+
+    public:
+        cGuiGfxAnimation() : mfFrameLength(1), mType(eGuiGfxAnimationType_Loop) {}
+
+        void AddFrame(int alNum);
+
+        void SetType(eGuiGfxAnimationType aType);
+
+        void SetFrameLength(float afLength);
+
+    private:
+        tString msName;
+        std::vector<int> mvFrames;
         float mfFrameLength;
-		eGuiGfxAnimationType mType;
-	};
+        eGuiGfxAnimationType mType;
+    };
 
-	//------------------------------------------
+    //------------------------------------------
 
-	class cGuiGfxElement
-	{
-		friend class cGuiSet;
-		friend class cGuiRenderObjectCompare;
-	public:
-		cGuiGfxElement(cGui* apGui);
-		~cGuiGfxElement();
+    class cGuiGfxElement {
+        friend class cGuiSet;
 
-		void Update(float afTimeStep);
+        friend class cGuiRenderObjectCompare;
 
-		void AddImage(cFrameSubImage* apImage);
-		void AddTexture(iTexture* apTexture, const cVector2f& avStartUV=0, const cVector2f& avEndUV=1);
+    public:
+        cGuiGfxElement(cGui *apGui);
 
-		void AddImageToBuffer(cFrameSubImage* apImage);
+        ~cGuiGfxElement();
 
-		int GetTextureNum(){ return mlTextureNum;}
+        void Update(float afTimeStep);
 
-		void SetDestroyTexture(bool abX){mbDestroyTexture = abX;}
-		bool GetDestroyTexture(){ return mbDestroyTexture;}
-		
-		iTexture * GetTexture(int alIdx){ return mvTextures[alIdx];}
-		cFrameSubImage * GetImage(int alIdx){ return mvImages[alIdx];}
+        void AddImage(cFrameSubImage *apImage);
 
-		void SetOffset(const cVector3f& avOffset){mvOffset = avOffset;}
-		const cVector3f& GetOffset()const { return mvOffset;}
+        void AddTexture(iTexture *apTexture, const cVector2f &avStartUV = 0, const cVector2f &avEndUV = 1);
 
-		void SetActiveSize(const cVector2f& avSize){mvActiveSize = avSize;}
-		const cVector2f& GetActiveSize(){ return mvActiveSize;}
+        void AddImageToBuffer(cFrameSubImage *apImage);
 
-		cGuiGfxAnimation* CreateAnimtion(const tString& asName);
-		void PlayAnimation(int alNum);
-		cGuiGfxAnimation* GetAnimation(int alIdx){return mvAnimations[alIdx];}
-		void SetAnimationTime(float afTime);
+        int GetTextureNum() { return mlTextureNum; }
 
-		void SetAnimationPaused(bool abX){mbAnimationPaused = abX;}
-		bool GSetAnimationPaused(){ return mbAnimationPaused;}
+        void SetDestroyTexture(bool abX) { mbDestroyTexture = abX; }
 
-		void SetMaterial(iGuiMaterial *apMat);
+        bool GetDestroyTexture() { return mbDestroyTexture; }
 
-		void SetColor(const cColor &aColor);
+        iTexture *GetTexture(int alIdx) { return mvTextures[alIdx]; }
 
-		void SetFlipUvYAxis(bool abX);
-		bool GetFlipUvYAxis() { return mbFlipUvYAxis;}
+        cFrameSubImage *GetImage(int alIdx) { return mvImages[alIdx]; }
 
-		cVector2f GetImageSize();
+        void SetOffset(const cVector3f &avOffset) { mvOffset = avOffset; }
 
-		void Flush();
-	private:
-		void SetImage(cFrameSubImage* apImage, int alNum);
+        const cVector3f &GetOffset() const { return mvOffset; }
 
-		cVector2f mvImageSize;
-		cGui *mpGui;
-		tVertexVec mvVtx;
+        void SetActiveSize(const cVector2f &avSize) { mvActiveSize = avSize; }
 
-		cVector3f mvOffset;
-		cVector2f mvActiveSize;
+        const cVector2f &GetActiveSize() { return mvActiveSize; }
 
-		iGuiMaterial *mpMaterial;
-		iTexture* mvTextures[kMaxGuiTextures];
-		cFrameSubImage* mvImages[kMaxGuiTextures];
+        cGuiGfxAnimation *CreateAnimtion(const tString &asName);
 
-		bool mbDestroyTexture;
+        void PlayAnimation(int alNum);
 
-		std::vector<cFrameSubImage*> mvImageBufferVec;
-		
-		std::vector<cGuiGfxAnimation*> mvAnimations;
-		int mlCurrentAnimation;
-		float mfCurrentFrame;
-		int mlActiveImage;
-		bool mbForwardAnim;
-		bool mbAnimationPaused;
+        cGuiGfxAnimation *GetAnimation(int alIdx) { return mvAnimations[alIdx]; }
 
-		bool mbFlipUvYAxis;
+        void SetAnimationTime(float afTime);
 
-		int mlImageUpdateCount;
-        
-		int mlTextureNum;
+        void SetAnimationPaused(bool abX) { mbAnimationPaused = abX; }
 
-		bool mbFlushed;
+        bool GSetAnimationPaused() { return mbAnimationPaused; }
 
-		cResources *mpResources;
-	};
-};
+        void SetMaterial(iGuiMaterial *apMat);
+
+        void SetColor(const cColor &aColor);
+
+        void SetFlipUvYAxis(bool abX);
+
+        bool GetFlipUvYAxis() { return mbFlipUvYAxis; }
+
+        cVector2f GetImageSize();
+
+        void Flush();
+
+    private:
+        void SetImage(cFrameSubImage *apImage, int alNum);
+
+        cVector2f mvImageSize;
+        cGui *mpGui;
+        tVertexVec mvVtx;
+
+        cVector3f mvOffset;
+        cVector2f mvActiveSize;
+
+        iGuiMaterial *mpMaterial;
+        iTexture *mvTextures[kMaxGuiTextures];
+        cFrameSubImage *mvImages[kMaxGuiTextures];
+
+        bool mbDestroyTexture;
+
+        std::vector<cFrameSubImage *> mvImageBufferVec;
+
+        std::vector<cGuiGfxAnimation *> mvAnimations;
+        int mlCurrentAnimation;
+        float mfCurrentFrame;
+        int mlActiveImage;
+        bool mbForwardAnim;
+        bool mbAnimationPaused;
+
+        bool mbFlipUvYAxis;
+
+        int mlImageUpdateCount;
+
+        int mlTextureNum;
+
+        bool mbFlushed;
+
+        cResources *mpResources;
+    };
+}
 #endif // HPL_GUI_GFX_ELEMENT_H

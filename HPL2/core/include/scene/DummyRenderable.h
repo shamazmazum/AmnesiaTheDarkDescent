@@ -24,42 +24,47 @@
 #include "graphics/Renderable.h"
 
 namespace hpl {
-	
-	//------------------------------------------
 
-	class cCamera;
-	class cFrustum;
-	class iTexture;
-	class cResources;
-	
-	//------------------------------------------
+    //------------------------------------------
 
-	class cDummyRenderable : public iRenderable
-	{
-	public:
-		cDummyRenderable(tString asName);
-		virtual ~cDummyRenderable();
+    class cCamera;
 
-		//////////////////////////////
-		//Properties
+    class cFrustum;
 
-		//////////////////////////////
-		//iEntity implementation
-		tString GetEntityType(){ return "cDummy";}
+    class iTexture;
 
-		///////////////////////////////
-		//Renderable implementation:
-		cMaterial *GetMaterial(){ return NULL;}
-		iVertexBuffer* GetVertexBuffer(){ return NULL;}
+    class cResources;
 
-		eRenderableType GetRenderType(){ return eRenderableType_Dummy;}
+    //------------------------------------------
 
-		int GetMatrixUpdateCount(){ return GetTransformUpdateCount();}
-		cMatrixf* GetModelMatrix(cFrustum* apFrustum);
-		
-	private:
-		cMatrixf m_mtxModelOutput;
-	};
+    class cDummyRenderable : public iRenderable {
+    public:
+        cDummyRenderable(tString asName);
 
-};
+        virtual ~cDummyRenderable();
+
+        //////////////////////////////
+        //Properties
+
+        //////////////////////////////
+        //iEntity implementation
+        tString GetEntityType() { return "cDummy"; }
+
+        ///////////////////////////////
+        //Renderable implementation:
+        cMaterial *GetMaterial() { return NULL; }
+
+        iVertexBuffer *GetVertexBuffer() { return NULL; }
+
+        eRenderableType GetRenderType() { return eRenderableType_Dummy; }
+
+        int GetMatrixUpdateCount() { return GetTransformUpdateCount(); }
+
+        cMatrixf *GetModelMatrix(cFrustum *apFrustum);
+
+    private:
+        cMatrixf m_mtxModelOutput;
+    };
+
+}
 #endif // HPL_DUMMY_RENDERABLE_H

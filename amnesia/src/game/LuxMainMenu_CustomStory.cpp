@@ -561,7 +561,7 @@ kGuiCallbackDeclaredFuncEnd(cLuxMainMenu_CustomStoryList, PressCancel);
 bool cLuxMainMenu_CustomStoryList::LoadStoryCallback(iWidget* apWidget, const cGuiMessageData& aData)
 {
 	bool bOkPressed = aData.mlVal==0? true : false;
-	if(bOkPressed==false)
+	if(!bOkPressed)
 		return true;
 
 	LoadStory(mpLBStories->GetSelectedItem());
@@ -575,7 +575,7 @@ kGuiCallbackDeclaredFuncEnd(cLuxMainMenu_CustomStoryList, LoadStoryCallback);
 bool cLuxMainMenu_CustomStoryList::ExitCallback(iWidget* apWidget, const cGuiMessageData& aData)
 {
 	bool bOkPressed = aData.mlVal==0? true : false;
-	if(bOkPressed==false)
+	if(!bOkPressed)
 	{
 		gpBase->SetCustomStory(NULL);
 		return true;

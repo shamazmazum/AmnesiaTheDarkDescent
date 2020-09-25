@@ -114,5 +114,5 @@ namespace hpl {
 		
 
 	};
-};
+}
 #endif // HPL_LOWLEVELSYSTEM_H

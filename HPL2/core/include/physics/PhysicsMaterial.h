@@ -108,5 +108,5 @@ namespace hpl {
 
 		cSurfaceData *mpSurfaceData;
 	};
-};
+}
 #endif // HPL_PHYSICS_MATERIAL_H

@@ -182,14 +182,14 @@ bool cLuxProp_SwingDoor::OnInteract(iPhysicsBody *apBody, const cVector3f &avPos
 		mfInteractSoundCount = 0.5f;
 	}
 
-	if(mbLocked==false)
+	if(!mbLocked)
 	{
 		SetClosed(false, true);
 	}
 
 	mbDisableAutoClose = false;
 
-	if(mbLocked == false  && mbShowHints)
+	if(!mbLocked && mbShowHints)
 		gpBase->mpHintHandler->Add("EntitySwingDoor", kTranslate("Hints", "EntitySwingDoor"), 0);
 
 	cLuxPlayerStateVars::SetupInteraction(apBody, avPos);
@@ -389,7 +389,7 @@ void cLuxProp_SwingDoor::ImplementedOnSetActive(bool abX)
 	{
 		if(mpDamageMeshEntity[i])
 		{
-			bool bActive = abX ? mlCurrentMeshEntity==i : false;
+			bool bActive = abX && mlCurrentMeshEntity == i;
 
 			mpDamageMeshEntity[i]->SetVisible(bActive);
 			mpDamageMeshEntity[i]->SetActive(bActive);
@@ -401,7 +401,7 @@ void cLuxProp_SwingDoor::ImplementedOnSetActive(bool abX)
 
 void cLuxProp_SwingDoor::OnHealthChange()
 {
-	if(mbBreakable==false || mbDisableBreakable) return;
+	if(!mbBreakable || mbDisableBreakable) return;
 	if(mbBroken) return;
 
 	tString msSound = "";
@@ -423,7 +423,7 @@ void cLuxProp_SwingDoor::OnHealthChange()
 
 	////////////////////////
 	// Broken
-	if(mfHealth <= 0 && mbBroken == false)
+	if(mfHealth <= 0 && !mbBroken)
 	{
 		mbBroken = true;	
 

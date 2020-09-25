@@ -31,50 +31,55 @@ class cLuxPlayer;
 
 //----------------------------------------------
 
-class iLuxMoveState
-{
-public:	
-	iLuxMoveState(cLuxPlayer *apPlayer);
-	virtual ~iLuxMoveState();
+class iLuxMoveState {
+public:
+    iLuxMoveState(cLuxPlayer *apPlayer);
 
-	virtual void OnMapEnter()=0;
+    virtual ~iLuxMoveState();
 
-	virtual void OnEnterState(eLuxMoveState aPrevState)=0;
-	virtual void OnLeaveState(eLuxMoveState aNewState)=0;
+    virtual void OnMapEnter() = 0;
 
-	void Update(float afTimeStep);
+    virtual void OnEnterState(eLuxMoveState aPrevState) = 0;
 
-	virtual bool GetAllowsInteraction()=0;
+    virtual void OnLeaveState(eLuxMoveState aNewState) = 0;
 
-	virtual bool OnMove(eCharDir aDir, float afMul)=0;
-	virtual bool OnAddYaw(float afAmount)=0;
-	virtual bool OnAddPitch(float afAmount)=0;
+    void Update(float afTimeStep);
 
-	virtual void OnRun(bool abActive)=0;
-	virtual void OnCrouch(bool abActive)=0;
-	virtual void OnJump(bool abActive)=0;
+    virtual bool GetAllowsInteraction() = 0;
 
-	virtual void OnDraw(float afFrameTime)=0;
-	
+    virtual bool OnMove(eCharDir aDir, float afMul) = 0;
+
+    virtual bool OnAddYaw(float afAmount) = 0;
+
+    virtual bool OnAddPitch(float afAmount) = 0;
+
+    virtual void OnRun(bool abActive) = 0;
+
+    virtual void OnCrouch(bool abActive) = 0;
+
+    virtual void OnJump(bool abActive) = 0;
+
+    virtual void OnDraw(float afFrameTime) = 0;
+
 protected:
-	virtual void OnUpdate(float afTimeStep)=0;
+    virtual void OnUpdate(float afTimeStep) = 0;
 
-	cLuxPlayer *mpPlayer;
+    cLuxPlayer *mpPlayer;
 
-	float mfMaxForwardSpeed;
-	float mfMaxBackwardSpeed;
-	float mfMaxSidwaySpeed;
-	float mfForwardAcc;
-	float mfSidewayAcc;
-	float mfForwardDeacc;
-	float mfSidewayDeacc;
+    float mfMaxForwardSpeed;
+    float mfMaxBackwardSpeed;
+    float mfMaxSidwaySpeed;
+    float mfForwardAcc;
+    float mfSidewayAcc;
+    float mfForwardDeacc;
+    float mfSidewayDeacc;
 
-	float mfForwardOppositeDirAccMul;
-	float mfSidewayOppositeDirAccMul;
+    float mfForwardOppositeDirAccMul;
+    float mfSidewayOppositeDirAccMul;
 
-	float mfMaxForwardSpeedMul;
-	float mfMaxBackwardSpeedMul;
-	float mfMaxSidwaySpeedMul;
+    float mfMaxForwardSpeedMul;
+    float mfMaxBackwardSpeedMul;
+    float mfMaxSidwaySpeedMul;
 };
 
 //----------------------------------------------

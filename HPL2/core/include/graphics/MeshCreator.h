@@ -70,7 +70,7 @@ namespace hpl {
 		cResources *mpResources;
 	};
 
-};
+}
 #endif // HPL_MESHCREATOR_H
 
 

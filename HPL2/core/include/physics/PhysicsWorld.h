@@ -281,6 +281,6 @@ namespace hpl {
 		tCollidePointVec mvContactPoints;
 		bool mbSaveContactPoints;
 	};
-};
+}
 #endif // HPL_PHYSICS_WORLD_H
 

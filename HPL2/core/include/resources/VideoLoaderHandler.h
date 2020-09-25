@@ -47,5 +47,5 @@ namespace hpl {
 		cResources* mpResources;
 	};
 
-};
+}
 #endif // HPL_VIDEO_LOADER_HANDLER_H

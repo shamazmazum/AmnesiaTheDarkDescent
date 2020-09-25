@@ -126,5 +126,5 @@ namespace hpl {
 		bool mbTangents;
 	};
 
-};
+}
 #endif // HPL_RENDERER3D_H

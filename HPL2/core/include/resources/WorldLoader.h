@@ -47,5 +47,5 @@ namespace hpl {
 		cPhysics *mpPhysics;
 	};
 
-};
+}
 #endif // HPL_MESH_LOADER_H

@@ -93,5 +93,5 @@ namespace hpl {
         cAnimation* mpParent;
 	};
 
-};
+}
 #endif // HPL_ANIMATION_TRACK_H

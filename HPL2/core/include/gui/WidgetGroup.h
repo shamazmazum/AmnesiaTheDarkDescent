@@ -25,45 +25,50 @@
 
 namespace hpl {
 
-	class cWidgetLabel;
-	class cGuiGfxElement;
+    class cWidgetLabel;
 
-	class cWidgetGroup : public iWidget
-	{
-	public:
-		cWidgetGroup(cGuiSet* apSet, cGuiSkin* apSkin);
-		~cWidgetGroup();
+    class cGuiGfxElement;
 
-		void SetHeaderText(const tWString& asText);
-		const tWString& GetHeaderText();
+    class cWidgetGroup : public iWidget {
+    public:
+        cWidgetGroup(cGuiSet *apSet, cGuiSkin *apSkin);
 
-		void SetDefaultFontSize(const cVector2f& avSize);
-	protected:
-		/////////////////////////////
-		// Implemented functions
-		void OnInit();
-		void OnLoadGraphics();
+        ~cWidgetGroup();
 
-		void OnChangeText();
+        void SetHeaderText(const tWString &asText);
 
-		void OnDraw(float afTimeStep, cGuiClipRegion* apClipRegion);
-		void OnDrawAfterClip(float afTimeStep, cGuiClipRegion *apClipRegion);
+        const tWString &GetHeaderText();
 
-		/////////////////////////////
-		// Data
+        void SetDefaultFontSize(const cVector2f &avSize);
 
-		cWidgetLabel *mpHeader;
-		cVector2f mvHeaderSize;
+    protected:
+        /////////////////////////////
+        // Implemented functions
+        void OnInit();
 
-		cGuiGfxElement *mpGfxBackground;
-		
-		cGuiGfxElement *mvGfxBorders[4];
-		cGuiGfxElement *mvGfxCorners[4];
+        void OnLoadGraphics();
 
-		float mfHeaderOffset;
-		bool mbHeaderBreaksUpperBorder;
-	};
-};
+        void OnChangeText();
+
+        void OnDraw(float afTimeStep, cGuiClipRegion *apClipRegion);
+
+        void OnDrawAfterClip(float afTimeStep, cGuiClipRegion *apClipRegion);
+
+        /////////////////////////////
+        // Data
+
+        cWidgetLabel *mpHeader;
+        cVector2f mvHeaderSize;
+
+        cGuiGfxElement *mpGfxBackground;
+
+        cGuiGfxElement *mvGfxBorders[4];
+        cGuiGfxElement *mvGfxCorners[4];
+
+        float mfHeaderOffset;
+        bool mbHeaderBreaksUpperBorder;
+    };
+}
 
 
 #endif // HPL_WIDGET_GROUP_H

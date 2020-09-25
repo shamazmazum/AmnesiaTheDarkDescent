@@ -326,7 +326,7 @@ void cLuxProp_MoveObject::UpdateAutoMove(float afTimeStep)
 {
 	///////////////////////
 	//Skip update if update is off, the entity is moving or the goal is reached.
-	if(mbAutoMove==false || mbMoving || mbAutoMoveReachedGoal) return;
+	if(!mbAutoMove || mbMoving || mbAutoMoveReachedGoal) return;
 	
 	///////////////////////
 	//Check if the auto move goal has been reached

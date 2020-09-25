@@ -84,7 +84,7 @@ void iLuxAchievementHandler::CreateAchievement(int alID, const tString& asName)
 
 void iLuxAchievementHandler::UnlockAchievement(int alID)
 {
-	if(mbRegistered == false)
+	if(!mbRegistered)
 	{
 		Error("Failed to activate Achievement %d. iLuxAchievementHandler::RegisterAchievements() has not been called\n", alID);
 		return;
@@ -121,7 +121,7 @@ tString iLuxAchievementHandler::GetAchievementName(int alID)
 
 void iLuxAchievementHandler::OnUnlockedAchievement(int alID)
 {
-	if(GetAchievementUnlocked(alID) == false)
+	if(!GetAchievementUnlocked(alID))
 	{
 		gpBase->mpDebugHandler->AddMessage(_W("Activated Achievement: ") + cString::To16Char(m_mapAchievements.find(alID)->second), false);
 		m_setDebugActivatedAchievements.insert(alID);

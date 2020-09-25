@@ -26,58 +26,67 @@
 
 namespace hpl {
 
-	class iHapticSurface;
-	class iLowLevelGraphics;
-	class iPhysicsBody;
-	class cSubMeshEntity;
+    class iHapticSurface;
 
-	class iHapticShape
-	{
-	public:
-		iHapticShape(const tString& asName ,eHapticShapeType aType) : 
-									mpSurface(NULL), mType(aType), msName(asName), 
-									mpBody(NULL),mpSubMeshEntity(NULL), mlTransformCount(-1) {}
-		virtual ~iHapticShape(){}
+    class iLowLevelGraphics;
 
-		eHapticShapeType GetType(){ return mType;}
-		const tString& GetName(){ return msName;} 
-		
-		virtual void SetEnabled(bool abX)=0;
-		virtual bool GetEnabled()=0;
+    class iPhysicsBody;
 
-		virtual void SetTransform(const cMatrixf &a_mtxTransform)=0;
-		virtual cMatrixf GetTransform()=0;
-		
-		virtual cVector3f GetAppliedForce()=0;
+    class cSubMeshEntity;
 
-		virtual void SetSurface(iHapticSurface *apSurface)=0;
-		
-		virtual void RenderDebug(iLowLevelGraphics *apLowLevel, const cColor &aColor)=0;
-		
-		iHapticSurface* GetSurface()const{ return mpSurface; }
+    class iHapticShape {
+    public:
+        iHapticShape(const tString &asName, eHapticShapeType aType) :
+                mpSurface(NULL), mType(aType), msName(asName),
+                mpBody(NULL), mpSubMeshEntity(NULL), mlTransformCount(-1) {}
 
-		cVector3f GetSize() const{ return mvSize;}
+        virtual ~iHapticShape() {}
 
-		iPhysicsBody* GetBody() const{ return mpBody; }
-		void SetBody(iPhysicsBody* apBody){ mpBody = apBody; }
+        eHapticShapeType GetType() { return mType; }
 
-		cSubMeshEntity* GetSubMeshEntity() const { return mpSubMeshEntity;}
-		void SetSubMeshEntity(cSubMeshEntity* apSubMeshEntity) { mpSubMeshEntity = apSubMeshEntity;}
+        const tString &GetName() { return msName; }
 
-		int GetTransformCount() const{ return mlTransformCount;}
-		void SetTransformCount(int alX){ mlTransformCount = alX;}
-	
-	protected:
-		tString msName;
-		iHapticSurface* mpSurface;
-		eHapticShapeType mType;
-		cVector3f mvSize;
+        virtual void SetEnabled(bool abX) = 0;
 
-		iPhysicsBody *mpBody;
-		cSubMeshEntity *mpSubMeshEntity;
-		int mlTransformCount;
+        virtual bool GetEnabled() = 0;
 
-	};
+        virtual void SetTransform(const cMatrixf &a_mtxTransform) = 0;
 
-};
+        virtual cMatrixf GetTransform() = 0;
+
+        virtual cVector3f GetAppliedForce() = 0;
+
+        virtual void SetSurface(iHapticSurface *apSurface) = 0;
+
+        virtual void RenderDebug(iLowLevelGraphics *apLowLevel, const cColor &aColor) = 0;
+
+        iHapticSurface *GetSurface() const { return mpSurface; }
+
+        cVector3f GetSize() const { return mvSize; }
+
+        iPhysicsBody *GetBody() const { return mpBody; }
+
+        void SetBody(iPhysicsBody *apBody) { mpBody = apBody; }
+
+        cSubMeshEntity *GetSubMeshEntity() const { return mpSubMeshEntity; }
+
+        void SetSubMeshEntity(cSubMeshEntity *apSubMeshEntity) { mpSubMeshEntity = apSubMeshEntity; }
+
+        int GetTransformCount() const { return mlTransformCount; }
+
+        void SetTransformCount(int alX) { mlTransformCount = alX; }
+
+    protected:
+        tString msName;
+        iHapticSurface *mpSurface;
+        eHapticShapeType mType;
+        cVector3f mvSize;
+
+        iPhysicsBody *mpBody;
+        cSubMeshEntity *mpSubMeshEntity;
+        int mlTransformCount;
+
+    };
+
+}
 #endif // HPL_HAPTIC_SHAPE_H

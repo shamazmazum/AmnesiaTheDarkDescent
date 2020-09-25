@@ -41,5 +41,5 @@ namespace hpl {
         int mlPicCount;
 	};
 
-};
+}
 #endif // HPL_FRAMEBASE_H

@@ -39,5 +39,5 @@ namespace hpl {
 		tStringList mlstExtensions;
 	};
 
-};
+}
 #endif // HPL_RESOURCE_LOADER_H

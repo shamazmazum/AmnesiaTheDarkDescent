@@ -159,7 +159,7 @@ bool cLuxHandObject_Melee::DoAction(eLuxPlayerAction aAction, bool abPressed)
 		}
 		else if(mpHands->GetState()== eLuxHandsState_HandObject)
 		{
-			if(abPressed ==false && mpHands->mlHandObjectState != 2)
+			if(!abPressed && mpHands->mlHandObjectState != 2)
 			{
 				mpHands->mbHandObjectAttackDown = false;
 				if(mpHands->mlHandObjectState !=0) Swing();
@@ -177,7 +177,7 @@ bool cLuxHandObject_Melee::AnimationIsOver()
 	//Going to charge
 	if(mpHands->mlHandObjectState == 0)
 	{
-		if(mpHands->mbHandObjectAttackDown==false)
+		if(!mpHands->mbHandObjectAttackDown)
 		{
 			Swing();
 		}
@@ -216,7 +216,7 @@ bool cLuxHandObject_Melee::AnimationIsOver()
 
 void cLuxHandObject_Melee::UpdateCharge(float afTimeStep)
 {
-	if(mpHands->mbHandObjectAttackDown==false) return;
+	if(!mpHands->mbHandObjectAttackDown) return;
 
 	if(mpHands->mfHandObjectChargeCount < 1)
 	{

@@ -179,5 +179,5 @@ namespace hpl {
 	//------------------------------------------
 
 
-};
+}
 #endif // HPL_VERLET_PARTICLE_H

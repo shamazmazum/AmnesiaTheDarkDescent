@@ -27,108 +27,126 @@
 
 namespace hpl {
 
-	class iLowLevelGraphics;
-	class iRenderableContainerNode;
+    class iLowLevelGraphics;
 
-	//-----------------------------------------------
+    class iRenderableContainerNode;
 
-	class cFrustum
-	{
-	public:
-		cFrustum();
+    //-----------------------------------------------
 
-		void SetupPerspectiveProj( const cMatrixf& a_mtxProj, const cMatrixf& a_mtxView,
-									float afFarPlane,float afNearPlane,float afFOV, float afAspect,
-									const cVector3f &avOrigin, bool abInfFarPlane=false,
-									cMatrixf* apCustomFarProjMtx=NULL,
-									bool abObliqueNearPlane=false);
+    class cFrustum {
+    public:
+        cFrustum();
 
-		void SetupOrthoProj( const cMatrixf& a_mtxProj, const cMatrixf& a_mtxView,
-							 float afFarPlane,float afNearPlane,const cVector2f &avViewSize,
-							 const cVector3f &avOrigin, bool abInfFarPlane=false);
+        void SetupPerspectiveProj(const cMatrixf &a_mtxProj, const cMatrixf &a_mtxView,
+                                  float afFarPlane, float afNearPlane, float afFOV, float afAspect,
+                                  const cVector3f &avOrigin, bool abInfFarPlane = false,
+                                  cMatrixf *apCustomFarProjMtx = NULL,
+                                  bool abObliqueNearPlane = false);
 
-		const cPlanef& GetPlane(eFrustumPlane aType);
-		const cVector3f& GetVertex(int alIdx){ return mvVertices[alIdx];}
+        void SetupOrthoProj(const cMatrixf &a_mtxProj, const cMatrixf &a_mtxView,
+                            float afFarPlane, float afNearPlane, const cVector2f &avViewSize,
+                            const cVector3f &avOrigin, bool abInfFarPlane = false);
 
-		bool CollidePoint(const cVector3f& avPoint);
-		eCollision CollideBoundingVolume(cBoundingVolume* apBV);
-		eCollision CollideNode(iRenderableContainerNode* apNode);
-		eCollision CollideFrustum(cFrustum *apFrustum);
-		
-		inline const cMatrixf& GetProjectionMatrix() const { return m_mtxProj;}
-		inline const cMatrixf& GetViewMatrix()const { return m_mtxView;}
+        const cPlanef &GetPlane(eFrustumPlane aType);
 
-		inline float GetFarPlane()const { return mfFarPlane;}
-		inline float GetNearPlane()const { return mfNearPlane;}
-		inline float GetAspect() const { return mfAspect;}
-		inline float GetFOV() const { return mfFOV;}
+        const cVector3f &GetVertex(int alIdx) { return mvVertices[alIdx]; }
 
-		bool GetInfFarPlane(){ return mbInfFarPlane;}
+        bool CollidePoint(const cVector3f &avPoint);
 
-		void SetInvertsCullMode(bool abX){ mbInvertsCullMode=abX;}
-		bool GetInvertsCullMode(){ return mbInvertsCullMode;}
+        eCollision CollideBoundingVolume(cBoundingVolume *apBV);
 
-		inline eProjectionType GetProjectionType() const { return mProjectionType; }
-		
-		inline const cVector2f& GetOrthoViewSize() const{ return mvViewSize;}
-		
-		bool CheckSphereNearPlaneIntersection(const cVector3f &avCenter, float afRadius);
-		bool CheckAABBNearPlaneIntersection(const cVector3f &avMin, const cVector3f &avMax);
-		bool CheckBVNearPlaneIntersection(cBoundingVolume* apBV);
-		bool CheckFrustumNearPlaneIntersection(cFrustum* apFrustum);
-		
-		bool CheckLineIntersection(const cVector3f& avStart, const cVector3f &avEnd, cVector3f &avIntersection);
+        eCollision CollideNode(iRenderableContainerNode *apNode);
 
-		cSpheref GetBoundingSphere(){ return mBoundingSphere;}
-		const cBoundingVolume& GetBoundingVolume(){ return mBoundingVolume;}
+        eCollision CollideFrustum(cFrustum *apFrustum);
 
-		const cVector3f& GetOrigin();
-		cBoundingVolume* GetOriginBV();
+        inline const cMatrixf &GetProjectionMatrix() const { return m_mtxProj; }
 
-		cVector3f GetForward();
+        inline const cMatrixf &GetViewMatrix() const { return m_mtxView; }
 
-		void Draw(iLowLevelGraphics *apLowLevelGraphics, const cColor &aColor);
+        inline float GetFarPlane() const { return mfFarPlane; }
 
-	private:
-		eCollision CollideFustrumSphere(const cVector3f& avCenter, float afRadius);
+        inline float GetNearPlane() const { return mfNearPlane; }
 
-		eCollision CollideSphere(const cVector3f& avCenter, float afRadius, int alMaxPlanes=6);
-		eCollision CollideAABB(const cVector3f& avMin,const cVector3f& avMax, int alMaxPlanes=6);
-		
+        inline float GetAspect() const { return mfAspect; }
 
-		void Setup(	const cMatrixf& a_mtxProj, const cMatrixf& a_mtxView,
-					float afFarPlane,float afNearPlane,const cVector3f &avOrigin, 
-					bool abInfFarPlane, cMatrixf* apCustomFarProjMtx=NULL);
-		
-		void UpdatePlanes(cMatrixf* apCustomFarProjMtx);
-		void UpdateSphere();
-		void UpdateVertices();
-		void UpdateBV();
+        inline float GetFOV() const { return mfFOV; }
 
-		float mfFarPlane;
-		float mfNearPlane;
-		float mfAspect;
-		float mfFOV;
+        bool GetInfFarPlane() { return mbInfFarPlane; }
 
-		cVector2f mvViewSize;
-        
-		bool mbInfFarPlane;
-		bool mbInvertsCullMode;
-		bool mbObliqueNearPlane;
+        void SetInvertsCullMode(bool abX) { mbInvertsCullMode = abX; }
 
-		eProjectionType mProjectionType;
+        bool GetInvertsCullMode() { return mbInvertsCullMode; }
 
-		cVector3f mvOrigin;
-		cBoundingVolume mOriginBV;
+        inline eProjectionType GetProjectionType() const { return mProjectionType; }
 
-		cMatrixf m_mtxProj;
-		cMatrixf m_mtxViewProj;
-		cMatrixf m_mtxView;
-		cPlanef mPlane[6];
-		cSpheref mBoundingSphere;
-		cBoundingVolume mBoundingVolume;
+        inline const cVector2f &GetOrthoViewSize() const { return mvViewSize; }
 
-		cVector3f mvVertices[8];
-	};
-};
+        bool CheckSphereNearPlaneIntersection(const cVector3f &avCenter, float afRadius);
+
+        bool CheckAABBNearPlaneIntersection(const cVector3f &avMin, const cVector3f &avMax);
+
+        bool CheckBVNearPlaneIntersection(cBoundingVolume *apBV);
+
+        bool CheckFrustumNearPlaneIntersection(cFrustum *apFrustum);
+
+        bool CheckLineIntersection(const cVector3f &avStart, const cVector3f &avEnd, cVector3f &avIntersection);
+
+        cSpheref GetBoundingSphere() { return mBoundingSphere; }
+
+        const cBoundingVolume &GetBoundingVolume() { return mBoundingVolume; }
+
+        const cVector3f &GetOrigin();
+
+        cBoundingVolume *GetOriginBV();
+
+        cVector3f GetForward();
+
+        void Draw(iLowLevelGraphics *apLowLevelGraphics, const cColor &aColor);
+
+    private:
+        eCollision CollideFustrumSphere(const cVector3f &avCenter, float afRadius);
+
+        eCollision CollideSphere(const cVector3f &avCenter, float afRadius, int alMaxPlanes = 6);
+
+        eCollision CollideAABB(const cVector3f &avMin, const cVector3f &avMax, int alMaxPlanes = 6);
+
+
+        void Setup(const cMatrixf &a_mtxProj, const cMatrixf &a_mtxView,
+                   float afFarPlane, float afNearPlane, const cVector3f &avOrigin,
+                   bool abInfFarPlane, cMatrixf *apCustomFarProjMtx = NULL);
+
+        void UpdatePlanes(cMatrixf *apCustomFarProjMtx);
+
+        void UpdateSphere();
+
+        void UpdateVertices();
+
+        void UpdateBV();
+
+        float mfFarPlane;
+        float mfNearPlane;
+        float mfAspect;
+        float mfFOV;
+
+        cVector2f mvViewSize;
+
+        bool mbInfFarPlane;
+        bool mbInvertsCullMode;
+        bool mbObliqueNearPlane;
+
+        eProjectionType mProjectionType;
+
+        cVector3f mvOrigin;
+        cBoundingVolume mOriginBV;
+
+        cMatrixf m_mtxProj;
+        cMatrixf m_mtxViewProj;
+        cMatrixf m_mtxView;
+        cPlanef mPlane[6];
+        cSpheref mBoundingSphere;
+        cBoundingVolume mBoundingVolume;
+
+        cVector3f mvVertices[8];
+    };
+}
 #endif // HPL_FRUSTUM_H

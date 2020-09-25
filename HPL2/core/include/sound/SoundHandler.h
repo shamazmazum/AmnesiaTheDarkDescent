@@ -30,254 +30,279 @@
 #include "physics/PhysicsWorld.h"
 
 namespace hpl {
-	
-	class iLowLevelSound;
-	class iSoundChannel;
-	class cWorld;
 
-	//----------------------------------------
+    class iLowLevelSound;
 
-	enum eSoundEntryType
-	{
-		eSoundEntryType_World = eFlagBit_0,
-		eSoundEntryType_Gui =	eFlagBit_1,
-		eSoundEntryType_All =	eFlagBit_All
-	};
+    class iSoundChannel;
 
-	//----------------------------------------
-	
-	class cSoundRayCallback :public iPhysicsRayCallback
-	{
-	public:
-		void Reset();
-		bool HasCollided(){ return mbHasCollided;}
-		
-		bool BeforeIntersect(iPhysicsBody *pBody);
-		bool OnIntersect(iPhysicsBody *pBody,cPhysicsRayParams *apParams);
-		
-	private:
-		bool mbHasCollided;
-		int mlCount;
-	};
+    class cWorld;
 
-	//----------------------------------------
+    //----------------------------------------
 
-	////////////////////////////////////////////////////
-	//////////// SOUND ENTRY ///////////////////////////
-	////////////////////////////////////////////////////
+    enum eSoundEntryType {
+        eSoundEntryType_World = eFlagBit_0,
+        eSoundEntryType_Gui = eFlagBit_1,
+        eSoundEntryType_All = eFlagBit_All
+    };
 
-	//----------------------------------------
+    //----------------------------------------
 
-	class cSoundHandler;
+    class cSoundRayCallback : public iPhysicsRayCallback {
+    public:
+        void Reset();
 
-	//----------------------------------------
-	
-	class cSoundEntry
-	{
-	public:
-		cSoundEntry(const tString& asName, iSoundChannel* apSound, float afVolume,
-					eSoundEntryType aType, bool ab3D,
-					bool abStream,int alId, 
-					cSoundHandler *apSoundHandler);
-		~cSoundEntry();
+        bool HasCollided() { return mbHasCollided; }
 
-		bool Update(float afTimeStep);
+        bool BeforeIntersect(iPhysicsBody *pBody);
 
-		inline const tString& GetName() const { return msName;}
-		inline eSoundEntryType GetType() const { return mType; }
-		inline int GetId() const { return mlId; }
-		inline iSoundChannel* GetChannel() const { return mpSound; }
-		
-		inline bool IsFirstTime(){ return mbFirstTime; }
+        bool OnIntersect(iPhysicsBody *pBody, cPhysicsRayParams *apParams);
 
-		void Stop();
-		void SetPaused(bool abX);
+    private:
+        bool mbHasCollided;
+        int mlCount;
+    };
 
-		void SetDefaultVolume(float afVolume);
-		void SetDefaultSpeed(float afSpeed);
+    //----------------------------------------
 
-		void SetVolumeMul(float afMul);
-		void SetSpeedMul(float afMul);
+    ////////////////////////////////////////////////////
+    //////////// SOUND ENTRY ///////////////////////////
+    ////////////////////////////////////////////////////
 
-		void FadeVolumeMulTo(float afDestMul, float afSpeed);
-		void FadeSpeedMulTo(float afDestMul, float afSpeed);
-		
-		void FadeOut(float afSpeed);
-		void FadeIn(float afVolumeMul,float afSpeed);
+    //----------------------------------------
 
-		iSoundEntryCallback* GetCallBack(){ return mpCallback;}
-		void SetCallBack(iSoundEntryCallback* apCallback){ mpCallback = apCallback;}
+    class cSoundHandler;
 
-		void SetStopDisabled(bool abX){mbStopDisabled = abX;}
-		bool GetStopDisabled(){ return mbStopDisabled;}
-		
-	private:
-		void UpdateVolumeMulFade(float afTimeStep);
-		void UpdateSpeedMulFade(float afTimeStep);
+    //----------------------------------------
 
-		void Update3DSpecifics(float afTimeStep);
-		
-		tString msName;
-		iSoundChannel* mpSound;
-		cSoundHandler *mpSoundHandler;
+    class cSoundEntry {
+    public:
+        cSoundEntry(const tString &asName, iSoundChannel *apSound, float afVolume,
+                    eSoundEntryType aType, bool ab3D,
+                    bool abStream, int alId,
+                    cSoundHandler *apSoundHandler);
 
-		eSoundEntryType mType;
-		int mlId;
+        ~cSoundEntry();
 
-		bool mb3D;
+        bool Update(float afTimeStep);
 
-		float mfNormalVolume;
-		float mfVolumeMul;
-		float mfVolumeFadeDest;
-		float mfVolumeFadeSpeed;
-		bool mbStopAfterFadeOut;
-				
-		float mfNormalSpeed;
-		float mfSpeedMul;
-		float mfSpeedFadeDest;
-		float mfSpeedFadeSpeed;
+        inline const tString &GetName() const { return msName; }
 
-		bool mbFirstTime;
-		
-		float mfBlockMul;
-		float mfBlockFadeDest;
-		float mfBlockFadeSpeed;
+        inline eSoundEntryType GetType() const { return mType; }
 
-		bool mbStream;
-		bool mbStopDisabled;
+        inline int GetId() const { return mlId; }
 
-		iSoundEntryCallback *mpCallback;
-	};
-	
-	//----------------------------------------
-	
-	////////////////////////////////////////////////////
-	//////////// SOUND HANDLER ///////////////////////
-	////////////////////////////////////////////////////
-	
-	
-	//----------------------------------------
+        inline iSoundChannel *GetChannel() const { return mpSound; }
 
-	typedef std::list<cSoundEntry*> tSoundEntryList;
-	typedef tSoundEntryList::iterator tSoundEntryListIt;
-	typedef cSTLIterator<cSoundEntry,tSoundEntryList,tSoundEntryListIt> tSoundEntryIterator;
+        inline bool IsFirstTime() { return mbFirstTime; }
 
-	class cResources;
+        void Stop();
 
-	//----------------------------------------
+        void SetPaused(bool abX);
 
-	class cSoundHandler
-	{
-	friend class cSoundEntry;
-	public:
-		cSoundHandler(iLowLevelSound* apLowLevelSound, cResources* apResources);
-		~cSoundHandler();
+        void SetDefaultVolume(float afVolume);
 
-		void Update(float afTimeStep);
+        void SetDefaultSpeed(float afSpeed);
 
-		/**
-		 * Plays a sound
-		 * \param asName Name of the file to load. 
-		 * \param abLoop If the sound shall be looping
-		 * \param afVolume The start volume of the sound
-		 * \param avPos The position to play it at
-		 * \param afMinDist Inside this distance max volume (afVolume) is heard, after it is lowered, only used if 3D.
-		 * \param afMaxDist Beyond this distance volume is 0
-		 * \param mEntryType The type of sound. Use to determine what effects affect it.
-		 * \param abRelative If position is relative to listener
-		 * \param ab3D If the sound uses 3D calculations to determine volume and other world effects.
-		 * \param alPriorityModifier The priority of the sound, if 3D then this number is added to a calculated priority based on distance from listener.
-		 * \return 
-		 */
-		cSoundEntry* Play(	const tString& asName,bool abLoop,float afVolume,const cVector3f& avPos,  
-							float afMinDist,float afMaxDist, eSoundEntryType aEntryType, 
-							bool abRelative, bool ab3D, int alPriorityModifier, bool abStream,
-							bool *apNotEnoughChannels=NULL);
-		
-		cSoundEntry* Play3D(	const tString& asName,bool abLoop,float afVolume,const cVector3f& avPos,  
-								float afMinDist,float afMaxDist, 
-								eSoundEntryType aEntryType = eSoundEntryType_World, 
-								bool abRelative=false,
-								int alPriorityModifier=0, bool abStream=false, bool *apNotEnoughChannels=NULL);
-		
-		cSoundEntry* PlayGuiStream(	const tString& asFileName,bool abLoop,float afVolume,const cVector3f& avPos=cVector3f(0,0,1),
-									eSoundEntryType aEntryType = eSoundEntryType_Gui, bool *apNotEnoughChannels=NULL);
+        void SetVolumeMul(float afMul);
 
-		cSoundEntry* PlayGui(	const tString& asName,bool abLoop,float afVolume,const cVector3f& avPos=cVector3f(0,0,1),
-								eSoundEntryType aEntryType = eSoundEntryType_Gui, bool *apNotEnoughChannels=NULL);
+        void SetSpeedMul(float afMul);
 
-		cSoundEntry* PlaySoundEntityGui(const tString& asName,bool abLoop,float afVolume,
-										eSoundEntryType aEntryType = eSoundEntryType_Gui,
-										const cVector3f& avPos=cVector3f(0,0,1), bool *apNotEnoughChannels=NULL);
+        void FadeVolumeMulTo(float afDestMul, float afSpeed);
+
+        void FadeSpeedMulTo(float afDestMul, float afSpeed);
+
+        void FadeOut(float afSpeed);
+
+        void FadeIn(float afVolumeMul, float afSpeed);
+
+        iSoundEntryCallback *GetCallBack() { return mpCallback; }
+
+        void SetCallBack(iSoundEntryCallback *apCallback) { mpCallback = apCallback; }
+
+        void SetStopDisabled(bool abX) { mbStopDisabled = abX; }
+
+        bool GetStopDisabled() { return mbStopDisabled; }
+
+    private:
+        void UpdateVolumeMulFade(float afTimeStep);
+
+        void UpdateSpeedMulFade(float afTimeStep);
+
+        void Update3DSpecifics(float afTimeStep);
+
+        tString msName;
+        iSoundChannel *mpSound;
+        cSoundHandler *mpSoundHandler;
+
+        eSoundEntryType mType;
+        int mlId;
+
+        bool mb3D;
+
+        float mfNormalVolume;
+        float mfVolumeMul;
+        float mfVolumeFadeDest;
+        float mfVolumeFadeSpeed;
+        bool mbStopAfterFadeOut;
+
+        float mfNormalSpeed;
+        float mfSpeedMul;
+        float mfSpeedFadeDest;
+        float mfSpeedFadeSpeed;
+
+        bool mbFirstTime;
+
+        float mfBlockMul;
+        float mfBlockFadeDest;
+        float mfBlockFadeSpeed;
+
+        bool mbStream;
+        bool mbStopDisabled;
+
+        iSoundEntryCallback *mpCallback;
+    };
+
+    //----------------------------------------
+
+    ////////////////////////////////////////////////////
+    //////////// SOUND HANDLER ///////////////////////
+    ////////////////////////////////////////////////////
 
 
-		void SetSilent(bool abX){ mbSilent = abX; }
-		bool GetSilent(){ return mbSilent; }
-		
-		bool Stop(const tString& asName);
-		bool StopAllExcept(const tString& asName);
-		
-		void StopAll(tFlag mTypes);
-		void PauseAll(tFlag mTypes);
-		void ResumeAll(tFlag mTypes);
-		void FadeOutAll(tFlag mTypes,float afFadeSpeed, bool abDisableStop);
+    //----------------------------------------
 
-		bool IsPlaying(const tString& asName);
+    typedef std::list<cSoundEntry *> tSoundEntryList;
+    typedef tSoundEntryList::iterator tSoundEntryListIt;
+    typedef cSTLIterator <cSoundEntry, tSoundEntryList, tSoundEntryListIt> tSoundEntryIterator;
 
-		bool IsValid(cSoundEntry *apEntry, int alID);
-		
-		/**
-		 * Set the global volume for a specific type(s). If alId >= 0 then the settings will be applied to that id, else a free id will be found. 
-		 * \param afVolume Global Volume to be set.
-		 * \param mAffectedTypes Type(s) affected by this setting.
-		 * \param alId The Id to the setting applies to, if < 0, the the a free one is found.
-		 * \return if alId >=0, alId is returned, else the lowest free id.
-		 */
-		int SetGlobalVolume(float afVolume, tFlag mAffectedTypes, int alId);
-		int SetGlobalSpeed(float afSpeed,tFlag mAffectedTypes, int alId);
+    class cResources;
 
-		int FadeGlobalVolume(float afDestVolume, float afSpeed,tFlag mAffectedTypes, int alId, bool abDestroyIdAtDest);
-		int FadeGlobalSpeed(float afDestSpeed, float afSpeed,tFlag mAffectedTypes, int alId, bool abDestroyIdAtDest);
+    //----------------------------------------
 
-		float GetGlobalVolume(eSoundEntryType aType);
-		float GetGlobalSpeed(eSoundEntryType aType);
+    class cSoundHandler {
+        friend class cSoundEntry;
 
-		cMultipleSettingsHandler* GetGlobalVolumeSettingsHandler(){ return &mGlobalVolumeHandler;}
-		cMultipleSettingsHandler* GetGlobalSpeedSettingsHandler(){ return &mGlobalSpeedHandler;}
+    public:
+        cSoundHandler(iLowLevelSound *apLowLevelSound, cResources *apResources);
 
-		void SetWorld(cWorld *apWorld);
+        ~cSoundHandler();
 
-		iSoundChannel* CreateChannel(const tString& asName, int alPriority, bool abStream, bool *apNotEnoughChannels);
+        void Update(float afTimeStep);
 
-		tSoundEntryList* GetEntryList();
-		
-		bool CheckSoundIsBlocked(const cVector3f& avSoundPosition);
-	
-	private:
-		cSoundEntry* GetEntry(const tString& asName);
+        /**
+         * Plays a sound
+         * \param asName Name of the file to load.
+         * \param abLoop If the sound shall be looping
+         * \param afVolume The start volume of the sound
+         * \param avPos The position to play it at
+         * \param afMinDist Inside this distance max volume (afVolume) is heard, after it is lowered, only used if 3D.
+         * \param afMaxDist Beyond this distance volume is 0
+         * \param mEntryType The type of sound. Use to determine what effects affect it.
+         * \param abRelative If position is relative to listener
+         * \param ab3D If the sound uses 3D calculations to determine volume and other world effects.
+         * \param alPriorityModifier The priority of the sound, if 3D then this number is added to a calculated priority based on distance from listener.
+         * \return
+         */
+        cSoundEntry *Play(const tString &asName, bool abLoop, float afVolume, const cVector3f &avPos,
+                          float afMinDist, float afMaxDist, eSoundEntryType aEntryType,
+                          bool abRelative, bool ab3D, int alPriorityModifier, bool abStream,
+                          bool *apNotEnoughChannels = NULL);
 
-		iLowLevelSound* mpLowLevelSound;
-		cResources* mpResources;
+        cSoundEntry *Play3D(const tString &asName, bool abLoop, float afVolume, const cVector3f &avPos,
+                            float afMinDist, float afMaxDist,
+                            eSoundEntryType aEntryType = eSoundEntryType_World,
+                            bool abRelative = false,
+                            int alPriorityModifier = 0, bool abStream = false, bool *apNotEnoughChannels = NULL);
 
-		tSoundEntryList m_lstSoundEntries;
+        cSoundEntry *PlayGuiStream(const tString &asFileName, bool abLoop, float afVolume,
+                                   const cVector3f &avPos = cVector3f(0, 0, 1),
+                                   eSoundEntryType aEntryType = eSoundEntryType_Gui, bool *apNotEnoughChannels = NULL);
 
-		//tSoundEntryList m_lstSoundEntriesPool;
-		
-		bool mbSilent;
+        cSoundEntry *
+        PlayGui(const tString &asName, bool abLoop, float afVolume, const cVector3f &avPos = cVector3f(0, 0, 1),
+                eSoundEntryType aEntryType = eSoundEntryType_Gui, bool *apNotEnoughChannels = NULL);
 
-		cWorld *mpWorld;
+        cSoundEntry *PlaySoundEntityGui(const tString &asName, bool abLoop, float afVolume,
+                                        eSoundEntryType aEntryType = eSoundEntryType_Gui,
+                                        const cVector3f &avPos = cVector3f(0, 0, 1), bool *apNotEnoughChannels = NULL);
 
-		cSoundRayCallback mSoundRayCallback;
 
-		int mlCount;
-		int mlIdCount;
+        void SetSilent(bool abX) { mbSilent = abX; }
 
-		float mfGlobalVolume[2];
-		float mfGlobalSpeed[2];
+        bool GetSilent() { return mbSilent; }
 
-		cMultipleSettingsHandler mGlobalVolumeHandler;
-		cMultipleSettingsHandler mGlobalSpeedHandler;
-	};
+        bool Stop(const tString &asName);
 
-};
+        bool StopAllExcept(const tString &asName);
+
+        void StopAll(tFlag mTypes);
+
+        void PauseAll(tFlag mTypes);
+
+        void ResumeAll(tFlag mTypes);
+
+        void FadeOutAll(tFlag mTypes, float afFadeSpeed, bool abDisableStop);
+
+        bool IsPlaying(const tString &asName);
+
+        bool IsValid(cSoundEntry *apEntry, int alID);
+
+        /**
+         * Set the global volume for a specific type(s). If alId >= 0 then the settings will be applied to that id, else a free id will be found.
+         * \param afVolume Global Volume to be set.
+         * \param mAffectedTypes Type(s) affected by this setting.
+         * \param alId The Id to the setting applies to, if < 0, the the a free one is found.
+         * \return if alId >=0, alId is returned, else the lowest free id.
+         */
+        int SetGlobalVolume(float afVolume, tFlag mAffectedTypes, int alId);
+
+        int SetGlobalSpeed(float afSpeed, tFlag mAffectedTypes, int alId);
+
+        int FadeGlobalVolume(float afDestVolume, float afSpeed, tFlag mAffectedTypes, int alId, bool abDestroyIdAtDest);
+
+        int FadeGlobalSpeed(float afDestSpeed, float afSpeed, tFlag mAffectedTypes, int alId, bool abDestroyIdAtDest);
+
+        float GetGlobalVolume(eSoundEntryType aType);
+
+        float GetGlobalSpeed(eSoundEntryType aType);
+
+        cMultipleSettingsHandler *GetGlobalVolumeSettingsHandler() { return &mGlobalVolumeHandler; }
+
+        cMultipleSettingsHandler *GetGlobalSpeedSettingsHandler() { return &mGlobalSpeedHandler; }
+
+        void SetWorld(cWorld *apWorld);
+
+        iSoundChannel *CreateChannel(const tString &asName, int alPriority, bool abStream, bool *apNotEnoughChannels);
+
+        tSoundEntryList *GetEntryList();
+
+        bool CheckSoundIsBlocked(const cVector3f &avSoundPosition);
+
+    private:
+        cSoundEntry *GetEntry(const tString &asName);
+
+        iLowLevelSound *mpLowLevelSound;
+        cResources *mpResources;
+
+        tSoundEntryList m_lstSoundEntries;
+
+        //tSoundEntryList m_lstSoundEntriesPool;
+
+        bool mbSilent;
+
+        cWorld *mpWorld;
+
+        cSoundRayCallback mSoundRayCallback;
+
+        int mlCount;
+        int mlIdCount;
+
+        float mfGlobalVolume[2];
+        float mfGlobalSpeed[2];
+
+        cMultipleSettingsHandler mGlobalVolumeHandler;
+        cMultipleSettingsHandler mGlobalSpeedHandler;
+    };
+
+}
 #endif // HPL_SOUNDHANDLER_H

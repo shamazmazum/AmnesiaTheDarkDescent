@@ -756,7 +756,7 @@ bool cLuxProp_Object::ShowOutlinesOnConnectedBodies()
 
 void cLuxProp_Object::UpdateFoodEnemyAttraction(float afTimeStep)
 {
-	if(mbIsFood==false) return;
+	if(!mbIsFood) return;
 	if(mfFoodAttractCount > 0)
 	{
 		mfFoodAttractCount -= afTimeStep;
@@ -783,14 +783,14 @@ void cLuxProp_Object::UpdateFoodEnemyAttraction(float afTimeStep)
 
 void cLuxProp_Object::UpdateInsanityVision(float afTimeStep)
 {
-	if(mbIsInsanityVision==false) return;
+	if(!mbIsInsanityVision) return;
 	if(mpMeshEntity==NULL) return;
 	
 	//////////////////////////////////
 	//Check if the object should be disabled or enabled
 	float fSanity = gpBase->mpPlayer->GetSanity();
 	if( (fSanity <= mfVisionMaxSanity && mbInsanityVisionActive) ||
-		(fSanity > mfVisionMaxSanity && mbInsanityVisionActive==false) )
+		(fSanity > mfVisionMaxSanity && !mbInsanityVisionActive) )
 	{
 		return;
 	}
@@ -818,7 +818,7 @@ void cLuxProp_Object::UpdateInsanityVision(float afTimeStep)
 
 	///////////////////////////////
 	// Iterate submeshes and see if any is in player FOV
-	if(bInsideFOV==false)
+	if(!bInsideFOV)
 	{
 		for(int i=0; i<mpMeshEntity->GetSubMeshEntityNum(); ++i)
 		{	
@@ -834,7 +834,7 @@ void cLuxProp_Object::UpdateInsanityVision(float afTimeStep)
 
 	//////////////////////////////////
 	//Change visibility
-	if(bInsideFOV==false)
+	if(!bInsideFOV)
 	{
 		SetInsanityVisionVisability(!mbInsanityVisionActive);
 	}

@@ -191,7 +191,7 @@ void cLuxSaveHandler::Update(float afTimeStep)
 
 void cLuxSaveHandler::Reset()
 {
-	if(mbInitialized==false)
+	if(!mbInitialized)
 	{
 		mbInitialized = true;
 		if(mbStartThread) mSaveHandlerThreadClass.SetUpThread();

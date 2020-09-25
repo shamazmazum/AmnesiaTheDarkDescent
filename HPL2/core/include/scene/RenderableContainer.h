@@ -27,150 +27,168 @@
 
 namespace hpl {
 
-	//-------------------------------------------
+    //-------------------------------------------
 
-	class iRenderableContainerNode;
-	class cRendererCallbackFunctions;
-	class iRenderable;
-	class cFrustum;
+    class iRenderableContainerNode;
 
-	//-------------------------------------------
-	
-	class cVisibleRCNodeTracker
-	{
-	public:
-		cVisibleRCNodeTracker();
+    class cRendererCallbackFunctions;
 
-		void SwitchAndClearVisibleNodeSet();
-		void SetNodeVisible(iRenderableContainerNode *apNode);
-		bool WasNodeVisible(iRenderableContainerNode *apNode);
+    class iRenderable;
 
-		void Reset();
+    class cFrustum;
 
-	private:
-		tRenderableContainerNodeSet m_setVisibleNodes[2];
-		int mlCurrentVisibleNodeSet;
-		int mlFrameCounter;
+    //-------------------------------------------
 
-	};
+    class cVisibleRCNodeTracker {
+    public:
+        cVisibleRCNodeTracker();
 
-	//-------------------------------------------
-	
-	class cRenderableContainerObjectCallback : public iRenderableCallback
-	{
-	public:
-		cRenderableContainerObjectCallback();
+        void SwitchAndClearVisibleNodeSet();
 
-		void OnVisibleChange(iRenderable *apObject);
-		void OnRenderFlagsChange(iRenderable *apObject);
-	};
+        void SetNodeVisible(iRenderableContainerNode *apNode);
 
-	//-------------------------------------------
+        bool WasNodeVisible(iRenderableContainerNode *apNode);
 
-	class iRenderableContainerNode
-	{
-	friend class iRenderableContainer;
-	public:
-		iRenderableContainerNode();
-		virtual ~iRenderableContainerNode(){}
+        void Reset();
 
-		virtual void UpdateBeforeUse(){}
+    private:
+        tRenderableContainerNodeSet m_setVisibleNodes[2];
+        int mlCurrentVisibleNodeSet;
+        int mlFrameCounter;
 
-		inline tRenderableContainerNodeList* GetChildNodeList(){ return &mlstChildNodes; }
-		inline bool HasChildNodes(){ return mlstChildNodes.empty() == false; }
+    };
 
-		inline tRenderableList* GetObjectList() { return &mlstObjects; }
-		inline bool HasObjects() { return mlstObjects.empty() == false; }
+    //-------------------------------------------
 
-		inline iRenderableContainerNode* GetParent(){ return mpParent;}
-		inline void SetParent(iRenderableContainerNode* apParent){ mpParent = apParent;}
+    class cRenderableContainerObjectCallback : public iRenderableCallback {
+    public:
+        cRenderableContainerObjectCallback();
 
-		inline int GetObjectNum(){ return (int)mlstObjects.size();}
-		
-		inline const cVector3f& GetMin() const{ return mvMin;}
-		inline const cVector3f& GetMax() const{ return mvMax;}
+        void OnVisibleChange(iRenderable *apObject);
 
-		inline const cVector3f GetCenter() const{ return mvCenter;}
-		inline float GetRadius() const { return mfRadius;}
+        void OnRenderFlagsChange(iRenderable *apObject);
+    };
 
-		inline float GetViewDistance()const{ return mfViewDistance;}
-		inline void SetViewDistance(float afX){ mfViewDistance = afX;}
+    //-------------------------------------------
 
-		inline bool IsInsideView() const{ return mbInsideView;}
-		inline void SetInsideView(bool abX) { mbInsideView = abX;}
+    class iRenderableContainerNode {
+        friend class iRenderableContainer;
 
-		inline bool UsesFlagsAndVisibility() { return mbUsesFlagsAndVisibility;}
+    public:
+        iRenderableContainerNode();
 
-		inline tRenderableFlag GetRenderFlags() const { return mlRenderFlags;}
-		inline bool HasVisibleObjects() const { return mbVisibleObjects;}
+        virtual ~iRenderableContainerNode() {}
 
-		inline void SetRenderFlags(tRenderableFlag alFlags) { mlRenderFlags = alFlags;}
-		inline void SetHasVisibleObjects(bool abX) { mbVisibleObjects = abX;}
+        virtual void UpdateBeforeUse() {}
 
-		inline void SetNeedPropertyUpdate(bool abX){ mbNeedPropertyUpdate = abX;}
-		inline bool GetNeedPropertyUpdate() const { return mbNeedPropertyUpdate;}
+        inline tRenderableContainerNodeList *GetChildNodeList() { return &mlstChildNodes; }
 
-		void PushUpNeedAABBUpdate();
-		inline bool GetNeedAABBUpdate() const { return mbNeedAABBUpdate;}
+        inline bool HasChildNodes() { return mlstChildNodes.empty() == false; }
 
-		inline void SetPrevFrustumCollision(eCollision aX){ mPrevFrustumCollision = aX;}
-		inline eCollision GetPrevFrustumCollision() const { return mPrevFrustumCollision;}
+        inline tRenderableList *GetObjectList() { return &mlstObjects; }
 
-		void CalculateMinMaxFromObjects();
-	
-	protected:
-		cVector3f mvMin;
-		cVector3f mvMax;
-		float mfRadius;
-		cVector3f mvCenter;
+        inline bool HasObjects() { return mlstObjects.empty() == false; }
 
-		tRenderableFlag mlRenderFlags;
-		bool mbVisibleObjects;
+        inline iRenderableContainerNode *GetParent() { return mpParent; }
 
-		bool mbNeedPropertyUpdate;
-		bool mbNeedAABBUpdate;
+        inline void SetParent(iRenderableContainerNode *apParent) { mpParent = apParent; }
 
-		bool mbUsesFlagsAndVisibility;
-        
-		//Temp structures
-		float mfViewDistance;
-		bool mbInsideView;
-		eCollision mPrevFrustumCollision;
+        inline int GetObjectNum() { return (int) mlstObjects.size(); }
 
-		iRenderableContainerNode *mpParent;
-		tRenderableContainerNodeList mlstChildNodes;
-		tRenderableList mlstObjects;
-	};
+        inline const cVector3f &GetMin() const { return mvMin; }
 
-	//-------------------------------------------
-	
-	class iRenderableContainer
-	{
-	public:
-		virtual ~iRenderableContainer(){}
+        inline const cVector3f &GetMax() const { return mvMax; }
 
-		void UpdateBeforeRendering();
+        inline const cVector3f GetCenter() const { return mvCenter; }
 
-		virtual void Add(iRenderable *apRenderable)=0;
-		virtual void Remove(iRenderable *apRenderable)=0;
+        inline float GetRadius() const { return mfRadius; }
 
-		virtual iRenderableContainerNode* GetRoot()=0;
+        inline float GetViewDistance() const { return mfViewDistance; }
+
+        inline void SetViewDistance(float afX) { mfViewDistance = afX; }
+
+        inline bool IsInsideView() const { return mbInsideView; }
+
+        inline void SetInsideView(bool abX) { mbInsideView = abX; }
+
+        inline bool UsesFlagsAndVisibility() { return mbUsesFlagsAndVisibility; }
+
+        inline tRenderableFlag GetRenderFlags() const { return mlRenderFlags; }
+
+        inline bool HasVisibleObjects() const { return mbVisibleObjects; }
+
+        inline void SetRenderFlags(tRenderableFlag alFlags) { mlRenderFlags = alFlags; }
+
+        inline void SetHasVisibleObjects(bool abX) { mbVisibleObjects = abX; }
+
+        inline void SetNeedPropertyUpdate(bool abX) { mbNeedPropertyUpdate = abX; }
+
+        inline bool GetNeedPropertyUpdate() const { return mbNeedPropertyUpdate; }
+
+        void PushUpNeedAABBUpdate();
+
+        inline bool GetNeedAABBUpdate() const { return mbNeedAABBUpdate; }
+
+        inline void SetPrevFrustumCollision(eCollision aX) { mPrevFrustumCollision = aX; }
+
+        inline eCollision GetPrevFrustumCollision() const { return mPrevFrustumCollision; }
+
+        void CalculateMinMaxFromObjects();
+
+    protected:
+        cVector3f mvMin;
+        cVector3f mvMax;
+        float mfRadius;
+        cVector3f mvCenter;
+
+        tRenderableFlag mlRenderFlags;
+        bool mbVisibleObjects;
+
+        bool mbNeedPropertyUpdate;
+        bool mbNeedAABBUpdate;
+
+        bool mbUsesFlagsAndVisibility;
+
+        //Temp structures
+        float mfViewDistance;
+        bool mbInsideView;
+        eCollision mPrevFrustumCollision;
+
+        iRenderableContainerNode *mpParent;
+        tRenderableContainerNodeList mlstChildNodes;
+        tRenderableList mlstObjects;
+    };
+
+    //-------------------------------------------
+
+    class iRenderableContainer {
+    public:
+        virtual ~iRenderableContainer() {}
+
+        void UpdateBeforeRendering();
+
+        virtual void Add(iRenderable *apRenderable) = 0;
+
+        virtual void Remove(iRenderable *apRenderable) = 0;
+
+        virtual iRenderableContainerNode *GetRoot() = 0;
 
         /**
          * This compiles the container. Even if the container is static, it should be possible to change orientation (scale, pos, rotation,radius etc) of added
 		 * objects before this method is called. After compile is called, objects orientation can not be changed!
          */
-        virtual void Compile()=0;
+        virtual void Compile() = 0;
 
-		virtual void RenderDebug(cRendererCallbackFunctions *apFunctions)=0;
+        virtual void RenderDebug(cRendererCallbackFunctions *apFunctions) = 0;
 
-	private:
-		void CheckNeedPropertyUpdateIteration(iRenderableContainerNode* apNode);
-		void CheckNeedAABBUpdateIteration(iRenderableContainerNode* apNode);
+    private:
+        void CheckNeedPropertyUpdateIteration(iRenderableContainerNode *apNode);
 
-		virtual void SpecificUpdateBeforeRendering(){}
-	};
+        void CheckNeedAABBUpdateIteration(iRenderableContainerNode *apNode);
 
-	//-------------------------------------------
-};
+        virtual void SpecificUpdateBeforeRendering() {}
+    };
+
+    //-------------------------------------------
+}
 #endif // RENDERABLE_CONTAINER

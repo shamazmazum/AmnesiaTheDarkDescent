@@ -488,7 +488,7 @@ kGuiCallbackDeclaredFuncEnd(cLuxMainMenu_Profile, PressDeleteProfile);
 bool cLuxMainMenu_Profile::PressDeleteProfilePopupClose(iWidget* apWidget, const cGuiMessageData& aData)
 {
 	bool bDeleteProfile = aData.mlVal ==0 ? true : false;
-	if(bDeleteProfile==false) return true;
+	if(!bDeleteProfile) return true;
 
 	tWString sFolder = mpListProfiles->GetItem(mpListProfiles->GetSelectedItem())->GetText();
 

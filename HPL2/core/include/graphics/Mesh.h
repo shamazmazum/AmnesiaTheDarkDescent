@@ -135,5 +135,5 @@ namespace hpl {
         tNode3DVec mvNodes;
 	};
 
-};
+}
 #endif // HPL_MESH_H

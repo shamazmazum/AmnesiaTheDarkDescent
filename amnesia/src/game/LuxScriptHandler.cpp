@@ -310,7 +310,7 @@ iLuxEntity* cLuxScriptHandler::GetEntity(const tString& asName, eLuxEntityType a
 		return NULL;
 	}
 
-	if(LuxIsCorrectType(pEntity,aType, alSubType)==false)
+	if(!LuxIsCorrectType(pEntity, aType, alSubType))
 	{
 		Warning("Entity '%s' is not correct type! (%d %d)\n", asName.c_str(), aType, alSubType);
 		return NULL;
@@ -2058,7 +2058,7 @@ void __stdcall cLuxScriptHandler::PlaySoundAtEntity(string& asSoundName, string&
 		cSoundEntity *pSound= pMap->GetWorld()->CreateSoundEntity(asSoundName, asSoundFile,bRemoveWhenOver);
 		if(pSound)
 		{
-			if(abSaveSound==false)
+			if(!abSaveSound)
 			{
 				pEntity->GetAttachEntity()->AddChild(pSound);
 			}
@@ -2999,8 +2999,7 @@ void __stdcall cLuxScriptHandler::ShowEnemyPlayerPosition(string& asName)
 		pEnemy->ShowPlayerPosition();
 		
 		eLuxEnemyState state = pEnemy->GetCurrentEnemyState();
-		if(	state != eLuxEnemyState_Hunt ||
-			state != eLuxEnemyState_AttackMeleeLong ||
+		if(true ||
 			state != eLuxEnemyState_AttackMeleeShort ||
 			state != eLuxEnemyState_BreakDoor)
 		{

@@ -197,5 +197,5 @@ namespace hpl {
 
 		iHapticSurface* mpHapticSurface;
 	};
-};
+}
 #endif // HPL_SURFACE_DATA_H

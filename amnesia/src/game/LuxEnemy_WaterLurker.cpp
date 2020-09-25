@@ -374,7 +374,7 @@ bool cLuxEnemy_WaterLurker::StateEventImplement(int alState, eLuxEnemyStateEvent
 		///////////////////////
 		// Enter
 		kLuxOnEnter
-			if(PlayerIsDetected()==false)
+			if(!PlayerIsDetected())
 			{
 				ChangeState(eLuxEnemyState_GoHome);	
 				mbCausesSanityDecrease = false;
@@ -411,7 +411,7 @@ bool cLuxEnemy_WaterLurker::StateEventImplement(int alState, eLuxEnemyStateEvent
 		kLuxOnMessage(eLuxEnemyMessage_TimeOut)
 			mpPathfinder->MoveTo(gpBase->mpPlayer->GetCharacterBody()->GetFeetPosition());
 			SendMessage(eLuxEnemyMessage_TimeOut, 0.4f, true);
-			if(PlayerIsDetected()==false)
+			if(!PlayerIsDetected())
 			{
 				ChangeState(eLuxEnemyState_GoHome);	
 				mbCausesSanityDecrease = false;

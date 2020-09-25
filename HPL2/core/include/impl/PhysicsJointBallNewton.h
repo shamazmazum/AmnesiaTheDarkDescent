@@ -25,24 +25,28 @@
 
 namespace hpl {
 
-	class cPhysicsJointBallNewton : public iPhysicsJointNewton<iPhysicsJointBall>
-	{
-	public:
-		cPhysicsJointBallNewton(const tString &asName, iPhysicsBody *apParentBody, iPhysicsBody *apChildBody, 
-			iPhysicsWorld *apWorld, const cVector3f &avPivotPoint, const cVector3f &avPinDir);
-		~cPhysicsJointBallNewton();
+    class cPhysicsJointBallNewton : public iPhysicsJointNewton<iPhysicsJointBall> {
+    public:
+        cPhysicsJointBallNewton(const tString &asName, iPhysicsBody *apParentBody, iPhysicsBody *apChildBody,
+                                iPhysicsWorld *apWorld, const cVector3f &avPivotPoint, const cVector3f &avPinDir);
 
-        void SetConeLimits(float afMaxConeAngle, float afMaxTwistAngle);		
-		cVector3f GetAngles();
+        ~cPhysicsJointBallNewton();
 
-		cVector3f GetVelocity();
-		cVector3f GetAngularVelocity();
-		float GetForceSize();
+        void SetConeLimits(float afMaxConeAngle, float afMaxTwistAngle);
 
-		float GetDistance();
-		float GetAngle();
-		
-	private:
-	};
-};
+        cVector3f GetAngles();
+
+        cVector3f GetVelocity();
+
+        cVector3f GetAngularVelocity();
+
+        float GetForceSize();
+
+        float GetDistance();
+
+        float GetAngle();
+
+    private:
+    };
+}
 #endif // HPL_PHYSICS_JOINT_BALL_NEWTON_H

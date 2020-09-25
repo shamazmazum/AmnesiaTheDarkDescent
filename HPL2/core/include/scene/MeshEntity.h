@@ -35,251 +35,297 @@
 
 namespace hpl {
 
-	class cMaterialManager;
-	class cMeshManager;
-	class cAnimationManager;
-	class cMesh;
-	class cSubMesh;
-	class cMeshEntity;
-	class cAnimation;
-	class cAnimationState;
-	class cNodeState;
-	class cBone;
-	class cNode3D;
-	class iCollideShape;
-	class iPhysicsBody;
-	class iPhysicsWorld;
-	class cWorld;
+    class cMaterialManager;
 
-	//-----------------------------------------------------------------------
+    class cMeshManager;
 
-	class cMeshEntityRootNodeUpdate : public iEntityCallback
-	{
-	public:
+    class cAnimationManager;
 
-		void OnTransformUpdate(iEntity3D * apEntity);
-	};
+    class cMesh;
 
-	//------------------------------------------
+    class cSubMesh;
 
-	class cMeshEntityCallback
-	{
-	public:
-		virtual void AfterAnimationUpdate(cMeshEntity *apMeshEntity, float afTimeStep)=0;
-	};
+    class cMeshEntity;
 
-	//------------------------------------------
+    class cAnimation;
 
-	class cMeshEntity : public iEntity3D
-	{
-	#ifdef __GNUC__
-		typedef iRenderable __super;
-	#endif
-	friend class cSubMeshEntity;
-	friend class cMeshEntityRootNodeUpdate;
-	friend class cMesh;
-	public:
-		cMeshEntity(const tString asName,cMesh* apMesh, cMaterialManager* apMaterialManager,
-					cMeshManager* apMeshManager, cAnimationManager *apAnimationManager);
-		~cMeshEntity();
-	
-		void SetWorld(cWorld *apWorld){ mpWorld = apWorld;}
-		cWorld* GetWorld(){ return mpWorld;}
+    class cAnimationState;
 
-		cMesh* GetMesh(){ return mpMesh;}
+    class cNodeState;
 
-		void SetCallback(cMeshEntityCallback *apCallback){mpCallback = apCallback;}
+    class cBone;
 
-		//Sub mesh entities
-		cSubMeshEntity* GetSubMeshEntity(unsigned int alIdx);
-		cSubMeshEntity* GetSubMeshEntityName(const tString &asName);
-		int GetSubMeshEntityNum();
+    class cNode3D;
 
-		//Animation states
-		cAnimationState* AddAnimation(cAnimation *apAnimation,const tString &asName, float afBaseSpeed);
-		void ClearAnimations();
+    class iCollideShape;
 
-		cAnimationState* GetAnimationState(int alIndex);
-		int GetAnimationStateIndex(const tString &asName);
-		cAnimationState* GetAnimationStateFromName(const tString &asName);
-		int GetAnimationStateNum();
+    class iPhysicsBody;
 
-		//Animation controller
-		void Play(int alIndex,bool abLoop, bool bStopPrev);
-		void PlayName(const tString &asName,bool abLoop, bool bStopPrev);
-		void Stop();
+    class iPhysicsWorld;
 
-		void PlayFadeTo(int alIndex,bool abLoop, float afTime);
-		void PlayFadeToName(const tString &asName,bool abLoop, float afTime);
+    class cWorld;
 
-		bool AnimationIsOver(const tString &asName);
+    //-----------------------------------------------------------------------
 
-		void SetNormalizeAnimationWeights(bool abX){ mbNormalizeAnimationWeights = abX;}
-		bool GetNormalizeAnimationWeights(){  return mbNormalizeAnimationWeights;}
+    class cMeshEntityRootNodeUpdate : public iEntityCallback {
+    public:
 
-		//Bone states
-		cNode3D* GetBoneStateRoot(){ return mpBoneStateRoot;}
-		
-		cBoneState* GetBoneState(int alIndex);
-		int GetBoneStateIndex(const tString &asName);
-		int GetBoneStateIndexFromPtr(cBoneState* apBoneState);
-		cBoneState* GetBoneStateFromName(const tString &asName);
-		int GetBoneStateNum();
+        void OnTransformUpdate(iEntity3D *apEntity);
+    };
 
-		//Skeleton physics
-		void SetSkeletonPhysicsActive(bool abX);
-		bool GetSkeletonPhysicsActive();
+    //------------------------------------------
 
-		void SetSkeletonPhysicsCanSleep(bool abX){mbSkeletonPhysicsCanSleep = abX;}
-		bool GetSkeletonPhysicsCanSleep(){ return mbSkeletonPhysicsCanSleep;}
+    class cMeshEntityCallback {
+    public:
+        virtual void AfterAnimationUpdate(cMeshEntity *apMeshEntity, float afTimeStep) = 0;
+    };
 
-		float GetSkeletonPhysicsWeight();
-		void SetSkeletonPhysicsWeight(float afX);
+    //------------------------------------------
 
-		void FadeSkeletonPhysicsWeight(float afTime);
-		
-		void SetSkeletonCollidersActive(bool abX);
-		bool GetSkeletonCollidersActive();
+    class cMeshEntity : public iEntity3D {
+#ifdef __GNUC__
+        typedef iRenderable __super;
+#endif
 
-		void AlignBodiesToSkeleton(bool abCalculateSpeed);
+        friend class cSubMeshEntity;
 
-		
-		/**
-		 * Calculates the transform (and angles and postion if wanted) of a mesh based on the postion of the root bone.
-		 * This is useful when going from rag doll to mesh.
-		 * \param *apPostion Can be NULL, the postion
-		 * \param *apAngles Can be NULL, the angles.
-		 */
-		cMatrixf CalculateTransformFromSkeleton(cVector3f *apPostion,cVector3f *apAngles);
+        friend class cMeshEntityRootNodeUpdate;
 
-		/**
-		 * Checks collision with the skeletons collider boides
-		 * \param *apWorld Physics world
-		 * \param *apShape The shape
-		 * \param &a_mtxShape The shapes matrix
-		 * \param *apPosList A list of positions that all contact points are stored in. can be NULL.
-		 * \param *apNumList A list of ints of number of the bone state body hit. can be NULL.
-		 */
-		bool CheckColliderShapeCollision(iPhysicsWorld *apWorld,
-										iCollideShape *apShape, const cMatrixf &a_mtxShape,
-										tVector3fList *apPosList, tIntList *apNumList);
+        friend class cMesh;
 
-		void ResetGraphicsUpdated();
+    public:
+        cMeshEntity(const tString asName, cMesh *apMesh, cMaterialManager *apMaterialManager,
+                    cMeshManager *apMeshManager, cAnimationManager *apAnimationManager);
 
-		//Node states
-		cNode3D* GetNodeState(int alIndex);
-		int GetNodeStateIndex(const tString &asName);
-		cNode3D* GetNodeStateFromName(const tString &asName);
-		int GetNodeStateNum();
-		
-		//Entity implementation
-		tString GetEntityType(){ return "MeshEntity";}
-		bool IsVisible(){ return mbIsVisible; }
-		void SetVisible(bool abVisible);
+        ~cMeshEntity();
 
-		cBoundingVolume* GetBoundingVolume();
+        void SetWorld(cWorld *apWorld) { mpWorld = apWorld; }
 
-		void SetStatic(bool abX);
-		bool IsStatic(){ return mbStatic;}
+        cWorld *GetWorld() { return mpWorld; }
 
-		void SetRenderFlagBit(tRenderableFlag alFlagBit, bool abSet);
-		//bool GetRenderFlagBit(tRenderableFlag alFlagBit){ return (mlRenderFlags & alFlagBit)!=0;} 
-		//inline tRenderableFlag GetRenderFlags() const { return mlRenderFlags;}
+        cMesh *GetMesh() { return mpMesh; }
 
-		void SetIlluminationAmount(float afX);
-		float GetIlluminationAmount(){ return mfIlluminationAmount; }
+        void SetCallback(cMeshEntityCallback *apCallback) { mpCallback = apCallback; }
 
-		void SetCoverageAmount(float afX);
-		float GetCoverageAmount(){ return mfCoverageAmount;}
+        //Sub mesh entities
+        cSubMeshEntity *GetSubMeshEntity(unsigned int alIdx);
 
-		void UpdateLogic(float afTimeStep);
+        cSubMeshEntity *GetSubMeshEntityName(const tString &asName);
 
-		void UpdateGraphicsForFrame(float afFrameTime);
+        int GetSubMeshEntityNum();
 
-		void SetBody(iPhysicsBody* apBody){ mpBody = apBody;}
-		iPhysicsBody* GetBody(){ return mpBody;}
+        //Animation states
+        cAnimationState *AddAnimation(cAnimation *apAnimation, const tString &asName, float afBaseSpeed);
 
-		void SetUserData(void* apData) { mpUserData = apData; }
-		void* GetUserData() { return mpUserData; }
+        void ClearAnimations();
 
-	private:
-		float GetAnimationWeightMul();
+        cAnimationState *GetAnimationState(int alIndex);
 
-		void CreateNodes();
+        int GetAnimationStateIndex(const tString &asName);
 
-		void UpdateNodeMatrixRec(cNode3D *apNode);
+        cAnimationState *GetAnimationStateFromName(const tString &asName);
 
-		void HandleAnimationEvent(cAnimationEvent *apEvent);
+        int GetAnimationStateNum();
 
-		void SetBoneMatrixFromBodyRec(const cMatrixf& a_mtxParentWorld,cBoneState *apBoneState);
+        //Animation controller
+        void Play(int alIndex, bool abLoop, bool bStopPrev);
 
-		void UpdateBVFromSkeleton();
-		void GetAABBFromBones(cVector3f &avMin, cVector3f &avMax);
+        void PlayName(const tString &asName, bool abLoop, bool bStopPrev);
 
-		void BuildBoneStatesRec(cBone *apBone, cNode3D *apParent);
+        void Stop();
 
-		cMaterialManager* mpMaterialManager;
-		cMeshManager* mpMeshManager;
-		cAnimationManager *mpAnimationManager;
+        void PlayFadeTo(int alIndex, bool abLoop, float afTime);
 
-		cWorld *mpWorld;
+        void PlayFadeToName(const tString &asName, bool abLoop, float afTime);
 
-		bool mbIsVisible;
-		float mfIlluminationAmount;
-		float mfCoverageAmount;
-		tRenderableFlag mlRenderFlags;
-		
-		bool mbBoneMatricesNeedUpdate;
-		int mlBoneMatricesTransformCount;
+        bool AnimationIsOver(const tString &asName);
 
-		cMatrixf m_mtxInvWorldMatrix;
-		int mlInvWorldMatrixTransformCount;
+        void SetNormalizeAnimationWeights(bool abX) { mbNormalizeAnimationWeights = abX; }
 
-		bool mbStatic;
+        bool GetNormalizeAnimationWeights() { return mbNormalizeAnimationWeights; }
 
-		tSubMeshEntityVec mvSubMeshes;
-		tSubMeshEntityMap m_mapSubMeshes;
+        //Bone states
+        cNode3D *GetBoneStateRoot() { return mpBoneStateRoot; }
 
-		tAnimationStateVec mvAnimationStates;
-		tAnimationStateIndexMap m_mapAnimationStateIndices;
+        cBoneState *GetBoneState(int alIndex);
 
-		cNode3D *mpBoneStateRoot;
+        int GetBoneStateIndex(const tString &asName);
 
-		tNodeStateVec mvBoneStates;
-		tNodeStateIndexMap m_mapBoneStateIndices;
-		tNodeStateVec mvTempBoneStates;
+        int GetBoneStateIndexFromPtr(cBoneState *apBoneState);
 
-		std::vector<cMatrixf> mvBoneMatrices;
+        cBoneState *GetBoneStateFromName(const tString &asName);
 
-		bool mbSkeletonPhysics;
-		bool mbSkeletonPhysicsFading;
-		float mfSkeletonPhysicsFadeSpeed;
-		float mfSkeletonPhysicsWeight;
+        int GetBoneStateNum();
 
-		bool mbSkeletonPhysicsSleeping;
-		bool mbSkeletonPhysicsCanSleep;
-		
-		bool mbSkeletonColliders;
+        //Skeleton physics
+        void SetSkeletonPhysicsActive(bool abX);
 
-		bool mbNormalizeAnimationWeights;
+        bool GetSkeletonPhysicsActive();
 
-		bool mbUpdatedBones;
-		bool mbHasUpdatedAnimation;
+        void SetSkeletonPhysicsCanSleep(bool abX) { mbSkeletonPhysicsCanSleep = abX; }
 
-		tNodeStateVec mvNodeStates;
-		tNodeStateIndexMap m_mapNodeStateIndices;
+        bool GetSkeletonPhysicsCanSleep() { return mbSkeletonPhysicsCanSleep; }
 
-		cMesh* mpMesh;
-		
-		cMeshEntityCallback *mpCallback;
+        float GetSkeletonPhysicsWeight();
 
-		iPhysicsBody *mpBody;
+        void SetSkeletonPhysicsWeight(float afX);
 
-		void* mpUserData;
-	};
+        void FadeSkeletonPhysicsWeight(float afTime);
 
-	//-----------------------------------------------------------------------
+        void SetSkeletonCollidersActive(bool abX);
+
+        bool GetSkeletonCollidersActive();
+
+        void AlignBodiesToSkeleton(bool abCalculateSpeed);
 
 
-};
+        /**
+         * Calculates the transform (and angles and postion if wanted) of a mesh based on the postion of the root bone.
+         * This is useful when going from rag doll to mesh.
+         * \param *apPostion Can be NULL, the postion
+         * \param *apAngles Can be NULL, the angles.
+         */
+        cMatrixf CalculateTransformFromSkeleton(cVector3f *apPostion, cVector3f *apAngles);
+
+        /**
+         * Checks collision with the skeletons collider boides
+         * \param *apWorld Physics world
+         * \param *apShape The shape
+         * \param &a_mtxShape The shapes matrix
+         * \param *apPosList A list of positions that all contact points are stored in. can be NULL.
+         * \param *apNumList A list of ints of number of the bone state body hit. can be NULL.
+         */
+        bool CheckColliderShapeCollision(iPhysicsWorld *apWorld,
+                                         iCollideShape *apShape, const cMatrixf &a_mtxShape,
+                                         tVector3fList *apPosList, tIntList *apNumList);
+
+        void ResetGraphicsUpdated();
+
+        //Node states
+        cNode3D *GetNodeState(int alIndex);
+
+        int GetNodeStateIndex(const tString &asName);
+
+        cNode3D *GetNodeStateFromName(const tString &asName);
+
+        int GetNodeStateNum();
+
+        //Entity implementation
+        tString GetEntityType() { return "MeshEntity"; }
+
+        bool IsVisible() { return mbIsVisible; }
+
+        void SetVisible(bool abVisible);
+
+        cBoundingVolume *GetBoundingVolume();
+
+        void SetStatic(bool abX);
+
+        bool IsStatic() { return mbStatic; }
+
+        void SetRenderFlagBit(tRenderableFlag alFlagBit, bool abSet);
+        //bool GetRenderFlagBit(tRenderableFlag alFlagBit){ return (mlRenderFlags & alFlagBit)!=0;}
+        //inline tRenderableFlag GetRenderFlags() const { return mlRenderFlags;}
+
+        void SetIlluminationAmount(float afX);
+
+        float GetIlluminationAmount() { return mfIlluminationAmount; }
+
+        void SetCoverageAmount(float afX);
+
+        float GetCoverageAmount() { return mfCoverageAmount; }
+
+        void UpdateLogic(float afTimeStep);
+
+        void UpdateGraphicsForFrame(float afFrameTime);
+
+        void SetBody(iPhysicsBody *apBody) { mpBody = apBody; }
+
+        iPhysicsBody *GetBody() { return mpBody; }
+
+        void SetUserData(void *apData) { mpUserData = apData; }
+
+        void *GetUserData() { return mpUserData; }
+
+    private:
+        float GetAnimationWeightMul();
+
+        void CreateNodes();
+
+        void UpdateNodeMatrixRec(cNode3D *apNode);
+
+        void HandleAnimationEvent(cAnimationEvent *apEvent);
+
+        void SetBoneMatrixFromBodyRec(const cMatrixf &a_mtxParentWorld, cBoneState *apBoneState);
+
+        void UpdateBVFromSkeleton();
+
+        void GetAABBFromBones(cVector3f &avMin, cVector3f &avMax);
+
+        void BuildBoneStatesRec(cBone *apBone, cNode3D *apParent);
+
+        cMaterialManager *mpMaterialManager;
+        cMeshManager *mpMeshManager;
+        cAnimationManager *mpAnimationManager;
+
+        cWorld *mpWorld;
+
+        bool mbIsVisible;
+        float mfIlluminationAmount;
+        float mfCoverageAmount;
+        tRenderableFlag mlRenderFlags;
+
+        bool mbBoneMatricesNeedUpdate;
+        int mlBoneMatricesTransformCount;
+
+        cMatrixf m_mtxInvWorldMatrix;
+        int mlInvWorldMatrixTransformCount;
+
+        bool mbStatic;
+
+        tSubMeshEntityVec mvSubMeshes;
+        tSubMeshEntityMap m_mapSubMeshes;
+
+        tAnimationStateVec mvAnimationStates;
+        tAnimationStateIndexMap m_mapAnimationStateIndices;
+
+        cNode3D *mpBoneStateRoot;
+
+        tNodeStateVec mvBoneStates;
+        tNodeStateIndexMap m_mapBoneStateIndices;
+        tNodeStateVec mvTempBoneStates;
+
+        std::vector <cMatrixf> mvBoneMatrices;
+
+        bool mbSkeletonPhysics;
+        bool mbSkeletonPhysicsFading;
+        float mfSkeletonPhysicsFadeSpeed;
+        float mfSkeletonPhysicsWeight;
+
+        bool mbSkeletonPhysicsSleeping;
+        bool mbSkeletonPhysicsCanSleep;
+
+        bool mbSkeletonColliders;
+
+        bool mbNormalizeAnimationWeights;
+
+        bool mbUpdatedBones;
+        bool mbHasUpdatedAnimation;
+
+        tNodeStateVec mvNodeStates;
+        tNodeStateIndexMap m_mapNodeStateIndices;
+
+        cMesh *mpMesh;
+
+        cMeshEntityCallback *mpCallback;
+
+        iPhysicsBody *mpBody;
+
+        void *mpUserData;
+    };
+
+    //-----------------------------------------------------------------------
+
+
+}
 #endif // HPL_MESH_ENTITY_H

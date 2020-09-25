@@ -25,26 +25,27 @@
 #include "input/Action.h"
 
 namespace hpl {
-	
-	class cInput;
-	
-	class cActionMouseButton : public iSubAction
-	{
-	public:
-		cActionMouseButton(cInput* apInput, eMouseButton mButton);
 
-		bool IsTriggerd();
-		float GetValue();
+    class cInput;
 
-		tString GetInputName();
+    class cActionMouseButton : public iSubAction {
+    public:
+        cActionMouseButton(cInput *apInput, eMouseButton mButton);
 
-		tString GetInputType(){return "MouseButton";}
-		
-		eMouseButton GetButton(){ return mButton;}
-	private:
-		eMouseButton mButton;
-		cInput *mpInput;
-	};
+        bool IsTriggerd();
 
-};
+        float GetValue();
+
+        tString GetInputName();
+
+        tString GetInputType() { return "MouseButton"; }
+
+        eMouseButton GetButton() { return mButton; }
+
+    private:
+        eMouseButton mButton;
+        cInput *mpInput;
+    };
+
+}
 #endif // HPL_ACTIONMOUSEBUTTON_H

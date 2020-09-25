@@ -40,5 +40,5 @@ namespace hpl {
 
 		virtual iXmlDocument* CreateXmlDocument(const tString& asName="")=0;
 	};
-};
+}
 #endif // HPL_LOWLEVELRESOURCES_H
