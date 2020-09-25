@@ -163,5 +163,5 @@ namespace hpl {
 
 		void* mpRenderableUserData;
 	};
-};
+}
 #endif // HPL_RENDERABLE_H

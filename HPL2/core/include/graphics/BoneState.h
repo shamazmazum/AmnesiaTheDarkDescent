@@ -49,5 +49,5 @@ namespace hpl {
 		iPhysicsBody *mpColliderBody;
 	};
 
-};
+}
 #endif // HPL_BONE_STATE_H

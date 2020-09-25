@@ -89,5 +89,5 @@ namespace hpl {
 		const char* GetCharArray(tString asLevel, tString asName);
 	};
 
-};
+}
 #endif // HPL_CONFIGFILE_H

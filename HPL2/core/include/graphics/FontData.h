@@ -161,5 +161,5 @@ namespace hpl {
 		void AddGlyph(cGlyph *apGlyph);
 	};
 
-};
+}
 #endif // HPL_FONTDATA_H

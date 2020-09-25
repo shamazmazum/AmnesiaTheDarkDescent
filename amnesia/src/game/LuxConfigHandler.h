@@ -26,70 +26,74 @@
 
 //----------------------------------------------
 
-class cLuxConfigHandler
-{
-public:	
-	cLuxConfigHandler();
-	~cLuxConfigHandler();
+class cLuxConfigHandler {
+public:
+    cLuxConfigHandler();
 
-	void LoadMainConfig();
-	void SaveMainConfig();
+    ~cLuxConfigHandler();
 
-	bool ShowRestartWarning(cGuiSet* apSet, void* apObject, tGuiCallbackFunc apCallback);
+    void LoadMainConfig();
 
-	void SetGameNeedsRestart() { mbGameNeedsRestart=true; mbRestartDialogShown=false; }
+    void SaveMainConfig();
 
-	// Variables
-	bool mbLoadDebugMenu;
-	bool mbFirstStart;
-	tString msScreenShotExt;
+    bool ShowRestartWarning(cGuiSet *apSet, void *apObject, tGuiCallbackFunc apCallback);
 
-	bool mbCreateAndLoadCompressedMaps;
-	bool mbForceCacheLoadingAndSkipSaving;
+    void SetGameNeedsRestart() {
+        mbGameNeedsRestart = true;
+        mbRestartDialogShown = false;
+    }
 
-	tString msLangFile;
-	
-	cVector2l mvScreenSize;
+    // Variables
+    bool mbLoadDebugMenu;
+    bool mbFirstStart;
+    tString msScreenShotExt;
+
+    bool mbCreateAndLoadCompressedMaps;
+    bool mbForceCacheLoadingAndSkipSaving;
+
+    tString msLangFile;
+
+    cVector2l mvScreenSize;
     int mlDisplay;
-	bool mbFullscreen;
-	bool mbVSync;
-	bool mbAdaptiveVSync;
-	int mlTextureQuality;
-	int mlTextureFilter;
-	float mfTextureAnisotropy;
-	int mlShadowQuality;
-	int mlShadowRes;
+    bool mbFullscreen;
+    bool mbVSync;
+    bool mbAdaptiveVSync;
+    int mlTextureQuality;
+    int mlTextureFilter;
+    float mfTextureAnisotropy;
+    int mlShadowQuality;
+    int mlShadowRes;
 
-	bool mbSSAOActive;
-	int mlSSAOSamples;
-	int mlSSAOResolution; //0= medium(div2), 1=high (same as screen resolution)
-	
-	int mlParallaxQuality;
-	bool mbParallaxEnabled;
+    bool mbSSAOActive;
+    int mlSSAOSamples;
+    int mlSSAOResolution; //0= medium(div2), 1=high (same as screen resolution)
 
-	bool mbOcclusionTestLights;
-	
-	bool mbEdgeSmooth;
-		
-	bool mbWorldReflection;
-	bool mbRefraction;
-	bool mbShadowsActive;
+    int mlParallaxQuality;
+    bool mbParallaxEnabled;
 
-	bool mbForceShaderModel3And4Off;
+    bool mbOcclusionTestLights;
 
-	bool mbFastPhysicsLoad;
-	bool mbFastStaticLoad;
-	bool mbFastEntityLoad;
+    bool mbEdgeSmooth;
 
-	int mlSoundDevID;
-	int mlMaxSoundChannels;
-	int mlSoundStreamBuffers;
-	int mlSoundStreamBufferSize;
+    bool mbWorldReflection;
+    bool mbRefraction;
+    bool mbShadowsActive;
 
-	
+    bool mbForceShaderModel3And4Off;
+
+    bool mbFastPhysicsLoad;
+    bool mbFastStaticLoad;
+    bool mbFastEntityLoad;
+
+    int mlSoundDevID;
+    int mlMaxSoundChannels;
+    int mlSoundStreamBuffers;
+    int mlSoundStreamBufferSize;
+
+
 private:
-	bool mbGameNeedsRestart;
-	bool mbRestartDialogShown;
+    bool mbGameNeedsRestart;
+    bool mbRestartDialogShown;
 };
 
 //----------------------------------------------

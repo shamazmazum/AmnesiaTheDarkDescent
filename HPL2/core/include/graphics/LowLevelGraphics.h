@@ -303,5 +303,5 @@ namespace hpl {
 	protected:
 		static bool mbForceShaderModel3And4Off;
 	};
-};
+}
 #endif // HPL_LOWLEVELGRAPHICS_H

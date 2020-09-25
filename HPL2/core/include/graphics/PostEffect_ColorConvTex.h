@@ -78,5 +78,5 @@ namespace hpl {
 
 	//------------------------------------------
 
-};
+}
 #endif // HPL_POSTEFFECT_COLOR_CONV_TEX_H

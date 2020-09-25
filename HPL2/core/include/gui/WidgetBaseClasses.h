@@ -24,232 +24,253 @@
 
 namespace hpl {
 
-	class cWidgetMultiPropertyItem;
-	class cWidgetItemProperty;
-	class cWidgetItem;
+    class cWidgetMultiPropertyItem;
 
-	class iWidgetItemContainer;
+    class cWidgetItemProperty;
 
-	//--------------------------------------
+    class cWidgetItem;
 
-	typedef std::vector<cWidgetItem*> tWidgetItemVec;
-	typedef tWidgetItemVec::iterator tWidgetItemVecIt;
+    class iWidgetItemContainer;
 
-	typedef std::vector<cWidgetItemProperty*> tWidgetItemPropertyVec;
-	typedef tWidgetItemPropertyVec::iterator tWidgetItemPropertyVecIt;
+    //--------------------------------------
 
-	enum eItemPropertyType
-	{
-		eItemPropertyType_String,
-		eItemPropertyType_Image,
+    typedef std::vector<cWidgetItem *> tWidgetItemVec;
+    typedef tWidgetItemVec::iterator tWidgetItemVecIt;
 
-		eItemProperty_LastEnum
-	};
+    typedef std::vector<cWidgetItemProperty *> tWidgetItemPropertyVec;
+    typedef tWidgetItemPropertyVec::iterator tWidgetItemPropertyVecIt;
 
-	enum eItemSelectType
-	{
-		eItemSelectType_Select,
-		eItemSelectType_Toggle,
-		eItemSelectType_Deselect,
-	};
+    enum eItemPropertyType {
+        eItemPropertyType_String,
+        eItemPropertyType_Image,
 
-	//--------------------------------------
+        eItemProperty_LastEnum
+    };
 
-	/////////////////////////////////////////////////////////////
-	// ITEM PROPERTY CLASS
-	/////////////////////////////////////////////////////////////
+    enum eItemSelectType {
+        eItemSelectType_Select,
+        eItemSelectType_Toggle,
+        eItemSelectType_Deselect,
+    };
 
-	//--------------------------------------
+    //--------------------------------------
 
-	class cWidgetItemProperty
-	{
-	public:
-		cWidgetItemProperty(const tWString& asText);
-		cWidgetItemProperty(const cGuiGfxElement* apGfx);
+    /////////////////////////////////////////////////////////////
+    // ITEM PROPERTY CLASS
+    /////////////////////////////////////////////////////////////
 
-		tWString& GetText() { return msText; }
-		cGuiGfxElement* GetGfx() { return mpGfx; }
+    //--------------------------------------
 
-		eItemPropertyType GetType() { return mType; }
+    class cWidgetItemProperty {
+    public:
+        cWidgetItemProperty(const tWString &asText);
 
-	protected:
-		tWString msText;
-		cGuiGfxElement* mpGfx;
+        cWidgetItemProperty(const cGuiGfxElement *apGfx);
 
-		eItemPropertyType mType;
-	};
+        tWString &GetText() { return msText; }
 
-	//--------------------------------------
+        cGuiGfxElement *GetGfx() { return mpGfx; }
 
-	/////////////////////////////////////////////////////////////
-	// ITEM CLASS
-	/////////////////////////////////////////////////////////////
+        eItemPropertyType GetType() { return mType; }
 
-	//--------------------------------------
+    protected:
+        tWString msText;
+        cGuiGfxElement *mpGfx;
 
-	class cWidgetItem
-	{
-	public:
-		cWidgetItem(iWidgetItemContainer* apCont);
+        eItemPropertyType mType;
+    };
+
+    //--------------------------------------
+
+    /////////////////////////////////////////////////////////////
+    // ITEM CLASS
+    /////////////////////////////////////////////////////////////
+
+    //--------------------------------------
+
+    class cWidgetItem {
+    public:
+        cWidgetItem(iWidgetItemContainer *apCont);
+
         ~cWidgetItem();
 
-		void SetIndex(int alIdx) { mlIndex = alIdx; }
-		int GetIndex() { return mlIndex; }
+        void SetIndex(int alIdx) { mlIndex = alIdx; }
 
-		const tWString& GetText()const { return msText; }
-        cWidgetItemProperty* GetProperty(int alIdx) const;
+        int GetIndex() { return mlIndex; }
 
-		void AddProperty(const tWString& asText);
-        void AddProperty(const cGuiGfxElement* apGfx);
-		
-		int GetPropertyNum();
+        const tWString &GetText() const { return msText; }
 
-		bool IsSelectable() { return mbSelectable; }
-		void SetSelectable(bool abX) { mbSelectable = abX; }
-		bool IsSelected() { return mbSelectable && mbSelected; }
-		void SetSelected(bool abX);
+        cWidgetItemProperty *GetProperty(int alIdx) const;
 
-		void SetText(const tWString& asText);
+        void AddProperty(const tWString &asText);
 
-		void SetUserData(void* apData) { mpUserData = apData; }
-		void* GetUserData() { return mpUserData; }
+        void AddProperty(const cGuiGfxElement *apGfx);
 
-		void SetUserValue(int alValue) { mlUserValue = alValue; }
-		int GetUserValue() { return mlUserValue; }
+        int GetPropertyNum();
 
-	protected:
-		iWidgetItemContainer* mpCont;
-		int mlIndex;
-		bool mbSelectable;
-		bool mbSelected;
+        bool IsSelectable() { return mbSelectable; }
 
-		tWString msText;
-		tWidgetItemPropertyVec mvProperties;
+        void SetSelectable(bool abX) { mbSelectable = abX; }
 
-		void* mpUserData;
-		int mlUserValue;
-	};
+        bool IsSelected() { return mbSelectable && mbSelected; }
 
-	//--------------------------------------
-	
-	/////////////////////////////////////////////////////////////
-	// ITEM CONTAINER CLASS
-	/////////////////////////////////////////////////////////////
+        void SetSelected(bool abX);
 
-	//--------------------------------------
-	
-	class iWidgetItemContainer
-	{
-	public:
-		~iWidgetItemContainer();
+        void SetText(const tWString &asText);
 
-		cWidgetItem* AddItem(const tString& asItem);
-		cWidgetItem* AddItem(const tWString &asItem);
-		cWidgetItem* AddItem();
-		void RemoveItem(int alX);
-		void RemoveItem(const tWString &asItem);
+        void SetUserData(void *apData) { mpUserData = apData; }
 
-		void ClearItems();
+        void *GetUserData() { return mpUserData; }
 
-		cWidgetItem* GetItem(int alX) const;
-		const tWString& GetItemText(int alX) const;
-		void SetItemText(int alX, const tWString& asText);
-		int GetItemNum() const;
-		bool HasItem(const tWString &asItem);
-		bool HasItem(const tString &asItem);
+        void SetUserValue(int alValue) { mlUserValue = alValue; }
 
-		virtual void AddItemToSelection(cWidgetItem* apItem) {}
-		virtual void RemoveItemFromSelection(cWidgetItem* apItem) {}
+        int GetUserValue() { return mlUserValue; }
 
-	protected:
-		virtual void UpdateProperties()=0;
+    protected:
+        iWidgetItemContainer *mpCont;
+        int mlIndex;
+        bool mbSelectable;
+        bool mbSelected;
 
-		tWidgetItemVec mvItems;
-	};
+        tWString msText;
+        tWidgetItemPropertyVec mvProperties;
 
-	//--------------------------------------
-	
-	/////////////////////////////////////////////////////////////
-	// FILE BROWSING COMPONENT CLASS
-	/////////////////////////////////////////////////////////////
+        void *mpUserData;
+        int mlUserValue;
+    };
 
-	//--------------------------------------
+    //--------------------------------------
 
-	enum eFileBrowserFileType
-	{
-		eFileBrowserFileType_Graphics,
-		eFileBrowserFileType_Models,
-		eFileBrowserFileType_Sounds,
-		eFileBrowserFileType_Text,
-		eFileBrowserFileType_Other,
-		eFileBrowserFileType_Folder,
+    /////////////////////////////////////////////////////////////
+    // ITEM CONTAINER CLASS
+    /////////////////////////////////////////////////////////////
 
-		eFileBrowserFileType_LastEnum
-	};
+    //--------------------------------------
 
-	class cFileBrowserCategory
-	{
-	public:
-		tWString msName;
-		tWStringVec mvFilters;
-	};
+    class iWidgetItemContainer {
+    public:
+        ~iWidgetItemContainer();
 
-	//--------------------------------------
+        cWidgetItem *AddItem(const tString &asItem);
 
-	typedef std::vector<cFileBrowserCategory*> tFileBrowserCategoryVec;
-	typedef tFileBrowserCategoryVec::iterator tFileBrowserCategoryVecIt;
+        cWidgetItem *AddItem(const tWString &asItem);
 
-	//--------------------------------------
+        cWidgetItem *AddItem();
 
-	class iFileBrowser
-	{
-	public:
-		iFileBrowser(const tWString& asStartPath, bool abAddHiddenFiles = false);
-		virtual ~iFileBrowser();
+        void RemoveItem(int alX);
 
-		void InitBrowser();
+        void RemoveItem(const tWString &asItem);
 
-		int AddCategory(const tWString& asCategory, const tWString& asFilter=_W(""));
-		void AddFilter(const int alCategoryId, const tWString& asFilter);
+        void ClearItems();
 
-		void SetPathFromString(const tWString &asPath);
+        cWidgetItem *GetItem(int alX) const;
 
-		bool NavigateTo(const tWString& asPath);
-		bool NavigateUp();
+        const tWString &GetItemText(int alX) const;
 
-		void GetFilesAndFoldersInCurrentPath(int alCategoryIndex, tWStringList& alstDestination);
-		eFileBrowserFileType GetFileTypeByName(const tWString& asFilename);
-		tWString GetHumanReadableSize(unsigned long alSize);
+        void SetItemText(int alX, const tWString &asText);
+
+        int GetItemNum() const;
+
+        bool HasItem(const tWString &asItem);
+
+        bool HasItem(const tString &asItem);
+
+        virtual void AddItemToSelection(cWidgetItem *apItem) {}
+
+        virtual void RemoveItemFromSelection(cWidgetItem *apItem) {}
+
+    protected:
+        virtual void UpdateProperties() = 0;
+
+        tWidgetItemVec mvItems;
+    };
+
+    //--------------------------------------
+
+    /////////////////////////////////////////////////////////////
+    // FILE BROWSING COMPONENT CLASS
+    /////////////////////////////////////////////////////////////
+
+    //--------------------------------------
+
+    enum eFileBrowserFileType {
+        eFileBrowserFileType_Graphics,
+        eFileBrowserFileType_Models,
+        eFileBrowserFileType_Sounds,
+        eFileBrowserFileType_Text,
+        eFileBrowserFileType_Other,
+        eFileBrowserFileType_Folder,
+
+        eFileBrowserFileType_LastEnum
+    };
+
+    class cFileBrowserCategory {
+    public:
+        tWString msName;
+        tWStringVec mvFilters;
+    };
+
+    //--------------------------------------
+
+    typedef std::vector<cFileBrowserCategory *> tFileBrowserCategoryVec;
+    typedef tFileBrowserCategoryVec::iterator tFileBrowserCategoryVecIt;
+
+    //--------------------------------------
+
+    class iFileBrowser {
+    public:
+        iFileBrowser(const tWString &asStartPath, bool abAddHiddenFiles = false);
+
+        virtual ~iFileBrowser();
+
+        void InitBrowser();
+
+        int AddCategory(const tWString &asCategory, const tWString &asFilter = _W(""));
+
+        void AddFilter(const int alCategoryId, const tWString &asFilter);
+
+        void SetPathFromString(const tWString &asPath);
+
+        bool NavigateTo(const tWString &asPath);
+
+        bool NavigateUp();
+
+        void GetFilesAndFoldersInCurrentPath(int alCategoryIndex, tWStringList &alstDestination);
+
+        eFileBrowserFileType GetFileTypeByName(const tWString &asFilename);
+
+        tWString GetHumanReadableSize(unsigned long alSize);
 
 
-		tWString InterpretPath(const tWString& asPath);
+        tWString InterpretPath(const tWString &asPath);
 
-		tWString GetCurrentFullPath();
+        tWString GetCurrentFullPath();
 
-		virtual void OnAddFilter()=0;
-		virtual void OnNavigate()=0;
+        virtual void OnAddFilter() = 0;
 
-		//////////////////////////////
-		// Data
-		bool mbAddHiddenFiles;
+        virtual void OnNavigate() = 0;
 
-		tWString msStartPath;
+        //////////////////////////////
+        // Data
+        bool mbAddHiddenFiles;
 
-		tFileBrowserCategoryVec mvCategories;
+        tWString msStartPath;
 
-		tWStringList mlstFiles;
-		tWStringVec mvCurrentDirFullPath;
+        tFileBrowserCategoryVec mvCategories;
 
-		tWStringVec mvSystemRootFolders;
-		std::vector<tWStringVec> mvFileTypeExtensions;
+        tWStringList mlstFiles;
+        tWStringVec mvCurrentDirFullPath;
+
+        tWStringVec mvSystemRootFolders;
+        std::vector <tWStringVec> mvFileTypeExtensions;
 
         static tWString msGameDir;
         static tWString msPersonalDir;
 
-		static tWStringVec mvSizeStrings;
-	};
+        static tWStringVec mvSizeStrings;
+    };
 
-	//--------------------------------------
+    //--------------------------------------
 
-};
+}
 #endif // HPL_WIDGET_BASE_CLASSES_H

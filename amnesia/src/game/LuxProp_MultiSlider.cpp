@@ -279,7 +279,7 @@ void cLuxProp_MultiSlider::OnConnectionStateChange(iLuxEntity *apEntity, int alS
 
 void cLuxProp_MultiSlider::UpdateCheckStuckSound(float afTimeStep)
 {
-	if(mlStuckState <0 || mbIsInteractedWith==false) return;
+	if(mlStuckState <0 || !mbIsInteractedWith) return;
 
 	if(mfStuckSoundTimer >0)
 	{
@@ -320,7 +320,7 @@ void cLuxProp_MultiSlider::UpdateCheckNewState(float afPos, float afTimeStep)
 
 void cLuxProp_MultiSlider::UpdateAutoMove(float afPos, float afTimeStep)
 {
-	if(IsInteractedWith() || mbAutoMoveToCurrentState==false || mlStuckState!=-1 || mlCurrentState==-1) return;
+	if(IsInteractedWith() || !mbAutoMoveToCurrentState || mlStuckState != -1 || mlCurrentState == -1) return;
 	
 	///////////////////////////
 	// Get the wanted speed

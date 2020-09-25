@@ -30,93 +30,115 @@
 
 namespace hpl {
 
-	class cLowLevelInputSDL;
+    class cLowLevelInputSDL;
 
-	class cGamepadSDL2 : public iGamepad
-	{
-	public:
-		cGamepadSDL2(cLowLevelInputSDL *apLowLevelInputSDL, int alIndex);
-		~cGamepadSDL2();
+    class cGamepadSDL2 : public iGamepad {
+    public:
+        cGamepadSDL2(cLowLevelInputSDL *apLowLevelInputSDL, int alIndex);
 
-		tString GetGamepadName() { return msGamepadName; }
+        ~cGamepadSDL2();
 
-		int GetNumButtons();
-		int GetNumAxes();
-		int GetNumHats();
-		int GetNumBalls();
+        tString GetGamepadName() { return msGamepadName; }
 
-		void Update();
+        int GetNumButtons();
 
-		void ClearState();
+        int GetNumAxes();
 
-		float GetTimeSinceLastActive();
+        int GetNumHats();
 
-		//Gamepad specific
-		bool HasInputUpdates();
-		cGamepadInputData GetInputUpdate();
+        int GetNumBalls();
 
-		bool ButtonIsDown(eGamepadButton aButton);
-		cGamepadInputData GetButton();
-		bool ButtonIsPressed();
-		bool ButtonIsReleased();
-		cGamepadInputData GetReleasedButton();
+        void Update();
 
-		float GetAxisValue(eGamepadAxis aAxis);
-		float GetAxisDeadZoneRadiusValue();
-		void SetAxisDeadZoneRadiusValue(float afValue);
-		bool AxesUpdated();
-		cGamepadInputData GetUpdatedAxis();
+        void ClearState();
 
-		eGamepadHatState GetHatCurrentState(eGamepadHat aHat);
-		bool HatIsInState(eGamepadHat aHat, eGamepadHatState aState);
-		bool HatsChanged();
-		cGamepadInputData GetHatState();
+        float GetTimeSinceLastActive();
 
-		cVector2l GetBallAbsPos(eGamepadBall aBall);
-		cVector2l GetBallRelPos(eGamepadBall aBall);
+        //Gamepad specific
+        bool HasInputUpdates();
 
-		void SetRumble(float afValue, int alMillisec);
-		//void SetColorLED(const cColor& aColor){}
-		//cColor GetColorLED(){ return cColor(0,0); }
-	private:
-		void UpdateAxis(int alAxis, float afVal);
-		void UpdateAxis(int alAxis0, float afVal0, int alAxis1, float afVal1);
+        cGamepadInputData GetInputUpdate();
 
-		eGamepadButton		SDLToButton(Uint8 alButton);
-		eGamepadAxis		SDLToAxis(Uint8 alAxis);
-		float				SDLToAxisValue(Sint16 alAxisValue);
-		eGamepadHat			SDLToHat(Uint8 alHat);
-		eGamepadHatState	SDLToHatState(Uint8 alHat);
-		eGamepadBall		SDLToBall(Uint8 alBall);
+        bool ButtonIsDown(eGamepadButton aButton);
 
-		tString msGamepadName;
+        cGamepadInputData GetButton();
 
-		std::vector<float>				mvAxisArray;
-		std::vector<eGamepadAxisRange>	mvAxisRange;
-		std::vector<bool>				mvButtonArray;
+        bool ButtonIsPressed();
 
-		std::list<cGamepadInputData> mlstInputUpdates;
+        bool ButtonIsReleased();
 
-		std::list<cGamepadInputData> mlstButtonsPressed;
-		std::list<cGamepadInputData> mlstButtonsReleased;
+        cGamepadInputData GetReleasedButton();
 
-		std::list<cGamepadInputData> mlstAxisChanges;
+        float GetAxisValue(eGamepadAxis aAxis);
 
-		SDL_GameController	*mpHandle;
-		SDL_JoystickID      mlInstance;
-		cLowLevelInputSDL	*mpLowLevelInputSDL;
-		SDL_Haptic* mpHaptic;
+        float GetAxisDeadZoneRadiusValue();
 
-		unsigned int mlLastTimeActive;
+        void SetAxisDeadZoneRadiusValue(float afValue);
 
-		bool mbRumbleActive;
-		std::vector<float> mvRumble;
+        bool AxesUpdated();
 
-		static float mfInvAxisMax;
-		static float mfDeadZoneRadius;
-		static float mfDeadZoneRadiusSqr;
-	};
+        cGamepadInputData GetUpdatedAxis();
 
-};
+        eGamepadHatState GetHatCurrentState(eGamepadHat aHat);
+
+        bool HatIsInState(eGamepadHat aHat, eGamepadHatState aState);
+
+        bool HatsChanged();
+
+        cGamepadInputData GetHatState();
+
+        cVector2l GetBallAbsPos(eGamepadBall aBall);
+
+        cVector2l GetBallRelPos(eGamepadBall aBall);
+
+        void SetRumble(float afValue, int alMillisec);
+        //void SetColorLED(const cColor& aColor){}
+        //cColor GetColorLED(){ return cColor(0,0); }
+    private:
+        void UpdateAxis(int alAxis, float afVal);
+
+        void UpdateAxis(int alAxis0, float afVal0, int alAxis1, float afVal1);
+
+        eGamepadButton SDLToButton(Uint8 alButton);
+
+        eGamepadAxis SDLToAxis(Uint8 alAxis);
+
+        float SDLToAxisValue(Sint16 alAxisValue);
+
+        eGamepadHat SDLToHat(Uint8 alHat);
+
+        eGamepadHatState SDLToHatState(Uint8 alHat);
+
+        eGamepadBall SDLToBall(Uint8 alBall);
+
+        tString msGamepadName;
+
+        std::vector<float> mvAxisArray;
+        std::vector <eGamepadAxisRange> mvAxisRange;
+        std::vector<bool> mvButtonArray;
+
+        std::list <cGamepadInputData> mlstInputUpdates;
+
+        std::list <cGamepadInputData> mlstButtonsPressed;
+        std::list <cGamepadInputData> mlstButtonsReleased;
+
+        std::list <cGamepadInputData> mlstAxisChanges;
+
+        SDL_GameController *mpHandle;
+        SDL_JoystickID mlInstance;
+        cLowLevelInputSDL *mpLowLevelInputSDL;
+        SDL_Haptic *mpHaptic;
+
+        unsigned int mlLastTimeActive;
+
+        bool mbRumbleActive;
+        std::vector<float> mvRumble;
+
+        static float mfInvAxisMax;
+        static float mfDeadZoneRadius;
+        static float mfDeadZoneRadiusSqr;
+    };
+
+}
 
 #endif // HPL_GAMEPAD_SDL2_H

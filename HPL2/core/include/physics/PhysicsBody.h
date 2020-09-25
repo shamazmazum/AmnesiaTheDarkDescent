@@ -324,5 +324,5 @@ namespace hpl {
 
 		bool mbCollide;
 	};
-};
+}
 #endif // HPL_PHYSICS_BODY_H

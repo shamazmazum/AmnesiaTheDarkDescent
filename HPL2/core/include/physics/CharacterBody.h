@@ -540,5 +540,5 @@ namespace hpl {
 
 		static std::vector<iPhysicsBody*> mvTempBodies;
 	};
-};
+}
 #endif // HPL_CHARACTER_BODY_H

@@ -279,5 +279,5 @@ namespace hpl {
 		static bool mbCreateAndLoadCompressedMaps;
 	};
 
-};
+}
 #endif // HPL_RESOURCES_H

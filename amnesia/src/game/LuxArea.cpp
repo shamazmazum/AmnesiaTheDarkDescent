@@ -27,44 +27,44 @@
 
 //-----------------------------------------------------------------------
 
-void iLuxAreaLoader::Load(const tString &asName, int alID, bool abActive, const cVector3f &avSize, const cMatrixf &a_mtxTransform,cWorld *apWorld)
-{
-	cLuxMap *pMap = gpBase->mpCurrentMapLoading;
-	if(pMap==NULL) return;
+void iLuxAreaLoader::Load(const tString &asName, int alID, bool abActive, const cVector3f &avSize,
+                          const cMatrixf &a_mtxTransform, cWorld *apWorld) {
+    cLuxMap *pMap = gpBase->mpCurrentMapLoading;
+    if (pMap == NULL) return;
 
-	iLuxArea *pArea = CreateArea(asName, alID,pMap);
+    iLuxArea *pArea = CreateArea(asName, alID, pMap);
 
-	//////////////////////////////
-	// Create and set body
-	iPhysicsWorld *pPhysicsWorld = apWorld->GetPhysicsWorld();
-	iCollideShape* pShape = pPhysicsWorld->CreateBoxShape(avSize, NULL);
-	iPhysicsBody* pBody = pPhysicsWorld->CreateBody(asName,pShape);
+    //////////////////////////////
+    // Create and set body
+    iPhysicsWorld *pPhysicsWorld = apWorld->GetPhysicsWorld();
+    iCollideShape *pShape = pPhysicsWorld->CreateBoxShape(avSize, NULL);
+    iPhysicsBody *pBody = pPhysicsWorld->CreateBody(asName, pShape);
 
-	pBody->SetCollide(false);
-	pBody->SetCollideCharacter(false);
-	pBody->SetMatrix(a_mtxTransform);
-	pBody->SetUserData(pArea);
-	
-	pArea->mpBody = pBody;
+    pBody->SetCollide(false);
+    pBody->SetCollideCharacter(false);
+    pBody->SetMatrix(a_mtxTransform);
+    pBody->SetUserData(pArea);
 
-	//////////////////////////////
-	// Load base properties
-	pArea->mvSize = avSize;
-	pArea->m_mtxTransform = a_mtxTransform;
+    pArea->mpBody = pBody;
 
-	//////////////////
-	//Load variables
-	LoadVariables(pArea, apWorld);
+    //////////////////////////////
+    // Load base properties
+    pArea->mvSize = avSize;
+    pArea->m_mtxTransform = a_mtxTransform;
 
-	//////////////////////////////
-	// Load type specific properties
-	SetupArea(pArea, apWorld);
+    //////////////////
+    //Load variables
+    LoadVariables(pArea, apWorld);
 
-	pMap->AddEntity(pArea);
+    //////////////////////////////
+    // Load type specific properties
+    SetupArea(pArea, apWorld);
 
-	pArea->SetActive(abActive);
+    pMap->AddEntity(pArea);
 
-	pArea->SetupAfterLoad(apWorld);
+    pArea->SetActive(abActive);
+
+    pArea->SetupAfterLoad(apWorld);
 }
 
 //-----------------------------------------------------------------------
@@ -78,21 +78,20 @@ void iLuxAreaLoader::Load(const tString &asName, int alID, bool abActive, const 
 
 //-----------------------------------------------------------------------
 
-iLuxArea::iLuxArea(const tString &asName, int alID, cLuxMap *apMap, eLuxAreaType aAreaType)  : iLuxEntity(asName,alID,apMap, eLuxEntityType_Area)
-{
-	mAreaType = aAreaType;
+iLuxArea::iLuxArea(const tString &asName, int alID, cLuxMap *apMap, eLuxAreaType aAreaType) : iLuxEntity(asName, alID,
+                                                                                                         apMap,
+                                                                                                         eLuxEntityType_Area) {
+    mAreaType = aAreaType;
 
-	mpBody = NULL;
+    mpBody = NULL;
 }
 
 //-----------------------------------------------------------------------
 
-iLuxArea::~iLuxArea()
-{
-	if(mpBody)
-	{
-		mpMap->GetPhysicsWorld()->DestroyBody(mpBody);
-	}
+iLuxArea::~iLuxArea() {
+    if (mpBody) {
+        mpMap->GetPhysicsWorld()->DestroyBody(mpBody);
+    }
 }
 
 //-----------------------------------------------------------------------
@@ -103,8 +102,7 @@ iLuxArea::~iLuxArea()
 
 //-----------------------------------------------------------------------
 
-void iLuxArea::OnRenderSolid(cRendererCallbackFunctions* apFunctions)
-{
+void iLuxArea::OnRenderSolid(cRendererCallbackFunctions *apFunctions) {
     /*if(mpBody==NULL) return;
 
 	cBoundingVolume* pBV = mpBody->GetBoundingVolume();
@@ -114,30 +112,26 @@ void iLuxArea::OnRenderSolid(cRendererCallbackFunctions* apFunctions)
 
 //-----------------------------------------------------------------------
 
-bool iLuxArea::CanInteract(iPhysicsBody *apBody)
-{
-	return false;
+bool iLuxArea::CanInteract(iPhysicsBody *apBody) {
+    return false;
 }
 
 //-----------------------------------------------------------------------
 
-bool iLuxArea::OnInteract(iPhysicsBody *apBody, const cVector3f &avPos)
-{
-	return false;
+bool iLuxArea::OnInteract(iPhysicsBody *apBody, const cVector3f &avPos) {
+    return false;
 }
 
 //-----------------------------------------------------------------------
 
-eLuxFocusCrosshair iLuxArea::GetFocusCrosshair(iPhysicsBody *apBody, const cVector3f &avPos)
-{
-	return eLuxFocusCrosshair_LastEnum;
+eLuxFocusCrosshair iLuxArea::GetFocusCrosshair(iPhysicsBody *apBody, const cVector3f &avPos) {
+    return eLuxFocusCrosshair_LastEnum;
 }
 
 //-----------------------------------------------------------------------
 
-iEntity3D* iLuxArea::GetAttachEntity()
-{
-	return mpBody;
+iEntity3D *iLuxArea::GetAttachEntity() {
+    return mpBody;
 }
 
 //-----------------------------------------------------------------------
@@ -147,19 +141,17 @@ iEntity3D* iLuxArea::GetAttachEntity()
 // PRIVATE METHODS
 //////////////////////////////////////////////////////////////////////////
 
-void iLuxArea::OnSetActive(bool abX)
-{	
-	///////////////
-	//Bodies
-	if(mpBody)
-		mpBody->SetActive(abX);
+void iLuxArea::OnSetActive(bool abX) {
+    ///////////////
+    //Bodies
+    if (mpBody)
+        mpBody->SetActive(abX);
 }
 
 //-----------------------------------------------------------------------
 
-void iLuxArea::OnUpdate(float afTimeStep)
-{
-	
+void iLuxArea::OnUpdate(float afTimeStep) {
+
 }
 
 //-----------------------------------------------------------------------
@@ -170,68 +162,68 @@ void iLuxArea::OnUpdate(float afTimeStep)
 
 //-----------------------------------------------------------------------
 
-kBeginSerializeVirtual(iLuxArea_SaveData, iLuxEntity_SaveData)
-kSerializeVar(mvSize,eSerializeType_Vector3f)
-kSerializeVar(m_mtxTransform,eSerializeType_Matrixf)
+kBeginSerializeVirtual(iLuxArea_SaveData, iLuxEntity_SaveData
+)
+kSerializeVar(mvSize, eSerializeType_Vector3f
+)
+kSerializeVar(m_mtxTransform, eSerializeType_Matrixf
+)
+
 kEndSerialize()
 
 
 //-----------------------------------------------------------------------
 
-iLuxEntity* iLuxArea_SaveData::CreateEntity(cLuxMap *apMap)
-{
-	iLuxArea *pArea = CreateArea(apMap);
-	apMap->AddEntity(pArea);
+iLuxEntity *iLuxArea_SaveData::CreateEntity(cLuxMap *apMap) {
+    iLuxArea *pArea = CreateArea(apMap);
+    apMap->AddEntity(pArea);
 
-	return pArea;
+    return pArea;
 }
 
 //-----------------------------------------------------------------------
 
-void iLuxArea::SaveToSaveData(iLuxEntity_SaveData* apSaveData)
-{
-	super_class::SaveToSaveData(apSaveData);
-	iLuxArea_SaveData *pData = static_cast<iLuxArea_SaveData*>(apSaveData);
+void iLuxArea::SaveToSaveData(iLuxEntity_SaveData *apSaveData) {
+    super_class::SaveToSaveData(apSaveData);
+    iLuxArea_SaveData * pData = static_cast<iLuxArea_SaveData *>(apSaveData);
 
     kCopyToVar(pData, mvSize);
-	kCopyToVar(pData, m_mtxTransform);
+    kCopyToVar(pData, m_mtxTransform);
 }
 
 //-----------------------------------------------------------------------
 
-void iLuxArea::LoadFromSaveData(iLuxEntity_SaveData* apSaveData)
-{
-	super_class::LoadFromSaveData(apSaveData);
-	iLuxArea_SaveData *pData = static_cast<iLuxArea_SaveData*>(apSaveData);
+void iLuxArea::LoadFromSaveData(iLuxEntity_SaveData *apSaveData) {
+    super_class::LoadFromSaveData(apSaveData);
+    iLuxArea_SaveData * pData = static_cast<iLuxArea_SaveData *>(apSaveData);
 
-	kCopyFromVar(pData, mvSize);
-	kCopyFromVar(pData, m_mtxTransform);
+    kCopyFromVar(pData, mvSize);
+    kCopyFromVar(pData, m_mtxTransform);
 
-	//////////////////////////////
-	// Create and set body
-	iPhysicsWorld *pPhysicsWorld = mpMap->GetPhysicsWorld();
-	iCollideShape* pShape = pPhysicsWorld->CreateBoxShape(mvSize, NULL);
-	iPhysicsBody* pBody = pPhysicsWorld->CreateBody(msName,pShape);
+    //////////////////////////////
+    // Create and set body
+    iPhysicsWorld *pPhysicsWorld = mpMap->GetPhysicsWorld();
+    iCollideShape *pShape = pPhysicsWorld->CreateBoxShape(mvSize, NULL);
+    iPhysicsBody *pBody = pPhysicsWorld->CreateBody(msName, pShape);
 
-	pBody->SetCollide(false);
-	pBody->SetCollideCharacter(false);
-	pBody->SetMatrix(m_mtxTransform);
-	pBody->SetUserData(this);
-	pBody->SetActive(mbActive);
+    pBody->SetCollide(false);
+    pBody->SetCollideCharacter(false);
+    pBody->SetMatrix(m_mtxTransform);
+    pBody->SetUserData(this);
+    pBody->SetActive(mbActive);
 
-	mpBody = pBody;
-	
-	///////////////////
-	//Do setup
-	SetupAfterLoad(mpMap->GetWorld());
+    mpBody = pBody;
+
+    ///////////////////
+    //Do setup
+    SetupAfterLoad(mpMap->GetWorld());
 }
 
 //-----------------------------------------------------------------------
 
-void iLuxArea::SetupSaveData(iLuxEntity_SaveData *apSaveData)
-{
-	super_class::SetupSaveData(apSaveData);
-	iLuxArea_SaveData *pData = static_cast<iLuxArea_SaveData*>(apSaveData);
+void iLuxArea::SetupSaveData(iLuxEntity_SaveData *apSaveData) {
+    super_class::SetupSaveData(apSaveData);
+    iLuxArea_SaveData * pData = static_cast<iLuxArea_SaveData *>(apSaveData);
 }
 
 //-----------------------------------------------------------------------

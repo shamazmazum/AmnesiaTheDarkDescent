@@ -44,5 +44,5 @@ namespace hpl {
 		iLowLevelGraphics *mpLowLevelGraphics;
 	};
 
-};
+}
 #endif // HPL_BITMAP_LOADER_H

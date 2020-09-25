@@ -29,39 +29,44 @@
 
 namespace hpl {
 
-	//----------------------------------------------
+    //----------------------------------------------
 
-	class iLowLevelGraphics;
+    class iLowLevelGraphics;
 
-	//----------------------------------------------
-	class cGLSLShader : public iGpuShader
-	{
-	public:
-		cGLSLShader(const tString& asName, eGpuShaderType aType, iLowLevelGraphics *apLowLevelGraphics);
-		~cGLSLShader();
+    //----------------------------------------------
+    class cGLSLShader : public iGpuShader {
+    public:
+        cGLSLShader(const tString &asName, eGpuShaderType aType, iLowLevelGraphics *apLowLevelGraphics);
 
-		bool Reload();
-		void Unload();
-		void Destroy();
+        ~cGLSLShader();
 
-		bool SamplerNeedsTextureUnitSetup(){ return true;}
+        bool Reload();
 
-		tString GetProgramName(){ return msName; }
+        void Unload();
 
-		bool CreateFromFile(const tWString& asFile, const tString& asEntry="main", bool abPrintInfoIfFail=true);
-		bool CreateFromString(const char *apStringData, const tString& asEntry="main", bool abPrintInfoIfFail=true);
+        void Destroy();
 
-		//GLSL Specific
-		GLuint GetHandle(){ return mlHandle;}
-	
-	protected:
-		void LogShaderInfoLog();
-		void LogShaderCode(const char *apStringData);
-		GLenum GetGLShaderType(eGpuShaderType aType);
+        bool SamplerNeedsTextureUnitSetup() { return true; }
 
-		iLowLevelGraphics *mpLowLevelGraphics;
-		
-		GLuint mlHandle;
-	};
-};
+        tString GetProgramName() { return msName; }
+
+        bool CreateFromFile(const tWString &asFile, const tString &asEntry = "main", bool abPrintInfoIfFail = true);
+
+        bool CreateFromString(const char *apStringData, const tString &asEntry = "main", bool abPrintInfoIfFail = true);
+
+        //GLSL Specific
+        GLuint GetHandle() { return mlHandle; }
+
+    protected:
+        void LogShaderInfoLog();
+
+        void LogShaderCode(const char *apStringData);
+
+        GLenum GetGLShaderType(eGpuShaderType aType);
+
+        iLowLevelGraphics *mpLowLevelGraphics;
+
+        GLuint mlHandle;
+    };
+}
 #endif // HPL_GLSL_SHADER_H

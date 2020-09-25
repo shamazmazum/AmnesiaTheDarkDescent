@@ -22,27 +22,28 @@
 
 namespace hpl {
 
-	class iLowLevelSystem;
-	class cLogicTimer;
+    class iLowLevelSystem;
 
-	class cSystem
-	{
-	public:
-		cSystem(iLowLevelSystem *apLowLevelSystem);
-		~cSystem();
+    class cLogicTimer;
 
-		iLowLevelSystem* GetLowLevel();
+    class cSystem {
+    public:
+        cSystem(iLowLevelSystem *apLowLevelSystem);
 
-		/**
-		 * Creates a logic timer.
-		 * \param alUpdatesPerSec Frequency of the timer.
-		 * \return 
-		 */
-		cLogicTimer * CreateLogicTimer(unsigned int alUpdatesPerSec);
-	
-	private:
+        ~cSystem();
+
+        iLowLevelSystem *GetLowLevel();
+
+        /**
+         * Creates a logic timer.
+         * \param alUpdatesPerSec Frequency of the timer.
+         * \return
+         */
+        cLogicTimer *CreateLogicTimer(unsigned int alUpdatesPerSec);
+
+    private:
         iLowLevelSystem *mpLowLevelSystem;
-	};
+    };
 
-};
+}
 #endif // HPL_SYSTEM_H

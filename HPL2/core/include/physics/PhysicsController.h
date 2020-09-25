@@ -180,5 +180,5 @@ namespace hpl {
 
 		bool mbLogInfo;
 	};
-};
+}
 #endif // HPL_PHYSICS_CONTROLLER_H

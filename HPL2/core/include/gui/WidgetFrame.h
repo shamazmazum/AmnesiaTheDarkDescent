@@ -24,82 +24,96 @@
 
 namespace hpl {
 
-	class cWidgetSlider;
-	class cGuiSkinFont;
+    class cWidgetSlider;
 
-	class cWidgetFrame : public iWidget
-	{
-	public:
-		cWidgetFrame(cGuiSet *apSet, cGuiSkin *apSkin, bool abHScrollBar=false, bool abVScrollBar=false);
-		virtual ~cWidgetFrame();
+    class cGuiSkinFont;
 
-		void SetDrawFrame(bool abX){ mbDrawFrame = abX;}
-		bool GetDrawFrame(){ return mbDrawFrame;}
-		
-		void SetDrawBackground(bool abX){mbDrawBackground = abX;}
-		bool GetDrawBackground(){ return mbDrawBackground;}
-		
-		void SetBackgroundZ(float afZ){mfBackgroundZ = afZ;}
-		float GetBackgroundZ(){ return mfBackgroundZ;}
+    class cWidgetFrame : public iWidget {
+    public:
+        cWidgetFrame(cGuiSet *apSet, cGuiSkin *apSkin, bool abHScrollBar = false, bool abVScrollBar = false);
 
-		void SetBackGroundColor(const cColor &aColor){ mBackGroundColor = aColor;}
-		const cColor& GetBackGroundColor(){ return mBackGroundColor;}
+        virtual ~cWidgetFrame();
 
-		void OnAttachChild(iWidget* apChild);
-		void OnRemoveChild(iWidget* apChild);
+        void SetDrawFrame(bool abX) { mbDrawFrame = abX; }
 
-		void ScrollToPosition(const cVector2f& avPos);
-		
-	protected:
-		/////////////////////////
-		// Own functions
-		bool OnSliderMove(iWidget* apWidget, const cGuiMessageData& aData);
-		kGuiCallbackDeclarationEnd(OnSliderMove);
+        bool GetDrawFrame() { return mbDrawFrame; }
 
-		/////////////////////////
-		// Implemented functions
-		void OnLoadGraphics();
+        void SetDrawBackground(bool abX) { mbDrawBackground = abX; }
 
-		void OnInit();
-		void OnChangeSize();
+        bool GetDrawBackground() { return mbDrawBackground; }
 
-		void OnChildUpdate(iWidget* apChild);
-		void OnUpdate(float afTimeStep);
-		
-		void OnDraw(float afTimeStep, cGuiClipRegion *apClipRegion);
-		void OnDrawAfterClip(float afTimeStep, cGuiClipRegion *apClipRegion);
+        void SetBackgroundZ(float afZ) { mfBackgroundZ = afZ; }
 
-		bool OnMouseMove(const cGuiMessageData& aData);
-		bool OnMouseDown(const cGuiMessageData& aData);
-		bool OnMouseUp(const cGuiMessageData& aData);
-		bool OnMouseEnter(const cGuiMessageData& aData);
-		bool OnMouseLeave(const cGuiMessageData& aData);
+        float GetBackgroundZ() { return mfBackgroundZ; }
 
-		/////////////////////////
-		// Data
-		bool mbAutoScroll;
-		bool mbHScrollBar, mbVScrollBar;
-		bool mbDrawFrame;
-		bool mbDrawBackground;
-		float mfBackgroundZ;
-		cColor mBackGroundColor;
+        void SetBackGroundColor(const cColor &aColor) { mBackGroundColor = aColor; }
 
-		cGuiGfxElement *mpGfxBackground;
-		
-		cGuiGfxElement *mvGfxBorders[4];
-		cGuiGfxElement *mvGfxCorners[4];
+        const cColor &GetBackGroundColor() { return mBackGroundColor; }
 
-		cVector3f mvMinWidgetCoord;
-		cVector3f mvMaxWidgetCoord;
+        void OnAttachChild(iWidget *apChild);
 
-		cWidgetSlider* mpHSlider;
-		cWidgetSlider* mpVSlider;
-		
-		bool mbScrollBarsNeedUpdate;
-		bool mbScrollUpdated;
+        void OnRemoveChild(iWidget *apChild);
 
-		cVector2f mvAutoScrollMargin;
-	};
+        void ScrollToPosition(const cVector2f &avPos);
 
-};
+    protected:
+        /////////////////////////
+        // Own functions
+        bool OnSliderMove(iWidget *apWidget, const cGuiMessageData &aData);
+
+        kGuiCallbackDeclarationEnd(OnSliderMove);
+
+        /////////////////////////
+        // Implemented functions
+        void OnLoadGraphics();
+
+        void OnInit();
+
+        void OnChangeSize();
+
+        void OnChildUpdate(iWidget *apChild);
+
+        void OnUpdate(float afTimeStep);
+
+        void OnDraw(float afTimeStep, cGuiClipRegion *apClipRegion);
+
+        void OnDrawAfterClip(float afTimeStep, cGuiClipRegion *apClipRegion);
+
+        bool OnMouseMove(const cGuiMessageData &aData);
+
+        bool OnMouseDown(const cGuiMessageData &aData);
+
+        bool OnMouseUp(const cGuiMessageData &aData);
+
+        bool OnMouseEnter(const cGuiMessageData &aData);
+
+        bool OnMouseLeave(const cGuiMessageData &aData);
+
+        /////////////////////////
+        // Data
+        bool mbAutoScroll;
+        bool mbHScrollBar, mbVScrollBar;
+        bool mbDrawFrame;
+        bool mbDrawBackground;
+        float mfBackgroundZ;
+        cColor mBackGroundColor;
+
+        cGuiGfxElement *mpGfxBackground;
+
+        cGuiGfxElement *mvGfxBorders[4];
+        cGuiGfxElement *mvGfxCorners[4];
+
+        cVector3f mvMinWidgetCoord;
+        cVector3f mvMaxWidgetCoord;
+
+        cWidgetSlider *mpHSlider;
+        cWidgetSlider *mpVSlider;
+
+        bool mbScrollBarsNeedUpdate;
+        bool mbScrollUpdated;
+
+        cVector2f mvAutoScrollMargin;
+    };
+
+}
 #endif // HPL_WIDGET_FRAME_H

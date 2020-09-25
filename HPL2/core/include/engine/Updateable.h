@@ -24,98 +24,125 @@
 #include "system/SystemTypes.h"
 
 namespace hpl {
-	
-	class iUpdateable
-	{
-	public:
-		iUpdateable(const tString& asName) : msName(asName){}
-		virtual ~iUpdateable() {}
 
-		virtual void OnPostBufferSwap(){}
+    class iUpdateable {
+    public:
+        iUpdateable(const tString &asName) : msName(asName) {}
 
-		virtual void OnStart(){}
+        virtual ~iUpdateable() {}
 
-		virtual void OnDraw(float afFrameTime){}
-		virtual void OnPostRender(float afFrameTime){}
-		
-		virtual void PreUpdate(float afTimeStep){}
-		virtual void Update(float afTimeStep){}
-		virtual void PostUpdate(float afTimeStep){}
+        virtual void OnPostBufferSwap() {}
 
-		virtual void OnPauseUpdate(float afTimeStep){}
+        virtual void OnStart() {}
 
-		virtual void OnQuit(){}
-		virtual void OnExit(){}
+        virtual void OnDraw(float afFrameTime) {}
 
-		virtual void Reset(){}
+        virtual void OnPostRender(float afFrameTime) {}
 
-		virtual void OnEnterContainer(const tString& asOldContainer){}
-		virtual void OnLeaveContainer(const tString& asNewContainer){}
+        virtual void PreUpdate(float afTimeStep) {}
 
-		virtual void AppGotInputFocus(){}
-		virtual void AppGotMouseFocus(){}
-		virtual void AppGotVisibility(){}
+        virtual void Update(float afTimeStep) {}
 
-		virtual void AppLostInputFocus(){}
-		virtual void AppLostMouseFocus(){}
-		virtual void AppLostVisibility(){}
+        virtual void PostUpdate(float afTimeStep) {}
 
-		virtual void AppDeviceWasPlugged(){}
-		virtual void AppDeviceWasRemoved(){}
+        virtual void OnPauseUpdate(float afTimeStep) {}
 
-		void RunMessage(eUpdateableMessage aMessage, float afX)
-		{
-			switch(aMessage)
-			{
-				case eUpdateableMessage_OnPostBufferSwap:
-					OnPostBufferSwap(); break;
-				case eUpdateableMessage_OnStart:
-					OnStart(); break;
-				case eUpdateableMessage_OnDraw:
-					OnDraw(afX); break;
-				case eUpdateableMessage_OnPostRender:
-					OnPostRender(afX); break;
-				case eUpdateableMessage_PreUpdate:
-					PreUpdate(afX); break;
-				case eUpdateableMessage_Update:
-					Update(afX); break;
-				case eUpdateableMessage_PostUpdate:
-					PostUpdate(afX); break;
-				case eUpdateableMessage_OnQuit:
-					OnQuit(); break;
-				case eUpdateableMessage_OnExit:
-					OnExit(); break;
-				case eUpdateableMessage_Reset:
-					Reset(); break;
-				case eUpdateableMessage_OnPauseUpdate:
-					OnPauseUpdate(afX);break;
-				
-				case eUpdateableMessage_AppGotInputFocus:
-					AppGotInputFocus();break;
-				case eUpdateableMessage_AppGotMouseFocus:
-					AppGotMouseFocus();break;
-				case eUpdateableMessage_AppGotVisibility:
-					AppGotVisibility();break;
+        virtual void OnQuit() {}
 
-				case eUpdateableMessage_AppLostInputFocus:
-					AppLostInputFocus();break;
-				case eUpdateableMessage_AppLostMouseFocus:
-					AppLostMouseFocus();break;
-				case eUpdateableMessage_AppLostVisibility:
-					AppLostVisibility();break;
+        virtual void OnExit() {}
 
-				case eUpdateableMessage_AppDeviceWasPlugged:
-					AppDeviceWasPlugged();break;
-				case eUpdateableMessage_AppDeviceWasRemoved:
-					AppDeviceWasRemoved();break;
-			};
-		}
-		
-		const tString& GetName(){ return msName;}
+        virtual void Reset() {}
 
-	private:
-		tString msName;
-	};
-};
+        virtual void OnEnterContainer(const tString &asOldContainer) {}
+
+        virtual void OnLeaveContainer(const tString &asNewContainer) {}
+
+        virtual void AppGotInputFocus() {}
+
+        virtual void AppGotMouseFocus() {}
+
+        virtual void AppGotVisibility() {}
+
+        virtual void AppLostInputFocus() {}
+
+        virtual void AppLostMouseFocus() {}
+
+        virtual void AppLostVisibility() {}
+
+        virtual void AppDeviceWasPlugged() {}
+
+        virtual void AppDeviceWasRemoved() {}
+
+        void RunMessage(eUpdateableMessage aMessage, float afX) {
+            switch (aMessage) {
+                case eUpdateableMessage_OnPostBufferSwap:
+                    OnPostBufferSwap();
+                    break;
+                case eUpdateableMessage_OnStart:
+                    OnStart();
+                    break;
+                case eUpdateableMessage_OnDraw:
+                    OnDraw(afX);
+                    break;
+                case eUpdateableMessage_OnPostRender:
+                    OnPostRender(afX);
+                    break;
+                case eUpdateableMessage_PreUpdate:
+                    PreUpdate(afX);
+                    break;
+                case eUpdateableMessage_Update:
+                    Update(afX);
+                    break;
+                case eUpdateableMessage_PostUpdate:
+                    PostUpdate(afX);
+                    break;
+                case eUpdateableMessage_OnQuit:
+                    OnQuit();
+                    break;
+                case eUpdateableMessage_OnExit:
+                    OnExit();
+                    break;
+                case eUpdateableMessage_Reset:
+                    Reset();
+                    break;
+                case eUpdateableMessage_OnPauseUpdate:
+                    OnPauseUpdate(afX);
+                    break;
+
+                case eUpdateableMessage_AppGotInputFocus:
+                    AppGotInputFocus();
+                    break;
+                case eUpdateableMessage_AppGotMouseFocus:
+                    AppGotMouseFocus();
+                    break;
+                case eUpdateableMessage_AppGotVisibility:
+                    AppGotVisibility();
+                    break;
+
+                case eUpdateableMessage_AppLostInputFocus:
+                    AppLostInputFocus();
+                    break;
+                case eUpdateableMessage_AppLostMouseFocus:
+                    AppLostMouseFocus();
+                    break;
+                case eUpdateableMessage_AppLostVisibility:
+                    AppLostVisibility();
+                    break;
+
+                case eUpdateableMessage_AppDeviceWasPlugged:
+                    AppDeviceWasPlugged();
+                    break;
+                case eUpdateableMessage_AppDeviceWasRemoved:
+                    AppDeviceWasRemoved();
+                    break;
+            }
+        }
+
+        const tString &GetName() { return msName; }
+
+    private:
+        tString msName;
+    };
+}
 
 #endif // HPL_UPDATEABLE_H

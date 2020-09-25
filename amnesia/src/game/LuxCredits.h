@@ -26,73 +26,77 @@
 
 //----------------------------------------------
 
-class cLuxCredits : public iLuxUpdateable
-{
-public:	
-	cLuxCredits();
-	~cLuxCredits();
+class cLuxCredits : public iLuxUpdateable {
+public:
+    cLuxCredits();
 
-	void LoadFonts();
+    ~cLuxCredits();
 
-	void Reset();
+    void LoadFonts();
 
-	void Update(float afTimeStep);
+    void Reset();
 
-	void AddKeyPart(int alKey);
-	void Setup(const tString& asMusic, bool abLoopMusic, const tString& asTextCat, const tString& asTextEntry, int alEndNum);
+    void Update(float afTimeStep);
 
-	void OnEnterContainer(const tString& asOldContainer);
-	void OnLeaveContainer(const tString& asNewContainer);
+    void AddKeyPart(int alKey);
 
-	void OnDraw(float afFrameTime);
+    void
+    Setup(const tString &asMusic, bool abLoopMusic, const tString &asTextCat, const tString &asTextEntry, int alEndNum);
 
-	void ExitPressed();
+    void OnEnterContainer(const tString &asOldContainer);
 
-	void AppLostInputFocus();
-	void AppGotInputFocus();
-	
+    void OnLeaveContainer(const tString &asNewContainer);
+
+    void OnDraw(float afFrameTime);
+
+    void ExitPressed();
+
+    void AppLostInputFocus();
+
+    void AppGotInputFocus();
+
 private:
-	///////////////////////
-	// Data
-	cGraphics *mpGraphics;
+    ///////////////////////
+    // Data
+    cGraphics *mpGraphics;
 
-	cGui* mpGui;
-	cGuiSet* mpGuiSet;
+    cGui *mpGui;
+    cGuiSet *mpGuiSet;
 
-	iFontData *mpFontNormal;
-	iFontData *mpFontHeader;
+    iFontData *mpFontNormal;
+    iFontData *mpFontHeader;
 
-	cViewport *mpViewport;
+    cViewport *mpViewport;
 
-	cGuiGfxElement *mpBlackGfx;
+    cGuiGfxElement *mpBlackGfx;
 
-	cVector2f mvScreenSize;
-	cVector2f mvGuiSetSize;
-	cVector2f mvGuiSetCenterSize;
-	cVector2f mvGuiSetOffset;
-	cVector3f mvGuiSetStartPos;
+    cVector2f mvScreenSize;
+    cVector2f mvGuiSetSize;
+    cVector2f mvGuiSetCenterSize;
+    cVector2f mvGuiSetOffset;
+    cVector3f mvGuiSetStartPos;
 
-	cVector2f mvNormalFontSize;
-	cVector2f mvHeaderFontSize;
-	cVector2f mvTheEndFontSize;
+    cVector2f mvNormalFontSize;
+    cVector2f mvHeaderFontSize;
+    cVector2f mvTheEndFontSize;
 
-	float mfScrollSpeed;
-	float mfFadeSpeed;
+    float mfScrollSpeed;
+    float mfFadeSpeed;
 
-	///////////////////////
-	// Vars
-	cBinaryBuffer mKeyBuffer;
-	tString msMusic;
-	bool mbLoopMusic;
-	int mlEndNum;
+    ///////////////////////
+    // Vars
+    cBinaryBuffer mKeyBuffer;
+    tString msMusic;
+    bool mbLoopMusic;
+    int mlEndNum;
 
-	tWStringVec mvTextRows;
+    tWStringVec mvTextRows;
 
-	bool mbActive;
-	float mfYPos;
-	int mlState;
-	float mfTime;
-	float mfFadeAlpha;
+    bool mbActive;
+    float mfYPos;
+    int mlState;
+    float mfTime;
+    float mfFadeAlpha;
 
 };
 

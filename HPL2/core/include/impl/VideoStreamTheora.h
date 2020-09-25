@@ -27,85 +27,94 @@
 
 namespace hpl {
 
-	//-----------------------------------------
-	class  cVideoStreamTheora_Loader;
+    //-----------------------------------------
+    class cVideoStreamTheora_Loader;
 
-	class cVideoStreamTheora : public iVideoStream
-	{
-	public:
-		cVideoStreamTheora(const tString& asName, cVideoStreamTheora_Loader* apLoader);
-		~cVideoStreamTheora();
+    class cVideoStreamTheora : public iVideoStream {
+    public:
+        cVideoStreamTheora(const tString &asName, cVideoStreamTheora_Loader *apLoader);
 
-        bool LoadFromFile(const tWString& asFilePath);
-		
-		void Update(float afTimeStep);
+        ~cVideoStreamTheora();
 
-		void Play();
-		void Stop();
+        bool LoadFromFile(const tWString &asFilePath);
 
-		void Pause(bool abX);
-		bool IsPaused(){ return mbPaused;}
+        void Update(float afTimeStep);
 
-		void SetLoop(bool abX);
-		bool IsLooping(){ return mbLooping;}
+        void Play();
 
-		void CopyToTexture(iTexture *apTexture);
+        void Stop();
 
-	private:
-		void DrawFrameToBuffer();
-		int BufferData(FILE *pFile ,ogg_sync_state *apOggSynchState);
-		void QueuePage(ogg_page *apPage);
-		bool GetHeaders();
-		bool InitDecoders();
-		void ResetStreams();
-		
-		cVideoStreamTheora_Loader *mpLoader;
+        void Pause(bool abX);
 
-		FILE *mpFile;
+        bool IsPaused() { return mbPaused; }
 
-		bool mbLooping;
-		bool mbPaused;
-		bool mbPlaying;
+        void SetLoop(bool abX);
 
-		float mfTime;
+        bool IsLooping() { return mbLooping; }
 
-		unsigned char *mpFrameBuffer;
-		
-		ogg_sync_state   mOggSyncState;
-		ogg_stream_state mTheoraStreamState;
-		theora_info      mTheoraInfo;
-		theora_comment mTheoraComment;
-		theora_state	mTheoraState;
+        void CopyToTexture(iTexture *apTexture);
 
-		int          mlVideobufReady;
-		ogg_int64_t  mlVideobufGranulePos;
-		double       mfVideobufTime;
+    private:
+        void DrawFrameToBuffer();
 
-		bool mbVideoLoaded;
-		bool mbVideoFrameReady;
-		int mlBufferSize;
-	};
+        int BufferData(FILE *pFile, ogg_sync_state *apOggSynchState);
 
-	//-----------------------------------------
+        void QueuePage(ogg_page *apPage);
 
-	class cVideoStreamTheora_Loader : public iVideoLoader
-	{
-	friend class cVideoStreamTheora;
-	public:
-		cVideoStreamTheora_Loader();
-		~cVideoStreamTheora_Loader();
-		
-		iVideoStream* LoadVideo(const tWString& asName);
-	
-	private:
-		unsigned char* mpYuvToR;
-		unsigned char* mpYuvToB;
-		
-		unsigned short* mpYuv_G_UV;
-		unsigned char* mpYuv_G_Y_UV;
-	};
+        bool GetHeaders();
 
-	//-----------------------------------------
+        bool InitDecoders();
 
-};
+        void ResetStreams();
+
+        cVideoStreamTheora_Loader *mpLoader;
+
+        FILE *mpFile;
+
+        bool mbLooping;
+        bool mbPaused;
+        bool mbPlaying;
+
+        float mfTime;
+
+        unsigned char *mpFrameBuffer;
+
+        ogg_sync_state mOggSyncState;
+        ogg_stream_state mTheoraStreamState;
+        theora_info mTheoraInfo;
+        theora_comment mTheoraComment;
+        theora_state mTheoraState;
+
+        int mlVideobufReady;
+        ogg_int64_t mlVideobufGranulePos;
+        double mfVideobufTime;
+
+        bool mbVideoLoaded;
+        bool mbVideoFrameReady;
+        int mlBufferSize;
+    };
+
+    //-----------------------------------------
+
+    class cVideoStreamTheora_Loader : public iVideoLoader {
+        friend class cVideoStreamTheora;
+
+    public:
+        cVideoStreamTheora_Loader();
+
+        ~cVideoStreamTheora_Loader();
+
+        iVideoStream *LoadVideo(const tWString &asName);
+
+    private:
+        unsigned char *mpYuvToR;
+        unsigned char *mpYuvToB;
+
+        unsigned short *mpYuv_G_UV;
+        unsigned char *mpYuv_G_Y_UV;
+    };
+
+    //-----------------------------------------
+
+}
 #endif // HPL_VIDEO_STREAM_THEORA_H

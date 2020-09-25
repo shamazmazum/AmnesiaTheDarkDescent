@@ -84,7 +84,7 @@ void cLuxCompletionCountHandler::Update(float afTimeStep)
 
 	/////////////////////
 	//Decrease alpha
-	if(mbActive==false)
+	if(!mbActive)
 	{
 		mfAlpha -= 0.5 * afTimeStep;
 		if(mfAlpha <0) mfAlpha =0;

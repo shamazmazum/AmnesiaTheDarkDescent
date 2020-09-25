@@ -30,74 +30,83 @@ class cLuxSaveGame_SaveData;
 
 //----------------------------------------------
 
-class cLuxSaveHandlerThreadClass : public iThreadClass
-{
+class cLuxSaveHandlerThreadClass : public iThreadClass {
 public:
-	cLuxSaveHandlerThreadClass();
-	~cLuxSaveHandlerThreadClass();
+    cLuxSaveHandlerThreadClass();
 
-	bool IsRunning();
+    ~cLuxSaveHandlerThreadClass();
 
-	void SetUpThread();
-	void Save(cLuxSaveGame_SaveData* apSaveData, const tWString& asFile);
+    bool IsRunning();
 
-	void ProcessPendingSaves();
+    void SetUpThread();
 
-	void UpdateThread();
+    void Save(cLuxSaveGame_SaveData *apSaveData, const tWString &asFile);
+
+    void ProcessPendingSaves();
+
+    void UpdateThread();
 
 protected:
-	iMutex* mpSaveMutex;
-	iThread* mpThread;
-	std::vector<cLuxSaveGame_SaveData*> mvSaveData;
-	tWStringVec mvSaveFileNames;
+    iMutex *mpSaveMutex;
+    iThread *mpThread;
+    std::vector<cLuxSaveGame_SaveData *> mvSaveData;
+    tWStringVec mvSaveFileNames;
 };
 
 //----------------------------------------------
 
-class cLuxSaveHandler : public iLuxUpdateable
-{
-public:	
-	cLuxSaveHandler();
-	~cLuxSaveHandler();
+class cLuxSaveHandler : public iLuxUpdateable {
+public:
+    cLuxSaveHandler();
 
-	void OnStart();
-	void Update(float afTimeStep);
-	void Reset();
+    ~cLuxSaveHandler();
 
-	void SaveGameToFile(const tWString& asFile, bool abSaveSnapshot=false);
-	void LoadGameFromFile(const tWString& asFile);
+    void OnStart();
 
-	bool AutoSave();
-	bool AutoLoad(bool abResetProgressLogger);
+    void Update(float afTimeStep);
 
-	bool SaveFileExists();
+    void Reset();
 
-	//////////////////////
-	// HARDMODE
+    void SaveGameToFile(const tWString &asFile, bool abSaveSnapshot = false);
 
-	bool HardModeSave();
+    void LoadGameFromFile(const tWString &asFile);
 
-	//////////////////////
+    bool AutoSave();
 
-	cLuxSaveGame_SaveData *CreateSaveGameData();
-	void LoadSaveGameData(cLuxSaveGame_SaveData *apSave);
+    bool AutoLoad(bool abResetProgressLogger);
 
-	tWString GetProperSaveName(const tWString& asFile);
+    bool SaveFileExists();
 
-	cLuxSaveHandlerThreadClass* GetThreadClass() { return &mSaveHandlerThreadClass; }
+    //////////////////////
+    // HARDMODE
+
+    bool HardModeSave();
+
+    //////////////////////
+
+    cLuxSaveGame_SaveData *CreateSaveGameData();
+
+    void LoadSaveGameData(cLuxSaveGame_SaveData *apSave);
+
+    tWString GetProperSaveName(const tWString &asFile);
+
+    cLuxSaveHandlerThreadClass *GetThreadClass() { return &mSaveHandlerThreadClass; }
+
 private:
-	tWString GetSaveName(const tWString &asPrefix);
-	void DeleteOldestSaveFiles(const tWString &asFolder, int alMax);
-	tWString GetNewestSaveFile(const tWString &asFolder);
+    tWString GetSaveName(const tWString &asPrefix);
 
-	bool mbInitialized;
-	bool mbStartThread;
+    void DeleteOldestSaveFiles(const tWString &asFolder, int alMax);
 
-	cDate mLatestSaveDate;
-	int mlMaxAutoSaves;
-	int mlSaveNameCount;
+    tWString GetNewestSaveFile(const tWString &asFolder);
 
-	cLuxSaveHandlerThreadClass mSaveHandlerThreadClass;
+    bool mbInitialized;
+    bool mbStartThread;
+
+    cDate mLatestSaveDate;
+    int mlMaxAutoSaves;
+    int mlSaveNameCount;
+
+    cLuxSaveHandlerThreadClass mSaveHandlerThreadClass;
 };
 
 

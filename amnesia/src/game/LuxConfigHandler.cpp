@@ -63,7 +63,7 @@ void cLuxConfigHandler::LoadMainConfig()
 	/////////////////////
 	// Main
 	mbLoadDebugMenu = gpBase->mpMainConfig->GetBool("Main","LoadDebugMenu", false);
-	mbFirstStart = gpBase->CheckFirstStartFlag()==false;
+	mbFirstStart = !gpBase->CheckFirstStartFlag();
 	//mbFirstStart = gpBase->mpMainConfig->GetBool("Main","FirstStart", true);
 
 	msLangFile = gpBase->mpMainConfig->GetString("Main", "StartLanguage", gpBase->msDefaultGameLanguage);
@@ -209,7 +209,7 @@ bool cLuxConfigHandler::ShowRestartWarning(cGuiSet* apSet, void* apObject, tGuiC
 	///////////////////////////////////////////////////////////////////////////////////
 	// This will show a popup if really needed, once per "restarting" setting changed.
 	// Also, will return true if the popup was actually shown.
-	if(mbGameNeedsRestart && mbRestartDialogShown==false)
+	if(mbGameNeedsRestart && !mbRestartDialogShown)
 	{
 		mbRestartDialogShown = true;
 		cGuiPopUpMessageBox* pPopUp = apSet->CreatePopUpMessageBox(kTranslate("OptionsMenu", "ReqRestartLabel"),

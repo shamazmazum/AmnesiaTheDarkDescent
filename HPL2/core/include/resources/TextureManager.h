@@ -89,5 +89,5 @@ namespace hpl {
 		cBitmapLoaderHandler *mpBitmapLoaderHandler;
 	};
 
-};
+}
 #endif // HPL_TEXTURE_MANAGER_H

@@ -26,167 +26,181 @@
 
 //----------------------------------------------
 
-class cLuxProp_Wheel_SaveData : public iLuxProp_SaveData
-{
-	kSerializableClassInit(cLuxProp_Wheel_SaveData)
+class cLuxProp_Wheel_SaveData : public iLuxProp_SaveData {
+    kSerializableClassInit(cLuxProp_Wheel_SaveData)
 public:
-	float mfAngle;
-	float mfPrevAngle;
+    float mfAngle;
+    float mfPrevAngle;
 
-	float mfLastToMax;
-	float mfLastToMin;
+    float mfLastToMax;
+    float mfLastToMin;
 
-	int mlCurrentState;
-	int mlStuckState;
+    int mlCurrentState;
+    int mlStuckState;
 
-	float mfJointAngle;
-	float mfPrevJointAngle;
+    float mfJointAngle;
+    float mfPrevJointAngle;
 
-	bool mbAutoMoving;
-	float mfAutoMoveGoal;
+    bool mbAutoMoving;
+    float mfAutoMoveGoal;
 
-	float mfMinLimit;
-	float mfMaxLimit;
-	bool mbMinLimitStuck;
-	bool mbMaxLimitStuck;
+    float mfMinLimit;
+    float mfMaxLimit;
+    bool mbMinLimitStuck;
+    bool mbMaxLimitStuck;
 
-	bool mbInteractionDisablesStuck;
+    bool mbInteractionDisablesStuck;
 
-	int mlSpinDir;
+    int mlSpinDir;
 };
 
 //----------------------------------------------
 
 
-class cLuxProp_Wheel : public iLuxProp
-{
-typedef iLuxProp super_class;
-friend class cLuxPropLoader_Wheel;
-public:	
-	cLuxProp_Wheel(const tString &asName, int alID, cLuxMap *apMap);
-	virtual ~cLuxProp_Wheel();
+class cLuxProp_Wheel : public iLuxProp {
+    typedef iLuxProp super_class;
 
-	//////////////////////
-	//General
-	bool CanInteract(iPhysicsBody *apBody);
-	bool OnInteract(iPhysicsBody *apBody, const cVector3f &avPos);
-	
-	void OnSetupAfterLoad(cWorld *apWorld);
+    friend class cLuxPropLoader_Wheel;
 
-	void OnResetProperties();
+public:
+    cLuxProp_Wheel(const tString &asName, int alID, cLuxMap *apMap);
 
-	void UpdatePropSpecific(float afTimeStep);
-	
-	void BeforePropDestruction();
+    virtual ~cLuxProp_Wheel();
 
-	eLuxFocusCrosshair GetFocusCrosshair(iPhysicsBody *apBody, const cVector3f &avPos);
+    //////////////////////
+    //General
+    bool CanInteract(iPhysicsBody *apBody);
 
-	float OnInteractDebugDraw(cGuiSet *apSet,iFontData *apFont, float afStartY);
+    bool OnInteract(iPhysicsBody *apBody, const cVector3f &avPos);
 
-	//////////////////////
-	//Properties
-	iLuxInteractData_RotateBase* GetMoveBaseData(){ return &mWheelData;}
+    void OnSetupAfterLoad(cWorld *apWorld);
 
-	void SetStuckState(int alState, bool abEffects);
-	int  GetStuckState(){ return mlStuckState; }
+    void OnResetProperties();
 
-	void SetAngle(float afX, bool abAutoMoveToAngle);
-	float GetAngle(){ return mfAngle;}
+    void UpdatePropSpecific(float afTimeStep);
 
-	float GetMinLimit(){ return mfMinLimit;}
-	float GetMaxLimit(){ return mfMaxLimit;}
+    void BeforePropDestruction();
 
-	void SetInteractionDisablesStuck(bool abX){ mbInteractionDisablesStuck = abX;}
-	bool GetInteractionDisablesStuck(bool abX){ return mbInteractionDisablesStuck;}
+    eLuxFocusCrosshair GetFocusCrosshair(iPhysicsBody *apBody, const cVector3f &avPos);
 
-	//////////////////////
-	//Connection callbacks
-	void OnConnectionStateChange(iLuxEntity *apEntity, int alState);
-	
-	//////////////////////
-	//Save data stuff
-	iLuxEntity_SaveData* CreateSaveData();
-	void SaveToSaveData(iLuxEntity_SaveData* apSaveData);
-	void LoadFromSaveData(iLuxEntity_SaveData* apSaveData);
-	void SetupSaveData(iLuxEntity_SaveData *apSaveData);
+    float OnInteractDebugDraw(cGuiSet *apSet, iFontData *apFont, float afStartY);
+
+    //////////////////////
+    //Properties
+    iLuxInteractData_RotateBase *GetMoveBaseData() { return &mWheelData; }
+
+    void SetStuckState(int alState, bool abEffects);
+
+    int GetStuckState() { return mlStuckState; }
+
+    void SetAngle(float afX, bool abAutoMoveToAngle);
+
+    float GetAngle() { return mfAngle; }
+
+    float GetMinLimit() { return mfMinLimit; }
+
+    float GetMaxLimit() { return mfMaxLimit; }
+
+    void SetInteractionDisablesStuck(bool abX) { mbInteractionDisablesStuck = abX; }
+
+    bool GetInteractionDisablesStuck(bool abX) { return mbInteractionDisablesStuck; }
+
+    //////////////////////
+    //Connection callbacks
+    void OnConnectionStateChange(iLuxEntity *apEntity, int alState);
+
+    //////////////////////
+    //Save data stuff
+    iLuxEntity_SaveData *CreateSaveData();
+
+    void SaveToSaveData(iLuxEntity_SaveData *apSaveData);
+
+    void LoadFromSaveData(iLuxEntity_SaveData *apSaveData);
+
+    void SetupSaveData(iLuxEntity_SaveData *apSaveData);
 
 private:
-	void UpdateAngle(float afTimeStep);
-	void UpdateCheckLimit(float afTimeStep);
-	void UpdateAutoRotation(float afTimeStep);
+    void UpdateAngle(float afTimeStep);
 
-	void SetMaxJointAngle(float afMaxAngle);
-	void SetMinJointAngle(float afMinAngle);
-	
-	void ChangeState(int alState, bool abEffects);
+    void UpdateCheckLimit(float afTimeStep);
 
-	void ResetAutoMove();
+    void UpdateAutoRotation(float afTimeStep);
 
-	////////////////////////////
-	// Data
-	cLuxInteractData_Wheel mWheelData;
+    void SetMaxJointAngle(float afMaxAngle);
 
-	cPidController<cVector3f> mRotatePid;
+    void SetMinJointAngle(float afMinAngle);
 
-	iPhysicsJointHinge *mpHingeJoint;
-	iPhysicsBody *mpWheelBody;
+    void ChangeState(int alState, bool abEffects);
 
-	////////////////////////////
-	// Settings
-	bool mbCanInteractWithStaticBody;
+    void ResetAutoMove();
 
-	float mfMinLimitRange;
-	float mfMaxLimitRange;
+    ////////////////////////////
+    // Data
+    cLuxInteractData_Wheel mWheelData;
 
-	float mfMinLimit;
-	float mfMaxLimit;
-	bool mbMinLimitStuck;
-	bool mbMaxLimitStuck;
+    cPidController <cVector3f> mRotatePid;
 
-	int mlSpinDir;
+    iPhysicsJointHinge *mpHingeJoint;
+    iPhysicsBody *mpWheelBody;
 
-	tString msMinLimitSound;
-	tString msMaxLimitSound;
-	
-	tString msStuckSound;
+    ////////////////////////////
+    // Settings
+    bool mbCanInteractWithStaticBody;
 
-	
-	bool mbSlowDownRotation;
-	bool mbSkipMiddleState;
+    float mfMinLimitRange;
+    float mfMaxLimitRange;
 
-	////////////////////////////
-	// Variables
-	float mfAngle;
-	float mfPrevAngle;
+    float mfMinLimit;
+    float mfMaxLimit;
+    bool mbMinLimitStuck;
+    bool mbMaxLimitStuck;
 
-	float mfStuckSoundTimer;
+    int mlSpinDir;
 
-	float mfLastToMax;
-	float mfLastToMin;
-	
-	int mlCurrentState;
-	int mlStuckState;
+    tString msMinLimitSound;
+    tString msMaxLimitSound;
 
-	float mfJointAngle;
-	float mfPrevJointAngle;
+    tString msStuckSound;
 
-	bool mbAutoMoving;
-	float mfAutoMoveGoal;
 
-	bool mbInteractionDisablesStuck;
+    bool mbSlowDownRotation;
+    bool mbSkipMiddleState;
+
+    ////////////////////////////
+    // Variables
+    float mfAngle;
+    float mfPrevAngle;
+
+    float mfStuckSoundTimer;
+
+    float mfLastToMax;
+    float mfLastToMin;
+
+    int mlCurrentState;
+    int mlStuckState;
+
+    float mfJointAngle;
+    float mfPrevJointAngle;
+
+    bool mbAutoMoving;
+    float mfAutoMoveGoal;
+
+    bool mbInteractionDisablesStuck;
 };
 
 //----------------------------------------------
 
-class cLuxPropLoader_Wheel : public iLuxPropLoader
-{
+class cLuxPropLoader_Wheel : public iLuxPropLoader {
 public:
-	cLuxPropLoader_Wheel(const tString& asName);
-	virtual ~cLuxPropLoader_Wheel(){}
+    cLuxPropLoader_Wheel(const tString &asName);
 
-	iLuxProp *CreateProp(const tString& asName, int alID, cLuxMap *apMap);
-	void LoadVariables(iLuxProp *apProp, cXmlElement *apRootElem);
-	void LoadInstanceVariables(iLuxProp *apProp, cResourceVarsObject *apInstanceVars);
+    virtual ~cLuxPropLoader_Wheel() {}
+
+    iLuxProp *CreateProp(const tString &asName, int alID, cLuxMap *apMap);
+
+    void LoadVariables(iLuxProp *apProp, cXmlElement *apRootElem);
+
+    void LoadInstanceVariables(iLuxProp *apProp, cResourceVarsObject *apInstanceVars);
 
 private:
 };

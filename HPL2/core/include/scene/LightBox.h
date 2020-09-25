@@ -25,31 +25,33 @@
 
 namespace hpl {
 
-	//------------------------------------------
+    //------------------------------------------
 
-	class cLightBox : public iLight
-	{
-	public:
-		cLightBox(tString asName, cResources *apResources);
+    class cLightBox : public iLight {
+    public:
+        cLightBox(tString asName, cResources *apResources);
 
-		void SetSize(const cVector3f& avSize);
-		inline const cVector3f& GetSize(){ return mvSize;}
+        void SetSize(const cVector3f &avSize);
 
-		void SetBlendFunc(eLightBoxBlendFunc aFunc){ mBlendFunc = aFunc; }
-		eLightBoxBlendFunc GetBlendFunc(){ return mBlendFunc; }
+        inline const cVector3f &GetSize() { return mvSize; }
 
-		bool IsVisible();
+        void SetBlendFunc(eLightBoxBlendFunc aFunc) { mBlendFunc = aFunc; }
 
-		void SetBoxLightPrio(int alX){ mlBoxLightPrio = alX;}
-		inline int GetBoxLightPrio()const{ return mlBoxLightPrio;}
+        eLightBoxBlendFunc GetBlendFunc() { return mBlendFunc; }
 
-	private:
-		void UpdateBoundingVolume();
+        bool IsVisible();
 
-		cVector3f mvSize;
-		eLightBoxBlendFunc mBlendFunc;
-		int mlBoxLightPrio;
-	};
+        void SetBoxLightPrio(int alX) { mlBoxLightPrio = alX; }
 
-};
+        inline int GetBoxLightPrio() const { return mlBoxLightPrio; }
+
+    private:
+        void UpdateBoundingVolume();
+
+        cVector3f mvSize;
+        eLightBoxBlendFunc mBlendFunc;
+        int mlBoxLightPrio;
+    };
+
+}
 #endif // HPL_LIGHT_BOX_H

@@ -87,5 +87,5 @@ namespace hpl {
 
 	};
 
-};
+}
 #endif // HPL_RESOURCEMANAGER_H

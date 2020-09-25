@@ -47,5 +47,5 @@ namespace hpl {
 		virtual unsigned int GetSampleCount()=0;
 	};
 
-};
+}
 #endif // HPL_OCCLUSION_QUERY_H

@@ -26,65 +26,70 @@
 
 namespace hpl {
 
-	//------------------------------------------------------
+    //------------------------------------------------------
 
-	class cLogWriter
-	{
-	public:
-		cLogWriter(const tWString& asDefaultFile);
-		~cLogWriter();
-		
-		void Write(const tString& asMessage);
-		void Clear();
+    class cLogWriter {
+    public:
+        cLogWriter(const tWString &asDefaultFile);
 
-		void SetFileName(const tWString& asFile);
-		
-	private:
-		void ReopenFile();
+        ~cLogWriter();
 
-		FILE *mpFile;
-		tWString msFileName;
-	};
+        void Write(const tString &asMessage);
 
-	//------------------------------------------------------
-	
-	class cScriptOutput// : public  asIOutputStream
-	{
-	public:
-		cScriptOutput() : msMessage("") {}
-		~cScriptOutput(){}
-		
-		void AddMessage(const asSMessageInfo *msg);
-		void Display();
-		void Clear();
+        void Clear();
 
-		tString &GetMessage(){ return msMessage;}
+        void SetFileName(const tWString &asFile);
 
-	private:
-		tString msMessage;
-	};
+    private:
+        void ReopenFile();
 
-	//------------------------------------------------------
+        FILE *mpFile;
+        tWString msFileName;
+    };
+
+    //------------------------------------------------------
+
+    class cScriptOutput// : public  asIOutputStream
+    {
+    public:
+        cScriptOutput() : msMessage("") {}
+
+        ~cScriptOutput() {}
+
+        void AddMessage(const asSMessageInfo *msg);
+
+        void Display();
+
+        void Clear();
+
+        tString &GetMessage() { return msMessage; }
+
+    private:
+        tString msMessage;
+    };
+
+    //------------------------------------------------------
 
 
-	class cLowLevelSystemSDL : public iLowLevelSystem
-	{
-	public:
-		cLowLevelSystemSDL();
-		~cLowLevelSystemSDL();
+    class cLowLevelSystemSDL : public iLowLevelSystem {
+    public:
+        cLowLevelSystemSDL();
 
-		iScript* CreateScript(const tString& asName);
+        ~cLowLevelSystemSDL();
 
-		bool AddScriptFunc(const tString& asFuncDecl, void* pFunc);
-		bool AddScriptVar(const tString& asVarDecl, void *pVar);
+        iScript *CreateScript(const tString &asName);
 
-	private:
-		asIScriptEngine *mpScriptEngine;
-		cScriptOutput *mpScriptOutput;
-		int mlHandleCount;
-	};
+        bool AddScriptFunc(const tString &asFuncDecl, void *pFunc);
 
-	//------------------------------------------------------
+        bool AddScriptVar(const tString &asVarDecl, void *pVar);
 
-};
+    private:
+        asIScriptEngine *mpScriptEngine;
+        cScriptOutput *mpScriptOutput;
+        int mlHandleCount;
+    };
+
+    //------------------------------------------------------
+
+}
 #endif // HPL_LOWLEVELSYSTEM_SDL_H

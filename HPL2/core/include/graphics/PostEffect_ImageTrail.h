@@ -83,5 +83,5 @@ namespace hpl {
 
 	//------------------------------------------
 
-};
+}
 #endif // HPL_POSTEFFECT_IMAGE_TRAIL_H

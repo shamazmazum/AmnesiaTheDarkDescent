@@ -26,124 +26,132 @@
 namespace hpl {
 
 
-	class iSubAction
-	{
-	friend class cAction;
-	public:
-		virtual ~iSubAction(){}
+    class iSubAction {
+        friend class cAction;
 
-		void Update(float afTimeStep);
+    public:
+        virtual ~iSubAction() {}
 
-		/**
-		* Update special logic for the action. Normally empty
-		*/
-		virtual void UpdateLogic(float afTimeStep){}
+        void Update(float afTimeStep);
+
+        /**
+        * Update special logic for the action. Normally empty
+        */
+        virtual void UpdateLogic(float afTimeStep) {}
 
 
-		/**
-		* Filled in by the class that inherits from Action.
-		* \return true if the action is being triggered
-		*/
-		virtual bool IsTriggerd()=0;
+        /**
+        * Filled in by the class that inherits from Action.
+        * \return true if the action is being triggered
+        */
+        virtual bool IsTriggerd() = 0;
 
-		/**
-		* 
-		* \return A value from the input, ie the relative mouse x position.
-		*/
-		virtual float GetValue()=0;
+        /**
+        *
+        * \return A value from the input, ie the relative mouse x position.
+        */
+        virtual float GetValue() = 0;
 
-		/**
-		* The name of the input, ie for keyboard the name of the key is returned.
-		*/
-		virtual tString GetInputName()=0;
+        /**
+        * The name of the input, ie for keyboard the name of the key is returned.
+        */
+        virtual tString GetInputName() = 0;
 
-		/**
-		* The name of the input type.
-		*/
-		virtual tString GetInputType()=0;
-	};
+        /**
+        * The name of the input type.
+        */
+        virtual tString GetInputType() = 0;
+    };
 
-	//---------------------------------------------------------
+    //---------------------------------------------------------
 
-	typedef std::vector<iSubAction*> tSubActionVec;
-	typedef tSubActionVec::iterator tSubActionVecIt;
+    typedef std::vector<iSubAction *> tSubActionVec;
+    typedef tSubActionVec::iterator tSubActionVecIt;
 
-	class cInput;
+    class cInput;
 
-	//---------------------------------------------------------
+    //---------------------------------------------------------
 
-	class cAction
-	{
-	public:
-		cAction(const tString& asName,int alId, cInput *apInput);
-		~cAction();
+    class cAction {
+    public:
+        cAction(const tString &asName, int alId, cInput *apInput);
 
-		void AddKey(eKey aKey);
-		void AddMouseButton(eMouseButton aButton);
-		void AddGamepadButton(int alPadIndex, eGamepadButton aButton);
-		void AddGamepadAxis(int alPadIndex, eGamepadAxis aAxis, eGamepadAxisRange aRange, float afMinThreshold, float afMaxThreshold=1.0f); 
-		void AddGamepadHat(int alPadIndex, eGamepadHat aHat, eGamepadHatState aHatState);
+        ~cAction();
 
-		void AddSubAction(iSubAction *apSubAction);
+        void AddKey(eKey aKey);
 
-		void ClearSubActions();
+        void AddMouseButton(eMouseButton aButton);
 
-		/**
-		* returns true if the action is triggered now
-		*/
-		bool IsTriggerd();
+        void AddGamepadButton(int alPadIndex, eGamepadButton aButton);
 
-		/**
-		* returns true if the action just was triggered, else false
-		*/
-		bool WasTriggerd();
+        void AddGamepadAxis(int alPadIndex, eGamepadAxis aAxis, eGamepadAxisRange aRange, float afMinThreshold,
+                            float afMaxThreshold = 1.0f);
 
-		/**
-		* returns true if the action just became triggered, else false
-		*/
-		bool BecameTriggerd();
+        void AddGamepadHat(int alPadIndex, eGamepadHat aHat, eGamepadHatState aHatState);
 
-		/**
-		* returns true if the action just was double triggered (double clicked), else false
-		*/
-		bool DoubleTriggerd(float afLimit);
+        void AddSubAction(iSubAction *apSubAction);
 
-		/**
-		 * Resets the action to the current state, so no actions are triggered.
-		 */
-		void ResetToCurrentState();
+        void ClearSubActions();
 
-		/**
-		*Update the Action, called by cInput
-		*/
-		void Update(float afTimeStep);
+        /**
+        * returns true if the action is triggered now
+        */
+        bool IsTriggerd();
 
-		iSubAction *GetSubAction(int alIdx){ return mvSubActions[alIdx];}
-		int GetSubActionNum(){ return (int)mvSubActions.size();}
+        /**
+        * returns true if the action just was triggered, else false
+        */
+        bool WasTriggerd();
 
-		
-		const tString& GetName(){ return msName;}
-		int GetId(){ return mlId; }
-	private:
-		tString msName;
-		int mlId;
-		cInput *mpInput;
+        /**
+        * returns true if the action just became triggered, else false
+        */
+        bool BecameTriggerd();
 
-		bool mbBecameTriggerd;
-		bool mbIsTriggerd;
+        /**
+        * returns true if the action just was double triggered (double clicked), else false
+        */
+        bool DoubleTriggerd(float afLimit);
 
-		bool mbDoubleTrigger_Down;
-		bool mbDoubleTrigger_Triggered;
+        /**
+         * Resets the action to the current state, so no actions are triggered.
+         */
+        void ResetToCurrentState();
 
-		bool mbIsDown;
+        /**
+        *Update the Action, called by cInput
+        */
+        void Update(float afTimeStep);
 
-		double mfTimeCount;
+        iSubAction *GetSubAction(int alIdx) { return mvSubActions[alIdx]; }
 
-		tSubActionVec mvSubActions;
-		
-	};
+        int GetSubActionNum() { return (int) mvSubActions.size(); }
 
-	//---------------------------------------------------------
 
-};
+        const tString &GetName() { return msName; }
+
+        int GetId() { return mlId; }
+
+    private:
+        tString msName;
+        int mlId;
+        cInput *mpInput;
+
+        bool mbBecameTriggerd;
+        bool mbIsTriggerd;
+
+        bool mbDoubleTrigger_Down;
+        bool mbDoubleTrigger_Triggered;
+
+        bool mbIsDown;
+
+        double mfTimeCount;
+
+        tSubActionVec mvSubActions;
+
+    };
+
+    //---------------------------------------------------------
+
+}
 #endif // HPL_ACTION_H

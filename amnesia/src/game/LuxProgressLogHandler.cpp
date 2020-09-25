@@ -82,7 +82,7 @@ void cLuxProgressLogHandler::Reset()
 
 void cLuxProgressLogHandler::CreateAndResetLogFile()
 {
-	if(mbActive==false) return;
+	if(!mbActive) return;
 
 	/////////////////////////////
 	// Close previous log file
@@ -130,7 +130,7 @@ void cLuxProgressLogHandler::CreateAndResetLogFile()
 
 void cLuxProgressLogHandler::Update(float afTimeStep)
 {
-	if(mbActive==false) return;
+	if(!mbActive) return;
 
 
 	mlCounter++;

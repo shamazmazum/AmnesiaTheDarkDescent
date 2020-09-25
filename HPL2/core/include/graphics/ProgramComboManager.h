@@ -191,5 +191,5 @@ namespace hpl {
 
 	//---------------------------------------------------
 
-};
+}
 #endif // HPL_PROGRAM_COMBO_MANAGER_H

@@ -26,19 +26,20 @@
 
 namespace hpl {
 
-	class cHapticForceHaptX_Impulse : public iHapticForceHaptX
-	{
-	public:
-		cHapticForceHaptX_Impulse(	HaptX::HaptXInterface *apInterface,
-									HaptX::iHapticDeviceID	aDeviceID);
-		~cHapticForceHaptX_Impulse();
+    class cHapticForceHaptX_Impulse : public iHapticForceHaptX {
+    public:
+        cHapticForceHaptX_Impulse(HaptX::HaptXInterface *apInterface,
+                                  HaptX::iHapticDeviceID aDeviceID);
 
-		void SetForce(const cVector3f &avForce);
-		void SetRelativeForce(const cVector3f &avForce);
-		
-	protected:
-		HaptX::ForceModelImpulseInfo *mpImpulseForce;		
-	};
+        ~cHapticForceHaptX_Impulse();
 
-};
+        void SetForce(const cVector3f &avForce);
+
+        void SetRelativeForce(const cVector3f &avForce);
+
+    protected:
+        HaptX::ForceModelImpulseInfo *mpImpulseForce;
+    };
+
+}
 #endif // HPL_HAPTIC_FORCE_HAPTX_H

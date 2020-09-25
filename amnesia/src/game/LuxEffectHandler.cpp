@@ -138,7 +138,7 @@ void cLuxEffect_PlayCommentary::Start(const tString &asTalker,const tString &asT
 
 void cLuxEffect_PlayCommentary::Stop()
 {
-	if(mbActive==false) return;
+	if(!mbActive) return;
 
 	if(mpSoundHandler->IsValid(mpSoundEntry,mlSoundEntryID)) mpSoundEntry->FadeOut(1);
 	mpSoundEntry = NULL;
@@ -343,7 +343,7 @@ void cLuxEffect_EmotionFlash::OnDraw(float afFrameTime)
 
 void cLuxEffect_EmotionFlash::DoAction(eLuxPlayerAction aAction, bool abPressed)
 {
-	if(abPressed==false) return;
+	if(!abPressed) return;
 
 	if(mlStep==1) mfTextTime = 0;
 }
@@ -1013,7 +1013,7 @@ void cLuxEffect_PlayVoice::AddVoice(const tString& asVoiceFile, const tString& a
 
 void cLuxEffect_PlayVoice::PauseCurrentVoices()
 {
-	if(mbActive==false || mbPaused) return;
+	if(!mbActive || mbPaused) return;
 
 	mbPaused = true;
 	
@@ -1034,7 +1034,7 @@ void cLuxEffect_PlayVoice::PauseCurrentVoices()
 
 void cLuxEffect_PlayVoice::UnpauseCurrentVoices()
 {
-	if(mbActive==false || mbPaused==false) return;
+	if(!mbActive || !mbPaused) return;
 	
 	mbPaused = false;
 
@@ -1092,7 +1092,7 @@ void cLuxEffect_PlayVoice::Update(float afTimeStep)
 	
 	//////////////////////
 	//GUI sound
-	if(voiceData.mbUsePosition==false)
+	if(!voiceData.mbUsePosition)
 	{
 		mpVoiceEntry = mpSoundHandler->PlayGuiStream(voiceData.msVoiceFile,false, 1.0f);
 		if(mpVoiceEntry) mlVoiceEntryID = mpVoiceEntry->GetId();
@@ -1146,7 +1146,7 @@ void cLuxEffect_PlayVoice::Update(float afTimeStep)
 
 void cLuxEffect_PlayVoice::OnDraw(float afFrameTime)
 {
-	if(gpBase->mpMessageHandler->ShowSubtitles()==false) return;
+	if(!gpBase->mpMessageHandler->ShowSubtitles()) return;
 	if(mvCurrentTextRows.empty()) return;
     
 	cVector3f vStartPos(400-mfRowWidth/2, 580 - (mvCurrentTextRows.size()*(mvFontSize.y+2)), 4);

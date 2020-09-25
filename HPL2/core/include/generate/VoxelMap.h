@@ -67,5 +67,5 @@ namespace hpl {
 		cVector3f mvPosition;
 	};
 
-};
+}
 #endif // HPL_VOXEL_MAP_H

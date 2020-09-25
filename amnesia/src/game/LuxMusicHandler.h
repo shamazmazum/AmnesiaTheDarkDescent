@@ -26,86 +26,98 @@
 
 //----------------------------------------------
 
-class cLuxMusic
-{
-friend class cLuxMusicHandler;
+class cLuxMusic {
+    friend class cLuxMusicHandler;
+
 public:
-	cLuxMusic();
+    cLuxMusic();
 
-	void Reset();
+    void Reset();
 
-	tString msFile;
-	bool mbLoop;
-	bool mbResume;
-	float mfVolume;
-	bool mbSpecialEffect;	//If started by enemy close or similar.
+    tString msFile;
+    bool mbLoop;
+    bool mbResume;
+    float mfVolume;
+    bool mbSpecialEffect;    //If started by enemy close or similar.
 };
 
 //----------------------------------------
 
 
-class cLuxMusicHandler : public iLuxUpdateable
-{
-friend class cLuxMusicHandler_SaveData;
-public:	
-	cLuxMusicHandler();
-	~cLuxMusicHandler();
-	
-	void OnStart();
-	void Update(float afTimeStep);
-	void Reset();
+class cLuxMusicHandler : public iLuxUpdateable {
+    friend class cLuxMusicHandler_SaveData;
 
-	float GetVolumeMul(){ return mfVolumeMul;}
+public:
+    cLuxMusicHandler();
 
-	int GetMaxPrio(){ return mlMaxPrio;}
-	int GetCurrentMaxPrio(){ return mlCurrentMaxPrio;}
+    ~cLuxMusicHandler();
 
-	cLuxMusic* GetMusic(int alPrio){ return &mvGameMusic[alPrio]; }
+    void OnStart();
 
-	void OnMapEnter(cLuxMap *apMap);
-	void OnMapLeave(cLuxMap *apMap);
+    void Update(float afTimeStep);
 
-	void Play(const tString &asFile, bool abLoop,float afVolume, float afFadeTime, int alPrio, bool abResume, bool abSpecialEffect);
-	void Stop(float afFadeTime, int alPrio);
+    void Reset();
 
-	void AddEnemy(eLuxEnemyMusic aType, iLuxEnemy *apEnemy);
-	void RemoveEnemy(eLuxEnemyMusic aType, iLuxEnemy *apEnemy);
-	bool EnemyExist(eLuxEnemyMusic aType, iLuxEnemy *apEnemy);
-	
-	void AddSearcher(iLuxEnemy *apEnemy);
-	void RemoveSearcher(iLuxEnemy *apEnemy);
-	bool SearcherExist(iLuxEnemy *apEnemy);
- 
+    float GetVolumeMul() { return mfVolumeMul; }
+
+    int GetMaxPrio() { return mlMaxPrio; }
+
+    int GetCurrentMaxPrio() { return mlCurrentMaxPrio; }
+
+    cLuxMusic *GetMusic(int alPrio) { return &mvGameMusic[alPrio]; }
+
+    void OnMapEnter(cLuxMap *apMap);
+
+    void OnMapLeave(cLuxMap *apMap);
+
+    void Play(const tString &asFile, bool abLoop, float afVolume, float afFadeTime, int alPrio, bool abResume,
+              bool abSpecialEffect);
+
+    void Stop(float afFadeTime, int alPrio);
+
+    void AddEnemy(eLuxEnemyMusic aType, iLuxEnemy *apEnemy);
+
+    void RemoveEnemy(eLuxEnemyMusic aType, iLuxEnemy *apEnemy);
+
+    bool EnemyExist(eLuxEnemyMusic aType, iLuxEnemy *apEnemy);
+
+    void AddSearcher(iLuxEnemy *apEnemy);
+
+    void RemoveSearcher(iLuxEnemy *apEnemy);
+
+    bool SearcherExist(iLuxEnemy *apEnemy);
+
 private:
-	void UpdateDangerMusic(float afTimeStep);
-	void UpdateEnemyMusic(float afTimeStep, eLuxEnemyMusic aType);
+    void UpdateDangerMusic(float afTimeStep);
 
-	void PlayHighestPriority();
+    void UpdateEnemyMusic(float afTimeStep, eLuxEnemyMusic aType);
 
-	//////////////////
-	// Data
-	cMusicHandler *mpMusicHandler;
-	int mlMaxPrio;
-	float mfVolumeMul;
+    void PlayHighestPriority();
 
-	//////////////////
-	// Variables
-	float mfUpdateDangerCount;
-	float mfUpdateAttackCount;
+    //////////////////
+    // Data
+    cMusicHandler *mpMusicHandler;
+    int mlMaxPrio;
+    float mfVolumeMul;
 
-	std::vector<cLuxMusic> mvGameMusic;
-	
-	int mlCurrentMaxPrio;
+    //////////////////
+    // Variables
+    float mfUpdateDangerCount;
+    float mfUpdateAttackCount;
 
-	tLuxEnemySet m_setEnemies[eLuxEnemyMusic_LastEnum];
-	
-	bool mbEnemyPlaying[eLuxEnemyMusic_LastEnum];
-	float mfEnemyPlayCount[eLuxEnemyMusic_LastEnum];
-	float mfEnemyStopCount[eLuxEnemyMusic_LastEnum];
+    std::vector <cLuxMusic> mvGameMusic;
 
-	bool mbEnemyClosePlaying;
-	float mfEnemyCloseCount;
-	float mfEnemyGoneCount;
+    int mlCurrentMaxPrio;
+
+    tLuxEnemySet m_setEnemies[eLuxEnemyMusic_LastEnum];
+
+    bool mbEnemyPlaying[eLuxEnemyMusic_LastEnum];
+    float mfEnemyPlayCount[eLuxEnemyMusic_LastEnum];
+    float mfEnemyStopCount[eLuxEnemyMusic_LastEnum];
+
+    bool mbEnemyClosePlaying;
+    float mfEnemyCloseCount;
+    float mfEnemyGoneCount;
 };
 
 //----------------------------------------------

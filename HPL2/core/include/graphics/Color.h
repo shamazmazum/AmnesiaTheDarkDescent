@@ -66,5 +66,5 @@ namespace hpl {
 	typedef std::vector<cColor> tColorVec;
 	typedef tColorVec::iterator tColorVecIt;
 
-};
+}
 #endif // HPL_COLOR_H

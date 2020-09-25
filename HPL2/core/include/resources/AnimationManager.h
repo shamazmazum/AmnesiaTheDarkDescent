@@ -44,5 +44,5 @@ namespace hpl {
 		cResources* mpResources;
 	};
 
-};
+}
 #endif // HPL_ANIMATION_MANAGER_H

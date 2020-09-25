@@ -24,31 +24,32 @@
 
 namespace hpl {
 
-	class cLowLevelSoundFmod : public iLowLevelSound
-	{
-	public:
-		cLowLevelSoundFmod();
-		~cLowLevelSoundFmod();
+    class cLowLevelSoundFmod : public iLowLevelSound {
+    public:
+        cLowLevelSoundFmod();
 
-		void GetSupportedFormats(tStringList &alstFormats);
+        ~cLowLevelSoundFmod();
 
-		iSoundData* LoadSoundData(const tString& asName,const tString& asFilePath,
-									const tString& asType, bool abStream,bool abLoopStream);
+        void GetSupportedFormats(tStringList &alstFormats);
 
-		void UpdateSound(float afTimeStep);
+        iSoundData *LoadSoundData(const tString &asName, const tString &asFilePath,
+                                  const tString &asType, bool abStream, bool abLoopStream);
 
-		void SetListenerAttributes (const cVector3f &avPos,const cVector3f &avVel,
-								const cVector3f &avForward,const cVector3f &avUp);
-		void SetListenerPosition(const cVector3f &avPos);
+        void UpdateSound(float afTimeStep);
 
-		void SetSetRolloffFactor(float afFactor);
+        void SetListenerAttributes(const cVector3f &avPos, const cVector3f &avVel,
+                                   const cVector3f &avForward, const cVector3f &avUp);
 
-		void SetListenerAttenuation (bool abEnabled);
+        void SetListenerPosition(const cVector3f &avPos);
 
-		virtual void SetVolume(float afVolume);
+        void SetSetRolloffFactor(float afFactor);
 
-	private:
-		tString mvFormats[30];
-	};
-};
+        void SetListenerAttenuation(bool abEnabled);
+
+        virtual void SetVolume(float afVolume);
+
+    private:
+        tString mvFormats[30];
+    };
+}
 #endif // HPL_LOWLEVELSOUND_FMOD_H

@@ -26,19 +26,20 @@
 
 namespace hpl {
 
-	class iHapticSurface
-	{
-	public:
-		iHapticSurface(const tString& asName, eHapticSurfaceType aType) : mType(aType){}
-		virtual ~iHapticSurface(){}
+    class iHapticSurface {
+    public:
+        iHapticSurface(const tString &asName, eHapticSurfaceType aType) : mType(aType) {}
 
-		eHapticSurfaceType GetType(){ return mType;}
-		tString& GetName(){ return msName; }
-		
-	private:
-		eHapticSurfaceType mType;
-		tString msName;
-	};
+        virtual ~iHapticSurface() {}
 
-};
+        eHapticSurfaceType GetType() { return mType; }
+
+        tString &GetName() { return msName; }
+
+    private:
+        eHapticSurfaceType mType;
+        tString msName;
+    };
+
+}
 #endif // HPL_HAPTIC_SURFACE_H

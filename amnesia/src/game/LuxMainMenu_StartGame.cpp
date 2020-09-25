@@ -260,7 +260,7 @@ kGuiCallbackDeclaredFuncEnd(cLuxMainMenu_StartGame, PressCancel);
 bool cLuxMainMenu_StartGame::ExitCallback(iWidget* apWidget, const cGuiMessageData& aData)
 {
 	bool bOkPressed = aData.mlVal == 0 ? true : false;
-	if (bOkPressed == false)
+	if (!bOkPressed)
 		return true;
 
 	if (gpBase->mpCustomStory == NULL)

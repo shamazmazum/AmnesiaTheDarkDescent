@@ -173,7 +173,6 @@ void cLuxMainMenu_Options::ExitPressed()
 
 void cLuxMainMenu_Options::CreateMainGui()
 {
-	cWidgetButton *pButton;
 	float fLeftBorderSize = 30;
 	float fUpperBorderSize = 10;
 
@@ -1146,19 +1145,13 @@ void cLuxMainMenu_Options::SetInputValues(cResourceVarsObject& aObj)
 				if(mode==vCurrentRes)
 					lCurrentMode = mpCBResolution->GetItemNum()-1;
 			}
-			if(lCurrentMode==-1)
-			{
-				tWString sRes = cString::ToStringW(vCurrentRes.mvScreenSize.x) + _W("x") + cString::ToStringW(vCurrentRes.mvScreenSize.y) + _W(" (Custom)");
-
-				mpCBResolution->AddItem(sRes);
-				mvScreenSizes.push_back(vCurrentRes);
-				lCurrentMode = mpCBResolution->GetItemNum()-1;
-
-				//lCurrentMode=0;
-				//bGenerateCallback = true;
-			}
-			mpCBResolution->SetSelectedItem(lCurrentMode, true, false);
-		}
+            tWString sRes = cString::ToStringW(vCurrentRes.mvScreenSize.x) + _W("x") +
+                            cString::ToStringW(vCurrentRes.mvScreenSize.y) + _W(" (Custom)");
+            mpCBResolution->AddItem(sRes);
+            mvScreenSizes.push_back(vCurrentRes);
+            lCurrentMode = mpCBResolution->GetItemNum() - 1;//lCurrentMode=0;
+            mpCBResolution->SetSelectedItem(lCurrentMode, true, false);//bGenerateCallback = true;
+        }
 
 		/////////////////////////
 		// Fullscreen & vsync
@@ -1633,7 +1626,7 @@ void cLuxMainMenu_Options::PopulateSoundDevices()
 			cWidgetItem* pItem = mpCBSndDevice->AddItem(pSndDev->GetName());
 			pItem->SetUserData(pSndDev);
 		}
-		if(bCurrentDevFound==false)
+		if(!bCurrentDevFound)
 		{
 			cWidgetItem* pItem = mpCBSndDevice->AddItem("(Unsupported) " + pCurSndDev->GetName());
 			pItem->SetUserData(pCurSndDev);
@@ -1954,7 +1947,7 @@ bool cLuxMainMenu_Options::Window_OnUpdate(iWidget* apWidget, const cGuiMessageD
 		{
 			mpLTip->SetDefaultFontColor(labelCol-cColor(0, aData.mfVal*0.8f));
 		}
-		else if(mbTipTextReset==false)
+		else if(!mbTipTextReset)
 		{
 			mbTipTextReset = true;
 		}
@@ -2203,7 +2196,7 @@ void cLuxMainMenu_Options::OnSetActive(bool abX)
 	{
 		SetTabNavigation(mpTabGame->GetParentTabFrame()->GetTabOnTop(), true);
 
-		if(mbKeyConfigOpen==false)
+		if(!mbKeyConfigOpen)
 		{
 			if(mInitialValues.GetVarBool("SettingLanguage", false))
 			{

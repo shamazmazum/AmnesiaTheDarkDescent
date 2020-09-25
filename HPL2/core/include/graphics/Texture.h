@@ -153,5 +153,5 @@ namespace hpl {
 		cVector3l mvMinDownScaleSize;
 
 	};
-};
+}
 #endif // HPL_TEXTURE_H

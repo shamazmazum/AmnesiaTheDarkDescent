@@ -131,5 +131,5 @@ namespace hpl {
 		bool mbLoadAsStatic;
 	};
 
-};
+}
 #endif // HPL_ENTITY_LOADER_OBJECT_H

@@ -88,5 +88,5 @@ namespace hpl {
 		tWString msFullPath;
 	};
 
-};
+}
 #endif // HPL_RESOURCEBASE_H

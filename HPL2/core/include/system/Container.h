@@ -27,259 +27,238 @@
 #include "system/MemoryManager.h"
 
 namespace hpl {
-	
-	//---------------------------------
 
-	class iContainerIterator
-	{
-	friend class cSerializeClass;
-	public:
-		virtual ~iContainerIterator() {}
-	protected:
-		virtual bool HasNext()=0;
+    //---------------------------------
 
-		virtual void* NextPtr()=0;
-	};
+    class iContainerIterator {
+        friend class cSerializeClass;
 
-	//---------------------------------
+    public:
+        virtual ~iContainerIterator() {}
 
-	class iContainer
-	{
-	friend class cSerializeClass;
-	public:
-		virtual ~iContainer() {}
-		virtual size_t Size()=0;
-		virtual void Clear()=0;
-	protected:
-		
-		virtual void AddVoidPtr(void **apPtr)=0;
-		virtual void AddVoidClass(void *apClass)=0;
+    protected:
+        virtual bool HasNext() = 0;
 
-		virtual iContainerIterator* CreateIteratorPtr()=0;
-	};
+        virtual void *NextPtr() = 0;
+    };
 
-	//---------------------------------
+    //---------------------------------
 
-	class iContainerKeyPair
-	{
-	public:
-		virtual ~iContainerKeyPair(){}
-		virtual size_t Size()=0;
-		
-		virtual void AddVoidPtr(void *apKey, void **apClass)=0;
-		virtual void AddVoidClass(void *apKey, void *apClass)=0;
-	};
+    class iContainer {
+        friend class cSerializeClass;
 
-	//---------------------------------
+    public:
+        virtual ~iContainer() {}
 
-	
-	template<class T>
-	class cContainerVecIterator : public iContainerIterator
-	{
-		void* NextPtr(){
-			return &Next();
-		}
-	
-	public:
-		cContainerVecIterator(std::vector<T> *apVec)
-		{
-			mpVec = apVec;
-			mIt = apVec->begin();
-		}
+        virtual size_t Size() = 0;
 
-		bool HasNext()
-		{
-			return mIt != mpVec->end();
-		}
+        virtual void Clear() = 0;
 
-		T& Next()
-		{
-			T &val = *mIt;
+    protected:
+
+        virtual void AddVoidPtr(void **apPtr) = 0;
+
+        virtual void AddVoidClass(void *apClass) = 0;
+
+        virtual iContainerIterator *CreateIteratorPtr() = 0;
+    };
+
+    //---------------------------------
+
+    class iContainerKeyPair {
+    public:
+        virtual ~iContainerKeyPair() {}
+
+        virtual size_t Size() = 0;
+
+        virtual void AddVoidPtr(void *apKey, void **apClass) = 0;
+
+        virtual void AddVoidClass(void *apKey, void *apClass) = 0;
+    };
+
+    //---------------------------------
+
+
+    template<class T>
+    class cContainerVecIterator : public iContainerIterator {
+        void *NextPtr() {
+            return &Next();
+        }
+
+    public:
+        cContainerVecIterator(std::vector <T> *apVec) {
+            mpVec = apVec;
+            mIt = apVec->begin();
+        }
+
+        bool HasNext() {
+            return mIt != mpVec->end();
+        }
+
+        T &Next() {
+            T &val = *mIt;
             mIt++;
-			return val;
-		}
+            return val;
+        }
 
-		T& PeekNext()
-		{
-			return *mIt;
-		}
+        T &PeekNext() {
+            return *mIt;
+        }
 
-		void Erase()
-		{
-			if(mIt != mpVec->end())
-				mIt = mpVec->erase(mIt);
-		}
+        void Erase() {
+            if (mIt != mpVec->end())
+                mIt = mpVec->erase(mIt);
+        }
 
-	private:
-		std::vector<T> *mpVec;
-		typename std::vector<T>::iterator mIt;
-	};
+    private:
+        std::vector <T> *mpVec;
+        typename std::vector<T>::iterator mIt;
+    };
 
-	////////////////////////////
-	
-	template<class T>
-	class cContainerVec : public iContainer
-	{
-	private:
-		void AddVoidPtr(void **apPtr)
-		{
-			mvVector.push_back(*((T*)apPtr));
-		}
-		void AddVoidClass(void *apClass)
-		{
-			mvVector.push_back(*((T*)apClass));
-		}
-		iContainerIterator* CreateIteratorPtr()
-		{
-			return hplNew( cContainerVecIterator<T>, (&mvVector) );
-		}
+    ////////////////////////////
 
-	public:
-		cContainerVec(){}
-		
-		//////////////////////
-		size_t Size()
-		{
-			return mvVector.size();
-		}
+    template<class T>
+    class cContainerVec : public iContainer {
+    private:
+        void AddVoidPtr(void **apPtr) {
+            mvVector.push_back(*((T *) apPtr));
+        }
 
-		void Clear()
-		{
-			mvVector.clear();
-		}
+        void AddVoidClass(void *apClass) {
+            mvVector.push_back(*((T *) apClass));
+        }
 
-		//////////////////////
+        iContainerIterator *CreateIteratorPtr() {
+            return hplNew(cContainerVecIterator<T>, (&mvVector));
+        }
 
-		void Reserve(size_t alSize)
-		{
-			mvVector.reserve(alSize);
-		}
+    public:
+        cContainerVec() {}
 
-		void Resize(size_t alSize)
-		{
-			mvVector.resize(alSize);
-		}
-		
-		void Add(T aVal)
-		{
-			mvVector.push_back(aVal);
-		}
+        //////////////////////
+        size_t Size() {
+            return mvVector.size();
+        }
 
-		//////////////////////
+        void Clear() {
+            mvVector.clear();
+        }
 
-		cContainerVecIterator<T> GetIterator()
-		{
-			return cContainerVecIterator<T>(&mvVector);
-		}
+        //////////////////////
 
-		//////////////////////
+        void Reserve(size_t alSize) {
+            mvVector.reserve(alSize);
+        }
 
-		T& operator [](size_t alX)
-		{
-			return mvVector[alX];
-		}
+        void Resize(size_t alSize) {
+            mvVector.resize(alSize);
+        }
 
-		//////////////////////
+        void Add(T aVal) {
+            mvVector.push_back(aVal);
+        }
 
-		std::vector<T> mvVector;
-	};
+        //////////////////////
 
-	//---------------------------------
+        cContainerVecIterator<T> GetIterator() {
+            return cContainerVecIterator<T>(&mvVector);
+        }
 
-	template<class T>
-	class cContainerListIterator : public iContainerIterator
-	{
-		void* NextPtr(){
-			return &Next();
-		}
+        //////////////////////
 
-	public:
-		cContainerListIterator(std::list<T> *apVec)
-		{
-			mpVec = apVec;
-			mIt = apVec->begin();
-		}
+        T &operator[](size_t alX) {
+            return mvVector[alX];
+        }
 
-		bool HasNext()
-		{
-			return mIt != mpVec->end();
-		}
+        //////////////////////
 
-		T& Next()
-		{
-			T &val = *mIt;
-			mIt++;
-			return val;
-		}
+        std::vector <T> mvVector;
+    };
 
-		T& PeekNext()
-		{
-			return *mIt;
-		}
+    //---------------------------------
 
-		void Erase()
-		{
-			if(mIt != mpVec->end())
-				mIt = mpVec->erase(mIt);
-		}
+    template<class T>
+    class cContainerListIterator : public iContainerIterator {
+        void *NextPtr() {
+            return &Next();
+        }
 
-	private:
-		std::list<T> *mpVec;
-		typename std::list<T>::iterator mIt;
-	};
+    public:
+        cContainerListIterator(std::list <T> *apVec) {
+            mpVec = apVec;
+            mIt = apVec->begin();
+        }
 
-	////////////////////////////
+        bool HasNext() {
+            return mIt != mpVec->end();
+        }
 
-	template<class T>
-	class cContainerList : public iContainer
-	{
-	private:
-		void AddVoidPtr(void **apPtr)
-		{
-			mvVector.push_back(*((T*)apPtr));
-		}
-		void AddVoidClass(void *apClass)
-		{
-			mvVector.push_back(*((T*)apClass));
-		}
-		iContainerIterator* CreateIteratorPtr()
-		{
-			return hplNew( cContainerListIterator<T>, (&mvVector) );
-		}
+        T &Next() {
+            T &val = *mIt;
+            mIt++;
+            return val;
+        }
 
-	public:
-		cContainerList(){}
+        T &PeekNext() {
+            return *mIt;
+        }
 
-		//////////////////////
-		size_t Size()
-		{
-			return mvVector.size();
-		}
+        void Erase() {
+            if (mIt != mpVec->end())
+                mIt = mpVec->erase(mIt);
+        }
 
-		void Clear()
-		{
-			mvVector.clear();
-		}
-		//////////////////////
+    private:
+        std::list <T> *mpVec;
+        typename std::list<T>::iterator mIt;
+    };
 
-		void Add(T aVal)
-		{
-			mvVector.push_back(aVal);
-		}
+    ////////////////////////////
 
-		//////////////////////
+    template<class T>
+    class cContainerList : public iContainer {
+    private:
+        void AddVoidPtr(void **apPtr) {
+            mvVector.push_back(*((T *) apPtr));
+        }
 
-		cContainerListIterator<T> GetIterator()
-		{
-			return cContainerListIterator<T>(&mvVector);
-		}
+        void AddVoidClass(void *apClass) {
+            mvVector.push_back(*((T *) apClass));
+        }
 
-		//////////////////////
+        iContainerIterator *CreateIteratorPtr() {
+            return hplNew(cContainerListIterator<T>, (&mvVector));
+        }
 
-		std::list<T> mvVector;
-	};
+    public:
+        cContainerList() {}
 
-	//---------------------------------
+        //////////////////////
+        size_t Size() {
+            return mvVector.size();
+        }
 
-};
+        void Clear() {
+            mvVector.clear();
+        }
+        //////////////////////
+
+        void Add(T aVal) {
+            mvVector.push_back(aVal);
+        }
+
+        //////////////////////
+
+        cContainerListIterator<T> GetIterator() {
+            return cContainerListIterator<T>(&mvVector);
+        }
+
+        //////////////////////
+
+        std::list <T> mvVector;
+    };
+
+    //---------------------------------
+
+}
 #endif // HPL_CONTAINER_H

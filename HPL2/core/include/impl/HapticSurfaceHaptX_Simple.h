@@ -26,16 +26,16 @@
 
 namespace hpl {
 
-	class cHapticSurfaceHaptX_Simple : public iHapticSurfaceHaptX
-	{
-	public:
-		cHapticSurfaceHaptX_Simple(	const tString& asName, HaptX::HaptXInterface *apInterface,
-									float afDamping, float afStiffness);
-		~cHapticSurfaceHaptX_Simple();
-		
-	private:
-		HaptX::SimpleSurfaceInfo *mpSimpleSurfaceInfo;
-	};
+    class cHapticSurfaceHaptX_Simple : public iHapticSurfaceHaptX {
+    public:
+        cHapticSurfaceHaptX_Simple(const tString &asName, HaptX::HaptXInterface *apInterface,
+                                   float afDamping, float afStiffness);
 
-};
+        ~cHapticSurfaceHaptX_Simple();
+
+    private:
+        HaptX::SimpleSurfaceInfo *mpSimpleSurfaceInfo;
+    };
+
+}
 #endif // HPL_HAPTIC_SURFACE_HAPTX_SIMPLE_H

@@ -104,7 +104,7 @@ namespace hpl {
 		bool IsDisabled() { return mbDisabled; }
 
 		void SetActive(bool abX);
-		bool IsActive(){ return mbDisabled==false && mbActive;}
+		bool IsActive(){ return !mbDisabled && mbActive;}
 
 		void SetParams(iPostEffectParams *apSrcParams);
 		void GetParams(iPostEffectParams *apDestParams);
@@ -147,5 +147,5 @@ namespace hpl {
 
 	//------------------------------------------
 
-};
+}
 #endif // HPL_POSTEFFECT_H

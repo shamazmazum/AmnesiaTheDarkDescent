@@ -380,7 +380,7 @@ void cLuxInputHandler::LoadUserConfig()
 	for(int i=0;gvLuxActions[i].msName!="";++i)
 	{
 		cLuxAction* pLuxAction = &gvLuxActions[i];
-		if(pLuxAction->mbConfigurable==false)
+		if(!pLuxAction->mbConfigurable)
 			continue;
 
 		cAction* pAction = mpInput->GetAction(pLuxAction->mlId);
@@ -401,7 +401,7 @@ void cLuxInputHandler::LoadUserConfig()
 		}
 
 		// If no valid inputs were loaded, load default
-		if(bHasUserDefinedInputs==false)
+		if(!bHasUserDefinedInputs)
 		{
 			tLuxInputVec vDefaultInputs = GetDefaultInputsByActionId(pLuxAction->mlId);
 
@@ -449,7 +449,7 @@ void cLuxInputHandler::SaveUserConfig()
 	for(int i=0;gvLuxActions[i].msName!="";++i)
 	{
 		cLuxAction* pLuxAction = &gvLuxActions[i];
-		if(pLuxAction->mbConfigurable==false)
+		if(!pLuxAction->mbConfigurable)
 			continue;
 
 		cAction* pAction = mpInput->GetAction(pLuxAction->mlId);
@@ -927,7 +927,7 @@ void cLuxInputHandler::UpdateGameInput()
 		gpBase->mpDebugHandler->SetFastForward(bActivate);
 	}
 
-	if(mpPlayer->IsDead()==false && gpBase->mpDebugHandler->GetAllowQuickSave() && gpBase->mbPTestActivated==false)
+	if(!mpPlayer->IsDead() && gpBase->mpDebugHandler->GetAllowQuickSave() && !gpBase->mbPTestActivated)
 	{
 		if(mpInput->BecameTriggerd(eLuxAction_QuickSave))
 		{
@@ -987,7 +987,7 @@ void cLuxInputHandler::UpdateGamePlayerInput()
 		}
 		return;
 	}
-	if(mpPlayer->IsActive()==false) return;
+	if(!mpPlayer->IsActive()) return;
 
 	////////////////////
 	// High level
@@ -995,17 +995,17 @@ void cLuxInputHandler::UpdateGamePlayerInput()
 	{
 		if(mpInput->BecameTriggerd(eLuxAction_Inventory))
 		{
-			if(gpBase->mpInventory->GetDisabled()==false)
+			if(!gpBase->mpInventory->GetDisabled())
 				gpBase->mpEngine->GetUpdater()->SetContainer("Inventory");
 		}
 		if(mpInput->BecameTriggerd(eLuxAction_Journal))
 		{
-			if(gpBase->mpInventory->GetDisabled()==false)
+			if(!gpBase->mpInventory->GetDisabled())
 				gpBase->mpEngine->GetUpdater()->SetContainer("Journal");
 		}
 		if(mpInput->BecameTriggerd(eLuxAction_QuestLog))
 		{
-			if(gpBase->mpInventory->GetDisabled()==false)
+			if(!gpBase->mpInventory->GetDisabled())
 			{
 				gpBase->mpJournal->SetForceInstantExit(true);
 				gpBase->mpEngine->GetUpdater()->SetContainer("Journal");
@@ -1014,7 +1014,7 @@ void cLuxInputHandler::UpdateGamePlayerInput()
 		}
 		if(mpInput->BecameTriggerd(eLuxAction_RecentText))
 		{
-			if(gpBase->mpInventory->GetDisabled()==false)
+			if(!gpBase->mpInventory->GetDisabled())
 			{
 				gpBase->mpJournal->OpenLastReadText();
 			}
@@ -1632,20 +1632,8 @@ bool cLuxInputHandler::ShowMouseOnMouseInput()
 
 	////////////////
 	// Show the cursor
-	if(bMouseActive)
-	{
-		if(mfMouseActiveAt != -1)
-		{
-		//	gpBase->SetDrawOnLiveCursor(true);
-		}
-		else
-		{
-			bMouseActive = false;
-		}
-		mfMouseActiveAt = gpBase->mpEngine->GetGameTime();
-	}
 #ifdef USE_GAMEPAD
-	else if(IsGamepadPresent())
+	if(IsGamepadPresent())
 	{
 		bool bDirPressed = mpInput->IsTriggerd(eLuxAction_UIArrowUp) || 
 						   mpInput->IsTriggerd(eLuxAction_UIArrowDown) ||

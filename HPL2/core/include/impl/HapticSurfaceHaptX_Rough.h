@@ -26,19 +26,19 @@
 
 namespace hpl {
 
-	class cHapticSurfaceHaptX_Rough : public iHapticSurfaceHaptX
-	{
-	public:
-		cHapticSurfaceHaptX_Rough(	const tString& asName, HaptX::HaptXInterface *apInterface,
-									float afDeviation, float afMean,
-									float afDamping, float afStiffness,
-									float afDynamicFriction, float afStartingFriction,
-									float afTangentStiffness, float afStoppingFriction);
-		~cHapticSurfaceHaptX_Rough();
-		
-	private:
-		HaptX::RoughSurfaceInfo *mpRoughSurfaceInfo;
-	};
+    class cHapticSurfaceHaptX_Rough : public iHapticSurfaceHaptX {
+    public:
+        cHapticSurfaceHaptX_Rough(const tString &asName, HaptX::HaptXInterface *apInterface,
+                                  float afDeviation, float afMean,
+                                  float afDamping, float afStiffness,
+                                  float afDynamicFriction, float afStartingFriction,
+                                  float afTangentStiffness, float afStoppingFriction);
 
-};
+        ~cHapticSurfaceHaptX_Rough();
+
+    private:
+        HaptX::RoughSurfaceInfo *mpRoughSurfaceInfo;
+    };
+
+}
 #endif // HPL_HAPTIC_SURFACE_HAPTX_ROUGH_H

@@ -82,5 +82,5 @@ namespace hpl {
 
 		static bool mbDebugInfo;
 	};
-};
+}
 #endif // HPL_GPU_SHADER_H

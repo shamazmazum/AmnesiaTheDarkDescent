@@ -40,5 +40,5 @@ namespace hpl {
 		iLowLevelGraphics *mpLowLevelGraphics;
 	};
 
-};
+}
 #endif // HPL_VIDEO_LOADER_H

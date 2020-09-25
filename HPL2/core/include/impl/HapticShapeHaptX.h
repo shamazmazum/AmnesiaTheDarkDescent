@@ -26,49 +26,52 @@
 
 namespace hpl {
 
-	class cLowLevelHapticHaptX;
+    class cLowLevelHapticHaptX;
 
-	class cHapticShapeHaptX : public iHapticShape
-	{
-	public:
-		cHapticShapeHaptX(	const tString &asName, eHapticShapeType aType,
-							const cVector3f& avSize, 
-							cLowLevelHapticHaptX *apLowLevel);
-		virtual ~cHapticShapeHaptX();
+    class cHapticShapeHaptX : public iHapticShape {
+    public:
+        cHapticShapeHaptX(const tString &asName, eHapticShapeType aType,
+                          const cVector3f &avSize,
+                          cLowLevelHapticHaptX *apLowLevel);
 
-		void SetEnabled(bool abX);
-		bool GetEnabled();
+        virtual ~cHapticShapeHaptX();
 
-		void SetTransform(const cMatrixf &a_mtxTransform);
-		cMatrixf GetTransform();
-		
-		cVector3f GetAppliedForce();
+        void SetEnabled(bool abX);
 
-		void SetSurface(iHapticSurface *apSurface);
+        bool GetEnabled();
 
-		void RenderDebug(iLowLevelGraphics *apLowLevel, const cColor &aColor);
+        void SetTransform(const cMatrixf &a_mtxTransform);
 
-		void CreateFromVertices(const unsigned int* apIndexArray, int alIndexNum,
-								const float *apPosArray, int alPosStride,
-								const float *apTexArray, int alTexStride,
-								int alVtxNum);
+        cMatrixf GetTransform();
+
+        cVector3f GetAppliedForce();
+
+        void SetSurface(iHapticSurface *apSurface);
+
+        void RenderDebug(iLowLevelGraphics *apLowLevel, const cColor &aColor);
+
+        void CreateFromVertices(const unsigned int *apIndexArray, int alIndexNum,
+                                const float *apPosArray, int alPosStride,
+                                const float *apTexArray, int alTexStride,
+                                int alVtxNum);
 
 
-		HaptX::iHapticShapeID GetHaptXShapeID(){return mShapeID;}
-		void SetHaptXShapeID(HaptX::iHapticShapeID aID){ mShapeID = aID;}
+        HaptX::iHapticShapeID GetHaptXShapeID() { return mShapeID; }
 
-		int mlIndexNum;
-		int mlPosNum;
-		int *mpIndices;
-		HaptX::Vectors::Vec3f *mpHxPositions;
-		cVector3f *mpHplPositions;
-			
-	private:
-		HaptX::iHapticShapeID mShapeID;
+        void SetHaptXShapeID(HaptX::iHapticShapeID aID) { mShapeID = aID; }
 
-		cLowLevelHapticHaptX *mpLowLevel;
-		HaptX::HaptXInterface* mpInterface;
-	};
+        int mlIndexNum;
+        int mlPosNum;
+        int *mpIndices;
+        HaptX::Vectors::Vec3f *mpHxPositions;
+        cVector3f *mpHplPositions;
 
-};
+    private:
+        HaptX::iHapticShapeID mShapeID;
+
+        cLowLevelHapticHaptX *mpLowLevel;
+        HaptX::HaptXInterface *mpInterface;
+    };
+
+}
 #endif // HPL_HAPTIC_SHAPE_H
