@@ -167,6 +167,8 @@ namespace hpl {
 			tString sName = cString::ToString(pChildElem->Attribute("Name"),"");
 			if(sName=="") continue;
 
+			if(GetSurfaceData(sName)) continue;
+
 			cSurfaceData *pData = CreateSurfaceData(sName);
 
 			//Get properties
