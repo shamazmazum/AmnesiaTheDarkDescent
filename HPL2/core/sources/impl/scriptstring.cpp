@@ -161,7 +161,7 @@ static void ConcatenateStrings_Generic(asIScriptGeneric *gen)
 static CScriptString &AssignUIntToString(unsigned int i, CScriptString &dest)
 {
 	char buf[100];
-	sprintf_s_s(buf, "%u", i);
+	sprintf_s(buf, "%u", i);
 	dest.buffer = buf;
 	return dest;
 }
