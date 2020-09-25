@@ -26,109 +26,120 @@
 
 //----------------------------------------------
 
-class cLuxDemoEnd : public iLuxUpdateable
-{
-public:	
-	cLuxDemoEnd();
-	~cLuxDemoEnd();
+class cLuxDemoEnd : public iLuxUpdateable {
+public:
+    cLuxDemoEnd();
 
-	void LoadFonts();
+    ~cLuxDemoEnd();
 
-	void Reset();
+    void LoadFonts();
 
-	void Update(float afTimeStep);
+    void Reset();
 
-	void OnEnterContainer(const tString& asOldContainer);
-	void OnLeaveContainer(const tString& asNewContainer);
+    void Update(float afTimeStep);
 
-	void OnDraw(float afFrameTime);
+    void OnEnterContainer(const tString &asOldContainer);
 
-	void Exit(bool abShowWebsite);
+    void OnLeaveContainer(const tString &asNewContainer);
 
-	void AppLostInputFocus();
-	void AppGotInputFocus();
+    void OnDraw(float afFrameTime);
 
-	bool ShowOnAllExit(){ return mbShowOnAllExit;}
-	
+    void Exit(bool abShowWebsite);
+
+    void AppLostInputFocus();
+
+    void AppGotInputFocus();
+
+    bool ShowOnAllExit() { return mbShowOnAllExit; }
+
 private:
-	void SetUpButtonLabel(cWidgetLabel* apLabel, float* apFadeValue, tGuiCallbackFunc apCallback);
+    void SetUpButtonLabel(cWidgetLabel *apLabel, float *apFadeValue, tGuiCallbackFunc apCallback);
 
-	bool BuyNowOnPressed(iWidget* apWidget, const cGuiMessageData& aData);
-	kGuiCallbackDeclarationEnd(BuyNowOnPressed);
+    bool BuyNowOnPressed(iWidget *apWidget, const cGuiMessageData &aData);
 
-	bool ExitOnPressed(iWidget* apWidget, const cGuiMessageData& aData);
-	kGuiCallbackDeclarationEnd(ExitOnPressed);
+    kGuiCallbackDeclarationEnd(BuyNowOnPressed);
 
-	bool ButtonLabelOnUpdate(iWidget* apWidget, const cGuiMessageData& aData);
-	kGuiCallbackDeclarationEnd(ButtonLabelOnUpdate);
-	bool ButtonLabelOnDraw(iWidget* apWidget, const cGuiMessageData& aData);
-	kGuiCallbackDeclarationEnd(ButtonLabelOnDraw);
-	bool ButtonLabelOnMouseEnter(iWidget* apWidget, const cGuiMessageData& aData);
-	kGuiCallbackDeclarationEnd(ButtonLabelOnMouseEnter);
-	bool ButtonLabelOnMouseLeave(iWidget* apWidget, const cGuiMessageData& aData);
-	kGuiCallbackDeclarationEnd(ButtonLabelOnMouseLeave);
-	///////////////////////
-	// Data
-	cGraphics *mpGraphics;
+    bool ExitOnPressed(iWidget *apWidget, const cGuiMessageData &aData);
 
-	cGui* mpGui;
-	cGuiSet* mpGuiSet;
+    kGuiCallbackDeclarationEnd(ExitOnPressed);
 
-	iFontData *mpFontMessage;
-	iFontData *mpFontButton;
+    bool ButtonLabelOnUpdate(iWidget *apWidget, const cGuiMessageData &aData);
 
-	cViewport *mpViewport;
+    kGuiCallbackDeclarationEnd(ButtonLabelOnUpdate);
 
-	cGuiGfxElement *mpBlackGfx;
+    bool ButtonLabelOnDraw(iWidget *apWidget, const cGuiMessageData &aData);
 
-	cVector2f mvScreenSize;
-	cVector2f mvGuiSetSize;
-	cVector2f mvGuiSetCenterSize;
-	cVector2f mvGuiSetOffset;
-	cVector3f mvGuiSetStartPos;
+    kGuiCallbackDeclarationEnd(ButtonLabelOnDraw);
 
-	float mfTextWidth;
-	float mfTextY;
+    bool ButtonLabelOnMouseEnter(iWidget *apWidget, const cGuiMessageData &aData);
 
-	float mfAvailableAtY;
+    kGuiCallbackDeclarationEnd(ButtonLabelOnMouseEnter);
 
-	float mfBuyButtonY;
-	float mfExitButtonY;
-	
-	cVector2f mvMessageFontSize;
-	cVector2f mvAvailableAtFontSize;
-	cVector2f mvButtonFontSize;
+    bool ButtonLabelOnMouseLeave(iWidget *apWidget, const cGuiMessageData &aData);
 
-	cColor mMessageFontColor;
-	cColor mAvailableAtFontColor;
-	cColor mButtonFontColor;
+    kGuiCallbackDeclarationEnd(ButtonLabelOnMouseLeave);
+    ///////////////////////
+    // Data
+    cGraphics *mpGraphics;
 
-	float mfFadeSpeed;
+    cGui *mpGui;
+    cGuiSet *mpGuiSet;
 
-	bool mbShowOnAllExit;
+    iFontData *mpFontMessage;
+    iFontData *mpFontButton;
 
-	///////////////////////
-	// Vars
-	bool mbActive;
-	float mfYPos;
-	int mlState;
-	float mfTime;
-	float mfFadeAlpha;
+    cViewport *mpViewport;
 
-	bool mbExiting;
-	bool mbGotoWebsiteAtExit;
-		
-	float mfBuyNowFade;
-	cWidgetLabel* mpLBuyNow;
-	float mfExitFade;
-	cWidgetLabel* mpLExit;
+    cGuiGfxElement *mpBlackGfx;
 
-	tString msBackgroundFile;
-	cGuiGfxElement* mpGfxBackground;
+    cVector2f mvScreenSize;
+    cVector2f mvGuiSetSize;
+    cVector2f mvGuiSetCenterSize;
+    cVector2f mvGuiSetOffset;
+    cVector3f mvGuiSetStartPos;
+
+    float mfTextWidth;
+    float mfTextY;
+
+    float mfAvailableAtY;
+
+    float mfBuyButtonY;
+    float mfExitButtonY;
+
+    cVector2f mvMessageFontSize;
+    cVector2f mvAvailableAtFontSize;
+    cVector2f mvButtonFontSize;
+
+    cColor mMessageFontColor;
+    cColor mAvailableAtFontColor;
+    cColor mButtonFontColor;
+
+    float mfFadeSpeed;
+
+    bool mbShowOnAllExit;
+
+    ///////////////////////
+    // Vars
+    bool mbActive;
+    float mfYPos;
+    int mlState;
+    float mfTime;
+    float mfFadeAlpha;
+
+    bool mbExiting;
+    bool mbGotoWebsiteAtExit;
+
+    float mfBuyNowFade;
+    cWidgetLabel *mpLBuyNow;
+    float mfExitFade;
+    cWidgetLabel *mpLExit;
+
+    tString msBackgroundFile;
+    cGuiGfxElement *mpGfxBackground;
 
     tWStringVec mvTextRows;
-	
-	tString msDestinationURL;
+
+    tString msDestinationURL;
 };
 
 //----------------------------------------------

@@ -101,5 +101,5 @@ namespace hpl {
 		int mlValue;
 	};
 
-};
+}
 #endif // HPL_BONE_H

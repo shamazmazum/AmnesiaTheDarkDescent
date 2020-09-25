@@ -29,44 +29,50 @@
 
 namespace hpl {
 
-	class cResources;
-	class cGraphics;
-	class cGui;
+    class cResources;
 
-	class cGuiSet;
+    class cGraphics;
 
-	//------------------------------------------
+    class cGui;
 
-	class cGuiSetEntity : public iRenderable
-	{
-	#ifdef __GNUC__
-		typedef iRenderable __super;
-	#endif
-	public:
-		cGuiSetEntity(const tString asName,cGuiSet *apSet);
-		~cGuiSetEntity();
+    class cGuiSet;
+
+    //------------------------------------------
+
+    class cGuiSetEntity : public iRenderable {
+#ifdef __GNUC__
+        typedef iRenderable __super;
+#endif
+    public:
+        cGuiSetEntity(const tString asName, cGuiSet *apSet);
+
+        ~cGuiSetEntity();
 
         void SetGuiSet(cGuiSet *apSet);
-		cGuiSet* GetGuiSet(){ return mpGuiSet;}
-		
-		/////////////////////////////////
-		//Entity implementation
-		tString GetEntityType(){ return "GuiSetEntity";}
 
-		/////////////////////////////////
-		//Renderable implementations
-		cMaterial *GetMaterial(){ return NULL;}
-		iVertexBuffer* GetVertexBuffer(){return NULL;}
+        cGuiSet *GetGuiSet() { return mpGuiSet; }
 
-		eRenderableType GetRenderType(){ return eRenderableType_GuiSet;}
-		cMatrixf* GetModelMatrix(cFrustum *apFrustum);
-		int GetMatrixUpdateCount();
+        /////////////////////////////////
+        //Entity implementation
+        tString GetEntityType() { return "GuiSetEntity"; }
 
-	private:
-		cGuiSet *mpGuiSet;
+        /////////////////////////////////
+        //Renderable implementations
+        cMaterial *GetMaterial() { return NULL; }
 
-		cMatrixf m_mtxTemp;
-	};
+        iVertexBuffer *GetVertexBuffer() { return NULL; }
 
-};
+        eRenderableType GetRenderType() { return eRenderableType_GuiSet; }
+
+        cMatrixf *GetModelMatrix(cFrustum *apFrustum);
+
+        int GetMatrixUpdateCount();
+
+    private:
+        cGuiSet *mpGuiSet;
+
+        cMatrixf m_mtxTemp;
+    };
+
+}
 #endif // HPL_GUI_SET_ENTITY_H

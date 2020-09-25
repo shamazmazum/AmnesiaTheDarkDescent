@@ -24,19 +24,19 @@
 
 namespace hpl {
 
-	class cWidgetDummy : public iWidget
-	{
-	public:
-		cWidgetDummy(cGuiSet *apSet, cGuiSkin *apSkin);
-		virtual ~cWidgetDummy();
+    class cWidgetDummy : public iWidget {
+    public:
+        cWidgetDummy(cGuiSet *apSet, cGuiSkin *apSkin);
 
-		void SetEncloseChildren(bool abX);
+        virtual ~cWidgetDummy();
 
-		void OnChildUpdate(iWidget* apChild);
+        void SetEncloseChildren(bool abX);
 
-	protected:
-		bool mbEncloseChildren;
-	};
+        void OnChildUpdate(iWidget *apChild);
 
-};
+    protected:
+        bool mbEncloseChildren;
+    };
+
+}
 #endif // HPL_WIDGET_H

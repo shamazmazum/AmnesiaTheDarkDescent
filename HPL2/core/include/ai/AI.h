@@ -27,24 +27,25 @@
 
 namespace hpl {
 
-	class cAINodeGenerator;
-    
-	class cAI : public iUpdateable
-	{
-	public:
-		cAI();
-		~cAI();
+    class cAINodeGenerator;
 
-		void Reset();
-		void Update(float afTimeStep);
-		
-		void Init();
-		
-		cAINodeGenerator *GetNodeGenerator(){ return mpAINodeGenerator;}
+    class cAI : public iUpdateable {
+    public:
+        cAI();
 
-	private:
-		cAINodeGenerator *mpAINodeGenerator;
-	};
+        ~cAI();
 
-};
+        void Reset();
+
+        void Update(float afTimeStep);
+
+        void Init();
+
+        cAINodeGenerator *GetNodeGenerator() { return mpAINodeGenerator; }
+
+    private:
+        cAINodeGenerator *mpAINodeGenerator;
+    };
+
+}
 #endif // HPL_AI_H

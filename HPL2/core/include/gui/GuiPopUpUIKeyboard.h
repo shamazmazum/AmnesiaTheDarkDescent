@@ -24,85 +24,99 @@
 
 namespace hpl {
 
-	class cGuiSet;
-	class cGuiSkin;
+    class cGuiSet;
 
-	class cWidgetWindow;
-	class cWidgetButton;
-	class cWidgetTextBox;
-	class cWidgetFrame;
-	class cWidgetSlider;
-	class cWidgetLabel;
+    class cGuiSkin;
 
-	//---------------------------------------------------------------
+    class cWidgetWindow;
 
-	class cUIKey
-	{
-	public:
-		cUIKey(eKey aKey, int alUnicodeLower, int alUnicodeUpper) : mKey(aKey) 
-		{ mvUnicode[0]=alUnicodeLower; mvUnicode[1]=alUnicodeUpper; }
+    class cWidgetButton;
 
-		eKey mKey;
-		int mvUnicode[2];
-	};
+    class cWidgetTextBox;
 
-	//---------------------------------------------------------------
+    class cWidgetFrame;
 
-	typedef std::list<cUIKey>		tUIKeyList;
-	typedef tUIKeyList::iterator	tUIKeyListIt;
+    class cWidgetSlider;
 
-	//---------------------------------------------------------------
+    class cWidgetLabel;
 
-	class cGuiPopUpUIKeyboard : public iGuiPopUp
-	{
-	public:
-		cGuiPopUpUIKeyboard(cWidgetTextBox* apTargetTextBox, void *apCallbackObject, tGuiCallbackFunc apCallback);
-		virtual ~cGuiPopUpUIKeyboard();		
+    //---------------------------------------------------------------
 
-	protected:
-		/////////////////////////////
-		// Own functions
-		void SetUpKey(iWidget* apKeyWidget, eKey aKey, int alUnicode, bool abShift=true);
+    class cUIKey {
+    public:
+        cUIKey(eKey aKey, int alUnicodeLower, int alUnicodeUpper) : mKey(aKey) {
+            mvUnicode[0] = alUnicodeLower;
+            mvUnicode[1] = alUnicodeUpper;
+        }
 
-		bool Key_OnPress(iWidget* apWidget, const cGuiMessageData& aData);
-		kGuiCallbackDeclarationEnd(Key_OnPress);
+        eKey mKey;
+        int mvUnicode[2];
+    };
 
-		bool Enter_OnPress(iWidget* apWidget, const cGuiMessageData& aData);
-		kGuiCallbackDeclarationEnd(Enter_OnPress);
+    //---------------------------------------------------------------
 
-		bool Cancel_OnPress(iWidget* apWidget, const cGuiMessageData& aData);
-		kGuiCallbackDeclarationEnd(Cancel_OnPress);
+    typedef std::list <cUIKey> tUIKeyList;
+    typedef tUIKeyList::iterator tUIKeyListIt;
 
-		bool Button_Pressed(iWidget* apWidget, const cGuiMessageData& aData);
-		kGuiCallbackDeclarationEnd(Button_Pressed);
+    //---------------------------------------------------------------
 
-		bool WindowClose(iWidget* apWidget, const cGuiMessageData& aData);
-		kGuiCallbackDeclarationEnd(WindowClose);
+    class cGuiPopUpUIKeyboard : public iGuiPopUp {
+    public:
+        cGuiPopUpUIKeyboard(cWidgetTextBox *apTargetTextBox, void *apCallbackObject, tGuiCallbackFunc apCallback);
 
-		bool Window_OnUIButtonPress(iWidget* apWidget, const cGuiMessageData& aData);
-		kGuiCallbackDeclarationEnd(Window_OnUIButtonPress);
+        virtual ~cGuiPopUpUIKeyboard();
 
-		bool Window_OnUIButtonRelease(iWidget* apWidget, const cGuiMessageData& aData);
-		kGuiCallbackDeclarationEnd(Window_OnUIButtonRelease);
-		
-		void Init();
+    protected:
+        /////////////////////////////
+        // Own functions
+        void SetUpKey(iWidget *apKeyWidget, eKey aKey, int alUnicode, bool abShift = true);
 
-		void ClosePopUp();
+        bool Key_OnPress(iWidget *apWidget, const cGuiMessageData &aData);
 
-		void SetShiftActive(bool abX);
+        kGuiCallbackDeclarationEnd(Key_OnPress);
 
-		//////////////////////////////
-		// Data
-		cVector3f mvPos;
+        bool Enter_OnPress(iWidget *apWidget, const cGuiMessageData &aData);
 
-		cWidgetTextBox* mpTargetTextBox;
-		tWString msBackUpText;
+        kGuiCallbackDeclarationEnd(Enter_OnPress);
 
-		tWidgetList mlstKeyWidgets;		
-		tUIKeyList mlstKeys;
+        bool Cancel_OnPress(iWidget *apWidget, const cGuiMessageData &aData);
 
-		bool mbShift;
-	};
-};
+        kGuiCallbackDeclarationEnd(Cancel_OnPress);
+
+        bool Button_Pressed(iWidget *apWidget, const cGuiMessageData &aData);
+
+        kGuiCallbackDeclarationEnd(Button_Pressed);
+
+        bool WindowClose(iWidget *apWidget, const cGuiMessageData &aData);
+
+        kGuiCallbackDeclarationEnd(WindowClose);
+
+        bool Window_OnUIButtonPress(iWidget *apWidget, const cGuiMessageData &aData);
+
+        kGuiCallbackDeclarationEnd(Window_OnUIButtonPress);
+
+        bool Window_OnUIButtonRelease(iWidget *apWidget, const cGuiMessageData &aData);
+
+        kGuiCallbackDeclarationEnd(Window_OnUIButtonRelease);
+
+        void Init();
+
+        void ClosePopUp();
+
+        void SetShiftActive(bool abX);
+
+        //////////////////////////////
+        // Data
+        cVector3f mvPos;
+
+        cWidgetTextBox *mpTargetTextBox;
+        tWString msBackUpText;
+
+        tWidgetList mlstKeyWidgets;
+        tUIKeyList mlstKeys;
+
+        bool mbShift;
+    };
+}
 
 #endif // HPL_GUI_POP_UP_UI_KEYBOARD_H

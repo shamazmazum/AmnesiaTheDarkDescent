@@ -24,85 +24,98 @@
 
 namespace hpl {
 
-	class cGuiSkinFont;
+    class cGuiSkinFont;
 
-	class cWidgetLabel : public iWidget
-	{
-	public:
-		cWidgetLabel(cGuiSet *apSet, cGuiSkin *apSkin);
-		virtual ~cWidgetLabel();
+    class cWidgetLabel : public iWidget {
+    public:
+        cWidgetLabel(cGuiSet *apSet, cGuiSkin *apSkin);
 
-		void SetTextAlign(eFontAlign aType){mTextAlign = aType;}
-		eFontAlign GetTextAlign(){ return mTextAlign;}
+        virtual ~cWidgetLabel();
 
-		bool GetWordWrap(){ return mbWordWrap;}
-		void SetWordWrap(bool abX){ mbWordWrap = abX;}
+        void SetTextAlign(eFontAlign aType) { mTextAlign = aType; }
 
-		void SetMaxTextLength(int alLength);
-		int GetMaxTextLength(){return mlMaxCharacters;}
+        eFontAlign GetTextAlign() { return mTextAlign; }
 
-		void SetAutogenerateSize(bool abX);
-		bool GetAutogenerateSize(){ return mbAutogenerateSize;}
+        bool GetWordWrap() { return mbWordWrap; }
 
-		void SetDefaultFontSize(const cVector2f& avSize);
+        void SetWordWrap(bool abX) { mbWordWrap = abX; }
 
-		void SetDrawBackGround(bool abX) { mbDrawBackGround = abX; }
-		bool GetDrawBackGround() { return mbDrawBackGround; }
+        void SetMaxTextLength(int alLength);
 
-		void SetBackGroundColor(const cColor &aColor){ mBackGroundColor = aColor;}
-		const cColor& GetBackGroundColor(){ return mBackGroundColor;}
+        int GetMaxTextLength() { return mlMaxCharacters; }
 
-		void SetScrollWaitTime(float afX) { mfWaitToScrollTime = afX; }
-		float GetScrollWaitTime() { return mfWaitToScrollTime; }
+        void SetAutogenerateSize(bool abX);
 
-		void SetScrollOffset(float afX) { mfWordWrapOffset = afX; }
+        bool GetAutogenerateSize() { return mbAutogenerateSize; }
 
-		void SetScrollSpeedMul(float afX) { mfScrollSpeedMul = afX; }
-		float GetScrollSpeedMul() { return mfScrollSpeedMul; }
+        void SetDefaultFontSize(const cVector2f &avSize);
 
-	protected:
-		/////////////////////////
-		// Own Funcs
-		void DrawText(float afTimeStep, cGuiClipRegion *apClipRegion);
+        void SetDrawBackGround(bool abX) { mbDrawBackGround = abX; }
 
-		/////////////////////////
-		// Implemented functions
-		void OnLoadGraphics();
+        bool GetDrawBackGround() { return mbDrawBackGround; }
 
-		void OnUpdate(float afTimeStep);
+        void SetBackGroundColor(const cColor &aColor) { mBackGroundColor = aColor; }
 
-		void OnChangeText();
-		
-		void OnDraw(float afTimeStep, cGuiClipRegion *apClipRegion);
-		void OnDrawAfterClip(float afTimeStep, cGuiClipRegion *apClipRegion);
+        const cColor &GetBackGroundColor() { return mBackGroundColor; }
 
-		bool OnMouseMove(const cGuiMessageData& aData);
-		bool OnMouseDown(const cGuiMessageData& aData);
-		bool OnMouseUp(const cGuiMessageData& aData);
-		bool OnMouseEnter(const cGuiMessageData& aData);
-		bool OnMouseLeave(const cGuiMessageData& aData);
+        void SetScrollWaitTime(float afX) { mfWaitToScrollTime = afX; }
 
-		/////////////////////////
-		// Data
-		eFontAlign mTextAlign;
-		bool mbWordWrap;
-		float mfWordWrapRowsHeight;
-		float mfWordWrapOffset;
-		float mfScrollSpeedMul;
-		float mfScrollTimer;
-		float mfWaitToScrollTime;
-		bool mbScrollingDown;
+        float GetScrollWaitTime() { return mfWaitToScrollTime; }
 
-		float mfBackgroundZ;
-		cGuiGfxElement *mpGfxBackground;
+        void SetScrollOffset(float afX) { mfWordWrapOffset = afX; }
 
-		bool mbDrawBackGround;
-		cColor mBackGroundColor;
+        void SetScrollSpeedMul(float afX) { mfScrollSpeedMul = afX; }
 
-		int mlMaxCharacters;
+        float GetScrollSpeedMul() { return mfScrollSpeedMul; }
+
+    protected:
+        /////////////////////////
+        // Own Funcs
+        void DrawText(float afTimeStep, cGuiClipRegion *apClipRegion);
+
+        /////////////////////////
+        // Implemented functions
+        void OnLoadGraphics();
+
+        void OnUpdate(float afTimeStep);
+
+        void OnChangeText();
+
+        void OnDraw(float afTimeStep, cGuiClipRegion *apClipRegion);
+
+        void OnDrawAfterClip(float afTimeStep, cGuiClipRegion *apClipRegion);
+
+        bool OnMouseMove(const cGuiMessageData &aData);
+
+        bool OnMouseDown(const cGuiMessageData &aData);
+
+        bool OnMouseUp(const cGuiMessageData &aData);
+
+        bool OnMouseEnter(const cGuiMessageData &aData);
+
+        bool OnMouseLeave(const cGuiMessageData &aData);
+
+        /////////////////////////
+        // Data
+        eFontAlign mTextAlign;
+        bool mbWordWrap;
+        float mfWordWrapRowsHeight;
+        float mfWordWrapOffset;
+        float mfScrollSpeedMul;
+        float mfScrollTimer;
+        float mfWaitToScrollTime;
+        bool mbScrollingDown;
+
+        float mfBackgroundZ;
+        cGuiGfxElement *mpGfxBackground;
+
+        bool mbDrawBackGround;
+        cColor mBackGroundColor;
+
+        int mlMaxCharacters;
 
         bool mbAutogenerateSize;
-	};
+    };
 
-};
+}
 #endif // HPL_WIDGET_LABEL_H

@@ -24,19 +24,18 @@
 
 namespace hpl {
 
-	//------------------------------------------
+    //------------------------------------------
 
-	class cLightPoint : public iLight
-	{
-	#ifdef __GNUC__
-		typedef iLight __super;
-	#endif
-	public:
-		cLightPoint(tString asName, cResources *apResources);
+    class cLightPoint : public iLight {
+#ifdef __GNUC__
+        typedef iLight __super;
+#endif
+    public:
+        cLightPoint(tString asName, cResources *apResources);
 
-	private:
-		void UpdateBoundingVolume();
-	};
+    private:
+        void UpdateBoundingVolume();
+    };
 
-};
+}
 #endif // HPL_LIGHT_POINT_H

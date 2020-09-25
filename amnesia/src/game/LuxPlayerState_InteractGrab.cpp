@@ -47,7 +47,7 @@ cLuxPlayerState_InteractGrab::cLuxPlayerState_InteractGrab(cLuxPlayer *apPlayer)
 	mfMaxSlowPlayerMass = gpBase->mpGameCfg->GetFloat("Player_Interaction","GrabMaxSlowPlayerMass",0);
 	mfMinSlowPlayerMul = gpBase->mpGameCfg->GetFloat("Player_Interaction","GrabMinSlowPlayerMul",0);
 
-	mForcePid.SetErrorNum(20);;
+	mForcePid.SetErrorNum(20);
 	mSpeedTorquePid.SetErrorNum(20);
 
 	mForcePid.p = 400;
@@ -333,7 +333,7 @@ void cLuxPlayerState_InteractGrab::PostUpdate(float afTimeStep)
 	mpCurrentBody->AddForce(vForce * mpGrabData->mfForceMul);
 
 
-	if(mpGrabData->mbUseRotation==false) return;
+	if(!mpGrabData->mbUseRotation) return;
 	/////////////////////////
 	// Get the wanted speed
 	cVector3f vWantedRotSpeed=0;
@@ -388,7 +388,7 @@ bool cLuxPlayerState_InteractGrab::OnDoAction(eLuxPlayerAction aAction,bool abPr
 	if(aAction == eLuxPlayerAction_Interact)
 	{
 		// Pressed
-		if(abPressed==false)
+		if(!abPressed)
 		{
 			///////////////////////
 			//Limit the body speed

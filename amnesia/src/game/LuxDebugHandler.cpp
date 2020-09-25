@@ -312,7 +312,7 @@ void cLuxDebugHandler::OnMapLeave(cLuxMap *apMap)
 
 void cLuxDebugHandler::SetDebugWindowActive(bool abActive)
 {
-	if(gpBase->mpConfigHandler->mbLoadDebugMenu==false) return;
+	if(!gpBase->mpConfigHandler->mbLoadDebugMenu) return;
 
 	//////////////////
 	// Active
@@ -323,7 +323,7 @@ void cLuxDebugHandler::SetDebugWindowActive(bool abActive)
 		mpGuiSet->SetActive(true);
 		gpBase->mpInputHandler->ChangeState(eLuxInputState_Debug);
 
-		if(gpBase->mpConfigHandler->mbFullscreen==false) {
+		if(!gpBase->mpConfigHandler->mbFullscreen) {
 			gpBase->mpEngine->GetInput()->GetLowLevel()->LockInput(false);
 			gpBase->mpEngine->GetInput()->GetLowLevel()->RelativeMouse(false);
 		}
@@ -337,7 +337,7 @@ void cLuxDebugHandler::SetDebugWindowActive(bool abActive)
 		mpGuiSet->SetActive(false);
 		gpBase->mpInputHandler->ChangeState(eLuxInputState_Game);
 
-		if(gpBase->mpConfigHandler->mbFullscreen==false) {
+		if(!gpBase->mpConfigHandler->mbFullscreen) {
 			gpBase->mpEngine->GetInput()->GetLowLevel()->LockInput(true);
 			gpBase->mpEngine->GetInput()->GetLowLevel()->RelativeMouse(true);
 		}
@@ -658,7 +658,7 @@ void cLuxDebugHandler::RenderSolid(cRendererCallbackFunctions* apFunctions)
 
 void cLuxDebugHandler::AddErrorOrWarningMessage(const tWString& asText)
 {
-	if(mbShowErrorMessages==false) return;
+	if(!mbShowErrorMessages) return;
 
 	/////////////////////////////
 	// Check if message exists
@@ -682,7 +682,7 @@ void cLuxDebugHandler::AddErrorOrWarningMessage(const tWString& asText)
 
 void cLuxDebugHandler::AddMessage(const tWString& asText, bool abCheckForDuplicates)
 {
-	if(mbShowDebugMessages==false) return;
+	if(!mbShowDebugMessages) return;
 
 	/////////////////////////////
 	// Check if message exists
@@ -746,7 +746,7 @@ void cLuxDebugHandler::CheckLineObjectIntersection(iRenderable *apObject, const 
 
 	cMatrixf mtxInvModel = cMath::MatrixInverse(apObject->GetWorldMatrix());
 	bool bIntersect = cMath::CheckLineTriVertexBufferIntersection(	avStart, avEnd,mtxInvModel, apObject->GetVertexBuffer(),NULL, &fT, NULL,true);
-	if(bIntersect==false || fT > gfMinT) return;
+	if(!bIntersect || fT > gfMinT) return;
 	
 	gfMinT = fT;
 	mpInspectMeshEntity = static_cast<cSubMeshEntity*>(apObject);
@@ -803,7 +803,7 @@ void cLuxDebugHandler::IterateRenderableNode(iRenderableContainerNode *apNode, c
 
 void cLuxDebugHandler::UpdateInspectionMeshEntity(float afTimeStep)
 {
-	if(mbInspectionMode==false) return;
+	if(!mbInspectionMode) return;
 
 	/////////////////////////////
 	// Set up line
@@ -859,7 +859,7 @@ void cLuxDebugHandler::UpdateMessages(float afTimeStep)
 
 void cLuxDebugHandler::CreateScriptOutputWindow()
 {
-	if(gpBase->mpConfigHandler->mbLoadDebugMenu==false) return;
+	if(!gpBase->mpConfigHandler->mbLoadDebugMenu) return;
 
 	//////////////////////////
 	//Set up variables
@@ -898,7 +898,7 @@ void cLuxDebugHandler::CreateScriptOutputWindow()
 
 void cLuxDebugHandler::CreateScriptOutputWindowText(const tWString& asOutput)
 {
-	if(gpBase->mpConfigHandler->mbLoadDebugMenu==false) return;
+	if(!gpBase->mpConfigHandler->mbLoadDebugMenu) return;
 
 	//////////////////////////
 	// Destroy all widgets
@@ -945,7 +945,7 @@ void cLuxDebugHandler::CreateScriptOutputWindowText(const tWString& asOutput)
 
 void cLuxDebugHandler::CreateGuiWindow()
 {
-	if(gpBase->mpConfigHandler->mbLoadDebugMenu==false) return;
+	if(!gpBase->mpConfigHandler->mbLoadDebugMenu) return;
 
 	//////////////////////////
 	//Set up variables
@@ -1247,7 +1247,7 @@ void cLuxDebugHandler::ReloadMap()
 
 	///////////////////
 	//Script
-	if(RecompileScript()==false)
+	if(!RecompileScript())
 	{
 		return;
 	}

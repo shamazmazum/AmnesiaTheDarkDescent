@@ -50,5 +50,5 @@ namespace hpl {
 
 	//---------------------------------------------
 
-};
+}
 #endif // HPL_RENDERER_WIRE_FRAME_H

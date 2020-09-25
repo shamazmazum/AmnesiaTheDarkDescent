@@ -26,87 +26,96 @@
 
 //----------------------------------------------
 
-class cLuxArea_Ladder_SaveData : public iLuxArea_SaveData
-{
-	kSerializableClassInit(cLuxArea_Ladder_SaveData)
+class cLuxArea_Ladder_SaveData : public iLuxArea_SaveData {
+    kSerializableClassInit(cLuxArea_Ladder_SaveData)
 public:
-	iLuxArea* CreateArea(cLuxMap *apMap);
+    iLuxArea *CreateArea(cLuxMap *apMap);
 
-	tString msMaterial;
+    tString msMaterial;
 };
 
 //----------------------------------------------
 
-class cLuxArea_Ladder : public iLuxArea
-{
-typedef iLuxArea super_class;
-friend class cLuxAreaLoader_Ladder;
-public:	
-	cLuxArea_Ladder(const tString &asName, int alID, cLuxMap *apMap);
-	virtual ~cLuxArea_Ladder();
+class cLuxArea_Ladder : public iLuxArea {
+    typedef iLuxArea super_class;
 
-	//////////////////////
-	//General
-	void SetupAfterLoad(cWorld *apWorld);
+    friend class cLuxAreaLoader_Ladder;
 
-	void OnUpdate(float afTimeStep);
+public:
+    cLuxArea_Ladder(const tString &asName, int alID, cLuxMap *apMap);
 
-	bool CanInteract(iPhysicsBody *apBody);
-	bool OnInteract(iPhysicsBody *apBody, const cVector3f &avPos);
+    virtual ~cLuxArea_Ladder();
 
-	eLuxFocusCrosshair GetFocusCrosshair(iPhysicsBody *apBody, const cVector3f &avPos);
+    //////////////////////
+    //General
+    void SetupAfterLoad(cWorld *apWorld);
 
-	//////////////////////
-	//Properties
-	cVector3f GetStartRotation();
-	
-	const cVector3f& GetForward(){ return mvForward;}
-	float GetMaxY(){ return mfMaxY;}
-	float GetMinY(){ return mfMinY;}
+    void OnUpdate(float afTimeStep);
 
-	const tString& GetMaterial(){return msMaterial;}
+    bool CanInteract(iPhysicsBody *apBody);
 
-	//////////////////////
-	//Connection callbacks
-	void OnConnectionStateChange(iLuxEntity *apEntity, int alState){}
+    bool OnInteract(iPhysicsBody *apBody, const cVector3f &avPos);
 
-	//////////////////////
-	//Save data stuff
-	iLuxEntity_SaveData* CreateSaveData();
-	virtual void SaveToSaveData(iLuxEntity_SaveData* apSaveData);
-	virtual void LoadFromSaveData(iLuxEntity_SaveData* apSaveData);
-	virtual void SetupSaveData(iLuxEntity_SaveData *apSaveData);
+    eLuxFocusCrosshair GetFocusCrosshair(iPhysicsBody *apBody, const cVector3f &avPos);
+
+    //////////////////////
+    //Properties
+    cVector3f GetStartRotation();
+
+    const cVector3f &GetForward() { return mvForward; }
+
+    float GetMaxY() { return mfMaxY; }
+
+    float GetMinY() { return mfMinY; }
+
+    const tString &GetMaterial() { return msMaterial; }
+
+    //////////////////////
+    //Connection callbacks
+    void OnConnectionStateChange(iLuxEntity *apEntity, int alState) {}
+
+    //////////////////////
+    //Save data stuff
+    iLuxEntity_SaveData *CreateSaveData();
+
+    virtual void SaveToSaveData(iLuxEntity_SaveData *apSaveData);
+
+    virtual void LoadFromSaveData(iLuxEntity_SaveData *apSaveData);
+
+    virtual void SetupSaveData(iLuxEntity_SaveData *apSaveData);
+
 protected:
 
 private:
-	cVector3f GetStartPosition();
+    cVector3f GetStartPosition();
 
-	/////////////////////////
-	// Data
-	cVector3f mvForward;
-	float mfMaxY;
-	float mfMinY;
+    /////////////////////////
+    // Data
+    cVector3f mvForward;
+    float mfMaxY;
+    float mfMinY;
 
-	tString msMaterial;
+    tString msMaterial;
 
-	/////////////////////////
-	// Variables
+    /////////////////////////
+    // Variables
 
 };
 
 //----------------------------------------------
 
-class cLuxAreaLoader_Ladder : public iLuxAreaLoader
-{
+class cLuxAreaLoader_Ladder : public iLuxAreaLoader {
 public:
-	cLuxAreaLoader_Ladder(const tString& asName);
-	~cLuxAreaLoader_Ladder();
+    cLuxAreaLoader_Ladder(const tString &asName);
 
-	iLuxArea *CreateArea(const tString& asName, int alID, cLuxMap *apMap);
-	
-	void LoadVariables(iLuxArea *apArea, cWorld *apWorld);
-	void SetupArea(iLuxArea *apArea, cWorld *apWorld);
-	
+    ~cLuxAreaLoader_Ladder();
+
+    iLuxArea *CreateArea(const tString &asName, int alID, cLuxMap *apMap);
+
+    void LoadVariables(iLuxArea *apArea, cWorld *apWorld);
+
+    void SetupArea(iLuxArea *apArea, cWorld *apWorld);
+
 };
 
 //----------------------------------------------

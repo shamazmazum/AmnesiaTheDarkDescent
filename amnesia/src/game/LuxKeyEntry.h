@@ -21,6 +21,7 @@
 
 #ifndef LuxKeyEntry_h
 #define LuxKeyEntry_h
+
 #include <FL/Fl.H>
 #include "hpl.h"
 #include <iostream>
@@ -30,34 +31,46 @@
 
 class Fl_Input_Key : public Fl_Input {
 public:
-  Fl_Input_Key(int X, int Y, int W, int H, const char *l = 0);
-  int handle(int event);
+    Fl_Input_Key(int X, int Y, int W, int H, const char *l = 0);
+
+    int handle(int event);
+
 private:
-  int handle_key();
-  int handle_paste();
-  bool verifychar(char key);
+    int handle_key();
+
+    int handle_paste();
+
+    bool verifychar(char key);
 };
+
 #include <FL/Fl_Window.H>
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Return_Button.H>
 
 class InstallKeyEntry {
-  std::string &dest; 
-  int &exitflag; 
+    std::string &dest;
+    int &exitflag;
 public:
-  InstallKeyEntry(std::string &key, int &exitpressed);
-  Fl_Window *keyentrydialog;
-  Fl_Input_Key *keyentry;
+    InstallKeyEntry(std::string &key, int &exitpressed);
+
+    Fl_Window *keyentrydialog;
+    Fl_Input_Key *keyentry;
 private:
-  void cb_Exit_i(Fl_Button*, void*);
-  static void cb_Exit(Fl_Button*, void*);
-  void cb_Validate_i(Fl_Return_Button*, void*);
-  static void cb_Validate(Fl_Return_Button*, void*);
+    void cb_Exit_i(Fl_Button *, void *);
+
+    static void cb_Exit(Fl_Button *, void *);
+
+    void cb_Validate_i(Fl_Return_Button *, void *);
+
+    static void cb_Validate(Fl_Return_Button *, void *);
+
 public:
-  void show(int argc, char*argv[]);
+    void show(int argc, char *argv[]);
 };
+
 int Ask_Serial(std::string &serial);
+
 #if TEST
 int main(int argc, char *argv[]);
 #endif

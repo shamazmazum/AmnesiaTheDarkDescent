@@ -27,74 +27,80 @@
 
 namespace hpl {
 
-	//-----------------------------------------
-	class cStateMachine;
+    //-----------------------------------------
+    class cStateMachine;
 
-	class iAIState
-	{
-	friend class cStateMachine;
-	public:
-		iAIState();
-		virtual ~iAIState(){}
+    class iAIState {
+        friend class cStateMachine;
 
-		virtual void OnUpdate(float afTime)=0;
+    public:
+        iAIState();
 
-		virtual void OnEnterState(int alLastState)=0;
-		virtual void OnLeaveState(int alNextState)=0;
+        virtual ~iAIState() {}
 
-		int GetId(){ return mlId;}
-		const tString& GetName(){ return msName;}
-		float GetUpdateStep(){ return mfUpdateStep;}
+        virtual void OnUpdate(float afTime) = 0;
 
-		void Sleep(float afTime);
+        virtual void OnEnterState(int alLastState) = 0;
 
-	protected:
-		int mlId;
-		tString msName;
-		float mfUpdateStep;
-		cStateMachine *mpStateMachine;
+        virtual void OnLeaveState(int alNextState) = 0;
 
-	private:
-		void Update(float afTime);
-		void SetStateMachine(cStateMachine *apStateMachine){ mpStateMachine = apStateMachine;}
+        int GetId() { return mlId; }
 
-		float mfTimeCount;
-	};
+        const tString &GetName() { return msName; }
 
-	typedef std::map<int, iAIState*> tAIStateMap;
-	typedef tAIStateMap::iterator tAIStateMapIt;
+        float GetUpdateStep() { return mfUpdateStep; }
 
-	//-----------------------------------------
+        void Sleep(float afTime);
 
-	class cStateMachine
-	{
-	public:
-		cStateMachine();
-		virtual ~cStateMachine();
+    protected:
+        int mlId;
+        tString msName;
+        float mfUpdateStep;
+        cStateMachine *mpStateMachine;
 
-		void Update(float afTime);
+    private:
+        void Update(float afTime);
 
-		/**
-		 * Adds a new state to the state machine. The state machine will destroy them when deleted.
-		 */
-		void AddState(iAIState *apState, const tString& asName, int alId, float afUpdateStep);
+        void SetStateMachine(cStateMachine *apStateMachine) { mpStateMachine = apStateMachine; }
 
-		void ChangeState(int alId);
+        float mfTimeCount;
+    };
 
-		void SetActive(bool abX){ mbActive = abX;}
-		bool IsActive(){ return mbActive;}
+    typedef std::map<int, iAIState *> tAIStateMap;
+    typedef tAIStateMap::iterator tAIStateMapIt;
 
-		iAIState* GetState(int alId);
+    //-----------------------------------------
 
-		iAIState* CurrentState();
+    class cStateMachine {
+    public:
+        cStateMachine();
 
-	private:
-		bool mbActive;
+        virtual ~cStateMachine();
 
-		tAIStateMap m_mapStates;
+        void Update(float afTime);
 
-		iAIState *mpCurrentState;
-	};
+        /**
+         * Adds a new state to the state machine. The state machine will destroy them when deleted.
+         */
+        void AddState(iAIState *apState, const tString &asName, int alId, float afUpdateStep);
 
-};
+        void ChangeState(int alId);
+
+        void SetActive(bool abX) { mbActive = abX; }
+
+        bool IsActive() { return mbActive; }
+
+        iAIState *GetState(int alId);
+
+        iAIState *CurrentState();
+
+    private:
+        bool mbActive;
+
+        tAIStateMap m_mapStates;
+
+        iAIState *mpCurrentState;
+    };
+
+}
 #endif // HPL_STATE_MACHINE_H

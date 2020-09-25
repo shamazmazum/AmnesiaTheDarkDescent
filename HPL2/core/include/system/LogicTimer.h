@@ -23,74 +23,77 @@
 
 namespace hpl {
 
-	class iLowLevelSystem;
+    class iLowLevelSystem;
 
-	class cLogicTimer
-	{
-	public:
-		/**
-		 *
-		 * \param alUpdatesPerSec Number of updates per second.
-		 * \param *apLowLevelSystem 
-		 * \return 
-		 */
-		cLogicTimer(int alUpdatesPerSec,iLowLevelSystem *apLowLevelSystem);
-		~cLogicTimer();
+    class cLogicTimer {
+    public:
+        /**
+         *
+         * \param alUpdatesPerSec Number of updates per second.
+         * \param *apLowLevelSystem
+         * \return
+         */
+        cLogicTimer(int alUpdatesPerSec, iLowLevelSystem *apLowLevelSystem);
 
-		/**
-		 * Reset the time. Do this when the logical update of the game has been ide, ie while loading.
-		 */
-		void Reset();
-		/**
-		 * Check with the time if it is time for another logical update
-		 * \return true if logic should be updated, else false.
-		 */
-		bool WantUpdate();
+        ~cLogicTimer();
 
-		/**
-		 * Resets various variables that makes the graphics is never frozen.
-		 */
-		void EndUpdateLoop();
+        /**
+         * Reset the time. Do this when the logical update of the game has been ide, ie while loading.
+         */
+        void Reset();
 
-		/**
-		 * Set the number of times per second to update
-		 * \param alUpdatesPerSec 
-		 */
-		void SetUpdatesPerSec(int alUpdatesPerSec);
+        /**
+         * Check with the time if it is time for another logical update
+         * \return true if logic should be updated, else false.
+         */
+        bool WantUpdate();
 
-		/**
-		 * Sets the maximum updates in a row.
-		 * \param alUpdatesPerSec 
-		 */
-		void SetMaxUpdates(int alMax);
+        /**
+         * Resets various variables that makes the graphics is never frozen.
+         */
+        void EndUpdateLoop();
 
-		/**
-		 * Get the number of updates per second.
-		 */
-		int GetUpdatesPerSec();
-		/**
-		 * Get the size of each step in seconds.
-		 */
-		float GetStepSize();
+        /**
+         * Set the number of times per second to update
+         * \param alUpdatesPerSec
+         */
+        void SetUpdatesPerSec(int alUpdatesPerSec);
 
-		double GetLocalTime(){ return mlLocalTime;}
-		double GetLocalTimeAdd(){ return mlLocalTimeAdd;}
+        /**
+         * Sets the maximum updates in a row.
+         * \param alUpdatesPerSec
+         */
+        void SetMaxUpdates(int alMax);
 
-		void SetSpeedMul(float afX){ mfSpeedMul = afX;}
-		
-	private:
-		void Update();
+        /**
+         * Get the number of updates per second.
+         */
+        int GetUpdatesPerSec();
 
-		double mlLocalTime;
-		double mlLocalTimeAdd;
+        /**
+         * Get the size of each step in seconds.
+         */
+        float GetStepSize();
 
-		double mfSpeedMul;
+        double GetLocalTime() { return mlLocalTime; }
 
-		int mlMaxUpdates;
-		int mlUpdateCount;
+        double GetLocalTimeAdd() { return mlLocalTimeAdd; }
 
-		iLowLevelSystem *mpLowLevelSystem;
-	};
+        void SetSpeedMul(float afX) { mfSpeedMul = afX; }
 
-};
+    private:
+        void Update();
+
+        double mlLocalTime;
+        double mlLocalTimeAdd;
+
+        double mfSpeedMul;
+
+        int mlMaxUpdates;
+        int mlUpdateCount;
+
+        iLowLevelSystem *mpLowLevelSystem;
+    };
+
+}
 #endif // HPL_LOGICTIMER_H

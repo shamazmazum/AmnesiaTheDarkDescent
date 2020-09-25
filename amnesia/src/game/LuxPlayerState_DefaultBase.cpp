@@ -144,11 +144,11 @@ void iLuxPlayerState_DefaultBase::OnDraw(cGuiSet *apGuiSet ,float afFrameTime)
 
 bool iLuxPlayerState_DefaultBase::OnDoAction(eLuxPlayerAction aAction,bool abPressed)
 {
-	if(mpPlayer->GetCurrentMoveStateData()->GetAllowsInteraction()==false) return true;
+	if(!mpPlayer->GetCurrentMoveStateData()->GetAllowsInteraction()) return true;
 
 	////////////////////////////
 	// Implemented
-	if(ImplementedDoAction(aAction, abPressed)==false)
+	if(!ImplementedDoAction(aAction, abPressed))
 	{
 		return false;
 	}

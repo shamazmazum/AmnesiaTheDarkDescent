@@ -31,63 +31,60 @@
 
 //-----------------------------------------------------------------------
 
-cLuxStaticPropLoader::cLuxStaticPropLoader(const tString& asName) : cEntityLoader_Object(asName)
-{
-	mbLoadAsStatic = true;
-	mbCreatesStaticEntity = true;
+cLuxStaticPropLoader::cLuxStaticPropLoader(const tString &asName) : cEntityLoader_Object(asName) {
+    mbLoadAsStatic = true;
+    mbCreatesStaticEntity = true;
 }
 
 //-----------------------------------------------------------------------
 
-void cLuxStaticPropLoader::BeforeLoad(cXmlElement *apRootElem, const cMatrixf &a_mtxTransform,cWorld *apWorld, cResourceVarsObject *apInstanceVars)
-{
+void cLuxStaticPropLoader::BeforeLoad(cXmlElement *apRootElem, const cMatrixf &a_mtxTransform, cWorld *apWorld,
+                                      cResourceVarsObject *apInstanceVars) {
 
 }
 
 //-----------------------------------------------------------------------
 
-void cLuxStaticPropLoader::AfterLoad(cXmlElement *apRootElem, const cMatrixf &a_mtxTransform,cWorld *apWorld, cResourceVarsObject *apInstanceVars)
-{
-	cLuxMap *pMap = gpBase->mpCurrentMapLoading;
-	if(pMap==NULL) return;
+void cLuxStaticPropLoader::AfterLoad(cXmlElement *apRootElem, const cMatrixf &a_mtxTransform, cWorld *apWorld,
+                                     cResourceVarsObject *apInstanceVars) {
+    cLuxMap *pMap = gpBase->mpCurrentMapLoading;
+    if (pMap == NULL) return;
 
-	// ATTENTION!
-	// The entity classes is only be used if for some reason 
-	// static props needs to be turned of or what not.
+    // ATTENTION!
+    // The entity classes is only be used if for some reason
+    // static props needs to be turned of or what not.
 
-	/*cLuxStaticProp *pStaticProp = hplNew( cLuxStaticProp, (msName, mlID) );
+    /*cLuxStaticProp *pStaticProp = hplNew( cLuxStaticProp, (msName, mlID) );
 
-	//////////////////////////////
-	// Set data
-	pStaticProp->mpMap = pMap;
-	pStaticProp->msFileName = msFileName;
-	pStaticProp->m_mtxOnLoadTransform = a_mtxTransform;
+    //////////////////////////////
+    // Set data
+    pStaticProp->mpMap = pMap;
+    pStaticProp->msFileName = msFileName;
+    pStaticProp->m_mtxOnLoadTransform = a_mtxTransform;
 
-	pStaticProp->mvBodies = mvBodies;
-	pStaticProp->mvJoints = mvJoints;
+    pStaticProp->mvBodies = mvBodies;
+    pStaticProp->mvJoints = mvJoints;
 
-	pStaticProp->mvLights = mvLights;
-	pStaticProp->mvParticleSystems = mvParticleSystems;
-	pStaticProp->mvBillboards = mvBillboards;
-	pStaticProp->mvBeams = mvBeams;
-	pStaticProp->mvSoundEntities = mvSoundEntities;
+    pStaticProp->mvLights = mvLights;
+    pStaticProp->mvParticleSystems = mvParticleSystems;
+    pStaticProp->mvBillboards = mvBillboards;
+    pStaticProp->mvBeams = mvBeams;
+    pStaticProp->mvSoundEntities = mvSoundEntities;
 
-	pStaticProp->mpMeshEntity = mpEntity;
+    pStaticProp->mpMeshEntity = mpEntity;
 
 
-	//////////////////////////////
-	//Add to the current map
-	pMap->AddStaticProp(pStaticProp);*/
-	
-	///////////////////////////////
-	// Instance vars
-	if(apInstanceVars)
-	{
-		if(mpEntity)
-		{
-			mpEntity->SetRenderFlagBit(eRenderableFlag_ShadowCaster, apInstanceVars->GetVarBool("CastShadows", true));
-		}
-	}
+    //////////////////////////////
+    //Add to the current map
+    pMap->AddStaticProp(pStaticProp);*/
+
+    ///////////////////////////////
+    // Instance vars
+    if (apInstanceVars) {
+        if (mpEntity) {
+            mpEntity->SetRenderFlagBit(eRenderableFlag_ShadowCaster, apInstanceVars->GetVarBool("CastShadows", true));
+        }
+    }
 }
 
 //-----------------------------------------------------------------------
@@ -99,65 +96,59 @@ void cLuxStaticPropLoader::AfterLoad(cXmlElement *apRootElem, const cMatrixf &a_
 //-----------------------------------------------------------------------
 
 
-cLuxStaticProp::cLuxStaticProp(const tString &asName, int alID)
-{
-	msName = asName;
-	mlID = alID;
+cLuxStaticProp::cLuxStaticProp(const tString &asName, int alID) {
+    msName = asName;
+    mlID = alID;
 }
 
-cLuxStaticProp::~cLuxStaticProp()
-{
-	cWorld *pWorld = mpMap->GetWorld();
-	iPhysicsWorld *pPhysicsWorld = pWorld->GetPhysicsWorld();
+cLuxStaticProp::~cLuxStaticProp() {
+    cWorld *pWorld = mpMap->GetWorld();
+    iPhysicsWorld *pPhysicsWorld = pWorld->GetPhysicsWorld();
 
-	////////////////////
-	// Destroy physics
-	{
-		//Joints
-		for(size_t i=0; i<mvJoints.size(); ++i)
-		{
-			iPhysicsJoint *pJoint = mvJoints[i];
+    ////////////////////
+    // Destroy physics
+    {
+        //Joints
+        for (size_t i = 0; i < mvJoints.size(); ++i) {
+            iPhysicsJoint *pJoint = mvJoints[i];
 
-			if(pJoint && pPhysicsWorld->JointExists(pJoint))
-			{
-				pPhysicsWorld->DestroyJoint(pJoint);
-			}
-		}
+            if (pJoint && pPhysicsWorld->JointExists(pJoint)) {
+                pPhysicsWorld->DestroyJoint(pJoint);
+            }
+        }
 
-		//Bodies
-		for(size_t i=0; i<mvBodies.size(); ++i)
-		{
-			iPhysicsBody *pBody = mvBodies[i];
+        //Bodies
+        for (size_t i = 0; i < mvBodies.size(); ++i) {
+            iPhysicsBody *pBody = mvBodies[i];
 
-			pWorld->GetPhysicsWorld()->DestroyBody(pBody);
-		}
-	}
+            pWorld->GetPhysicsWorld()->DestroyBody(pBody);
+        }
+    }
 
-	////////////////////
-	// Destroy graphics
-	{
-		//Mesh entity
-		if(mpMeshEntity) pWorld->DestroyMeshEntity(mpMeshEntity);
+    ////////////////////
+    // Destroy graphics
+    {
+        //Mesh entity
+        if (mpMeshEntity) pWorld->DestroyMeshEntity(mpMeshEntity);
 
-		//Lights
-		for(size_t i=0; i<mvLights.size(); ++i) pWorld->DestroyLight(mvLights[i]);
+        //Lights
+        for (size_t i = 0; i < mvLights.size(); ++i) pWorld->DestroyLight(mvLights[i]);
 
-		//Particle systems
-		for(size_t i=0; i<mvParticleSystems.size(); ++i) 
-		{
-			cParticleSystem *pPS = mvParticleSystems[i];
-			if(pPS && pWorld->ParticleSystemExists(pPS)) pPS->Kill();
-		}
+        //Particle systems
+        for (size_t i = 0; i < mvParticleSystems.size(); ++i) {
+            cParticleSystem *pPS = mvParticleSystems[i];
+            if (pPS && pWorld->ParticleSystemExists(pPS)) pPS->Kill();
+        }
 
-		//Billboards
-		for(size_t i=0; i<mvBillboards.size(); ++i)	pWorld->DestroyBillboard(mvBillboards[i]);
+        //Billboards
+        for (size_t i = 0; i < mvBillboards.size(); ++i) pWorld->DestroyBillboard(mvBillboards[i]);
 
-		//Beams
-		for(size_t i=0; i<mvBeams.size(); ++i)		pWorld->DestroyBeam(mvBeams[i]);
+        //Beams
+        for (size_t i = 0; i < mvBeams.size(); ++i) pWorld->DestroyBeam(mvBeams[i]);
 
-		//Sound entities
-		for(size_t i=0; i<mvSoundEntities.size(); ++i) 	pWorld->DestroySoundEntity(mvSoundEntities[i]);
-	}	
+        //Sound entities
+        for (size_t i = 0; i < mvSoundEntities.size(); ++i) pWorld->DestroySoundEntity(mvSoundEntities[i]);
+    }
 }
 
 //-----------------------------------------------------------------------
@@ -170,11 +161,15 @@ cLuxStaticProp::~cLuxStaticProp()
 
 kBeginSerializeBase(iLuxStaticProp_SaveData)
 
-kSerializeVar(msName, eSerializeType_String)
-kSerializeVar(mlID, eSerializeType_Int32)
+kSerializeVar(msName, eSerializeType_String
+)
+kSerializeVar(mlID, eSerializeType_Int32
+)
 
-kSerializeVar(msFileName, eSerializeType_String)
-kSerializeVar(m_mtxOnLoadTransform, eSerializeType_Matrixf)
+kSerializeVar(msFileName, eSerializeType_String
+)
+kSerializeVar(m_mtxOnLoadTransform, eSerializeType_Matrixf
+)
 
 kEndSerialize()
 

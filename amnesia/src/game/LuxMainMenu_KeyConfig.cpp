@@ -175,7 +175,7 @@ void cLuxInputMenuEntry::RetrieveInitialValue()
 
 void cLuxInputMenuEntry::UpdateAction()
 {
-	if(mbChanged==false)
+	if(!mbChanged)
 		return;
 
 	cInput* pInp = gpBase->mpEngine->GetInput();
@@ -993,7 +993,7 @@ void cLuxMainMenu_KeyConfig::CreateGui()
 		for(size_t i=0;i<vActions.size();++i)
 		{
 			cLuxAction* pLuxAction = vActions[i];
-			if(pLuxAction->mbConfigurable==false)
+			if(!pLuxAction->mbConfigurable)
 				continue;
 
 			cLuxInputMenuEntry* pEntry = CreateInputEntry(pLuxAction, pGroup, vPosInGroup);

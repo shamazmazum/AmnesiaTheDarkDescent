@@ -55,5 +55,5 @@ namespace hpl {
 		cGui *mpGui;
 	};
 
-};
+}
 #endif // HPL_FONT_MANAGER_H

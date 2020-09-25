@@ -27,31 +27,33 @@
 
 namespace hpl {
 
-	class cSqScript : public iScript
-	{
-	public:
-		cSqScript(const tString& asName, asIScriptEngine *apScriptEngine,cScriptOutput *apScriptOutput, int alHandle); 
-		~cSqScript();
+    class cSqScript : public iScript {
+    public:
+        cSqScript(const tString &asName, asIScriptEngine *apScriptEngine, cScriptOutput *apScriptOutput, int alHandle);
 
-		bool CreateFromFile(const tWString& asFileName, tString *apCompileMessages=NULL);
+        ~cSqScript();
 
-		int GetFuncHandle(const tString& asFunc);
-		void AddArg(const tString& asArg);
+        bool CreateFromFile(const tWString &asFileName, tString *apCompileMessages = NULL);
 
-		bool Run(const tString& asFuncLine);
-		bool Run(int alHandle);
+        int GetFuncHandle(const tString &asFunc);
 
-	private:
-		asIScriptEngine *mpScriptEngine;
-		cScriptOutput *mpScriptOutput;
-        
-		asIScriptContext *mpContext;
-		asIScriptModule *mpModule;
-		
-		int mlHandle;
-		tString msModuleName;
+        void AddArg(const tString &asArg);
 
-		char* LoadCharBuffer(const tWString& asFileName, int& alLength);
-	};
-};
+        bool Run(const tString &asFuncLine);
+
+        bool Run(int alHandle);
+
+    private:
+        asIScriptEngine *mpScriptEngine;
+        cScriptOutput *mpScriptOutput;
+
+        asIScriptContext *mpContext;
+        asIScriptModule *mpModule;
+
+        int mlHandle;
+        tString msModuleName;
+
+        char *LoadCharBuffer(const tWString &asFileName, int &alLength);
+    };
+}
 #endif // HPL_SCRIPT_H

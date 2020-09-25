@@ -280,7 +280,7 @@ kGuiCallbackDeclaredFuncEnd(cLuxMainMenu_LoadGame, UIPressCancel);
 bool cLuxMainMenu_LoadGame::LoadGameCallback(iWidget* apWidget, const cGuiMessageData& aData)
 {
 	bool bOkPressed = aData.mlVal==0? true : false;
-	if(bOkPressed==false)
+	if(!bOkPressed)
 		return true;
 
 	LoadGame(mpLBSavedGames->GetSelectedItem());
@@ -294,7 +294,7 @@ kGuiCallbackDeclaredFuncEnd(cLuxMainMenu_LoadGame, LoadGameCallback);
 bool cLuxMainMenu_LoadGame::ExitCallback(iWidget* apWidget, const cGuiMessageData& aData)
 {
 	bool bOkPressed = aData.mlVal==0? true : false;
-	if(bOkPressed==false)
+	if(!bOkPressed)
 		return true;
 
 	if(gpBase->mpCustomStory==NULL)

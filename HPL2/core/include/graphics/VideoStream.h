@@ -65,5 +65,5 @@ namespace hpl {
 		tWString msFilePath;
 		cVector2l mvSize;
 	};
-};
+}
 #endif // HPL_VIDEO_STREAM_H

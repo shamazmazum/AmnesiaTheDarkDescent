@@ -52,5 +52,5 @@ namespace hpl {
 		cGraphics *mpGraphics;
 	};
 
-};
+}
 #endif // HPL_GENERATE_H

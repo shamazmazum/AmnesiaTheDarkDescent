@@ -27,233 +27,280 @@
 //----------------------------------------------
 
 class cLuxNode_Pos;
+
 class cLuxNode_PlayerStart;
+
 class cLuxArea_Sticky;
+
 class cLuxLampLightConnection;
+
 class cLuxProp_Lamp;
 
-typedef std::multimap<tString,cLuxNode_Pos*> tLuxPosNodeMap;
+typedef std::multimap<tString, cLuxNode_Pos *> tLuxPosNodeMap;
 typedef tLuxPosNodeMap::iterator tLuxPosNodeMapIt;
 
-typedef std::multimap<tString,cLuxNode_PlayerStart*> tLuxPlayerStartMap;
+typedef std::multimap<tString, cLuxNode_PlayerStart *> tLuxPlayerStartMap;
 typedef tLuxPlayerStartMap::iterator tLuxPlayerStartMapIt;
 
-typedef std::list<cLuxArea_Sticky*> tLuxArea_StickyList;
+typedef std::list<cLuxArea_Sticky *> tLuxArea_StickyList;
 typedef tLuxArea_StickyList::iterator tLuxArea_StickyListIt;
 
-typedef std::list<cLuxLampLightConnection*> tLuxLampLightConnectionList;
+typedef std::list<cLuxLampLightConnection *> tLuxLampLightConnectionList;
 typedef tLuxLampLightConnectionList::iterator tLuxLampLightConnectionListIt;
 
 //----------------------------------------------
 class cLuxMap;
 
-class cLuxDissolveEntity
-{
+class cLuxDissolveEntity {
 public:
-	cLuxDissolveEntity(cLuxMap *apMap);
-	~cLuxDissolveEntity();
+    cLuxDissolveEntity(cLuxMap *apMap);
 
-	cLuxMap *mpMap;
-	cMeshEntity *mpEntity;
-	float mfFadeSpeed;
-	float mfAlpha;
+    ~cLuxDissolveEntity();
+
+    cLuxMap *mpMap;
+    cMeshEntity *mpEntity;
+    float mfFadeSpeed;
+    float mfAlpha;
 };
 
-typedef std::list<cLuxDissolveEntity*> tLuxDissolveEntityList;
+typedef std::list<cLuxDissolveEntity *> tLuxDissolveEntityList;
 typedef tLuxDissolveEntityList::iterator tLuxDissolveEntityListIt;
 
 //----------------------------------------------
 
-class cLuxMap
-{
-friend class cLuxDissolveEntity;
-friend class cLuxSavedMap;
-friend class cLuxSavedGameMap;
-public:	
-	cLuxMap(const tString& asName);
-	~cLuxMap();
+class cLuxMap {
+    friend class cLuxDissolveEntity;
 
-	const tString& GetName(){ return msName;}
-	const tString& GetFileName(){ return msFileName;}
+    friend class cLuxSavedMap;
 
-	void SetDisplayNameEntry(const tString& asEntry){ msDisplayNameEntry = asEntry;}
-	const tString& GetDisplayNameEntry(){ return msDisplayNameEntry;}
+    friend class cLuxSavedGameMap;
 
-	bool LoadFromFile(const tString & asFile, bool abLoadEntities);
-	
-	void AfterWorldLoadEntitySetup();
-	
-	void OnEnter(bool abRunScript, bool abFirstTime);
-	void OnLeave(bool abRunScript);
-	
-	void Update(float afTimeStep);
+public:
+    cLuxMap(const tString &asName);
 
-	void RunScript(const tString& asCommand);
-	bool RecompileScript(tString *apOutput);
+    ~cLuxMap();
 
-	void OnRenderSolid(cRendererCallbackFunctions* apFunctions);
-	
-	cWorld* GetWorld(){ return mpWorld; }
-	iPhysicsWorld* GetPhysicsWorld(){ return mpPhysicsWorld; }
+    const tString &GetName() { return msName; }
 
-	void PlacePlayerAtStartPos(const tString& asPosName);
+    const tString &GetFileName() { return msFileName; }
 
-	void CreateEntity(const tString& asName, const tString& asFile, const cMatrixf& a_mtxTransform, const cVector3f& avScale);
+    void SetDisplayNameEntry(const tString &asEntry) { msDisplayNameEntry = asEntry; }
 
-	/**
-	 * This also destroys timer and light connections
-	 */
-	void DestroyAllEntities();
+    const tString &GetDisplayNameEntry() { return msDisplayNameEntry; }
 
-	void AddEntity(iLuxEntity *apEntity);
+    bool LoadFromFile(const tString &asFile, bool abLoadEntities);
 
-	/**
-	 * Do not call this when IsDeletingAllWorldEntities is true!
-	 */
-	void DestroyEntity(iLuxEntity *apEntity);
-	iLuxEntity *GetEntityByName(const tString& asName, eLuxEntityType aType=eLuxEntityType_LastEnum, int alSubType=-1);
-	iLuxEntity *GetEntityByID(int alID, eLuxEntityType aType=eLuxEntityType_LastEnum, int alSubType=-1);
-	iLuxEntity *GetLatestEntity(){ return mpLatestAddedEntity;}
-	void ResetLatestEntity(){ mpLatestAddedEntity=NULL;}
-	bool EntityExists(iLuxEntity *apEntity);
-	cLuxEntityIterator GetEntityIterator();
-	cLuxEnemyIterator GetEnemyIterator();
+    void AfterWorldLoadEntitySetup();
 
-	void BroadcastEnemyMessage(eLuxEnemyMessage aType, bool abHasPosition, const cVector3f& avPos, float afRadius,
-								float afTime=0, bool abLocalScope=false, const cVector3f& avX=0,float afX=0, int alX=0);
-	void BroadcastEnemySoundMessage(const cVector3f& avPos, float afVolume ,float afMinDist, float afMaxDist);
-	/**
-	 * Gets number of enemies that are in range of player
-	 */
-	int GetInRangeEnemyNum();
+    void OnEnter(bool abRunScript, bool abFirstTime);
 
-	bool AINodeIsUsedAsGoal(cAINode *apNode);
-	bool DoorIsBroken(int alID);
-	bool DoorIsClosed(int alID);
-	/**
-	* -1 = angle is close to 0, 1=angle is 70% or higher of max, 0=inbetween -1 and 1.
-	*/
-	int GetDoorState(int alID);
+    void OnLeave(bool abRunScript);
 
-	bool BodyIsInDetachableStickyArea(iPhysicsBody* apBody);
-	bool DetachBodyFromStickyArea(iPhysicsBody* apBody);
+    void Update(float afTimeStep);
+
+    void RunScript(const tString &asCommand);
+
+    bool RecompileScript(tString *apOutput);
+
+    void OnRenderSolid(cRendererCallbackFunctions *apFunctions);
+
+    cWorld *GetWorld() { return mpWorld; }
+
+    iPhysicsWorld *GetPhysicsWorld() { return mpPhysicsWorld; }
+
+    void PlacePlayerAtStartPos(const tString &asPosName);
+
+    void CreateEntity(const tString &asName, const tString &asFile, const cMatrixf &a_mtxTransform,
+                      const cVector3f &avScale);
+
+    /**
+     * This also destroys timer and light connections
+     */
+    void DestroyAllEntities();
+
+    void AddEntity(iLuxEntity *apEntity);
+
+    /**
+     * Do not call this when IsDeletingAllWorldEntities is true!
+     */
+    void DestroyEntity(iLuxEntity *apEntity);
+
+    iLuxEntity *
+    GetEntityByName(const tString &asName, eLuxEntityType aType = eLuxEntityType_LastEnum, int alSubType = -1);
+
+    iLuxEntity *GetEntityByID(int alID, eLuxEntityType aType = eLuxEntityType_LastEnum, int alSubType = -1);
+
+    iLuxEntity *GetLatestEntity() { return mpLatestAddedEntity; }
+
+    void ResetLatestEntity() { mpLatestAddedEntity = NULL; }
+
+    bool EntityExists(iLuxEntity *apEntity);
+
+    cLuxEntityIterator GetEntityIterator();
+
+    cLuxEnemyIterator GetEnemyIterator();
+
+    void BroadcastEnemyMessage(eLuxEnemyMessage aType, bool abHasPosition, const cVector3f &avPos, float afRadius,
+                               float afTime = 0, bool abLocalScope = false, const cVector3f &avX = 0, float afX = 0,
+                               int alX = 0);
+
+    void BroadcastEnemySoundMessage(const cVector3f &avPos, float afVolume, float afMinDist, float afMaxDist);
+
+    /**
+     * Gets number of enemies that are in range of player
+     */
+    int GetInRangeEnemyNum();
+
+    bool AINodeIsUsedAsGoal(cAINode *apNode);
+
+    bool DoorIsBroken(int alID);
+
+    bool DoorIsClosed(int alID);
+
+    /**
+    * -1 = angle is close to 0, 1=angle is 70% or higher of max, 0=inbetween -1 and 1.
+    */
+    int GetDoorState(int alID);
+
+    bool BodyIsInDetachableStickyArea(iPhysicsBody *apBody);
+
+    bool DetachBodyFromStickyArea(iPhysicsBody *apBody);
 
     void DestroyAllRopes();
 
-	iPhysicsBody* GetBodyFromEntityBodyIdPair(const cLuxIdPair &aIdPair);
+    iPhysicsBody *GetBodyFromEntityBodyIdPair(const cLuxIdPair &aIdPair);
 
-	bool CheckCollision(iLuxCollideCallbackContainer *apCollider1, iLuxCollideCallbackContainer* apCollider2);
+    bool CheckCollision(iLuxCollideCallbackContainer *apCollider1, iLuxCollideCallbackContainer *apCollider2);
 
-	void AddPlayerStart(cLuxNode_PlayerStart *apNode);
-	cLuxNode_PlayerStart *GetPlayerStart(const tString & asName);
-	cLuxNode_PlayerStart *GetFirstPlayerStart();
-	int GetPlayerStartNodeNum(){ return (int)mvPlayerStartNodes.size();}
-	cLuxNode_PlayerStart *GetPlayerStartNode(int alIdx){ return mvPlayerStartNodes[alIdx];}
+    void AddPlayerStart(cLuxNode_PlayerStart *apNode);
 
-	void AddPosNode(cLuxNode_Pos *apNode);
-	cLuxNode_Pos *GetPosNode(const tString & asName);
+    cLuxNode_PlayerStart *GetPlayerStart(const tString &asName);
 
-	void SetCheckPoint(const tString& asName, const tString& asStartPos, const tString& asCallback);
-	void LoadCheckPoint();
-    
-	void AddUseItemCallback(	const tString& asName, const tString& asItem, const tString& asEntity,
-								const tString& asFunction, bool abAutoCallback);
-	void RemoveUseItemCallback( const tString& asName);
+    cLuxNode_PlayerStart *GetFirstPlayerStart();
 
-	/**
-	 * if asName is not "" it can be used as a safty check so it really is the correct callback that is destroyed!
-	 */
-	void RemoveUseItemCallback( cLuxUseItemCallback * apCallback, const tString& asName="");
-	cLuxUseItemCallback* GetUseItemCallback(const tString& asItem, const tString& asEntity);
+    int GetPlayerStartNodeNum() { return (int) mvPlayerStartNodes.size(); }
 
-	void AddTimer(const tString& asName, float afTime, const tString& asFunction);
-	void RemoveTimer(const tString& asName);
-	cLuxEventTimer* GetTimer(const tString& asName);
-	
-	void AddDissolveEntity(cMeshEntity *apMeshEntity, float afTime);
+    cLuxNode_PlayerStart *GetPlayerStartNode(int alIdx) { return mvPlayerStartNodes[alIdx]; }
 
-	cLuxLampLightConnection* AddLampLightConnection(cLuxProp_Lamp *apLamp, iLight *apLight, float afAmount, bool abUseOnColor, bool abUseSpec);
-	cLuxLampLightConnection* GetLampLightConnection(iLight *apLight);
+    void AddPosNode(cLuxNode_Pos *apNode);
 
-	cLuxScriptVar* GetVar(const tString &asName);
+    cLuxNode_Pos *GetPosNode(const tString &asName);
 
-	bool IsDeletingAllWorldEntities(){ return mbDeletingAllWorldEntities;}
+    void SetCheckPoint(const tString &asName, const tString &asStartPos, const tString &asCallback);
 
-	//////////////////////////
-	// Properties	
-	void SetNumberOfQuests(int alX){mlNumberOfQuests = alX;}
-	int GetNumberOfQuests(){ return mlNumberOfQuests;}
-	void AddCompletionAmount(int alAmount, float afDelay=0.0f);
+    void LoadCheckPoint();
 
-	void SetLanternLitCallback(const tString& asCallback){ msLanternLitCallback = asCallback;}
-	const tString& GetLanternLitCallback(){ return msLanternLitCallback;}
-	
-	
+    void AddUseItemCallback(const tString &asName, const tString &asItem, const tString &asEntity,
+                            const tString &asFunction, bool abAutoCallback);
+
+    void RemoveUseItemCallback(const tString &asName);
+
+    /**
+     * if asName is not "" it can be used as a safty check so it really is the correct callback that is destroyed!
+     */
+    void RemoveUseItemCallback(cLuxUseItemCallback *apCallback, const tString &asName = "");
+
+    cLuxUseItemCallback *GetUseItemCallback(const tString &asItem, const tString &asEntity);
+
+    void AddTimer(const tString &asName, float afTime, const tString &asFunction);
+
+    void RemoveTimer(const tString &asName);
+
+    cLuxEventTimer *GetTimer(const tString &asName);
+
+    void AddDissolveEntity(cMeshEntity *apMeshEntity, float afTime);
+
+    cLuxLampLightConnection *
+    AddLampLightConnection(cLuxProp_Lamp *apLamp, iLight *apLight, float afAmount, bool abUseOnColor, bool abUseSpec);
+
+    cLuxLampLightConnection *GetLampLightConnection(iLight *apLight);
+
+    cLuxScriptVar *GetVar(const tString &asName);
+
+    bool IsDeletingAllWorldEntities() { return mbDeletingAllWorldEntities; }
+
+    //////////////////////////
+    // Properties
+    void SetNumberOfQuests(int alX) { mlNumberOfQuests = alX; }
+
+    int GetNumberOfQuests() { return mlNumberOfQuests; }
+
+    void AddCompletionAmount(int alAmount, float afDelay = 0.0f);
+
+    void SetLanternLitCallback(const tString &asCallback) { msLanternLitCallback = asCallback; }
+
+    const tString &GetLanternLitCallback() { return msLanternLitCallback; }
+
+
 private:
-	void CalculateTotalCompletionAmount();
+    void CalculateTotalCompletionAmount();
 
-	int GetFreeEntityID();
+    int GetFreeEntityID();
 
-	void UpdateToBeDesotroyedEntities(bool abUseCallbacks);
-	void UpdateTimers(float afTimeStep);
-	void UpdateDissolveEntities(float afTimeStep);
-	void UpdateLampLightConnections(float afTimeStep);
-	void UpdateCheckCommentaryIconActive(float afTimeStep);
+    void UpdateToBeDesotroyedEntities(bool abUseCallbacks);
 
-	tString msName;
-	tString msFileName;
+    void UpdateTimers(float afTimeStep);
 
-	tString msDisplayNameEntry;
+    void UpdateDissolveEntities(float afTimeStep);
 
-	bool mbUpdatingTimers;
+    void UpdateLampLightConnections(float afTimeStep);
 
-	bool mbDeletingAllWorldEntities;
-	
-	cEngine *mpEngine;
-	cWorld *mpWorld;
-	iPhysicsWorld *mpPhysicsWorld;
+    void UpdateCheckCommentaryIconActive(float afTimeStep);
 
-	iScript *mpScript;
+    tString msName;
+    tString msFileName;
 
-	tString msLanternLitCallback;
+    tString msDisplayNameEntry;
 
-	int mlNumberOfQuests;
-	int mlTotalCompletionAmount;
-	int mlCurrentCompletionAmount;
+    bool mbUpdatingTimers;
 
-	bool mbCommentaryIconsActive;
+    bool mbDeletingAllWorldEntities;
 
-	tString msCheckPointName;
-	tString msCheckPointStartPos;
-	tString msCheckPointCallback;
-	int mlCheckPointCount;
-	tString msCheckPointMusic;
-	int mlCheckPointMusicPrio;
-	bool mbCheckPointMusicResume;
-	float mfCheckPointMusicVolume;
+    cEngine *mpEngine;
+    cWorld *mpWorld;
+    iPhysicsWorld *mpPhysicsWorld;
 
-	tLuxEventTimerList mlstTimers;
+    iScript *mpScript;
 
-	tLuxScriptVarMap m_mapVars;
-	
-	tLuxEntityNameMap m_mapEntitiesByName;
-	tLuxEntityIDMap m_mapEntitiesByID;
-	tLuxEntityList mlstEntities;
-	tLuxEnemyList mlstEnemies;
-	tLuxEntityList mlstToBeDestroyedEntities;
-	iLuxEntity *mpLatestAddedEntity;
-	tLuxArea_StickyList mlstStickyAreas;
+    tString msLanternLitCallback;
 
-	tLuxPlayerStartMap m_mapPlayerStartNodes;
-	std::vector<cLuxNode_PlayerStart*> mvPlayerStartNodes;
+    int mlNumberOfQuests;
+    int mlTotalCompletionAmount;
+    int mlCurrentCompletionAmount;
 
-	tLuxPosNodeMap m_mapPosNodes;
+    bool mbCommentaryIconsActive;
 
-	tLuxUseItemCallbackList mlstUseItemCallbacks;
+    tString msCheckPointName;
+    tString msCheckPointStartPos;
+    tString msCheckPointCallback;
+    int mlCheckPointCount;
+    tString msCheckPointMusic;
+    int mlCheckPointMusicPrio;
+    bool mbCheckPointMusicResume;
+    float mfCheckPointMusicVolume;
 
-	tLuxDissolveEntityList mlstDissolveEntities;
+    tLuxEventTimerList mlstTimers;
 
-	tLuxLampLightConnectionList mlstLampLightConnections;
+    tLuxScriptVarMap m_mapVars;
+
+    tLuxEntityNameMap m_mapEntitiesByName;
+    tLuxEntityIDMap m_mapEntitiesByID;
+    tLuxEntityList mlstEntities;
+    tLuxEnemyList mlstEnemies;
+    tLuxEntityList mlstToBeDestroyedEntities;
+    iLuxEntity *mpLatestAddedEntity;
+    tLuxArea_StickyList mlstStickyAreas;
+
+    tLuxPlayerStartMap m_mapPlayerStartNodes;
+    std::vector<cLuxNode_PlayerStart *> mvPlayerStartNodes;
+
+    tLuxPosNodeMap m_mapPosNodes;
+
+    tLuxUseItemCallbackList mlstUseItemCallbacks;
+
+    tLuxDissolveEntityList mlstDissolveEntities;
+
+    tLuxLampLightConnectionList mlstLampLightConnections;
 };
 
 //----------------------------------------------

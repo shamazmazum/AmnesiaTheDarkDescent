@@ -54,5 +54,5 @@ namespace hpl {
 		cGraphics* mpGraphics;
 	};
 
-};
+}
 #endif // HPL_MESH_LOADER_HANDLER_H

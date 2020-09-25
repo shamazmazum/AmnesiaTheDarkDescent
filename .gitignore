@@ -3,6 +3,8 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+.idea
+
 *.exe
 HPL2_2010.lib
 
@@ -34,6 +36,8 @@ bld/
 [Ll]og/
 [Ll]ogs/
 amnesia/_temp/
+amnesia/src/*.bin*
+amnesia/src/core2
 
 # CMake build files
 CMakeFiles/

@@ -593,6 +593,6 @@ namespace hpl {
 		return sPath;
 	}
 
-};
+}
 
 

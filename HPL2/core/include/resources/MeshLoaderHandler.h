@@ -56,5 +56,5 @@ namespace hpl {
 		cScene* mpScene;
 	};
 
-};
+}
 #endif // HPL_MESH_LOADER_HANDLER_H

@@ -28,85 +28,74 @@
 
 //-----------------------------------------------------------------------
 
-cLuxModelCache::cLuxModelCache()
-{
+cLuxModelCache::cLuxModelCache() {
 
 }
 
 //-----------------------------------------------------------------------
 
-cLuxModelCache::~cLuxModelCache()
-{
-	Destroy();
+cLuxModelCache::~cLuxModelCache() {
+    Destroy();
 }
 
 //-----------------------------------------------------------------------
 
-void cLuxModelCache::Create()
-{
-	if(gpBase->mpMapHandler->GetCurrentMap()==NULL) return;
+void cLuxModelCache::Create() {
+    if (gpBase->mpMapHandler->GetCurrentMap() == NULL) return;
 
-	///////////////////////////////
-	// Textures
-	cResourceBaseIterator texIt = gpBase->mpEngine->GetResources()->GetTextureManager()->GetResourceBaseIterator();
-	while(texIt.HasNext())
-	{
-		iTexture *pTex = static_cast<iTexture*>(texIt.Next());
+    ///////////////////////////////
+    // Textures
+    cResourceBaseIterator texIt = gpBase->mpEngine->GetResources()->GetTextureManager()->GetResourceBaseIterator();
+    while (texIt.HasNext()) {
+        iTexture *pTex = static_cast<iTexture *>(texIt.Next());
         pTex->IncUserCount();
-		mlstTextureCache.push_back(pTex);
-	}
+        mlstTextureCache.push_back(pTex);
+    }
 
-	///////////////////////////////
-	// Meshes and animations
-	cLuxEntityIterator entIt = gpBase->mpMapHandler->GetCurrentMap()->GetEntityIterator();
-	while(entIt.HasNext())
-	{
-		iLuxEntity *pEntity = entIt.Next();
+    ///////////////////////////////
+    // Meshes and animations
+    cLuxEntityIterator entIt = gpBase->mpMapHandler->GetCurrentMap()->GetEntityIterator();
+    while (entIt.HasNext()) {
+        iLuxEntity *pEntity = entIt.Next();
 
-		//Add mesh to list and increase user count.
-		if(pEntity->GetMeshEntity())
-		{
-			cMeshEntity *pMeshEntity = pEntity->GetMeshEntity();
-			cMesh *pMesh = pEntity->GetMeshEntity()->GetMesh();
+        //Add mesh to list and increase user count.
+        if (pEntity->GetMeshEntity()) {
+            cMeshEntity *pMeshEntity = pEntity->GetMeshEntity();
+            cMesh *pMesh = pEntity->GetMeshEntity()->GetMesh();
 
-			pMesh->IncUserCount();
-			mlstMeshCache.push_back(pMesh);
+            pMesh->IncUserCount();
+            mlstMeshCache.push_back(pMesh);
 
-			for(int i=0; i<pMeshEntity->GetAnimationStateNum(); ++i)
-			{
-				cAnimationState *pAnimState =pMeshEntity->GetAnimationState(i);
-				if(pAnimState->DataIsInMeshFile()) continue; //Data will be saved with mesh!
+            for (int i = 0; i < pMeshEntity->GetAnimationStateNum(); ++i) {
+                cAnimationState *pAnimState = pMeshEntity->GetAnimationState(i);
+                if (pAnimState->DataIsInMeshFile()) continue; //Data will be saved with mesh!
 
-				cAnimation *pAnim = pAnimState->GetAnimation();
+                cAnimation *pAnim = pAnimState->GetAnimation();
 
-				pAnim->IncUserCount();
-				mlstAnimationCache.push_back(pAnim);
-			}
-		}
-	}
+                pAnim->IncUserCount();
+                mlstAnimationCache.push_back(pAnim);
+            }
+        }
+    }
 }
 //-----------------------------------------------------------------------
 
-void cLuxModelCache::Destroy()
-{
-	for(std::list<cMesh*>::iterator it = mlstMeshCache.begin(); it != mlstMeshCache.end(); ++it)
-	{
-		gpBase->mpEngine->GetResources()->GetMeshManager()->Destroy(*it);
-	}
-    
-	for(std::list<cAnimation*>::iterator it = mlstAnimationCache.begin(); it != mlstAnimationCache.end(); ++it)
-	{
-		gpBase->mpEngine->GetResources()->GetAnimationManager()->Destroy(*it);
-	}
+void cLuxModelCache::Destroy() {
+    for (std::list<cMesh *>::iterator it = mlstMeshCache.begin(); it != mlstMeshCache.end(); ++it) {
+        gpBase->mpEngine->GetResources()->GetMeshManager()->Destroy(*it);
+    }
 
-	for(std::list<iTexture*>::iterator it = mlstTextureCache.begin(); it != mlstTextureCache.end(); ++it)
-	{
-		gpBase->mpEngine->GetResources()->GetTextureManager()->Destroy(*it);
-	}
+    for (std::list<cAnimation *>::iterator it = mlstAnimationCache.begin(); it != mlstAnimationCache.end(); ++it) {
+        gpBase->mpEngine->GetResources()->GetAnimationManager()->Destroy(*it);
+    }
 
-	mlstMeshCache.clear();
-	mlstAnimationCache.clear();
-	mlstTextureCache.clear();
+    for (std::list<iTexture *>::iterator it = mlstTextureCache.begin(); it != mlstTextureCache.end(); ++it) {
+        gpBase->mpEngine->GetResources()->GetTextureManager()->Destroy(*it);
+    }
+
+    mlstMeshCache.clear();
+    mlstAnimationCache.clear();
+    mlstTextureCache.clear();
 }
 
 //-----------------------------------------------------------------------
@@ -117,27 +106,25 @@ void cLuxModelCache::Destroy()
 
 //-----------------------------------------------------------------------
 
-cLuxHelpFuncs::cLuxHelpFuncs() : iLuxUpdateable("LuxHelpFuncs")
-{
-	mpSet = gpBase->mpEngine->GetGui()->CreateSet("DirectToScree", NULL);
-	mpSet->SetActive(false);
-	mpSet->SetVirtualSize(gpBase->mvHudVirtualSize,-1000, 1000, gpBase->mvHudVirtualOffset);
+cLuxHelpFuncs::cLuxHelpFuncs() : iLuxUpdateable("LuxHelpFuncs") {
+    mpSet = gpBase->mpEngine->GetGui()->CreateSet("DirectToScree", NULL);
+    mpSet->SetActive(false);
+    mpSet->SetVirtualSize(gpBase->mvHudVirtualSize, -1000, 1000, gpBase->mvHudVirtualOffset);
 
-	mpLowLevelGfx = gpBase->mpEngine->GetGraphics()->GetLowLevel();
+    mpLowLevelGfx = gpBase->mpEngine->GetGraphics()->GetLowLevel();
 
-	mpFontDefault = NULL;
+    mpFontDefault = NULL;
 
-	mfTextDuration_StartTime = gpBase->mpMenuCfg->GetFloat("General", "TextDuration_StartTime",0);
-	mfTextDuration_MinTime = gpBase->mpMenuCfg->GetFloat("General", "TextDuration_MinTime",0);
-	mfTextDuration_CharTime = gpBase->mpMenuCfg->GetFloat("General", "TextDuration_CharTime",0);
+    mfTextDuration_StartTime = gpBase->mpMenuCfg->GetFloat("General", "TextDuration_StartTime", 0);
+    mfTextDuration_MinTime = gpBase->mpMenuCfg->GetFloat("General", "TextDuration_MinTime", 0);
+    mfTextDuration_CharTime = gpBase->mpMenuCfg->GetFloat("General", "TextDuration_CharTime", 0);
 
-	Reset();
+    Reset();
 }
 
 //-----------------------------------------------------------------------
 
-cLuxHelpFuncs::~cLuxHelpFuncs()
-{
+cLuxHelpFuncs::~cLuxHelpFuncs() {
 }
 
 //-----------------------------------------------------------------------
@@ -148,158 +135,140 @@ cLuxHelpFuncs::~cLuxHelpFuncs()
 
 //-----------------------------------------------------------------------
 
-void cLuxHelpFuncs::LoadFonts()
-{
-	mpFontDefault = LoadFont("game_default.fnt");
+void cLuxHelpFuncs::LoadFonts() {
+    mpFontDefault = LoadFont("game_default.fnt");
 }
 
 //-----------------------------------------------------------------------
 
-bool cLuxHelpFuncs::PlayGuiSoundData(const tString& asName,eSoundEntryType aDestType, float afVolMul, eSoundEntityType aSoundType, bool abSkipPreviousRandom,
-									cLuxSoundExtraData *apOutputData)
-{
-	if(asName=="") return false;
+bool cLuxHelpFuncs::PlayGuiSoundData(const tString &asName, eSoundEntryType aDestType, float afVolMul,
+                                     eSoundEntityType aSoundType, bool abSkipPreviousRandom,
+                                     cLuxSoundExtraData *apOutputData) {
+    if (asName == "") return false;
 
-	cSoundHandler *pSoundHandler = gpBase->mpEngine->GetSound()->GetSoundHandler();
-	cResources *pResources = gpBase->mpEngine->GetResources();
-	
-	cSoundEntityData *pSoundData = pResources->GetSoundEntityManager()->CreateSoundEntity(asName);
-	if(pSoundData == NULL) return false;
-	
-	tString sSoundName = pSoundData->GetRandomSoundName(aSoundType, abSkipPreviousRandom);
-	cSoundEntry *pSound = pSoundHandler->PlayGui(sSoundName, false, pSoundData->GetVolume()*afVolMul,cVector3f(0,0,1),aDestType);
+    cSoundHandler *pSoundHandler = gpBase->mpEngine->GetSound()->GetSoundHandler();
+    cResources *pResources = gpBase->mpEngine->GetResources();
 
-	if(apOutputData)
-	{
-		apOutputData->mfMinDistance = pSoundData->GetMinDistance();
-		apOutputData->mfMaxDistance = pSoundData->GetMaxDistance();
-		apOutputData->mfVolume = pSoundData->GetVolume();
-		apOutputData->mpSoundEntry = pSound;
-	}
+    cSoundEntityData *pSoundData = pResources->GetSoundEntityManager()->CreateSoundEntity(asName);
+    if (pSoundData == NULL) return false;
 
-	return true;
+    tString sSoundName = pSoundData->GetRandomSoundName(aSoundType, abSkipPreviousRandom);
+    cSoundEntry *pSound = pSoundHandler->PlayGui(sSoundName, false, pSoundData->GetVolume() * afVolMul,
+                                                 cVector3f(0, 0, 1), aDestType);
+
+    if (apOutputData) {
+        apOutputData->mfMinDistance = pSoundData->GetMinDistance();
+        apOutputData->mfMaxDistance = pSoundData->GetMaxDistance();
+        apOutputData->mfVolume = pSoundData->GetVolume();
+        apOutputData->mpSoundEntry = pSound;
+    }
+
+    return true;
 }
 
 //-----------------------------------------------------------------------
 
-void cLuxHelpFuncs::DrawSetToScreen(bool abClearScreen, const cColor& aCol, cGuiSet* apSet)
-{
-	///////////////////////////
-	// Clear screen
-	if(abClearScreen)
-	{
-		mpLowLevelGfx->SetClearColor(aCol);
-        mpLowLevelGfx->ClearFrameBuffer(eClearFrameBufferFlag_Color);		
-	}
+void cLuxHelpFuncs::DrawSetToScreen(bool abClearScreen, const cColor &aCol, cGuiSet *apSet) {
+    ///////////////////////////
+    // Clear screen
+    if (abClearScreen) {
+        mpLowLevelGfx->SetClearColor(aCol);
+        mpLowLevelGfx->ClearFrameBuffer(eClearFrameBufferFlag_Color);
+    }
 
-	///////////////////////////
-	// Draw set
-	cGuiSet* pSet = mpSet;
-	if(apSet!=NULL)
-		pSet = apSet;
-		
-	pSet->Render(NULL);
-	pSet->ClearRenderObjects();
-	
-	mpLowLevelGfx->FlushRendering();
-	mpLowLevelGfx->SwapBuffers();
+    ///////////////////////////
+    // Draw set
+    cGuiSet *pSet = mpSet;
+    if (apSet != NULL)
+        pSet = apSet;
+
+    pSet->Render(NULL);
+    pSet->ClearRenderObjects();
+
+    mpLowLevelGfx->FlushRendering();
+    mpLowLevelGfx->SwapBuffers();
 }
 
 //-----------------------------------------------------------------------
 
-void cLuxHelpFuncs::CleanupData()
-{
-	//Destroy particle systems and sounds that are not in use.
-	gpBase->mpEngine->GetResources()->GetSoundManager()->DestroyUnused(20);
-	gpBase->mpEngine->GetResources()->GetParticleManager()->DestroyUnused(10);
+void cLuxHelpFuncs::CleanupData() {
+    //Destroy particle systems and sounds that are not in use.
+    gpBase->mpEngine->GetResources()->GetSoundManager()->DestroyUnused(20);
+    gpBase->mpEngine->GetResources()->GetParticleManager()->DestroyUnused(10);
 
 }
 
 //-----------------------------------------------------------------------
 
-tWString cLuxHelpFuncs::ParseString(const tWString& asInput)
-{
-	tWString sOutput=_W("");
-	tWString sCommand =_W("");
-	bool bParseVar = false;
+tWString cLuxHelpFuncs::ParseString(const tWString &asInput) {
+    tWString sOutput = _W("");
+    tWString sCommand = _W("");
+    bool bParseVar = false;
 
-    for(size_t i=0; i<asInput.size(); ++i)
-	{
-		wchar_t lChar = asInput[i];
-		
-		////////////////////////
-		// Parse variable
-		if(bParseVar)
-		{
-			// Add character to command
-			if( (lChar >= 'a' && lChar <= 'z') || (lChar >= 'A' && lChar <= 'Z') )
-			{
-				sCommand += lChar;
-			}
-			//Parse command
-			else
-			{
-				sOutput += ParseStringCommand(sCommand);
-				sOutput += lChar;
-				bParseVar = false;
-			}
+    for (size_t i = 0; i < asInput.size(); ++i) {
+        wchar_t lChar = asInput[i];
 
-		}
-		////////////////////////
-		// Normal parsing
-		else
-		{
-			if(lChar == '$')
-			{
+        ////////////////////////
+        // Parse variable
+        if (bParseVar) {
+            // Add character to command
+            if ((lChar >= 'a' && lChar <= 'z') || (lChar >= 'A' && lChar <= 'Z')) {
+                sCommand += lChar;
+            }
+                //Parse command
+            else {
+                sOutput += ParseStringCommand(sCommand);
+                sOutput += lChar;
+                bParseVar = false;
+            }
+
+        }
+            ////////////////////////
+            // Normal parsing
+        else {
+            if (lChar == '$') {
                 bParseVar = true;
-				sCommand = _W("");
-			}
-			else
-			{
-				sOutput += lChar;
-			}
-		}
-	}
+                sCommand = _W("");
+            } else {
+                sOutput += lChar;
+            }
+        }
+    }
 
-	return sOutput;
+    return sOutput;
 }
 
 //-----------------------------------------------------------------------
 
-float cLuxHelpFuncs::GetStringDuration(const tWString& asStr)
-{
-	float fTime = mfTextDuration_StartTime + (float)asStr.length() * mfTextDuration_CharTime;
-	if(fTime < mfTextDuration_MinTime) fTime = mfTextDuration_MinTime;
-	return fTime;
+float cLuxHelpFuncs::GetStringDuration(const tWString &asStr) {
+    float fTime = mfTextDuration_StartTime + (float) asStr.length() * mfTextDuration_CharTime;
+    if (fTime < mfTextDuration_MinTime) fTime = mfTextDuration_MinTime;
+    return fTime;
 }
 
 //-----------------------------------------------------------------------
 
-void cLuxHelpFuncs::RenderBackgroundScreen(bool abDrawFullHUD)
-{
-	gpBase->mpMapHandler->GetViewport()->SetVisible(true);
-	gpBase->mpGameHudSet->ClearRenderObjects();
+void cLuxHelpFuncs::RenderBackgroundScreen(bool abDrawFullHUD) {
+    gpBase->mpMapHandler->GetViewport()->SetVisible(true);
+    gpBase->mpGameHudSet->ClearRenderObjects();
 
-	if(abDrawFullHUD==false)
-	{
-		gpBase->mpPlayer->RunHelperMessage(eUpdateableMessage_OnDraw,0.0001f);
-	}
-	else
-	{
-		gpBase->mpPlayer->OnDraw(0.01f);
-		gpBase->mpEffectHandler->OnDraw(0.01f);
-	}
-	
+    if (!abDrawFullHUD) {
+        gpBase->mpPlayer->RunHelperMessage(eUpdateableMessage_OnDraw, 0.0001f);
+    } else {
+        gpBase->mpPlayer->OnDraw(0.01f);
+        gpBase->mpEffectHandler->OnDraw(0.01f);
+    }
+
     tFlag lFlags = tSceneRenderFlag_World | tSceneRenderFlag_PostEffects;
-	if(abDrawFullHUD) lFlags |= tSceneRenderFlag_Gui;
-	
-	gpBase->mpEngine->GetScene()->Render(0.0001f, lFlags);
-	
-	if(abDrawFullHUD==false)
-		gpBase->mpGameHudSet->Render(NULL);
+    if (abDrawFullHUD) lFlags |= tSceneRenderFlag_Gui;
 
-	gpBase->mpGameHudSet->ClearRenderObjects();
-	gpBase->mpMapHandler->GetViewport()->SetVisible(false);
+    gpBase->mpEngine->GetScene()->Render(0.0001f, lFlags);
+
+    if (abDrawFullHUD == false)
+        gpBase->mpGameHudSet->Render(NULL);
+
+    gpBase->mpGameHudSet->ClearRenderObjects();
+    gpBase->mpMapHandler->GetViewport()->SetVisible(false);
 }
 
 //-----------------------------------------------------------------------
@@ -312,101 +281,96 @@ void cLuxHelpFuncs::RenderBackgroundScreen(bool abDrawFullHUD)
 //-----------------------------------------------------------------------
 
 
-tWString cLuxHelpFuncs::ParseStringCommand(const tWString& asCommand)
-{
-	tWString sPrefix = cString::SubW(asCommand, 0, 3);
-	
-	////////////////////////////////
-	// Button
-	if(sPrefix == _W("But") )
-	{
-		tString sAction = cString::To8Char(cString::SubW(asCommand, 3));
+tWString cLuxHelpFuncs::ParseStringCommand(const tWString &asCommand) {
+    tWString sPrefix = cString::SubW(asCommand, 0, 3);
 
-		///////////////////////////
-		// Get action
+    ////////////////////////////////
+    // Button
+    if (sPrefix == _W("But")) {
+        tString sAction = cString::To8Char(cString::SubW(asCommand, 3));
+
+        ///////////////////////////
+        // Get action
         cAction *pAction = gpBase->mpEngine->GetInput()->GetAction(sAction);
-		if(pAction==NULL || pAction->GetSubActionNum()==0)
-		{
-			Error("String parser could not find action '%s' invalid!\n", sAction.c_str());
-			return _W("BADACTION");			
-		}
+        if (pAction == NULL || pAction->GetSubActionNum() == 0) {
+            Error("String parser could not find action '%s' invalid!\n", sAction.c_str());
+            return _W("BADACTION");
+        }
 
-		///////////////////////////
-		// Create string from action
-		tWString sOutput = _W("");
-		for(size_t i=0; i<pAction->GetSubActionNum(); ++i)
-		{
-			iSubAction *pSubAction = pAction->GetSubAction(i);
-			if(i!=0) sOutput += _W(" / ");
+        ///////////////////////////
+        // Create string from action
+        tWString sOutput = _W("");
+        for (size_t i = 0; i < pAction->GetSubActionNum(); ++i) {
+            iSubAction *pSubAction = pAction->GetSubAction(i);
+            if (i != 0) sOutput += _W(" / ");
 
 #ifdef USE_GAMEPAD
-			tString sType = pSubAction->GetInputType();
-			////////////
-			// 
-			if(sType == "GamepadButton"
-			|| sType == "GamepadAxis"
-			|| sType == "GamepadHat")
-			{
-				tWString sConverted;
+            tString sType = pSubAction->GetInputType();
+            ////////////
+            //
+            if(sType == "GamepadButton"
+            || sType == "GamepadAxis"
+            || sType == "GamepadHat")
+            {
+                tWString sConverted;
 
-				///////////
-				// Add a new format containing the gamepad type and button
-				sOutput += _W("$");
+                ///////////
+                // Add a new format containing the gamepad type and button
+                sOutput += _W("$");
 
-				//////////
-				// Convert the type to wstring and append
-				size_t lSize = sType.length() + 1;
-				sConverted.resize(lSize);
-				std::copy(sType.begin(), sType.end(), sConverted.begin());
+                //////////
+                // Convert the type to wstring and append
+                size_t lSize = sType.length() + 1;
+                sConverted.resize(lSize);
+                std::copy(sType.begin(), sType.end(), sConverted.begin());
 
-				sOutput += cString::SubW(sConverted, 0, lSize-1);
-				sOutput += _W(".");
+                sOutput += cString::SubW(sConverted, 0, lSize-1);
+                sOutput += _W(".");
 
-				//////////
-				// Convert name to wstring and append
-				tString sName = pSubAction->GetInputName();
-				lSize = sName.length() + 1;
-				sConverted.resize(lSize);
-				std::copy(sName.begin(), sName.end(), sConverted.begin());
+                //////////
+                // Convert name to wstring and append
+                tString sName = pSubAction->GetInputName();
+                lSize = sName.length() + 1;
+                sConverted.resize(lSize);
+                std::copy(sName.begin(), sName.end(), sConverted.begin());
 
-				sOutput += cString::SubW(sConverted, 0, lSize-1);
-				
-				//////
-				// Enclose it with a $, since "." and " " is used in the names
-				sOutput += _W("$");
-			}
-			else
-			{
-				sOutput += kTranslate("ButtonNames", pSubAction->GetInputName());
-			}
+                sOutput += cString::SubW(sConverted, 0, lSize-1);
+
+                //////
+                // Enclose it with a $, since "." and " " is used in the names
+                sOutput += _W("$");
+            }
+            else
+            {
+                sOutput += kTranslate("ButtonNames", pSubAction->GetInputName());
+            }
 #else
-			sOutput += kTranslate("ButtonNames", pSubAction->GetInputName());
+            sOutput += kTranslate("ButtonNames", pSubAction->GetInputName());
 #endif
-		}
+        }
 
 
-		return sOutput;
-	}
-	else if(asCommand == _W("Look"))
-	{
-		tWString sOutput = _W("");
+        return sOutput;
+    } else if (asCommand == _W("Look")) {
+        tWString sOutput = _W("");
 #ifdef USE_GAMEPAD
-		sOutput += kTranslate("Hints", "Mouse");
+        sOutput += kTranslate("Hints", "Mouse");
 
-		if(gpBase->mpInputHandler->IsGamepadPresent())
-		{
-			sOutput += +_W(" / ")+kTranslate("Hints", "Thumbstick");
-		}
+        if(gpBase->mpInputHandler->IsGamepadPresent())
+        {
+            sOutput += +_W(" / ")+kTranslate("Hints", "Thumbstick");
+        }
 #else
-		sOutput += kTranslate("Hints", "Mouse");
+        sOutput += kTranslate("Hints", "Mouse");
 #endif
-		return sOutput;
-	}
+        return sOutput;
+    }
 
-	////////////////////////////////
-	// Unknown Command
-	Error("String parser command prefix '%s' in command '%s' invalid!\n", cString::To8Char(sPrefix).c_str(), cString::To8Char(asCommand).c_str());
-	return _W("BADCOMMAND");
+    ////////////////////////////////
+    // Unknown Command
+    Error("String parser command prefix '%s' in command '%s' invalid!\n", cString::To8Char(sPrefix).c_str(),
+          cString::To8Char(asCommand).c_str());
+    return _W("BADCOMMAND");
 }
 
 //-----------------------------------------------------------------------

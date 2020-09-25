@@ -32,99 +32,109 @@ class cLuxPlayerHands;
 
 class iLuxHandObject;
 
-class cLuxHandObjectLoader : public cEntityLoader_Object
-{
+class cLuxHandObjectLoader : public cEntityLoader_Object {
 public:
-	cLuxHandObjectLoader(const tString& asName);
+    cLuxHandObjectLoader(const tString &asName);
 
-	void SetHandObject(iLuxHandObject *apHandObject){ mpHandObject = apHandObject; }
+    void SetHandObject(iLuxHandObject *apHandObject) { mpHandObject = apHandObject; }
 
-	void BeforeLoad(cXmlElement *apRootElem, const cMatrixf &a_mtxTransform,cWorld *apWorld, cResourceVarsObject *apInstanceVars);
-	void AfterLoad(cXmlElement *apRootElem, const cMatrixf &a_mtxTransform,cWorld *apWorld, cResourceVarsObject *apInstanceVars);
+    void BeforeLoad(cXmlElement *apRootElem, const cMatrixf &a_mtxTransform, cWorld *apWorld,
+                    cResourceVarsObject *apInstanceVars);
+
+    void AfterLoad(cXmlElement *apRootElem, const cMatrixf &a_mtxTransform, cWorld *apWorld,
+                   cResourceVarsObject *apInstanceVars);
 
 private:
-	iLuxHandObject *mpHandObject;
+    iLuxHandObject *mpHandObject;
 };
 
 //----------------------------------------------
 
-class iLuxHandObject
-{
-friend class cLuxHandObjectLoader;
-public:	
-	iLuxHandObject(const tString& asName, cLuxPlayerHands *apHands);
-	~iLuxHandObject();
+class iLuxHandObject {
+    friend class cLuxHandObjectLoader;
 
-	////////////////////////
-	//General
-	virtual void Update(float afTimeStep)=0;
+public:
+    iLuxHandObject(const tString &asName, cLuxPlayerHands *apHands);
 
-	bool LoadMainData(cXmlElement *apMainElem);
-	void LoadSettings(cXmlElement *apVarsElem);
+    ~iLuxHandObject();
 
-	void CreateEntity(cLuxMap *apMap);
-	void DestroyEntity(cLuxMap *apMap);
+    ////////////////////////
+    //General
+    virtual void Update(float afTimeStep) = 0;
 
-	virtual void RenderSolid(cRendererCallbackFunctions* apFunctions){}
-	virtual void RenderTrans(cRendererCallbackFunctions* apFunctions){}
+    bool LoadMainData(cXmlElement *apMainElem);
 
-	void Reset();
-	void ResetEntityContainers();
+    void LoadSettings(cXmlElement *apVarsElem);
 
-	void SetSetEntitiesVisible(bool abVisible);
+    void CreateEntity(cLuxMap *apMap);
 
-	////////////////////////
-	//Callbacks
+    void DestroyEntity(cLuxMap *apMap);
 
-	//Returning true, means go to hand mode
-	virtual bool DoAction(eLuxPlayerAction aAction, bool abPressed)=0;
-	
-	//Returning true, means go to idle mode
-	virtual bool AnimationIsOver()=0;
+    virtual void RenderSolid(cRendererCallbackFunctions *apFunctions) {}
 
-	////////////////////////
-	//Properties
-	const tString& GetName(){ return msName;}
-	
-	cMeshEntity *GetMeshEntity(){ return mpMeshEntity; }
-	
-	const tString& GetAttachBoneName(){ return msAttachBoneName; }
+    virtual void RenderTrans(cRendererCallbackFunctions *apFunctions) {}
 
-	const tString& GetAnimIdle(){ return msHandsAnim_Idle; }
-	const tString& GetAnimDraw(){ return msHandsAnim_Draw; }
-	const tString& GetAnimHolster(){ return msHandsAnim_Holster;}
-	
+    void Reset();
+
+    void ResetEntityContainers();
+
+    void SetSetEntitiesVisible(bool abVisible);
+
+    ////////////////////////
+    //Callbacks
+
+    //Returning true, means go to hand mode
+    virtual bool DoAction(eLuxPlayerAction aAction, bool abPressed) = 0;
+
+    //Returning true, means go to idle mode
+    virtual bool AnimationIsOver() = 0;
+
+    ////////////////////////
+    //Properties
+    const tString &GetName() { return msName; }
+
+    cMeshEntity *GetMeshEntity() { return mpMeshEntity; }
+
+    const tString &GetAttachBoneName() { return msAttachBoneName; }
+
+    const tString &GetAnimIdle() { return msHandsAnim_Idle; }
+
+    const tString &GetAnimDraw() { return msHandsAnim_Draw; }
+
+    const tString &GetAnimHolster() { return msHandsAnim_Holster; }
+
 protected:
-	virtual void LoadImplementedVars(cXmlElement *apVarsElem)=0;
+    virtual void LoadImplementedVars(cXmlElement *apVarsElem) = 0;
 
-	virtual void ImplementedCreateEntity(cLuxMap *apMap)=0;
-	virtual void ImplementedDestroyEntity(cLuxMap *apMap)=0;
+    virtual void ImplementedCreateEntity(cLuxMap *apMap) = 0;
 
-	virtual void ImplementedReset()=0;
+    virtual void ImplementedDestroyEntity(cLuxMap *apMap) = 0;
 
-	/////////////////////////
-	// Data
-	cLuxPlayerHands *mpHands;
+    virtual void ImplementedReset() = 0;
+
+    /////////////////////////
+    // Data
+    cLuxPlayerHands *mpHands;
     tString msName;
-	
-	tString msModelFile;
-	cMatrixf m_mtxOffset;
 
-	tString msAttachBoneName;
+    tString msModelFile;
+    cMatrixf m_mtxOffset;
 
-	/////////////////////////
-	// Animations
-	tString msHandsAnim_Idle;
-	tString msHandsAnim_Draw;
-	tString msHandsAnim_Holster;
+    tString msAttachBoneName;
 
-	/////////////////////////
-	// Variables
-	cMesh *mpMesh;
-	cMeshEntity* mpMeshEntity;
-	std::vector<cBillboard*> mvBillboards;
-	std::vector<cParticleSystem*> mvParticleSystems;
-	std::vector<iLight*> mvLights;
+    /////////////////////////
+    // Animations
+    tString msHandsAnim_Idle;
+    tString msHandsAnim_Draw;
+    tString msHandsAnim_Holster;
+
+    /////////////////////////
+    // Variables
+    cMesh *mpMesh;
+    cMeshEntity *mpMeshEntity;
+    std::vector<cBillboard *> mvBillboards;
+    std::vector<cParticleSystem *> mvParticleSystems;
+    std::vector<iLight *> mvLights;
 };
 
 //----------------------------------------------

@@ -39,7 +39,7 @@ cLuxPlayerState_InteractSlide::cLuxPlayerState_InteractSlide(cLuxPlayer *apPlaye
 	mfMoveToMouseAddFactor = gpBase->mpGameCfg->GetFloat("Player_Interaction","MoveToMouseAddFactor", 0.01f);
 	mfMaxForce = gpBase->mpGameCfg->GetFloat("Player_Interaction","SlideMaxForce", 1000.0f);
 
-	mForcePid.SetErrorNum(10);;
+	mForcePid.SetErrorNum(10);
 	mForcePid.p = 6;
 	mForcePid.i = 0;
 	mForcePid.d = 0.1f;
@@ -195,7 +195,7 @@ bool cLuxPlayerState_InteractSlide::OnDoAction(eLuxPlayerAction aAction,bool abP
 	if(aAction == eLuxPlayerAction_Interact)
 	{
 		// Not Pressed
-		if(abPressed==false)
+		if(!abPressed)
 		{
 			mpPlayer->ChangeState(mPreviousState);
 

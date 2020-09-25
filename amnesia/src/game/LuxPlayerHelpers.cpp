@@ -162,7 +162,7 @@ void cLuxPlayerInsanityCollapse::Start()
 
 void cLuxPlayerInsanityCollapse::Stop()
 {
-	if(mbActive==false) return;
+	if(!mbActive) return;
 
 	cSoundHandler *pSoundHandler = gpBase->mpEngine->GetSound()->GetSoundHandler();
 	pSoundHandler->FadeGlobalVolume(1, 0.3f, eSoundEntryType_World,eLuxGlobalVolumeType_InsanityCollapse, false);
@@ -189,7 +189,7 @@ void cLuxPlayerInsanityCollapse::Stop()
 
 void cLuxPlayerInsanityCollapse::Update(float afTimeStep)
 {
-	if(mbActive==false) return;
+	if(!mbActive) return;
 	
 	////////////////////////
 	// Collapse
@@ -316,7 +316,7 @@ void cLuxPlayerCamDirEffects::Update(float afTimeStep)
 {
 	////////////////////
 	// Check if insane
-	if(mbSwayActive==false && mpPlayer->GetSanity() <= mfStartSwayMaxSanity)
+	if(!mbSwayActive && mpPlayer->GetSanity() <= mfStartSwayMaxSanity)
 	{
 		SetSwayActive(true);
 	}
@@ -332,7 +332,7 @@ void cLuxPlayerCamDirEffects::Update(float afTimeStep)
 		mfSwayAlpha += afTimeStep *0.1f;
 		if(mfSwayAlpha > 1) mfSwayAlpha =1;
 	}
-	else if(mbSwayActive==false && mfSwayAlpha>0)
+	else if(!mbSwayActive && mfSwayAlpha > 0)
 	{
 		mfSwayAlpha -= afTimeStep *0.2f;
 		if(mfSwayAlpha < 0)
@@ -483,7 +483,7 @@ void cLuxPlayerSpawnPS::RespawnAll()
 
 void cLuxPlayerSpawnPS::Update(float afTimeStep)
 {
-	if(mbActive==false) return;
+	if(!mbActive) return;
 
 	cVector3f vPlayerPos = mpPlayer->GetCharacterBody()->GetFeetPosition();
 	cWorld *pWorld = gpBase->mpMapHandler->GetCurrentMap()->GetWorld();
@@ -899,7 +899,7 @@ void cLuxPlayerFlashback::Start(const tString &asFlashbackFile, const tString &a
 
 void cLuxPlayerFlashback::Update(float afTimeStep)
 {
-	if(mbActive==false)
+	if(!mbActive)
 	{
 		if(mlstFlashbackQueue.empty()==false)
 		{
@@ -1054,7 +1054,7 @@ cLuxPlayerLookAt::~cLuxPlayerLookAt()
 
 void cLuxPlayerLookAt::Update(float afTimeStep)
 {
-	if(mbActive==false) return;
+	if(!mbActive) return;
 
 	cCamera *pCam = mpPlayer->GetCamera();
 	cVector3f vGoalAngle = cMath::GetAngleFromPoints3D(pCam->GetPosition(),mvTargetPos);
@@ -1122,7 +1122,7 @@ void cLuxPlayerLookAt::SetTarget(const cVector3f &avTargetPos, float afSpeedMul,
 void cLuxPlayerLookAt::SetActive(bool abX)
 {
 	mbActive = abX;
-	if(mbActive==false)
+	if(!mbActive)
 	{
 		mvCurrentSpeed =0;
 	}
@@ -1368,7 +1368,7 @@ void cLuxPlayerSanity::UpdateCheckEnemySeen(float afTimeStep)
 	while(entIt.HasNext())
 	{
 		iLuxEntity *pEntity = entIt.Next();
-		if(pEntity->IsActive()==false)continue;
+		if(!pEntity->IsActive())continue;
 		if(pEntity->GetEntityType() != eLuxEntityType_Prop) continue;
 
 		iLuxProp *pProp = static_cast<iLuxProp*>(pEntity);
@@ -1376,7 +1376,7 @@ void cLuxPlayerSanity::UpdateCheckEnemySeen(float afTimeStep)
 
 		iLuxProp_CritterBase *pCritter = static_cast<iLuxProp_CritterBase*>(pProp);
 		
-		if(pCritter->CausesSanityDecrease()==false) continue;
+		if(!pCritter->CausesSanityDecrease()) continue;
 		
 		float fDistSqrt = cMath::Vector3DistSqr(pProp->GetBody(0)->GetLocalPosition(), vPlayerHeadPos); 
 		if(fDistSqrt > fMinCritterDistSqrt) continue;
@@ -1399,7 +1399,7 @@ void cLuxPlayerSanity::UpdateCheckEnemySeen(float afTimeStep)
 		pEnemy->SetIsSeenByPlayer(false);
 		
 		if(pEnemy->IsActive()==false) continue;
-		if(pEnemy->CausesSanityDecrease()==false) continue;
+		if(!pEnemy->CausesSanityDecrease()) continue;
 
 		iCharacterBody *pCharBody = pEnemy->GetCharacterBody();
 
@@ -1473,7 +1473,7 @@ void cLuxPlayerSanity::UpdateCheckEnemySeen(float afTimeStep)
 void cLuxPlayerSanity::UpdateHit(float afTimeStep)
 {
 	if(mpPlayer->IsDead()) return;
-	if(mfHitAlpha<=0 && mbHitActive==false) return;
+	if(mfHitAlpha<=0 && !mbHitActive) return;
 
 	mbHitIsUpdated = true;
 	
@@ -1600,7 +1600,7 @@ void cLuxPlayerSanity::UpdateLowSanity(float afTimeStep)
 	}
 
 
-	if(mbSanityLostIsUpdated==false)
+	if(!mbSanityLostIsUpdated)
 	{
 		gpBase->mpEffectHandler->GetImageTrail()->FadeTo(1.6f, 3);
 		mbSanityEffectUpdated = true;
@@ -1671,7 +1671,7 @@ void cLuxPlayerLantern::Reset()
 
 void cLuxPlayerLantern::Update(float afTimeStep)
 {
-	if(mbActive ==false && mfAlpha <=0)
+	if(!mbActive && mfAlpha <= 0)
 	{
 		return;
 	}
@@ -1774,14 +1774,14 @@ void cLuxPlayerLantern::SetActive(bool abX, bool abUseEffects, bool abCheckForOi
 
 	/////////////////
 	// Check so allowed
-	if(abCheckIfAllowed && mpPlayer->GetCurrentStateData()->AllowLantern()==false)
+	if(abCheckIfAllowed && !mpPlayer->GetCurrentStateData()->AllowLantern())
 	{
 		return;
 	}
 
 	/////////////////
 	// Check so player has the lantern item
-    if(abCheckForOilAndItems && gpBase->mpInventory->HasItemOfType(eLuxItemType_Lantern)==false)
+    if(abCheckForOilAndItems && !gpBase->mpInventory->HasItemOfType(eLuxItemType_Lantern))
 	{
 		gpBase->mpHintHandler->Add("LanternNoItem", kTranslate("Hints", "LanternNoItem"), 0);
 		return;
@@ -2018,7 +2018,7 @@ void cLuxPlayerDeath::Start()
 
 void cLuxPlayerDeath::Update(float afTimeStep)
 {
-	if(mbActive==false) return;
+	if(!mbActive) return;
 
 	mfT += afTimeStep;
 	mFlashOscill.Update(afTimeStep);
@@ -2081,7 +2081,7 @@ void cLuxPlayerDeath::Update(float afTimeStep)
 		if(mfTextAlpha1 > 0.9f && mfFadeAlpha==1)
 		{
 			mfTextOnScreenCount += afTimeStep;
-			if(mfTextOnScreenCount > 5.5f || mbShowHint==false)
+			if(mfTextOnScreenCount > 5.5f || !mbShowHint)
 			{
 				mlState = 2;
 
@@ -2136,7 +2136,7 @@ void cLuxPlayerDeath::Update(float afTimeStep)
 				//////////////////////
 				// Load latest save
 
-				if (gpBase->mpSaveHandler->AutoLoad(true) == false)
+				if (!gpBase->mpSaveHandler->AutoLoad(true))
 				{
 					mbToMainMenu = true;
 				}
@@ -2159,7 +2159,7 @@ void cLuxPlayerDeath::Update(float afTimeStep)
 	{
 		//////////////////////
 		// Load latest save
-		if (gpBase->mpSaveHandler->AutoLoad(true) == false)
+		if (!gpBase->mpSaveHandler->AutoLoad(true))
 		{
 			mbToMainMenu = true;
 		}
@@ -2171,12 +2171,12 @@ void cLuxPlayerDeath::PostUpdate(float afTimeStep)
 {
 	///////////////////////////
 	// HARDMODE
-	if (gpBase->mbHardMode == false) return;
+	if (!gpBase->mbHardMode) return;
 
 	///////////////////////////
 	// Wants to go to main menu, 
 	// cant be in update since the playerclass will go bananas
-	if (mbToMainMenu == false) return;
+	if (!mbToMainMenu) return;
 	
 	//////////////////////////
 	// Set MainMenu container
@@ -2198,11 +2198,11 @@ void cLuxPlayerDeath::PostUpdate(float afTimeStep)
 
 void cLuxPlayerDeath::OnDraw(float afFrameTime)
 {
-	if(mbActive==false) return;
+	if(!mbActive) return;
 
 	gpBase->mpGameHudSet->DrawGfx(mpWhiteModGfx,gpBase->mvHudVirtualStartPos+ cVector3f(0,0,3), gpBase->mvHudVirtualSize,cColor(1-mfFadeAlpha,1));
 
-	if(mbShowHint==false) return; //Skip death hint
+	if(!mbShowHint) return; //Skip death hint
 
 	cVector2f vFontSize = 32;
 	float fSizeMul = 1.5f;
@@ -2250,7 +2250,7 @@ void cLuxPlayerDeath::OnDraw(float afFrameTime)
 
 void cLuxPlayerDeath::OnPressButton()
 {
-	if(mbActive==false || mfFadeAlpha < 1) return;
+	if(!mbActive || mfFadeAlpha < 1) return;
 
 	mfTextOnScreenCount = 100;
 
@@ -2649,7 +2649,7 @@ void cLuxPlayerHudEffect::UpdateSplashes(float afTimeStep)
 
 void cLuxPlayerHudEffect::DrawFlash(float afFrameTime)
 {
-	if(mfFlashAlpha <=0 || mbFlashActive==false) return;
+	if(mfFlashAlpha <=0 || !mbFlashActive) return;
 
 	cColor col = mFlashColor;
 	
@@ -2662,7 +2662,7 @@ void cLuxPlayerHudEffect::DrawFlash(float afFrameTime)
 
 void cLuxPlayerHudEffect::UpdateFlash(float afTimeStep)
 {
-	if(mbFlashActive==false) return;
+	if(!mbFlashActive) return;
 	
 	mfFlashAlpha += mfFlashAlphaSpeed * afTimeStep;
 
@@ -2896,7 +2896,7 @@ void cLuxPlayerInDarkness::Update(float afTimeStep)
 	//Turn on ambient light
 	else
 	{
-		if(mbAmbientLightIsOn==false)
+		if(!mbAmbientLightIsOn)
 		{
 			mbAmbientLightIsOn = true;
 
@@ -2944,7 +2944,7 @@ void cLuxPlayerInDarkness::Update(float afTimeStep)
 
 		////////////////////////////
 		//Lower sanity
-		if(	mpPlayer->GetHelperFlashback()->IsActive()==false && mpPlayer->GetSanityDrainDisabled()==false && 
+		if(!mpPlayer->GetHelperFlashback()->IsActive() && !mpPlayer->GetSanityDrainDisabled() &&
 			gpBase->mpEffectHandler->GetEmotionFlash()->IsActive()==false)
 		{
 			mpPlayer->LowerSanity(mfSanityLossPerSecond*afTimeStep*mfSanityLossMul, true);
@@ -3033,7 +3033,7 @@ void cLuxPlayerInDarkness::SetActive(bool abX)
 {
 	mbActive = abX;
 
-	if (abX == false)
+	if (!abX)
 	{
 		if(mbAmbientLightIsOn)
 		{

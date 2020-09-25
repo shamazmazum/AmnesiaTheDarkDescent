@@ -112,5 +112,5 @@ namespace hpl {
 		int mlAdditionsSinceReorganization;
 	};
 
-};
+}
 #endif // HPL_FRAMEBITMAP_H

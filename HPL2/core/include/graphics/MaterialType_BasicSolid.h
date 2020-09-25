@@ -119,5 +119,5 @@ namespace hpl {
 
 	//---------------------------------------------------
 
-};
+}
 #endif // HPL_MATERIAL_TYPE_BASIC_SURFACES_H

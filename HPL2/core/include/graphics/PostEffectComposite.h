@@ -71,5 +71,5 @@ namespace hpl {
 
 	//------------------------------------------
 
-};
+}
 #endif // HPL_POSTEFFECT_COMPOSITE_H

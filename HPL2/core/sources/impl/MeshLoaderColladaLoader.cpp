@@ -417,7 +417,7 @@ namespace hpl {
 
 	static void SaveImageVec(TiXmlElement *apRootElem, tColladaImageVec *apColladaImageVec)
 	{
-		TiXmlElement *pImageRootElem =  CreateXMLChild(apRootElem,"ImageRoot");
+		TiXmlElement *pImageRootElem =  CreateXMLChild(apRootElem,"ImageRoot")
 
 		pImageRootElem->SetAttribute("Size",(int)apColladaImageVec->size());
 
@@ -437,7 +437,7 @@ namespace hpl {
 
 	static void SaveTextureVec(TiXmlElement *apRootElem, tColladaTextureVec *apColladaTextureVec)
 	{
-		TiXmlElement *pTextureRootElem =  CreateXMLChild(apRootElem,"TextureRoot");
+		TiXmlElement *pTextureRootElem =  CreateXMLChild(apRootElem,"TextureRoot")
 
 		pTextureRootElem->SetAttribute("Size",(int)apColladaTextureVec->size());
 
@@ -457,7 +457,7 @@ namespace hpl {
 
 	static void SaveMaterialVec(TiXmlElement *apRootElem, tColladaMaterialVec *apColladaMaterialVec)
 	{
-		TiXmlElement *pMaterialRootElem =  CreateXMLChild(apRootElem,"MaterialRoot");
+		TiXmlElement *pMaterialRootElem =  CreateXMLChild(apRootElem,"MaterialRoot")
 
 		pMaterialRootElem->SetAttribute("Size",(int)apColladaMaterialVec->size());
 
@@ -478,7 +478,7 @@ namespace hpl {
 
 	static void SaveLightVec(TiXmlElement *apRootElem, tColladaLightVec *apColladaLightVec)
 	{
-		TiXmlElement *pLightRootElem =  CreateXMLChild(apRootElem,"LightRoot");
+		TiXmlElement *pLightRootElem =  CreateXMLChild(apRootElem,"LightRoot")
 
 		pLightRootElem->SetAttribute("Size",(int)apColladaLightVec->size());
 
@@ -503,7 +503,7 @@ namespace hpl {
 
 	static void SaveAnimationVec(TiXmlElement *apRootElem, tColladaAnimationVec *apColladaAnimationVec)
 	{
-		TiXmlElement *pAnimationRootElem =  CreateXMLChild(apRootElem,"AnimationRoot");
+		TiXmlElement *pAnimationRootElem =  CreateXMLChild(apRootElem,"AnimationRoot")
 
 		pAnimationRootElem->SetAttribute("Size",(int)apColladaAnimationVec->size());
 
@@ -575,7 +575,7 @@ namespace hpl {
 
 	static void SaveControllerVec(TiXmlElement *apRootElem, tColladaControllerVec *apColladaControllerVec)
 	{
-		TiXmlElement *pControllerRootElem =  CreateXMLChild(apRootElem,"ControllerRoot");
+		TiXmlElement *pControllerRootElem =  CreateXMLChild(apRootElem,"ControllerRoot")
 
 		pControllerRootElem->SetAttribute("Size",(int)apColladaControllerVec->size());
 
@@ -678,7 +678,7 @@ namespace hpl {
 
 	static void SaveGeometryVec(TiXmlElement *apRootElem, tColladaGeometryVec *apColladaGeometryVec)
 	{
-		TiXmlElement *pGeometryRootElem =  CreateXMLChild(apRootElem,"GeometryRoot");
+		TiXmlElement *pGeometryRootElem =  CreateXMLChild(apRootElem,"GeometryRoot")
 
 		pGeometryRootElem->SetAttribute("Size",(int)apColladaGeometryVec->size());
 
@@ -878,13 +878,13 @@ namespace hpl {
 
 	static void SaveScene(TiXmlElement *apRootElem, cColladaScene *apColladaScene)
 	{
-		TiXmlElement *pSceneElem =  CreateXMLChild(apRootElem,"Scene");
+		TiXmlElement *pSceneElem =  CreateXMLChild(apRootElem,"Scene")
 
 		pSceneElem->SetAttribute("StartTime",cString::ToString(apColladaScene->mfStartTime).c_str());
 		pSceneElem->SetAttribute("EndTime",cString::ToString(apColladaScene->mfEndTime).c_str());
 		pSceneElem->SetAttribute("DeltaTime",cString::ToString(apColladaScene->mfDeltaTime).c_str());
 		
-		TiXmlElement *pSceneRootElem =  CreateXMLChild(pSceneElem,"Root");
+		TiXmlElement *pSceneRootElem =  CreateXMLChild(pSceneElem,"Root")
 		
 		SaveIterativeNode(pSceneRootElem,&apColladaScene->mRoot);
 	}

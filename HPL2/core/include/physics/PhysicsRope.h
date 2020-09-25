@@ -202,5 +202,5 @@ namespace hpl {
 		
 		bool mbHasUpdated;
 	};
-};
+}
 #endif // HPL_PHYSICS_ROPE_H

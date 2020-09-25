@@ -268,5 +268,5 @@ namespace hpl {
 
         void LimitEffect(cJointLimitEffect *pEffect);
 	};
-};
+}
 #endif // HPL_PHYSICS_JOINT_H

@@ -43,7 +43,7 @@ void cLuxMoveState_Normal_Callback::OnGravityCollide(iCharacterBody *apCharBody,
 	if(	apCollideData->mvContactPoints[0].mvNormal.y > 0.001f &&
 		apCharBody->GetForceVelocity().y < -mpMoveState->mfMinHitGroundBounceSpeed)
 	{
-		if(mpMoveState->mbHeadGroundBounceActive == false)
+		if(!mpMoveState->mbHeadGroundBounceActive)
 		{
 			mpMoveState->mbHeadGroundBounceActive = true;
 			mpMoveState->mfBounceSizeMul = 1.0f;
@@ -305,7 +305,7 @@ void cLuxMoveState_Normal::OnRun(bool abActive)
 {
 	if(abActive)
 	{
-		if(mpPlayer->GetCrouchDisabled()==false && mpPlayer->GetInsanityCollapse()->IsActive()==false)
+		if(!mpPlayer->GetCrouchDisabled() && !mpPlayer->GetInsanityCollapse()->IsActive())
 		{
 			//Stand up if moving and running!
 			iCharacterBody *pCharBody = mpPlayer->GetCharacterBody();
@@ -322,7 +322,7 @@ void cLuxMoveState_Normal::OnRun(bool abActive)
 void cLuxMoveState_Normal::OnCrouch(bool abActive)
 {
 	//Do nothing on button release
-	if(abActive==false) return;
+	if(!abActive) return;
 
 	SetCrouch(!mbCrouching);	
 }
@@ -333,7 +333,7 @@ void cLuxMoveState_Normal::OnJump(bool abActive)
 {
 	//////////////////////////
 	//Jump pressed
-	if(abActive && mbJumping == false)
+	if(abActive && !mbJumping)
 	{
 		iCharacterBody *pCharBody = mpPlayer->GetCharacterBody();
 		if(pCharBody->IsOnGround()==false) return;
@@ -491,7 +491,7 @@ void cLuxMoveState_Normal::UpdateMovement(float afTimeStep)
 
 		if(mbRunning)
 		{
-			if(mpPlayer->GetCrouchDisabled()==false && mpPlayer->GetInsanityCollapse()->IsActive()==false)
+			if(!mpPlayer->GetCrouchDisabled() && !mpPlayer->GetInsanityCollapse()->IsActive())
 			{
 				SetCrouch(false);
 			}
@@ -638,7 +638,7 @@ void cLuxMoveState_Normal::UpdateHeadBob(float afTimeStep)
 	bool bMoving = pCharBody->IsOnGround() && pCharBody->GetMovedLastUpdate();
 
 	//If not moving fade size to 0 too.
-	if(bMoving==false)
+	if(!bMoving)
 	{
 		mvBobMaxGoal =0;
 	}
@@ -650,7 +650,7 @@ void cLuxMoveState_Normal::UpdateHeadBob(float afTimeStep)
 
 	/////////////////////////
 	//Player is not moving
-	if(bMoving==false)
+	if(!bMoving)
 	{
         //If the head is in a bob, move it back to the rest state (sin = 1)
 		if(mbBobbing)
@@ -782,7 +782,7 @@ bool cLuxMoveState_Normal::UpdateLedgeCheck(float afTimeStep)
 		}
 	}
 	
-	if(bIntersection== false) return false;
+	if(!bIntersection) return false;
 
 	//////////////////////////////
 	// Check if the new position works
@@ -802,13 +802,13 @@ bool cLuxMoveState_Normal::UpdateLedgeCheck(float afTimeStep)
     }
 
 	//Check if crouching works
-	if( bFitting==false && mbCrouching==false)
+	if(!bFitting && !mbCrouching)
 	{
 		bFitting = pCharBody->CheckCharacterFits(vFeetPos, true,1);
 		if(bFitting) SetCrouch(true);
 	}
 	
-	if(bFitting == false) return false;	
+	if(!bFitting) return false;
 	
 	//////////////////////////////////////
 	// Player fits! Set up stuff

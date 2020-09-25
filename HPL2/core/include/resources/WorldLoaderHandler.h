@@ -53,5 +53,5 @@ namespace hpl {
 		cPhysics *mpPhysics;
 	};
 
-};
+}
 #endif // HPL_WORLD_LOADER_HANDLER_H

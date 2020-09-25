@@ -155,5 +155,5 @@ namespace hpl {
 		int		mlErrorCol;
 	};
 
-};
+}
 #endif // HPL_XML_DOCUMENT_H

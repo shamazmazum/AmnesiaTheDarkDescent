@@ -25,130 +25,150 @@
 
 namespace hpl {
 
-	class cGuiSkinFont;
+    class cGuiSkinFont;
 
-	class cWidgetSlider;
+    class cWidgetSlider;
 
-	enum eListBoxSelectType
-	{
-		eListBoxSelectType_Select,
-		eListBoxSelectType_Toggle,
-		eListBoxSelectType_FromLastCursor,
-		eListBoxSelectType_FromAnchorPos,
-	};
+    enum eListBoxSelectType {
+        eListBoxSelectType_Select,
+        eListBoxSelectType_Toggle,
+        eListBoxSelectType_FromLastCursor,
+        eListBoxSelectType_FromAnchorPos,
+    };
 
-	//-----------------------------------------------------------------------
-	//-----------------------------------------------------------------------
+    //-----------------------------------------------------------------------
+    //-----------------------------------------------------------------------
 
-	class iWidgetListBoxBase : public iWidget, public iWidgetItemContainer
-	{
-	public:
-		iWidgetListBoxBase(cGuiSet *apSet, cGuiSkin *apSkin);
-		virtual ~iWidgetListBoxBase();
+    class iWidgetListBoxBase : public iWidget, public iWidgetItemContainer {
+    public:
+        iWidgetListBoxBase(cGuiSet *apSet, cGuiSkin *apSkin);
 
-		void SetBackgroundZ(float afZ){mfBackgroundZ = afZ;}
-		float GetBackgroundZ(){ return mfBackgroundZ;}
+        virtual ~iWidgetListBoxBase();
 
-		void SetSelectedItem(int alX,bool abMoveList=false, 
-							 bool abGenerateCallback=true,
-							 eListBoxSelectType aType=eListBoxSelectType_Toggle,
-							 bool abClearPrevious=true);
-		int GetSelectedItem();
+        void SetBackgroundZ(float afZ) { mfBackgroundZ = afZ; }
 
-		void AddIndexToSelection(int alIdx);
-		void RemoveIndexFromSelection(int alIdx);
+        float GetBackgroundZ() { return mfBackgroundZ; }
 
-		int GetMultiSelectionNum();
-		int GetMultiSelection(int alIdx);
+        void SetSelectedItem(int alX, bool abMoveList = false,
+                             bool abGenerateCallback = true,
+                             eListBoxSelectType aType = eListBoxSelectType_Toggle,
+                             bool abClearPrevious = true);
 
-		void SetAllowMultiSelection(bool abX) { mbAllowMultiSelection = abX; }
-		bool GetAllowMultiSelection() { return mbAllowMultiSelection; }
+        int GetSelectedItem();
 
-		void ClearSelection();
+        void AddIndexToSelection(int alIdx);
 
-		virtual cVector3f GetItemStartPos();
+        void RemoveIndexFromSelection(int alIdx);
 
-		void SetCursorPos(int alPos, bool abMoveList, bool abClamp);
-		int GetCursorPos() { return mlCursorPos; }
-		
-		void SetAnchorPos(int alX) { mlAnchorPos = alX; }
+        int GetMultiSelectionNum();
 
-		bool GetIsLocked() { return mbLocked; }
-		void SetIsLocked(bool abX) { mbLocked = abX; }
-        		
-	protected:
-		/////////////////////////
-		// Own functions
-		virtual void DrawItems(float afTimeStep, cGuiClipRegion* apClipRegion){}
+        int GetMultiSelection(int alIdx);
 
-		void SelectRange(int alStart, int alEnd);
+        void SetAllowMultiSelection(bool abX) { mbAllowMultiSelection = abX; }
 
-		void UpdateProperties();
+        bool GetAllowMultiSelection() { return mbAllowMultiSelection; }
 
-		void AddItemToSelection(cWidgetItem* apItem);
-		void RemoveItemFromSelection(cWidgetItem* apItem);
+        void ClearSelection();
 
-		bool MoveSlider(iWidget* apWidget, const cGuiMessageData& aData);
-		kGuiCallbackDeclarationEnd(MoveSlider);	
+        virtual cVector3f GetItemStartPos();
 
-		/////////////////////////
-		// Implemented functions
-		void OnChangeSize();
-		void OnLoadGraphics();
-		void OnInit();
+        void SetCursorPos(int alPos, bool abMoveList, bool abClamp);
+
+        int GetCursorPos() { return mlCursorPos; }
+
+        void SetAnchorPos(int alX) { mlAnchorPos = alX; }
+
+        bool GetIsLocked() { return mbLocked; }
+
+        void SetIsLocked(bool abX) { mbLocked = abX; }
+
+    protected:
+        /////////////////////////
+        // Own functions
+        virtual void DrawItems(float afTimeStep, cGuiClipRegion *apClipRegion) {}
+
+        void SelectRange(int alStart, int alEnd);
+
+        void UpdateProperties();
+
+        void AddItemToSelection(cWidgetItem *apItem);
+
+        void RemoveItemFromSelection(cWidgetItem *apItem);
+
+        bool MoveSlider(iWidget *apWidget, const cGuiMessageData &aData);
+
+        kGuiCallbackDeclarationEnd(MoveSlider);
+
+        /////////////////////////
+        // Implemented functions
+        void OnChangeSize();
+
+        void OnLoadGraphics();
+
+        void OnInit();
 
 
-		void OnDraw(float afTimeStep, cGuiClipRegion* apClipRegion);
-		void OnDrawAfterClip(float afTimeStep, cGuiClipRegion* apClipRegion);
+        void OnDraw(float afTimeStep, cGuiClipRegion *apClipRegion);
+
+        void OnDrawAfterClip(float afTimeStep, cGuiClipRegion *apClipRegion);
 
 
-		bool OnMouseMove(const cGuiMessageData& aData);
-		bool OnMouseDown(const cGuiMessageData& aData);
-		bool OnMouseDoubleClick(const cGuiMessageData& aData);
-		bool OnMouseUp(const cGuiMessageData& aData);
-		bool OnMouseEnter(const cGuiMessageData& aData);
-		bool OnMouseLeave(const cGuiMessageData& aData);
+        bool OnMouseMove(const cGuiMessageData &aData);
 
-		bool OnKeyPress(const cGuiMessageData& aData);
+        bool OnMouseDown(const cGuiMessageData &aData);
 
-		bool OnUIArrowPress(const cGuiMessageData& aData);
-		bool OnUIArrowRelease(const cGuiMessageData& aData);
-		bool OnUIButtonPress(const cGuiMessageData& aData);
-		bool OnUIButtonRelease(const cGuiMessageData& aData);
-		bool OnUIButtonDoublePress(const cGuiMessageData& aData);
-		
-		/////////////////////////
-		// Data
-		float mfBackgroundZ;
-		float mfSliderWidth;
+        bool OnMouseDoubleClick(const cGuiMessageData &aData);
 
-		int mlFirstItem;
-		int mlMaxItems;
+        bool OnMouseUp(const cGuiMessageData &aData);
 
-		tIntList mlstSelectedItems;
+        bool OnMouseEnter(const cGuiMessageData &aData);
 
-		int mlCursorPos;
-		int mlLastCursorPos;
-		int mlAnchorPos;
-		int mlNumClicksOnSamePos;
+        bool OnMouseLeave(const cGuiMessageData &aData);
 
-		cGuiGfxElement *mpGfxBackground;
-		cGuiGfxElement *mpGfxSelection;
-		
-		cGuiGfxElement *mvGfxBorders[4];
-		cGuiGfxElement *mvGfxCorners[4];
+        bool OnKeyPress(const cGuiMessageData &aData);
 
-		cWidgetSlider *mpSlider;
+        bool OnUIArrowPress(const cGuiMessageData &aData);
 
-		bool mbAllowMultiSelection;
-		bool mbSelectionUpdated;
-		bool mbClearingSelection;
+        bool OnUIArrowRelease(const cGuiMessageData &aData);
 
-		int mlNumItems;
-		int mlNumBlankRows;
+        bool OnUIButtonPress(const cGuiMessageData &aData);
 
-		bool mbLocked;
-	};
+        bool OnUIButtonRelease(const cGuiMessageData &aData);
 
-};
+        bool OnUIButtonDoublePress(const cGuiMessageData &aData);
+
+        /////////////////////////
+        // Data
+        float mfBackgroundZ;
+        float mfSliderWidth;
+
+        int mlFirstItem;
+        int mlMaxItems;
+
+        tIntList mlstSelectedItems;
+
+        int mlCursorPos;
+        int mlLastCursorPos;
+        int mlAnchorPos;
+        int mlNumClicksOnSamePos;
+
+        cGuiGfxElement *mpGfxBackground;
+        cGuiGfxElement *mpGfxSelection;
+
+        cGuiGfxElement *mvGfxBorders[4];
+        cGuiGfxElement *mvGfxCorners[4];
+
+        cWidgetSlider *mpSlider;
+
+        bool mbAllowMultiSelection;
+        bool mbSelectionUpdated;
+        bool mbClearingSelection;
+
+        int mlNumItems;
+        int mlNumBlankRows;
+
+        bool mbLocked;
+    };
+
+}
 #endif // HPL_WIDGET_LIST_BOX_BASE_H

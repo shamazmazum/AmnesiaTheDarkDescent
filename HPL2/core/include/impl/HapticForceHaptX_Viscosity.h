@@ -26,17 +26,17 @@
 
 namespace hpl {
 
-	class cHapticForceHaptX_Viscosity : public iHapticForceHaptX
-	{
-	public:
-		cHapticForceHaptX_Viscosity(	HaptX::HaptXInterface *apInterface,
-									HaptX::iHapticDeviceID	aDeviceID,const cVector3f& avVelocity,float afMass, 
-									float afStiffness, float afDamping);
-		~cHapticForceHaptX_Viscosity();
+    class cHapticForceHaptX_Viscosity : public iHapticForceHaptX {
+    public:
+        cHapticForceHaptX_Viscosity(HaptX::HaptXInterface *apInterface,
+                                    HaptX::iHapticDeviceID aDeviceID, const cVector3f &avVelocity, float afMass,
+                                    float afStiffness, float afDamping);
 
-	protected:
-		HaptX::ForceModelViscosityInfo *mpViscosityForce;		
-	};
+        ~cHapticForceHaptX_Viscosity();
 
-};
+    protected:
+        HaptX::ForceModelViscosityInfo *mpViscosityForce;
+    };
+
+}
 #endif // HPL_HAPTIC_FORCE_VISCOSITY_H

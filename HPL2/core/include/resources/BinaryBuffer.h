@@ -247,5 +247,5 @@ namespace hpl {
 		size_t mlCRCStartPos;
 	};
 
-};
+}
 #endif // HPL_BINARY_BUFFER_H

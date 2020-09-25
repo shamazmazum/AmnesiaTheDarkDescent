@@ -28,151 +28,156 @@
 
 //----------------------------------------------
 
-#include "LuxEnemy.h"	//<- This is a bit bad... but what u gonna do?
+#include "LuxEnemy.h"    //<- This is a bit bad... but what u gonna do?
 
 //----------------------------------------------
 
 class iLuxEntity_SaveData;
+
 class iLuxInteractConnection_SaveData;
+
 class cLuxMap;
 
 //----------------------------------------------
 
-class cLuxSavedGameEntity : public iSerializable
-{
-	kSerializableClassInit(cLuxSavedGameEntity)
+class cLuxSavedGameEntity : public iSerializable {
+    kSerializableClassInit(cLuxSavedGameEntity)
 public:
-	virtual ~cLuxSavedGameEntity();
+    virtual ~cLuxSavedGameEntity();
 
-	void FromEntity(iLuxEntity *apEntity);
-	void ToEntity(cLuxMap *apMap, iLuxEntity *apEntity);
+    void FromEntity(iLuxEntity *apEntity);
 
-	int mlID;
+    void ToEntity(cLuxMap *apMap, iLuxEntity *apEntity);
 
-	//Prop specfics:
-	cContainerVec<cLuxProp_AttachedProp> mvAttachedProps;
-	cContainerVec<iLuxInteractConnection_SaveData*> mvInteractConnections;
+    int mlID;
 
-	//General
-	cContainerVec<cLuxEntityConnection_SaveData> mvConnections;
-	cContainerList<cLuxCollideCallback_SaveData> mlstCollideCallbacks;
+    //Prop specfics:
+    cContainerVec <cLuxProp_AttachedProp> mvAttachedProps;
+    cContainerVec<iLuxInteractConnection_SaveData *> mvInteractConnections;
+
+    //General
+    cContainerVec <cLuxEntityConnection_SaveData> mvConnections;
+    cContainerList <cLuxCollideCallback_SaveData> mlstCollideCallbacks;
 };
 
 //----------------------------------------------
 
-class cLuxSavedGameEnemy : public iSerializable
-{
-	kSerializableClassInit(cLuxSavedGameEnemy)
+class cLuxSavedGameEnemy : public iSerializable {
+    kSerializableClassInit(cLuxSavedGameEnemy)
 public:
-	void FromEnemy(iLuxEnemy *apEnemy);
-	void ToEnemy(cLuxMap *apMap, iLuxEnemy *apEnemy);
+    void FromEnemy(iLuxEnemy *apEnemy);
 
-	int mlID;
-	bool mbActive;
+    void ToEnemy(cLuxMap *apMap, iLuxEnemy *apEnemy);
 
-	cContainerVec<cLuxEnemyPatrolNode_SaveData> mvPatrolNodes;
+    int mlID;
+    bool mbActive;
+
+    cContainerVec <cLuxEnemyPatrolNode_SaveData> mvPatrolNodes;
 };
 
 //----------------------------------------------
 
-class cLuxSavedGameEntityFunc : public iSerializable
-{
-	kSerializableClassInit(cLuxSavedGameEntityFunc)
+class cLuxSavedGameEntityFunc : public iSerializable {
+    kSerializableClassInit(cLuxSavedGameEntityFunc)
 public:
-	cLuxSavedGameEntityFunc() {}
-	cLuxSavedGameEntityFunc(int alID, const tString& asFunc, bool abAutoRemove) : mlID(alID), msFunc(asFunc), mbAutoRemove(abAutoRemove){}
+    cLuxSavedGameEntityFunc() {}
 
-	int mlID;
-    tString msFunc;	
-	bool mbAutoRemove;
+    cLuxSavedGameEntityFunc(int alID, const tString &asFunc, bool abAutoRemove) : mlID(alID), msFunc(asFunc),
+                                                                                  mbAutoRemove(abAutoRemove) {}
+
+    int mlID;
+    tString msFunc;
+    bool mbAutoRemove;
 };
 
 //----------------------------------------------
 
 
-class cLuxSavedGameMap : public iSerializable
-{
-	kSerializableClassInit(cLuxSavedGameMap)
-public:	
-	cLuxSavedGameMap();
-	~cLuxSavedGameMap();
+class cLuxSavedGameMap : public iSerializable {
+    kSerializableClassInit(cLuxSavedGameMap)
+public:
+    cLuxSavedGameMap();
 
-	void DestroyAll();
+    ~cLuxSavedGameMap();
 
-	void FromMap(cLuxMap *apMap);
-	void ToMap(cLuxMap *apMap);
-	
-	tString msName;
-	tString msDisplayNameEntry;
+    void DestroyAll();
 
-	int mlNumberOfQuests;
-	int mlTotalCompletionAmount;
-	int mlCurrentCompletionAmount;
+    void FromMap(cLuxMap *apMap);
 
-	bool mbSkyBoxActive;
-	tString msSkyboxTexture;
-	cColor mSkyBoxColor;
+    void ToMap(cLuxMap *apMap);
 
-	bool mbFogActive;
-	bool mbFogCulling;
-	float mfFogStart;
-	float mfFogEnd;
-	float mfFogFalloffExp;
-	cColor mFogColor;
+    tString msName;
+    tString msDisplayNameEntry;
 
-	cContainerList<iLuxEntity_SaveData*> mlstFullEntities;
-	
-	cContainerList<cLuxSavedGameEntity*> mlstCollideAndConnectEntities;
-	cContainerList<cLuxSavedGameEnemy*> mlstEnemies;
+    int mlNumberOfQuests;
+    int mlTotalCompletionAmount;
+    int mlCurrentCompletionAmount;
 
-	cContainerList<cEngineLight_SaveData> mlstLights;
-	cContainerList<cEngineSound_SaveData> mlstSounds;
-	cContainerList<cEnginePS_SaveData> mlstPS;
+    bool mbSkyBoxActive;
+    tString msSkyboxTexture;
+    cColor mSkyBoxColor;
 
-	cContainerList<cLuxEventTimer> mlstTimers;
+    bool mbFogActive;
+    bool mbFogCulling;
+    float mfFogStart;
+    float mfFogEnd;
+    float mfFogFalloffExp;
+    cColor mFogColor;
 
-	cContainerList<cLuxScriptVar> mlstVars;
-	cContainerVec<cLuxUseItemCallback> mvUseItemCallbacks;
+    cContainerList<iLuxEntity_SaveData *> mlstFullEntities;
 
-	cContainerList<cLuxCollideCallback_SaveData> mlstPlayerCollideCallbacks;
-	
-	cContainerList<cLuxSavedGameEntityFunc> mlstEntityFunc_Look;
-	cContainerList<cLuxSavedGameEntityFunc> mlstEntityFunc_Interact;
-	cContainerList<cLuxSavedGameEntityFunc> mlstEntityFunc_Callback;
-	cContainerList<cLuxSavedGameEntityFunc> mlstEntityFunc_StateChange;
+    cContainerList<cLuxSavedGameEntity *> mlstCollideAndConnectEntities;
+    cContainerList<cLuxSavedGameEnemy *> mlstEnemies;
+
+    cContainerList <cEngineLight_SaveData> mlstLights;
+    cContainerList <cEngineSound_SaveData> mlstSounds;
+    cContainerList <cEnginePS_SaveData> mlstPS;
+
+    cContainerList <cLuxEventTimer> mlstTimers;
+
+    cContainerList <cLuxScriptVar> mlstVars;
+    cContainerVec <cLuxUseItemCallback> mvUseItemCallbacks;
+
+    cContainerList <cLuxCollideCallback_SaveData> mlstPlayerCollideCallbacks;
+
+    cContainerList <cLuxSavedGameEntityFunc> mlstEntityFunc_Look;
+    cContainerList <cLuxSavedGameEntityFunc> mlstEntityFunc_Interact;
+    cContainerList <cLuxSavedGameEntityFunc> mlstEntityFunc_Callback;
+    cContainerList <cLuxSavedGameEntityFunc> mlstEntityFunc_StateChange;
 
     cContainerList<int> mlstDisabledEntities;
-	cContainerList<int> mlstLockedDoors;
-	cContainerList<int> mlstLockedLevelDoors;
-	cContainerList<int> mlstActiveItems;
-	cContainerList<int> mlstOpenChests;
-	cContainerList<int> mlstUnbrokenItemContainers;
-	cContainerList<int> mlstBrokenContainersWithActiveItem;
-	cContainerList<int> mlstUnlitLamps;
+    cContainerList<int> mlstLockedDoors;
+    cContainerList<int> mlstLockedLevelDoors;
+    cContainerList<int> mlstActiveItems;
+    cContainerList<int> mlstOpenChests;
+    cContainerList<int> mlstUnbrokenItemContainers;
+    cContainerList<int> mlstBrokenContainersWithActiveItem;
+    cContainerList<int> mlstUnlitLamps;
 private:
-	bool EntitySaveDataExists(int alID);
+    bool EntitySaveDataExists(int alID);
 };
 
 //----------------------------------------------
 
-class cLuxSavedGameMapCollection : public iSerializable
-{
-	kSerializableClassInit(cLuxSavedGameMapCollection)
-public:	
-	cLuxSavedGameMapCollection();
-	~cLuxSavedGameMapCollection();
-
-	void Reset();
-
-	void SaveMap(cLuxMap *apMap);
-	void LoadMap(cLuxMap *apMap);
-
-	bool MapExists(const tString& asName);
-	
-	cLuxSavedGameMap* GetSavedMap(const tString& asName, bool abCreateNew);
-	
+class cLuxSavedGameMapCollection : public iSerializable {
+    kSerializableClassInit(cLuxSavedGameMapCollection)
 public:
-	cContainerList<cLuxSavedGameMap*> mlstMaps;
+    cLuxSavedGameMapCollection();
+
+    ~cLuxSavedGameMapCollection();
+
+    void Reset();
+
+    void SaveMap(cLuxMap *apMap);
+
+    void LoadMap(cLuxMap *apMap);
+
+    bool MapExists(const tString &asName);
+
+    cLuxSavedGameMap *GetSavedMap(const tString &asName, bool abCreateNew);
+
+public:
+    cContainerList<cLuxSavedGameMap *> mlstMaps;
 };
 
 //----------------------------------------------

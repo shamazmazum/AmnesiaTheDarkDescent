@@ -53,5 +53,5 @@ namespace hpl {
 		cResources *mpResources;
 	};
 
-};
+}
 #endif // HPL_VIDEO_MANAGER_H

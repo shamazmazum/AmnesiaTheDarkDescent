@@ -73,6 +73,8 @@ namespace hpl {
 		*/
 		static cColor RandRectColor(const cColor &aMin,const cColor &aMax);
 
+		static cVector3f RandomSphereSurfacePoint(float afRadius);
+		static cVector3f RandomSphereInsidePoint(float afRadius);
 		
 		/**
 		 * Randomize the rand funcs.
@@ -86,6 +88,60 @@ namespace hpl {
 		
 		static int GetFlagBit(int alBitNum);
 
+
+		//////////////////////////////////////////////////////
+		////////// COLOR CONVERSION //////////////////////////
+		//////////////////////////////////////////////////////
+
+		/**
+		* Gets HSB values for a RGB color
+		* \param Color in RGB format
+		* \return Vector with HSB values
+		*/
+		static cVector3f RGBToHSB(const cColor& aRGB);
+		static void RGBToHSBHelper(const cColor& aRGB, cVector3f& avX);
+		/**
+		* Gets a RGB color given HSB values (H : [0, 360], S&B : [0, 1])
+		* \param Vector with HSB values
+		* \return Color in RGB format
+		*/
+		static cColor HSBToRGB(const cVector3f& avHSB);
+		static void	HSBToRGBHelper(const cVector3f& avHSB, cColor& aX);
+
+		/**
+		* Creates a cColor from a Hexcode string (8 and 16 bit chars)
+		* \param Color in Hex string format (XXYYZZ, with XX hex pair for R, YY hex pair for G and ZZ hex pair for B)
+		* \return cColor with given values
+		*/
+		static cColor	HexToRGB(const tString& asHex);
+		static void		HexToRGBHelper(const tString& asHex, cColor& aCol);
+
+		static cColor	HexWToRGB(const tWString& asHex);
+		static void		HexWToRGBHelper(const tWString& asHex, cColor& aCol);
+
+		static cColor	HexToRGBA(const tString& asHex);
+		static void		HexToRGBAHelper(const tString& asHex, cColor& aCol);
+
+		static cColor	HexWToRGBA(const tWString& asHex);
+		static void		HexWToRGBAHelper(const tWString& asHex, cColor& aCol);
+
+		/**
+		* Returns a hex encoded RGB value string (8 and 16 bit chars) given a cColor
+		* \param cColor
+		* \return string (XXYYZZ, with XX hex pair for R, YY hex pair for G and ZZ hex pair for B)
+		*/
+		static tString RGBToHex(const cColor& aRGB);
+		static tWString RGBToHexW(const cColor& aRGB);
+
+		static tString RGBAToHex(const cColor& aRGB);
+		static tWString RGBAToHexW(const cColor& aRGB);
+		
+		// Helpers
+		static unsigned char HexStringToUChar(const tString& asHexStr);
+		static unsigned char HexStringToUChar(const tWString& asHexStr);
+
+		static tString UCharToHexString(unsigned char aValue);
+		static tWString UCharToHexStringW(unsigned char alValue);
 
 		/////////////////////////////////////////////////////
 		////////// BV AND AABB OPERTIONS //////////////////
@@ -656,6 +712,15 @@ namespace hpl {
 		* \return 
 		*/
 		static float Vector3Angle(const cVector3f& avVecA,const cVector3f& avVecB);
+
+		/**
+		* Calculates the signed angle between two vectors using a normal as reference
+		* \param avVecA 
+		* \param avVecB 
+		* \param avVecN 
+		* \return 
+		*/
+		static float Vector3SignedAngle(const cVector3f& avVecA,const cVector3f& avVecB, const cVector3f& avVecN);
 		
 		/**
 		 * Unprojects a vector from screen size and coords.
@@ -670,6 +735,12 @@ namespace hpl {
 
 		static void Vector3OrthonormalizeBasis(const cVector3f& avSrcRight, const cVector3f& avSrcUp, const cVector3f& avSrcForward,
 											cVector3f& avDstRight, cVector3f& avDstUp, cVector3f& avDstForward);
+
+		/**
+		* Calculates a pseudo-random point based on x (which becomes the x coord) and y which is a seed for y,z on the sphere
+		* \param avSeed both elements must be between 0 and 1.
+		*/
+		static cVector3f Vector3SphereSurfacePoint(const cVector2f& avSeed, float afRadius);
 
 		//////////////////////////////////////////////////////
 		////////// SPHERICAL COORDS ////////////////////////

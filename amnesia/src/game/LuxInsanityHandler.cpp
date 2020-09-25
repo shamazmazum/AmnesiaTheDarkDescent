@@ -224,7 +224,7 @@ void cLuxInstanityEvent_Bugs::Update(float afTimeStep)
 			pBug->mfAlpha += cMath::RandRectf(0.2f,1.0f)*afTimeStep;
 			if(pBug->mfAlpha>1) pBug->mfAlpha=1;
 		}
-		else if(bActive==false)
+		else if(!bActive)
 		{
 			pBug->mfAlpha -= cMath::RandRectf(0.2f,1.0f)*afTimeStep;
 			if(pBug->mfAlpha<0)
@@ -546,7 +546,7 @@ void cLuxInstanityEvent_SoundStream::Update(float afTimeStep)
 	// Check if sound is over
 	if(mfSoundCount <=0 && (mpSoundEntry==NULL || pSoundHandler->IsValid(mpSoundEntry, mlSoundEntryID)==false) )
 	{
-		if(mbFadeScreen==false)
+		if(!mbFadeScreen)
 		{
 			EventIsDone();
 		}
@@ -788,7 +788,7 @@ void cLuxInsanityHandler::StartEvent()
 		if(bDisabled==false)	lTotalEnabledEvents++;
 	}
 
-	if(lTotalEnabledEvents==0) return;
+    return;
 
 	/////////////////////////////////////
 	//If all events are used, reset!

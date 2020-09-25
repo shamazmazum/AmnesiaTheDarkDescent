@@ -63,7 +63,9 @@ namespace hpl {
 		mvWorldSizeMin = cVector3f(0,0,0);
 		mvWorldSizeMax = cVector3f(0,0,0);
 
-		mvGravity = cVector3f(0,-9.81f,0);
+		float fGravityBoost = 1.25f; //change this value to increase/decrease gravity
+
+		mvGravity = cVector3f(0,-9.81f * fGravityBoost,0);
 		mfMaxTimeStep = 1.0f/60.0f;
 		
 		/////////////////////////////////
@@ -506,9 +508,13 @@ namespace hpl {
 		//Call the call back
 		bool bRet = gpRayCallback->OnIntersect(pRigidBody,&gRayParams);
 		
-		//return correct value.
-		if(bRet) return 1;//afIntersetParam;
-		else return 0;
+		if(bRet == false) return 0;
+		else
+		{
+			float fLength = pRigidBody->GetBoundingVolume()->GetRadius() / gfRayLength;
+
+			return cMath::Min(1.0f, afIntersetParam + fLength);
+		}
 	}
 
 	//////////////////////////////////////

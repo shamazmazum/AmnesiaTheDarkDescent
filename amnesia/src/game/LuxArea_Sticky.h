@@ -26,135 +26,144 @@
 
 //----------------------------------------------
 
-class cLuxArea_Sticky_SaveData : public iLuxArea_SaveData
-{
-	kSerializableClassInit(cLuxArea_Sticky_SaveData)
+class cLuxArea_Sticky_SaveData : public iLuxArea_SaveData {
+    kSerializableClassInit(cLuxArea_Sticky_SaveData)
 public:
-	iLuxArea* CreateArea(cLuxMap *apMap);
-	
-	tString msAttachFunction;
-	tString msDetachFunction;
+    iLuxArea *CreateArea(cLuxMap *apMap);
 
-	tString msAttachSound;
-	tString msDetachSound;
+    tString msAttachFunction;
+    tString msDetachFunction;
 
-	tString msAttachPS;
-	tString msDetachPS;
+    tString msAttachSound;
+    tString msDetachSound;
 
-	bool mbCanDetach;
+    tString msAttachPS;
+    tString msDetachPS;
 
-	float mfPoseTime;
+    bool mbCanDetach;
 
-	bool mbCheckCenterInArea;
+    float mfPoseTime;
 
-	tString msAttachableBodyName;
+    bool mbCheckCenterInArea;
 
-	int mlAttachedEntityID;
-	int mlAttachedBodyID;
-	
-	float mfAttachedBodyMass;
-	bool mbAttachedBodyGravity;
-	bool mbAttachedEntityFullGameSaved;
+    tString msAttachableBodyName;
 
-	float mfSetMtxTime;
+    int mlAttachedEntityID;
+    int mlAttachedBodyID;
+
+    float mfAttachedBodyMass;
+    bool mbAttachedBodyGravity;
+    bool mbAttachedEntityFullGameSaved;
+
+    float mfSetMtxTime;
 };
 
 //----------------------------------------------
 
-class cLuxArea_Sticky : public iLuxArea
-{
-typedef iLuxArea super_class;
-friend class cLuxAreaLoader_Sticky;
-public:	
-	cLuxArea_Sticky(const tString &asName, int alID, cLuxMap *apMap);
-	virtual ~cLuxArea_Sticky();
+class cLuxArea_Sticky : public iLuxArea {
+    typedef iLuxArea super_class;
 
-	//////////////////////
-	//General
-	void SetupAfterLoad(cWorld *apWorld);
-	void OnUpdate(float afTimeStep);
+    friend class cLuxAreaLoader_Sticky;
 
-	//////////////////////
-	//Actions
-	void AttachBody(iPhysicsBody *apBody);
-	void DetachBody();
+public:
+    cLuxArea_Sticky(const tString &asName, int alID, cLuxMap *apMap);
 
-	//////////////////////
-	//Properties
-	static void SetAllowAttachment(bool abX){ mbAllowAttachment = abX;}
+    virtual ~cLuxArea_Sticky();
 
-	iPhysicsBody *GetAttachedBody(){ return mpAttachedBody;}
-	bool CanDetach(){ return mbCanDetach && mfSetMtxTime>=1;}
+    //////////////////////
+    //General
+    void SetupAfterLoad(cWorld *apWorld);
 
-	//////////////////////
-	//Connection callbacks
-	void OnConnectionStateChange(iLuxEntity *apEntity, int alState){}
+    void OnUpdate(float afTimeStep);
 
-	//////////////////////
-	//Save data stuff
-	iLuxEntity_SaveData* CreateSaveData();
-	virtual void SaveToSaveData(iLuxEntity_SaveData* apSaveData);
-	virtual void LoadFromSaveData(iLuxEntity_SaveData* apSaveData);
-	virtual void SetupSaveData(iLuxEntity_SaveData *apSaveData);
+    //////////////////////
+    //Actions
+    void AttachBody(iPhysicsBody *apBody);
+
+    void DetachBody();
+
+    //////////////////////
+    //Properties
+    static void SetAllowAttachment(bool abX) { mbAllowAttachment = abX; }
+
+    iPhysicsBody *GetAttachedBody() { return mpAttachedBody; }
+
+    bool CanDetach() { return mbCanDetach && mfSetMtxTime >= 1; }
+
+    //////////////////////
+    //Connection callbacks
+    void OnConnectionStateChange(iLuxEntity *apEntity, int alState) {}
+
+    //////////////////////
+    //Save data stuff
+    iLuxEntity_SaveData *CreateSaveData();
+
+    virtual void SaveToSaveData(iLuxEntity_SaveData *apSaveData);
+
+    virtual void LoadFromSaveData(iLuxEntity_SaveData *apSaveData);
+
+    virtual void SetupSaveData(iLuxEntity_SaveData *apSaveData);
 
 private:
-	void UpdateAttachBody(float afTimeStep);
-	void UpdateCollision(float afTimeStep);
+    void UpdateAttachBody(float afTimeStep);
 
-	
-	tString GetCallbackFunc(const tString &asFunc,iPhysicsBody *apBody);
-	
-	/////////////////////////
-	// Data
-	tString msAttachFunction;
-	tString msDetachFunction;
+    void UpdateCollision(float afTimeStep);
 
-	tString msAttachSound;
-	tString msDetachSound;
 
-	tString msAttachPS;
-	tString msDetachPS;
+    tString GetCallbackFunc(const tString &asFunc, iPhysicsBody *apBody);
 
-	tString msAttachableBodyName;
+    /////////////////////////
+    // Data
+    tString msAttachFunction;
+    tString msDetachFunction;
 
-	bool mbMoveBody;
-	bool mbRotateBody;
+    tString msAttachSound;
+    tString msDetachSound;
 
-	bool mbCheckCenterInArea;
+    tString msAttachPS;
+    tString msDetachPS;
 
-	bool mbCanDetach;
+    tString msAttachableBodyName;
 
-	float mfPoseTime;
+    bool mbMoveBody;
+    bool mbRotateBody;
 
-	/////////////////////////
-	// Variables
-	bool mbAttachedBodyGravity;
-	float mfAttachedBodyMass;
+    bool mbCheckCenterInArea;
 
-	bool mbAttachedEntityFullGameSaved;
+    bool mbCanDetach;
 
-	iPhysicsBody *mpAttachedBody;
-	iPhysicsBody *mpLastAttachedBody;
+    float mfPoseTime;
 
-	float mfSetMtxTime;
-	cMatrixf mtxAttachedStart;
+    /////////////////////////
+    // Variables
+    bool mbAttachedBodyGravity;
+    float mfAttachedBodyMass;
 
-	static bool mbAllowAttachment;
+    bool mbAttachedEntityFullGameSaved;
+
+    iPhysicsBody *mpAttachedBody;
+    iPhysicsBody *mpLastAttachedBody;
+
+    float mfSetMtxTime;
+    cMatrixf mtxAttachedStart;
+
+    static bool mbAllowAttachment;
 };
 
 //----------------------------------------------
 
-class cLuxAreaLoader_Sticky : public iLuxAreaLoader
-{
+class cLuxAreaLoader_Sticky : public iLuxAreaLoader {
 public:
-	cLuxAreaLoader_Sticky(const tString& asName);
-	~cLuxAreaLoader_Sticky();
+    cLuxAreaLoader_Sticky(const tString &asName);
 
-	iLuxArea *CreateArea(const tString& asName, int alID, cLuxMap *apMap);
-	
-	void LoadVariables(iLuxArea *apArea, cWorld *apWorld);
-	void SetupArea(iLuxArea *apArea, cWorld *apWorld);
-	
+    ~cLuxAreaLoader_Sticky();
+
+    iLuxArea *CreateArea(const tString &asName, int alID, cLuxMap *apMap);
+
+    void LoadVariables(iLuxArea *apArea, cWorld *apWorld);
+
+    void SetupArea(iLuxArea *apArea, cWorld *apWorld);
+
 };
 
 //----------------------------------------------

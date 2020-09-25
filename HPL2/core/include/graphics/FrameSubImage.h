@@ -97,6 +97,6 @@ namespace hpl {
 	typedef std::vector<cFrameSubImage*> tResourceImageVec;
 	typedef tResourceImageVec::iterator tResourceImageVecIt;
 
-};
+}
 
 #endif // HPL_RESOURCE_IMAGE_H

@@ -109,5 +109,5 @@ namespace hpl {
 		cVector2l mvSize;
 
 	};
-};
+}
 #endif // HPL_TEXTURE_H

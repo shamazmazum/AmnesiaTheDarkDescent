@@ -101,5 +101,5 @@ namespace hpl {
 		int mlNumOfImages;
 		int mlNumOfMipMaps;
 	};
-};
+}
 #endif // HPL_BITMAP_H

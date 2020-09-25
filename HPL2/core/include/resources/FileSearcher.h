@@ -78,5 +78,5 @@ namespace hpl {
 		tWString msNull;
 	};
 
-};
+}
 #endif // HPL_FILESEARCHER_H

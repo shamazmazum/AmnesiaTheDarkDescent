@@ -151,5 +151,5 @@ namespace hpl {
 		cMesh* mpParent;
 	};
 
-};
+}
 #endif // HPL_SUB_MESH_H

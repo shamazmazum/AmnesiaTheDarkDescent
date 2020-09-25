@@ -114,5 +114,5 @@ namespace hpl {
 		bool mbLog;
 	};
 
-};
+}
 #endif // HPL_Physics_H
