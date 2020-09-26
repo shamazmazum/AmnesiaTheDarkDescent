@@ -75,7 +75,7 @@ There are a few extra steps required to be able to successfully build everything
 
 To run the compiled binary, copy it to your Amnesia installation folder. For example copy the `Amnesia.bin.x86_64` to your game folder. Run it, and the game should start directly.
 
-## Toubleshooting
+## Troubleshooting
 * **"When I compile `Lux`, I get an error message "fatal error RC1015: cannot open include file 'afxres.h'".**"
 * You need to install the `Microsoft Foundation Classes for C++`. If it still doesn't work, change `afxres.h` to `windows.h`. It should compile then.
 
