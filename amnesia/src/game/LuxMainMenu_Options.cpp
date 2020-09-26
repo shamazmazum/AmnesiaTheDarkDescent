@@ -851,20 +851,20 @@ void cLuxMainMenu_Options::AddAdvancedGfxOptions(cWidgetDummy* apDummy)
 		mpChBBloom->SetFocusNavigation(eUIArrow_Up, mpChBShadows);
 		mpChBSepia->SetFocusNavigation(eUIArrow_Up, mpCBShadowQuality);
 		mpChBInsanity->SetFocusNavigation(eUIArrow_Up, mpCBShadowRes);
-		mpChBColorGrading->SetFocusNavigation(eUIArrow_Up, mpChBColorGrading);
+		mpChBColorGrading->SetFocusNavigation(eUIArrow_Up, mpChBInsanity);
 
 		mpChBBloom->SetFocusNavigation(eUIArrow_Right, mpChBSepia);
 		mpChBSepia->SetFocusNavigation(eUIArrow_Right, mpChBInsanity);
-		mpChBInsanity->SetFocusNavigation(eUIArrow_Right, mpChBColorGrading);
+		mpChBInsanity->SetFocusNavigation(eUIArrow_Down, mpChBColorGrading);
 
 		mpChBSepia->SetFocusNavigation(eUIArrow_Left, mpChBBloom);
 		mpChBInsanity->SetFocusNavigation(eUIArrow_Left, mpChBSepia);
-		mpChBColorGrading->SetFocusNavigation(eUIArrow_Left, mpChBColorGrading);
+		mpChBColorGrading->SetFocusNavigation(eUIArrow_Left, mpChBRadialBlur);
 
 		mpChBBloom->SetFocusNavigation(eUIArrow_Down, mpChBImageTrail);
 		mpChBSepia->SetFocusNavigation(eUIArrow_Down, mpChBRadialBlur);
 		mpChBInsanity->SetFocusNavigation(eUIArrow_Down, mpChBRadialBlur);
-		mpChBColorGrading->SetFocusNavigation(eUIArrow_Down, mpChBColorGrading);
+		mpChBColorGrading->SetFocusNavigation(eUIArrow_Down, mpChBSSAO);
 
 		mpChBImageTrail->SetFocusNavigation(eUIArrow_Up, mpChBBloom);
 		mpChBRadialBlur->SetFocusNavigation(eUIArrow_Up, mpChBSepia);
@@ -874,6 +874,8 @@ void cLuxMainMenu_Options::AddAdvancedGfxOptions(cWidgetDummy* apDummy)
 
 		mpChBImageTrail->SetFocusNavigation(eUIArrow_Down, mpChBSSAO);
 		mpChBRadialBlur->SetFocusNavigation(eUIArrow_Down, mpCBSSAOSamples);
+
+		mpChBRadialBlur->SetFocusNavigation(eUIArrow_Right, mpChBColorGrading);
 	}
 
 	{
