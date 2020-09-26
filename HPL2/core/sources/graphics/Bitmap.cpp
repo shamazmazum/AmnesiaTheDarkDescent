@@ -319,6 +319,38 @@ namespace hpl {
 	}
 	
 	//-----------------------------------------------------------------------
+	
+	void cBitmap::SetPixel(int alImage, int alMipMap, const cVector3l& avPixelPos, unsigned char* apPixelData)
+	{
+		cBitmapData* pData = GetData(alImage, alMipMap);
+
+		unsigned char* pPixelData = &pData->mpData[avPixelPos.z*mvSize.x*mvSize.y*mlBytesPerPixel + avPixelPos.y*mvSize.x*mlBytesPerPixel + avPixelPos.x*mlBytesPerPixel];
+
+		for(int i=0; i<mlBytesPerPixel; ++i)
+		{
+			*pPixelData = *apPixelData;
+
+			++pPixelData;
+			++apPixelData;
+		}
+	}
+
+	void cBitmap::GetPixel(int alImage, int alMipMap, const cVector3l& avPixelPos, unsigned char* apPixelData)
+	{
+		cBitmapData* pData = GetData(alImage, alMipMap);
+
+		unsigned char* pPixelData = &pData->mpData[avPixelPos.z*mvSize.x*mvSize.y*mlBytesPerPixel + avPixelPos.y*mvSize.x*mlBytesPerPixel + avPixelPos.x*mlBytesPerPixel];
+
+		for(int i=0; i<mlBytesPerPixel; ++i)
+		{
+			*apPixelData = *pPixelData;
+
+			++pPixelData;
+			++apPixelData;
+		}
+	}
+
+	//-----------------------------------------------------------------------
 
 
 	//////////////////////////////////////////////////////////////////////////

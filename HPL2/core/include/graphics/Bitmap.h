@@ -81,6 +81,9 @@ namespace hpl {
 					int alSrcImage=0, int alSrcMipMap=0);
 
 		
+		void SetPixel(int alImage, int alMipMapLevel, const cVector3l& avPixelPos, unsigned char* apPixelData);
+		void GetPixel(int alImage, int alMipMapLevel, const cVector3l& avPixelPos, unsigned char* apDestPixelData);
+
 		
 	private:
 		void CopyPixel(	unsigned char* apDest, ePixelFormat aDestFormat, 
@@ -101,5 +104,5 @@ namespace hpl {
 		int mlNumOfImages;
 		int mlNumOfMipMaps;
 	};
-}
+};
 #endif // HPL_BITMAP_H

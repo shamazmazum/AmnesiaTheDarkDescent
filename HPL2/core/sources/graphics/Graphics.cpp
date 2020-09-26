@@ -48,6 +48,7 @@
 
 #include "graphics/PostEffect_Bloom.h"
 #include "graphics/PostEffect_ColorConvTex.h"
+#include "graphics/PostEffect_ColorGrading.h"
 #include "graphics/PostEffect_ImageTrail.h"
 #include "graphics/PostEffect_RadialBlur.h"
 
@@ -212,6 +213,7 @@ namespace hpl {
 			AddPostEffectType(hplNew( cPostEffectType_ColorConvTex, (this, apResources)) );
 			AddPostEffectType(hplNew( cPostEffectType_ImageTrail, (this, apResources)) );
 			AddPostEffectType(hplNew( cPostEffectType_RadialBlur, (this, apResources)) );
+			AddPostEffectType(hplNew( cPostEffectType_ColorGrading, (this, apResources)) );
 		}
 		
 		Log("--------------------------------------------------------\n\n");
