@@ -149,6 +149,7 @@ enum eLuxAreaType {
     eLuxAreaType_Examine,
     eLuxAreaType_Sign,
     eLuxAreaType_SlimeDamage,
+	eLuxAreaType_ColorGrading,
 
     eLuxAreaType_LastEnum
 };

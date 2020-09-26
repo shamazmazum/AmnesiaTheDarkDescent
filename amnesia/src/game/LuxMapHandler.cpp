@@ -182,6 +182,16 @@ cLuxMapHandler::cLuxMapHandler() : iLuxUpdateable("LuxMapHandler") {
     pPostEffectComp->AddPostEffect(mpPostEffect_Sepia, 4);
     mpPostEffect_Sepia->SetActive(false);
 
+	//Color Grading
+	cPostEffectParams_ColorGrading colorGradingParams;
+	colorGradingParams.msTextureFile1 = "colorgrading_base.png";
+	colorGradingParams.msTextureFile2 = "";
+	colorGradingParams.mfCrossFadeAlpha = 0.0f;
+	colorGradingParams.mbIsReinitialisation = true;
+	mpPostEffect_ColorGrading = pGraphics->CreatePostEffect(&colorGradingParams);
+	pPostEffectComp->AddPostEffect(mpPostEffect_ColorGrading, 3);
+	mpPostEffect_ColorGrading->SetActive(true);
+
     //////////////////////////
     //Saving
     mpSavedGame = hplNew(cLuxSavedGameMapCollection, ());
@@ -383,13 +393,16 @@ void cLuxMapHandler::ChangeMap(const tString &asMapName, const tString &asStartP
 //-----------------------------------------------------------------------
 
 cLuxMap *cLuxMapHandler::LoadMap(const tString &asFileName, bool abLoadEntities) {
-    cLuxMap *pMap = hplNew(cLuxMap, (FileToMapName(asFileName)));
+	const tString & mapname = FileToMapName(asFileName);
 
-    pMap->LoadFromFile(msMapFolder + asFileName, abLoadEntities);
+	gpBase->mpEffectHandler->GetColorGrading()->InitializeLUT(mapname + "_colorgrading.png");
 
-    mlstMaps.push_back(pMap);
+	cLuxMap *pMap = hplNew(cLuxMap, (mapname));
 
-    return pMap;
+	pMap->LoadFromFile(msMapFolder + asFileName, abLoadEntities);
+	mlstMaps.push_back(pMap);
+
+	return pMap;
 }
 //-----------------------------------------------------------------------
 
@@ -507,11 +520,10 @@ void cLuxMapHandler::AppGotInputFocus() {
 
 void cLuxMapHandler::LoadMainConfig() {
     mpPostEffect_Bloom->SetDisabled(gpBase->mpMainConfig->GetBool("Graphics", "PostEffectBloom", true) == false);
-    mpPostEffect_ImageTrail->SetDisabled(
-            gpBase->mpMainConfig->GetBool("Graphics", "PostEffectImageTrail", true) == false);
+    mpPostEffect_ImageTrail->SetDisabled(gpBase->mpMainConfig->GetBool("Graphics", "PostEffectImageTrail", true) == false);
     mpPostEffect_Sepia->SetDisabled(gpBase->mpMainConfig->GetBool("Graphics", "PostEffectSepia", true) == false);
-    mpPostEffect_RadialBlur->SetDisabled(
-            gpBase->mpMainConfig->GetBool("Graphics", "PostEffectRadialBlur", true) == false);
+    mpPostEffect_RadialBlur->SetDisabled(gpBase->mpMainConfig->GetBool("Graphics", "PostEffectRadialBlur", true) == false);
+	mpPostEffect_ColorGrading->SetDisabled(gpBase->mpMainConfig->GetBool("Graphics", "PostEffectColorGrading", true) == false);
 
     cRenderSettings *pRenderSettings = mpViewport->GetRenderSettings();
     pRenderSettings->mbUseEdgeSmooth = gpBase->mpConfigHandler->mbEdgeSmooth; //This is saved in config handler!
@@ -522,6 +534,7 @@ void cLuxMapHandler::SaveMainConfig() {
     gpBase->mpMainConfig->SetBool("Graphics", "PostEffectImageTrail", mpPostEffect_ImageTrail->IsDisabled() == false);
     gpBase->mpMainConfig->SetBool("Graphics", "PostEffectSepia", mpPostEffect_Sepia->IsDisabled() == false);
     gpBase->mpMainConfig->SetBool("Graphics", "PostEffectRadialBlur", mpPostEffect_RadialBlur->IsDisabled() == false);
+	gpBase->mpMainConfig->SetBool("Graphics", "PostEffectColorGrading", mpPostEffect_ColorGrading->IsDisabled() == false);
 }
 
 //-----------------------------------------------------------------------

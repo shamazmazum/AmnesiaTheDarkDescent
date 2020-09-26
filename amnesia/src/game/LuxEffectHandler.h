@@ -173,6 +173,46 @@ private:
 
 //-----------------------------------------
 
+class cLuxEffect_ColorGrading : public iLuxEffect
+{
+	friend class cLuxEffectHandler_SaveData;
+public:
+	cLuxEffect_ColorGrading();
+
+	void InitializeLUT(tString asBaseEnvironmentLUT);
+	void EnterLUTEnvironment(tString asEnvironmentLUT, float afFadeTime);
+	void LeaveLUTEnvironment(tString asEnvironmentLUT);
+	void FadeGameplayLUTTo(tString asEnvironmentLUT, float afFadeTime);
+	void FadeOutGameplayLUT(float afFadeTime);
+
+	virtual bool IsAlwaysOn() { return true; }
+
+	void Update(float afTimeStep);
+	void OnDraw(float afFrameTime) {}
+	void Reset();
+
+private:
+
+	void FadeFromTo(tString asFromTexture, tString asToTexture, float afFadeTime);
+
+	bool
+		mbIsCrossFading;
+
+	tStringList msEnvironmentLUTs;
+	tFloatList msEnvironmentLUTFadeTimes;
+
+	tString msGameplayLUT;
+	float mfGameplayFadeTime;
+
+	tString msFadeTargetLUT;
+
+	float mfCrossFadeAlpha;
+	bool mbIsFadingUp;
+	float mfFadeSpeed;
+};
+
+//-----------------------------------------
+
 class cLuxEffect_ShakeScreen_Shake {
 public:
     float mfMaxSize;
@@ -440,6 +480,8 @@ public:
 
     cLuxEffect_PlayCommentary *GetPlayCommentary() { return mpPlayCommentary; }
 
+	cLuxEffect_ColorGrading *GetColorGrading() { return mpColorGrading; }
+
 private:
     cLuxEffect_Fade *mpFade;
     cLuxEffect_Flash *mpFlash;
@@ -451,6 +493,7 @@ private:
     cLuxEffect_RadialBlur *mpRadialBlur;
     cLuxEffect_EmotionFlash *mpEmotionFlash;
     cLuxEffect_PlayCommentary *mpPlayCommentary;
+	cLuxEffect_ColorGrading *mpColorGrading;
 
     std::vector<iLuxEffect *> mvEffects;
 
