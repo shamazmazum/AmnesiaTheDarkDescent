@@ -66,12 +66,7 @@ There are a few extra steps required to be able to successfully build everything
 1. Ensure you have `make` and `cmake` installed.
 2. Clone the project and enter the folder
 3. Extract `./HPL2/dependencies.zip` to the same folder it's in
-4. Open a terminal in `./HPL2/dependencies/lib/linux/lib64` and run ([credit](https://github.com/FrictionalGames/AmnesiaTheDarkDescent/pull/2#issuecomment-697648592)):
-
-    ```
-	for f in `file * | grep ASCII | cut -d: -f1`; do ln -fs `cut -d' ' -f2 $f` $f; done
-	```
-
+4. Run the script file at `./HPL2/dependencies/lib/linux/lib64/fix_symlinks.sh` to fix broken symlinks from the .zip file
 5. Open a terminal in `./amnesia/src` and run `cmake .`
 6. With a terminal in `./amnesia/src` do `make` (or use `make -jX` where X is the number of jobs you want to run to speed things up, based on your CPU threads)
 7. The build should compile and the resulting binaries will be found in `./amnesia/src`
