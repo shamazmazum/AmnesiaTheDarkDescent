@@ -454,6 +454,10 @@ void cLuxScriptHandler::InitScriptFunctions()
 	AddFunc("void StartScreenShake(float afAmount, float afTime, float afFadeInTime,float afFadeOutTime)",(void *)StartScreenShake);
 	AddFunc("bool GetFlashbackIsActive()", (void *)GetFlashbackIsActive);
 
+	AddFunc("void ShowScreenImage(string &in asImageName, float afX, float afY, float afScale, bool abUseRelativeCoordinates, float afDuration, float afFadeIn, float afFadeOut)", (void*)ShowScreenImage);
+	AddFunc("void HideScreenImageImmediately()", (void*)HideScreenImageImmediately);
+	AddFunc("void HideScreenImageWithFade(float afFadeOut)", (void*)HideScreenImageWithFade);
+
 	AddFunc("void SetInsanitySetEnabled(string &in asSet, bool abX)", (void *)SetInsanitySetEnabled);
 	AddFunc("void StartRandomInsanityEvent()", (void *)StartRandomInsanityEvent);
 	AddFunc("void StartInsanityEvent(string &in asEventName)", (void *)StartInsanityEvent);
@@ -1170,6 +1174,29 @@ void __stdcall cLuxScriptHandler::StartEffectEmotionFlash(string &asTextCat, str
 {
 	gpBase->mpEffectHandler->GetEmotionFlash()->Start(asTextCat, asTextEntry, asSound);
 }
+
+
+//-----------------------------------------------------------------------
+
+void __stdcall cLuxScriptHandler::ShowScreenImage(string& asImageName, float afX, float afY, float afScale, bool abUseRelativeCoordinates, float afDuration, float afFadeIn, float afFadeOut)
+{
+	gpBase->mpEffectHandler->GetScreenImage()->ShowImage(asImageName, afX, afY, afScale, abUseRelativeCoordinates, afDuration, afFadeIn, afFadeOut);
+}
+
+//-----------------------------------------------------------------------
+
+void __stdcall cLuxScriptHandler::HideScreenImageImmediately()
+{
+	gpBase->mpEffectHandler->GetScreenImage()->HideImmediately();
+}
+
+//-----------------------------------------------------------------------
+
+void __stdcall cLuxScriptHandler::HideScreenImageWithFade(float afFadeOut)
+{
+	gpBase->mpEffectHandler->GetScreenImage()->HideWithFade(afFadeOut);
+}
+
 
 //-----------------------------------------------------------------------
 

@@ -79,6 +79,42 @@ private:
 	int mlIconID;
 };
 
+class cLuxEffect_ScreenImage : public iLuxEffect
+{
+public:
+	cLuxEffect_ScreenImage();
+	~cLuxEffect_ScreenImage();
+
+	void ShowImage(const tString& asImageName, float afX, float afY, float afScale, bool abUseRelativeCoordinates, float afDuration, float afFadeIn, float afFadeOut);
+	void HideImmediately();
+	void HideWithFade(float afFadeOut);
+
+	void Update(float afTimeStep);
+	void OnDraw(float afFrameTime);
+	void Reset() {};
+
+private:
+
+	//////////////////////
+	//Data
+	cGuiSet* mpGuiSet;
+
+	tString msTextureName;
+
+	cGuiGfxElement* mpTextureGfx;
+
+	cVector3f
+		mvPosition;
+
+	float
+		mfFadeInDuration,
+		mfShowDuration,
+		mfFadeOutDuration,
+		mfFadeTimer,
+		mfScale,
+		mfCurrentFade;
+};
+
 //----------------------------------------------
 
 class cLuxEffect_EmotionFlash : public iLuxEffect
@@ -393,6 +429,7 @@ public:
 	cLuxEffect_RadialBlur *GetRadialBlur(){ return mpRadialBlur;}
 	cLuxEffect_EmotionFlash *GetEmotionFlash(){ return mpEmotionFlash;}
 	cLuxEffect_PlayCommentary *GetPlayCommentary(){ return  mpPlayCommentary;}
+	cLuxEffect_ScreenImage* GetScreenImage() { return mpScreenImage; }
 
 private:
 	cLuxEffect_Fade *mpFade;
@@ -405,6 +442,7 @@ private:
 	cLuxEffect_RadialBlur *mpRadialBlur;
 	cLuxEffect_EmotionFlash *mpEmotionFlash;
 	cLuxEffect_PlayCommentary *mpPlayCommentary;
+	cLuxEffect_ScreenImage* mpScreenImage;
 
 	std::vector<iLuxEffect*> mvEffects;	
 
