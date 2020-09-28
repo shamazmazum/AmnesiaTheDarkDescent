@@ -561,6 +561,10 @@ void cLevelEditor::OnInitLayout()
 	vHandlePos += cVector3f(pHandle->GetSize().x+10, 0, 0);
 	pHandle = mpLowerToolbar->AddClipPlaneControls();
 	pHandle->SetPosition(vHandlePos);
+	//New stuff:
+	vHandlePos += cVector3f(pHandle->GetSize().x+10, 0, 0);
+	pHandle = mpLowerToolbar->AddCommunityCredits();
+	pHandle->SetPosition(vHandlePos);
 
 	////////////////////////////////////
 	// Search Window
@@ -685,7 +689,7 @@ void cLevelEditor::OnLoadConfig()
 	}
 
 	// Window caption
-	msCaption = "HPL Level Editor";
+	msCaption = "HPL Level Editor (Community Edition)";
 	
 	SetLogFile(GetHomeDir() + _W("LevelEditor.log"));
 

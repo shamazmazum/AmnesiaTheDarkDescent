@@ -251,6 +251,16 @@ iWidget* iEditorWindowLowerToolbar::AddClipPlaneControls()
 	return mpGClipPlanes;
 }
 
+iWidget* iEditorWindowLowerToolbar::AddCommunityCredits()
+{
+	//mpVersionLabelDummy = mpSet->CreateWidgetGroup(0, cVector2f(290,43), _W("Credits"), mpBGFrame);
+	mpVersionLabelDummy = mpSet->CreateWidgetDummy(0, mpBGFrame);
+
+	mpGridPresetLabel = mpSet->CreateWidgetLabel(cVector3f(200, 4, 0.1f), cVector2f(32, 20), _W("Level Editor - Community version 1.0"), mpVersionLabelDummy);
+
+	return mpVersionLabelDummy;
+}
+
 //---------------------------------------------------------------
 
 void iEditorWindowLowerToolbar::SetFocusedClipPlane(int alX)

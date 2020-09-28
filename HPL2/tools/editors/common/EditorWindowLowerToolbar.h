@@ -41,6 +41,7 @@ public:
 	iWidget* AddLightingControls();
 	iWidget* AddCameraControls();
 	iWidget* AddClipPlaneControls();
+	iWidget* AddCommunityCredits();
 
 	void SetFocusedClipPlane(int alX);
 	int GetFocusedClipPlane();
@@ -100,6 +101,10 @@ protected:
 	cWidgetButton* mpBClipNormalSwitch;
 	cEditorInputNumber* mpInpClipPlaneHeight;
 	cWidgetButton* mpBClipPlaneCullSide;
+
+	//Credits
+	cWidgetDummy* mpVersionLabelDummy;
+	cWidgetLabel* mpVersionLabel;
 };
 
 //--------------------------------------------------------------------
