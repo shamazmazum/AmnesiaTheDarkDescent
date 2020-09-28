@@ -121,7 +121,10 @@ iWidget* iEditorWindowLowerToolbar::AddGridControls()
 	mpBSnap->SetToolTip(_W("Toggle grid snapping"));
 	mpBSnap->SetToolTipEnabled(true);
 
-	//mpSet->AddGlobalShortcut(0, eKey_C, mpBSnap, eGuiMessage_ButtonPressed);
+	mpSet->AddGlobalShortcut(0, eKey_C, mpBSnap, eGuiMessage_ButtonPressed);
+
+	/*mpShortcutToggleSnap = mpBSnap->AddShortcut(eKeyModifier_None, eKey_C);
+	mpShortcutToggleSnap->SetEnabled(true);*/
 
 	// Height and sep.
 	mpInpPlaneHeight = CreateInputNumber(cVector3f(65,5,0.1f), _W("Height"), "", mpGridControlsGroup, 50, 0.25f);
@@ -140,7 +143,7 @@ iWidget* iEditorWindowLowerToolbar::AddGridControls()
 	mpSnapPreset25->SetToolTip(_W("Set grid snapping to 25 cm"));
 	mpSnapPreset25->SetToolTipEnabled(true);
 
-	//name mpSnapPreset1 comes from when it was a 0.01 preset, didn't bother changing it
+	//name "mpSnapPreset1" comes from when it was a 0.01 preset, didn't bother changing it
 	mpSnapPreset1 = mpSet->CreateWidgetButton(cVector3f(245, 18, 0.1f), cVector2f(32, 20), _W("0.5"), mpGridControlsGroup);
 	mpSnapPreset1->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(InputCallback));
 	mpSnapPreset1->SetToolTip(_W("Set grid snapping to 1 cm"));
@@ -253,7 +256,6 @@ iWidget* iEditorWindowLowerToolbar::AddClipPlaneControls()
 
 iWidget* iEditorWindowLowerToolbar::AddCommunityCredits()
 {
-	//mpVersionLabelDummy = mpSet->CreateWidgetGroup(0, cVector2f(290,43), _W("Credits"), mpBGFrame);
 	mpVersionLabelDummy = mpSet->CreateWidgetDummy(0, mpBGFrame);
 
 	mpGridPresetLabel = mpSet->CreateWidgetLabel(cVector3f(200, 4, 0.1f), cVector2f(32, 20), _W("Level Editor - Community version 1.0"), mpVersionLabelDummy);
