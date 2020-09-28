@@ -63,6 +63,8 @@ iEditorWindowLowerToolbar::iEditorWindowLowerToolbar(iEditorBase* apEditor) : iE
 	mbClipPlaneAdded = false;
 	mbClipPlaneRemoved = false;
 	mbClipPlaneVecUpdated = false;
+
+	//mpShortcutToggleSnap = NULL;
 }
 
 //---------------------------------------------------------------
@@ -118,6 +120,11 @@ iWidget* iEditorWindowLowerToolbar::AddGridControls()
 	mpBSnap->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(InputCallback));
 	mpBSnap->SetToolTip(_W("Toggle grid snapping"));
 	mpBSnap->SetToolTipEnabled(true);
+
+	mpSet->AddGlobalShortcut(0, eKey_C, mpBSnap, eGuiMessage_ButtonPressed);
+
+	/*mpShortcutToggleSnap = mpBSnap->AddShortcut(eKeyModifier_None, eKey_C);
+	mpShortcutToggleSnap->SetEnabled(true);*/
 
 	// Height and sep.
 	mpInpPlaneHeight = CreateInputNumber(cVector3f(65,5,0.1f), _W("Height"), "", mpGridControlsGroup, 50, 0.25f);
