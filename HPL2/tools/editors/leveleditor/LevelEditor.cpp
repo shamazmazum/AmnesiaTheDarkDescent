@@ -347,6 +347,27 @@ bool cLevelEditor::MainMenu_ItemClick(iWidget* apWidget, const cGuiMessageData& 
 		AddWindow(mpWindowOptions);
 	}
 
+	///////////////////////////////////////////////
+	// Menu Item "Help.Shortcuts"
+	else if(apWidget==mpMainMenuShortcuts)
+	{
+		//_W("")
+		ShowMessageBox(_W("New Shortcuts"), 
+						_W("Grid preset 1:     Shift+Q  Grid preset 2:     Shift+W  Grid preset 3:     Shift+E"), 
+						_W("Close"), _W(""),
+						NULL, NULL);
+	}
+
+	///////////////////////////////////////////////
+	// Menu Item "Help.About"
+	else if(apWidget==mpMainMenuAbout)
+	{
+		ShowMessageBox(_W("About"), 
+						_W("We made this [br]and like shieeet"), 
+						_W("Close"), _W(""),
+						NULL, NULL);
+	}
+
 
 	return true;
 }
@@ -904,6 +925,15 @@ cWidgetMainMenu* cLevelEditor::CreateMainMenu()
 	// Options
 	mpMainMenuOptions = pItem->AddMenuItem(_W("Options"));
 	mpMainMenuOptions->AddCallback(eGuiMessage_ButtonPressed,this,kGuiCallback(MainMenu_ItemClick));
+
+	//Help tab - community stuff
+    pItem = mpMainMenu->AddMenuItem(_W("Help"));
+
+    mpMainMenuAbout = pItem->AddMenuItem(_W("About"));
+    mpMainMenuAbout->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(MainMenu_ItemClick));
+
+	mpMainMenuShortcuts = pItem->AddMenuItem(_W("New shortcuts"));
+    mpMainMenuShortcuts->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(MainMenu_ItemClick));
 
 	return mpMainMenu;
 }
