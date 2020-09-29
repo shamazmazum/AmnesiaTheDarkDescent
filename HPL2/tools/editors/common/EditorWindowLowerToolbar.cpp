@@ -258,7 +258,8 @@ iWidget* iEditorWindowLowerToolbar::AddCommunityCredits()
 {
 	mpVersionLabelDummy = mpSet->CreateWidgetDummy(0, mpBGFrame);
 
-	mpGridPresetLabel = mpSet->CreateWidgetLabel(cVector3f(200, 4, 0.1f), cVector2f(32, 20), _W("Level Editor - Community version 1.0"), mpVersionLabelDummy);
+	//See header file for the community version string
+	mpGridPresetLabel = mpSet->CreateWidgetLabel(cVector3f(200, 4, 0.1f), cVector2f(32, 20), COMMUNITY_VERSION, mpVersionLabelDummy);
 
 	return mpVersionLabelDummy;
 }
