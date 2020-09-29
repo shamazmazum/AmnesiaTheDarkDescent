@@ -135,20 +135,20 @@ iWidget* iEditorWindowLowerToolbar::AddGridControls()
 
 	mpSnapPreset5 = mpSet->CreateWidgetButton(cVector3f(175, 18, 0.1f), cVector2f(32, 20), _W("0.05"), mpGridControlsGroup);
 	mpSnapPreset5->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(InputCallback));
-	mpSnapPreset5->SetToolTip(_W("Set grid snapping to 5 cm"));
+	mpSnapPreset5->SetToolTip(_W("Set grid snapping to 5 cm (Ctrl+Q)"));
 	mpSnapPreset5->SetToolTipEnabled(true);
 	mpSet->AddGlobalShortcut(eKeyModifier_Shift, eKey_Q, mpSnapPreset5, eGuiMessage_ButtonPressed);
 
 	mpSnapPreset25 = mpSet->CreateWidgetButton(cVector3f(210, 18, 0.1f), cVector2f(32, 20), _W("0.25"), mpGridControlsGroup);
 	mpSnapPreset25->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(InputCallback));
-	mpSnapPreset25->SetToolTip(_W("Set grid snapping to 25 cm"));
+	mpSnapPreset25->SetToolTip(_W("Set grid snapping to 25 cm (Ctrl+W)"));
 	mpSnapPreset25->SetToolTipEnabled(true);
 	mpSet->AddGlobalShortcut(eKeyModifier_Shift, eKey_W, mpSnapPreset25, eGuiMessage_ButtonPressed);
 
 	//name "mpSnapPreset1" comes from when it was a 0.01 preset, didn't bother changing it
 	mpSnapPreset1 = mpSet->CreateWidgetButton(cVector3f(245, 18, 0.1f), cVector2f(32, 20), _W("0.5"), mpGridControlsGroup);
 	mpSnapPreset1->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(InputCallback));
-	mpSnapPreset1->SetToolTip(_W("Set grid snapping to 1 cm"));
+	mpSnapPreset1->SetToolTip(_W("Set grid snapping to 50 cm (Ctrl+E)"));
 	mpSnapPreset1->SetToolTipEnabled(true);
 	mpSet->AddGlobalShortcut(eKeyModifier_Shift, eKey_E, mpSnapPreset1, eGuiMessage_ButtonPressed);
 

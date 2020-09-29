@@ -353,7 +353,7 @@ bool cLevelEditor::MainMenu_ItemClick(iWidget* apWidget, const cGuiMessageData& 
 	{
 		//_W("")
 		ShowMessageBox(_W("New Shortcuts"), 
-						_W("Grid preset 1:     Shift+Q  Grid preset 2:     Shift+W  Grid preset 3:     Shift+E"), 
+						_W("A full list of new shortcuts is available in an attached text file."), 
 						_W("Close"), _W(""),
 						NULL, NULL);
 	}
@@ -362,8 +362,8 @@ bool cLevelEditor::MainMenu_ItemClick(iWidget* apWidget, const cGuiMessageData& 
 	// Menu Item "Help.About"
 	else if(apWidget==mpMainMenuAbout)
 	{
-		ShowMessageBox(_W("About"), 
-						_W("We made this [br]and like shieeet"), 
+		ShowMessageBox(_W("Find us"), 
+						_W("You can reach us on the official FG Discord server or at github.com/TiManGames/AmnesiaTheDarkDescent"), 
 						_W("Close"), _W(""),
 						NULL, NULL);
 	}
