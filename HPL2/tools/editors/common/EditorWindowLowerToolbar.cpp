@@ -118,10 +118,10 @@ iWidget* iEditorWindowLowerToolbar::AddGridControls()
 	mpBSnap->SetToggleable(true);
 	mpBSnap->SetImage(pImg);
 	mpBSnap->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(InputCallback));
-	mpBSnap->SetToolTip(_W("Toggle grid snapping"));
+	mpBSnap->SetToolTip(_W("Toggle grid snapping (R)"));
 	mpBSnap->SetToolTipEnabled(true);
 
-	mpSet->AddGlobalShortcut(0, eKey_C, mpBSnap, eGuiMessage_ButtonPressed);
+	mpSet->AddGlobalShortcut(0, eKey_R, mpBSnap, eGuiMessage_ButtonPressed);
 
 	/*mpShortcutToggleSnap = mpBSnap->AddShortcut(eKeyModifier_None, eKey_C);
 	mpShortcutToggleSnap->SetEnabled(true);*/
@@ -200,13 +200,13 @@ iWidget* iEditorWindowLowerToolbar::AddCameraControls()
 {
 	mpHandleCamera = mpSet->CreateWidgetDummy(0, mpBGFrame);
 
-
 	mpBCameraLockToGrid = mpSet->CreateWidgetButton(0, 19, _W("LT"), mpHandleCamera);
 
 	mpBCameraLockToGrid->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(InputCallback));
 	mpBCameraLockToGrid->SetToggleable(true);
-	mpBCameraLockToGrid->SetToolTip(_W("Lock camera tracking to grid"));
+	mpBCameraLockToGrid->SetToolTip(_W("Lock camera tracking to grid (T)"));
 	mpBCameraLockToGrid->SetToolTipEnabled(true);
+	mpSet->AddGlobalShortcut(0, eKey_T, mpBCameraLockToGrid, eGuiMessage_ButtonPressed);
 
 	mpBCameraFocusOnSelection = mpSet->CreateWidgetButton(cVector3f(0,21,0), 19, _W("F"), mpHandleCamera);
 
@@ -284,8 +284,6 @@ int iEditorWindowLowerToolbar::GetFocusedClipPlane()
 
 	return -1;
 }
-
-//---------------------------------------------------------------
 
 //---------------------------------------------------------------
 
@@ -447,7 +445,12 @@ bool iEditorWindowLowerToolbar::InputCallback(iWidget* apWidget, const cGuiMessa
 	///////////////////////////
 	// Grid snap button
 	else if(apWidget==mpBSnap)
-		pGrid->SetSnapToGrid(mpBSnap->IsPressed());
+	{
+		bool bSnap = pGrid->GetSnapToGrid();
+		pGrid->SetSnapToGrid(!bSnap);
+		mpBSnap->SetPressed(!bSnap, false);
+	}
+		//pGrid->SetSnapToGrid(mpBSnap->IsPressed());
 	///////////////////////////
 	// Ambient light button
 	else if(apWidget==mpBGlobalAmbientLight)
@@ -460,7 +463,12 @@ bool iEditorWindowLowerToolbar::InputCallback(iWidget* apWidget, const cGuiMessa
 	// Camera lock to grid button
 	else if(apWidget==mpBCameraLockToGrid)
 	{
-		mpEditor->GetFocusedViewport()->GetVCamera()->LockToGrid(mpBCameraLockToGrid->IsPressed());
+		//Original code:
+		//mpEditor->GetFocusedViewport()->GetVCamera()->LockToGrid(mpBCameraLockToGrid->IsPressed());
+		cEditorViewportCamera* tmpCamHandle = mpEditor->GetFocusedViewport()->GetVCamera();
+		bool isLocked = tmpCamHandle->IsLockedToGrid();
+		tmpCamHandle->LockToGrid(!isLocked);
+		mpBCameraLockToGrid->SetPressed(!isLocked, false);
 	}
 	else if(apWidget==mpBCameraFocusOnSelection)
 	{
