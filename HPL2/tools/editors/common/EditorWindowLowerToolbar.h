@@ -26,7 +26,7 @@
 
 using namespace hpl;
 
-#define COMMUNITY_VERSION _W("Level Editor - Community version 0.2.0")
+#define COMMUNITY_VERSION _W("Level Editor - Community version 0.2.1")
 
 //---------------------------------------------------------------
 
@@ -107,6 +107,7 @@ protected:
 	//Credits
 	cWidgetDummy* mpVersionLabelDummy;
 	cWidgetLabel* mpVersionLabel;
+	cWidgetImage* mpVanityLogo;
 };
 
 //--------------------------------------------------------------------

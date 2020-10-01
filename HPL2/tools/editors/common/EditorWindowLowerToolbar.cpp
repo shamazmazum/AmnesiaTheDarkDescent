@@ -100,9 +100,6 @@ iWidget* iEditorWindowLowerToolbar::AddGridControls()
 	mpGridControlsGroup = mpSet->CreateWidgetGroup(0,cVector2f(280,43),_W("Grid Controls"), mpBGFrame);
 	mpGridControlsGroup->SetDefaultFontSize(iEditorInput::GetFontSize());
 
-
-	// Buttons
-
 	// Plane switch
 	mpBPlaneSwitch = mpSet->CreateWidgetButton(cVector3f(5,10,0.1f), 25, _W(""), mpGridControlsGroup);
 	mpBPlaneSwitch->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(InputCallback));
@@ -122,9 +119,6 @@ iWidget* iEditorWindowLowerToolbar::AddGridControls()
 	mpBSnap->SetToolTipEnabled(true);
 
 	mpSet->AddGlobalShortcut(0, eKey_R, mpBSnap, eGuiMessage_ButtonPressed);
-
-	/*mpShortcutToggleSnap = mpBSnap->AddShortcut(eKeyModifier_None, eKey_C);
-	mpShortcutToggleSnap->SetEnabled(true);*/
 
 	// Height and sep.
 	mpInpPlaneHeight = CreateInputNumber(cVector3f(65,5,0.1f), _W("Height"), "", mpGridControlsGroup, 50, 0.25f);
@@ -261,8 +255,20 @@ iWidget* iEditorWindowLowerToolbar::AddCommunityCredits()
 {
 	mpVersionLabelDummy = mpSet->CreateWidgetDummy(0, mpBGFrame);
 
+	float offsetX = 30;
+
+	//Nate logo
+	/*mpVanityLogo = mpSet->CreateWidgetImage("nate.tga",
+											cVector3f(offsetX+0,0,0.1f),
+											cVector2f(32),
+											eGuiMaterial_Diffuse, false,
+											mpVersionLabelDummy, "");
+	mpVanityLogo->SetToolTip(_W("Neil Barney Works LTD :)"));
+	mpVanityLogo->SetToolTipEnabled(true);
+	mpVanityLogo->AddCallback(eGuiMessage_MouseDown, this, kGuiCallback(InputCallback)); */
+
 	//See header file for the community version string
-	mpGridPresetLabel = mpSet->CreateWidgetLabel(cVector3f(200, 4, 0.1f), cVector2f(32, 20), COMMUNITY_VERSION, mpVersionLabelDummy);
+	mpVersionLabel = mpSet->CreateWidgetLabel(cVector3f(offsetX+40, 0, 0.1f), cVector2f(32, 20), COMMUNITY_VERSION, mpVersionLabelDummy);
 
 	return mpVersionLabelDummy;
 }
@@ -517,6 +523,13 @@ bool iEditorWindowLowerToolbar::InputCallback(iWidget* apWidget, const cGuiMessa
 	else if(apWidget==mpSnapPreset25)
 	{
 		mpInpSnapSep->SetValue(0.25f, true, true);
+	}
+	else if(apWidget==mpVanityLogo)
+	{
+		mpEditor->ShowMessageBox(_W("Why you click me"), 
+						_W("Easter egg text!"), 
+						_W("Close"), _W(""),
+						NULL, NULL);
 	}
 	
 	mpEditor->AddAction(pAction);
