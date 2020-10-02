@@ -363,15 +363,49 @@ bool cLevelEditor::MainMenu_ItemClick(iWidget* apWidget, const cGuiMessageData& 
 	else if(apWidget==mpMainMenuAbout)
 	{
 		ShowMessageBox(_W("Find us"), 
-						_W("You can reach us on the official FG Discord server or at github.com/TiManGames/AmnesiaTheDarkDescent"), 
-						_W("Close"), _W(""),
-						NULL, NULL);
+						_W("You can reach the creators of the Community Edition on the official FG Discord server or on GitHub:"), 
+						_W("Open website"), _W("Cancel"),
+						this, kGuiCallback(WebsiteCallback));
 	}
-
 
 	return true;
 }
 kGuiCallbackDeclaredFuncEnd(cLevelEditor, MainMenu_ItemClick);
+
+//--------------------------------------------------------------------
+//TODO: This entire section should be moved to a separate header file
+#ifdef WIN32
+#include <windows.h>
+#include <shellapi.h>
+#endif
+
+bool open_browser(const char* url, HWND parent = NULL)
+{
+    // Try normally, with the default verb (which will typically be "open")
+    HINSTANCE result = ShellExecuteA(parent, NULL, url, NULL, NULL, SW_SHOWNORMAL);
+
+    // If that fails due to privileges, let's ask for more and try again
+    if ((int)result == SE_ERR_ACCESSDENIED)
+        result = ShellExecuteA(parent, "runas", url, NULL, NULL, SW_SHOWNORMAL);
+
+    // Return whether or not we were successful.
+    return ((int)result > 32);
+}
+
+bool cLevelEditor::WebsiteCallback(iWidget* apWidget, const cGuiMessageData& aData)
+{
+	#if defined(WIN32)
+		open_browser("https://github.com/TiManGames/AmnesiaTheDarkDescent");
+	#elif defined(__linux__)
+		return false;
+	#elif defined(__APPLE__)
+		return false;
+	#endif
+
+	return true;
+}
+kGuiCallbackDeclaredFuncEnd(cLevelEditor, WebsiteCallback);
+
 
 //--------------------------------------------------------------------
 

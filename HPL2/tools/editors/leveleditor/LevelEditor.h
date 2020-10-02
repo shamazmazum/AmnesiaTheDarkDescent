@@ -111,6 +111,9 @@ public:
 	cLevelEditor();
 	~cLevelEditor();
 
+	bool WebsiteCallback(iWidget* apWidget, const cGuiMessageData& aData); //Community stuff
+	kGuiCallbackDeclarationEnd(WebsiteCallback);
+
 	void LookAtEntity(int alEntityID);
 
 	// Open up a file picker for importing the contents of a map file into the current map. 
