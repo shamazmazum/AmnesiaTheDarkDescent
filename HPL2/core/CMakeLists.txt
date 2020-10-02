@@ -244,6 +244,8 @@ FindPrebuiltLibrary(GLEW_LIBRARY GLEW)
 FindPrebuiltLibrary(THEORA_LIBRARY theora)
 FindPrebuiltLibrary(DEVIL_LIBRARY IL)
 
+set(OpenGL_GL_PREFERENCE LEGACY)
+
 find_package(OpenGL)
 mark_as_advanced(NEWTON_LIBRARY ANGELSCRIPT_LIBRARY FBX_LIBRARY GLEW_LIBRARY THEORA_LIBRARY DEVIL_LIBRARY)
 
@@ -294,10 +296,10 @@ target_link_libraries(HPL2
 )
 
 
-if(APPLE)   
+if(APPLE)
     # helper function to copy the needed frameworks in at build time
     SET(HPL2_FRAMEWORKS ${HPL2_FRAMEWORKS} CACHE STRING "HPL2 copy frameworks")
-    SET(HPL2_LIBRARIES libSDL2.dylib libIL.1.dylib) 
+    SET(HPL2_LIBRARIES libSDL2.dylib libIL.1.dylib)
     SET(HPL2_LIBRARIES ${HPL2_LIBRARIES}  CACHE STRING "HPL2 copy libs")
     mark_as_advanced(HPL2_FRAMEWORKS HPL2_LIBRARIES)
 
@@ -344,7 +346,6 @@ FUNCTION(AddTestTarget target_name)
     )
 ENDFUNCTION()
 
-add_subdirectory(../tests tests)
 add_subdirectory(../tools tools)
 
-
+set(CMAKE_CXX_FLAGS "-fpermissive -no-pie")
