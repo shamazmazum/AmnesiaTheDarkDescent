@@ -1,20 +1,20 @@
 /*
- * Copyright © 2009-2020 Frictional Games
+ * Copyright © 2011-2020 Frictional Games
  * 
- * This file is part of Amnesia: The Dark Descent.
+ * This file is part of Amnesia: A Machine For Pigs.
  * 
- * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
+ * Amnesia: A Machine For Pigs is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version. 
 
- * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
+ * Amnesia: A Machine For Pigs is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
+ * along with Amnesia: A Machine For Pigs.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "EditorWindowLowerToolbar.h"
@@ -97,16 +97,15 @@ void iEditorWindowLowerToolbar::OnInitLayout()
 iWidget* iEditorWindowLowerToolbar::AddGridControls()
 {
 	// Grid Controls group
-	mpGridControlsGroup = mpSet->CreateWidgetGroup(0,cVector2f(200,43),_W("Grid Controls"), mpBGFrame);
+	mpGridControlsGroup = mpSet->CreateWidgetGroup(0,cVector2f(280,43),_W("Grid Controls"), mpBGFrame);
 	mpGridControlsGroup->SetDefaultFontSize(iEditorInput::GetFontSize());
-
-	// Buttons
 
 	// Plane switch
 	mpBPlaneSwitch = mpSet->CreateWidgetButton(cVector3f(5,10,0.1f), 25, _W(""), mpGridControlsGroup);
 	mpBPlaneSwitch->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(InputCallback));
 	mpBPlaneSwitch->SetToolTip(_W("Cycle through grid planes"));
 	mpBPlaneSwitch->SetToolTipEnabled(true);
+
 
 	////////////////////
 	// Snap controls
@@ -116,13 +115,42 @@ iWidget* iEditorWindowLowerToolbar::AddGridControls()
 	mpBSnap->SetToggleable(true);
 	mpBSnap->SetImage(pImg);
 	mpBSnap->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(InputCallback));
-	mpBSnap->SetToolTip(_W("Toggle grid snapping"));
+	mpBSnap->SetToolTip(_W("Toggle grid snapping (R)"));
 	mpBSnap->SetToolTipEnabled(true);
+
+	mpSet->AddGlobalShortcut(0, eKey_R, mpBSnap, eGuiMessage_ButtonPressed);
 
 	// Height and sep.
 	mpInpPlaneHeight = CreateInputNumber(cVector3f(65,5,0.1f), _W("Height"), "", mpGridControlsGroup, 50, 0.25f);
 	mpInpSnapSep = CreateInputNumber(cVector3f(120,5,0.1f), _W("Snap sep."), "", mpGridControlsGroup, 50, 0.25f); 
 
+	
+	mpGridPresetLabel = mpSet->CreateWidgetLabel(cVector3f(179, 4, 0.1f), cVector2f(32, 20), _W("Grid presets"), mpGridControlsGroup);
+
+	mpSnapPreset5 = mpSet->CreateWidgetButton(cVector3f(175, 18, 0.1f), cVector2f(32, 20), _W("0.05"), mpGridControlsGroup);
+	mpSnapPreset5->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(InputCallback));
+	mpSnapPreset5->SetToolTip(_W("Set grid snapping to 5 cm (Ctrl+Q)"));
+	mpSnapPreset5->SetToolTipEnabled(true);
+	mpSet->AddGlobalShortcut(eKeyModifier_Shift, eKey_Q, mpSnapPreset5, eGuiMessage_ButtonPressed);
+
+	mpSnapPreset25 = mpSet->CreateWidgetButton(cVector3f(210, 18, 0.1f), cVector2f(32, 20), _W("0.25"), mpGridControlsGroup);
+	mpSnapPreset25->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(InputCallback));
+	mpSnapPreset25->SetToolTip(_W("Set grid snapping to 25 cm (Ctrl+W)"));
+	mpSnapPreset25->SetToolTipEnabled(true);
+	mpSet->AddGlobalShortcut(eKeyModifier_Shift, eKey_W, mpSnapPreset25, eGuiMessage_ButtonPressed);
+
+	//name "mpSnapPreset1" comes from when it was a 0.01 preset, didn't bother changing it
+	mpSnapPreset1 = mpSet->CreateWidgetButton(cVector3f(245, 18, 0.1f), cVector2f(32, 20), _W("0.5"), mpGridControlsGroup);
+	mpSnapPreset1->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(InputCallback));
+	mpSnapPreset1->SetToolTip(_W("Set grid snapping to 50 cm (Ctrl+E)"));
+	mpSnapPreset1->SetToolTipEnabled(true);
+	mpSet->AddGlobalShortcut(eKeyModifier_Shift, eKey_E, mpSnapPreset1, eGuiMessage_ButtonPressed);
+
+	/*
+	cWidgetButton*	mpSnapPreset1;
+	cWidgetButton*	mpSnapPreset5;
+	cWidgetButton*	mpSnapPreset25;
+	*/
 	return mpGridControlsGroup;
 }
 
@@ -167,12 +195,15 @@ iWidget* iEditorWindowLowerToolbar::AddCameraControls()
 	mpHandleCamera = mpSet->CreateWidgetDummy(0, mpBGFrame);
 
 	mpBCameraLockToGrid = mpSet->CreateWidgetButton(0, 19, _W("LT"), mpHandleCamera);
+
 	mpBCameraLockToGrid->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(InputCallback));
 	mpBCameraLockToGrid->SetToggleable(true);
-	mpBCameraLockToGrid->SetToolTip(_W("Lock camera tracking to grid"));
+	mpBCameraLockToGrid->SetToolTip(_W("Lock camera tracking to grid (T)"));
 	mpBCameraLockToGrid->SetToolTipEnabled(true);
+	mpSet->AddGlobalShortcut(0, eKey_T, mpBCameraLockToGrid, eGuiMessage_ButtonPressed);
 
 	mpBCameraFocusOnSelection = mpSet->CreateWidgetButton(cVector3f(0,21,0), 19, _W("F"), mpHandleCamera);
+
 	mpBCameraFocusOnSelection->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(InputCallback));
 	mpBCameraFocusOnSelection->SetToolTip(_W("Focus on selection"));
 	mpBCameraFocusOnSelection->SetToolTipEnabled(true);
@@ -188,12 +219,14 @@ iWidget* iEditorWindowLowerToolbar::AddClipPlaneControls()
 	mpGClipPlanes = mpSet->CreateWidgetGroup(0, cVector2f(275,43), _W("Clip planes"), mpBGFrame);
 	mpGClipPlanes->SetDefaultFontSize(iEditorInput::GetFontSize());
 
+
 	mpInpClipPlanes = CreateInputEnum(cVector3f(5,0,0.1f), _W(""), "", tWStringList(), mpGClipPlanes,50);
 	mpInpClipPlanes->SetMaxShownItems(3);
 	mpBAddClipPlane = mpSet->CreateWidgetButton(cVector3f(60, 5, 0.1f), cVector2f(15), _W("+"), mpGClipPlanes);
 
 	mpBAddClipPlane->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(InputCallback));
 	mpBRemClipPlane = mpSet->CreateWidgetButton(cVector3f(60, 21, 0.1f), cVector2f(15), _W("-"), mpGClipPlanes);
+
 	mpBRemClipPlane->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(InputCallback));
 
 	// Buttons
@@ -201,6 +234,7 @@ iWidget* iEditorWindowLowerToolbar::AddClipPlaneControls()
 	mpBClipNormalSwitch->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(InputCallback));
 	mpBClipNormalSwitch->SetToolTip(_W("Cycle through clip plane alignments"));
 	mpBClipNormalSwitch->SetToolTipEnabled(true);
+
 
 	mpInpClipPlaneHeight = CreateInputNumber(cVector3f(130,5,0.1f), _W("Height"), "", mpGClipPlanes, 50, 0.25f);
 	mpSet->AddGlobalShortcut(0, eKey_O, mpInpClipPlaneHeight->GetInputWidget(), eGuiMessage_TextBoxValueUp);
@@ -211,9 +245,32 @@ iWidget* iEditorWindowLowerToolbar::AddClipPlaneControls()
 	mpBClipPlaneCullSide->SetToolTip(_W("Set culled plane side"));
 	mpBClipPlaneCullSide->SetToolTipEnabled(true);
 
+
 	mpInpClipPlaneActive = CreateInputBool(cVector3f(215,5,0.1f), _W("Active"), "", mpGClipPlanes);
 
 	return mpGClipPlanes;
+}
+
+iWidget* iEditorWindowLowerToolbar::AddCommunityCredits()
+{
+	mpVersionLabelDummy = mpSet->CreateWidgetDummy(0, mpBGFrame);
+
+	float offsetX = 30;
+
+	//Nate logo
+	/*mpVanityLogo = mpSet->CreateWidgetImage("nate.tga",
+											cVector3f(offsetX+0,0,0.1f),
+											cVector2f(32),
+											eGuiMaterial_Diffuse, false,
+											mpVersionLabelDummy, "");
+	mpVanityLogo->SetToolTip(_W("Neil Barney Works LTD :)"));
+	mpVanityLogo->SetToolTipEnabled(true);
+	mpVanityLogo->AddCallback(eGuiMessage_MouseDown, this, kGuiCallback(InputCallback)); */
+
+	//See header file for the community version string
+	mpVersionLabel = mpSet->CreateWidgetLabel(cVector3f(offsetX+40, 0, 0.1f), cVector2f(32, 20), COMMUNITY_VERSION, mpVersionLabelDummy);
+
+	return mpVersionLabelDummy;
 }
 
 //---------------------------------------------------------------
@@ -233,8 +290,6 @@ int iEditorWindowLowerToolbar::GetFocusedClipPlane()
 
 	return -1;
 }
-
-//---------------------------------------------------------------
 
 //---------------------------------------------------------------
 
@@ -396,7 +451,12 @@ bool iEditorWindowLowerToolbar::InputCallback(iWidget* apWidget, const cGuiMessa
 	///////////////////////////
 	// Grid snap button
 	else if(apWidget==mpBSnap)
-		pGrid->SetSnapToGrid(mpBSnap->IsPressed());
+	{
+		bool bSnap = pGrid->GetSnapToGrid();
+		pGrid->SetSnapToGrid(!bSnap);
+		mpBSnap->SetPressed(!bSnap, false);
+	}
+		//pGrid->SetSnapToGrid(mpBSnap->IsPressed());
 	///////////////////////////
 	// Ambient light button
 	else if(apWidget==mpBGlobalAmbientLight)
@@ -409,7 +469,12 @@ bool iEditorWindowLowerToolbar::InputCallback(iWidget* apWidget, const cGuiMessa
 	// Camera lock to grid button
 	else if(apWidget==mpBCameraLockToGrid)
 	{
-		mpEditor->GetFocusedViewport()->GetVCamera()->LockToGrid(mpBCameraLockToGrid->IsPressed());
+		//Original code:
+		//mpEditor->GetFocusedViewport()->GetVCamera()->LockToGrid(mpBCameraLockToGrid->IsPressed());
+		cEditorViewportCamera* tmpCamHandle = mpEditor->GetFocusedViewport()->GetVCamera();
+		bool isLocked = tmpCamHandle->IsLockedToGrid();
+		tmpCamHandle->LockToGrid(!isLocked);
+		mpBCameraLockToGrid->SetPressed(!isLocked, false);
 	}
 	else if(apWidget==mpBCameraFocusOnSelection)
 	{
@@ -446,6 +511,25 @@ bool iEditorWindowLowerToolbar::InputCallback(iWidget* apWidget, const cGuiMessa
 		{
 			pAction = hplNew(cEditorActionClipPlaneSetCullingOnPositiveSide,(pWorld, lClipPlaneIdx, !pClipPlane->GetCullingOnPositiveSide()));
 		}
+	}
+	else if(apWidget==mpSnapPreset1)
+	{
+		mpInpSnapSep->SetValue(0.5f, true, true);
+	}
+	else if(apWidget==mpSnapPreset5)
+	{
+		mpInpSnapSep->SetValue(0.05f, true, true);
+	}
+	else if(apWidget==mpSnapPreset25)
+	{
+		mpInpSnapSep->SetValue(0.25f, true, true);
+	}
+	else if(apWidget==mpVanityLogo)
+	{
+		mpEditor->ShowMessageBox(_W("Why you click me"), 
+						_W("Easter egg text!"), 
+						_W("Close"), _W(""),
+						NULL, NULL);
 	}
 	
 	mpEditor->AddAction(pAction);

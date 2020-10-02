@@ -347,6 +347,27 @@ bool cLevelEditor::MainMenu_ItemClick(iWidget* apWidget, const cGuiMessageData& 
 		AddWindow(mpWindowOptions);
 	}
 
+	///////////////////////////////////////////////
+	// Menu Item "Help.Shortcuts"
+	else if(apWidget==mpMainMenuShortcuts)
+	{
+		//_W("")
+		ShowMessageBox(_W("New Shortcuts"), 
+						_W("A full list of new shortcuts is available in an attached text file."), 
+						_W("Close"), _W(""),
+						NULL, NULL);
+	}
+
+	///////////////////////////////////////////////
+	// Menu Item "Help.About"
+	else if(apWidget==mpMainMenuAbout)
+	{
+		ShowMessageBox(_W("Find us"), 
+						_W("You can reach us on the official FG Discord server or at github.com/TiManGames/AmnesiaTheDarkDescent"), 
+						_W("Close"), _W(""),
+						NULL, NULL);
+	}
+
 
 	return true;
 }
@@ -561,6 +582,10 @@ void cLevelEditor::OnInitLayout()
 	vHandlePos += cVector3f(pHandle->GetSize().x+10, 0, 0);
 	pHandle = mpLowerToolbar->AddClipPlaneControls();
 	pHandle->SetPosition(vHandlePos);
+	//New stuff:
+	vHandlePos += cVector3f(pHandle->GetSize().x+10, 0, 0);
+	pHandle = mpLowerToolbar->AddCommunityCredits();
+	pHandle->SetPosition(vHandlePos);
 
 	////////////////////////////////////
 	// Search Window
@@ -685,7 +710,7 @@ void cLevelEditor::OnLoadConfig()
 	}
 
 	// Window caption
-	msCaption = "HPL Level Editor";
+	msCaption = "HPL Level Editor (Community Edition)";
 	
 	SetLogFile(GetHomeDir() + _W("LevelEditor.log"));
 
@@ -900,6 +925,15 @@ cWidgetMainMenu* cLevelEditor::CreateMainMenu()
 	// Options
 	mpMainMenuOptions = pItem->AddMenuItem(_W("Options"));
 	mpMainMenuOptions->AddCallback(eGuiMessage_ButtonPressed,this,kGuiCallback(MainMenu_ItemClick));
+
+	//Help tab - community stuff
+    pItem = mpMainMenu->AddMenuItem(_W("Help"));
+
+    mpMainMenuAbout = pItem->AddMenuItem(_W("About"));
+    mpMainMenuAbout->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(MainMenu_ItemClick));
+
+	mpMainMenuShortcuts = pItem->AddMenuItem(_W("New shortcuts"));
+    mpMainMenuShortcuts->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(MainMenu_ItemClick));
 
 	return mpMainMenu;
 }

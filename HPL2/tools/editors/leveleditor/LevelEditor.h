@@ -208,6 +208,9 @@ protected:
 	cWidgetMenuItem* mpMainMenuOptions;
 	cWidgetMenuItem* mpMainMenuCompound;
 
+	//Help menu - community
+	cWidgetMenuItem* mpMainMenuAbout;
+	cWidgetMenuItem* mpMainMenuShortcuts;
 
 	
 	////////////////////////////////
