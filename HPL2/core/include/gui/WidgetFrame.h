@@ -33,6 +33,8 @@ namespace hpl {
 		cWidgetFrame(cGuiSet *apSet, cGuiSkin *apSkin, bool abHScrollBar=false, bool abVScrollBar=false);
 		virtual ~cWidgetFrame();
 
+		void ChangeBackgroundForColorPicking(); //New stuff
+
 		void SetDrawFrame(bool abX){ mbDrawFrame = abX;}
 		bool GetDrawFrame(){ return mbDrawFrame;}
 		
