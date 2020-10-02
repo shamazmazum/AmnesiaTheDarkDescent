@@ -26,7 +26,7 @@
 
 using namespace hpl;
 
-#define COMMUNITY_VERSION _W("Level Editor - Community version 0.2.1")
+#define COMMUNITY_VERSION _W("Level Editor - Community version 0.2.2")
 
 //---------------------------------------------------------------
 

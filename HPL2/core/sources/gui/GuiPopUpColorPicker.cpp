@@ -1339,6 +1339,7 @@ namespace hpl {
 		mpFPreviousColor->SetBackGroundColor(mColor);
 		mpFPreviousColor->SetUserData(NULL);
 		mpFPreviousColor->SetDrawBackground(true);
+		mpFPreviousColor->ChangeBackgroundForColorPicking();
 		mpFPreviousColor->SetBackgroundZ(0.1f);
 
 		/////////////////////////////////////////////////////////////////
@@ -1356,6 +1357,7 @@ namespace hpl {
 			pRecent->SetUserData(&*itRecent);
 
 			pRecent->SetDrawBackground(true);
+			pRecent->ChangeBackgroundForColorPicking();
 			pRecent->SetBackgroundZ(0.1f);
 
 			vPos.y += pRecent->GetSize().y + 5;
