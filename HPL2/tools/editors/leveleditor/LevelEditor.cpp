@@ -377,8 +377,6 @@ kGuiCallbackDeclaredFuncEnd(cLevelEditor, MainMenu_ItemClick);
 #ifdef WIN32
 #include <windows.h>
 #include <shellapi.h>
-#endif
-
 bool open_browser(const char* url, HWND parent = NULL)
 {
     // Try normally, with the default verb (which will typically be "open")
@@ -391,6 +389,7 @@ bool open_browser(const char* url, HWND parent = NULL)
     // Return whether or not we were successful.
     return ((int)result > 32);
 }
+#endif
 
 bool cLevelEditor::WebsiteCallback(iWidget* apWidget, const cGuiMessageData& aData)
 {
