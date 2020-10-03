@@ -11,7 +11,8 @@ You should always work **on your own branches.**
 * `style/` - Reformatting code.
 * `chore/` - Maintenance of the project (Build script files, etc).
 * `docs/` - Adding project documentation.
-Aftet the `/` character, you will write in **Kebab case** the name of the branch. Keep it short and focus on the main subject changes (`this-is-kebab-case`)
+
+3. After the `/` character, you will write the name of the branch in `kebab-case`. Keep it short and focus on the main subject changes.
 
 Example:
 * `feat/congestion-tests`
