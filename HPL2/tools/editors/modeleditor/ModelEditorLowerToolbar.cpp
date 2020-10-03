@@ -87,11 +87,6 @@ void cModelEditorLowerToolbar::OnInitLayout()
 	pHandle = AddCameraControls();
 	pHandle->SetPosition(vPos);
 
-	//Community stuff
-	vPos.x += pHandle->GetSize().x+5;
-	pHandle = AddCommunityCredits();
-	pHandle->SetPosition(vPos);
-	
 }
 
 //---------------------------------------------------------------

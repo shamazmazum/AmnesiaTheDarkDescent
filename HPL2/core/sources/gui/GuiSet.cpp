@@ -1134,8 +1134,8 @@ namespace hpl {
 
 	cGuiPopUpColorPicker* cGuiSet::CreatePopUpColorPicker( cColor* apDestColor, const cVector3f& avPos,  void *apCallbackObject, tGuiCallbackFunc apCallback)
 	{
-		cGuiPopUpColorPicker* pPicker = hplNew(cGuiPopUpColorPicker, (mpGraphics, this, apDestColor, apCallbackObject, apCallback, NULL, NULL));
-
+		cGuiPopUpColorPicker* pPicker = hplNew( cGuiPopUpColorPicker,(this, mpSkin, avPos, apDestColor, apCallbackObject, apCallback));
+		
 		return pPicker;
 	}
 	

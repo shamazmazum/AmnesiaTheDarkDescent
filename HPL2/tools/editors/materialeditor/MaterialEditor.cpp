@@ -205,7 +205,7 @@ void cMaterialEditor::OnLoadConfig()
 	}
 
 	// Window caption
-	msCaption = "HPL Material Editor (Community Edition)";
+	msCaption = "HPL Material Editor";
 	
 	SetLogFile(GetHomeDir() + _W("MaterialEditor.log"));
 

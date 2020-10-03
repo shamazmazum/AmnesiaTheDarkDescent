@@ -49,12 +49,7 @@ protected:
 	// Data
 	cWidgetButton* mpButtonTest;
 
-	iEditorWindow* mpTestWindow;
-
-	//Credits
-	cWidgetDummy* mpVersionLabelDummy;
-	cWidgetLabel* mpVersionLabel;
-	cWidgetImage* mpVanityLogo;
+	iEditorWindow* mpTestWindow;	
 };
 
 //--------------------------------------------------------------------

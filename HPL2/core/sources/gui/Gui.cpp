@@ -787,7 +787,6 @@ namespace hpl {
 		AddGfx(FrameCornerLD);
 
 		AddGfx(FrameBackground);
-		AddGfx(FrameBackgroundColorPicking);
 
 		///////////////////////////////////
 		// Check box Graphics
