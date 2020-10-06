@@ -192,6 +192,8 @@ public:
 
 	void InitAchievements();
 
+	bool InitCommunityConfig();
+
 	/////////////////////////
 	// Public variables
 public:
@@ -306,6 +308,10 @@ public:
 
 	std::vector<iLuxUpdateable*> mvModules;
 
+	// Custom community related additions
+	cConfigFile* mpCommunityConfig;
+
+	tWString msSkin;
 };
 
 //----------------------------------------------

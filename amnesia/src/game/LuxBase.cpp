@@ -417,6 +417,10 @@ bool cLuxBase::Init(const tString &asCommandline)
 	// Load the config files
 	if(InitMainConfig()==false) return false;
 
+	/////////////////////////////
+	// Load community config
+	if(InitCommunityConfig()==false) return false;
+
 	Log("Version %d.%d \n",kCurrentVersion_Main, kCurrentVersion_Minor);
 
 	#ifdef COPY_PROTECTION_ENABLED
@@ -507,7 +511,7 @@ bool cLuxBase::Init(const tString &asCommandline)
 	//////////////////////////
 	//The init is over
 	InitOver();
-		
+	
 	return true;
 }
 
@@ -1064,7 +1068,7 @@ bool cLuxBase::InitUserConfig()
 	RunModuleMessage(eLuxUpdateableMessage_LoadUserConfig);
 
 	return true;
-}	
+}
 
 void cLuxBase::ExitConfig()
 {
@@ -1732,4 +1736,17 @@ void cLuxBase::InitAchievements()
 	mpAchievementHandler->UnlockAchievement(eLuxAchievement_StillAlive);
 	mpAchievementHandler->UnlockAchievement(eLuxAchievement_MasterArchivist);
 	*/
+}
+
+/**
+ * Load the community specific config where we can store additional settings
+ * that are otherwise not present in the default config files.
+ */
+bool cLuxBase::InitCommunityConfig()
+{
+	mpCommunityConfig = LoadConfigFile(_W("community_config.cfg"), msBaseSavePath + _W("community_config.cfg"));
+	if(mpCommunityConfig==NULL) return false;
+
+	msSkin = mpCommunityConfig->GetStringW("Main", "DefaultSkinFile", _W("gui_default.skin"));
+	return true;
 }
