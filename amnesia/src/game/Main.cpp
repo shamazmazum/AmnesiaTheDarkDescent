@@ -17,7 +17,7 @@
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "LuxBase.h"
+#include "cLuxBase.h"
 
 //---------------------------------------
 #ifdef WIN32

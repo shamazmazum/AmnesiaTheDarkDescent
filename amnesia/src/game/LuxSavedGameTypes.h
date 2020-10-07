@@ -22,8 +22,8 @@
 
 //----------------------------------------------
 
-#include "LuxBase.h"
-#include "LuxSavedMap.h"
+#include "cLuxBase.h"
+#include "cLuxSavedMap.h"
 #include "LuxSavedEngineTypes.h"
 
 //----------------------------------------------

@@ -19,9 +19,9 @@
 
 #include "LuxSavedEngineTypes.h"
 
-#include "LuxPlayer.h"
-#include "LuxPlayerState.h"
-#include "LuxMap.h"
+#include "cLuxPlayer.h"
+#include "iLuxPlayerState.h"
+#include "cLuxMap.h"
 
 //////////////////////////////////////////////////////////////////////////
 // CHARACTER BODY

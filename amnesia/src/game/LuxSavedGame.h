@@ -22,13 +22,13 @@
 
 //----------------------------------------------
 
-#include "LuxBase.h"
+#include "cLuxBase.h"
 #include "LuxSavedEngineTypes.h"
 #include "LuxSavedGameTypes.h"
 
 //----------------------------------------------
 
-#include "LuxEnemy.h"	//<- This is a bit bad... but what u gonna do?
+#include "iLuxEnemy.h"	//<- This is a bit bad... but what u gonna do?
 
 //----------------------------------------------
 

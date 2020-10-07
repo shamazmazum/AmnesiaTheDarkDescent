@@ -278,22 +278,22 @@
 			Name="Main"
 			Filter="">
 			<File
-				RelativePath=".\LuxBase.cpp">
+				RelativePath=".\cLuxBase.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxBase.h">
+				RelativePath=".\cLuxBase.h">
 			</File>
 			<File
-				RelativePath=".\LuxConfigHandler.cpp">
+				RelativePath=".\cLuxConfigHandler.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxConfigHandler.h">
+				RelativePath=".\cLuxConfigHandler.h">
 			</File>
 			<File
-				RelativePath=".\LuxHelpFuncs.cpp">
+				RelativePath=".\cLuxHelpFuncs.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxHelpFuncs.h">
+				RelativePath=".\cLuxHelpFuncs.h">
 			</File>
 			<File
 				RelativePath=".\LuxTypes.cpp">
@@ -334,422 +334,422 @@
 			Name="Entities"
 			Filter="">
 			<File
-				RelativePath=".\LuxArea.cpp">
+				RelativePath=".\iLuxArea.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxArea.h">
+				RelativePath=".\iLuxArea.h">
 			</File>
 			<File
-				RelativePath=".\LuxArea_Examine.cpp">
+				RelativePath=".\cLuxArea_Examine.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxArea_Examine.h">
+				RelativePath=".\cLuxArea_Examine.h">
 			</File>
 			<File
-				RelativePath=".\LuxArea_Flashback.cpp">
+				RelativePath=".\cLuxArea_Flashback.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxArea_Flashback.h">
+				RelativePath=".\cLuxArea_Flashback.h">
 			</File>
 			<File
-				RelativePath=".\LuxArea_Insanity.cpp">
+				RelativePath=".\cLuxArea_Insanity.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxArea_Insanity.h">
+				RelativePath=".\cLuxArea_Insanity.h">
 			</File>
 			<File
-				RelativePath=".\LuxArea_Ladder.cpp">
+				RelativePath=".\cLuxArea_Ladder.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxArea_Ladder.h">
+				RelativePath=".\cLuxArea_Ladder.h">
 			</File>
 			<File
-				RelativePath=".\LuxArea_Liquid.cpp">
+				RelativePath=".\cLuxArea_Liquid.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxArea_Liquid.h">
+				RelativePath=".\cLuxArea_Liquid.h">
 			</File>
 			<File
-				RelativePath=".\LuxArea_Rope.cpp">
+				RelativePath=".\cLuxArea_Rope.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxArea_Rope.h">
+				RelativePath=".\cLuxArea_Rope.h">
 			</File>
 			<File
-				RelativePath=".\LuxArea_Script.cpp">
+				RelativePath=".\cLuxArea_Script.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxArea_Script.h">
+				RelativePath=".\cLuxArea_Script.h">
 			</File>
 			<File
-				RelativePath=".\LuxArea_Sign.cpp">
+				RelativePath=".\cLuxArea_Sign.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxArea_Sign.h">
+				RelativePath=".\cLuxArea_Sign.h">
 			</File>
 			<File
-				RelativePath=".\LuxArea_SlimeDamage.cpp">
+				RelativePath=".\cLuxArea_SlimeDamage.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxArea_SlimeDamage.h">
+				RelativePath=".\cLuxArea_SlimeDamage.h">
 			</File>
 			<File
-				RelativePath=".\LuxArea_Sticky.cpp">
+				RelativePath=".\cLuxArea_Sticky.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxArea_Sticky.h">
+				RelativePath=".\cLuxArea_Sticky.h">
 			</File>
 			<File
-				RelativePath=".\LuxAreaNodes.cpp">
+				RelativePath=".\cLuxAreaNodes.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxAreaNodes.h">
+				RelativePath=".\cLuxAreaNodes.h">
 			</File>
 			<File
-				RelativePath=".\LuxCommentaryIcon.cpp">
+				RelativePath=".\cLuxCommentaryIcon.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxCommentaryIcon.h">
+				RelativePath=".\cLuxCommentaryIcon.h">
 			</File>
 			<File
-				RelativePath=".\LuxCritter_Bug.cpp">
+				RelativePath=".\cLuxCritter_Bug.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxCritter_Bug.h">
+				RelativePath=".\cLuxCritter_Bug.h">
 			</File>
 			<File
-				RelativePath=".\LuxCritter_Spider.cpp">
+				RelativePath=".\cLuxCritter_Spider.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxCritter_Spider.h">
+				RelativePath=".\cLuxCritter_Spider.h">
 			</File>
 			<File
-				RelativePath=".\LuxEnemy.cpp">
+				RelativePath=".\iLuxEnemy.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxEnemy.h">
+				RelativePath=".\iLuxEnemy.h">
 			</File>
 			<File
-				RelativePath=".\LuxEnemy_Grunt.cpp">
+				RelativePath=".\cLuxEnemy_Grunt.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxEnemy_Grunt.h">
+				RelativePath=".\cLuxEnemy_Grunt.h">
 			</File>
 			<File
-				RelativePath=".\LuxEnemy_WaterLurker.cpp">
+				RelativePath=".\cLuxEnemy_WaterLurker.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxEnemy_WaterLurker.h">
+				RelativePath=".\cLuxEnemy_WaterLurker.h">
 			</File>
 			<File
-				RelativePath=".\LuxEnemyMover.cpp">
+				RelativePath=".\cLuxEnemyMover.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxEnemyMover.h">
+				RelativePath=".\cLuxEnemyMover.h">
 			</File>
 			<File
-				RelativePath=".\LuxEnemyPathfinder.cpp">
+				RelativePath=".\cLuxEnemyPathfinder.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxEnemyPathfinder.h">
+				RelativePath=".\cLuxEnemyPathfinder.h">
 			</File>
 			<File
-				RelativePath=".\LuxEntity.cpp">
+				RelativePath=".\iLuxEntity.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxEntity.h">
+				RelativePath=".\iLuxEntity.h">
 			</File>
 			<File
-				RelativePath=".\LuxInteractConnections.cpp">
+				RelativePath=".\iLuxInteractConnections.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxInteractConnections.h">
+				RelativePath=".\iLuxInteractConnections.h">
 			</File>
 			<File
-				RelativePath=".\LuxItemType.cpp">
+				RelativePath=".\iLuxItemType.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxItemType.h">
+				RelativePath=".\iLuxItemType.h">
 			</File>
 			<File
-				RelativePath=".\LuxProp.cpp">
+				RelativePath=".\iLuxProp.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxProp.h">
+				RelativePath=".\iLuxProp.h">
 			</File>
 			<File
-				RelativePath=".\LuxProp_Button.cpp">
+				RelativePath=".\cLuxProp_Button.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxProp_Button.h">
+				RelativePath=".\cLuxProp_Button.h">
 			</File>
 			<File
-				RelativePath=".\LuxProp_Chest.cpp">
+				RelativePath=".\cLuxProp_Chest.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxProp_Chest.h">
+				RelativePath=".\cLuxProp_Chest.h">
 			</File>
 			<File
-				RelativePath=".\LuxProp_CritterBase.cpp">
+				RelativePath=".\iLuxProp_CritterBase.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxProp_CritterBase.h">
+				RelativePath=".\iLuxProp_CritterBase.h">
 			</File>
 			<File
-				RelativePath=".\LuxProp_EmotionStone.cpp">
+				RelativePath=".\cLuxProp_EmotionStone.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxProp_EmotionStone.h">
+				RelativePath=".\cLuxProp_EmotionStone.h">
 			</File>
 			<File
-				RelativePath=".\LuxProp_Item.cpp">
+				RelativePath=".\cLuxProp_Item.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxProp_Item.h">
+				RelativePath=".\cLuxProp_Item.h">
 			</File>
 			<File
-				RelativePath=".\LuxProp_Lamp.cpp">
+				RelativePath=".\cLuxProp_Lamp.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxProp_Lamp.h">
+				RelativePath=".\cLuxProp_Lamp.h">
 			</File>
 			<File
-				RelativePath=".\LuxProp_LevelDoor.cpp">
+				RelativePath=".\cLuxProp_LevelDoor.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxProp_LevelDoor.h">
+				RelativePath=".\cLuxProp_LevelDoor.h">
 			</File>
 			<File
-				RelativePath=".\LuxProp_Lever.cpp">
+				RelativePath=".\cLuxProp_Lever.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxProp_Lever.h">
+				RelativePath=".\cLuxProp_Lever.h">
 			</File>
 			<File
-				RelativePath=".\LuxProp_MoveObject.cpp">
+				RelativePath=".\cLuxProp_MoveObject.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxProp_MoveObject.h">
+				RelativePath=".\cLuxProp_MoveObject.h">
 			</File>
 			<File
-				RelativePath=".\LuxProp_MultiSlider.cpp">
+				RelativePath=".\cLuxProp_MultiSlider.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxProp_MultiSlider.h">
+				RelativePath=".\cLuxProp_MultiSlider.h">
 			</File>
 			<File
-				RelativePath=".\LuxProp_NPC.cpp">
+				RelativePath=".\cLuxProp_NPC.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxProp_NPC.h">
+				RelativePath=".\cLuxProp_NPC.h">
 			</File>
 			<File
-				RelativePath=".\LuxProp_Object.cpp">
+				RelativePath=".\cLuxProp_Object.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxProp_Object.h">
+				RelativePath=".\cLuxProp_Object.h">
 			</File>
 			<File
-				RelativePath=".\LuxProp_OilBarrel.cpp">
+				RelativePath=".\cLuxProp_OilBarrel.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxProp_OilBarrel.h">
+				RelativePath=".\cLuxProp_OilBarrel.h">
 			</File>
 			<File
-				RelativePath=".\LuxProp_Photocell.cpp">
+				RelativePath=".\cLuxProp_Photocell.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxProp_Photocell.h">
+				RelativePath=".\cLuxProp_Photocell.h">
 			</File>
 			<File
-				RelativePath=".\LuxProp_SwingDoor.cpp">
+				RelativePath=".\cLuxProp_SwingDoor.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxProp_SwingDoor.h">
+				RelativePath=".\cLuxProp_SwingDoor.h">
 			</File>
 			<File
-				RelativePath=".\LuxProp_Wheel.cpp">
+				RelativePath=".\cLuxProp_Wheel.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxProp_Wheel.h">
+				RelativePath=".\cLuxProp_Wheel.h">
 			</File>
 			<File
-				RelativePath=".\LuxStaticProp.cpp">
+				RelativePath=".\cLuxStaticProp.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxStaticProp.h">
+				RelativePath=".\cLuxStaticProp.h">
 			</File>
 		</Filter>
 		<Filter
 			Name="Modules"
 			Filter="">
 			<File
-				RelativePath=".\LuxCompletionCountHandler.cpp">
+				RelativePath=".\cLuxCompletionCountHandler.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxCompletionCountHandler.h">
+				RelativePath=".\cLuxCompletionCountHandler.h">
 			</File>
 			<File
-				RelativePath=".\LuxCredits.cpp">
+				RelativePath=".\cLuxCredits.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxCredits.h">
+				RelativePath=".\cLuxCredits.h">
 			</File>
 			<File
-				RelativePath=".\LuxDebugHandler.cpp">
+				RelativePath=".\cLuxDebugHandler.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxDebugHandler.h">
+				RelativePath=".\cLuxDebugHandler.h">
 			</File>
 			<File
-				RelativePath=".\LuxDemoEnd.cpp">
+				RelativePath=".\cLuxDemoEnd.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxDemoEnd.h">
+				RelativePath=".\cLuxDemoEnd.h">
 			</File>
 			<File
-				RelativePath=".\LuxEffectHandler.cpp">
+				RelativePath=".\cLuxEffectHandler.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxEffectHandler.h">
+				RelativePath=".\cLuxEffectHandler.h">
 			</File>
 			<File
-				RelativePath=".\LuxEffectRenderer.cpp">
+				RelativePath=".\cLuxEffectRenderer.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxEffectRenderer.h">
+				RelativePath=".\cLuxEffectRenderer.h">
 			</File>
 			<File
-				RelativePath=".\LuxGlobalDataHandler.cpp">
+				RelativePath=".\cLuxGlobalDataHandler.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxGlobalDataHandler.h">
+				RelativePath=".\cLuxGlobalDataHandler.h">
 			</File>
 			<File
-				RelativePath=".\LuxHintHandler.cpp">
+				RelativePath=".\cLuxHintHandler.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxHintHandler.h">
+				RelativePath=".\cLuxHintHandler.h">
 			</File>
 			<File
-				RelativePath=".\LuxInputHandler.cpp">
+				RelativePath=".\cLuxInputHandler.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxInputHandler.h">
+				RelativePath=".\cLuxInputHandler.h">
 			</File>
 			<File
-				RelativePath=".\LuxInsanityHandler.cpp">
+				RelativePath=".\cLuxInsanityHandler.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxInsanityHandler.h">
+				RelativePath=".\cLuxInsanityHandler.h">
 			</File>
 			<File
-				RelativePath=".\LuxInventory.cpp">
+				RelativePath=".\cLuxInventory.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxInventory.h">
+				RelativePath=".\cLuxInventory.h">
 			</File>
 			<File
-				RelativePath=".\LuxJournal.cpp">
+				RelativePath=".\cLuxJournal.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxJournal.h">
+				RelativePath=".\cLuxJournal.h">
 			</File>
 			<File
-				RelativePath=".\LuxLoadScreenHandler.cpp">
+				RelativePath=".\cLuxLoadScreenHandler.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxLoadScreenHandler.h">
+				RelativePath=".\cLuxLoadScreenHandler.h">
 			</File>
 			<File
-				RelativePath=".\LuxMainMenu.cpp">
+				RelativePath=".\cLuxMainMenu.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxMainMenu.h">
+				RelativePath=".\cLuxMainMenu.h">
 			</File>
 			<File
-				RelativePath=".\LuxMainMenu_CustomStory.cpp">
+				RelativePath=".\cLuxMainMenu_CustomStory.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxMainMenu_CustomStory.h">
+				RelativePath=".\cLuxMainMenu_CustomStory.h">
 			</File>
 			<File
-				RelativePath=".\LuxMainMenu_KeyConfig.cpp">
+				RelativePath=".\cLuxMainMenu_KeyConfig.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxMainMenu_KeyConfig.h">
+				RelativePath=".\cLuxMainMenu_KeyConfig.h">
 			</File>
 			<File
-				RelativePath=".\LuxMainMenu_LoadGame.cpp">
+				RelativePath=".\cLuxMainMenu_LoadGame.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxMainMenu_LoadGame.h">
+				RelativePath=".\cLuxMainMenu_LoadGame.h">
 			</File>
 			<File
-				RelativePath=".\LuxMainMenu_Options.cpp">
+				RelativePath=".\cLuxMainMenu_Options.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxMainMenu_Options.h">
+				RelativePath=".\cLuxMainMenu_Options.h">
 			</File>
 			<File
-				RelativePath=".\LuxMainMenu_Profile.cpp">
+				RelativePath=".\cLuxMainMenu_Profile.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxMainMenu_Profile.h">
+				RelativePath=".\cLuxMainMenu_Profile.h">
 			</File>
 			<File
-				RelativePath=".\LuxMap.cpp">
+				RelativePath=".\cLuxMap.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxMap.h">
+				RelativePath=".\cLuxMap.h">
 			</File>
 			<File
-				RelativePath=".\LuxMapHandler.cpp">
+				RelativePath=".\cLuxMapHandler.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxMapHandler.h">
+				RelativePath=".\cLuxMapHandler.h">
 			</File>
 			<File
-				RelativePath=".\LuxMapHelper.cpp">
+				RelativePath=".\cLuxMapHelper.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxMapHelper.h">
+				RelativePath=".\cLuxMapHelper.h">
 			</File>
 			<File
-				RelativePath=".\LuxMessageHandler.cpp">
+				RelativePath=".\cLuxMessageHandler.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxMessageHandler.h">
+				RelativePath=".\cLuxMessageHandler.h">
 			</File>
 			<File
-				RelativePath=".\LuxMusicHandler.cpp">
+				RelativePath=".\cLuxMusicHandler.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxMusicHandler.h">
+				RelativePath=".\cLuxMusicHandler.h">
 			</File>
 			<File
-				RelativePath=".\LuxPostEffects.cpp">
+				RelativePath=".\iLuxPostEffect.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxPostEffects.h">
+				RelativePath=".\iLuxPostEffect.h">
 			</File>
 			<File
-				RelativePath=".\LuxPreMenu.cpp">
+				RelativePath=".\cLuxPreMenu.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxPreMenu.h">
+				RelativePath=".\cLuxPreMenu.h">
 			</File>
 			<File
-				RelativePath=".\LuxProgressLogHandler.cpp">
+				RelativePath=".\cLuxProgressLogHandler.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxProgressLogHandler.h">
+				RelativePath=".\cLuxProgressLogHandler.h">
 			</File>
 			<File
-				RelativePath=".\LuxScriptHandler.cpp">
+				RelativePath=".\cLuxScriptHandler.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxScriptHandler.h">
+				RelativePath=".\cLuxScriptHandler.h">
 			</File>
 		</Filter>
 		<Filter
@@ -771,68 +771,68 @@
 				RelativePath=".\LuxSavedGameTypes.h">
 			</File>
 			<File
-				RelativePath=".\LuxSavedMap.cpp">
+				RelativePath=".\cLuxSavedMap.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxSavedMap.h">
+				RelativePath=".\cLuxSavedMap.h">
 			</File>
 			<File
-				RelativePath=".\LuxSaveHandler.cpp">
+				RelativePath=".\cLuxSaveHandler.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxSaveHandler.h">
+				RelativePath=".\cLuxSaveHandler.h">
 			</File>
 		</Filter>
 		<Filter
 			Name="Player"
 			Filter="">
 			<File
-				RelativePath=".\LuxHandObject.cpp">
+				RelativePath=".\iLuxHandObject.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxHandObject.h">
+				RelativePath=".\iLuxHandObject.h">
 			</File>
 			<File
-				RelativePath=".\LuxHandObject_LightSource.cpp">
+				RelativePath=".\cLuxHandObject_LightSource.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxHandObject_LightSource.h">
+				RelativePath=".\cLuxHandObject_LightSource.h">
 			</File>
 			<File
-				RelativePath=".\LuxHandObject_Melee.cpp">
+				RelativePath=".\cLuxHandObject_Melee.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxHandObject_Melee.h">
+				RelativePath=".\cLuxHandObject_Melee.h">
 			</File>
 			<File
-				RelativePath=".\LuxMoveState.cpp">
+				RelativePath=".\iLuxMoveState.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxMoveState.h">
+				RelativePath=".\iLuxMoveState.h">
 			</File>
 			<File
-				RelativePath=".\LuxMoveState_ClimbLedge.cpp">
+				RelativePath=".\cLuxMoveState_ClimbLedge.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxMoveState_ClimbLedge.h">
+				RelativePath=".\cLuxMoveState_ClimbLedge.h">
 			</File>
 			<File
-				RelativePath=".\LuxMoveState_Normal.cpp">
+				RelativePath=".\cLuxMoveState_Normal.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxMoveState_Normal.h">
+				RelativePath=".\cLuxMoveState_Normal.h">
 			</File>
 			<File
-				RelativePath=".\LuxPlayer.cpp">
+				RelativePath=".\cLuxPlayer.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxPlayer.h">
+				RelativePath=".\cLuxPlayer.h">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerHands.cpp">
+				RelativePath=".\cLuxPlayerHands.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerHands.h">
+				RelativePath=".\cLuxPlayerHands.h">
 			</File>
 			<File
 				RelativePath=".\LuxPlayerHelpers.cpp">
@@ -841,88 +841,88 @@
 				RelativePath=".\LuxPlayerHelpers.h">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState.cpp">
+				RelativePath=".\iLuxPlayerState.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState.h">
+				RelativePath=".\iLuxPlayerState.h">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_DefaultBase.cpp">
+				RelativePath=".\iLuxPlayerState_DefaultBase.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_DefaultBase.h">
+				RelativePath=".\iLuxPlayerState_DefaultBase.h">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_HandObject.cpp">
+				RelativePath=".\cLuxPlayerState_HandObject.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_HandObject.h">
+				RelativePath=".\cLuxPlayerState_HandObject.h">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_Interact.cpp">
+				RelativePath=".\iLuxPlayerState_Interact.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_Interact.h">
+				RelativePath=".\iLuxPlayerState_Interact.h">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_InteractGrab.cpp">
+				RelativePath=".\cLuxPlayerState_InteractGrab.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_InteractGrab.h">
+				RelativePath=".\cLuxPlayerState_InteractGrab.h">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_InteractLever.cpp">
+				RelativePath=".\cLuxPlayerState_InteractLever.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_InteractLever.h">
+				RelativePath=".\cLuxPlayerState_InteractLever.h">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_InteractPush.cpp">
+				RelativePath=".\cLuxPlayerState_InteractPush.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_InteractPush.h">
+				RelativePath=".\cLuxPlayerState_InteractPush.h">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_InteractRotateBase.cpp">
+				RelativePath=".\iLuxPlayerState_InteractRotateBase.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_InteractRotateBase.h">
+				RelativePath=".\iLuxPlayerState_InteractRotateBase.h">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_InteractSlide.cpp">
+				RelativePath=".\cLuxPlayerState_InteractSlide.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_InteractSlide.h">
+				RelativePath=".\cLuxPlayerState_InteractSlide.h">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_InteractSwingDoor.cpp">
+				RelativePath=".\cLuxPlayerState_InteractSwingDoor.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_InteractSwingDoor.h">
+				RelativePath=".\cLuxPlayerState_InteractSwingDoor.h">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_InteractWheel.cpp">
+				RelativePath=".\cLuxPlayerState_InteractWheel.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_InteractWheel.h">
+				RelativePath=".\cLuxPlayerState_InteractWheel.h">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_Ladder.cpp">
+				RelativePath=".\cLuxPlayerState_Ladder.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_Ladder.h">
+				RelativePath=".\cLuxPlayerState_Ladder.h">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_Normal.cpp">
+				RelativePath=".\cLuxPlayerState_Normal.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_Normal.h">
+				RelativePath=".\cLuxPlayerState_Normal.h">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_UseItem.cpp">
+				RelativePath=".\cLuxPlayerState_UseItem.cpp">
 			</File>
 			<File
-				RelativePath=".\LuxPlayerState_UseItem.h">
+				RelativePath=".\cLuxPlayerState_UseItem.h">
 			</File>
 			<File
 				RelativePath=".\LuxSavedGame.h">

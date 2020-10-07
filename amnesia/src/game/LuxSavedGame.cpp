@@ -19,18 +19,18 @@
 
 #include "LuxSavedGame.h"
 
-#include "LuxMapHandler.h"
-#include "LuxMap.h"
-#include "LuxEnemy.h"
-#include "LuxEnemyPathfinder.h"
-#include "LuxProp_SwingDoor.h"
-#include "LuxProp_LevelDoor.h"
-#include "LuxProp_Item.h"
-#include "LuxProp_Object.h"
-#include "LuxProp_Chest.h"
-#include "LuxProp_Lamp.h"
-#include "LuxPlayer.h"
-#include "LuxInteractConnections.h"
+#include "cLuxMapHandler.h"
+#include "cLuxMap.h"
+#include "iLuxEnemy.h"
+#include "cLuxEnemyPathfinder.h"
+#include "cLuxProp_SwingDoor.h"
+#include "cLuxProp_LevelDoor.h"
+#include "cLuxProp_Item.h"
+#include "cLuxProp_Object.h"
+#include "cLuxProp_Chest.h"
+#include "cLuxProp_Lamp.h"
+#include "cLuxPlayer.h"
+#include "iLuxInteractConnections.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ENTITY

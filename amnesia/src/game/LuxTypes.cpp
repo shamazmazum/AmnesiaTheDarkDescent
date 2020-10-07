@@ -19,10 +19,10 @@
 
 #include "LuxTypes.h"
 
-#include "LuxEntity.h"
-#include "LuxArea.h"
-#include "LuxProp.h"
-#include "LuxMap.h"
+#include "iLuxEntity.h"
+#include "iLuxArea.h"
+#include "iLuxProp.h"
+#include "cLuxMap.h"
 
 //////////////////////////////////////////////////////////////////////////
 // TYPE CONVERSIONS
