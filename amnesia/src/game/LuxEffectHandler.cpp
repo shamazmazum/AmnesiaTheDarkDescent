@@ -56,6 +56,10 @@ cLuxEffectHandler::cLuxEffectHandler() : iLuxUpdateable("LuxEffectHandler")
 	mpSepiaColor = hplNew( cLuxEffect_SepiaColor, () );
 	mvEffects.push_back(mpSepiaColor);
 
+	mpColorGrading = hplNew(cLuxEffect_ColorGrading, ());
+	mpColorGrading->SetActive(true);
+	mvEffects.push_back(mpColorGrading);
+
 	mpRadialBlur = hplNew( cLuxEffect_RadialBlur, () );
 	mvEffects.push_back(mpRadialBlur);
 
@@ -492,6 +496,228 @@ void cLuxEffect_SepiaColor::Reset()
 	mfAmountGoal =0;
 	gpBase->mpMapHandler->GetPostEffect_Sepia()->Reset();
 	gpBase->mpMapHandler->GetPostEffect_Sepia()->SetActive(false);
+}
+
+//-----------------------------------------------------------------------
+
+//////////////////////////////////////////////////////////////////////////
+// COLOR GRADING
+//////////////////////////////////////////////////////////////////////////
+
+cLuxEffect_ColorGrading::cLuxEffect_ColorGrading()
+{
+	mbIsCrossFading = false;
+	mfCrossFadeAlpha = 0.0f;
+	mbIsFadingUp = false;
+	mfFadeSpeed = 1.0f;
+	mfGameplayFadeTime = 1.0f;
+	msFadeTargetLUT = "";
+	msGameplayLUT = "";
+}
+
+//-----------------------------------------------------------------------
+
+void cLuxEffect_ColorGrading::InitializeLUT(tString asBaseEnvironmentLUT)
+{
+	mbIsCrossFading = false;
+	mfCrossFadeAlpha = 0.0f;
+	mbIsFadingUp = false;
+	mfFadeSpeed = 1.0f;
+	msFadeTargetLUT = asBaseEnvironmentLUT;
+	msGameplayLUT = "";
+
+	msEnvironmentLUTs.clear();
+	msEnvironmentLUTs.push_front(asBaseEnvironmentLUT);
+	msEnvironmentLUTFadeTimes.clear();
+	msEnvironmentLUTFadeTimes.push_front(5.0f);
+
+	cPostEffectParams_ColorGrading colorGradingParams;
+	colorGradingParams.msTextureFile1 = asBaseEnvironmentLUT;
+	colorGradingParams.msTextureFile2 = "";
+	colorGradingParams.mfCrossFadeAlpha = 0.0f;
+	colorGradingParams.mbIsReinitialisation = true;
+
+
+	gpBase->mpMapHandler->GetPostEffect_ColorGrading()->SetParams(&colorGradingParams);
+}
+
+//-----------------------------------------------------------------------
+
+void cLuxEffect_ColorGrading::EnterLUTEnvironment(tString asEnvironmentLUT, float afFadeTime)
+{
+	if (afFadeTime < 0.5f) afFadeTime = 0.5f;
+
+	if (!mbIsCrossFading)
+	{
+		// not fading
+
+		if (msGameplayLUT != "")
+		{
+			// we have a gameplay LUT fully active. That means we just push the environment lut, and ignore the fade time. This environment will become active when the gameplay lut fades out
+			msEnvironmentLUTs.push_front(asEnvironmentLUT);
+			msEnvironmentLUTFadeTimes.push_front(afFadeTime);
+		}
+		else
+		{
+			if (asEnvironmentLUT != *msEnvironmentLUTs.begin())
+			{
+				// not fading, new map & no current gameplay LUT -> fade to the new map with the new fadetime
+
+				FadeFromTo(*msEnvironmentLUTs.begin(), asEnvironmentLUT, afFadeTime);
+			}
+
+			msEnvironmentLUTs.push_front(asEnvironmentLUT);
+			msEnvironmentLUTFadeTimes.push_front(afFadeTime);
+		}
+	}
+	else
+	{
+		// a crossfade is in progress. Queue ours, when fade is finished it will re-fade
+
+		msEnvironmentLUTs.push_front(asEnvironmentLUT);
+		msEnvironmentLUTFadeTimes.push_front(afFadeTime);
+	}
+}
+
+void cLuxEffect_ColorGrading::FadeFromTo(tString asFromTexture, tString asToTexture, float afFadeTime)
+{
+	if (!mbIsFadingUp)
+	{
+		cPostEffectParams_ColorGrading colorGradingParams;
+		colorGradingParams.msTextureFile1 = asFromTexture;
+		colorGradingParams.msTextureFile2 = asToTexture;
+		colorGradingParams.mfCrossFadeAlpha = 0.0f;
+		colorGradingParams.mbIsReinitialisation = false;
+
+		gpBase->mpMapHandler->GetPostEffect_ColorGrading()->SetParams(&colorGradingParams);
+	}
+	else
+	{
+		cPostEffectParams_ColorGrading colorGradingParams;
+		colorGradingParams.msTextureFile1 = asToTexture;
+		colorGradingParams.msTextureFile2 = asFromTexture;
+		colorGradingParams.mfCrossFadeAlpha = 1.0f;
+		colorGradingParams.mbIsReinitialisation = false;
+
+		gpBase->mpMapHandler->GetPostEffect_ColorGrading()->SetParams(&colorGradingParams);
+	}
+
+	msFadeTargetLUT = asToTexture;
+	mbIsFadingUp = !mbIsFadingUp;
+	mbIsCrossFading = true;
+	mfFadeSpeed = 1.0f / afFadeTime;
+}
+
+//-----------------------------------------------------------------------
+
+void cLuxEffect_ColorGrading::LeaveLUTEnvironment(tString asEnvironmentLUT)
+{
+	tStringListIt second = msEnvironmentLUTs.begin();
+	if (msEnvironmentLUTs.size() > 1) second++;
+
+	if (mbIsCrossFading
+		|| msGameplayLUT != ""
+		|| asEnvironmentLUT != *msEnvironmentLUTs.begin()
+		|| (msEnvironmentLUTs.size() > 1 && *second == asEnvironmentLUT)
+		)
+	{
+		tFloatListIt fadeTimeIt = msEnvironmentLUTFadeTimes.begin();
+
+		// just remove the first occurrence of this map
+		for (tStringListIt it = msEnvironmentLUTs.begin(); it != msEnvironmentLUTs.end(); ++it)
+		{
+			if (*it == asEnvironmentLUT)
+			{
+				msEnvironmentLUTs.erase(it);
+				msEnvironmentLUTFadeTimes.erase(fadeTimeIt);
+				break;
+			}
+			fadeTimeIt++;
+		}
+	}
+	else
+	{
+		// this means we're the first map, the second is different and we don't have a gameplay map. Start a fade to the second environment map before removing
+
+		FadeFromTo(asEnvironmentLUT, *second, *msEnvironmentLUTFadeTimes.begin());
+
+		msEnvironmentLUTs.erase(msEnvironmentLUTs.begin());
+		msEnvironmentLUTFadeTimes.erase(msEnvironmentLUTFadeTimes.begin());
+	}
+}
+
+//-----------------------------------------------------------------------
+
+void cLuxEffect_ColorGrading::FadeGameplayLUTTo(tString asEnvironmentLUT, float afFadeTime)
+{
+}
+
+//-----------------------------------------------------------------------
+
+void cLuxEffect_ColorGrading::FadeOutGameplayLUT(float afFadeTime)
+{
+}
+
+//-----------------------------------------------------------------------
+
+void cLuxEffect_ColorGrading::Update(float afTimeStep)
+{
+	bool bJustFinishedCrossFading = false;
+
+	if (mbIsCrossFading)
+	{
+		if (mbIsFadingUp)
+		{
+			mfCrossFadeAlpha += afTimeStep * mfFadeSpeed;
+			if (mfCrossFadeAlpha >= 1.0f)
+			{
+				mfCrossFadeAlpha = 1.0f;
+				mbIsCrossFading = false;
+				bJustFinishedCrossFading = true;
+			}
+		}
+		else
+		{
+			mfCrossFadeAlpha -= afTimeStep * mfFadeSpeed;
+			if (mfCrossFadeAlpha <= 0.0f)
+			{
+				mfCrossFadeAlpha = 0.0f;
+				mbIsCrossFading = false;
+				bJustFinishedCrossFading = true;
+			}
+		}
+
+		((cPostEffect_ColorGrading*)gpBase->mpMapHandler->GetPostEffect_ColorGrading())->SetCrossFadeAlpha(mfCrossFadeAlpha);
+	}
+
+	if (bJustFinishedCrossFading)
+	{
+		// check if the final state of the crossfade is the current state we want, if not, crossfade.
+		tString sDesiredLUT = "";
+		float fDesiredFadeTime = 1.0f;
+
+		if (msGameplayLUT != "")
+		{
+			sDesiredLUT = msGameplayLUT;
+			fDesiredFadeTime = mfGameplayFadeTime;
+		}
+		else
+		{
+			sDesiredLUT = *msEnvironmentLUTs.begin();
+			fDesiredFadeTime = *msEnvironmentLUTFadeTimes.begin();
+		}
+
+		if (sDesiredLUT != msFadeTargetLUT)
+		{
+			FadeFromTo(msFadeTargetLUT, sDesiredLUT, fDesiredFadeTime);
+		}
+	}
+}
+
+//-----------------------------------------------------------------------
+
+void cLuxEffect_ColorGrading::Reset()
+{
 }
 
 //-----------------------------------------------------------------------

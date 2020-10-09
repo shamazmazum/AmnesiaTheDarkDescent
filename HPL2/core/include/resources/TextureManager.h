@@ -1,20 +1,20 @@
 /*
- * Copyright © 2009-2020 Frictional Games
+ * Copyright © 2011-2020 Frictional Games
  * 
- * This file is part of Amnesia: The Dark Descent.
+ * This file is part of Amnesia: A Machine For Pigs.
  * 
- * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
+ * Amnesia: A Machine For Pigs is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version. 
 
- * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
+ * Amnesia: A Machine For Pigs is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
+ * along with Amnesia: A Machine For Pigs.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef HPL_TEXTURE_MANAGER_H
@@ -51,7 +51,9 @@ namespace hpl {
 
 		iTexture* Create3D(	const tString& asName,bool abUseMipMaps, eTextureUsage aUsage=eTextureUsage_Normal,
 							unsigned int alTextureSizeLevel=0);
-		
+
+		iTexture* CreateFlattened3D(	const tString& asName,bool abUseMipMaps, eTextureUsage aUsage=eTextureUsage_Normal,
+							unsigned int alTextureSizeLevel=0);
 		/**
 		 * Creates an animated texture. The name must be [name]01.[ext]. And then the textures in the animation must
 		 * be named [name]01.[ext], [name]02.[ext], etc 
@@ -74,7 +76,8 @@ namespace hpl {
 	private:
 		iTexture* CreateSimpleTexture(const tString& asName,bool abUseMipMaps, 
 									eTextureUsage aUsage, eTextureType aType, 
-									unsigned int alTextureSizeLevel);
+									unsigned int alTextureSizeLevel,
+                                    bool isFlattened3d = false);
 
 		iTexture* FindTexture2D(const tString &asName, tWString &asFilePath);
 
@@ -89,5 +92,5 @@ namespace hpl {
 		cBitmapLoaderHandler *mpBitmapLoaderHandler;
 	};
 
-}
+};
 #endif // HPL_TEXTURE_MANAGER_H

@@ -139,6 +139,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="LuxAchievementHandler.cpp" />
+    <ClCompile Include="LuxArea_ColorGrading.cpp" />
     <ClCompile Include="LuxBase.cpp" />
     <ClCompile Include="LuxConfigHandler.cpp" />
     <ClCompile Include="LuxEnemy_ManPig.cpp" />
@@ -248,6 +249,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LuxAchievementHandler.h" />
+    <ClInclude Include="LuxArea_ColorGrading.h" />
     <ClInclude Include="LuxBase.h" />
     <ClInclude Include="LuxConfigHandler.h" />
     <ClInclude Include="LuxEnemy_ManPig.h" />

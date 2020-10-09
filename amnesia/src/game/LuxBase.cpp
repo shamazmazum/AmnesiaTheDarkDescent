@@ -87,6 +87,7 @@
 #include "LuxArea_Sign.h"
 #include "LuxArea_Rope.h"
 #include "LuxArea_SlimeDamage.h"
+#include "LuxArea_ColorGrading.h"
 
 #include "LuxEnemy_Grunt.h"
 #include "LuxEnemy_WaterLurker.h"
@@ -1345,6 +1346,7 @@ bool cLuxBase::InitGame() {
     mpEngine->GetResources()->AddAreaLoader(hplNew(cLuxAreaLoader_Sign, ("Sign")));
     mpEngine->GetResources()->AddAreaLoader(hplNew(cLuxAreaLoader_SlimeDamage, ("SlimeDamage")));
     mpEngine->GetResources()->AddAreaLoader(hplNew(cLuxAreaRopeLoader, ("Rope")));
+    mpEngine->GetResources()->AddAreaLoader(hplNew(cLuxAreaLoader_ColorGrading, ("ColorGrading")));
 
 
     RunModuleMessage(eLuxUpdateableMessage_LoadFonts);
