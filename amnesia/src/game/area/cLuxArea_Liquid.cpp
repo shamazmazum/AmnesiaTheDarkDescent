@@ -17,12 +17,12 @@
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "cLuxArea_Liquid.h"
+#include "area/cLuxArea_Liquid.h"
 
 #include "cLuxMap.h"
 #include "cLuxPlayer.h"
 #include "iLuxPlayerState.h"
-#include "iLuxEnemy.h"
+#include "enemy/iLuxEnemy.h"
 
 
 //////////////////////////////////////////////////////////////////////////

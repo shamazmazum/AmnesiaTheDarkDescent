@@ -22,7 +22,7 @@
 #include "cLuxConfigHandler.h"
 
 #include "iLuxEntity.h"
-#include "cLuxAreaNodes.h"
+#include "area/cLuxAreaNodes.h"
 
 #include "cLuxPlayer.h"
 #include "iLuxPlayerState.h"
@@ -33,13 +33,13 @@
 #include "cLuxEffectHandler.h"
 #include "cLuxMapHandler.h"
 
-#include "iLuxEnemy.h"
-#include "cLuxEnemyPathfinder.h"
+#include "enemy/iLuxEnemy.h"
+#include "enemy/cLuxEnemyPathfinder.h"
 
 #include "cLuxProp_SwingDoor.h"
 #include "cLuxProp_Item.h"
 #include "cLuxProp_Lamp.h"
-#include "cLuxArea_Sticky.h"
+#include "area/cLuxArea_Sticky.h"
 
 #include <sstream>
 

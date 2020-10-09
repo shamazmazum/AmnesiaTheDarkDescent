@@ -4,6 +4,8 @@ project(Amnesia)
 file(GLOB all_sources RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
     *.cpp
     *.h
+    */*.cpp
+    */*.h
 )
 file(GLOB serial_source RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
     LuxCopyProtection.cpp

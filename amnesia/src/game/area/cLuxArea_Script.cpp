@@ -17,7 +17,7 @@
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "cLuxArea_Script.h"
+#include "area/cLuxArea_Script.h"
 
 #include "cLuxMap.h"
 

@@ -22,7 +22,7 @@
 
 //----------------------------------------------
 
-#include "iLuxEnemy.h"
+#include "enemy/iLuxEnemy.h"
 #include "eLuxIdleBehavior_ManPig.h"
 
 //----------------------------------------------

@@ -21,7 +21,7 @@
 
 #include "cLuxMapHandler.h"
 #include "cLuxMap.h"
-#include "iLuxEnemy.h"
+#include "enemy/iLuxEnemy.h"
 
 #include "cLuxPlayer.h"
 #include "LuxPlayerHelpers.h"

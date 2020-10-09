@@ -17,7 +17,13 @@
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "cLuxArea_Sign.h"
+#include "area/cLuxArea_Flashback.h"
+
+#include "cLuxMap.h"
+#include "cLuxPlayer.h"
+#include "LuxPlayerHelpers.h"
+#include "cLuxHelpFuncs.h"
+#include "cLuxMessageHandler.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -26,35 +32,35 @@
 
 //-----------------------------------------------------------------------
 
-cLuxAreaLoader_Sign::cLuxAreaLoader_Sign(const tString& asName) : iLuxAreaLoader(asName)
+cLuxAreaLoader_Flashback::cLuxAreaLoader_Flashback(const tString& asName) : iLuxAreaLoader(asName)
 {
 
 }
 
-cLuxAreaLoader_Sign::~cLuxAreaLoader_Sign()
+cLuxAreaLoader_Flashback::~cLuxAreaLoader_Flashback()
 {
 
 }
 
 //-----------------------------------------------------------------------
 
-iLuxArea *cLuxAreaLoader_Sign::CreateArea(const tString& asName, int alID, cLuxMap *apMap)
+iLuxArea *cLuxAreaLoader_Flashback::CreateArea(const tString& asName, int alID, cLuxMap *apMap)
 {
-	cLuxArea_Sign *pArea = hplNew(cLuxArea_Sign, (asName, alID, apMap));
+	cLuxArea_Flashback *pArea = hplNew(cLuxArea_Flashback, (asName, alID, apMap));
 	return pArea;
 }
 
 //-----------------------------------------------------------------------
 
-void cLuxAreaLoader_Sign::LoadVariables(iLuxArea *apArea, cWorld *apWorld)
+void cLuxAreaLoader_Flashback::LoadVariables(iLuxArea *apArea, cWorld *apWorld)
 {
-	cLuxArea_Sign *pSignArea = static_cast<cLuxArea_Sign*>(apArea);
+	cLuxArea_Flashback *pFlashArea = static_cast<cLuxArea_Flashback*>(apArea);
 
-	pSignArea->msTextCat = GetVarString("TextCat","");
-	pSignArea->msTextEntry = GetVarString("TextEntry","");
+    pFlashArea->msFlashbackFile = GetVarString("FlashbackFile","");
+	pFlashArea->msCallback = GetVarString("Callback","");
 }
 
-void cLuxAreaLoader_Sign::SetupArea(iLuxArea *apArea, cWorld *apWorld)
+void cLuxAreaLoader_Flashback::SetupArea(iLuxArea *apArea, cWorld *apWorld)
 {
 
 }
@@ -67,14 +73,14 @@ void cLuxAreaLoader_Sign::SetupArea(iLuxArea *apArea, cWorld *apWorld)
 
 //-----------------------------------------------------------------------
 
-cLuxArea_Sign::cLuxArea_Sign(const tString &asName, int alID, cLuxMap *apMap)  : iLuxArea(asName,alID,apMap, eLuxAreaType_Sign)
+cLuxArea_Flashback::cLuxArea_Flashback(const tString &asName, int alID, cLuxMap *apMap)  : iLuxArea(asName,alID,apMap, eLuxAreaType_Flashback)
 {
-	mfMaxFocusDistance = gpBase->mpGameCfg->GetFloat("Player_Interaction","Sign_MaxFocusDist",0);
+	mfCheckCollisionCount =0;
 }
 
 //-----------------------------------------------------------------------
 
-cLuxArea_Sign::~cLuxArea_Sign()
+cLuxArea_Flashback::~cLuxArea_Flashback()
 {
 }
 
@@ -86,46 +92,29 @@ cLuxArea_Sign::~cLuxArea_Sign()
 
 //-----------------------------------------------------------------------
 
-void cLuxArea_Sign::SetupAfterLoad(cWorld *apWorld)
+void cLuxArea_Flashback::OnUpdate(float afTimeStep)
 {
-	
+	//Do not update this unless it is a proper game update (when eveything is 100% intialized)
+	if(afTimeStep < gpBase->mpEngine->GetStepSize()*0.8f) return;
+
+	//////////////////////////
+	// Check update count
+	mfCheckCollisionCount-=afTimeStep;
+	if(mfCheckCollisionCount>0) return;
+	mfCheckCollisionCount = 0.1f;
+
+	//////////////////////////
+	// Check collision
+	if(CollidesWithPlayer())
+	{
+		SetActive(false);
+
+		gpBase->mpPlayer->GetHelperFlashback()->Start(msFlashbackFile, msCallback);
+	}
 }
 
 //-----------------------------------------------------------------------
 
-void cLuxArea_Sign::OnUpdate(float afTimeStep)
-{
-}
-
-//-----------------------------------------------------------------------
-
-bool cLuxArea_Sign::CanInteract(iPhysicsBody *apBody)
-{
-	return true;
-}
-
-//-----------------------------------------------------------------------
-
-bool cLuxArea_Sign::OnInteract(iPhysicsBody *apBody, const cVector3f &avPos)
-{
-	return false;
-}
-
-//-----------------------------------------------------------------------
-
-eLuxFocusCrosshair cLuxArea_Sign::GetFocusCrosshair(iPhysicsBody *apBody, const cVector3f &avPos)
-{
-	return eLuxFocusCrosshair_Default;	
-}
-
-//-----------------------------------------------------------------------
-
-tWString cLuxArea_Sign::GetFocusText()
-{
-	return kTranslate(msTextCat, msTextEntry);
-}
-
-//-----------------------------------------------------------------------
 
 //////////////////////////////////////////////////////////////////////////
 // PRIVATE METHODS
@@ -141,52 +130,50 @@ tWString cLuxArea_Sign::GetFocusText()
 
 //-----------------------------------------------------------------------
 
-kBeginSerialize(cLuxArea_Sign_SaveData, iLuxArea_SaveData)
-
-kSerializeVar(msTextCat, eSerializeType_String)
-kSerializeVar(msTextEntry, eSerializeType_String)
-
+kBeginSerialize(cLuxArea_Flashback_SaveData, iLuxArea_SaveData)
+kSerializeVar(msFlashbackFile, eSerializeType_String)
+kSerializeVar(msCallback, eSerializeType_String)
 kEndSerialize()
 
 //-----------------------------------------------------------------------
 
-iLuxArea* cLuxArea_Sign_SaveData::CreateArea(cLuxMap *apMap)
+iLuxArea* cLuxArea_Flashback_SaveData::CreateArea(cLuxMap *apMap)
 {
-	return hplNew(cLuxArea_Sign, (msName, mlID, apMap));
+	return hplNew(cLuxArea_Flashback, (msName, mlID, apMap));
 }
 
 //-----------------------------------------------------------------------
 
-iLuxEntity_SaveData* cLuxArea_Sign::CreateSaveData()
+iLuxEntity_SaveData* cLuxArea_Flashback::CreateSaveData()
 {
-	return hplNew(cLuxArea_Sign_SaveData, ());
+	return hplNew(cLuxArea_Flashback_SaveData, ());
 }
 
 //-----------------------------------------------------------------------
 
-void cLuxArea_Sign::SaveToSaveData(iLuxEntity_SaveData* apSaveData)
+void cLuxArea_Flashback::SaveToSaveData(iLuxEntity_SaveData* apSaveData)
 {
 	super_class::SaveToSaveData(apSaveData);
-	cLuxArea_Sign_SaveData *pData = static_cast<cLuxArea_Sign_SaveData*>(apSaveData);
+	cLuxArea_Flashback_SaveData *pData = static_cast<cLuxArea_Flashback_SaveData*>(apSaveData);
 
-    kCopyToVar(pData, msTextCat);
-	kCopyToVar(pData, msTextEntry);
+    kCopyToVar(pData, msFlashbackFile);
+	kCopyToVar(pData, msCallback);
 }
 
 //-----------------------------------------------------------------------
 
-void cLuxArea_Sign::LoadFromSaveData(iLuxEntity_SaveData* apSaveData)
+void cLuxArea_Flashback::LoadFromSaveData(iLuxEntity_SaveData* apSaveData)
 {
 	super_class::LoadFromSaveData(apSaveData);
-	cLuxArea_Sign_SaveData *pData = static_cast<cLuxArea_Sign_SaveData*>(apSaveData);
+	cLuxArea_Flashback_SaveData *pData = static_cast<cLuxArea_Flashback_SaveData*>(apSaveData);
 
-	kCopyFromVar(pData, msTextCat);
-	kCopyFromVar(pData, msTextEntry);
+	kCopyFromVar(pData, msFlashbackFile);
+	kCopyFromVar(pData, msCallback);
 }
 
 //-----------------------------------------------------------------------
 
-void cLuxArea_Sign::SetupSaveData(iLuxEntity_SaveData *apSaveData)
+void cLuxArea_Flashback::SetupSaveData(iLuxEntity_SaveData *apSaveData)
 {
 	super_class::SetupSaveData(apSaveData);
 

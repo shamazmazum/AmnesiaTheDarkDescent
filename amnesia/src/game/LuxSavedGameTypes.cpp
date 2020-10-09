@@ -28,7 +28,7 @@
 #include "cLuxInventory.h"
 #include "cLuxMapHandler.h"
 #include "cLuxMusicHandler.h"
-#include "iLuxEnemy.h"
+#include "enemy/iLuxEnemy.h"
 #include "cLuxJournal.h"
 #include "cLuxEffectHandler.h"
 #include "cLuxGlobalDataHandler.h"

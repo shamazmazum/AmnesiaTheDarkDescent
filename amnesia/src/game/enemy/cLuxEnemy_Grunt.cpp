@@ -17,10 +17,10 @@
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "cLuxEnemy_Grunt.h"
+#include "enemy/cLuxEnemy_Grunt.h"
 
-#include "cLuxEnemyMover.h"
-#include "cLuxEnemyPathfinder.h"
+#include "enemy/cLuxEnemyMover.h"
+#include "enemy/cLuxEnemyPathfinder.h"
 
 #include "cLuxMap.h"
 #include "cLuxMapHelper.h"

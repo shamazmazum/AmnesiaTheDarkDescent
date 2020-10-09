@@ -17,33 +17,43 @@
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef LUX_ENEMY_GRUNT_H
-#define LUX_ENEMY_GRUNT_H
+#ifndef LUX_ENEMY_WATER_LURKER_H
+#define LUX_ENEMY_WATER_LURKER_H
 
 //----------------------------------------------
 
-#include "iLuxEnemy.h"
+#include "enemy/iLuxEnemy.h"
 
 //----------------------------------------------
 
-class cLuxEnemy_Grunt_SaveData : public iLuxEnemy_SaveData
+class cLuxEnemy_WaterLurker_SaveData : public iLuxEnemy_SaveData
 {
-	kSerializableClassInit(cLuxEnemy_Grunt_SaveData)
+	kSerializableClassInit(cLuxEnemy_WaterLurker_SaveData)
 public:
 	////////////////
 	//Properties
-		
+	float mfPlayerDetectionHeight;	
 };
 
 //----------------------------------------------
 
-class cLuxEnemy_Grunt : public iLuxEnemy
+enum eWaterLurkerSplash
 {
-friend class cLuxEnemyLoader_Grunt;
+	eWaterLurkerSplash_Walk,
+	eWaterLurkerSplash_Run,
+	eWaterLurkerSplash_Eat,
+	eWaterLurkerSplash_Attack,
+};
+
+//----------------------------------------------
+
+class cLuxEnemy_WaterLurker : public iLuxEnemy
+{
+friend class cLuxEnemyLoader_WaterLurker;
 typedef iLuxEnemy super_class;
 public:	
-	cLuxEnemy_Grunt(const tString &asName, int alID, cLuxMap *apMap);
-	virtual ~cLuxEnemy_Grunt();
+	cLuxEnemy_WaterLurker(const tString &asName, int alID, cLuxMap *apMap);
+	virtual ~cLuxEnemy_WaterLurker();
 
 	//////////////////////
 	//General
@@ -55,6 +65,9 @@ public:
 	//Actions
 	bool StateEventImplement(int alState, eLuxEnemyStateEvent aEvent, cLuxStateMessage *apMessage);
 
+	//////////////////////
+	//Callbacks
+	bool InRangeOfFood(iPhysicsBody *apFoodBody);
 
 	//////////////////////
 	//Debug
@@ -70,10 +83,13 @@ public:
 	
 private:
 	//////////////////////
+	// Actions
+	void SplashWater(eWaterLurkerSplash aType);
+
+	//////////////////////
 	// Callbacks
 	bool PlayerIsDetected();
-
-	void OnDisableTriggers();
+	void OnSetActiveEnemySpecific(bool abX);
 
 	float GetDamageMul(float afAmount, int alStrength);
 
@@ -84,39 +100,33 @@ private:
 	
 	//////////////
 	//Data
-	tString msNoticeSound;
-	tString msGiveUpNoticeSound;
-	tString msEnabledSound;
+	float mfPlayerDetectionHeight;
+	float mfEatDamage;
+	float mfAfterAttackPauseTime;
 
-	float mfGroggyDamageCount;
-	float mfAlertToHuntDistance;
-	float mfAlertToInstantHuntDistance;
-	float mfHuntPauseMinTime;
-	float mfHuntPauseMaxTime;
-	float mfIncreaseAlertSpeedDistance;
-	float mfIncreasedAlertSpeedMul;
-	float mfAlertRunTowardsToHuntLimit;
-	float mfAlertRunTowardsCheckDistance;
+	tString msSplashPS_Walk;
+	tString msSplashPS_Run;
+	tString msSplashPS_Eat;
+	tString msSplashPS_Attack;
 
-	float mfIdleExtraTimeMin;
-	float mfIdleExtraTimeMax;
-	int mlIdleExtraNum;
-	
+	tString msSplashSound_Walk;
+	tString msSplashSound_Run;
+	tString msSplashSound_Eat;
+	tString msSplashSound_Attack;
 	
 	//////////////
 	//Variables
-	float mfWaitTime;
-	float mfAlertRunTowardsCount;
+
 	
 };
 
 //----------------------------------------------
 
-class cLuxEnemyLoader_Grunt : public iLuxEnemyLoader
+class cLuxEnemyLoader_WaterLurker : public iLuxEnemyLoader
 {
 public:
-	cLuxEnemyLoader_Grunt(const tString& asName);
-	virtual ~cLuxEnemyLoader_Grunt(){}
+	cLuxEnemyLoader_WaterLurker(const tString& asName);
+	virtual ~cLuxEnemyLoader_WaterLurker(){}
 
 	iLuxEnemy *CreateEnemy(const tString& asName, int alID, cLuxMap *apMap);
 	void LoadVariables(iLuxEnemy *apEnemy, cXmlElement *apRootElem);
@@ -126,4 +136,4 @@ public:
 //----------------------------------------------
 
 
-#endif // LUX_ENEMY_GRUNT_H
+#endif // LUX_ENEMY_WATER_LURKER_H

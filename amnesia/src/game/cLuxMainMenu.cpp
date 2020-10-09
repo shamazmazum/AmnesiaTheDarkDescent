@@ -23,7 +23,7 @@
 #include "cLuxMapHandler.h"
 #include "cLuxInputHandler.h"
 #include "cLuxPlayer.h"
-#include "cLuxAreaNodes.h"
+#include "area/cLuxAreaNodes.h"
 #include "cLuxHelpFuncs.h"
 #include "cLuxSaveHandler.h"
 #include "cLuxConfigHandler.h"

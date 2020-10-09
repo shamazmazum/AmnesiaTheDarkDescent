@@ -20,7 +20,7 @@
 #include "cLuxPlayerState_Ladder.h"
 
 #include "cLuxPlayer.h"
-#include "cLuxArea_Ladder.h"
+#include "area/cLuxArea_Ladder.h"
 #include "cLuxMoveState_Normal.h"
 #include "cLuxHelpFuncs.h"
 #include "cLuxMapHandler.h"

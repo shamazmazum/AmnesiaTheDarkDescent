@@ -55,12 +55,12 @@
 #include "cLuxProp_Button.h"
 #include "cLuxProp_NPC.h"
 #include "cLuxProp_MultiSlider.h"
-#include "cLuxEnemy_ManPig.h"
+#include "enemy/cLuxEnemy_ManPig.h"
 
-#include "cLuxArea_Sticky.h"
+#include "area/cLuxArea_Sticky.h"
 
-#include "iLuxEnemy.h"
-#include "cLuxEnemyPathfinder.h"
+#include "enemy/iLuxEnemy.h"
+#include "enemy/cLuxEnemyPathfinder.h"
 #include "iLuxItemType.h"
 
 #include "iLuxInteractConnections.h"

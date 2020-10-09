@@ -17,7 +17,7 @@
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "cLuxArea_Examine.h"
+#include "area/cLuxArea_Examine.h"
 
 #include "cLuxMap.h"
 #include "cLuxPlayer.h"

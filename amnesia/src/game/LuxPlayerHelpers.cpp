@@ -28,7 +28,7 @@
 #include "cLuxHelpFuncs.h"
 #include "cLuxInventory.h"
 #include "cLuxEffectHandler.h"
-#include "iLuxEnemy.h"
+#include "enemy/iLuxEnemy.h"
 #include "iLuxProp.h"
 #include "iLuxProp_CritterBase.h"
 #include "cLuxHintHandler.h"

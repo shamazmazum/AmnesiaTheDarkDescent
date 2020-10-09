@@ -31,7 +31,7 @@
 #include "cLuxLoadScreenHandler.h"
 #include "cLuxMainMenu.h"
 
-#include "iLuxEnemy.h"
+#include "enemy/iLuxEnemy.h"
 #include "iLuxAchievementHandler.h"
 
 //////////////////////////////////////////////////////////////////////////

@@ -17,9 +17,9 @@
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "cLuxEnemyMover.h"
+#include "enemy/cLuxEnemyMover.h"
 
-#include "iLuxEnemy.h"
+#include "enemy/iLuxEnemy.h"
 #include "cLuxMap.h"
 
 //-----------------------------------------------------------------------

@@ -46,7 +46,7 @@
 #include "LuxPlayerHelpers.h"
 #include "cLuxPlayerHands.h"
 
-#include "cLuxAreaNodes.h"
+#include "area/cLuxAreaNodes.h"
 
 
 //////////////////////////////////////////////////////////////////////////

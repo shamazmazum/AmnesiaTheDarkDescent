@@ -34,7 +34,7 @@
 #include "LuxSavedGame.h"
 #include "cLuxInsanityHandler.h"
 #include "cLuxHelpFuncs.h"
-#include "cLuxAreaNodes.h"
+#include "area/cLuxAreaNodes.h"
 #include "cLuxConfigHandler.h"
 #include "cLuxGlobalDataHandler.h"
 #include "cLuxInventory.h"

@@ -28,7 +28,7 @@
 
 //----------------------------------------------
 
-#include "iLuxEnemy.h"	//<- This is a bit bad... but what u gonna do?
+#include "enemy/iLuxEnemy.h"	//<- This is a bit bad... but what u gonna do?
 
 //----------------------------------------------
 

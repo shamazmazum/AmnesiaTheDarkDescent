@@ -21,8 +21,8 @@
 
 #include "cLuxMapHandler.h"
 #include "cLuxMap.h"
-#include "iLuxEnemy.h"
-#include "cLuxEnemyPathfinder.h"
+#include "enemy/iLuxEnemy.h"
+#include "enemy/cLuxEnemyPathfinder.h"
 #include "cLuxProp_SwingDoor.h"
 #include "cLuxProp_LevelDoor.h"
 #include "cLuxProp_Item.h"

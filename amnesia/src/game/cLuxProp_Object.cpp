@@ -22,7 +22,7 @@
 #include "cLuxPlayer.h"
 #include "iLuxPlayerState.h"
 #include "cLuxMap.h"
-#include "iLuxEnemy.h"
+#include "enemy/iLuxEnemy.h"
 #include "cLuxProp_Item.h"
 #include "cLuxHintHandler.h"
 
