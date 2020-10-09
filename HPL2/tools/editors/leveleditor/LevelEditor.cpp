@@ -393,14 +393,13 @@ bool open_browser(const char* url, HWND parent = NULL)
 
 bool cLevelEditor::WebsiteCallback(iWidget* apWidget, const cGuiMessageData& aData)
 {
-	#if defined(WIN32)
-		open_browser("https://github.com/TiManGames/AmnesiaTheDarkDescent");
-	#elif defined(__linux__)
-		return false;
-	#elif defined(__APPLE__)
-		return false;
-	#endif
-
+#if defined(WIN32)
+	open_browser("https://github.com/TiManGames/AmnesiaTheDarkDescent");
+#elif defined(__linux__)
+	system("xdg-open https://github.com/TiManGames/AmnesiaTheDarkDescent");
+#elif defined(__APPLE__)
+	return false;
+#endif
 	return true;
 }
 kGuiCallbackDeclaredFuncEnd(cLevelEditor, WebsiteCallback);
