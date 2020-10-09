@@ -1063,6 +1063,9 @@
     <ClInclude Include="include\impl\GamepadSDL2.h">
       <Filter>Impl\Input</Filter>
     </ClInclude>
+    <ClInclude Include="include\graphics\PostEffect_ColorGrading.h">
+      <Filter>Graphics\PostEffectTypes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\system\Container.cpp">
@@ -1937,6 +1940,9 @@
     </ClCompile>
     <ClCompile Include="sources\impl\GamepadSDL2.cpp">
       <Filter>Impl\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\graphics\PostEffect_ColorGrading.cpp">
+      <Filter>Graphics\PostEffectTypes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

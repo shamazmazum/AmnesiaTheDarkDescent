@@ -406,6 +406,9 @@ namespace hpl {
 
                 assert( size.z == 1 && size.y == ( size.x * size.x ) );
 
+				if (size.z != 1 | size.y != size.x * size.x)
+					Error("Texture manager Couldn't load bitmap '%s'\n", cString::To8Char(sPath).c_str());
+
                 size.y = size.x;
                 size.z = size.x;
 

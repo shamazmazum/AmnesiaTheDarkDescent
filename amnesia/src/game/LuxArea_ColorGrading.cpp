@@ -93,6 +93,7 @@ cLuxArea_ColorGrading::~cLuxArea_ColorGrading()
 
 void cLuxArea_ColorGrading::OnUpdate(float afTimeStep)
 {
+    gpBase->mpEffectHandler->GetColorGrading()->Update(afTimeStep);
 	//////////////////////////
 	// Update collision check timer
 	mfCollisionCheckTimer -= afTimeStep;
