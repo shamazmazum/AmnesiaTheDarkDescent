@@ -20,7 +20,7 @@
 #include "cLuxMapHandler.h"
 
 #include "cLuxMap.h"
-#include "cLuxPlayer.h"
+#include "player/cLuxPlayer.h"
 #include "cLuxEffectRenderer.h"
 #include "cLuxEffectHandler.h"
 #include "cLuxDebugHandler.h"
@@ -29,7 +29,7 @@
 #include "cLuxSaveHandler.h"
 #include "cLuxConfigHandler.h"
 #include "cLuxLoadScreenHandler.h"
-#include "cLuxMainMenu.h"
+#include "main_menu/cLuxMainMenu.h"
 
 #include "enemy/iLuxEnemy.h"
 #include "iLuxAchievementHandler.h"

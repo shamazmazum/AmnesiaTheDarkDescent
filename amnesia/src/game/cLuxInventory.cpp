@@ -19,7 +19,7 @@
 
 #include "cLuxInventory.h"
 
-#include "cLuxPlayer.h"
+#include "player/cLuxPlayer.h"
 #include "cLuxInputHandler.h"
 #include "cLuxMapHandler.h"
 #include "cLuxMap.h"

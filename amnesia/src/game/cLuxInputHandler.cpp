@@ -19,12 +19,12 @@
 
 #include "cLuxInputHandler.h"
 
-#include "cLuxPlayer.h"
-#include "iLuxPlayerState.h"
-#include "LuxPlayerHelpers.h"
+#include "player/cLuxPlayer.h"
+#include "player/iLuxPlayerState.h"
+#include "player/LuxPlayerHelpers.h"
 
-#include "cLuxPreMenu.h"
-#include "cLuxMainMenu.h"
+#include "main_menu/cLuxPreMenu.h"
+#include "main_menu/cLuxMainMenu.h"
 #include "cLuxCredits.h"
 #include "cLuxDemoEnd.h"
 

@@ -25,8 +25,8 @@
 #include "cLuxMap.h"
 #include "cLuxMapHelper.h"
 #include "cLuxMapHandler.h"
-#include "cLuxPlayer.h"
-#include "LuxPlayerHelpers.h"
+#include "player/cLuxPlayer.h"
+#include "player/LuxPlayerHelpers.h"
 #include "iLuxInteractConnections.h"
 #include "cLuxMusicHandler.h"
 #include "cLuxEffectRenderer.h"
@@ -35,8 +35,8 @@
 #include "cLuxProgressLogHandler.h"
 #include "cLuxHelpFuncs.h"
 
-#include "iLuxProp.h"
-#include "cLuxProp_Object.h"
+#include "prop/iLuxProp.h"
+#include "prop/cLuxProp_Object.h"
 
 //////////////////////////////////////////////////////////////////////////
 // Global Vars

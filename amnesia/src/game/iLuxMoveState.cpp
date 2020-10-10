@@ -19,7 +19,7 @@
 
 #include "iLuxMoveState.h"
 
-#include "cLuxPlayer.h"
+#include "player/cLuxPlayer.h"
 
 //////////////////////////////////////////////////////////////////////////
 // CONSTRUCTORS

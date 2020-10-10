@@ -19,8 +19,8 @@
 
 #include "LuxSavedEngineTypes.h"
 
-#include "cLuxPlayer.h"
-#include "iLuxPlayerState.h"
+#include "player/cLuxPlayer.h"
+#include "player/iLuxPlayerState.h"
 #include "cLuxMap.h"
 
 //////////////////////////////////////////////////////////////////////////

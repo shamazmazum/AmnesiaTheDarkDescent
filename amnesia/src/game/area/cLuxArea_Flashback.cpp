@@ -20,8 +20,8 @@
 #include "area/cLuxArea_Flashback.h"
 
 #include "cLuxMap.h"
-#include "cLuxPlayer.h"
-#include "LuxPlayerHelpers.h"
+#include "player/cLuxPlayer.h"
+#include "player/LuxPlayerHelpers.h"
 #include "cLuxHelpFuncs.h"
 #include "cLuxMessageHandler.h"
 

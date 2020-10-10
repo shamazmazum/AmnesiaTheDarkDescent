@@ -20,8 +20,8 @@
 #include "LuxTypes.h"
 
 #include "iLuxEntity.h"
-#include "iLuxArea.h"
-#include "iLuxProp.h"
+#include "area/iLuxArea.h"
+#include "prop/iLuxProp.h"
 #include "cLuxMap.h"
 
 //////////////////////////////////////////////////////////////////////////

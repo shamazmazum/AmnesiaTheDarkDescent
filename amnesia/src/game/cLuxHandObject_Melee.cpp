@@ -20,8 +20,8 @@
 #include "cLuxHandObject_Melee.h"
 
 #include "cLuxMap.h"
-#include "cLuxPlayer.h"
-#include "cLuxPlayerHands.h"
+#include "player/cLuxPlayer.h"
+#include "player/cLuxPlayerHands.h"
 #include "cLuxMapHelper.h"
 #include "cLuxHelpFuncs.h"
 

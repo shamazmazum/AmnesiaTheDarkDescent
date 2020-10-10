@@ -27,10 +27,10 @@
 #include "cLuxMusicHandler.h"
 #include "cLuxDebugHandler.h"
 
-#include "cLuxPlayer.h"
-#include "LuxPlayerHelpers.h"
+#include "player/cLuxPlayer.h"
+#include "player/LuxPlayerHelpers.h"
 
-#include "cLuxProp_Object.h"
+#include "prop/cLuxProp_Object.h"
 
 //////////////////////////////////////////////////////////////////////////
 // LOADER

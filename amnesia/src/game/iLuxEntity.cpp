@@ -20,7 +20,7 @@
 #include "iLuxEntity.h"
 
 #include "cLuxMap.h"
-#include "cLuxPlayer.h"
+#include "player/cLuxPlayer.h"
 #include "cLuxMapHelper.h"
 
 //////////////////////////////////////////////////////////////////////////

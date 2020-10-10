@@ -22,7 +22,7 @@
 #include "cLuxMapHandler.h"
 #include "cLuxInputHandler.h"
 #include "cLuxHelpFuncs.h"
-#include "cLuxPlayer.h"
+#include "player/cLuxPlayer.h"
 #include "cLuxHelpFuncs.h"
 #include "cLuxEffectHandler.h"
 #include "cLuxProgressLogHandler.h"

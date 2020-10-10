@@ -24,8 +24,8 @@
 #include "iLuxEntity.h"
 #include "area/cLuxAreaNodes.h"
 
-#include "cLuxPlayer.h"
-#include "iLuxPlayerState.h"
+#include "player/cLuxPlayer.h"
+#include "player/iLuxPlayerState.h"
 #include "cLuxDebugHandler.h"
 #include "cLuxCompletionCountHandler.h"
 #include "cLuxMusicHandler.h"
@@ -36,9 +36,9 @@
 #include "enemy/iLuxEnemy.h"
 #include "enemy/cLuxEnemyPathfinder.h"
 
-#include "cLuxProp_SwingDoor.h"
-#include "cLuxProp_Item.h"
-#include "cLuxProp_Lamp.h"
+#include "prop/cLuxProp_SwingDoor.h"
+#include "prop/cLuxProp_Item.h"
+#include "prop/cLuxProp_Lamp.h"
 #include "area/cLuxArea_Sticky.h"
 
 #include <sstream>

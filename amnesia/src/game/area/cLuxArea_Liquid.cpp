@@ -20,8 +20,8 @@
 #include "area/cLuxArea_Liquid.h"
 
 #include "cLuxMap.h"
-#include "cLuxPlayer.h"
-#include "iLuxPlayerState.h"
+#include "player/cLuxPlayer.h"
+#include "player/iLuxPlayerState.h"
 #include "enemy/iLuxEnemy.h"
 
 

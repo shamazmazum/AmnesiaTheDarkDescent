@@ -19,9 +19,9 @@
 
 #include "cLuxCritter_Spider.h"
 
-#include "cLuxPlayer.h"
-#include "LuxPlayerHelpers.h"
-#include "iLuxPlayerState.h"
+#include "player/cLuxPlayer.h"
+#include "player/LuxPlayerHelpers.h"
+#include "player/iLuxPlayerState.h"
 #include "cLuxMap.h"
 #include "cLuxMapHelper.h"
 #include "cLuxDebugHandler.h"

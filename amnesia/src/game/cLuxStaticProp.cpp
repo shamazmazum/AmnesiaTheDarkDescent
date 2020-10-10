@@ -20,7 +20,7 @@
 #include "cLuxStaticProp.h"
 
 #include "cLuxMap.h"
-#include "cLuxPlayer.h"
+#include "player/cLuxPlayer.h"
 #include "iLuxInteractConnections.h"
 
 

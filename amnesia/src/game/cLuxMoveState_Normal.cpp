@@ -19,11 +19,11 @@
 
 #include "cLuxMoveState_Normal.h"
 
-#include "cLuxPlayer.h"
+#include "player/cLuxPlayer.h"
 #include "cLuxMapHandler.h"
 #include "cLuxMap.h"
 #include "cLuxHelpFuncs.h"
-#include "LuxPlayerHelpers.h"
+#include "player/LuxPlayerHelpers.h"
 
 //////////////////////////////////////////////////////////////////////////
 // CHARACTER CALLBACK

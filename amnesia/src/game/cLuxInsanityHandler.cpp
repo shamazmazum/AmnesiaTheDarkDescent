@@ -19,7 +19,7 @@
 
 #include "cLuxInsanityHandler.h"
 
-#include "cLuxPlayer.h"
+#include "player/cLuxPlayer.h"
 #include "cLuxDebugHandler.h"
 #include "cLuxMapHandler.h"
 #include "cLuxMap.h"

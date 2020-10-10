@@ -19,7 +19,7 @@
 
 #include "cLuxMoveState_ClimbLedge.h"
 
-#include "cLuxPlayer.h"
+#include "player/cLuxPlayer.h"
 #include "cLuxHelpFuncs.h"
 
 //////////////////////////////////////////////////////////////////////////

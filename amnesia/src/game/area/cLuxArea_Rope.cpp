@@ -21,7 +21,7 @@
 
 #include "cLuxMap.h"
 
-#include "iLuxProp.h"
+#include "prop/iLuxProp.h"
 
 //-----------------------------------------------------------------------
 

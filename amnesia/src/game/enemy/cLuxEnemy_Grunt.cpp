@@ -28,8 +28,8 @@
 #include "cLuxDebugHandler.h"
 #include "cLuxGlobalDataHandler.h"
 
-#include "cLuxPlayer.h"
-#include "LuxPlayerHelpers.h"
+#include "player/cLuxPlayer.h"
+#include "player/LuxPlayerHelpers.h"
 
 //////////////////////////////////////////////////////////////////////////
 // LOADER

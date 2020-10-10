@@ -19,9 +19,9 @@
 
 #include "iLuxInteractConnections.h"
 
-#include "cLuxProp_Wheel.h"
-#include "cLuxProp_SwingDoor.h"
-#include "cLuxProp_MoveObject.h"
+#include "prop/cLuxProp_Wheel.h"
+#include "prop/cLuxProp_SwingDoor.h"
+#include "prop/cLuxProp_MoveObject.h"
 #include "cLuxMap.h"
 
 

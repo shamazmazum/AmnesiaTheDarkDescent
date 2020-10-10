@@ -20,10 +20,10 @@
 #include "area/cLuxArea_Sticky.h"
 
 #include "cLuxMap.h"
-#include "cLuxPlayer.h"
-#include "iLuxPlayerState.h"
+#include "player/cLuxPlayer.h"
+#include "player/iLuxPlayerState.h"
 
-#include "iLuxProp.h"
+#include "prop/iLuxProp.h"
 
 
 //////////////////////////////////////////////////////////////////////////

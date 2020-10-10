@@ -22,7 +22,7 @@
 
 //----------------------------------------------
 
-#include "iLuxProp_CritterBase.h"
+#include "prop/iLuxProp_CritterBase.h"
 
 //----------------------------------------------
 

@@ -20,8 +20,8 @@
 #include "area/cLuxArea_Examine.h"
 
 #include "cLuxMap.h"
-#include "cLuxPlayer.h"
-#include "iLuxPlayerState.h"
+#include "player/cLuxPlayer.h"
+#include "player/iLuxPlayerState.h"
 #include "cLuxEffectHandler.h"
 #include "cLuxHelpFuncs.h"
 #include "cLuxCompletionCountHandler.h"

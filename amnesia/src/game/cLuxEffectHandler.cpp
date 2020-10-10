@@ -21,7 +21,7 @@
 
 #include "cLuxMapHandler.h"
 #include "cLuxMap.h"
-#include "cLuxPlayer.h"
+#include "player/cLuxPlayer.h"
 #include "cLuxHelpFuncs.h"
 #include "cLuxMessageHandler.h"
 #include "cLuxCommentaryIcon.h"
