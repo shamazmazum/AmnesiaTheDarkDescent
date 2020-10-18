@@ -49,7 +49,6 @@ using namespace hpl;
 #include "../common/EditorWindowLowerToolbar.h"
 #include "../common/EditorWindowEditModeSidebar.h"
 
-
 #include "../common/EditorGrid.h"
 #include "../common/EditorClipPlane.h"
 #include "../common/EditorSelection.h"
@@ -66,6 +65,8 @@ using namespace hpl;
 #include "LevelEditorWindowLevelSettings.h"
 #include "LevelEditorWorld.h"
 #include "LevelEditorActions.h"
+#include "LevelEditorWindowAbout.h"
+#include "CommunityEdition.h"
 
 #include <algorithm>
 
@@ -347,6 +348,15 @@ bool cLevelEditor::MainMenu_ItemClick(iWidget* apWidget, const cGuiMessageData& 
 		AddWindow(mpWindowOptions);
 	}
 
+	///////////////////////////////////////////////
+	// Menu Item "Help.About" community stuff
+	else if(apWidget==mpMainMenuAbout)
+	{
+		iEditorWindow* pWindow = hplNew(cLevelEditorWindowAbout,(this));
+		pWindow->Init();
+		pWindow->SetActive(true);
+		AddWindow(pWindow);
+	}
 
 	return true;
 }
@@ -561,6 +571,10 @@ void cLevelEditor::OnInitLayout()
 	vHandlePos += cVector3f(pHandle->GetSize().x+10, 0, 0);
 	pHandle = mpLowerToolbar->AddClipPlaneControls();
 	pHandle->SetPosition(vHandlePos);
+	//New stuff:
+	vHandlePos += cVector3f(pHandle->GetSize().x+10, 0, 0);
+	pHandle = mpLowerToolbar->AddCommunityCredits();
+	pHandle->SetPosition(vHandlePos);
 
 	////////////////////////////////////
 	// Search Window
@@ -685,7 +699,7 @@ void cLevelEditor::OnLoadConfig()
 	}
 
 	// Window caption
-	msCaption = "HPL Level Editor";
+	msCaption = "HPL Level Editor (Community Edition)";
 	
 	SetLogFile(GetHomeDir() + _W("LevelEditor.log"));
 
@@ -900,6 +914,12 @@ cWidgetMainMenu* cLevelEditor::CreateMainMenu()
 	// Options
 	mpMainMenuOptions = pItem->AddMenuItem(_W("Options"));
 	mpMainMenuOptions->AddCallback(eGuiMessage_ButtonPressed,this,kGuiCallback(MainMenu_ItemClick));
+
+	//Help menu - community stuff
+    pItem = mpMainMenu->AddMenuItem(_W("Help"));
+
+    mpMainMenuAbout = pItem->AddMenuItem(_W("About"));
+    mpMainMenuAbout->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(MainMenu_ItemClick));
 
 	return mpMainMenu;
 }

@@ -116,7 +116,6 @@ public:
 	// Open up a file picker for importing the contents of a map file into the current map. 
 	void Command_Import();
 	
-	
 	// Open up a file picker for exporting all currently selected entities into a map file.
 	void Command_Export();
 
@@ -208,7 +207,8 @@ protected:
 	cWidgetMenuItem* mpMainMenuOptions;
 	cWidgetMenuItem* mpMainMenuCompound;
 
-
+	//Help menu - community
+	cWidgetMenuItem* mpMainMenuAbout;
 	
 	////////////////////////////////
 	// Some windows

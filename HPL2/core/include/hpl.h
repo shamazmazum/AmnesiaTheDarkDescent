@@ -216,4 +216,6 @@
 #include "haptic/HapticForce.h"
 #include "haptic/HapticSurface.h"
 
+#include "CommunityEdition.h"
+
 #endif // HPL_HPL_H

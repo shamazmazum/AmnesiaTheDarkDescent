@@ -304,6 +304,62 @@ namespace hpl {
 
 	//---------------------------------------------------
 
+	void cGuiGfxElement::AddTexture(iTexture* apTexture, const cVector2f& avUVUpperLeft, const cVector2f& avUVUpperRight, const cVector2f& avUVLowerRight, const cVector2f& avUVLowerLeft)
+	{
+		mvTextures[mlTextureNum] = apTexture;
+
+		if (mlTextureNum == 0)
+		{
+			cVector2f vSize = cVector2f((float)apTexture->GetWidth(), (float)apTexture->GetHeight());
+
+			// TODO : this would not work if the UV coords are not aligned with the axes.
+			// No rush since it is a func that is only used once and by the color picker.
+			// Fix when needed.
+			mvImageSize.x = vSize.x * (avUVLowerRight.x - avUVUpperLeft.x);
+			mvImageSize.y = vSize.y * (avUVLowerRight.y - avUVUpperLeft.y);
+
+			if (apTexture->GetType() == eTextureType_Rect)
+			{
+				//If a rect, give new texture coordinates
+
+				mvVtx[0].tex.x = avUVUpperLeft.x * vSize.x;
+				mvVtx[0].tex.y = avUVUpperLeft.y * vSize.y;
+
+				mvVtx[1].tex.x = avUVUpperRight.x * vSize.x;
+				mvVtx[1].tex.y = avUVUpperRight.y * vSize.y;
+
+				mvVtx[2].tex.x = avUVLowerRight.x * vSize.x;
+				mvVtx[2].tex.y = avUVLowerRight.y * vSize.y;
+
+				mvVtx[3].tex.x = avUVLowerLeft.x * vSize.x;
+				mvVtx[3].tex.y = avUVLowerLeft.y * vSize.y;
+			}
+			else
+			{
+				mvVtx[0].tex.x = avUVUpperLeft.x;
+				mvVtx[0].tex.y = avUVUpperLeft.y;
+
+				mvVtx[1].tex.x = avUVUpperRight.x;
+				mvVtx[1].tex.y = avUVUpperRight.y;
+
+				mvVtx[2].tex.x = avUVLowerRight.x;
+				mvVtx[2].tex.y = avUVLowerRight.y;
+
+				mvVtx[3].tex.x = avUVLowerLeft.x;
+				mvVtx[3].tex.y = avUVLowerLeft.y;
+
+			}
+
+			if (mbFlipUvYAxis) SetFlipUvYAxis(mbFlipUvYAxis);
+		}
+
+		mvActiveSize = GetImageSize();
+
+		++mlTextureNum;
+	}
+
+	//---------------------------------------------------
+
 	void cGuiGfxElement::AddImageToBuffer(cFrameSubImage* apImage)
 	{
 		if(mvImageBufferVec.size()==0)

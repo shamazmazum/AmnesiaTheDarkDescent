@@ -27,6 +27,7 @@
 
 
 namespace hpl {
+
     //--------------------------------
 
     enum eGuiWindowZDest {

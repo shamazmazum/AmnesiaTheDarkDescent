@@ -81,7 +81,8 @@ file(GLOB common_sources RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
     sources/resources/*
     sources/scene/*
     sources/sound/*
-    sources/system/*
+	sources/system/*
+	sources/CommunityEdition.cpp
 
     include/ai/*
     include/engine/*
@@ -243,6 +244,8 @@ FindPrebuiltLibrary(FBX_LIBRARY fbxsdk-2012.2-static)
 FindPrebuiltLibrary(GLEW_LIBRARY GLEW)
 FindPrebuiltLibrary(THEORA_LIBRARY theora)
 FindPrebuiltLibrary(DEVIL_LIBRARY IL)
+
+set(OpenGL_GL_PREFERENCE LEGACY)
 
 find_package(OpenGL)
 mark_as_advanced(NEWTON_LIBRARY ANGELSCRIPT_LIBRARY FBX_LIBRARY GLEW_LIBRARY THEORA_LIBRARY DEVIL_LIBRARY)

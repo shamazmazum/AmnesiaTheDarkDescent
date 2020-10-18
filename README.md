@@ -2,6 +2,8 @@
 
 This is a fork of the Amnesia the Dark Descent repository from FrictionalGames. We will mostly play with different parts of the engine and perhaps even fix some bugs :)
 
+Currently also working on improving the engine tools - check the appropriate branch.
+
 ## Index
 
 * [Windows](#project-overview-windows) - Compiling instructions for Windows.
