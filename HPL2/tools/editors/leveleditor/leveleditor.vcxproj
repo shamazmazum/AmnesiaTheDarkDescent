@@ -46,6 +46,7 @@
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <PreLinkEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</PreLinkEventUseInBuild>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -205,6 +206,7 @@
     <ClCompile Include="LevelEditorMain.cpp" />
     <ClCompile Include="LevelEditorStaticObjectCombo.cpp" />
     <ClCompile Include="LevelEditorWindow.cpp" />
+    <ClCompile Include="LevelEditorWindowAbout.cpp" />
     <ClCompile Include="LevelEditorWindowGroup.cpp" />
     <ClCompile Include="LevelEditorWindowLevelSettings.cpp" />
     <ClCompile Include="LevelEditorWorld.cpp" />
@@ -320,6 +322,7 @@
     <ClInclude Include="LevelEditorStaticObjectCombo.h" />
     <ClInclude Include="LevelEditorTypes.h" />
     <ClInclude Include="LevelEditorWindow.h" />
+    <ClInclude Include="LevelEditorWindowAbout.h" />
     <ClInclude Include="LevelEditorWindowGroup.h" />
     <ClInclude Include="LevelEditorWindowLevelSettings.h" />
     <ClInclude Include="LevelEditorWorld.h" />
