@@ -268,7 +268,8 @@ iWidget* iEditorWindowLowerToolbar::AddCommunityCredits()
 	mpVanityLogo->AddCallback(eGuiMessage_MouseDown, this, kGuiCallback(InputCallback)); */
 
 	//See header file for the community version string
-	mpVersionLabel = mpSet->CreateWidgetLabel(cVector3f(offsetX+40, 0, 0.1f), cVector2f(32, 20), COMMUNITY_VERSION, mpVersionLabelDummy);
+	// mpVersionLabel = mpSet->CreateWidgetLabel(cVector3f(offsetX+40, 0, 0.1f), cVector2f(32, 20), _W("Community version ")COMMUNITY_VERSION, mpVersionLabelDummy);
+	// mpVersionLabel->SetTextAlign(eFontAlign_Right);
 
 	return mpVersionLabelDummy;
 }

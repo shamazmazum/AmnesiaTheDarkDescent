@@ -26,10 +26,6 @@
 
 using namespace hpl;
 
-#define COMMUNITY_VERSION _W("Level Editor - Community version 0.2.3")
-
-//---------------------------------------------------------------
-
 //---------------------------------------------------------------
 
 class iEditorWindowLowerToolbar : public iEditorWindow

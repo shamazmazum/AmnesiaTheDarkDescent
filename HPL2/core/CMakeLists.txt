@@ -81,7 +81,8 @@ file(GLOB common_sources RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
     sources/resources/*
     sources/scene/*
     sources/sound/*
-    sources/system/*
+	sources/system/*
+	sources/CommunityEdition.cpp
 
     include/ai/*
     include/engine/*

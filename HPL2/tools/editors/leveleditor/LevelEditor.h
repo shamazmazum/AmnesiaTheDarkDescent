@@ -111,14 +111,10 @@ public:
 	cLevelEditor();
 	~cLevelEditor();
 
-	bool WebsiteCallback(iWidget* apWidget, const cGuiMessageData& aData); //Community stuff
-	kGuiCallbackDeclarationEnd(WebsiteCallback);
-
 	void LookAtEntity(int alEntityID);
 
 	// Open up a file picker for importing the contents of a map file into the current map. 
 	void Command_Import();
-	
 	
 	// Open up a file picker for exporting all currently selected entities into a map file.
 	void Command_Export();
@@ -213,8 +209,6 @@ protected:
 
 	//Help menu - community
 	cWidgetMenuItem* mpMainMenuAbout;
-	cWidgetMenuItem* mpMainMenuShortcuts;
-
 	
 	////////////////////////////////
 	// Some windows

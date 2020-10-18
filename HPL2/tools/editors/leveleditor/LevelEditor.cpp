@@ -49,7 +49,6 @@ using namespace hpl;
 #include "../common/EditorWindowLowerToolbar.h"
 #include "../common/EditorWindowEditModeSidebar.h"
 
-
 #include "../common/EditorGrid.h"
 #include "../common/EditorClipPlane.h"
 #include "../common/EditorSelection.h"
@@ -66,6 +65,8 @@ using namespace hpl;
 #include "LevelEditorWindowLevelSettings.h"
 #include "LevelEditorWorld.h"
 #include "LevelEditorActions.h"
+#include "LevelEditorWindowAbout.h"
+#include "CommunityEdition.h"
 
 #include <algorithm>
 
@@ -348,62 +349,18 @@ bool cLevelEditor::MainMenu_ItemClick(iWidget* apWidget, const cGuiMessageData& 
 	}
 
 	///////////////////////////////////////////////
-	// Menu Item "Help.Shortcuts"
-	else if(apWidget==mpMainMenuShortcuts)
-	{
-		//_W("")
-		ShowMessageBox(_W("New Shortcuts"), 
-						_W("A full list of new shortcuts is available in an attached text file."), 
-						_W("Close"), _W(""),
-						NULL, NULL);
-	}
-
-	///////////////////////////////////////////////
-	// Menu Item "Help.About"
+	// Menu Item "Help.About" community stuff
 	else if(apWidget==mpMainMenuAbout)
 	{
-		ShowMessageBox(_W("Find us"), 
-						_W("You can reach the creators of the Community Edition on the official FG Discord server or on GitHub:"), 
-						_W("Open website"), _W("Cancel"),
-						this, kGuiCallback(WebsiteCallback));
+		iEditorWindow* pWindow = hplNew(cLevelEditorWindowAbout,(this));
+		pWindow->Init();
+		pWindow->SetActive(true);
+		AddWindow(pWindow);
 	}
 
 	return true;
 }
 kGuiCallbackDeclaredFuncEnd(cLevelEditor, MainMenu_ItemClick);
-
-//--------------------------------------------------------------------
-//TODO: This entire section should be moved to a separate header file
-#ifdef WIN32
-#include <windows.h>
-#include <shellapi.h>
-bool open_browser(const char* url, HWND parent = NULL)
-{
-    // Try normally, with the default verb (which will typically be "open")
-    HINSTANCE result = ShellExecuteA(parent, NULL, url, NULL, NULL, SW_SHOWNORMAL);
-
-    // If that fails due to privileges, let's ask for more and try again
-    if ((int)result == SE_ERR_ACCESSDENIED)
-        result = ShellExecuteA(parent, "runas", url, NULL, NULL, SW_SHOWNORMAL);
-
-    // Return whether or not we were successful.
-    return ((int)result > 32);
-}
-#endif
-
-bool cLevelEditor::WebsiteCallback(iWidget* apWidget, const cGuiMessageData& aData)
-{
-#if defined(WIN32)
-	open_browser("https://github.com/TiManGames/AmnesiaTheDarkDescent");
-#elif defined(__linux__)
-	system("xdg-open https://github.com/TiManGames/AmnesiaTheDarkDescent");
-#elif defined(__APPLE__)
-	return false;
-#endif
-	return true;
-}
-kGuiCallbackDeclaredFuncEnd(cLevelEditor, WebsiteCallback);
-
 
 //--------------------------------------------------------------------
 
@@ -958,14 +915,11 @@ cWidgetMainMenu* cLevelEditor::CreateMainMenu()
 	mpMainMenuOptions = pItem->AddMenuItem(_W("Options"));
 	mpMainMenuOptions->AddCallback(eGuiMessage_ButtonPressed,this,kGuiCallback(MainMenu_ItemClick));
 
-	//Help tab - community stuff
+	//Help menu - community stuff
     pItem = mpMainMenu->AddMenuItem(_W("Help"));
 
     mpMainMenuAbout = pItem->AddMenuItem(_W("About"));
     mpMainMenuAbout->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(MainMenu_ItemClick));
-
-	mpMainMenuShortcuts = pItem->AddMenuItem(_W("New shortcuts"));
-    mpMainMenuShortcuts->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(MainMenu_ItemClick));
 
 	return mpMainMenu;
 }
