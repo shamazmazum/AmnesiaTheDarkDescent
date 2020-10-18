@@ -26,75 +26,82 @@
 
 //----------------------------------------------
 
-class cLuxProp_Button_SaveData : public iLuxProp_SaveData
-{
-	kSerializableClassInit(cLuxProp_Button_SaveData)
+class cLuxProp_Button_SaveData : public iLuxProp_SaveData {
+    kSerializableClassInit(cLuxProp_Button_SaveData)
 public:
-	bool mbSwitchedOn;
-	bool mbCanBeSwitchedOn;
-	bool mbCanBeSwitchedOff;
+    bool mbSwitchedOn;
+    bool mbCanBeSwitchedOn;
+    bool mbCanBeSwitchedOff;
 };
 
 
 //----------------------------------------------
 
-class cLuxProp_Button : public iLuxProp
-{
-typedef iLuxProp super_class;
-friend class cLuxPropLoader_Button;
-public:	
-	cLuxProp_Button(const tString &asName, int alID, cLuxMap *apMap);
-	virtual ~cLuxProp_Button();
+class cLuxProp_Button : public iLuxProp {
+    typedef iLuxProp super_class;
 
-	//////////////////////
-	//General
-	bool CanInteract(iPhysicsBody *apBody);
-	bool OnInteract(iPhysicsBody *apBody, const cVector3f &avPos);
-	
-	void OnSetupAfterLoad(cWorld *apWorld);
+    friend class cLuxPropLoader_Button;
 
-	void OnResetProperties();
+public:
+    cLuxProp_Button(const tString &asName, int alID, cLuxMap *apMap);
 
-	void UpdatePropSpecific(float afTimeStep);
-	
-	void BeforePropDestruction();
+    virtual ~cLuxProp_Button();
 
-	eLuxFocusCrosshair GetFocusCrosshair(iPhysicsBody *apBody, const cVector3f &avPos);
+    //////////////////////
+    //General
+    bool CanInteract(iPhysicsBody *apBody);
 
-	//////////////////////
-	//Properties
-	void SetSwitchedOn(bool abX, bool abUseEffects);
+    bool OnInteract(iPhysicsBody *apBody, const cVector3f &avPos);
 
-	//////////////////////
-	//Connection callbacks
-	void OnConnectionStateChange(iLuxEntity *apEntity, int alState);
+    void OnSetupAfterLoad(cWorld *apWorld);
 
-	//////////////////////
-	//Save data stuff
-	iLuxEntity_SaveData* CreateSaveData();
-	void SaveToSaveData(iLuxEntity_SaveData* apSaveData);
-	void LoadFromSaveData(iLuxEntity_SaveData* apSaveData);
-	void SetupSaveData(iLuxEntity_SaveData *apSaveData);
+    void OnResetProperties();
+
+    void UpdatePropSpecific(float afTimeStep);
+
+    void BeforePropDestruction();
+
+    eLuxFocusCrosshair GetFocusCrosshair(iPhysicsBody *apBody, const cVector3f &avPos);
+
+    //////////////////////
+    //Properties
+    void SetSwitchedOn(bool abX, bool abUseEffects);
+
+    //////////////////////
+    //Connection callbacks
+    void OnConnectionStateChange(iLuxEntity *apEntity, int alState);
+
+    //////////////////////
+    //Save data stuff
+    iLuxEntity_SaveData *CreateSaveData();
+
+    void SaveToSaveData(iLuxEntity_SaveData *apSaveData);
+
+    void LoadFromSaveData(iLuxEntity_SaveData *apSaveData);
+
+    void SetupSaveData(iLuxEntity_SaveData *apSaveData);
 
 
 private:
-	//Vars
-	bool mbSwitchedOn;
-	bool mbCanBeSwitchedOn;
-	bool mbCanBeSwitchedOff;
+    //Vars
+    bool mbSwitchedOn;
+    bool mbCanBeSwitchedOn;
+    bool mbCanBeSwitchedOff;
 };
 
 //----------------------------------------------
 
-class cLuxPropLoader_Button : public iLuxPropLoader
-{
+class cLuxPropLoader_Button : public iLuxPropLoader {
 public:
-	cLuxPropLoader_Button(const tString& asName);
-	virtual ~cLuxPropLoader_Button(){}
+    cLuxPropLoader_Button(const tString &asName);
 
-	iLuxProp *CreateProp(const tString& asName, int alID, cLuxMap *apMap);
-	void LoadVariables(iLuxProp *apProp, cXmlElement *apRootElem);
-	void LoadInstanceVariables(iLuxProp *apProp, cResourceVarsObject *apInstanceVars);
+    virtual ~cLuxPropLoader_Button() {}
+
+    iLuxProp *CreateProp(const tString &asName, int alID, cLuxMap *apMap);
+
+    void LoadVariables(iLuxProp *apProp, cXmlElement *apRootElem);
+
+    void LoadInstanceVariables(iLuxProp *apProp, cResourceVarsObject *apInstanceVars);
 
 private:
 };

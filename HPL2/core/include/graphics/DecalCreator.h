@@ -137,7 +137,7 @@ namespace hpl {
 		tMatrixfVec mvMatrices;
 	};
 
-};
+}
 #endif // HPL_DECALCREATOR_H
 
 

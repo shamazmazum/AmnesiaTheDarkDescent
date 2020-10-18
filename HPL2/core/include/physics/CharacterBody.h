@@ -82,12 +82,13 @@ namespace hpl {
 	public:
 		cCharacterBodyRay();
 
-		void Clear();
+		void Clear(bool abCollideVolatile);
 		bool OnIntersect(iPhysicsBody *pBody,cPhysicsRayParams *apParams);
 
 		float mfMinDist;
 		cVector3f mvNormal;
 		bool mbCollide;
+		bool mbCollideVolatile;
 	};
 
 	//------------------------------------------------
@@ -147,6 +148,9 @@ namespace hpl {
 
 		void SetCollideCharacter(bool abX);
 		bool GetCollideCharacter(){ return mbCollideCharacter;}
+		
+		void SetCollideStaticVolatile(bool abX) { mbCollideStaticVolatile = abX;}
+		bool GetCollideStaticVolatile() { return mbCollideStaticVolatile;}
 
 		void SetTestCollision(bool abX);
 		bool GetTestCollision(){return mbTestCollision;}
@@ -175,6 +179,7 @@ namespace hpl {
 		void SetPosition(const cVector3f& avPos, bool abSmooth=false);
 		const cVector3f& GetPosition();
 		const cVector3f& GetLastPosition();
+		void SetLastPosition(const cVector3f& avPos) { mvLastPosition = avPos; };    // quite hacky, but necessary. Last position is used to determine velocity. If we want to teleport a pig and maintain its velocity, we need to fix up the last position too.
 		void SetFeetPosition(const cVector3f& avPos, bool abSmooth=false);
 		cVector3f GetFeetPosition();
 
@@ -388,6 +393,7 @@ namespace hpl {
 		bool mbActive;
 
 		bool mbCollideCharacter;
+		bool mbCollideStaticVolatile;
 
 		bool mbTestCollision;
 

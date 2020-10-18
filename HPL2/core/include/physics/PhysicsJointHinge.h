@@ -48,5 +48,5 @@ namespace hpl {
 		float mfMaxAngle;
 		float mfMinAngle;
 	};
-};
+}
 #endif // HPL_PHYSICS_JOINT_HINGE_H

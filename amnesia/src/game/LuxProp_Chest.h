@@ -26,22 +26,20 @@
 
 //----------------------------------------------
 
-class cLuxProp_Chest_SaveData : public iLuxProp_SaveData
-{
-	kSerializableClassInit(cLuxProp_Chest_SaveData)
+class cLuxProp_Chest_SaveData : public iLuxProp_SaveData {
+    kSerializableClassInit(cLuxProp_Chest_SaveData)
 public:
-	bool mbLocked;
-	
-	int mlCoinsNeeded;
+    bool mbLocked;
+
+    int mlCoinsNeeded;
 };
 
 //----------------------------------------------
 
-class cLuxChestJointData
-{
+class cLuxChestJointData {
 public:
-	iPhysicsJointHinge *mpHingeJoint;
-	iPhysicsBody *mpChildBody;
+    iPhysicsJointHinge *mpHingeJoint;
+    iPhysicsBody *mpChildBody;
 
     float mfMaxAngle;
 };
@@ -51,101 +49,112 @@ public:
 
 class cLuxProp_Chest;
 
-class cLuxChestMessageCallback : public iLuxMessageCallback
-{
+class cLuxChestMessageCallback : public iLuxMessageCallback {
 public:
-	cLuxChestMessageCallback(cLuxProp_Chest *apChest);
+    cLuxChestMessageCallback(cLuxProp_Chest *apChest);
 
-	void OnPress(bool abYes);
+    void OnPress(bool abYes);
 
 private:
-	cLuxProp_Chest *mpChest;
+    cLuxProp_Chest *mpChest;
 };
 
 //----------------------------------------------
 
 
-class cLuxProp_Chest : public iLuxProp
-{
-typedef iLuxProp super_class;
-friend class cLuxPropLoader_Chest;
-friend class cLuxChestMessageCallback;
-public:	
-	cLuxProp_Chest(const tString &asName, int alID, cLuxMap *apMap);
-	virtual ~cLuxProp_Chest();
+class cLuxProp_Chest : public iLuxProp {
+    typedef iLuxProp super_class;
 
-	//////////////////////
-	//General
-	bool CanInteract(iPhysicsBody *apBody);
-	bool OnInteract(iPhysicsBody *apBody, const cVector3f &avPos);
-	
-	void OnSetupAfterLoad(cWorld *apWorld);
+    friend class cLuxPropLoader_Chest;
 
-	void OnResetProperties();
+    friend class cLuxChestMessageCallback;
 
-	void UpdatePropSpecific(float afTimeStep);
-	
-	void BeforePropDestruction();
+public:
+    cLuxProp_Chest(const tString &asName, int alID, cLuxMap *apMap);
 
-	eLuxFocusCrosshair GetFocusCrosshair(iPhysicsBody *apBody, const cVector3f &avPos);
-	tWString GetFocusText();
+    virtual ~cLuxProp_Chest();
 
-	void ImplementedOnSetActive(bool abX);
+    //////////////////////
+    //General
+    bool CanInteract(iPhysicsBody *apBody);
 
-	void OnDamage(float afAmount, int alStrength);
+    bool OnInteract(iPhysicsBody *apBody, const cVector3f &avPos);
 
-	void InFocusDraw(cGuiSet *apGuiSet,float afFrameTime);
+    void OnSetupAfterLoad(cWorld *apWorld);
 
-	//////////////////////
-	//Properties
-	iLuxInteractData_RotateBase* GetMoveBaseData(){ return &mSwingDoorData;}
-	
-	void SetLocked(bool abLocked, bool abEffects);
-	bool GetLocked(){ return mbLocked;}
-	
-	//////////////////////
-	//Connection callbacks
-	void OnConnectionStateChange(iLuxEntity *apEntity, int alState);
+    void OnResetProperties();
+
+    void UpdatePropSpecific(float afTimeStep);
+
+    void BeforePropDestruction();
+
+    eLuxFocusCrosshair GetFocusCrosshair(iPhysicsBody *apBody, const cVector3f &avPos);
+
+    tWString GetFocusText();
+
+    void ImplementedOnSetActive(bool abX);
+
+    void OnDamage(float afAmount, int alStrength);
+
+    void InFocusDraw(cGuiSet *apGuiSet, float afFrameTime);
+
+    //////////////////////
+    //Properties
+    iLuxInteractData_RotateBase *GetMoveBaseData() { return &mSwingDoorData; }
+
+    void SetLocked(bool abLocked, bool abEffects);
+
+    bool GetLocked() { return mbLocked; }
+
+    //////////////////////
+    //Connection callbacks
+    void OnConnectionStateChange(iLuxEntity *apEntity, int alState);
 
 
-	//////////////////////
-	//Save data stuff
-	iLuxEntity_SaveData* CreateSaveData();
-	void SaveToSaveData(iLuxEntity_SaveData* apSaveData);
-	void LoadFromSaveData(iLuxEntity_SaveData* apSaveData);
-	void SetupSaveData(iLuxEntity_SaveData *apSaveData);
+    //////////////////////
+    //Save data stuff
+    iLuxEntity_SaveData *CreateSaveData();
+
+    void SaveToSaveData(iLuxEntity_SaveData *apSaveData);
+
+    void LoadFromSaveData(iLuxEntity_SaveData *apSaveData);
+
+    void SetupSaveData(iLuxEntity_SaveData *apSaveData);
 
 private:
-	cLuxChestJointData* GetJointDataFromBody(iPhysicsBody *apBody);
-	cLuxChestJointData* GetJointDataFromJoint(iPhysicsJoint *apJoint);
+    cLuxChestJointData *GetJointDataFromBody(iPhysicsBody *apBody);
 
-	//////////////////////
-	// Data
-	std::vector<cLuxChestJointData> mvJointData;
+    cLuxChestJointData *GetJointDataFromJoint(iPhysicsJoint *apJoint);
 
-	cLuxInteractData_SwingDoor mSwingDoorData;
+    //////////////////////
+    // Data
+    std::vector <cLuxChestJointData> mvJointData;
 
-	cLuxChestMessageCallback *mpMessageCallback;
+    cLuxInteractData_SwingDoor mSwingDoorData;
 
-	//////////////////////
-	// Variables
-	bool mbLocked;
-	
-	int mlCoinsNeeded;
+    cLuxChestMessageCallback *mpMessageCallback;
+
+    //////////////////////
+    // Variables
+    bool mbLocked;
+
+    int mlCoinsNeeded;
 
 };
 
 //----------------------------------------------
 
-class cLuxPropLoader_Chest : public iLuxPropLoader
-{
+class cLuxPropLoader_Chest : public iLuxPropLoader {
 public:
-	cLuxPropLoader_Chest(const tString& asName);
-	virtual ~cLuxPropLoader_Chest(){}
+    cLuxPropLoader_Chest(const tString &asName);
 
-	iLuxProp *CreateProp(const tString& asName, int alID, cLuxMap *apMap);
-	void LoadVariables(iLuxProp *apProp, cXmlElement *apRootElem);
-	void LoadInstanceVariables(iLuxProp *apProp, cResourceVarsObject *apInstanceVars);
+    virtual ~cLuxPropLoader_Chest() {}
+
+    iLuxProp *CreateProp(const tString &asName, int alID, cLuxMap *apMap);
+
+    void LoadVariables(iLuxProp *apProp, cXmlElement *apRootElem);
+
+    void LoadInstanceVariables(iLuxProp *apProp, cResourceVarsObject *apInstanceVars);
 
 private:
 };

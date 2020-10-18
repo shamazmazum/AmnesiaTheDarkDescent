@@ -24,56 +24,63 @@
 
 namespace hpl {
 
-	class cGuiSet;
-	class cGuiSkin;
+    class cGuiSet;
 
-	class cWidgetWindow;
+    class cGuiSkin;
 
-	class iGuiPopUp 
-	{
-	public:
-		iGuiPopUp(cGuiSet *apSet, bool abAddCloseButton, const cVector2f& avPopUpSize);
-		virtual ~iGuiPopUp();
+    class cWidgetWindow;
 
-		void AddOnDestroyCallback(void *apCallbackObject, tGuiCallbackFunc apCallback);
+    class iGuiPopUp {
+    public:
+        iGuiPopUp(cGuiSet *apSet, bool abAddCloseButton, const cVector2f &avPopUpSize);
 
-		void SetKillOnEscapeKey(bool abX);
-		bool GetKillOnEscapeKey();
+        virtual ~iGuiPopUp();
 
-		void SetNextFocusWidget(iWidget *apNewFocused)  { mpNewFocused = apNewFocused; mbFocusChanged = apNewFocused != NULL; }
-		cGuiSet* GetGuiSet() { return mpSet; }
+        void AddOnDestroyCallback(void *apCallbackObject, tGuiCallbackFunc apCallback);
 
-	protected:
-		bool Window_OnClose(iWidget* apWidget, const cGuiMessageData& aData);
-		kGuiCallbackDeclarationEnd(Window_OnClose);
+        void SetKillOnEscapeKey(bool abX);
 
-		virtual void OnCloseSpecific() {}
+        bool GetKillOnEscapeKey();
 
-		void SelfDestruct();
+        void SetNextFocusWidget(iWidget *apNewFocused) {
+            mpNewFocused = apNewFocused;
+            mbFocusChanged = apNewFocused != NULL;
+        }
 
-		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		// Use this func to safely execute callbacks (makes sure right attention and focus widgets are set after destroying popup)
-		bool RunCallback(void* apObj, tGuiCallbackFunc apCallback, 
-							iWidget* apWidget, const cGuiMessageData& aData, bool abRunFocusChangeChecks);
+        cGuiSet *GetGuiSet() { return mpSet; }
 
-		void SetUpDefaultFocus(iWidget* apWidget);
+    protected:
+        bool Window_OnClose(iWidget *apWidget, const cGuiMessageData &aData);
 
-		cGuiSet *mpSet;
-		cGuiSkin *mpSkin;
+        kGuiCallbackDeclarationEnd(Window_OnClose);
 
-		cWidgetWindow* mpWindow;
+        virtual void OnCloseSpecific() {}
 
-		void* mpDestroyCallbackObject;
-		tGuiCallbackFunc mpDestroyCallback;
+        void SelfDestruct();
 
-		bool mbAttChanged;
-		iWidget* mpNewAttention;
-		bool mbFocusChanged;
-		iWidget* mpNewFocused;
-		bool mbDefaultUIFocusChanged;
-		iWidget* mpNewDefaultUIFocus;
-	};
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Use this func to safely execute callbacks (makes sure right attention and focus widgets are set after destroying popup)
+        bool RunCallback(void *apObj, tGuiCallbackFunc apCallback,
+                         iWidget *apWidget, const cGuiMessageData &aData, bool abRunFocusChangeChecks);
 
-};
+        void SetUpDefaultFocus(iWidget *apWidget);
+
+        cGuiSet *mpSet;
+        cGuiSkin *mpSkin;
+
+        cWidgetWindow *mpWindow;
+
+        void *mpDestroyCallbackObject;
+        tGuiCallbackFunc mpDestroyCallback;
+
+        bool mbAttChanged;
+        iWidget *mpNewAttention;
+        bool mbFocusChanged;
+        iWidget *mpNewFocused;
+        bool mbDefaultUIFocusChanged;
+        iWidget *mpNewDefaultUIFocus;
+    };
+
+}
 #endif // HPL_GUI_POP_UP_H
 

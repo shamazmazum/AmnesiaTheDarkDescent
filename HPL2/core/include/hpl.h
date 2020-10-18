@@ -85,6 +85,7 @@
 #include "graphics/PostEffect_ColorConvTex.h"
 #include "graphics/PostEffect_ImageTrail.h"
 #include "graphics/PostEffect_RadialBlur.h"
+#include "graphics/PostEffect_ColorGrading.h"
 
 #include "math/MathTypes.h"
 #include "math/Math.h"

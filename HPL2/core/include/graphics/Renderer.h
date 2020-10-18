@@ -233,6 +233,7 @@ namespace hpl {
 		iTexture *mpTexture;
 		iFrameBuffer *mpBuffer;
 		int mlFrameCount;
+		int mlShadowCasterNum;
 		
 		cShadowMapLightCache mCache;
 	};
@@ -269,6 +270,8 @@ namespace hpl {
 		cWorld *GetCurrentWorld(){ return mpCurrentWorld;}
 		cFrustum *GetCurrentFrustum(){ return mpCurrentFrustum;}
 		cRenderList *GetCurrentRenderList(){ return mpCurrentRenderList;}
+
+		float GetCurrentFrameTime() { return mfCurrentFrameTime; }
 		
 		iVertexBuffer* GetShapeBoxVertexBuffer(){ return mpShapeBox; }
 
@@ -302,7 +305,9 @@ namespace hpl {
 		static void SetRefractionEnabled(bool abX) { mbRefractionEnabled = abX;}
 		static bool GetRefractionEnabled(){ return mbRefractionEnabled;}
 
-		
+		static void IncDrawCalls() { mlDrawCalls++; }
+		static int GetDrawCalls() { return mlDrawCalls; }
+
 		//Debug
 		tRenderableVec *GetShadowCasterVec(){ return &mvShadowCasters;}
 
@@ -490,6 +495,7 @@ namespace hpl {
 		static bool mbParallaxEnabled;
 		static int mlReflectionSizeDiv;
 		static bool mbRefractionEnabled;
+		static int mlDrawCalls;
 	};
 
 	//---------------------------------------------

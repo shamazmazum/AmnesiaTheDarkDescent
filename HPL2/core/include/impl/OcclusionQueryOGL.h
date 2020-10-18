@@ -24,22 +24,25 @@
 
 namespace hpl {
 
-	class cOcclusionQueryOGL : public iOcclusionQuery
-	{
-	public:
-		cOcclusionQueryOGL();
-		~cOcclusionQueryOGL();
+    class cOcclusionQueryOGL : public iOcclusionQuery {
+    public:
+        cOcclusionQueryOGL();
 
-		void Begin();
-		void End();
-		bool FetchResults();
-		unsigned int GetSampleCount();
+        ~cOcclusionQueryOGL();
 
-	public:
-		bool mbResultsAreFetched;
-		int mlLastSampleCount;
-		unsigned int mlQueryId;
-	};
+        void Begin();
 
-};
+        void End();
+
+        bool FetchResults();
+
+        unsigned int GetSampleCount();
+
+    public:
+        bool mbResultsAreFetched;
+        int mlLastSampleCount;
+        unsigned int mlQueryId;
+    };
+
+}
 #endif // HPL_OCCLUSION_QUERY_H

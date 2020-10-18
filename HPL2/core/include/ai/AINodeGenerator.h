@@ -28,47 +28,47 @@
 
 namespace hpl {
 
-	class cWorld;
-	
-	//-------------------------------
+    class cWorld;
 
-	class cAINodeGeneratorParams
-	{
-	public:
-		cAINodeGeneratorParams();
-		
-		tString msNodeType;
-		
-		float mfHeightFromGround;
-		float mfMinWallDist;
+    //-------------------------------
 
-		cVector3f mvMinPos;
-		cVector3f mvMaxPos;
+    class cAINodeGeneratorParams {
+    public:
+        cAINodeGeneratorParams();
 
-		float mfGridSize;
-  	};
+        tString msNodeType;
 
-	//-------------------------------
+        float mfHeightFromGround;
+        float mfMinWallDist;
 
-	class cAINodeGenerator : public iPhysicsRayCallback
-	{
-	public:
-		cAINodeGenerator();
-		~cAINodeGenerator();
+        cVector3f mvMinPos;
+        cVector3f mvMaxPos;
 
-		void Generate(cWorld* apWorld,cAINodeGeneratorParams *apParams);
+        float mfGridSize;
+    };
 
-	private:
-		bool OnIntersect(iPhysicsBody *pBody,cPhysicsRayParams *apParams);
+    //-------------------------------
 
-		void SaveToFile();
-		void LoadFromFile();
+    class cAINodeGenerator : public iPhysicsRayCallback {
+    public:
+        cAINodeGenerator();
 
-		cAINodeGeneratorParams *mpParams;
-		cWorld* mpWorld;
-		tTempAiNodeList *mpNodeList;
-		int mlIDCount;
-	};
+        ~cAINodeGenerator();
 
-};
+        void Generate(cWorld *apWorld, cAINodeGeneratorParams *apParams);
+
+    private:
+        bool OnIntersect(iPhysicsBody *pBody, cPhysicsRayParams *apParams);
+
+        void SaveToFile();
+
+        void LoadFromFile();
+
+        cAINodeGeneratorParams *mpParams;
+        cWorld *mpWorld;
+        tTempAiNodeList *mpNodeList;
+        int mlIDCount;
+    };
+
+}
 #endif // HPL_AI_NODE_GENERATOR_H

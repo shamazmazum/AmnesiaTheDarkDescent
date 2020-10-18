@@ -25,43 +25,57 @@
 
 namespace hpl {
 
-	class iLowLevelSystem;;
-	class iLowLevelGraphics;
-	class iLowLevelInput;
-	class iLowLevelResources;
-	class iLowLevelSound;
-	class iLowLevelPhysics;
-	class iLowLevelHaptic;
+    class iLowLevelSystem;
 
-	class cSDLEngineSetup : public iLowLevelEngineSetup
-	{
-	public:
-		cSDLEngineSetup(tFlag alHplSetupFlags);
-		~cSDLEngineSetup();
-		
-		cInput* CreateInput(cGraphics* apGraphics);
-		cSystem* CreateSystem();
-		cGraphics* CreateGraphics();
-		cResources* CreateResources(cGraphics* apGraphics);
-		cScene* CreateScene(cGraphics* apGraphics, cResources* apResources, cSound* apSound,
-							cPhysics *apPhysics, cSystem *apSystem,cAI *apAI,cGui *apGui,cHaptic *apHaptic);
-		cSound* CreateSound();
-		cPhysics* CreatePhysics();
-		cAI* CreateAI();
-		cHaptic* CreateHaptic();
+    class iLowLevelGraphics;
 
-	private:
-		iLowLevelSystem *mpLowLevelSystem;
-		iLowLevelGraphics *mpLowLevelGraphics;
-		iLowLevelInput *mpLowLevelInput;
-		iLowLevelResources *mpLowLevelResources;
+    class iLowLevelInput;
+
+    class iLowLevelResources;
+
+    class iLowLevelSound;
+
+    class iLowLevelPhysics;
+
+    class iLowLevelHaptic;
+
+    class cSDLEngineSetup : public iLowLevelEngineSetup {
+    public:
+        cSDLEngineSetup(tFlag alHplSetupFlags);
+
+        ~cSDLEngineSetup();
+
+        cInput *CreateInput(cGraphics *apGraphics);
+
+        cSystem *CreateSystem();
+
+        cGraphics *CreateGraphics();
+
+        cResources *CreateResources(cGraphics *apGraphics);
+
+        cScene *CreateScene(cGraphics *apGraphics, cResources *apResources, cSound *apSound,
+                            cPhysics *apPhysics, cSystem *apSystem, cAI *apAI, cGui *apGui, cHaptic *apHaptic);
+
+        cSound *CreateSound();
+
+        cPhysics *CreatePhysics();
+
+        cAI *CreateAI();
+
+        cHaptic *CreateHaptic();
+
+    private:
+        iLowLevelSystem *mpLowLevelSystem;
+        iLowLevelGraphics *mpLowLevelGraphics;
+        iLowLevelInput *mpLowLevelInput;
+        iLowLevelResources *mpLowLevelResources;
 //		#ifdef WIN32
 //			cLowLevelSoundFmod* mpLowLevelSound;
 //		#else
-			iLowLevelSound*	mpLowLevelSound;
+        iLowLevelSound *mpLowLevelSound;
 //		#endif
-		iLowLevelPhysics* mpLowLevelPhysics;
-		iLowLevelHaptic* mpLowLevelHaptic;
-	};
-};
+        iLowLevelPhysics *mpLowLevelPhysics;
+        iLowLevelHaptic *mpLowLevelHaptic;
+    };
+}
 #endif // HPL_SDL_ENGINESETUP_H

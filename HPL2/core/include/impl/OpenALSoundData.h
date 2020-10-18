@@ -25,33 +25,35 @@
 #ifdef USE_OALWRAPPER
 # include "OALWrapper/OAL_Funcs.h"
 #else
+
 # include "OpenAL/OAL_Funcs.h"
+
 #endif
 
 namespace hpl {
 
-	class cOpenALSoundData : public iSoundData
-	{
-	public:
-		cOpenALSoundData(const tString& asName, bool abStream);
-		~cOpenALSoundData();
+    class cOpenALSoundData : public iSoundData {
+    public:
+        cOpenALSoundData(const tString &asName, bool abStream);
 
-		bool CreateFromFile(const tWString &asFile);
+        ~cOpenALSoundData();
 
-		iSoundChannel* CreateChannel(int alPriority);
+        bool CreateFromFile(const tWString &asFile);
 
-		bool IsStream(){ return mbStream;}
+        iSoundChannel *CreateChannel(int alPriority);
 
-		bool IsStereo();
+        bool IsStream() { return mbStream; }
 
-		cOAL_Sample*	GetSample(){ return ( mpSample ); } //static_cast<cOAL_Sample*> (mpSoundData));}
-		cOAL_Stream*	GetStream(){ return ( mpStream ); } //static_cast<cOAL_Stream*> (mpSoundData));}
-	
-	private:
-		cOAL_Sample*	mpSample;
-		cOAL_Stream*	mpStream;
+        bool IsStereo();
+
+        cOAL_Sample *GetSample() { return (mpSample); } //static_cast<cOAL_Sample*> (mpSoundData));}
+        cOAL_Stream *GetStream() { return (mpStream); } //static_cast<cOAL_Stream*> (mpSoundData));}
+
+    private:
+        cOAL_Sample *mpSample;
+        cOAL_Stream *mpStream;
 
 //iOAL_Loadable*	mpSoundData;
-	};
-};
+    };
+}
 #endif // HPL_OPENAL_SOUND_DATA_H

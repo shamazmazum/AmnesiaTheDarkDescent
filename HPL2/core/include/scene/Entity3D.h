@@ -30,129 +30,148 @@
 
 namespace hpl {
 
-	//------------------------------------
+    //------------------------------------
 
-	//Used for the render container to add specific data to
-	//the object.
-	class iRenderContainerData
-	{
+    //Used for the render container to add specific data to
+    //the object.
+    class iRenderContainerData {
 
-	};
+    };
 
-	typedef std::list<iRenderContainerData*> tRenderContainerDataList;
-	typedef tRenderContainerDataList::iterator tRenderContainerDataListIt;
-	
-	//-----------------------------------------
+    typedef std::list<iRenderContainerData *> tRenderContainerDataList;
+    typedef tRenderContainerDataList::iterator tRenderContainerDataListIt;
 
-	class cNode3D;
+    //-----------------------------------------
 
-	//-----------------------------------------
+    class cNode3D;
 
-	class iEntity3D
-	{
-	public:
-		iEntity3D(tString asName);
-		virtual ~iEntity3D();
+    //-----------------------------------------
 
-		virtual tString GetEntityType()=0;
+    class iEntity3D {
+    public:
+        iEntity3D(tString asName);
 
-		virtual void UpdateLogic(float afTimeStep){}
+        virtual ~iEntity3D();
 
-		tString& GetName(){return msName;}
-		void SetName(const tString& asName){msName = asName;}
+        virtual tString GetEntityType() = 0;
 
-		cNode3D* GetParent(){ return mpParentNode;}
-		void SetParent(cNode3D* apNode){ mpParentNode = apNode;}
-		bool HasParent(){ return mpParentNode!=NULL;}
+        virtual void UpdateLogic(float afTimeStep) {}
 
-		bool IsActive(){ return mbIsActive; }
-		void SetActive(bool abActive){ mbIsActive = abActive; }
+        tString &GetName() { return msName; }
 
-		cVector3f GetLocalPosition();
-		cMatrixf& GetLocalMatrix();
+        void SetName(const tString &asName) { msName = asName; }
 
-		cVector3f GetWorldPosition();
-		cMatrixf& GetWorldMatrix();
+        cNode3D *GetParent() { return mpParentNode; }
 
-		void SetPosition(const cVector3f& avPos);
-		void SetMatrix(const cMatrixf& a_mtxTransform);
+        void SetParent(cNode3D *apNode) { mpParentNode = apNode; }
 
-		void SetWorldPosition(const cVector3f& avWorldPos);
-		void SetWorldMatrix(const cMatrixf& a_mtxWorldTransform);
+        bool HasParent() { return mpParentNode != NULL; }
 
-		void SetTransformUpdated(bool abUpdateCallbacks = true);
-		bool GetTransformUpdated();
+        bool IsActive() { return mbIsActive; }
 
-		int GetTransformUpdateCount();
+        void SetActive(bool abActive) { mbIsActive = abActive; }
 
-		void AddCallback(iEntityCallback *apCallback);
-		void RemoveCallback(iEntityCallback *apCallback);
+        cVector3f GetLocalPosition();
 
-		void SetSourceFile(const tString& asFile){ msSourceFile = asFile;}
-		const tString& GetSourceFile(){ return msSourceFile;}
+        cMatrixf &GetLocalMatrix();
 
-		virtual cBoundingVolume* GetBoundingVolume();
+        cVector3f GetWorldPosition();
 
-		bool IsSaved(){ return mbIsSaved; }
-		void SetIsSaved(bool abX){ mbIsSaved = abX; }
+        cMatrixf &GetWorldMatrix();
 
-		void SetUniqueID(int alX){ mlUniqueID = alX;}
-		int GetUniqueID(){ return mlUniqueID;}
+        void SetPosition(const cVector3f &avPos);
+
+        void SetMatrix(const cMatrixf &a_mtxTransform);
+
+        void SetWorldPosition(const cVector3f &avWorldPos);
+
+        void SetWorldMatrix(const cMatrixf &a_mtxWorldTransform);
+
+        void SetTransformUpdated(bool abUpdateCallbacks = true);
+
+        bool GetTransformUpdated();
+
+        int GetTransformUpdateCount();
+
+        void AddCallback(iEntityCallback *apCallback);
+
+        void RemoveCallback(iEntityCallback *apCallback);
+
+        void SetSourceFile(const tString &asFile) { msSourceFile = asFile; }
+
+        const tString &GetSourceFile() { return msSourceFile; }
+
+        virtual cBoundingVolume *GetBoundingVolume();
+
+        bool IsSaved() { return mbIsSaved; }
+
+        void SetIsSaved(bool abX) { mbIsSaved = abX; }
+
+        void SetUniqueID(int alX) { mlUniqueID = alX; }
+
+        int GetUniqueID() { return mlUniqueID; }
 
         /**
 		 * The entity3d child hierarchy will only work if the child has no node parent.
 		 **/
-		void AddChild(iEntity3D *apEntity);
-		void RemoveChild(iEntity3D *apEntity);
-		bool IsChild(iEntity3D *apEntity);
-		iEntity3D *GetEntityParent();
-		cEntity3DIterator GetChildIterator();
-		
-		/**
-		* The node3d child hierarchy will only work if the node child has no node parent.
-		**/
-		void AddNodeChild(cNode3D *apNode);
-		void RemoveNodeChild(cNode3D *apNode);
-		bool IsNodeChild(cNode3D *apNode);
+        void AddChild(iEntity3D *apEntity);
 
-		inline int GetIteratorCount(){ return mlIteratorCount;}
-		inline void SetIteratorCount(const int alX){ mlIteratorCount = alX;}
+        void RemoveChild(iEntity3D *apEntity);
 
-	protected:
-		virtual void OnTransformUpdated(){}
-		
-		cNode3D* mpParentNode;
+        bool IsChild(iEntity3D *apEntity);
 
-		tString msName;
-		bool mbIsActive;
+        iEntity3D *GetEntityParent();
 
-		bool mbIsSaved;
-		int mlUniqueID;
+        cEntity3DIterator GetChildIterator();
 
-		cMatrixf m_mtxLocalTransform;
-		cMatrixf m_mtxWorldTransform;
+        /**
+        * The node3d child hierarchy will only work if the node child has no node parent.
+        **/
+        void AddNodeChild(cNode3D *apNode);
 
-		cBoundingVolume mBoundingVolume;
-		bool mbUpdateBoundingVolume;
-		bool mbApplyTransformToBV;
+        void RemoveNodeChild(cNode3D *apNode);
 
-		bool mbTransformUpdated;
-		
-		int mlCount;
+        bool IsNodeChild(cNode3D *apNode);
 
-		tString msSourceFile;
+        inline int GetIteratorCount() { return mlIteratorCount; }
 
-		tEntityCallbackList mlstCallbacks;
+        inline void SetIteratorCount(const int alX) { mlIteratorCount = alX; }
 
-		tEntity3DList mlstChildren;
-		iEntity3D *mpParent;
+    protected:
+        virtual void OnTransformUpdated() {}
 
-		tNode3DList mlstNodeChildren;
-		
-		int mlIteratorCount;
-	private:
-		void UpdateWorldTransform();
-	};
+        cNode3D *mpParentNode;
 
-};
+        tString msName;
+        bool mbIsActive;
+
+        bool mbIsSaved;
+        int mlUniqueID;
+
+        cMatrixf m_mtxLocalTransform;
+        cMatrixf m_mtxWorldTransform;
+
+        cBoundingVolume mBoundingVolume;
+        bool mbUpdateBoundingVolume;
+        bool mbApplyTransformToBV;
+
+        bool mbTransformUpdated;
+
+        int mlCount;
+
+        tString msSourceFile;
+
+        tEntityCallbackList mlstCallbacks;
+
+        tEntity3DList mlstChildren;
+        iEntity3D *mpParent;
+
+        tNode3DList mlstNodeChildren;
+
+        int mlIteratorCount;
+    private:
+        void UpdateWorldTransform();
+    };
+
+}
 #endif // HPL_ENTITY3D_H

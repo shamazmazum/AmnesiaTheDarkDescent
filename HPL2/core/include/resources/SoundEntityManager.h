@@ -46,5 +46,5 @@ namespace hpl {
 		cResources* mpResources;
 	};
 
-};
+}
 #endif // HPL_SOUND_ENTITY_MANAGER_H

@@ -68,5 +68,5 @@ namespace hpl {
 		tAnimationTrackVec mvTracks;
 	};
 
-};
+}
 #endif // HPL_ANIMATION_H

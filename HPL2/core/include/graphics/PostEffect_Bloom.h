@@ -85,5 +85,5 @@ namespace hpl {
 
 	//------------------------------------------
 
-};
+}
 #endif // HPL_POSTEFFECT_BLOOM_H

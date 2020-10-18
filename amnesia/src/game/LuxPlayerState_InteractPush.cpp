@@ -288,7 +288,7 @@ void cLuxPlayerState_InteractPush::Update(float afTimeStep)
 	// Get the max right and forward speeds allowed.
 	// Skip it if the body is about to collide with player!
 	// Note: This will only work if move state is update before the player state!
-	if(bWillCollideWithPlayer==false)
+	if(!bWillCollideWithPlayer)
 	{
 		for(int i=0; i<2; ++i)
 		{
@@ -322,7 +322,7 @@ bool cLuxPlayerState_InteractPush::OnDoAction(eLuxPlayerAction aAction,bool abPr
 	if(aAction == eLuxPlayerAction_Interact)
 	{
 		// Released
-		if(abPressed==false)
+		if(!abPressed)
 		{
 			mpPlayer->ChangeState(mPreviousState);
 

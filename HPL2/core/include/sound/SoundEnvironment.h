@@ -22,29 +22,30 @@
 
 #include "system/String.h"
 
-namespace hpl
-{
-	class cSoundManager;
+namespace hpl {
+    class cSoundManager;
 
-	class iSoundEnvironment
-	{
-	public:
-		iSoundEnvironment ( ){}		
-		virtual ~iSoundEnvironment () {}
+    class iSoundEnvironment {
+    public:
+        iSoundEnvironment() {}
 
-		virtual bool CreateFromFile(const tString &asFile){ return false;}
+        virtual ~iSoundEnvironment() {}
 
-		tString& GetName() { return mstrName; }
-		tString& GetFileName() { return msFileName; }
-		void SetFileName(const tString & asFileName){ msFileName = asFileName; }
+        virtual bool CreateFromFile(const tString &asFile) { return false; }
 
-	protected:
-		tString mstrName;
-		tString msFileName;
-	};
-	
+        tString &GetName() { return mstrName; }
+
+        tString &GetFileName() { return msFileName; }
+
+        void SetFileName(const tString &asFileName) { msFileName = asFileName; }
+
+    protected:
+        tString mstrName;
+        tString msFileName;
+    };
+
 }
 
 
-#endif	// HPL_SOUNDENVIRONMENT_H
+#endif    // HPL_SOUNDENVIRONMENT_H
 

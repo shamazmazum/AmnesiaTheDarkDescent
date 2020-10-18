@@ -57,5 +57,5 @@ namespace hpl {
 
 	};
 
-};
+}
 #endif // HPL_SOUND_MANAGER_H

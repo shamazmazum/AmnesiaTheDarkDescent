@@ -25,180 +25,218 @@
 
 namespace hpl {
 
-	class iHapticShape;
-	class iHapticForce;
-	class iHapticSurface;
+    class iHapticShape;
 
-	class iVertexBuffer;
-	class cCamera;
-	class cResources;
-	class iPhysicsBody;
+    class iHapticForce;
 
-	class iLowLevelHaptic
-	{
-	public:
-		iLowLevelHaptic();
-		virtual ~iLowLevelHaptic();
+    class iHapticSurface;
 
-		//########################################################################################
-		//! \name General
-		//########################################################################################
-		//! @{
+    class iVertexBuffer;
 
-		void Update(float afTimeStep);
-		bool Init(cResources *apResources);
-		
-		void DestroyAllShapes();
-		void DestroyAll();
+    class cCamera;
 
-		virtual float GetMaxForce()=0;
+    class cResources;
 
-		virtual void SetWorldScale(float afScale)=0;
-		virtual float GetWorldScale()=0;
+    class iPhysicsBody;
 
-		virtual void SetRenderingActive(bool abX)=0;
-		virtual bool IsRenderingActive()=0;
+    class iLowLevelHaptic {
+    public:
+        iLowLevelHaptic();
 
-		virtual bool ShapeIsInContact(iHapticShape *apShape)=0;
+        virtual ~iLowLevelHaptic();
 
-		void SetCamera(cCamera *apCamera){ mpCamera = apCamera;}
-		cCamera* GetCamera(){ return mpCamera;}
-		void SetCameraOffset(const cVector3f &avOffset){ mvCameraOffset = avOffset;}
-		cVector3f GetCameraOffset(){ return mvCameraOffset; }
+        //########################################################################################
+        //! \name General
+        //########################################################################################
+        //! @{
 
-		void SetUpdateShapes(bool abX){ mbUpdateShapes = abX;}
-		bool GetUpdateShapes(){ return mbUpdateShapes;}
+        void Update(float afTimeStep);
 
-		void SetForceMul(float afX) {mfForceMul = afX;}
-		float GetForceMul() {return mfForceMul;}
+        bool Init(cResources *apResources);
 
-		//! @}
+        void DestroyAllShapes();
 
-		//########################################################################################
-		//! \name Input
-		//########################################################################################
-		//! @{
-		
-		virtual bool ButtonIsPressed(int alNum)=0;
+        void DestroyAll();
 
-		virtual cVector3f GetHardwarePosition()=0;
-		virtual cVector3f GetHardwareRotation()=0;
+        virtual float GetMaxForce() = 0;
 
-		cVector3f GetHardwarePosDelta();
-		
-		cVector2f GetProxyScreenPos(const cVector2f& avScreenSize);
-		cVector2f GetProxyScreenDeltaPos(const cVector2f& avScreenSize);
+        virtual void SetWorldScale(float afScale) = 0;
 
-		cVector2f GetRelativeVirtualMousePos();
-		cVector2f GetVirtualMousePos();
-		void SetVirtualMousePosBounds(	const cVector2f &avMin,const cVector2f &avMax,
-											const cVector2f &avScreenSize);
-		
-		virtual cVector3f GetProxyPosition()=0;
-		virtual void SetProxyRadius(float afRadius)=0;
-		virtual float GetProxyRadius()=0;
+        virtual float GetWorldScale() = 0;
 
-		virtual int GetNumberOfButtons()=0;
+        virtual void SetRenderingActive(bool abX) = 0;
 
-		//! @}
+        virtual bool IsRenderingActive() = 0;
 
-		//########################################################################################
-		//! \name Surfaces
-		//########################################################################################
-		//! @{
+        virtual bool ShapeIsInContact(iHapticShape *apShape) = 0;
 
-		virtual iHapticSurface* CreateSimpleSurface(const tString &asName,
-													float afDamping=0.0f, float afStiffness=0.9f)=0;
-		
-		virtual iHapticSurface* CreateFrictionalSurface(const tString &asName,
-														float afDamping=0.0f, float afStiffness=0.9f,
-														float afDynamicFriction=0.2f, float afStartingFriction=0.3f,
-														float afTangentStiffness=0.7f, float afStoppingFriction=0.1f)=0;
-		
-		virtual iHapticSurface* CreateRoughSurface(const tString &asName, 
-													float afDeviation=0.1f, float afMean=0.5f,
-													float afDamping=0.0f, float afStiffness=0.9f,
-													float afDynamicFriction=0.2f, float afStartingFriction=0.3f,
-													float afTangentStiffness=0.7f, float afStoppingFriction=0.1f)=0;
-		
-		virtual iHapticSurface* CreateStickySurface(const tString &asName, 
-													float afDeadHeight=0.004f, float afStickyStiffness=0.6f,
-													float afDamping=0.0f, float afStiffness=0.9f,
-													float afDynamicFriction=0.2f, float afStartingFriction=0.3f,
-													float afTangentStiffness=0.7f, float afStoppingFriction=0.1f)=0;
-		
-		iHapticSurface* GetSurfaceFromName(const tString &asName);
+        void SetCamera(cCamera *apCamera) { mpCamera = apCamera; }
 
-		
+        cCamera *GetCamera() { return mpCamera; }
 
-		//! @}
+        void SetCameraOffset(const cVector3f &avOffset) { mvCameraOffset = avOffset; }
 
-		//########################################################################################
-		//! \name Shapes
-		//########################################################################################
-		//! @{
+        cVector3f GetCameraOffset() { return mvCameraOffset; }
 
-		virtual iHapticShape* CreateBoxShape(const tString &asName, const cVector3f &avSize, cMatrixf* apOffsetMtx)=0;
-		virtual iHapticShape* CreateSphereShape(const tString &asName, const cVector3f &avRadii, cMatrixf* apOffsetMtx)=0;
-		virtual iHapticShape* CreateCylinderShape(const tString &asName, float afRadius, float afHeight, cMatrixf* apOffsetMtx)=0;
-		virtual iHapticShape* CreateCapsuleShape(const tString &asName, float afRadius, float afHeight, cMatrixf* apOffsetMtx)=0;
-		virtual iHapticShape* CreateMeshShape(const tString &asName, iVertexBuffer *apVtxBuffer)=0;
-		virtual iHapticShape* CreateCompundShape(const tString &asName, tHapticShapeVec &avShapes)=0;
+        void SetUpdateShapes(bool abX) { mbUpdateShapes = abX; }
 
-		virtual iHapticShape* CreateShapeFromPhysicsBody(const tString &asName, iPhysicsBody *apBody)=0;
+        bool GetUpdateShapes() { return mbUpdateShapes; }
 
-		void DestroyShape(iHapticShape* apShape);
-		bool ShapeExists(iHapticShape* apShape);
+        void SetForceMul(float afX) { mfForceMul = afX; }
 
-		cHapticShapeIterator GetShapeIterator();
+        float GetForceMul() { return mfForceMul; }
 
-		//! @}
+        //! @}
 
-		//########################################################################################
-		//! \name Forces
-		//########################################################################################
-		//! @{
+        //########################################################################################
+        //! \name Input
+        //########################################################################################
+        //! @{
 
-		virtual iHapticForce* CreateImpulseForce(const cVector3f& avForce)=0;
-		virtual iHapticForce* CreateSinusWaveForce(const cVector3f& avDirection, float afAmp, float afFreq)=0;
-		virtual iHapticForce* CreateSawWaveForce(const cVector3f& avDirection, float afAmp, float afFreq)=0;
-		virtual iHapticForce* CreateSpringForce(const cVector3f& avPostition, float afStiffness, float afDamping)=0;
-		virtual iHapticForce* CreateViscosityForce(const cVector3f& avVelocity,float afMass, float afStiffness, float afDamping)=0;
+        virtual bool ButtonIsPressed(int alNum) = 0;
 
-		void DestroyForce(iHapticForce* apForce);
+        virtual cVector3f GetHardwarePosition() = 0;
 
-		void StopAllForces();
+        virtual cVector3f GetHardwareRotation() = 0;
 
-		//! @}
+        cVector3f GetHardwarePosDelta();
 
-	protected:
-		virtual bool InitLowLevel()=0;
-		virtual void UpdateLowLevel(float afTimeStep)=0;
+        cVector2f GetProxyScreenPos(const cVector2f &avScreenSize);
 
-		cResources *mpResources;
-	
-		cCamera *mpCamera;
-		cVector3f mvCameraOffset;
+        cVector2f GetProxyScreenDeltaPos(const cVector2f &avScreenSize);
 
-		tHapticSurfaceMap m_mapSurfaces;
-		tHapticForceList mlstForces;
-		tHapticShapeList mlstShapes;
+        cVector2f GetRelativeVirtualMousePos();
 
-		float mfForceMul;
+        cVector2f GetVirtualMousePos();
 
-		cVector3f mvPreviousHardwarePos;
-		cVector3f mvCurrentHardwarePos;
+        void SetVirtualMousePosBounds(const cVector2f &avMin, const cVector2f &avMax,
+                                      const cVector2f &avScreenSize);
 
-		cVector2f mvPreviousScreenPos;
-		cVector2f mvCurrentScreenPos;
-		bool mbScreenPosFirstTime;
+        virtual cVector3f GetProxyPosition() = 0;
 
-		cVector2f mvMinMousePos;
-		cVector2f mvMaxMousePos;
-		cVector2f mvScreenSize;
+        virtual void SetProxyRadius(float afRadius) = 0;
 
-		bool mbUpdateShapes;
-	};
+        virtual float GetProxyRadius() = 0;
 
-};
+        virtual int GetNumberOfButtons() = 0;
+
+        //! @}
+
+        //########################################################################################
+        //! \name Surfaces
+        //########################################################################################
+        //! @{
+
+        virtual iHapticSurface *CreateSimpleSurface(const tString &asName,
+                                                    float afDamping = 0.0f, float afStiffness = 0.9f) = 0;
+
+        virtual iHapticSurface *CreateFrictionalSurface(const tString &asName,
+                                                        float afDamping = 0.0f, float afStiffness = 0.9f,
+                                                        float afDynamicFriction = 0.2f, float afStartingFriction = 0.3f,
+                                                        float afTangentStiffness = 0.7f,
+                                                        float afStoppingFriction = 0.1f) = 0;
+
+        virtual iHapticSurface *CreateRoughSurface(const tString &asName,
+                                                   float afDeviation = 0.1f, float afMean = 0.5f,
+                                                   float afDamping = 0.0f, float afStiffness = 0.9f,
+                                                   float afDynamicFriction = 0.2f, float afStartingFriction = 0.3f,
+                                                   float afTangentStiffness = 0.7f,
+                                                   float afStoppingFriction = 0.1f) = 0;
+
+        virtual iHapticSurface *CreateStickySurface(const tString &asName,
+                                                    float afDeadHeight = 0.004f, float afStickyStiffness = 0.6f,
+                                                    float afDamping = 0.0f, float afStiffness = 0.9f,
+                                                    float afDynamicFriction = 0.2f, float afStartingFriction = 0.3f,
+                                                    float afTangentStiffness = 0.7f,
+                                                    float afStoppingFriction = 0.1f) = 0;
+
+        iHapticSurface *GetSurfaceFromName(const tString &asName);
+
+
+
+        //! @}
+
+        //########################################################################################
+        //! \name Shapes
+        //########################################################################################
+        //! @{
+
+        virtual iHapticShape *CreateBoxShape(const tString &asName, const cVector3f &avSize, cMatrixf *apOffsetMtx) = 0;
+
+        virtual iHapticShape *
+        CreateSphereShape(const tString &asName, const cVector3f &avRadii, cMatrixf *apOffsetMtx) = 0;
+
+        virtual iHapticShape *
+        CreateCylinderShape(const tString &asName, float afRadius, float afHeight, cMatrixf *apOffsetMtx) = 0;
+
+        virtual iHapticShape *
+        CreateCapsuleShape(const tString &asName, float afRadius, float afHeight, cMatrixf *apOffsetMtx) = 0;
+
+        virtual iHapticShape *CreateMeshShape(const tString &asName, iVertexBuffer *apVtxBuffer) = 0;
+
+        virtual iHapticShape *CreateCompundShape(const tString &asName, tHapticShapeVec &avShapes) = 0;
+
+        virtual iHapticShape *CreateShapeFromPhysicsBody(const tString &asName, iPhysicsBody *apBody) = 0;
+
+        void DestroyShape(iHapticShape *apShape);
+
+        bool ShapeExists(iHapticShape *apShape);
+
+        cHapticShapeIterator GetShapeIterator();
+
+        //! @}
+
+        //########################################################################################
+        //! \name Forces
+        //########################################################################################
+        //! @{
+
+        virtual iHapticForce *CreateImpulseForce(const cVector3f &avForce) = 0;
+
+        virtual iHapticForce *CreateSinusWaveForce(const cVector3f &avDirection, float afAmp, float afFreq) = 0;
+
+        virtual iHapticForce *CreateSawWaveForce(const cVector3f &avDirection, float afAmp, float afFreq) = 0;
+
+        virtual iHapticForce *CreateSpringForce(const cVector3f &avPostition, float afStiffness, float afDamping) = 0;
+
+        virtual iHapticForce *
+        CreateViscosityForce(const cVector3f &avVelocity, float afMass, float afStiffness, float afDamping) = 0;
+
+        void DestroyForce(iHapticForce *apForce);
+
+        void StopAllForces();
+
+        //! @}
+
+    protected:
+        virtual bool InitLowLevel() = 0;
+
+        virtual void UpdateLowLevel(float afTimeStep) = 0;
+
+        cResources *mpResources;
+
+        cCamera *mpCamera;
+        cVector3f mvCameraOffset;
+
+        tHapticSurfaceMap m_mapSurfaces;
+        tHapticForceList mlstForces;
+        tHapticShapeList mlstShapes;
+
+        float mfForceMul;
+
+        cVector3f mvPreviousHardwarePos;
+        cVector3f mvCurrentHardwarePos;
+
+        cVector2f mvPreviousScreenPos;
+        cVector2f mvCurrentScreenPos;
+        bool mbScreenPosFirstTime;
+
+        cVector2f mvMinMousePos;
+        cVector2f mvMaxMousePos;
+        cVector2f mvScreenSize;
+
+        bool mbUpdateShapes;
+    };
+
+}
 #endif // HPL_LOW_LEVEL_HAPTIC_H

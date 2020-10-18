@@ -26,95 +26,102 @@
 
 //----------------------------------------------
 
-class cLuxArea_Liquid_SaveData : public iLuxArea_SaveData
-{
-	kSerializableClassInit(cLuxArea_Liquid_SaveData)
+class cLuxArea_Liquid_SaveData : public iLuxArea_SaveData {
+    kSerializableClassInit(cLuxArea_Liquid_SaveData)
 public:
-	iLuxArea* CreateArea(cLuxMap *apMap);
-	
-	float mfDensity;
-	float mfLinearViscosity;
-	float mfAngularViscosity;
+    iLuxArea *CreateArea(cLuxMap *apMap);
 
-	tString msPhysicsMaterial;
-	
-	bool mbHasWaves;
-	float mfWaveAmp;
-	float mfWaveFreq;
+    float mfDensity;
+    float mfLinearViscosity;
+    float mfAngularViscosity;
 
-	float mfPlayerSpeedMul;
-	float mfMaxWaveDistanceSqr;
+    tString msPhysicsMaterial;
 
-	float mfTimeCount;
+    bool mbHasWaves;
+    float mfWaveAmp;
+    float mfWaveFreq;
+
+    float mfPlayerSpeedMul;
+    float mfMaxWaveDistanceSqr;
+
+    float mfTimeCount;
 };
 
 //----------------------------------------------
 
-class cLuxArea_Liquid : public iLuxArea
-{
-typedef iLuxArea super_class;
-friend class cLuxAreaLoader_Liquid;
-public:	
-	cLuxArea_Liquid(const tString &asName, int alID, cLuxMap *apMap);
-	virtual ~cLuxArea_Liquid();
+class cLuxArea_Liquid : public iLuxArea {
+    typedef iLuxArea super_class;
 
-	//////////////////////
-	//General
-	void SetupAfterLoad(cWorld *apWorld);
-	void OnUpdate(float afTimeStep);
+    friend class cLuxAreaLoader_Liquid;
 
-	//////////////////////
-	//Connection callbacks
-	void OnConnectionStateChange(iLuxEntity *apEntity, int alState){}
+public:
+    cLuxArea_Liquid(const tString &asName, int alID, cLuxMap *apMap);
 
-	//////////////////////
-	//Save data stuff
-	iLuxEntity_SaveData* CreateSaveData();
-	virtual void SaveToSaveData(iLuxEntity_SaveData* apSaveData);
-	virtual void LoadFromSaveData(iLuxEntity_SaveData* apSaveData);
-	virtual void SetupSaveData(iLuxEntity_SaveData *apSaveData);
+    virtual ~cLuxArea_Liquid();
+
+    //////////////////////
+    //General
+    void SetupAfterLoad(cWorld *apWorld);
+
+    void OnUpdate(float afTimeStep);
+
+    //////////////////////
+    //Connection callbacks
+    void OnConnectionStateChange(iLuxEntity *apEntity, int alState) {}
+
+    //////////////////////
+    //Save data stuff
+    iLuxEntity_SaveData *CreateSaveData();
+
+    virtual void SaveToSaveData(iLuxEntity_SaveData *apSaveData);
+
+    virtual void LoadFromSaveData(iLuxEntity_SaveData *apSaveData);
+
+    virtual void SetupSaveData(iLuxEntity_SaveData *apSaveData);
 
 private:
-	void DoBuoyancyOnBody(iPhysicsBody *apBody, float afSurfaceY, bool abInsideWater);
-	void DoBuoyancyOnCharBody(iCharacterBody *apCharBody, float afSurfaceY, bool abInsideWater);
-	
-	void SplashEffect(iPhysicsBody *apBody, float afSurfaceY);
-	
-	/////////////////////////
-	// Data
-	float mfDensity;
-	float mfLinearViscosity;
-	float mfAngularViscosity;
-	
-	iPhysicsMaterial *mpPhysicsMaterial;
+    void DoBuoyancyOnBody(iPhysicsBody *apBody, float afSurfaceY, bool abInsideWater);
 
-	bool mbHasWaves;
-	float mfWaveAmp;
-	float mfWaveFreq;
+    void DoBuoyancyOnCharBody(iCharacterBody *apCharBody, float afSurfaceY, bool abInsideWater);
 
-	float mfPlayerSpeedMul;
-	float mfMaxWaveDistanceSqr;
+    void SplashEffect(iPhysicsBody *apBody, float afSurfaceY);
 
-	/////////////////////////
-	// Variables
-	float mfTimeCount;
+    /////////////////////////
+    // Data
+    float mfDensity;
+    float mfLinearViscosity;
+    float mfAngularViscosity;
 
-	cPlanef mSurfacePlane;
+    iPhysicsMaterial *mpPhysicsMaterial;
+
+    bool mbHasWaves;
+    float mfWaveAmp;
+    float mfWaveFreq;
+
+    float mfPlayerSpeedMul;
+    float mfMaxWaveDistanceSqr;
+
+    /////////////////////////
+    // Variables
+    float mfTimeCount;
+
+    cPlanef mSurfacePlane;
 };
 
 //----------------------------------------------
 
-class cLuxAreaLoader_Liquid : public iLuxAreaLoader
-{
+class cLuxAreaLoader_Liquid : public iLuxAreaLoader {
 public:
-	cLuxAreaLoader_Liquid(const tString& asName);
-	~cLuxAreaLoader_Liquid();
+    cLuxAreaLoader_Liquid(const tString &asName);
 
-	iLuxArea *CreateArea(const tString& asName, int alID, cLuxMap *apMap);
-	
-	void LoadVariables(iLuxArea *apArea, cWorld *apWorld);
-	void SetupArea(iLuxArea *apArea, cWorld *apWorld);
-	
+    ~cLuxAreaLoader_Liquid();
+
+    iLuxArea *CreateArea(const tString &asName, int alID, cLuxMap *apMap);
+
+    void LoadVariables(iLuxArea *apArea, cWorld *apWorld);
+
+    void SetupArea(iLuxArea *apArea, cWorld *apWorld);
+
 };
 
 //----------------------------------------------

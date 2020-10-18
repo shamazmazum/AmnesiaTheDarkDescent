@@ -60,5 +60,5 @@ namespace hpl {
 		static void SetupWorldEntity(iEntity3D *apEntity, cXmlElement* apElement);
 		
 	};
-};
+}
 #endif // HPL_ENGINE_FILE_LOADING_H

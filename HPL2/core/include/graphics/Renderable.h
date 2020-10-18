@@ -76,6 +76,7 @@ namespace hpl {
 
 		virtual bool IsVisible(){ return mbIsVisible && mfCoverageAmount >0; }
 		void SetVisible(bool abVisible);
+
 		/**
 		 * This is needed since IsVisible does not return the actual var value!
 		 */
@@ -84,6 +85,9 @@ namespace hpl {
 		
 		virtual void SetIlluminationAmount(float afX){ mfIlluminationAmount = afX;}
 		inline float GetIlluminationAmount()const { return mfIlluminationAmount;}
+
+        virtual void SetShaderTimer(float afX){ mfShaderTimer = afX;}
+		inline float GetShaderTimer()const { return mfShaderTimer;}
 		
 		void SetCoverageAmount(float afX);
 		inline float GetCoverageAmount()const { return mfCoverageAmount;}
@@ -102,6 +106,8 @@ namespace hpl {
 
 		inline float GetViewSpaceZ() const { return mfViewSpaceZ;}
 		inline void SetViewSpaceZ(float afZ){ mfViewSpaceZ = afZ;}
+
+		virtual bool IsOccluder() { return false; }
 
 		cMatrixf* GetInvModelMatrix();
 
@@ -157,6 +163,7 @@ namespace hpl {
 		float mfViewSpaceZ;
 
 		float mfIlluminationAmount;
+        float mfShaderTimer;
 		float mfCoverageAmount;
 
 		iRenderableContainerNode *mpRenderContainerNode;

@@ -145,6 +145,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\CommunityEdition.h" />
+    <ClInclude Include="include\graphics\PostEffect_ColorGrading.h" />
     <ClInclude Include="include\impl\GamepadSDL2.h" />
     <ClInclude Include="include\impl\MeshLoaderFBX.h" />
     <ClInclude Include="include\gui\GuiPopUpUIKeyboard.h" />
@@ -478,6 +479,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\CommunityEdition.cpp" />
+    <ClCompile Include="sources\graphics\PostEffect_ColorGrading.cpp" />
     <ClCompile Include="sources\impl\GamepadSDL2.cpp" />
     <ClCompile Include="sources\impl\MeshLoaderFBX.cpp" />
     <ClCompile Include="sources\gui\GuiPopUpUIKeyboard.cpp" />

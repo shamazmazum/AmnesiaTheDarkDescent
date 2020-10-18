@@ -26,127 +26,141 @@
 
 //----------------------------------------------
 
-class cLuxRope_SaveData : public iLuxEntity_SaveData
-{
-	kSerializableClassInit(cLuxRope_SaveData)
+class cLuxRope_SaveData : public iLuxEntity_SaveData {
+    kSerializableClassInit(cLuxRope_SaveData)
 public:
-	////////////////
-	//Variables
-	bool mbRopeCreated;
+    ////////////////
+    //Variables
+    bool mbRopeCreated;
 
-	////////////////
-	//Properties
-	cVector3f mvStartPos;
-	cVector3f mvEndPos;
+    ////////////////
+    //Properties
+    cVector3f mvStartPos;
+    cVector3f mvEndPos;
 
-	tString msEndPosNode; 
-	tString msStartBody;
-	tString msEndBody;
+    tString msEndPosNode;
+    tString msStartBody;
+    tString msEndBody;
 
-	float mfMinTotalLength;
-	float mfMaxTotalLength;
-	float mfSegmentLength;
-	float mfDamping;
-	float mfStrength;
-	float mfStiffness;
-	tString msMaterial;
-	float mfRadius;
-	float mfLengthTileAmount;
-	float mfLengthTileSize;
-	tString msSound;
-	float mfSoundStartSpeed;
-	float mfSoundStopSpeed;
-	bool mbAutoMove;
-	float mfAutoMoveAcc;
-	float mfAutoMoveMaxSpeed;
-	
-	////////////////
-	//Methods
-	iLuxEntity* CreateEntity(cLuxMap *apMap);
+    float mfMinTotalLength;
+    float mfMaxTotalLength;
+    float mfSegmentLength;
+    float mfDamping;
+    float mfStrength;
+    float mfStiffness;
+    tString msMaterial;
+    float mfRadius;
+    float mfLengthTileAmount;
+    float mfLengthTileSize;
+    tString msSound;
+    float mfSoundStartSpeed;
+    float mfSoundStopSpeed;
+    bool mbAutoMove;
+    float mfAutoMoveAcc;
+    float mfAutoMoveMaxSpeed;
+
+    ////////////////
+    //Methods
+    iLuxEntity *CreateEntity(cLuxMap *apMap);
 };
 
 //----------------------------------------------
 
-class cLuxRope : public iLuxEntity
-{
-typedef iLuxEntity super_class;
-friend class cLuxAreaRopeLoader;
+class cLuxRope : public iLuxEntity {
+    typedef iLuxEntity super_class;
+
+    friend class cLuxAreaRopeLoader;
+
 public:
-	cLuxRope(const tString& asName, int alID, cLuxMap *apMap);
-	~cLuxRope();
+    cLuxRope(const tString &asName, int alID, cLuxMap *apMap);
 
-	void AfterWorldLoad();
+    ~cLuxRope();
 
-	void OnSetActive(bool abX);
-	void OnUpdate(float afTimeStep);
+    void AfterWorldLoad();
 
-	//////////////////////
-	//Connection
-	void OnConnectionStateChange(iLuxEntity *apEntity, int alState);
+    void OnSetActive(bool abX);
 
-	//////////////////////
-	//Quick and dirt entity implementations
-	eLuxFocusCrosshair GetFocusCrosshair(iPhysicsBody *apBody, const cVector3f &avPos){ return eLuxFocusCrosshair_Default; }
-	iEntity3D* GetAttachEntity(){ return NULL;}
-	void GiveDamage(float afAmount, int alStrength){}
-	bool CanInteract(iPhysicsBody *apBody){ return false; }
-	bool OnInteract(iPhysicsBody *apBody, const cVector3f &avPos){ return false;}
-	int GetBodyNum(){ return 0;}
-	iPhysicsBody* GetBody(int alIdx){ return NULL;}
+    void OnUpdate(float afTimeStep);
 
-	//////////////////////
-	//Save data stuff
-	iLuxEntity_SaveData* CreateSaveData();
-	void SaveToSaveData(iLuxEntity_SaveData* apSaveData);
-	void LoadFromSaveData(iLuxEntity_SaveData* apSaveData);
-	void SetupSaveData(iLuxEntity_SaveData *apSaveData);
+    //////////////////////
+    //Connection
+    void OnConnectionStateChange(iLuxEntity *apEntity, int alState);
+
+    //////////////////////
+    //Quick and dirt entity implementations
+    eLuxFocusCrosshair
+    GetFocusCrosshair(iPhysicsBody *apBody, const cVector3f &avPos) { return eLuxFocusCrosshair_Default; }
+
+    iEntity3D *GetAttachEntity() { return NULL; }
+
+    void GiveDamage(float afAmount, int alStrength) {}
+
+    bool CanInteract(iPhysicsBody *apBody) { return false; }
+
+    bool OnInteract(iPhysicsBody *apBody, const cVector3f &avPos) { return false; }
+
+    int GetBodyNum() { return 0; }
+
+    iPhysicsBody *GetBody(int alIdx) { return NULL; }
+
+    //////////////////////
+    //Save data stuff
+    iLuxEntity_SaveData *CreateSaveData();
+
+    void SaveToSaveData(iLuxEntity_SaveData *apSaveData);
+
+    void LoadFromSaveData(iLuxEntity_SaveData *apSaveData);
+
+    void SetupSaveData(iLuxEntity_SaveData *apSaveData);
+
 private:
-	//First tries to find a body by name, if failed, searches for entity.
-	iPhysicsBody* GetBody(const tString& asName);
+    //First tries to find a body by name, if failed, searches for entity.
+    iPhysicsBody *GetBody(const tString &asName);
 
-	//////////////////////////////
-	// Variables
-	bool mbRopeCreated;
+    //////////////////////////////
+    // Variables
+    bool mbRopeCreated;
 
-	iPhysicsRope *mpRope;
-	cRopeEntity *mpRopeGfx;
+    iPhysicsRope *mpRope;
+    cRopeEntity *mpRopeGfx;
 
-	//////////////////////////////
-	// Properties
-	cVector3f mvStartPos;
-	cVector3f mvEndPos;
+    //////////////////////////////
+    // Properties
+    cVector3f mvStartPos;
+    cVector3f mvEndPos;
 
-	tString msEndPosNode; 
-	tString msStartBody;
-	tString msEndBody;
-	
-	float mfMinTotalLength;
-	float mfMaxTotalLength;
-	float mfSegmentLength;
-	float mfDamping;
-	float mfStrength;
-	float mfStiffness;
-	tString msMaterial;
-	float mfRadius;
-	float mfLengthTileAmount;
-	float mfLengthTileSize;
-	tString msSound;
-	float mfSoundStartSpeed;
-	float mfSoundStopSpeed;
-	bool mbAutoMove;
-	float mfAutoMoveAcc;
-	float mfAutoMoveMaxSpeed;
+    tString msEndPosNode;
+    tString msStartBody;
+    tString msEndBody;
+
+    float mfMinTotalLength;
+    float mfMaxTotalLength;
+    float mfSegmentLength;
+    float mfDamping;
+    float mfStrength;
+    float mfStiffness;
+    tString msMaterial;
+    float mfRadius;
+    float mfLengthTileAmount;
+    float mfLengthTileSize;
+    tString msSound;
+    float mfSoundStartSpeed;
+    float mfSoundStopSpeed;
+    bool mbAutoMove;
+    float mfAutoMoveAcc;
+    float mfAutoMoveMaxSpeed;
 };
 
 //----------------------------------------------
 
-class cLuxAreaRopeLoader : public iAreaLoader
-{
+class cLuxAreaRopeLoader : public iAreaLoader {
 public:
-	cLuxAreaRopeLoader(const tString& asName) : iAreaLoader(asName){}
-	virtual ~cLuxAreaRopeLoader(){}
+    cLuxAreaRopeLoader(const tString &asName) : iAreaLoader(asName) {}
 
-	void Load(const tString &asName, int alID, bool abActive, const cVector3f &avSize, const cMatrixf &a_mtxTransform,cWorld *apWorld);
+    virtual ~cLuxAreaRopeLoader() {}
+
+    void Load(const tString &asName, int alID, bool abActive, const cVector3f &avSize, const cMatrixf &a_mtxTransform,
+              cWorld *apWorld);
 };
 
 //----------------------------------------------

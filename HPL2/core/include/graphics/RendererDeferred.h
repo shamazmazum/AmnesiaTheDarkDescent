@@ -346,5 +346,5 @@ namespace hpl {
 
 	//---------------------------------------------
 
-};
+}
 #endif // HPL_RENDERER_DEFERRED_H

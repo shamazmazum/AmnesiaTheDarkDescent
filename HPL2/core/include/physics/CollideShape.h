@@ -73,5 +73,5 @@ namespace hpl {
 
 		cBoundingVolume mBoundingVolume;
 	};
-};
+}
 #endif // HPL_COLLIDE_SHAPE_H

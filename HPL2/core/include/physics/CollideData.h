@@ -47,5 +47,5 @@ namespace hpl {
 		}
 	};
 
-};
+}
 #endif // HPL_COLLIDE_DATA_H

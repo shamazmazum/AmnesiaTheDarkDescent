@@ -2394,7 +2394,7 @@ namespace hpl {
 
 	GLenum GetGLWrapEnum(eTextureWrap aMode)
 	{
-		;
+
 
 		switch(aMode)
 		{
@@ -2412,7 +2412,7 @@ namespace hpl {
 
 	GLenum PixelFormatToGLFormat(ePixelFormat aFormat)
 	{
-		;
+
 
 		switch(aFormat)
 		{
@@ -2436,7 +2436,7 @@ namespace hpl {
 		case ePixelFormat_LuminanceAlpha32: return GL_LUMINANCE_ALPHA;
 		case ePixelFormat_RGB32:			return GL_RGB;
 		case ePixelFormat_RGBA32:			return GL_RGBA;
-		};
+		}
 
 		return 0;
 	}
@@ -2445,7 +2445,7 @@ namespace hpl {
 
 	GLenum PixelFormatToGLInternalFormat(ePixelFormat aFormat)
 	{
-		;
+
 
 		switch(aFormat)
 		{
@@ -2469,7 +2469,7 @@ namespace hpl {
 		case ePixelFormat_LuminanceAlpha32: return GL_LUMINANCE_ALPHA32F_ARB;
 		case ePixelFormat_RGB32:			return GL_RGB32F_ARB;
 		case ePixelFormat_RGBA32:			return GL_RGBA32F_ARB;
-		};
+		}
 
 		return 0;
 	}
@@ -2478,7 +2478,7 @@ namespace hpl {
 
 	GLenum GetGLCompressionFormatFromPixelFormat(ePixelFormat aFormat)
 	{
-		;
+
 
 		switch(aFormat)
 		{
@@ -2508,7 +2508,7 @@ namespace hpl {
 
 	GLenum GetGLBlendEnum(eBlendFunc aType)
 	{
-		;
+
 
 		switch(aType)
 		{
@@ -2531,7 +2531,7 @@ namespace hpl {
 
 	GLenum GetGLTextureParamEnum(eTextureParam aType)
 	{
-		;
+
 
 		switch(aType)
 		{
@@ -2559,7 +2559,7 @@ namespace hpl {
 
 	GLenum GetGLTextureOpEnum(eTextureOp aType)
 	{
-		;
+
 
 		switch(aType)
 		{
@@ -2575,7 +2575,7 @@ namespace hpl {
 
 	GLenum GetGLTextureSourceEnum(eTextureSource aType)
 	{
-		;
+
 
 		switch(aType)
 		{
@@ -2590,7 +2590,7 @@ namespace hpl {
 
 	GLenum GetGLTextureTargetEnum(eTextureType aType)
 	{
-		;
+
 
 		switch(aType)
 		{
@@ -2610,7 +2610,7 @@ namespace hpl {
 
 	GLenum GetGLTextureCompareMode(eTextureCompareMode aMode)
 	{
-		;
+
 
 		switch(aMode)
 		{
@@ -2634,7 +2634,7 @@ namespace hpl {
 
 	GLenum GetGLTextureFuncEnum(eTextureFunc aType)
 	{
-		;
+
 
 		switch(aType)
 		{
@@ -2653,7 +2653,7 @@ namespace hpl {
 	//-----------------------------------------------------------------------
 	GLenum GetGLDepthTestFuncEnum(eDepthTestFunc aType)
 	{
-		;
+
 
 		switch(aType)
 		{
@@ -2673,7 +2673,7 @@ namespace hpl {
 
 	GLenum GetGLAlphaTestFuncEnum(eAlphaTestFunc aType)
 	{
-		;
+
 
 		switch(aType)
 		{
@@ -2693,7 +2693,7 @@ namespace hpl {
 
 	GLenum GetGLStencilFuncEnum(eStencilFunc aType)
 	{
-		;
+
 
 		switch(aType)
 		{
@@ -2713,7 +2713,7 @@ namespace hpl {
 
 	GLenum GetGLStencilOpEnum(eStencilOp aType)
 	{
-		;
+
 
 		switch(aType)
 		{

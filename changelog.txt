@@ -1,0 +1,2 @@
+- Refactored engine and game code: Optimzed imports, simplifed code expressions and removed empty condition blocks.
+- Updated physics from MFP: Swing Doors are less buggy, physics objects can block Ai path.

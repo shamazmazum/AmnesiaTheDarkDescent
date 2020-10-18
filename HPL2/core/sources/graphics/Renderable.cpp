@@ -65,6 +65,8 @@ namespace hpl {
 		mpRenderContainerNode = NULL;
 
 		mpRenderableUserData = NULL;
+
+        mfShaderTimer = 0.0f;
 	}
 	
 	//-----------------------------------------------------------------------

@@ -25,27 +25,27 @@
 #include "input/Action.h"
 
 namespace hpl {
-	
-	class cInput;
 
-	class cActionKeyboard : public iSubAction
-	{
-	public:
-		cActionKeyboard(cInput* apInput, eKey mKey);
+    class cInput;
 
-		bool IsTriggerd();
-		float GetValue();
+    class cActionKeyboard : public iSubAction {
+    public:
+        cActionKeyboard(cInput *apInput, eKey mKey);
 
-		tString GetInputName();
+        bool IsTriggerd();
 
-		tString GetInputType(){return "Keyboard";}
+        float GetValue();
 
-		eKey GetKey(){ return mKey;}
+        tString GetInputName();
 
-	private:
-		eKey mKey;
-		cInput *mpInput;
-	};
+        tString GetInputType() { return "Keyboard"; }
 
-};
+        eKey GetKey() { return mKey; }
+
+    private:
+        eKey mKey;
+        cInput *mpInput;
+    };
+
+}
 #endif // HPL_ACTIONKEYBOARD_H

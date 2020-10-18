@@ -363,5 +363,5 @@ namespace hpl {
 	//-------------------------------------------------
 
 
-};
+}
 #endif // HPL_SERIALIZE_CLASS_H

@@ -26,18 +26,18 @@
 
 namespace hpl {
 
-	class cHapticSurfaceHaptX_Frictional : public iHapticSurfaceHaptX
-	{
-	public:
-		cHapticSurfaceHaptX_Frictional(	const tString& asName, HaptX::HaptXInterface *apInterface,
-									float afDamping, float afStiffness,
-									float afDynamicFriction, float afStartingFriction,
-									float afTangentStiffness, float afStoppingFriction);
-		~cHapticSurfaceHaptX_Frictional();
-		
-	private:
-		HaptX::FrictionalSurfaceInfo *mpFrictionalSurfaceInfo;
-	};
+    class cHapticSurfaceHaptX_Frictional : public iHapticSurfaceHaptX {
+    public:
+        cHapticSurfaceHaptX_Frictional(const tString &asName, HaptX::HaptXInterface *apInterface,
+                                       float afDamping, float afStiffness,
+                                       float afDynamicFriction, float afStartingFriction,
+                                       float afTangentStiffness, float afStoppingFriction);
 
-};
+        ~cHapticSurfaceHaptX_Frictional();
+
+    private:
+        HaptX::FrictionalSurfaceInfo *mpFrictionalSurfaceInfo;
+    };
+
+}
 #endif // HPL_HAPTIC_SURFACE_HAPTX_FRICTIONAL_H

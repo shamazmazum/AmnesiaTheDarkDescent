@@ -85,5 +85,5 @@ namespace hpl {
 
 	//---------------------------------------------------
 
-};
+}
 #endif // HPL_MATERIAL_TYPE_BASIC_TRANSLUCENT_H

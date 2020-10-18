@@ -25,26 +25,27 @@
 #include "haptic/Haptic.h"
 
 namespace hpl {
-	
-	class cHaptic;
-	
-	class cActionHaptic : public iSubAction
-	{
-	public:
-		cActionHaptic(cHaptic *apHaptic, int mlButton);
 
-		bool IsTriggerd();
-		float GetValue();
+    class cHaptic;
 
-		tString GetInputName();
+    class cActionHaptic : public iSubAction {
+    public:
+        cActionHaptic(cHaptic *apHaptic, int mlButton);
 
-		tString GetInputType(){return "HapticDeviceButton";}
-		
-		int GetButton(){ return mlButton;}
-	private:
-		int mlButton;
-		cHaptic *mpHaptic;
-	};
+        bool IsTriggerd();
 
-};
+        float GetValue();
+
+        tString GetInputName();
+
+        tString GetInputType() { return "HapticDeviceButton"; }
+
+        int GetButton() { return mlButton; }
+
+    private:
+        int mlButton;
+        cHaptic *mpHaptic;
+    };
+
+}
 #endif // HPL_ACTIONMOUSEBUTTON_H

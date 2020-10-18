@@ -377,7 +377,7 @@ void cLuxCritter_Spider::UpdateGroundCheck(float afTimeStep)
 			mbOnGround = true;
 		}
 
-		if(mbOnGround ==false)
+		if(!mbOnGround)
 		{
 			//Look for ground elsewhere! Ledge climbing done here?
 		}
@@ -385,7 +385,7 @@ void cLuxCritter_Spider::UpdateGroundCheck(float afTimeStep)
 
 	////////////////////////
 	// Gravity
-	if(mbOnGround==false || mbColliding==false)
+	if(!mbOnGround || !mbColliding)
 	{
 		mvGravityVel -= mvGroundNormal * 9.8f * afTimeStep;
 		mfFallingCount+= afTimeStep;

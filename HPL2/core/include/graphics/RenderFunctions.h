@@ -169,5 +169,5 @@ namespace hpl {
 	
 	//---------------------------------------------
 
-};
+}
 #endif // HPL_RENDER_FUNCTIONS_H

@@ -56,5 +56,5 @@ namespace hpl {
 
 		cVector3f mvPin;
 	};
-};
+}
 #endif // HPL_PHYSICS_JOINT_SCREW_H

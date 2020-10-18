@@ -74,5 +74,5 @@ namespace hpl {
 		cResources *mpResources;
 	};
 
-};
+}
 #endif // HPL_LANGUAGE_FILE_H

@@ -26,75 +26,81 @@
 
 namespace hpl {
 
-	class cWidgetContextMenu : public iWidgetMenu
-	{
-	public:
-		cWidgetContextMenu(cGuiSet *apSet, cGuiSkin *apSkin);
-		~cWidgetContextMenu();
+    class cWidgetContextMenu : public iWidgetMenu {
+    public:
+        cWidgetContextMenu(cGuiSet *apSet, cGuiSkin *apSkin);
 
-		////////////////////////////////////
-		// iWidgetMenu implemented functions
-		void AddSeparator();
-		void Hide();
+        ~cWidgetContextMenu();
 
-		void SavePrevAttentionWidget();
+        ////////////////////////////////////
+        // iWidgetMenu implemented functions
+        void AddSeparator();
 
-		float GetMenuItemWidth();
+        void Hide();
 
-	protected:
+        void SavePrevAttentionWidget();
 
-		////////////////////////////////////
-		// iWidgetMenu implemented functions
+        float GetMenuItemWidth();
 
-		void UpdateMenuItemsPos(cWidgetMenuItem* apNewItem);
-		void UpdateMenuItemsSize(cWidgetMenuItem* apNewItem);
-		void UpdateMenuWidth(float afWidth);
+    protected:
 
-		void OnChildMenuHide();
+        ////////////////////////////////////
+        // iWidgetMenu implemented functions
 
-		////////////////////////////////////
-		// iWidget implemented functions
+        void UpdateMenuItemsPos(cWidgetMenuItem *apNewItem);
 
-		void OnDraw(float afTimeStep, cGuiClipRegion *apClipRegion);
+        void UpdateMenuItemsSize(cWidgetMenuItem *apNewItem);
 
-		void OnUpdate(float afTimeStep);
+        void UpdateMenuWidth(float afWidth);
 
-		void OnInit();
+        void OnChildMenuHide();
 
-		bool OnMouseDown(const cGuiMessageData& aData) {return true;}
-		bool OnMouseUp(const cGuiMessageData& aData) {return true;}
+        ////////////////////////////////////
+        // iWidget implemented functions
 
-		bool OnMouseEnter(const cGuiMessageData& aData);
-		bool OnMouseLeave(const cGuiMessageData& aData);
+        void OnDraw(float afTimeStep, cGuiClipRegion *apClipRegion);
 
-		bool OnKeyPress(const cGuiMessageData& aData);
+        void OnUpdate(float afTimeStep);
 
-		bool OnLostFocus(const cGuiMessageData& aData);
-		bool OnGotFocus(const cGuiMessageData& aData);
+        void OnInit();
 
-		void OnLoadGraphics();
+        bool OnMouseDown(const cGuiMessageData &aData) { return true; }
 
-		/////////////////////////
-		// Data
-		float mfTimer;
-		float mfHideTime;
+        bool OnMouseUp(const cGuiMessageData &aData) { return true; }
 
-		// Skin attributes
-		float mfItemHPadding;
-		float mfItemTextLeftPadding;
-		float mfItemTextRightPadding;
-		float mfItemVPadding;
-		float mfItemSeparation;
-		float mfItemArrowIconSize;
-		float mfItemCheckIconSize;
-		
-		// Graphics
-		cGuiGfxElement* mpGfxBackground;
+        bool OnMouseEnter(const cGuiMessageData &aData);
 
-		cGuiGfxElement* mvGfxBorders[4];
-		cGuiGfxElement* mvGfxCorners[4];
-	};
-};
+        bool OnMouseLeave(const cGuiMessageData &aData);
+
+        bool OnKeyPress(const cGuiMessageData &aData);
+
+        bool OnLostFocus(const cGuiMessageData &aData);
+
+        bool OnGotFocus(const cGuiMessageData &aData);
+
+        void OnLoadGraphics();
+
+        /////////////////////////
+        // Data
+        float mfTimer;
+        float mfHideTime;
+
+        // Skin attributes
+        float mfItemHPadding;
+        float mfItemTextLeftPadding;
+        float mfItemTextRightPadding;
+        float mfItemVPadding;
+        float mfItemSeparation;
+        float mfItemArrowIconSize;
+        float mfItemCheckIconSize;
+
+        // Graphics
+        cGuiGfxElement *mpGfxBackground;
+
+        cGuiGfxElement *mvGfxBorders[4];
+        cGuiGfxElement *mvGfxCorners[4];
+    };
+}
 
 #endif // HPL_WIDGET_CONTEXT_MENU
 

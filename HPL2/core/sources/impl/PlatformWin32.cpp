@@ -309,7 +309,7 @@ namespace hpl {
 	static bool IsGoodFolder(struct _wfinddata_t* pFileInfo, bool abAddHidden, bool abAddUpFolder)
 	{
 		if( (pFileInfo->attrib & _A_SUBDIR) ==0) return false;
-		if( abAddHidden==false && (pFileInfo->attrib & _A_HIDDEN)) return false;
+		if(!abAddHidden && (pFileInfo->attrib & _A_HIDDEN)) return false;
 
 		tWString sName = pFileInfo->name;
 		if( sName == _W("..") ) return abAddUpFolder;

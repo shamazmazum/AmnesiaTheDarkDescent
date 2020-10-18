@@ -41,6 +41,7 @@ class iLuxInteractConnection_SaveData : public iSerializable
 	kSerializableClassInit(iLuxInteractConnection_SaveData)
 public:
 	virtual iLuxInteractConnection* CreateConnection(cLuxMap *apMap)=0;
+    virtual ~iLuxInteractConnection_SaveData(){}
 	virtual void FromConnection(iLuxInteractConnection* apConnection);
 
 	tString msName;
@@ -159,7 +160,6 @@ class cLuxInteractConnection_MoveObject : public iLuxInteractConnection
 {
 friend class cLuxInteractConnection_MoveObject_SaveData;
 public:
-
 	/**
 	* lStatesUsed, 0=max and min, 1=max only, -1=min only.
 	*/

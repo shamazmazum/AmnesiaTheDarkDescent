@@ -26,30 +26,34 @@
 
 namespace hpl {
 
-	class iHapticForceHaptX : public iHapticForce
-	{
-	public:
-		iHapticForceHaptX(	eHapticForceType aType, HaptX::HaptXInterface *apInterface,
-							HaptX::iHapticDeviceID	aDeviceID);
-		virtual ~iHapticForceHaptX();
+    class iHapticForceHaptX : public iHapticForce {
+    public:
+        iHapticForceHaptX(eHapticForceType aType, HaptX::HaptXInterface *apInterface,
+                          HaptX::iHapticDeviceID aDeviceID);
 
-		void SetActive(bool abX);
-		bool IsActive();
+        virtual ~iHapticForceHaptX();
 
-		virtual void SetForce(const cVector3f &avForce){}
-		virtual void SetRelativeForce(const cVector3f &avForce){}
+        void SetActive(bool abX);
 
-		virtual void SetDirection(const cVector3f &avForce){}
-		virtual void SetFreq(float afFreq){}
-		virtual void SetAmp(float afAmp){}
+        bool IsActive();
 
-		void SetTimeControl(bool abLoop,float afTime,float afIdleTime, float afFadeInTime, float afFadeOutTime);
-	
-	protected:
-		HaptX::HaptXInterface *mpInterface;
-		HaptX::iHapticDeviceID	mDeviceID;
-		HaptX::ForceModelInfo *mpForce;		
-	};
+        virtual void SetForce(const cVector3f &avForce) {}
 
-};
+        virtual void SetRelativeForce(const cVector3f &avForce) {}
+
+        virtual void SetDirection(const cVector3f &avForce) {}
+
+        virtual void SetFreq(float afFreq) {}
+
+        virtual void SetAmp(float afAmp) {}
+
+        void SetTimeControl(bool abLoop, float afTime, float afIdleTime, float afFadeInTime, float afFadeOutTime);
+
+    protected:
+        HaptX::HaptXInterface *mpInterface;
+        HaptX::iHapticDeviceID mDeviceID;
+        HaptX::ForceModelInfo *mpForce;
+    };
+
+}
 #endif // HPL_HAPTIC_FORCE_HAPTX_H

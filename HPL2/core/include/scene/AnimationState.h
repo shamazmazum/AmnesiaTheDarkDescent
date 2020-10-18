@@ -28,123 +28,139 @@
 
 namespace hpl {
 
-	class cAnimation;
-	class cAnimationManager;
+    class cAnimation;
 
-	//---------------------------------------------
-	
-	class cAnimationEvent
-	{
-	public:
-		float mfTime;
-		eAnimationEventType mType;
-		tString msValue;
-	};
+    class cAnimationManager;
 
-	//---------------------------------------------
+    //---------------------------------------------
 
-	class cAnimationState
-	{
-	public:
-		cAnimationState(cAnimation* apAnimation,const tString &asName,
-						cAnimationManager *apAnimationManager);
-		~cAnimationState();
+    class cAnimationEvent {
+    public:
+        float mfTime;
+        eAnimationEventType mType;
+        tString msValue;
+    };
 
-        const tString& GetName(){ return msName;}
+    //---------------------------------------------
 
-		void Update(float afTimeStep);
+    class cAnimationState {
+    public:
+        cAnimationState(cAnimation *apAnimation, const tString &asName,
+                        cAnimationManager *apAnimationManager);
 
-		bool DataIsInMeshFile(){return mpAnimationManager==NULL;}
+        ~cAnimationState();
 
-		bool IsFading();
+        const tString &GetName() { return msName; }
 
-		/**
-		 * If the animation has reached the end.
-		 */
-		bool IsOver();
+        void Update(float afTimeStep);
 
-		void FadeIn(float afTime);
-		void FadeOut(float afTime);
+        bool DataIsInMeshFile() { return mpAnimationManager == NULL; }
 
-		void SetLength(float afLength);
-		float GetLength();
+        bool IsFading();
 
-		void SetWeight(float afWeight);
-		float GetWeight();
+        /**
+         * If the animation has reached the end.
+         */
+        bool IsOver();
+
+        void FadeIn(float afTime);
+
+        void FadeOut(float afTime);
+
+        void SetLength(float afLength);
+
+        float GetLength();
+
+        void SetWeight(float afWeight);
+
+        float GetWeight();
 
         void SetSpeed(float afSpeed);
-		float GetSpeed();
 
-		void SetBaseSpeed(float afSpeed);
-		float GetBaseSpeed();
+        float GetSpeed();
 
-		void SetTimePosition(float afPosition);
+        void SetBaseSpeed(float afSpeed);
+
+        float GetBaseSpeed();
+
+        void SetTimePosition(float afPosition);
+
         float GetTimePosition();
-		float GetPreviousTimePosition();
 
-		/**
-		 * Set the relative postion. 0 = start, 1 = end
-		 * \param afPosition
-		 */
-		void SetRelativeTimePosition(float afPosition);
+        float GetPreviousTimePosition();
 
-		/**
-		* Get the relative postion. 0 = start, 1 = end
-		*/
-		float GetRelativeTimePosition();
+        /**
+         * Set the relative postion. 0 = start, 1 = end
+         * \param afPosition
+         */
+        void SetRelativeTimePosition(float afPosition);
 
-		bool IsActive();
-		void SetActive(bool abActive);
+        /**
+        * Get the relative postion. 0 = start, 1 = end
+        */
+        float GetRelativeTimePosition();
 
-		bool IsLooping();
-		void SetLoop(bool abLoop);
+        bool IsActive();
 
-		bool IsPaused();
-		void SetPaused(bool abPaused);
+        void SetActive(bool abActive);
 
-		void SetSpecialEventTime(float afT){ mfSpecialEventTime = afT;}
-		float GetSpecialEventTime(){ return mfSpecialEventTime;}
-		bool IsAfterSpecialEvent();
-		bool IsBeforeSpecialEvent();
+        bool IsLooping();
 
-		void AddTimePosition(float afAdd);
+        void SetLoop(bool abLoop);
 
-		cAnimation* GetAnimation();
+        bool IsPaused();
 
-		cAnimationEvent *CreateEvent();
-		cAnimationEvent *GetEvent(int alIdx);
-		int GetEventNum();
+        void SetPaused(bool abPaused);
 
-		float GetFadeStep(){ return mfFadeStep;}
-		void SetFadeStep(float afX){ mfFadeStep = afX;}
-	
-	private:
-		tString msName;
+        void SetSpecialEventTime(float afT) { mfSpecialEventTime = afT; }
 
-		cAnimationManager *mpAnimationManager;
+        float GetSpecialEventTime() { return mfSpecialEventTime; }
 
-		cAnimation* mpAnimation;
+        bool IsAfterSpecialEvent();
 
-		std::vector<cAnimationEvent*> mvEvents;
+        bool IsBeforeSpecialEvent();
 
-		//Properties of the animation
-		float mfLength;
-		float mfWeight;
-		float mfSpeed;
-		float mfTimePos;
-		float mfPrevTimePos;
+        void AddTimePosition(float afAdd);
 
-		float mfBaseSpeed;
+        cAnimation *GetAnimation();
 
-		float mfSpecialEventTime;
+        cAnimationEvent *CreateEvent();
 
-		bool mbActive;
-		bool mbLoop;
-		bool mbPaused;
+        cAnimationEvent *GetEvent(int alIdx);
 
-		//properties for update
-		float mfFadeStep;
-	};
+        int GetEventNum();
 
-};
+        float GetFadeStep() { return mfFadeStep; }
+
+        void SetFadeStep(float afX) { mfFadeStep = afX; }
+
+    private:
+        tString msName;
+
+        cAnimationManager *mpAnimationManager;
+
+        cAnimation *mpAnimation;
+
+        std::vector<cAnimationEvent *> mvEvents;
+
+        //Properties of the animation
+        float mfLength;
+        float mfWeight;
+        float mfSpeed;
+        float mfTimePos;
+        float mfPrevTimePos;
+
+        float mfBaseSpeed;
+
+        float mfSpecialEventTime;
+
+        bool mbActive;
+        bool mbLoop;
+        bool mbPaused;
+
+        //properties for update
+        float mfFadeStep;
+    };
+
+}
 #endif // HPL_ANIMATION_STATE_H

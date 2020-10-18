@@ -247,7 +247,7 @@ void cLuxMusicHandler::UpdateDangerMusic(float afTimeStep)
 {
 	////////////////////////////
 	// HARDMODE early out
-	if (gpBase->mbHardMode == true) return;
+	if (gpBase->mbHardMode) return;
 
 	for(int i=0; i<eLuxEnemyMusic_LastEnum; ++i)
 	{
@@ -259,7 +259,7 @@ void cLuxMusicHandler::UpdateDangerMusic(float afTimeStep)
 	
 	////////////////////////////
 	//Music not playing
-	if(mbEnemyClosePlaying==false)
+	if(!mbEnemyClosePlaying)
 	{
 		tString sMusic ="";
 		int lHighestPrio =-1;
@@ -309,7 +309,7 @@ void cLuxMusicHandler::UpdateDangerMusic(float afTimeStep)
 			}
 		}
 
-		if(bFound == false)
+		if(!bFound)
 		{
 			mfEnemyCloseCount =0;
 			mfEnemyGoneCount += afTimeStep;
@@ -336,7 +336,7 @@ void cLuxMusicHandler::UpdateEnemyMusic(float afTimeStep, eLuxEnemyMusic aType)
 
 	////////////////////////////////////////
 	//Attack not playing and attackers active
-	if(mbEnemyPlaying[aType]==false && m_setEnemies[aType].empty()==false)
+	if(!mbEnemyPlaying[aType] && m_setEnemies[aType].empty() == false)
 	{
 		mfEnemyStopCount[aType] =0;
 		mfEnemyPlayCount[aType] += afTimeStep;

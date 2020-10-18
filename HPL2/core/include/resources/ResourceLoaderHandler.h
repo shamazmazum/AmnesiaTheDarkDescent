@@ -51,5 +51,5 @@ namespace hpl {
 		tResourceLoaderList mlstLoaders;
 	};
 
-};
+}
 #endif // HPL_RESOURCE_LOADER_HANDLER_H

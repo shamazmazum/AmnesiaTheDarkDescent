@@ -55,5 +55,5 @@ namespace hpl {
 		cImageManager *mpImageManager;
 	};
 
-};
+}
 #endif // HPL_FRAMETEXTURE_H

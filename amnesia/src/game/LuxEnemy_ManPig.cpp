@@ -190,7 +190,7 @@ cLuxEnemy_ManPig::cLuxEnemy_ManPig(const tString &asName, int alID, cLuxMap *apM
 		eLuxEnemyPoseType pose = eLuxEnemyPoseType_Biped;
 		msIdleAnimationName[i][pose] = "IdleBiped";
 		msWalkAnimationName[i][pose] = "WalkBiped";
-		msRunAnimationName[i][pose] =  i==eLuxEnemyMoveType_Normal ? "RunBiped" : "FleeBiped";;
+		msRunAnimationName[i][pose] =  i==eLuxEnemyMoveType_Normal ? "RunBiped" : "FleeBiped";
 
 		pose = eLuxEnemyPoseType_Quadruped;
 		msIdleAnimationName[i][pose] = "IdleQuadruped";
@@ -669,7 +669,7 @@ bool cLuxEnemy_ManPig::StateEventImplement(int alState, eLuxEnemyStateEvent aEve
 
 			/////////////////////////
 			// Flee
-			if(mbFleeFromPlayer && mbThreatenOnAlert==false)
+			if(mbFleeFromPlayer && !mbThreatenOnAlert)
 			{
 				ChangeState(eLuxEnemyState_Flee);
 			}
@@ -790,10 +790,10 @@ bool cLuxEnemy_ManPig::StateEventImplement(int alState, eLuxEnemyStateEvent aEve
 			}
 			//////////////////////////////
 			//Player is no longer seen, see if time to search or wait
-			else if(PlayerIsDetected()==false)
+			else if(!PlayerIsDetected())
 			{
 				float fTerror = gpBase->mpPlayer->GetTerror();
-				if (mbIsTelsa == true)
+				if (mbIsTelsa)
 				{
 					if (fTerror < 0.1) ChangeState(eLuxEnemyState_Wait);
 				}
@@ -845,7 +845,7 @@ bool cLuxEnemy_ManPig::StateEventImplement(int alState, eLuxEnemyStateEvent aEve
 					//If terror is topped and distance to player is over a value or player is running towards piggie
 					//Or if distance to player is less than a value
 					float fTerror = gpBase->mpPlayer->GetTerror();
-					if (mbIsTelsa==true) fTerror *= 3;
+					if (mbIsTelsa) fTerror *= 3;
 					if(	(fTerror >= 1 && (fDistToPlayer > mfAlertToHuntDistance || mfAlertRunTowardsCount>mfAlertRunTowardsToHuntLimit) ) || 
 						fDistToPlayer < mfAlertToInstantHuntDistance)
 					{
@@ -861,14 +861,14 @@ bool cLuxEnemy_ManPig::StateEventImplement(int alState, eLuxEnemyStateEvent aEve
 		//////////////
 		//Reach end of path
 		kLuxOnMessage(eLuxEnemyMessage_EndOfPath)
-			if(mbThreatenOnAlert==false)
+			if(!mbThreatenOnAlert)
 			{
 				float fDistToPlayer = DistToPlayer();
 
 				//Path ended and player is not seen or enemy is stuck (this should only happen when at a distance!
-				if(PlayerIsDetected()==false || (apMessage->mlCustomValue == 1 && fDistToPlayer>5))
+				if(!PlayerIsDetected() || (apMessage->mlCustomValue == 1 && fDistToPlayer > 5))
 				{
-					if(mbIsTelsa==false)
+					if(!mbIsTelsa)
 						ChangeState(eLuxEnemyState_Search);
 					else
 						ChangeState(eLuxEnemyState_Wait);
@@ -907,7 +907,7 @@ bool cLuxEnemy_ManPig::StateEventImplement(int alState, eLuxEnemyStateEvent aEve
 		/////////////
 		//Check if threat should end
 		kLuxOnMessage(eLuxEnemyMessage_TimeOut_3)
-			if(PlayerIsDetected()==false)
+			if(!PlayerIsDetected())
 				ChangeState(eLuxEnemyState_Patrol);
 			else
 				SendMessage(eLuxEnemyMessage_TimeOut_3, 0.75f, true);
@@ -1055,12 +1055,12 @@ bool cLuxEnemy_ManPig::StateEventImplement(int alState, eLuxEnemyStateEvent aEve
 		// Check if no longer visible.
 		kLuxOnMessage(eLuxEnemyMessage_TimeOut_2)
 
-			if(PlayerIsDetected()==false)	mfFleeCheckIfInvisbleCount += 0.2f;
+			if(!PlayerIsDetected()) mfFleeCheckIfInvisbleCount += 0.2f;
 			else							mfFleeCheckIfInvisbleCount = 0;
 
 			if(mfFleeCheckIfInvisbleCount>=1.6)
 			{
-				if(CheckEnemyAutoRemoval(15)==false) ChangeState(eLuxEnemyState_Wait);
+				if(!CheckEnemyAutoRemoval(15)) ChangeState(eLuxEnemyState_Wait);
 			}
 			else
 			{
@@ -1075,11 +1075,11 @@ bool cLuxEnemy_ManPig::StateEventImplement(int alState, eLuxEnemyStateEvent aEve
 		kLuxOnMessage(eLuxEnemyMessage_EndOfPath)
 
 			//Check if pig can be auto removed, else continue fleeing or, go on patrol
-			if(mbAutoDisableAfterFlee==false || CheckEnemyAutoRemoval(15)==false)
+			if(!mbAutoDisableAfterFlee || !CheckEnemyAutoRemoval(15))
 			{
 				if(PlayerIsDetected())
 				{
-					if(FleeTryToFindSafeNode()==false)
+					if(!FleeTryToFindSafeNode())
 						ChangeState(eLuxEnemyState_Alert);
 				}
 				else
@@ -1110,7 +1110,7 @@ bool cLuxEnemy_ManPig::StateEventImplement(int alState, eLuxEnemyStateEvent aEve
 			SendMessage(eLuxEnemyMessage_TimeOut, 2.5f, true);
 			mfFOVMul =0.5f; //We want small FOV so that we do not go into alert unless needed.
 
-			if(StalkFindNode()==false)
+			if(!StalkFindNode())
 			{
 				mfWaitTime = cMath::RandRectf(2, 4);
 				ChangeState(eLuxEnemyState_Wait);
@@ -1146,7 +1146,7 @@ bool cLuxEnemy_ManPig::StateEventImplement(int alState, eLuxEnemyStateEvent aEve
 				IsVisibleToPlayerAtFeetPos(mpPathfinder->GetFinalGoalPos())
 				)
 			{
-				if(StalkFindNode()==false)
+				if(!StalkFindNode())
 				{
 					mfWaitTime = cMath::RandRectf(1, 3);
 					ChangeState(eLuxEnemyState_Wait);
@@ -1196,7 +1196,7 @@ bool cLuxEnemy_ManPig::StateEventImplement(int alState, eLuxEnemyStateEvent aEve
 			SetMoveSpeed(eLuxEnemyMoveSpeed_Walk);
 			SendMessage(eLuxEnemyMessage_TimeOut, 2.5f, true);
 			
-			if(TrackFindNode()==false)
+			if(!TrackFindNode())
 			{
 				mfWaitTime = cMath::RandRectf(1, 2);
 				ChangeState(eLuxEnemyState_Wait);
@@ -1222,7 +1222,7 @@ bool cLuxEnemy_ManPig::StateEventImplement(int alState, eLuxEnemyStateEvent aEve
 				{
 					mpPathfinder->Stop();
 
-					if(TrackFindNode()==false)
+					if(!TrackFindNode())
 					{
 						mfWaitTime = cMath::RandRectf(1, 2);
 						ChangeState(eLuxEnemyState_Wait);
@@ -1238,7 +1238,7 @@ bool cLuxEnemy_ManPig::StateEventImplement(int alState, eLuxEnemyStateEvent aEve
 		////////////////////////
 		// End of current path
 		kLuxOnMessage(eLuxEnemyMessage_EndOfPath)
-			if(TrackFindNode()==false)
+			if(!TrackFindNode())
 			{
 				if(DistToPlayer2D() < 4.0f)
 				{
@@ -1252,7 +1252,7 @@ bool cLuxEnemy_ManPig::StateEventImplement(int alState, eLuxEnemyStateEvent aEve
 				}
 				else
 				{
-					if(TrackFindNode()==false)
+					if(!TrackFindNode())
 					{
 						mfWaitTime = cMath::RandRectf(1, 2);
 						ChangeState(eLuxEnemyState_Wait);
@@ -1383,7 +1383,7 @@ bool cLuxEnemy_ManPig::StateEventImplement(int alState, eLuxEnemyStateEvent aEve
 			//Check if was end of path because of stuck.,
 			if(apMessage->mlCustomValue==1 && fDistToPlayer >= mfNormalAttackDistance)
 			{
-				if(PlayerIsDetected() == false)
+				if(!PlayerIsDetected())
 				{
 					//Give some extra time to find player!
 					SendMessage(eLuxEnemyMessage_TimeOut_4, 1.5f, true);
@@ -1398,7 +1398,7 @@ bool cLuxEnemy_ManPig::StateEventImplement(int alState, eLuxEnemyStateEvent aEve
 			{
 				mpPathfinder->MoveTo(mvLastKnownPlayerPos);
 
-				if(PlayerIsDetected() == false)
+				if(!PlayerIsDetected())
 				{
 					//When lost player give some extra time to catch up
 					SendMessage(eLuxEnemyMessage_TimeOut_4, 1.5f, true);
@@ -1423,7 +1423,7 @@ bool cLuxEnemy_ManPig::StateEventImplement(int alState, eLuxEnemyStateEvent aEve
 		//////////////////
 		//When lost player give some extra time to catch up
 		kLuxOnMessage(eLuxEnemyMessage_TimeOut_4)
-			if(PlayerIsDetected() == false)
+			if(!PlayerIsDetected())
 			{
 				gpBase->mpPlayer->RemoveTerrorEnemy(this);
 				
@@ -1878,7 +1878,7 @@ void cLuxEnemy_ManPig::OnSetActiveEnemySpecific(bool abX)
 		}
 	}
 
-	if(abX==false && mbIsTelsa)
+	if(!abX && mbIsTelsa)
 	{
 		ResetMindFuckEffects();
 		mbTeslaTerror = false;
@@ -1893,7 +1893,7 @@ void cLuxEnemy_ManPig::OnSetActiveEnemySpecific(bool abX)
 
 bool cLuxEnemy_ManPig::CheckEnemyAutoRemoval(float afDistance)
 {
-	if(mbIsSeenByPlayer==false && DistToPlayer() > afDistance && mbAutoRemoveAtPathEnd)
+	if(!mbIsSeenByPlayer && DistToPlayer() > afDistance && mbAutoRemoveAtPathEnd)
 	{
 		SetActive(false);	
 
@@ -2164,7 +2164,7 @@ bool cLuxEnemy_ManPig::InsidePlayerView()
 
 void cLuxEnemy_ManPig::UpdateCheckInLantern(float afTimeStep)
 {
-	if(gpBase->mpPlayer->GetHelperLantern()->IsActive()==false || mbDisableTriggers)
+	if(!gpBase->mpPlayer->GetHelperLantern()->IsActive() || mbDisableTriggers)
 	{
 		mfInLanternLightCount =0;
 		return;
@@ -2201,7 +2201,7 @@ void cLuxEnemy_ManPig::UpdateCheckInLantern(float afTimeStep)
 
 void cLuxEnemy_ManPig::ForceTeslaSighting()
 {
-	if(mbIsTelsa==false) return;
+	if(!mbIsTelsa) return;
 
 	if(mlMindFuckBlinkState==1)
 	{
@@ -2236,7 +2236,7 @@ void cLuxEnemy_ManPig::ResetMindFuckEffects()
 	mbTeslaMindFuckActive = false;
 	mfTeslaMindFuckPulse =0;
 	mfTeslaMindFuckPulseAdd=1;
-	if (mbTeslaFadeDisabled == false)
+	if (!mbTeslaFadeDisabled)
 		gpBase->mpEffectHandler->GetFade()->SetDirectAlpha(0);
 
 	if(mpMindFuckSound)
@@ -2403,7 +2403,7 @@ void cLuxEnemy_ManPig::UpdateTesla(float afTimeStep)
 
 		///////////////////////////////
 		// No notice
-		if(bWasNoticed==false)
+		if(!bWasNoticed)
 		{
 			mfTeslaSpecialNoticeCount -= afTimeStep*0.5f;
 			if(mfTeslaSpecialNoticeCount<0.0f) mfTeslaSpecialNoticeCount=0;
@@ -2418,9 +2418,9 @@ void cLuxEnemy_ManPig::UpdateTesla(float afTimeStep)
 
 		///////////////////////////////
 		// Make it easier to escape.
-		if(mbTeslaEasyEscapeDisabled==false && 
-		   mfTeslaSpecialNoticeCount<0.35f && 
-		   mbCanSeePlayer == false &&
+		if(!mbTeslaEasyEscapeDisabled &&
+		   mfTeslaSpecialNoticeCount<0.35f &&
+           !mbCanSeePlayer &&
 		   gpBase->mpPlayer->GetHealth()<75)
 		{
 			if(mCurrentState == eLuxEnemyState_Hunt ||
@@ -2529,14 +2529,14 @@ void cLuxEnemy_ManPig::UpdateTesla(float afTimeStep)
 				}
 						
 				//float fDarkness = 0.4f + (mfTeslaSpecialNoticeCount/fMaxNoticeCount)*0.5f;
-				if (mbTeslaFadeDisabled == false)
+				if (!mbTeslaFadeDisabled)
 					gpBase->mpEffectHandler->GetFade()->SetDirectAlpha(mfMindFuckBlinkAmount);
 			}
 			
 
 			////////////////////////
 			// Sound
-			if (mbTeslaSoundDisabled == false)
+			if (!mbTeslaSoundDisabled)
 			{
 				cSoundHandler *pSoundHandler = gpBase->mpEngine->GetSound()->GetSoundHandler();
 				if(mpMindFuckSound==NULL || pSoundHandler->IsValid(mpMindFuckSound, mlMindFuckSoundId)==false)

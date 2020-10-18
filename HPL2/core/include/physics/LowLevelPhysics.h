@@ -35,5 +35,5 @@ namespace hpl {
 
 		virtual iPhysicsWorld* CreateWorld()=0;
 	};
-};
+}
 #endif // HPL_LOWLEVELPHYSICS_H

@@ -62,5 +62,5 @@ namespace hpl {
 		cPreprocessParser* mpPreprocessParser;
 	};
 
-};
+}
 #endif // HPL_GPU_SHADER_MANAGER_H

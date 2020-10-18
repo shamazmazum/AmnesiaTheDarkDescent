@@ -26,18 +26,18 @@
 
 namespace hpl {
 
-	class cHapticForceHaptX_Spring : public iHapticForceHaptX
-	{
-	public:
-		cHapticForceHaptX_Spring(	HaptX::HaptXInterface *apInterface,
-									HaptX::iHapticDeviceID	aDeviceID,
-									const cVector3f& avPostition,
-									float afStiffness, float afDamping);
-		~cHapticForceHaptX_Spring();
+    class cHapticForceHaptX_Spring : public iHapticForceHaptX {
+    public:
+        cHapticForceHaptX_Spring(HaptX::HaptXInterface *apInterface,
+                                 HaptX::iHapticDeviceID aDeviceID,
+                                 const cVector3f &avPostition,
+                                 float afStiffness, float afDamping);
 
-	protected:
-		HaptX::ForceModelSpringInfo *mpSpringForce;		
-	};
+        ~cHapticForceHaptX_Spring();
 
-};
+    protected:
+        HaptX::ForceModelSpringInfo *mpSpringForce;
+    };
+
+}
 #endif // HPL_HAPTIC_FORCE_SPRING_H

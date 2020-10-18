@@ -26,22 +26,24 @@
 
 namespace hpl {
 
-	class cHapticForceHaptX_SineWave : public iHapticForceHaptX
-	{
-	public:
-		cHapticForceHaptX_SineWave(	HaptX::HaptXInterface *apInterface,
-									HaptX::iHapticDeviceID	aDeviceID,
-									const cVector3f &avDirection,
-									float afAmp, float afFreq);
-		~cHapticForceHaptX_SineWave();
+    class cHapticForceHaptX_SineWave : public iHapticForceHaptX {
+    public:
+        cHapticForceHaptX_SineWave(HaptX::HaptXInterface *apInterface,
+                                   HaptX::iHapticDeviceID aDeviceID,
+                                   const cVector3f &avDirection,
+                                   float afAmp, float afFreq);
 
-		void SetDirection(const cVector3f &avDir);
-		void SetFreq(float afFreq);
-		void SetAmp(float afAmp);
+        ~cHapticForceHaptX_SineWave();
 
-	protected:
-		HaptX::ForceModelSineWaveInfo *mpSineWaveForce;		
-	};
+        void SetDirection(const cVector3f &avDir);
 
-};
+        void SetFreq(float afFreq);
+
+        void SetAmp(float afAmp);
+
+    protected:
+        HaptX::ForceModelSineWaveInfo *mpSineWaveForce;
+    };
+
+}
 #endif // HPL_HAPTIC_FORCE_SINEWAVE_H

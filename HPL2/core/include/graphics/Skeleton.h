@@ -61,5 +61,5 @@ namespace hpl {
 		tBoneIdxNameMap m_mapBonesIdxByName;
 	};
 
-};
+}
 #endif // HPL_SKELETON_H

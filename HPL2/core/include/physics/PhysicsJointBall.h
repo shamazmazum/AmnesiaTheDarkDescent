@@ -49,5 +49,5 @@ namespace hpl {
 		float mfMaxConeAngle;
 		float mfMaxTwistAngle;
 	};
-};
+}
 #endif // HPL_PHYSICS_JOINT_BALL_H

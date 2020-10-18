@@ -186,5 +186,5 @@ namespace hpl {
 		tHplMapStaticUserDataList mlstTempStaticUserData;
 	};
 
-};
+}
 #endif // HPL_WORLD_LOADER_HPL_MAP_H

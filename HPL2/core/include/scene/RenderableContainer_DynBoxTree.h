@@ -24,124 +24,134 @@
 
 namespace hpl {
 
-	//-------------------------------------------
+    //-------------------------------------------
 
-	class cBoundingVolume;
+    class cBoundingVolume;
 
-	class cRCNode_DynBoxTree;
-	class cRenderableContainer_DynBoxTree;
+    class cRCNode_DynBoxTree;
 
-	//-------------------------------------------
+    class cRenderableContainer_DynBoxTree;
+
+    //-------------------------------------------
 
 
-	class cDynBoxTreeObjectCallback : public cRenderableContainerObjectCallback, public iEntityCallback
-	{
-	public:
-		cDynBoxTreeObjectCallback(cRenderableContainer_DynBoxTree *apContainer);
+    class cDynBoxTreeObjectCallback : public cRenderableContainerObjectCallback, public iEntityCallback {
+    public:
+        cDynBoxTreeObjectCallback(cRenderableContainer_DynBoxTree *apContainer);
 
-		void OnTransformUpdate(iEntity3D * apEntity);
+        void OnTransformUpdate(iEntity3D *apEntity);
 
-	private:
-		cRenderableContainer_DynBoxTree *mpContainer;
-	};
+    private:
+        cRenderableContainer_DynBoxTree *mpContainer;
+    };
 
-	
-	//-------------------------------------------
 
-	class cRCNode_DynBoxTree : public iRenderableContainerNode
-	{
-	friend class cRenderableContainer_DynBoxTree;
-	friend class cDynBoxTreeObjectCallback;
-	public:
-		cRCNode_DynBoxTree();
-		~cRCNode_DynBoxTree();
+    //-------------------------------------------
 
-		void UpdateBeforeUse();
+    class cRCNode_DynBoxTree : public iRenderableContainerNode {
+        friend class cRenderableContainer_DynBoxTree;
 
-		void RemoveObject(iRenderable *apObject);
+        friend class cDynBoxTreeObjectCallback;
 
-		void RecalculateSplit();
-		void RecalculateAABB();
+    public:
+        cRCNode_DynBoxTree();
 
-		void ObjectMoved();
+        ~cRCNode_DynBoxTree();
 
-	private:
-		cRenderableContainer_DynBoxTree *mpContainer;
+        void UpdateBeforeUse();
 
-		int mlSplitAxis;
-		float mfSplitPlane;
+        void RemoveObject(iRenderable *apObject);
 
-		bool mbRecalculateSplit;
-		bool mbRecalculateSplitAxis;
-		bool mbRecalculateAABB;
+        void RecalculateSplit();
+
+        void RecalculateAABB();
+
+        void ObjectMoved();
+
+    private:
+        cRenderableContainer_DynBoxTree *mpContainer;
+
+        int mlSplitAxis;
+        float mfSplitPlane;
+
+        bool mbRecalculateSplit;
+        bool mbRecalculateSplitAxis;
+        bool mbRecalculateAABB;
         bool mbObjectMoved;
 
-		bool mbIsSplit;
+        bool mbIsSplit;
 
-		int mlIgnoreSplitCount;
-		int mlGarbageCollectCount;
+        int mlIgnoreSplitCount;
+        int mlGarbageCollectCount;
 
-		cVector3f mvMeanPosition;
-	};
+        cVector3f mvMeanPosition;
+    };
 
-	//-------------------------------------------
-	
-	class cRenderableContainer_DynBoxTree : public iRenderableContainer
-	{
-	friend class cRCNode_DynBoxTree;
-	friend class cDynBoxTreeObjectCallback;
-	public:
-		cRenderableContainer_DynBoxTree();
-		~cRenderableContainer_DynBoxTree();
+    //-------------------------------------------
 
-		void Add(iRenderable *apRenderable);
-		void Remove(iRenderable *apRenderable);
+    class cRenderableContainer_DynBoxTree : public iRenderableContainer {
+        friend class cRCNode_DynBoxTree;
 
-		iRenderableContainerNode* GetRoot();
+        friend class cDynBoxTreeObjectCallback;
 
-        void Compile();	
+    public:
+        cRenderableContainer_DynBoxTree();
 
-		void RebuildNodes();
+        ~cRenderableContainer_DynBoxTree();
 
-		void RenderDebug(cRendererCallbackFunctions *apFunctions);
-	
-	private:
-		void AddNodeObjectsToRoot(cRCNode_DynBoxTree *apNode);
-		void SpecificUpdateBeforeRendering();
+        void Add(iRenderable *apRenderable);
 
-		void RenderDebugNode(cRendererCallbackFunctions *apFunctions, cRCNode_DynBoxTree *apNode, int alLevel);
+        void Remove(iRenderable *apRenderable);
 
-		void RemoveNode(cRCNode_DynBoxTree *apNode);
-		void CheckNodeAABBNeedsUpdateIterative(cRCNode_DynBoxTree *apNode, iRenderable *apObject);
-		
-		cRCNode_DynBoxTree *GetAddNode(cRCNode_DynBoxTree *apStartNode, iRenderable *apObject);
-		void AddObjectToNodeIterative(cRCNode_DynBoxTree *apNode, iRenderable *apObject);
+        iRenderableContainerNode *GetRoot();
 
-		int GetSplitGroup(iRenderable *apObject, float afSplitPlane, int alAxis, const cVector3f &avNodeSize);
+        void Compile();
 
-		void UpdateObjectInContainer(iRenderable* apObject);
-		void CheckForFitIterative(cRCNode_DynBoxTree *apNode, cBoundingVolume *apBV);
+        void RebuildNodes();
 
-		
-		cRCNode_DynBoxTree mRoot;
+        void RenderDebug(cRendererCallbackFunctions *apFunctions);
 
-		int mlSplitThreshold;
-		float mfMaxIntersectionAmount;
-		int mlMaxIgnoreSplitCount;
-		int mlMaxGarbageCollectCount;
+    private:
+        void AddNodeObjectsToRoot(cRCNode_DynBoxTree *apNode);
 
-		int mlRebuildCount;
-		int mlMaxRebuildCount;
+        void SpecificUpdateBeforeRendering();
 
-		cRCNode_DynBoxTree *mpCheckForFitTempNode;
+        void RenderDebugNode(cRendererCallbackFunctions *apFunctions, cRCNode_DynBoxTree *apNode, int alLevel);
 
-		tRenderableSet m_setObjectsToUpdate;
+        void RemoveNode(cRCNode_DynBoxTree *apNode);
 
-		cDynBoxTreeObjectCallback *mpObjectCalllback;
+        void CheckNodeAABBNeedsUpdateIterative(cRCNode_DynBoxTree *apNode, iRenderable *apObject);
 
-		cRCNode_DynBoxTree *mpTempNode;
-	};
+        cRCNode_DynBoxTree *GetAddNode(cRCNode_DynBoxTree *apStartNode, iRenderable *apObject);
 
-	//-------------------------------------------
-};
+        void AddObjectToNodeIterative(cRCNode_DynBoxTree *apNode, iRenderable *apObject);
+
+        int GetSplitGroup(iRenderable *apObject, float afSplitPlane, int alAxis, const cVector3f &avNodeSize);
+
+        void UpdateObjectInContainer(iRenderable *apObject);
+
+        void CheckForFitIterative(cRCNode_DynBoxTree *apNode, cBoundingVolume *apBV);
+
+
+        cRCNode_DynBoxTree mRoot;
+
+        int mlSplitThreshold;
+        float mfMaxIntersectionAmount;
+        int mlMaxIgnoreSplitCount;
+        int mlMaxGarbageCollectCount;
+
+        int mlRebuildCount;
+        int mlMaxRebuildCount;
+
+        cRCNode_DynBoxTree *mpCheckForFitTempNode;
+
+        tRenderableSet m_setObjectsToUpdate;
+
+        cDynBoxTreeObjectCallback *mpObjectCalllback;
+
+        cRCNode_DynBoxTree *mpTempNode;
+    };
+
+    //-------------------------------------------
+}
 #endif // HPL_RENDERABLE_CONTAINER_DYNBOXTREE_H

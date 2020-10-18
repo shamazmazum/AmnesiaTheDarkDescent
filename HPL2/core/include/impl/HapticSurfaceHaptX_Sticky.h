@@ -26,19 +26,19 @@
 
 namespace hpl {
 
-	class cHapticSurfaceHaptX_Sticky : public iHapticSurfaceHaptX
-	{
-	public:
-		cHapticSurfaceHaptX_Sticky(	const tString& asName, HaptX::HaptXInterface *apInterface,
-									float afDeadHeight, float afStickyStiffness,
-									float afDamping, float afStiffness,
-									float afDynamicFriction, float afStartingFriction,
-									float afTangentStiffness, float afStoppingFriction);
-		~cHapticSurfaceHaptX_Sticky();
-		
-	private:
-		HaptX::StickyFrictionalSurfaceInfo *mpStickySurfaceInfo;
-	};
+    class cHapticSurfaceHaptX_Sticky : public iHapticSurfaceHaptX {
+    public:
+        cHapticSurfaceHaptX_Sticky(const tString &asName, HaptX::HaptXInterface *apInterface,
+                                   float afDeadHeight, float afStickyStiffness,
+                                   float afDamping, float afStiffness,
+                                   float afDynamicFriction, float afStartingFriction,
+                                   float afTangentStiffness, float afStoppingFriction);
 
-};
+        ~cHapticSurfaceHaptX_Sticky();
+
+    private:
+        HaptX::StickyFrictionalSurfaceInfo *mpStickySurfaceInfo;
+    };
+
+}
 #endif // HPL_HAPTIC_SURFACE_HAPTX_STICKY_H

@@ -26,20 +26,21 @@
 
 namespace hpl {
 
-	class cMutexWin32 : public iMutex
-	{
-	public:
-		
-		cMutexWin32();
-		~cMutexWin32();
+    class cMutexWin32 : public iMutex {
+    public:
 
-		bool Lock();
-		bool Unlock();
+        cMutexWin32();
 
-	private:
-		HANDLE mpMutexHandle;
+        ~cMutexWin32();
 
-	};
+        bool Lock();
 
-};
+        bool Unlock();
+
+    private:
+        HANDLE mpMutexHandle;
+
+    };
+
+}
 #endif // HPL_MUTEX_WIN32_H

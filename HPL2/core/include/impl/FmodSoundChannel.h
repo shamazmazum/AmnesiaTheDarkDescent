@@ -27,50 +27,67 @@
 
 namespace hpl {
 
-	class cFmodSoundChannel : public iSoundChannel
-	{
-	public:
-		cFmodSoundChannel(iSoundData* apData, int alChannel, cSoundManager* apSoundManger);
-		~cFmodSoundChannel();
+    class cFmodSoundChannel : public iSoundChannel {
+    public:
+        cFmodSoundChannel(iSoundData *apData, int alChannel, cSoundManager *apSoundManger);
 
-		void Play();
-		void Stop();
+        ~cFmodSoundChannel();
 
-		void SetPaused(bool abX);
-		void SetSpeed(float afSpeed);
-		void SetVolume (float afVolume); 
-		void SetLooping (bool abLoop);
-		void SetPan (float afPan);
-		void Set3D(bool ab3D);
+        void Play();
 
-		void SetPriority(int alX);
-		int GetPriority();
+        void Stop();
 
-		void SetPositionIsRelative(bool abRelative);
-		void SetPosition(const cVector3f &avPos);
-		void SetVelocity(const cVector3f &avVel);
-		
-		void SetMinDistance(float fMin);
-		void SetMaxDistance(float fMax); 
+        void SetPaused(bool abX);
 
-		bool IsPlaying();
-		bool IsBufferUnderrun(){return false;}
-		double GetElapsedTime () { return 0;}
-		double GetTotalTime () { return 0; }
-		void SetElapsedTime(double afTime){}
+        void SetSpeed(float afSpeed);
 
-		void SetAffectedByEnv(bool abAffected) {}
-		void SetFiltering ( bool abEnabled, int alFlags) {}
-		void SetFilterGain(float afGain) {}
-		void SetFilterGainHF(float afGainHF) {}
-		
-	
-	private:
-		int mlChannel;
-		int mlDefaultFreq;
+        void SetVolume(float afVolume);
 
-		float mfPosition[3];
-		float mfVelocity[3];
-	};
-};
+        void SetLooping(bool abLoop);
+
+        void SetPan(float afPan);
+
+        void Set3D(bool ab3D);
+
+        void SetPriority(int alX);
+
+        int GetPriority();
+
+        void SetPositionIsRelative(bool abRelative);
+
+        void SetPosition(const cVector3f &avPos);
+
+        void SetVelocity(const cVector3f &avVel);
+
+        void SetMinDistance(float fMin);
+
+        void SetMaxDistance(float fMax);
+
+        bool IsPlaying();
+
+        bool IsBufferUnderrun() { return false; }
+
+        double GetElapsedTime() { return 0; }
+
+        double GetTotalTime() { return 0; }
+
+        void SetElapsedTime(double afTime) {}
+
+        void SetAffectedByEnv(bool abAffected) {}
+
+        void SetFiltering(bool abEnabled, int alFlags) {}
+
+        void SetFilterGain(float afGain) {}
+
+        void SetFilterGainHF(float afGainHF) {}
+
+
+    private:
+        int mlChannel;
+        int mlDefaultFreq;
+
+        float mfPosition[3];
+        float mfVelocity[3];
+    };
+}
 #endif // HPL_SOUND_CHANNEL_H
