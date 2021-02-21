@@ -29,6 +29,11 @@ Todo: Add some descriptions about what kind of files we have in the game solutio
 ## Building & Playing (Windows)
 In order to build the game on Windows, you will first need to compile and build the HPL2 Engine.
 
+### Required tools
+Visual Studio C++ 2010 (express edition is fine): https://visualstudio.microsoft.com/vs/older-downloads/
+
+VS 2010 Service pack 1 (the main game won't compile without this): https://www.microsoft.com/en-us/download/details.aspx?id=34677
+
 ### Building the Engine
 1. Clone the project
 2. Go to the `HPL2/` folder and extract `dependencies.zip`.
