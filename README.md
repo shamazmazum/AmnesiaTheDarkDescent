@@ -10,11 +10,15 @@ Currently also working on improving the engine tools - check the appropriate bra
 * [Linux](#building--playing-linux) - Compiling instructions for Linux.
 
 ## Prerequisites
+All releases:
+- A copy of Amnesia: the Dark Descent (For playing the game, many files necessary for launching don't come with the source code)
 
-- A copy of Amnesia: the Dark Descent (For playing the game)
-- Visual Studio 2010 (Windows, for compiling the engine)
-- Visual Studio 2017 (Windows, for compiling the game)
-- CMake, Make (Linux, for compiling)
+Windows:
+- Visual Studio C++ 2010 (for compiling the engine), express edition is fine: https://visualstudio.microsoft.com/vs/older-downloads/
+- VS 2010 Service pack 1 (the main game won't compile without this): https://www.microsoft.com/en-us/download/details.aspx?id=34677
+
+Linux:
+- CMake, Make (for compiling)
 
 ## Project Overview (Windows)
 The game is built from two separate solutions: The engine solution named `HPL2_2010` and the main game solution named `Lux`.
@@ -28,11 +32,6 @@ Todo: Add some descriptions about what kind of files we have in the game solutio
 
 ## Building & Playing (Windows)
 In order to build the game on Windows, you will first need to compile and build the HPL2 Engine.
-
-### Required tools
-Visual Studio C++ 2010 (express edition is fine): https://visualstudio.microsoft.com/vs/older-downloads/
-
-VS 2010 Service pack 1 (the main game won't compile without this): https://www.microsoft.com/en-us/download/details.aspx?id=34677
 
 ### Building the Engine
 1. Clone the project
