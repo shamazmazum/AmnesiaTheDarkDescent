@@ -16,6 +16,7 @@ All releases:
 Windows:
 - Visual Studio C++ 2010 (for compiling the engine), express edition is fine: https://visualstudio.microsoft.com/vs/older-downloads/
 - VS 2010 Service pack 1 (the main game won't compile without this): https://www.microsoft.com/en-us/download/details.aspx?id=34677
+- You can also use a newer VS version for compiling as long as you have the 2010 one too
 
 Linux:
 - CMake, Make (for compiling)
