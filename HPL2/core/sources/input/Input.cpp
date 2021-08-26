@@ -415,4 +415,10 @@ namespace hpl
 
     //-----------------------------------------------------------------------
 
+    bool operator==(const cGamepadInputData& x, const cGamepadInputData& y) {
+        return x.mlPadIndex == y.mlPadIndex &&
+            x.mInputType == y.mInputType && 
+            x.mlInputId == y.mlInputId &&
+            x.mfInputValue == y.mfInputValue;
+    }
 }

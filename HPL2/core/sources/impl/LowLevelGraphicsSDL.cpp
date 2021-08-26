@@ -707,7 +707,7 @@ namespace hpl {
 		{
 			wglSwapIntervalEXT(abX ? (abAdaptive ? -1 : 1) : 0);
 		}
-#elif defined(__linux__)
+#elif defined(__linux__) || defined(__FreeBSD__)
 		if (GLX_SGI_swap_control)
 		{
 			GLXSWAPINTERVALPROC glXSwapInterval = (GLXSWAPINTERVALPROC)glXGetProcAddress((GLubyte*)"glXSwapIntervalSGI");

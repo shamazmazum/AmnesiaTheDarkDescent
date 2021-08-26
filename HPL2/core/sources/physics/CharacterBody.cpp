@@ -1586,10 +1586,11 @@ namespace hpl {
 				{
 					vForwardVel = vForwardVel - vNormal * cMath::Vector3Dot(vNormal, vForwardVel);
 					float fForwardSpeed = vForwardVel.Length();
-					if(mfMoveSpeed[eCharDir_Forward] > 0)
+					if(mfMoveSpeed[eCharDir_Forward] > 0) {
 						if(mfMoveSpeed[eCharDir_Forward] > fForwardSpeed) mfMoveSpeed[eCharDir_Forward] = fForwardSpeed;
-					else
+                    } else {
 						if(mfMoveSpeed[eCharDir_Forward] < fForwardSpeed) mfMoveSpeed[eCharDir_Forward] = -fForwardSpeed;
+                    }
 				}
 				
 				/////////////////////////////////////	
@@ -1599,10 +1600,11 @@ namespace hpl {
 				{
 					vRightVel = vRightVel - vNormal * cMath::Vector3Dot(vNormal, vRightVel);
 					float fRightSpeed = vRightVel.Length();
-					if(mfMoveSpeed[eCharDir_Right] > 0)
+					if(mfMoveSpeed[eCharDir_Right] > 0) {
 						if(mfMoveSpeed[eCharDir_Right] > fRightSpeed) mfMoveSpeed[eCharDir_Right] = fRightSpeed;
-					else
+                    } else {
 						if(mfMoveSpeed[eCharDir_Right] < fRightSpeed) mfMoveSpeed[eCharDir_Right] = -fRightSpeed;
+                    }
 				}
 			}
 		}

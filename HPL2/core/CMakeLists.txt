@@ -41,6 +41,8 @@ ENDIF()
 OPTION(USE_SDL2 "Use SDL2 instead of SDL1.2" ON)
 
 add_subdirectory(../dependencies/OALWrapper OALWrapper)
+add_subdirectory(../dependencies/AngelScript AngelScript)
+add_subdirectory(../dependencies/Newton Newton)
 
 SET(HPL2_DEFINES
     PUBLIC $<$<BOOL:${USE_SDL2}>:USE_SDL2>
@@ -57,14 +59,14 @@ set(HPL2_INCLUDES
     PUBLIC ../dependencies/include
 )
 
-IF(LINUX)
-    add_library(binreloc STATIC ../dependencies/sources/binreloc/binreloc.c)
-    set_target_properties(binreloc PROPERTIES COMPILE_DEFINITIONS "ENABLE_BINRELOC")
-
-    list(APPEND HPL2_INCLUDES
-        ../dependencies/sources/binreloc/
-    )
-ENDIF()
+#IF(LINUX)
+#    add_library(binreloc STATIC ../dependencies/sources/binreloc/binreloc.c)
+#    set_target_properties(binreloc PROPERTIES COMPILE_DEFINITIONS "ENABLE_BINRELOC")
+#
+#    list(APPEND HPL2_INCLUDES
+#        ../dependencies/sources/binreloc/
+#    )
+#ENDIF()
 
 
 # common shared source
@@ -237,20 +239,18 @@ source_group("Platform" REGULAR_EXPRESSION "\\/impl\\/Platform.+")
 
 # setup libs
 
-FindPrebuiltLibrary(NEWTON_LIBRARY Newton)
-FindPrebuiltLibrary(ANGELSCRIPT_LIBRARY angelscript)
-FindPrebuiltLibrary(FBX_LIBRARY fbxsdk-2012.2-static)
-FindPrebuiltLibrary(GLEW_LIBRARY GLEW)
-FindPrebuiltLibrary(THEORA_LIBRARY theora)
-FindPrebuiltLibrary(DEVIL_LIBRARY IL)
-
 set(OpenGL_GL_PREFERENCE LEGACY)
 
 find_package(OpenGL)
-mark_as_advanced(NEWTON_LIBRARY ANGELSCRIPT_LIBRARY FBX_LIBRARY GLEW_LIBRARY THEORA_LIBRARY DEVIL_LIBRARY)
+find_package(Theora REQUIRED)
+find_package(Devil REQUIRED)
+find_package(GLEW REQUIRED)
 
 # setup HPL2 compile target
 
+include_directories(../dependencies/AngelScript/include)
+include_directories(../dependencies/Newton/include)
+include_directories(/usr/local/include)
 add_library(HPL2 STATIC
     ${common_sources}
     ${version_sources}
@@ -267,7 +267,7 @@ target_compile_definitions(HPL2
 
 if(LINUX)
     set(PLATFORM_LIBS
-        binreloc
+      #binreloc
         pthread
         dl
     )
@@ -283,16 +283,17 @@ elseif(APPLE)
 endif()
 
 target_link_libraries(HPL2
-    OALWrapper # also pulls in ogg,vorbis,SDL
-    ${NEWTON_LIBRARY}
-    ${ANGELSCRIPT_LIBRARY}
-    ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY}
-    ${GLEW_LIBRARY}
-    ${THEORA_LIBRARY}
-    ${DEVIL_LIBRARY}
-    z
-    ${FBX_LIBRARY}
-    ${PLATFORM_LIBS}
+  OALWrapper # also pulls in ogg,vorbis,SDL
+  AngelScript
+  Newton
+  ${GLEW_LIBRARIES}
+  ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY}
+#    ${GLEW_LIBRARY}
+${THEORA_LIBRARY}
+${DEVIL_LIBRARY}
+z
+#    ${FBX_LIBRARY}
+${PLATFORM_LIBS}
 )
 
 
@@ -348,4 +349,4 @@ ENDFUNCTION()
 
 add_subdirectory(../tools tools)
 
-set(CMAKE_CXX_FLAGS "-fpermissive -no-pie")
+set(CMAKE_CXX_FLAGS "-fpermissive -Wno-extern-c-compat -Wno-undefined-var-template")

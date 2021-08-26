@@ -52,13 +52,15 @@ namespace hpl {
 		mpPreprocessParser->GetEnvVarContainer()->Add("ScreenWidth",mpLowLevelGraphics->GetScreenSizeInt().x);
 		mpPreprocessParser->GetEnvVarContainer()->Add("ScreenHeigth",mpLowLevelGraphics->GetScreenSizeInt().y);
 
-		#ifdef WIN32
-			mpPreprocessParser->GetEnvVarContainer()->Add("OS_Windows");
+#ifdef WIN32
+        mpPreprocessParser->GetEnvVarContainer()->Add("OS_Windows");
 		#elif defined(__APPLE__)
-			mpPreprocessParser->GetEnvVarContainer()->Add("OS_OSX");
-		#elif defined(__linux__)
-			mpPreprocessParser->GetEnvVarContainer()->Add("OS_Linux");
-		#endif
+        mpPreprocessParser->GetEnvVarContainer()->Add("OS_OSX");
+#elif defined(__linux__)
+        mpPreprocessParser->GetEnvVarContainer()->Add("OS_Linux");
+#elif defined(__FreeBSD__)
+        mpPreprocessParser->GetEnvVarContainer()->Add("OS_FreeBSD");
+#endif
 	}
 
 	cGpuShaderManager::~cGpuShaderManager()

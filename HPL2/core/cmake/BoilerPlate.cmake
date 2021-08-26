@@ -5,9 +5,9 @@ option(FORCE32 "Force a 32bit compile on 64bit" OFF)
 # this adds the build directory to the include path automatically
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-if("${CMAKE_SYSTEM}" MATCHES "Linux")
+#if("${CMAKE_SYSTEM}" MATCHES "Linux")
     set(LINUX ON)
-endif()
+#endif()
 
 if(FORCE32)
     if(LINUX)

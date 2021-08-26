@@ -49,7 +49,7 @@ namespace hpl {
 		HDC         mDeviceContext;
 		HGLRC       mGLContext;
 		HPBUFFERARB mPBuffer;
-		#elif defined(__linux__)
+#elif defined(__linux__) || defined(__FreeBSD__)
 		Display *gDpy;
 		GLXContext glCtx;
 		GLXPbuffer gPBuffer;

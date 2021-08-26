@@ -75,7 +75,7 @@ int WINAPI WinMain(	HINSTANCE hInstance,  HINSTANCE hPrevInstance,LPSTR	lpCmdLin
 #else
 int main(int argc, char *argv[])
 {
-#ifdef __linux__
+#if defined(__linux__) || defined(__FreeBSD__)
 	if(!std::setlocale(LC_CTYPE, "")) {
 		fprintf(stderr, "Can't set the specified locale! Check LANG, LC_CTYPE, LC_ALL.\n");
 		return 1;
@@ -222,7 +222,7 @@ namespace hpl {
 
 		if(gpLogMessageCallbackFunc) gpLogMessageCallbackFunc(eLogOutputType_FatalError, sMess.c_str());
 
-#if defined(__APPLE__) || defined(__linux__)
+#if defined(__APPLE__) || defined(__linux__) || defined(__FreeBSD__)
 #if !SDL_VERSION_ATLEAST(2, 0, 0)
 		SDL_WM_GrabInput(SDL_GRAB_OFF);
 #endif

@@ -447,12 +447,6 @@ namespace hpl {
 		cGamepadInputData(int alPadIndex, eGamepadInputType aType, int alInputId, float afInputValue) 
 			: mlPadIndex(alPadIndex), mInputType(aType), mlInputId(alInputId), mfInputValue(afInputValue) {}
 
-		bool operator==(const cGamepadInputData& aData)
-		{
-			return mlPadIndex==aData.mlPadIndex && mInputType==aData.mInputType && 
-				mlInputId==aData.mlInputId && mfInputValue==aData.mfInputValue;
-		}
-
 		int mlPadIndex;
 		eGamepadInputType mInputType;
 		int mlInputId;
@@ -460,7 +454,7 @@ namespace hpl {
 	};
 
 	//-------------------------------------------------
-
+    bool operator==(const cGamepadInputData& x, const cGamepadInputData& y);
 };
 
 #endif // HPL_INPUT_TYPES_H

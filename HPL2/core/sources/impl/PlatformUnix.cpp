@@ -34,9 +34,11 @@
 #include "SDL/SDL.h"
 #endif
 
-#ifdef __linux__
-#include <FL/fl_ask.H>
+#if defined(__linux__) || defined (__FreeBSD__)
+//#include <FL/fl_ask.H>
+#if defined(__linux__)
 #include "binreloc.h"
+#endif
 
 #include <sys/types.h>
 #endif
@@ -319,7 +321,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-#ifdef __linux__
+#if defined(__linux__)
     tString cPlatform::GetDataDir()
     {
         tString temp;
@@ -336,6 +338,13 @@ namespace hpl {
 			}
 		}
         return temp;
+    }
+#elif defined(__FreeBSD__)
+    tString cPlatform::GetDataDir()
+    {
+        char buff[MAXPATHLEN];
+        getcwd(buff, MAXPATHLEN);
+        return tString(buff);
     }
 #endif
 
@@ -425,7 +434,7 @@ namespace hpl {
 
 	ePlatform cPlatform::GetPlatform()
 	{
-#if defined(__linux__)
+#if defined(__linux__) || defined(__FreeBSD__)
 		return ePlatform_Linux;
 #elif defined(__APPLE__)
         return ePlatform_Mac;
@@ -437,6 +446,8 @@ namespace hpl {
 	//-----------------------------------------------------------------------
 #if defined(__linux__) && defined(__LP64__)
 	tString cPlatform::msName = "Linux x86_64";
+#elif defined(__FreeBSD__)
+	tString cPlatform::msName = "FreeBSD x86_64";
 #elif defined(__linux__)
     tString cPlatform::msName = "Linux x86";
 #elif defined(__APPLE__) && (defined(__PPC__) || defined(__ppc__))

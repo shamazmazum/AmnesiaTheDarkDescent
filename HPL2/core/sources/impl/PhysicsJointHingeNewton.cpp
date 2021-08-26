@@ -310,7 +310,7 @@ namespace hpl {
 			pHingeJoint->mfPreviousAngle = fAngle;
 			return 1;
 		}
-		/*else
+		else
 		{
 			if(pHingeJoint->mpParentBody ==NULL || pHingeJoint->mpParentBody->GetMass()==0)
 			{

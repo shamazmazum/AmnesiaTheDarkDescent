@@ -91,4 +91,4 @@ ENDIF()
 
 # vim: noet ts=4:
 
-set(CMAKE_CXX_FLAGS "-fpermissive -no-pie")
+set(CMAKE_CXX_FLAGS "-fpermissive")

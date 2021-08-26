@@ -35,14 +35,17 @@ set(VERSION "1.3.1")
 
 add_subdirectory(game game)
 
-if(APPLE)
-    add_subdirectory(launcher-macosx launcher)
-else()
-    add_subdirectory(launcher launcher)
-endif()
+#if(APPLE)
+#    add_subdirectory(launcher-macosx launcher)
+#else()
+#    add_subdirectory(launcher launcher)
+#endif()
 
 add_custom_target(GameRelease
-    DEPENDS Amnesia Launcher
+    DEPENDS Amnesia# Launcher
 )
 
-set(CMAKE_CXX_FLAGS "-fpermissive -no-pie")
+set(CMAKE_CXX_FLAGS "-fpermissive")
+
+install (TARGETS Amnesia RUNTIME
+         DESTINATION bin)

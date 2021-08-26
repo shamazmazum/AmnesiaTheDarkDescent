@@ -37,7 +37,7 @@
 #endif
 
 // Include these AFTER SDL
-#ifdef __linux__
+#if defined(__linux__) || defined(__FreeBSD__)
 #include <GL/glx.h>
 #endif
 
@@ -47,7 +47,7 @@
 
 namespace hpl {
 
-#ifdef __linux__
+#if defined(__linux__) || defined(__FreeBSD__)
 	typedef int (*GLXSWAPINTERVALPROC)(int interval);
 #endif
 	//-------------------------------------------------

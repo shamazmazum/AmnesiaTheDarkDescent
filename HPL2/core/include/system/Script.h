@@ -21,8 +21,7 @@
 #define HPL_SCRIPT_H
 
 #include "resources/ResourceBase.h"
-
-#ifdef __GNUC__
+#if defined(__GNUC__) || defined(__calng__)
 	#if defined __ppc__ || defined(__LP64__)
 		#define __stdcall
 	#else

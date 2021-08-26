@@ -17,7 +17,9 @@
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#ifdef _WIN32
 #pragma comment(lib, "newton.lib")
+#endif
 
 #include "impl/LowLevelPhysicsNewton.h"
 
