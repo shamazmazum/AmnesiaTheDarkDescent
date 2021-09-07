@@ -17,6 +17,7 @@
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include "ResourcesLocation.h"
 #include "system/Platform.h"
 
 #include "system/String.h"
@@ -35,11 +36,6 @@
 #endif
 
 #if defined(__linux__) || defined (__FreeBSD__)
-//#include <FL/fl_ask.H>
-#if defined(__linux__)
-#include "binreloc.h"
-#endif
-
 #include <sys/types.h>
 #endif
 #include <unistd.h>
@@ -321,32 +317,16 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-#if defined(__linux__)
     tString cPlatform::GetDataDir()
-    {
-        tString temp;
-        BrInitError error;
-		if (!br_init (&error)) {
-			// Log non-fatal error
-			printf("*** BinReloc failed to initialize. Error: %d\n", error);
-		} else {
-			char *exedir;
-			exedir = br_find_exe_dir(NULL);
-			if (exedir) {
-				temp = exedir;
-				free(exedir);
-			}
-		}
-        return temp;
-    }
-#elif defined(__FreeBSD__)
-    tString cPlatform::GetDataDir()
-    {
-        char buff[MAXPATHLEN];
-        getcwd(buff, MAXPATHLEN);
-        return tString(buff);
-    }
+	{
+#if defined(SYSTEMWIDE_RESOURCES)
+		return SYSTEMWIDE_RESOURCES_LOCATION;
+#else
+		char buff[MAXPATHLEN];
+		getcwd(buff, MAXPATHLEN);
+		return tString(buff);
 #endif
+	}
 
 	//-----------------------------------------------------------------------
 

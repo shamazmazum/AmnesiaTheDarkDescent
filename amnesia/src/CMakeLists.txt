@@ -8,7 +8,12 @@ set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS}
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR})
 OPTION(USERDIR_RESOURCES "Allow using local userdirectory resources" ON)
+option(SYSTEMWIDE_RESOURCES "Allow system-wide installation of game resources" OFF)
 set(MACOSX_BUNDLE_COPYRIGHT "Copyright © 2010-2013 Frictional Games")
+
+if (NOT DEFINED SYSTEMWIDE_RESOURCES_LOCATION)
+  set (SYSTEMWIDE_RESOURCES_LOCATION "/usr/local/share/amnesia-tdd")
+endif (NOT DEFINED SYSTEMWIDE_RESOURCES_LOCATION)
 
 add_subdirectory(../../HPL2/core core2)
 

@@ -161,6 +161,10 @@ GenerateBuildID(version_source
     ${CMAKE_CURRENT_SOURCE_DIR}/sources
 )
 
+configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/ResourcesLocation.h.in
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/ResourcesLocation.h)
+
 # setup source groups
 source_group("AI" REGULAR_EXPRESSION "\\/ai\\/.+")
 source_group("Engine" REGULAR_EXPRESSION "\\/engine\\/.+")
@@ -222,7 +226,6 @@ target_include_directories(HPL2
 
 if(LINUX)
   set(PLATFORM_LIBS
-    #binreloc
     pthread
     dl
     )
