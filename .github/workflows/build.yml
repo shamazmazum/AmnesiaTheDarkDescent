@@ -1,0 +1,22 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          sudo apt-get install cmake libdevil-dev mesa-common-dev libtheora-dev
+          sudo apt-get install libvorbis-dev libopenal-dev libsdl2-dev libglew-dev
+      - name: Configure
+        run: |
+          mkdir $GITHUB_WORKSPACE/build && cd $GITHUB_WORKSPACE/build
+          cmake $GITHUB_WORKSPACE/amnesia/src
+      - name: Build
+        run: |
+          cd $GITHUB_WORKSPACE/build
+          make

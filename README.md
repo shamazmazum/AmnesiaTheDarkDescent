@@ -1,4 +1,5 @@
 # Amnesia: The Dark Descent
+[![CI](https://github.com/shamazmazum/AmnesiaTheDarkDescent/actions/workflows/build.yml/badge.svg)](https://github.com/shamazmazum/AmnesiaTheDarkDescent/actions/workflows/build.yml)
 
 This is a port of Amnesia: The Dark Descent to Linux/BSD systems. It's 100%
 binary blob free (thanks to buzer2020's port). Only few dependencies are bundled
