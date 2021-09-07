@@ -3,7 +3,8 @@ project(Lux)
 
 # Well, first of all, disable some harmless warnings, which are really
 # hard to get rid off (they are overall in the code).
-set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-Wno-switch -Wno-undefined-var-template")
+set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS}
+  "-Wno-switch -Wno-undefined-var-template -Wno-extern-c-compat")
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR})
 OPTION(USERDIR_RESOURCES "Allow using local userdirectory resources" ON)

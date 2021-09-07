@@ -208,19 +208,26 @@ namespace hpl {
 
 	void FatalError(const char* fmt,... )
 	{
-		char text[4096];
-		va_list ap;	
-		if (fmt == NULL)
-			return;	
-		va_start(ap, fmt);
-		vsprintf(text, fmt, ap);
-		va_end(ap);
+		if (fmt != NULL) {
+			char text[4096];
+			va_list ap;
+			va_start(ap, fmt);
+			vsprintf(text, fmt, ap);
+			va_end(ap);
 
-		tString sMess = "FATAL ERROR: ";
-		sMess += text;
-		gLogWriter.Write(sMess);
+			tString sMess = "FATAL ERROR: ";
+			sMess += text;
+			gLogWriter.Write(sMess);
 
-		if(gpLogMessageCallbackFunc) gpLogMessageCallbackFunc(eLogOutputType_FatalError, sMess.c_str());
+			if(gpLogMessageCallbackFunc) {
+				gpLogMessageCallbackFunc(eLogOutputType_FatalError, sMess.c_str());
+
+			}
+
+			cPlatform::CreateMessageBox(eMsgBoxType_Error,
+										_W("FATAL ERROR"), _W("%ls"),
+										cString::To16Char(sMess).c_str());
+		}
 
 #if defined(__APPLE__) || defined(__linux__) || defined(__FreeBSD__)
 #if !SDL_VERSION_ATLEAST(2, 0, 0)
@@ -228,8 +235,6 @@ namespace hpl {
 #endif
 		SDL_Quit();
 #endif
-		cPlatform::CreateMessageBox(eMsgBoxType_Error, _W("FATAL ERROR"), _W("%ls"), cString::To16Char(sMess).c_str());
-
 		exit(1);
 	}
 

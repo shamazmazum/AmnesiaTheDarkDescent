@@ -87,6 +87,7 @@ namespace hpl {
 	{
 	public:
 		iParserSymbol(int alRow) : mlRow(alRow){}
+        virtual ~iParserSymbol() {};
 
 		virtual eParserSymbol GetType()=0;
 
