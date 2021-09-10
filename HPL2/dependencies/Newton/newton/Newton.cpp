@@ -85,7 +85,15 @@ void SaveCollision (const NewtonCollision* collisionPtr)
 }
 #endif
 
+static dgMatrix array2matrix(const dFloat *array) {
+	dgVector row1(&array[0]);
+	dgVector row2(&array[4]);
+	dgVector row3(&array[8]);
+	dgVector row4(&array[12]);
+	dgMatrix mat(row1, row2, row3, row4);
 
+	return mat;
+}
 
 /*
 // *dFloat* globalScale - global scale factor that will scale all internal tolerance.
@@ -4092,9 +4100,13 @@ int NewtonCollisionCollide(const NewtonWorld* newtonWorld, int maxSize,
 	world = (Newton *)newtonWorld;
 
 	TRACE_FUNTION(__FUNCTION__);
-	return world->Collide ((dgCollision*)collisionA, *((dgMatrix*) matrixA), 
-		(dgCollision*)collisionB, *((dgMatrix*) matrixB), 
-		(dgTriplex*) contacts, (dgTriplex*) normals, penetration, maxSize, threadIndex);
+	return world->Collide ((dgCollision*)collisionA,
+						   array2matrix(matrixA),
+						   (dgCollision*)collisionB,
+						   array2matrix(matrixB),
+						   (dgTriplex*) contacts,
+						   (dgTriplex*) normals,
+						   penetration, maxSize, threadIndex);
 }
 
 
