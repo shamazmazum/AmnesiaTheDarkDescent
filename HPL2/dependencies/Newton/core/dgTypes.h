@@ -136,10 +136,13 @@
 
 
 //************************************************************
-#if !(defined (_WIN_32_VER) || defined (_WIN_64_VER))
+#ifdef NEWTON_DEBUG
 #include <cassert>
 #define _ASSERTE(x) assert(x)
 #define _ASSERT(x) assert(x)
+#else
+#define _ASSERTE(x)
+#define _ASSERT(x)
 #endif
 
 #define __USE_CPU_FOUND__
