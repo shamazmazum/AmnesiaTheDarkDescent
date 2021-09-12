@@ -11,15 +11,15 @@
    redistribute it freely, subject to the following restrictions:
 
    1. The origin of this software must not be misrepresented; you
-      must not claim that you wrote the original software. If you use
-      this software in a product, an acknowledgment in the product
-      documentation would be appreciated but is not required.
+	  must not claim that you wrote the original software. If you use
+	  this software in a product, an acknowledgment in the product
+	  documentation would be appreciated but is not required.
 
    2. Altered source versions must be plainly marked as such, and
-      must not be misrepresented as being the original software.
+	  must not be misrepresented as being the original software.
 
    3. This notice may not be removed or altered from any source
-      distribution.
+	  distribution.
 
    The original version of this library can be located at:
    http://www.angelcode.com/angelscript/
@@ -49,82 +49,32 @@ BEGIN_AS_NAMESPACE
 enum argTypes { x64ENDARG = 0, x64INTARG = 1, x64FLOATARG = 2, x64DOUBLEARG = 3, x64VARIABLE = 4 };
 typedef asQWORD ( *funcptr_t )( void );
 
-#define X64_MAX_ARGS             32
-#define MAX_CALL_INT_REGISTERS    6
-#define MAX_CALL_SSE_REGISTERS    8
-#define CALLSTACK_MULTIPLIER      2
-#define X64_CALLSTACK_SIZE        ( X64_MAX_ARGS + MAX_CALL_SSE_REGISTERS + 3 )
+#define X64_MAX_ARGS			 32
+#define MAX_CALL_INT_REGISTERS	  6
+#define MAX_CALL_SSE_REGISTERS	  8
+#define CALLSTACK_MULTIPLIER	  2
+#define X64_CALLSTACK_SIZE		  ( X64_MAX_ARGS + MAX_CALL_SSE_REGISTERS + 3 )
 
 // TODO: Should this really be different on Mac and other systems? Probably the Mac way is the correct one
-#if defined(AS_MAC)
-#define PUSH_LONG( val )                         \
-	__asm__ __volatile__ (                       \
-		"movq   %0, %%rax\n"                     \
-		"pushq  %%rax"                           \
-		:                                        \
-		: "m" ( val )                            \
+#define ASM_GET_REG( name, dest )				 \
+	__asm__ __volatile__ (						 \
+		"movq %" name ", %0\n"					 \
+		:										 \
+		: "m" ( dest )							 \
 	)
-
-#define POP_LONG( reg )                          \
-	__asm__ __volatile__ (                       \
-		"popq     %rax\n"                        \
-		"movq     %rax, " reg                    \
-	)
-
-
-#define ASM_GET_REG( name, dest )                \
-	__asm__ __volatile__ (                       \
-		"movq %" name ", %0\n"                   \
-		:                                        \
-		: "m" ( dest )                           \
-	)
-#else
-#define PUSH_LONG( val )                         \
-	__asm__ __volatile__ (                       \
-		"mov    %0, %%rax\r\n"                   \
-		"push   %%rax"                           \
-		:                                        \
-		: "m" ( val )                            \
-	)
-
-#define POP_LONG( reg )                          \
-	__asm__ __volatile__ (                       \
-		"popq     %rax\r\n"                      \
-		"movq     %rax, " reg                    \
-	)
-
-
-#define ASM_GET_REG( name, dest )                \
-	__asm__ __volatile__ (                       \
-		"mov  %" name ", %0\r\n"                 \
-		:                                        \
-		: "m" ( dest )                           \
-	)
-#endif
 
 static asDWORD GetReturnedFloat()
 {
-	float   retval;
+	float	retval;
 	asDWORD ret;
 
-// TODO: Should this really be different on Mac and other systems? Probably the Mac way is the correct one
-#ifdef AS_MAC
 	__asm__ __volatile__ (
-		"lea      %0, %%rax\n"
-		"movss    %%xmm0, (%%rax)"
+		"lea	  %0, %%rax\n"
+		"movss	  %%xmm0, (%%rax)"
 		: /* no output */
 		: "m" (retval)
 		: "%rax"
 	);
-#else
-	__asm__ __volatile__ (
-		"lea      %0, %%rax\r\n"
-		"movss    %%xmm0, (%%rax)"
-		: /* no output */
-		: "m" (retval)
-		: "%rax"
-	);
-#endif
 
 	/* We need to avoid implicit conversions from float to unsigned - we need
 	   a bit-wise-correct-and-complete copy of the value */
@@ -135,27 +85,17 @@ static asDWORD GetReturnedFloat()
 
 static asQWORD GetReturnedDouble()
 {
-	double  retval;
+	double	retval;
 	asQWORD ret;
 
-// TODO: Should this really be different on Mac and other systems? Probably the Mac way is the correct one
-#ifdef AS_MAC
 	__asm__ __volatile__ (
-		"lea     %0, %%rax\n"
-		"movlpd  %%xmm0, (%%rax)"
+		"lea	 %0, %%rax\n"
+		"movlpd	 %%xmm0, (%%rax)"
 		: /* no optput */
 		: "m" (retval)
 		: "%rax"
 	);
-#else
-	__asm__ __volatile__ (
-		"lea     %0, %%rax\r\n"
-		"movlpd  %%xmm0, (%%rax)"
-		: /* no optput */
-		: "m" (retval)
-		: "%rax"
-	);
-#endif
+
 	/* We need to avoid implicit conversions from double to unsigned long long - we need
 	   a bit-wise-correct-and-complete copy of the value */
 	memcpy( &ret, &retval, sizeof( ret ) );
@@ -163,46 +103,98 @@ static asQWORD GetReturnedDouble()
 	return ret;
 }
 
-static asQWORD __attribute ((__noinline__)) X64_CallFunction( const asDWORD* pArgs, const asBYTE *pArgsType, void *func )
+static asQWORD __attribute ((__noinline__)) X64_CallFunction( const asDWORD* pArgs,
+															  const asBYTE *pArgsType,
+															  void *func )
 {
-	asQWORD retval      = 0;
-	asQWORD ( *call )() = (asQWORD (*)())func;
-	int     i           = 0;
+	volatile asQWORD retval;
+	volatile asQWORD stackcnt = 0;
+	int i;
 
-	/* push the stack parameters */
-	for ( i = MAX_CALL_INT_REGISTERS + MAX_CALL_SSE_REGISTERS; pArgsType[i] != x64ENDARG && ( i < X64_MAX_ARGS + MAX_CALL_SSE_REGISTERS + 3 ); i++ ) {
-		PUSH_LONG( pArgs[i * CALLSTACK_MULTIPLIER] );
+	for (i = MAX_CALL_INT_REGISTERS + MAX_CALL_SSE_REGISTERS;
+		 pArgsType[i] != x64ENDARG && ( i < X64_MAX_ARGS + MAX_CALL_SSE_REGISTERS + 3);
+		 i++ ) {
+		stackcnt++;
 	}
 
-	/* push integer parameters */
-	for ( i = 0; i < MAX_CALL_INT_REGISTERS; i++ ) {
-		PUSH_LONG( pArgs[i * CALLSTACK_MULTIPLIER] );
-	}
+	__asm__ __volatile__ (
+		// %0 - stackcnt, %1 - Args, %2 - func
+		"  movq %0, %%rcx \n"
+		"  movq %1, %%r10 \n"
+		"  movq %2, %%r11 \n"
 
-	/* push floating point parameters */
-	for ( i = MAX_CALL_INT_REGISTERS; i < MAX_CALL_INT_REGISTERS + MAX_CALL_SSE_REGISTERS; i++ ) {
-		PUSH_LONG( pArgs[i * CALLSTACK_MULTIPLIER] );
-	}
+		// Backup stack pointer in R15 that is guaranteed to maintain its value over function calls
+		"  movq %%rsp, %%r15 \n"
 
-	/* now pop the registers in reverse order and make the call */
-	POP_LONG( "%xmm7" );
-	POP_LONG( "%xmm6" );
-	POP_LONG( "%xmm5" );
-	POP_LONG( "%xmm4" );
-	POP_LONG( "%xmm3" );
-	POP_LONG( "%xmm2" );
-	POP_LONG( "%xmm1" );
-	POP_LONG( "%xmm0" );
+#ifdef __OPTIMIZE__
+		// Make sure the stack unwind logic knows we've backed up the stack pointer in register r15
+		// This should only be done if any optimization is done. If no optimization (-O0) is used,
+		// then the compiler already backups the rsp before entering the inline assembler code
+		".cfi_def_cfa_register r15 \n"
+#endif
 
-	POP_LONG( "%r9" );
-	POP_LONG( "%r8" );
-	POP_LONG( "%rcx" );
-	POP_LONG( "%rdx" );
-	POP_LONG( "%rsi" );
-	POP_LONG( "%rdi" );
+		// Skip the first 128 bytes on the stack frame, called "red zone",	
+		// that might be used by the compiler to store temporary values
+		"  sub $128, %%rsp \n"
 
-	// call the function with the arguments
-	retval = call();
+		// Make sure the stack pointer will be aligned to 16 bytes when the function is called
+		"  movq %%rcx, %%rdx \n"
+		"  salq $3, %%rdx \n"
+		"  movq %%rsp, %%rax \n"
+		"  sub %%rdx, %%rax \n"
+		"  and $15, %%rax \n"
+		"  sub %%rax, %%rsp \n"
+
+		// Push the stack parameters, i.e. the arguments that won't be loaded into registers
+// Push the stack parameters, i.e. the arguments that won't be loaded into registers
+		"  movq %%rcx, %%rsi \n"
+		"  testl %%esi, %%esi \n"
+		"  jle 2f \n"
+		"  subl $1, %%esi \n"
+		"  xorl %%edx, %%edx \n"
+		"  leaq 8(, %%rsi, 8), %%rcx \n"
+		"1: \n"
+		"  movq 112(%%r10, %%rdx), %%rax \n"
+		"  pushq %%rax \n"
+		"  addq $8, %%rdx \n"
+		"  cmpq %%rcx, %%rdx \n"
+		"  jne 1b \n"
+		"2: \n"
+
+		// Populate integer and floating point parameters
+		"movq %%r10, %%rax \n"
+		"movq	(%%rax), %%rdi\n"
+		"movq  8(%%rax), %%rsi\n"
+		"movq 16(%%rax), %%rdx\n"
+		"movq 24(%%rax), %%rcx\n"
+		"movq 32(%%rax), %%r8\n"
+		"movq 40(%%rax), %%r9\n"
+		"movq 48(%%rax), %%xmm0\n"
+		"movq 56(%%rax), %%xmm1\n"
+		"movq 64(%%rax), %%xmm2\n"
+		"movq 72(%%rax), %%xmm3\n"
+		"movq 80(%%rax), %%xmm4\n"
+		"movq 88(%%rax), %%xmm5\n"
+		"movq 96(%%rax), %%xmm6\n"
+		"movq 104(%%rax), %%xmm7\n"
+
+		// Call the function
+		"callq *%%r11 \n"
+
+		// Restore stack pointer
+		"movq %%r15, %%rsp\n"
+#ifdef __OPTIMIZE__
+		// Inform the stack unwind logic that the stack pointer has been restored
+		// This should only be done if any optimization is done. If no optimization (-O0) is used,
+		// then the compiler already backups the rsp before entering the inline assembler code
+		".cfi_def_cfa_register rsp \n"
+#endif
+		"movq %%rax, %3\n"
+
+		: : "g" (stackcnt), "g" (pArgs), "g" (func), "m" (retval)
+		: "%xmm0", "%xmm1", "%xmm2", "%xmm3", "%xmm4", "%xmm5", "%xmm6", "%xmm7",
+		  "%rdi", "%rsi", "%rax", "%rdx", "%rcx", "%r8", "%r9", "%r10", "%r11", "%r15");
+
 	return retval;
 }
 
@@ -214,37 +206,37 @@ inline bool IsVariableArgument( asCDataType type )
 
 int CallSystemFunction( int id, asCContext *context, void *objectPointer )
 {
-	asCScriptEngine            *engine             = context->engine;
-	asCScriptFunction          *descr              = engine->scriptFunctions[id];
-	asSSystemFunctionInterface *sysFunc            = engine->scriptFunctions[id]->sysFuncIntf;
-	int                         callConv           = sysFunc->callConv;
+	asCScriptEngine			   *engine			   = context->engine;
+	asCScriptFunction		   *descr			   = engine->scriptFunctions[id];
+	asSSystemFunctionInterface *sysFunc			   = engine->scriptFunctions[id]->sysFuncIntf;
+	int							callConv		   = sysFunc->callConv;
 
-	asQWORD                     retQW              = 0;
-	asQWORD                     retQW2             = 0;
-	void                       *func               = ( void * )sysFunc->func;
-	int                         paramSize          = sysFunc->paramSize;
-	asDWORD                    *args               = context->regs.stackPointer;
-	asDWORD                    *stack_pointer      = context->regs.stackPointer;
-	void                       *retPointer         = 0;
-	void                       *obj                = 0;
-	funcptr_t                  *vftable            = NULL;
-	int                         popSize            = paramSize;
-	int                         totalArgumentCount = 0;
-	int                         n                  = 0;
-	int                         base_n             = 0;
-	int                         a                  = 0;
-	int                         param_pre          = 0;
-	int                         param_post         = 0;
-	int                         argIndex           = 0;
-	int                         argumentCount      = 0;
+	asQWORD						retQW			   = 0;
+	asQWORD						retQW2			   = 0;
+	void					   *func			   = ( void * )sysFunc->func;
+	int							paramSize		   = sysFunc->paramSize;
+	asDWORD					   *args			   = context->regs.stackPointer;
+	asDWORD					   *stack_pointer	   = context->regs.stackPointer;
+	void					   *retPointer		   = 0;
+	void					   *obj				   = 0;
+	funcptr_t				   *vftable			   = NULL;
+	int							popSize			   = paramSize;
+	int							totalArgumentCount = 0;
+	int							n				   = 0;
+	int							base_n			   = 0;
+	int							a				   = 0;
+	int							param_pre		   = 0;
+	int							param_post		   = 0;
+	int							argIndex		   = 0;
+	int							argumentCount	   = 0;
 
-	asDWORD  tempBuff[CALLSTACK_MULTIPLIER * X64_CALLSTACK_SIZE] = { 0 };
-	asBYTE   tempType[X64_CALLSTACK_SIZE] = { 0 };
+	asDWORD	 tempBuff[CALLSTACK_MULTIPLIER * X64_CALLSTACK_SIZE] = { 0 };
+	asBYTE	 tempType[X64_CALLSTACK_SIZE] = { 0 };
 
-	asDWORD  paramBuffer[CALLSTACK_MULTIPLIER * X64_CALLSTACK_SIZE] = { 0 };
+	asDWORD	 paramBuffer[CALLSTACK_MULTIPLIER * X64_CALLSTACK_SIZE] = { 0 };
 	asBYTE	 argsType[X64_CALLSTACK_SIZE] = { 0 };
 
-	asBYTE   argsSet[X64_CALLSTACK_SIZE]  = { 0 };
+	asBYTE	 argsSet[X64_CALLSTACK_SIZE]  = { 0 };
 
 	if( callConv == ICC_GENERIC_FUNC || callConv == ICC_GENERIC_METHOD ) {
 		return context->CallGeneric( id, objectPointer );
@@ -344,12 +336,12 @@ int CallSystemFunction( int id, asCContext *context, void *objectPointer )
 		--------------------------+--------------------------+-------------------
 		General Purpose Registers | Floating Point Registers | Stack Frame Offset
 		--------------------------+--------------------------+-------------------
-		 %rdi: e                  | %xmm0: s.d               | 0:  ld
-		 %rsi: f                  | %xmm1: m                 | 16: j
-		 %rdx: s.a,s.b            | %xmm2: n                 | 24: k
-		 %rcx: g                  |                          |
-		 %r8:  h                  |                          |
-		 %r9:  i                  |                          |
+		 %rdi: e				  | %xmm0: s.d				 | 0:  ld
+		 %rsi: f				  | %xmm1: m				 | 16: j
+		 %rdx: s.a,s.b			  | %xmm2: n				 | 24: k
+		 %rcx: g				  |							 |
+		 %r8:  h				  |							 |
+		 %r9:  i				  |							 |
 		--------------------------+--------------------------+-------------------
 		*/
 
@@ -383,7 +375,7 @@ int CallSystemFunction( int id, asCContext *context, void *objectPointer )
 
 	if ( obj && ( callConv == ICC_VIRTUAL_THISCALL || callConv == ICC_VIRTUAL_THISCALL_RETURNINMEM ) ) {
 		vftable = *( ( funcptr_t ** )obj );
-		func    = ( void * )vftable[( asQWORD )func >> 3];
+		func	= ( void * )vftable[( asQWORD )func >> 3];
 	}
 
 	switch ( callConv ) {
@@ -507,21 +499,21 @@ int CallSystemFunction( int id, asCContext *context, void *objectPointer )
 	 * it's little magic which must work regardless of how the compiler decides to
 	 * allocate registers. Basically:
 	 * - the first MAX_CALL_INT_REGISTERS entries in tempBuff and tempType will
-	 *   contain the values/types of the x64INTARG parameters - that is the ones who
-	 *   go into the registers. If the function has less then MAX_CALL_INT_REGISTERS
-	 *   integer parameters then the last entries will be set to 0
+	 *	 contain the values/types of the x64INTARG parameters - that is the ones who
+	 *	 go into the registers. If the function has less then MAX_CALL_INT_REGISTERS
+	 *	 integer parameters then the last entries will be set to 0
 	 * - the next MAX_CALL_SSE_REGISTERS entries will contain the float/double arguments
-	 *   that go into the floating point registers. If the function has less than
-	 *   MAX_CALL_SSE_REGISTERS floating point parameters then the last entries will
-	 *   be set to 0
+	 *	 that go into the floating point registers. If the function has less than
+	 *	 MAX_CALL_SSE_REGISTERS floating point parameters then the last entries will
+	 *	 be set to 0
 	 * - index MAX_CALL_INT_REGISTERS + MAX_CALL_SSE_REGISTERS marks the start of the
-	 *   parameters which will get passed on the stack. These are added to the array
-	 *   in reverse order so that X64_CallFunction() can simply push them to the stack
-	 *   without the need to perform further tests
+	 *	 parameters which will get passed on the stack. These are added to the array
+	 *	 in reverse order so that X64_CallFunction() can simply push them to the stack
+	 *	 without the need to perform further tests
 	 */
-	int     used_int_regs = 0;
-	int     used_sse_regs = 0;
-	int     idx           = 0;
+	int		used_int_regs = 0;
+	int		used_sse_regs = 0;
+	int		idx			  = 0;
 	base_n = 0;
 	for ( n = 0; ( n < X64_CALLSTACK_SIZE ) && ( used_int_regs < MAX_CALL_INT_REGISTERS ); n++ ) {
 		if ( argsType[n] == x64INTARG ) {
@@ -609,12 +601,12 @@ int CallSystemFunction( int id, asCContext *context, void *objectPointer )
 				} 
 				else if ( sysFunc->hostReturnSize == 3 ) 
 				{
-					*( asQWORD * )retPointer             = retQW;
+					*( asQWORD * )retPointer			 = retQW;
 					*( ( ( asDWORD * )retPointer ) + 2 ) = ( asDWORD )retQW2;
 				} 
 				else 
 				{
-					*( asQWORD * )retPointer             = retQW;
+					*( asQWORD * )retPointer			 = retQW;
 					*( ( ( asQWORD * )retPointer ) + 1 ) = retQW2;
 				}
 			}
