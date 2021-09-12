@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -64,33 +64,33 @@ namespace hpl {
 		mlFramecounter=0;
 		mfFrametimestart=0;
 		mfFrametime=0;
-	
+
 		mfUpdateRate = 1;
 
 		mpLowLevelSystem = apLowLevelSystem;
 
-		mfFrametimestart = ((float)cPlatform::GetApplicationTime()) / 1000.0f; 
+		mfFrametimestart = ((float)cPlatform::GetApplicationTime()) / 1000.0f;
 	}
-	
+
 	void cFPSCounter::AddFrame()
 	{
 		mlFramecounter++;
 
 		mfFrametime = (((float)cPlatform::GetApplicationTime()) / 1000.0f) - mfFrametimestart;
-		
+
 		// update the timer
 		if (mfFrametime >= mfUpdateRate)
 		{
 			mfFPS = ((float)mlFramecounter)/mfFrametime;
 			mlFramecounter = 0;
-			mfFrametimestart = ((float)cPlatform::GetApplicationTime()) / 1000.0f; 
+			mfFrametimestart = ((float)cPlatform::GetApplicationTime()) / 1000.0f;
 		}
 	}
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// SETUP VAR CONTAINER
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
 
 	cSetupVarContainer::cSetupVarContainer()
@@ -133,25 +133,25 @@ namespace hpl {
 	float cSetupVarContainer::GetFloat(const tString& asName, float afDefault)
 	{
 		const tString& sVal = GetString(asName);
-		if(sVal == "") 
+		if(sVal == "")
 			return afDefault;
-		else 
+		else
 			return cString::ToFloat(sVal.c_str(),afDefault);
 	}
 	int cSetupVarContainer::GetInt(const tString& asName, int alDefault)
 	{
 		const tString& sVal = GetString(asName);
-		if(sVal == "") 
+		if(sVal == "")
 			return alDefault;
-		else 
+		else
 			return cString::ToInt(sVal.c_str(),alDefault);
 	}
 	bool cSetupVarContainer::GetBool(const tString& asName, bool abDefault)
 	{
 		const tString& sVal = GetString(asName);
-		if(sVal == "") 
+		if(sVal == "")
 			return abDefault;
-		else 
+		else
 			return cString::ToBool(sVal.c_str(),abDefault);
 	}
 
@@ -160,7 +160,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	cEngine* CreateHPLEngine(eHplAPI aApi, tFlag alHplModuleFlags, cEngineInitVars *apVars)
 	{
 		iLowLevelEngineSetup *pGameSetup = NULL;
@@ -170,7 +170,7 @@ namespace hpl {
 			case eHplAPI_OpenGL: pGameSetup = hplNew(cSDLEngineSetup, (alHplModuleFlags) ); break;
 		}
 
-		return hplNew( cEngine,  (pGameSetup,alHplModuleFlags, apVars) ); 
+		return hplNew( cEngine,  (pGameSetup,alHplModuleFlags, apVars) );
 	}
 
 	//-----------------------------------------------------------------------
@@ -228,7 +228,7 @@ namespace hpl {
 		//Create the modules that game connects to and init them!
 		Log(" Creating graphics module\n");
 		mpGraphics = mpGameSetup->CreateGraphics();
-		
+
 		Log(" Creating system module\n");
 		mpSystem = mpGameSetup->CreateSystem();
 
@@ -276,12 +276,12 @@ namespace hpl {
 							apVars->mGraphics.mlDisplay,
 							apVars->mGraphics.mlScreenBpp,
 							apVars->mGraphics.mbFullscreen,
-							apVars->mGraphics.mlMultisampling, 
+							apVars->mGraphics.mlMultisampling,
 							apVars->mGraphics.mGpuProgramFormat,
 							apVars->mGraphics.msWindowCaption,
 							apVars->mGraphics.mvWindowPosition,
 							mpResources,alHplSetupFlags);
-		
+
 		//Init Sound
 		mpSound->Init(mpResources, apVars->mSound.mlSoundDeviceID,
 						apVars->mSound.mbUseEnvironmentalAudio,
@@ -303,7 +303,7 @@ namespace hpl {
 
 		//Init Gui
 		mpGui->Init(mpResources,mpGraphics,mpSound,mpScene, mpInput);
-		
+
 		//Init Generate
 		mpGenerate->Init(mpResources,mpGraphics);
 
@@ -338,7 +338,7 @@ namespace hpl {
 		//Init some standard script funcs
 		Log(" Initializing script functions\n");
 		cScriptFuncs::Init(mpGraphics,mpResources,mpSystem,mpInput,mpScene,mpSound,this);
-		
+
 		mpMutex = cPlatform::CreateMutEx();
 
 		//Since game is not done:
@@ -370,9 +370,9 @@ namespace hpl {
 		hplDelete(mpFPSCounter);
 		hplDelete(mpFrameTimer);
 		hplDelete(mpMutex);
-		
+
 		hplDelete(mpUpdater);
-		
+
 		hplDelete(mpGui);
 		hplDelete(mpGenerate);
 		hplDelete(mpScene);
@@ -384,10 +384,10 @@ namespace hpl {
 		hplDelete(mpPhysics);
 		hplDelete(mpAI);
 		hplDelete(mpSystem);
-		
+
 		Log(" Deleting game setup provided by user\n");
 		hplDelete(mpGameSetup);
-		
+
 		Log("HPL Exit was successful!\n");
 	}
 
@@ -398,33 +398,33 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	int glClearUpdateCheck=0;
 	void cEngine::Run()
 	{
 		//Log line that ends user init.
 		Log("--------------------------------------------------------\n\n");
-		
+
 		double fNumOfTimes=0;
 		double fMediumTime=0;
 
 		mpUpdater->BroadcastMessageToAll(eUpdateableMessage_OnStart);
-		
+
 		mpLogicTimer->Reset();
 
 		//Loop the game... fix the var...
 		unsigned long lTempTime = cPlatform::GetApplicationTime();
-		
+
 		Log("Game Running\n");
 		Log("--------------------------------------------------------\n");
 
 		mfFrameTime = 0;
 		mpFrameTimer->Start();
-		
+
 		bool bIsUpdated = true;
 		bool bBufferSwap = false;
 		bool bSwappedOnce = false;
-		
+
 		//cMemoryManager::SetLogCreation(true);
 
 		while(!GetGameIsDone())
@@ -481,7 +481,7 @@ namespace hpl {
 							if(mpUpdater->GetCurrentContainerName() == "Default") ClearUpdateLogFile();
 						}
 					}
-				
+
 					//Increase game time.
 					mfGameTime += GetStepSize();
 				}
@@ -511,7 +511,7 @@ namespace hpl {
 				START_TIMING(SwapBuffers)
 				mpGraphics->GetLowLevel()->SwapBuffers();
 				STOP_TIMING(SwapBuffers)
-				
+
 				//Log("Swap done: %d\n", cPlatform::GetApplicationTime());
 				mpUpdater->RunMessage(eUpdateableMessage_OnPostBufferSwap);
 				bSwappedOnce =true;
@@ -532,7 +532,7 @@ namespace hpl {
 				START_TIMING(OnDraw)
 				mpUpdater->RunMessage(eUpdateableMessage_OnDraw, mfFrameTime);
 				STOP_TIMING(OnDraw)
-				
+
 				//Render this frame
 				START_TIMING(RenderAll)
 				mpScene->Render(mfFrameTime, tSceneRenderFlag_All);
@@ -541,14 +541,14 @@ namespace hpl {
 				START_TIMING(PostRender)
 				mpUpdater->RunMessage(eUpdateableMessage_OnPostRender, mfFrameTime);
 				STOP_TIMING(PostRender)
-				
+
 				START_TIMING(FlushRender)
 				mpGraphics->GetLowLevel()->FlushRendering();
 				STOP_TIMING(FlushRender)
-				
+
 				//Update fps counter.
 				mpFPSCounter->AddFrame();
-	           	
+
 				fNumOfTimes++;
 				bIsUpdated = false;
 				bBufferSwap = true;
@@ -557,19 +557,19 @@ namespace hpl {
 			//if(GetGameIsDone()) Log("4\n");
 		}
 		Log("--------------------------------------------------------\n\n");
-	
+
 		Log("Statistics\n");
 		Log("--------------------------------------------------------\n");
 
 		unsigned long lTime = cPlatform::GetApplicationTime() - lTempTime;
 		fMediumTime = fNumOfTimes/(((double)lTime)/1000);
-		
+
 		Log(" Medium framerate: %f\n", fMediumTime);
 		Log("--------------------------------------------------------\n\n");
 
 		Log("User Exit\n");
 		Log("--------------------------------------------------------\n");
-		
+
 		mpUpdater->BroadcastMessageToAll(eUpdateableMessage_OnExit);
 	}
 	//-----------------------------------------------------------------------
@@ -617,7 +617,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	float cEngine::GetFPS()
 	{
 		return mpFPSCounter->mfFPS;
@@ -636,7 +636,7 @@ namespace hpl {
 	{
 		return (1.0f/mpFPSCounter->mfFPS)*1000.0f;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cEngine::SetFPSUpdateRate(float afSec)
@@ -758,7 +758,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	bool cEngine::GetPaused()
 	{
 		mpMutex->Lock();
@@ -794,7 +794,7 @@ namespace hpl {
 			mfAvgFrameTimeInMS = (float)(fFrameSum / (double)mlstFrameTimes.size());
 			mlstFrameTimes.clear();
 		}*/
-				
+
 		mpFrameTimer->Start();
 	}
 

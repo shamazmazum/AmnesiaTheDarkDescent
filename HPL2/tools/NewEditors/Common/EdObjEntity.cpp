@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -66,7 +66,7 @@ cEngineLoadedMeshAggregate::~cEngineLoadedMeshAggregate()
 		pWorld->DestroyParticleSystem(mvParticleSystems[i]);
 
 	for(int i=0;i<(int)mvSounds.size();++i)
-		pWorld->DestroySoundEntity(mvSounds[i]);	
+		pWorld->DestroySoundEntity(mvSounds[i]);
 }
 
 //-----------------------------------------------------------------------
@@ -212,7 +212,7 @@ iEdObjectType* cTypeRootEntity::GetTypeFromEntFile(const tString& asFile)
 	if(pUserVars)
 	{
 		tString sType = pUserVars->GetAttributeString("EntityType");
-		
+
 		if(sType.empty()==false)
 			sEntityType += "." + sType;
 
@@ -231,7 +231,7 @@ iEdObjectType* cTypeRootEntity::GetTypeFromEntFile(const tString& asFile)
 
 		Log("Using type %s for typeless entity file %s\n", pType->ToString().c_str(), asFile.c_str());
 		return pType;
-		
+
 	}
 
 	/*
@@ -310,9 +310,9 @@ iEdVar* cTypeEntity::GetLinkedEditorSetupVar(const tWString& asX, eVariableType 
 
 //------------------------------------------------------------------------------
 
-iEdObjectData* cTypeEntity::CreateTypeSpecificData() 
+iEdObjectData* cTypeEntity::CreateTypeSpecificData()
 {
-	return hplNew(cEdObjDataEntity,(this)); 
+	return hplNew(cEdObjDataEntity,(this));
 }
 
 //---------------------------------------------------------------------------
@@ -415,7 +415,7 @@ iEdObject* cEdObjDataEntity::CreateTypeSpecificObject()
 
 //---------------------------------------------------------------------------
 
-cEdObjEntity::cEdObjEntity(iEdObjectData* apData) : iUserObject(apData)												
+cEdObjEntity::cEdObjEntity(iEdObjectData* apData) : iUserObject(apData)
 {
 	mbAffectedByDecal = true;
 	mpEntFile = NULL;
@@ -490,7 +490,7 @@ bool cEdObjEntity::SetProperty(int alPropID, const tString& asX)
 	return true;
 }
 
-//--------------------------------------------------------------------------- 
+//---------------------------------------------------------------------------
 
 /*
 iEdAction* cEdObjEntity::CreateSetStringAction(int alPropID, const tString& asX)
@@ -616,7 +616,7 @@ iEngineObject* cEdObjEntity::CreateEngineObject()
 		return NULL;
 
 	return hplNew(cEngineLoadedMeshAggregate,(this, mpEntFile->msRelativePath));
-	
+
 	/*
 	if(msFilename=="")
 	{
@@ -629,7 +629,7 @@ iEngineObject* cEdObjEntity::CreateEngineObject()
 			Log("Error creating Entity named %s, ID %d\n", msName.c_str(), mlID);
 	}
 	*/
-	
+
 	//return hplNew(cEngineLoadedMeshAggregate,(this, msFilename));
 }
 

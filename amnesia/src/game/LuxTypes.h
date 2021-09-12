@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -81,7 +81,7 @@ enum eLuxAchievement
 	eLuxAchievement_MasterArchivist,
 
 	eLuxAchievement_LastEnum,
-	
+
 	// pig
 	eLuxAchievement_TheTeeth,
 	eLuxAchievement_TheThroat,
@@ -118,7 +118,7 @@ enum eLuxEntityType
 	eLuxEntityType_Enemy,
 	eLuxEntityType_Rope,
 	eLuxEntityType_CommentaryIcon,
-	
+
 	eLuxEntityType_LastEnum
 };
 
@@ -140,7 +140,7 @@ enum eLuxPropType
 	eLuxPropType_EmotionStone,
 	eLuxPropType_NPC,
 	eLuxPropType_MultiSlider,
-		
+
 	eLuxPropType_LastEnum
 };
 
@@ -176,7 +176,7 @@ enum eLuxObjectType
 	eLuxObjectType_Grab,
 	eLuxObjectType_Push,
 	eLuxObjectType_Slide,
-	
+
 	eLuxObjectType_LastEnum
 };
 
@@ -204,7 +204,7 @@ enum eLuxItemType
 	eLuxItemType_LampOil,
 	eLuxItemType_Tinderbox,
 	eLuxItemType_HandObject,
-	
+
 	eLuxItemType_LastEnum
 };
 
@@ -417,14 +417,14 @@ enum eLuxAction
 	eLuxAction_Rotate,
 	eLuxAction_Holster,
 	eLuxAction_Lantern,
-	
+
 	eLuxAction_Run,
 	eLuxAction_Jump,
 	eLuxAction_Crouch,
 
 	eLuxAction_ZoomIn,
 	eLuxAction_ZoomOut,
-	
+
 
 	eLuxAction_LastEnum
 };
@@ -434,7 +434,7 @@ enum eLuxAction
 enum eLuxIgniteSource
 {
 	eLuxIgniteSource_Player,
-	
+
 	eLuxIgniteSource_LastEnum
 };
 
@@ -490,7 +490,7 @@ enum eLuxGlobalVolumeType
 	eLuxGlobalVolumeType_InsanityCollapse,
 	eLuxGlobalVolumeType_Commentary,
 	eLuxGlobalVolumeType_DebugMenu,
-	
+
 	eLuxGlobalVolumeType_LastEnum
 };
 
@@ -587,7 +587,7 @@ public:
 			OnMapEnter((cLuxMap*) apData); break;
 		case eLuxUpdateableMessage_OnMapLeave:
 			OnMapLeave((cLuxMap*) apData); break;
-		
+
 		case eLuxUpdateableMessage_SaveMainConfig:
 			SaveMainConfig(); break;
 		case eLuxUpdateableMessage_SaveUserConfig:
@@ -664,12 +664,12 @@ class iLuxCollideCallbackContainer
 {
 public:
 	iLuxCollideCallbackContainer();
-	
+
 	void DestroyCollideCallbacks();
 
 	virtual int GetBodyNum()=0;
 	virtual iPhysicsBody* GetBody(int alIdx)=0;
-	
+
 	void CheckCollisionCallback(const tString& asName, cLuxMap *apMap);
 	bool CheckEntityCollision(iLuxEntity*apEntity, cLuxMap *apMap);
 
@@ -694,7 +694,7 @@ typedef tLuxCollideCallbackContainerList::iterator tLuxCollideCallbackContainerL
 class cLuxAlphaFader
 {
 public:
-	cLuxAlphaFader() : mfAlpha(0), mbActive(false) {}	
+	cLuxAlphaFader() : mfAlpha(0), mbActive(false) {}
 
 	void Reset();
 	void Update(float afTimeStep);

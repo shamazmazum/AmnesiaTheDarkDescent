@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -129,7 +129,7 @@ iEditorVar* cEditorUserClass::CreateClassSpecificVariableFromElement(cXmlElement
 			mvVariables[lIdx].insert(mvVariables[lIdx].end(), vTempVars.begin(), vTempVars.end());
 		}
 	}
-	
+
 	return CreateVariableFromElement(apElement);
 }
 
@@ -159,7 +159,7 @@ void cEditorUserClass::AddVariablesToInstance(eEditorVarCategory aCat, cEditorUs
 	{
 		iEditorVar* pVar = vVars[i];
 		cEditorVarInstance* pVarInstance = pVar->CreateInstance();
-		
+
 		apInstance->AddVarInstance(pVarInstance);
 	}
 }
@@ -285,7 +285,7 @@ iEditorVar* cEditorUserClassType::GetVariable(eEditorVarCategory aCat, const tWS
 	if(pVar)
 		return pVar;
 
-	if(mpBaseClass) 
+	if(mpBaseClass)
 		return ((cEditorUserClassBase*)mpBaseClass)->GetVariable(aCat, asName);
 
 	return NULL;
@@ -508,8 +508,8 @@ bool cEditorUserClassDefinition::Create(const tString& asFilename, int alLoadFla
 		pRes->DestroyXmlDocument(pDoc);
 
 		tString sError = (pDoc==NULL)?"file not found":("error found in line " + cString::ToString(lRow) + ", column " + cString::ToString(lCol));
-		FatalError("Failed compilation of Custom Variable definition %s: %s\n", 
-					cString::GetFileName(asFilename).c_str(), 
+		FatalError("Failed compilation of Custom Variable definition %s: %s\n",
+					cString::GetFileName(asFilename).c_str(),
 					sError.c_str());
 
 		return false;
@@ -706,7 +706,7 @@ cEditorUserClassDefinition* cEditorUserClassDefinitionManager::GetDefinition(int
 
 	if(lIndex<0 || lIndex>=(int)mvDefinitions.size())
 		return NULL;
-	
+
 	return mvDefinitions[lIndex];
 }
 

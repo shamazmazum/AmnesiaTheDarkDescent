@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -42,7 +42,7 @@ tWString& iEditorObjectIndexEntryMeshObject::GetMeshFileName()
 {
 	if(msMeshFileName==_W(""))
 		msMeshFileName = GetFileNameRelPath();
-	
+
 	return msMeshFileName;
 }
 
@@ -54,7 +54,7 @@ bool iEditorObjectIndexEntryMeshObject::CreateFromFile(const tWString& asFilenam
 		return false;
 
 	iEditorObjectIndex* pIndex = mpParentDir->GetIndex();
-	
+
 	cMeshEntity* pMeshEntity = CreateTempEntity(pIndex->GetEditor()->GetTempWorld());
 
 	mlTriangleCount = pMeshEntity->GetMesh()->GetTriangleCount();
@@ -68,7 +68,7 @@ bool iEditorObjectIndexEntryMeshObject::CreateFromFile(const tWString& asFilenam
 		cBoundingVolume* pBV = pSubMeshEntity->GetBoundingVolume();
 		cMath::ExpandAABB(mvBVMin, mvBVMax, pBV->GetMin(), pBV->GetMax());
 	}
-	
+
 	return true;
 }
 
@@ -104,7 +104,7 @@ void iEditorObjectIndexEntryMeshObject::BuildThumbnail()
 	iEditorObjectIndex* pIndex = mpParentDir->GetIndex();
 	iEditorBase* pEditor = pIndex->GetEditor();
 	cEditorThumbnailBuilder* pTmbBuilder = pEditor->GetThumbnailBuilder();
-	
+
 	////////////////////////////////////////////////////////////////
 	// Create thumbnail if it doesn't exist or the object was updated
 	bool bIsUpdated = IsUpdated();
@@ -154,11 +154,11 @@ cMeshEntity* iEditorObjectIndexEntryMeshObject::CreateTempEntity(cWorld* apWorld
 cEditorWindowObjectBrowser::cEditorWindowObjectBrowser(iEditorEditMode* apEditMode,
 													   const tWStringVec& avBaseDirs,
 													   bool abAddCategoryHeaders) : iEditModeObjectCreatorWindow(apEditMode)
-																						 
+																						
 {
 	mvBaseDirs = avBaseDirs;
 	mbAddCategoryHeaders = abAddCategoryHeaders;
-	
+
 	mpPreviewEntity = NULL;
 	mpCurrentIndex = NULL;
 }
@@ -286,12 +286,12 @@ void cEditorWindowObjectBrowser::OnInitLayout()
 		mvLabelBVSize[i] = mpSet->CreateWidgetLabel(vPos,vSize,_W(""), mpInfoGroup);
 		mvLabelBVSize[i]->SetDefaultFontSize(12.5f);
 
-		mvLabelPolyCount[i] = mpSet->CreateWidgetLabel(vPos + cVector3f(0,40,0),vSize,_W(""), mpInfoGroup);		
+		mvLabelPolyCount[i] = mpSet->CreateWidgetLabel(vPos + cVector3f(0,40,0),vSize,_W(""), mpInfoGroup);
 		mvLabelPolyCount[i]->SetDefaultFontSize(12.5f);
 
 		vPos.y += 20;
-		
-		
+
+
 	}
 
 	mvLabelBVSize[0]->SetText(_W("BB Size:"));
@@ -318,7 +318,7 @@ void cEditorWindowObjectBrowser::BuildObjectSetList()
 	mpObjectSets->ClearItems();
 
 	for(int i=0;i<(int)mvBaseDirs.size();++i)
-        BuildObjectSetListHelper(mvBaseDirs[i],0);	
+        BuildObjectSetListHelper(mvBaseDirs[i],0);
 }
 
 //-------------------------------------------------------------------
@@ -393,7 +393,7 @@ void cEditorWindowObjectBrowser::ClearObjectList()
 void cEditorWindowObjectBrowser::UpdateObjectList()
 {
 	ClearObjectList();
-	AddEntriesInDirToList(mpCurrentIndex->GetRootDir(), mvCurrentListedEntries); 
+	AddEntriesInDirToList(mpCurrentIndex->GetRootDir(), mvCurrentListedEntries);
 }
 
 //-------------------------------------------------------------------
@@ -426,7 +426,7 @@ void cEditorWindowObjectBrowser::UpdateObjectInfo()
 	else
 	{
 		cVector3f vBVSize = pObj->GetBVMax() - pObj->GetBVMin();
-		
+
 		sBVSize = _W("(");
 		for(int i=0;i<3;++i)
 		{

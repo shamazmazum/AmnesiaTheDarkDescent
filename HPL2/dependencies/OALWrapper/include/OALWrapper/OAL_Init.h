@@ -25,14 +25,14 @@
 class cOAL_Init_Params
 {
 public:
-	cOAL_Init_Params() :  msDeviceName(""), mlMajorVersionReq(1), mlMinorVersionReq(1), 
+	cOAL_Init_Params() :  msDeviceName(""), mlMajorVersionReq(1), mlMinorVersionReq(1),
 						mlOutputFreq(44100),
 						#ifdef __EMSCRIPTEN__
 						mbUseThread(false),
 						#else
 						mbUseThread(true),
 						#endif
-						mlUpdateFreq(10), 
+						mlUpdateFreq(10),
 						mlNumSourcesHint(32), mbVoiceManagement(true), mlMinMonoSourcesHint(0),
 						mlMinStereoSourcesHint(0), mlStreamingBufferSize(STREAMING_BLOCK_SIZE), mlStreamingBufferCount(4),
 						mbUseEFX(false), mlNumSlotsHint(4), mlNumSendsHint(4), mlSlotUpdateFreq(15)
@@ -61,8 +61,8 @@ public:
 
 /////////////////////////////////////////
 
-/*bool	OAL_Init (	const char* asDeviceName = NULL, int alOutputFreq = 44100, 
-					bool abUseThread = true, int alUpdateFreq = 100, 
+/*bool	OAL_Init (	const char* asDeviceName = NULL, int alOutputFreq = 44100,
+					bool abUseThread = true, int alUpdateFreq = 100,
 					int alReqMajorVersion = 1, int alReqMinorVersion = 1,
 					int alNumSourcesHint = 32, bool mbVoiceManagement = true,
 					int alMinMonoSourceHint = 0, int alMinStereoSourceHint = 0,

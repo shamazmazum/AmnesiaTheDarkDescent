@@ -94,7 +94,7 @@ public:
 	int		BindData	( cOAL_Sample* apSample );
 	int		BindData	( cOAL_Stream* apStream );
 	void	Play ();
-	void	Stop (bool abRemove = true); 
+	void	Stop (bool abRemove = true);
 	void	Pause ( bool abPaused );
 
 	////////////////////////////////////
@@ -110,7 +110,7 @@ public:
 	void SetElapsedTime(double afTime);
 
 	void SetPriority(const ALuint alX);
-	
+
 	inline float GetGain() { return mfGain; }
 	inline float GetPitch() { return mfPitch; }
 
@@ -148,9 +148,9 @@ public:
 	// Misc methods
 	void Update();
 
-	// Special 
+	// Special
 	void IncRefCount();
-	// Logging 
+	// Logging
 	//void LogMsg("",eOAL_LogVerbose aeVerboseLevelReq, eOAL_LogMsg aeMessageType, const char* asMessage, ...);
 
 
@@ -164,13 +164,13 @@ private:
 	SDL_mutex*	mpSourceMutex;
 
 	cOAL_SourceManager* mpSourceManager;
-	
+
 	iOAL_AudioData*	mpAudioData;
 
 	bool mbLoop;
 	bool mbPlaying;
 	bool mbPaused;
-	
+
 	bool mbNeedsReset;
 
 	float mfGain;
@@ -180,7 +180,7 @@ private:
     bool mbRelativePosition;
 
 	std::vector<cOAL_SourceSend*> mvSends;
-	
+
 	cOAL_Filter*	mpFilter;
 	cOAL_Filter*	mpDirectFilter;
 

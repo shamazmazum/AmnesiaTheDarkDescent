@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -25,7 +25,7 @@
 namespace hpl {
 
 	class cGuiSkinFont;
-	
+
 	class cWidgetButton;
 	class cGuiPopUpUIKeyboard;
 
@@ -43,7 +43,7 @@ namespace hpl {
 
 		void SetForceCallBackOnEnter(bool abX) { mbForceCallBackOnEnter=abX; }
 		bool GetForceCallBackOnEnter() { return mbForceCallBackOnEnter; }
-		
+
 		void SetMaxTextLength(int alLength);
 		int GetMaxTextLength(){return mlMaxCharacters;}
 
@@ -78,7 +78,7 @@ namespace hpl {
 		const tWString& GetIllegalChars();
 
 		void SetLegalCharCodeLimitEnabled(bool abX);
-		
+
 		/**
 		* A character that is lower (NOT equal) to this is considered illegal
 		*/
@@ -91,7 +91,7 @@ namespace hpl {
 		bool GetLegalCharCodeLimitEnabled(){ return mbLegalCharCodeLimitEnabled;}
 		wchar_t GetLegalCharCodeMinLimit(){ return mlLegalCharCodeMinLimit;}
 		wchar_t GetLegalCharCodeMaxLimit(){ return mlLegalCharCodeMaxLimit;}
-		
+
 	protected:
 		/////////////////////////
 		// Own functions
@@ -117,7 +117,7 @@ namespace hpl {
 		void OnLoadGraphics();
 		void OnChangeSize();
 		void OnChangeText();
-		
+
 		void OnDraw(float afTimeStep, cGuiClipRegion *apClipRegion);
 
 		bool OnMouseMove(const cGuiMessageData& aData);
@@ -184,12 +184,12 @@ namespace hpl {
 		bool mbCallbackOnLostFocus;
 
 		cWidgetButton *mvButtons[2];
-		
+
 		cGuiGfxElement *mpGfxMarker;
 		cGuiGfxElement *mpGfxSelectedTextBack;
 
 		cGuiGfxElement *mpGfxBackground;
-		
+
 		cGuiGfxElement *mvGfxBorders[4];
 		cGuiGfxElement *mvGfxCorners[4];
 

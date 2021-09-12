@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -117,42 +117,42 @@ namespace hpl {
 	{
 		Log(asText.c_str());
 	}
-	
+
 	static std::string __stdcall FloatToString(float afX)
 	{
 		char sTemp[30];
 		sprintf(sTemp,"%f",afX);
 		return (std::string) sTemp;
 	}
-	
+
 	static std::string __stdcall IntToString(int alX)
 	{
 		char sTemp[30];
 		sprintf(sTemp,"%d",alX);
 		return (std::string) sTemp;
 	}
-	
+
 	static float __stdcall RandFloat(float afMin, float afMax)
 	{
 		return cMath::RandRectf(afMin,afMax);
 	}
-	
+
 	static int __stdcall RandInt(int alMin, int alMax)
 	{
 		return cMath::RandRectl(alMin,alMax);
 	}
-	
+
 	static bool __stdcall StringContains(std::string asString, std::string asSubString)
 	{
 		return cString::GetLastStringPos(asString,asSubString)>=0;
 	}
-	
+
 	static void __stdcall ResetLogicTimer()
 	{
 		gpGame->ResetLogicTimer();
 	}
-	
-	
+
+
 
 	//-----------------------------------------------------------------------
 
@@ -169,13 +169,13 @@ namespace hpl {
 			pVar->mlVal = alVal;
 		}
 	}
-	
+
 	static void __stdcall SetLocalVar(std::string asName, int alVal)
 	{
 		cScriptVar* pVar = gpGame->CreateLocalVar(asName);
 		pVar->mlVal = alVal;
 	}
-	
+
 	static void __stdcall AddLocalVar(std::string asName, int alVal)
 	{
 		cScriptVar* pVar = gpGame->CreateLocalVar(asName);
@@ -192,7 +192,7 @@ namespace hpl {
 		}
 		return pVar->mlVal;
 	}
-	
+
 	//-----------------------------------------------------------------------
 	/////////////////////////////////////////////////////////////////////////
 	/////// GLOBAL VARS //////////////////////////////////////////////////////
@@ -206,7 +206,7 @@ namespace hpl {
 			pVar->mlVal = alVal;
 		}
 	}
-	
+
 	static void __stdcall SetGlobalVar(std::string asName, int alVal)
 	{
 		cScriptVar* pVar = gpGame->CreateGlobalVar(asName);
@@ -231,7 +231,7 @@ namespace hpl {
 		}
 		return pVar->mlVal;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 
@@ -282,10 +282,10 @@ namespace hpl {
 		//Resources
 		gpSystem->GetLowLevel()->AddScriptFunc(SCRIPT_REGISTER_FUNC(PreloadSound));
 		gpSystem->GetLowLevel()->AddScriptFunc(SCRIPT_REGISTER_FUNC(Translate));
-		
+
 		//Mesh Entity
 		gpSystem->GetLowLevel()->AddScriptFunc(SCRIPT_REGISTER_FUNC(SetMeshActive));
-		
+
 		//Beams
 		gpSystem->GetLowLevel()->AddScriptFunc(SCRIPT_REGISTER_FUNC(CreateBeam));
 		gpSystem->GetLowLevel()->AddScriptFunc(SCRIPT_REGISTER_FUNC(DestroyBeam));

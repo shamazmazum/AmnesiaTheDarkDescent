@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -44,14 +44,14 @@ namespace hpl {
 		mvFormats[0] = "WAV";mvFormats[1] = "OGG";mvFormats[2] = "MP3";
 		mvFormats[3] = "";
 
-		
+
 		Log(" Initializing FMOD.\n");
 		FSOUND_SetDriver(0);
 		FSOUND_SetMixer(FSOUND_MIXER_AUTODETECT);
 
 		//Debug:
 		//FSOUND_SetMaxHardwareChannels(0);
-		
+
 		FSOUND_Init(44100, 32, 0); //Change this to get effects later on..
 
 		//Setup channel limit.
@@ -60,10 +60,10 @@ namespace hpl {
 		Log(" Number of hardware 2D channels: %d\n",lChannels2D);
 		Log(" Number of hardware 3D channels: %d\n",lChannels3d);
 		Log(" Number of total hardware channels: %d\n",lChannelsTotal);
-        
+
 		FSOUND_SetMinHardwareChannels(32);
 		FSOUND_SetMaxHardwareChannels(32);
-				
+
 		//Default listener settings.
 		float Pos[3] = {0,0,0};
 		float Vel[3] = {0,0,0};
@@ -95,9 +95,9 @@ namespace hpl {
 												const tString& asType, bool abStream,bool abLoopStream)
 	{
 		cFmodSoundData* pSoundData = new cFmodSoundData(asName,abStream);
-		
+
 		pSoundData->SetLoopStream(abLoopStream);
-		
+
 		if(pSoundData->CreateFromFile(asFilePath)==false)
 		{
 			delete pSoundData;
@@ -120,12 +120,12 @@ namespace hpl {
 		}
 	}
 	//-----------------------------------------------------------------------
-	
+
 	void cLowLevelSoundFmod::UpdateSound(float afTimeStep)
 	{
 		FSOUND_Update();
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cLowLevelSoundFmod::SetListenerAttributes(const cVector3f &avPos,const cVector3f &avVel,
@@ -156,14 +156,14 @@ namespace hpl {
 	void cLowLevelSoundFmod::SetListenerPosition(const cVector3f &avPos)
 	{
 		mvListenerPosition = avPos;
-	
+
 		FSOUND_3D_Listener_SetAttributes(avPos.v,mvListenerVelocity.v,
 			mvListenerForward.x,mvListenerForward.y,mvListenerForward.z,
 			mvListenerUp.x,mvListenerUp.y,mvListenerUp.z);
 	}
-	
+
 	//-----------------------------------------------------------------------
-		
+
 	void cLowLevelSoundFmod::SetListenerAttenuation (bool abEnabled)
 	{
 		mbListenerAttenuation = abEnabled;
@@ -175,7 +175,7 @@ namespace hpl {
 	{
 		FSOUND_3D_SetRolloffFactor(afFactor);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cLowLevelSoundFmod::SetVolume(float afVolume)

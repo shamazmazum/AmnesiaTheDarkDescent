@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -75,7 +75,7 @@ iEditorWindow::~iEditorWindow()
 void iEditorWindow::SetPosition(const cVector3f &avPosition)
 {
 	mvPos = avPosition;
-	
+
 	if(mpBGFrame)
 		mpBGFrame->SetPosition(mvPos);
 }
@@ -368,7 +368,7 @@ void iEditModeObjectCreatorWindow::UpdateScale()
 {
 	if(mbScaleUpdated==false && (mpGRotate==NULL || mpInpRandScale->GetValue()==false))
 		return;
-	
+
 	mbScaleUpdated=false;
 	if(mpInpRandScale->GetValue())
 		mvScale = cMath::RandRectVector3f(mpInpMinScale->GetValue(), mpInpMaxScale->GetValue());
@@ -385,7 +385,7 @@ void iEditModeObjectCreatorWindow::AddCreateOnSurfaceControls(bool abAddAverageN
 
 	iEditorEditModeObjectCreator* pEditMode = (iEditorEditModeObjectCreator*)mpEditMode;
 
-	mpGSurface = mpSet->CreateWidgetDummy(0, mpBGFrame); 
+	mpGSurface = mpSet->CreateWidgetDummy(0, mpBGFrame);
 	mpInpCreateOnSurface = CreateInputBool(0, _W("Create on surface"), "", mpGSurface);
 	cVector3f vPos = cVector3f(mpInpCreateOnSurface->GetSize().x+5,0,0.1f);
 	tWString vStrings[] = { _W("StaticObjects"), _W("Primitives"), _W("Entities") };
@@ -407,7 +407,7 @@ void iEditModeObjectCreatorWindow::AddCreateOnSurfaceControls(bool abAddAverageN
 
 void iEditModeObjectCreatorWindow::AddRotateControls()
 {
-	mpGRotate = mpSet->CreateWidgetDummy(0, mpBGFrame); 
+	mpGRotate = mpSet->CreateWidgetDummy(0, mpBGFrame);
 	mpInpRandRotate = CreateInputBool(0, _W("Rand. rotate"), "", mpGRotate);
 	cVector3f vPos = mpInpRandRotate->GetSize().y+5;
 	mpInpMinRotate = CreateInputVec3(vPos, _W("Min rotate"), "", mpGRotate, 50, tWStringList(), eEditorInputLayoutStyle_RowLabelOnTop, 15);
@@ -427,7 +427,7 @@ void iEditModeObjectCreatorWindow::AddRotateControls()
 
 void iEditModeObjectCreatorWindow::AddScaleControls()
 {
-	mpGScale = mpSet->CreateWidgetDummy(0, mpBGFrame); 
+	mpGScale = mpSet->CreateWidgetDummy(0, mpBGFrame);
 	mpInpRandScale = CreateInputBool(0, _W("Rand. scale"), "", mpGScale);
 	cVector3f vPos = mpInpRandScale->GetSize().y+5;
 	mpInpMinScale = CreateInputVec3(vPos, _W("Min scale"), "", mpGScale, 50, tWStringList(), eEditorInputLayoutStyle_RowLabelOnTop, 0.25f);
@@ -508,8 +508,8 @@ bool iEditModeObjectCreatorWindow::WindowSpecificInputCallback(iEditorInput* apI
 
 //--------------------------------------------------------
 
-iEditorWindowPopUp::iEditorWindowPopUp(iEditorBase* apEditor, 
-									   const tString& asName, 
+iEditorWindowPopUp::iEditorWindowPopUp(iEditorBase* apEditor,
+									   const tString& asName,
 									   bool abGetEditorAttention, bool abGetGuiAttention, bool abDestroyOnDisable,
 									   const cVector2f& avSize) : iEditorWindow(apEditor, asName)
 {
@@ -543,10 +543,10 @@ void iEditorWindowPopUp::OnSetActive(bool abX)
 		SetPosition(vPos);
 		mpWindow->SetPosition(0);
 
-		if(mbGetEditorAttention) 
+		if(mbGetEditorAttention)
 		{
 		}
-		if(mbGetGuiAttention) 
+		if(mbGetGuiAttention)
 		{
 			mpPrevAttention = mpSet->GetAttentionWidget();
 			mpSet->SetAttentionWidget(mpBGFrame);
@@ -559,7 +559,7 @@ void iEditorWindowPopUp::OnSetActive(bool abX)
 		if(mbGetEditorAttention)
 		{
 		}
-		if(mbGetGuiAttention) 
+		if(mbGetGuiAttention)
 		{
 			if(mpSet->GetAttentionWidget()==mpBGFrame) mpSet->SetAttentionWidget(mpPrevAttention);
 		}

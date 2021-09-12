@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -65,7 +65,7 @@ void iLuxPlayerState_Interact::OnAttachBodyToStickyArea(iPhysicsBody *apBody)
 	bool bBodyInProp = false;
 	for(int i=0; i<mpCurrentProp->GetBodyNum(); ++i)
 	{
-		if(mpCurrentProp->GetBody(i) == apBody) 
+		if(mpCurrentProp->GetBody(i) == apBody)
 		{
 			bBodyInProp = true;
 			break;
@@ -94,7 +94,7 @@ void iLuxPlayerState_Interact::SetupInteractVars()
 	mvCurrentFocusPos = cLuxPlayerStateVars::mvInteractPos;
 
 	mpCurrentProp->SetIsInteractedWith(true);
-}	
+}
 
 //-----------------------------------------------------------------------
 
@@ -147,7 +147,7 @@ void iLuxPlayerState_Interact::LoadFromSaveDataBeforeEnter(cLuxMap *apMap, iLuxP
 	// Init
 	super_class::LoadFromSaveDataBeforeEnter(apMap,apSaveData);
 	iLuxPlayerState_Interact_SaveData *pData = static_cast<iLuxPlayerState_Interact_SaveData*>(apSaveData);
-	
+
 	//////////////////////
 	//Setup interaction vars
 	iPhysicsBody* pFoucsBody=NULL;

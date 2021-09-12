@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -102,14 +102,14 @@ void cEditorActionObjectCreate::UndoModify()
 cEditorActionEntityDelete::cEditorActionEntityDelete(iEditorWorld* apEditorWorld, cEditorSelection* apSelection, const tIntList& alstSelectedIDs) : iEditorActionWorldModifier("Delete",apEditorWorld)
 {
 	mpSelection = apSelection;
-	
+
 	tIntList::const_iterator it = alstSelectedIDs.begin();
 
 	for(;it!=alstSelectedIDs.end();++it)
 	{
 		iEntityWrapper* pEnt = mpEditorWorld->GetEntity(*it);
 		iEntityWrapperData* pData = pEnt->CreateCopyData();
-	
+
 		mvEntityData.push_back(pData);
 	}
 }
@@ -168,7 +168,7 @@ void cEditorActionEntityDelete::UndoModify()
 //---------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------
 /////////////////////////////////////////////////////////////////////////////////////////
-// ENTITY CLONE ACTION 
+// ENTITY CLONE ACTION
 /////////////////////////////////////////////////////////////////////////////////////////
 //---------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------
@@ -220,7 +220,7 @@ void cEditorActionEntityClone::DoModify()
 		mpSelection->AddEntity(pClone);
 		lstClones.push_back(pClone);
 	}
-	
+
 	tEntityWrapperListIt it = lstClones.begin();
 	for(;it!=lstClones.end();++it)
 	{
@@ -257,7 +257,7 @@ void cEditorActionEntityClone::UndoModify()
 //---------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------
 /////////////////////////////////////////////////////////////////////////////////////////
-// ENTITY SELECT ACTION 
+// ENTITY SELECT ACTION
 /////////////////////////////////////////////////////////////////////////////////////////
 //---------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------
@@ -323,14 +323,14 @@ void cEditorActionEntitySelect::Undo()
 
 	if(pEditor->GetCurrentEditMode()!=mpEditMode)
 		pEditor->SetCurrentEditMode(mpEditMode);
-	
+
 	mpSelection->AddEntitiesByID(mlstOldSelectedEntityIDs);
 }
 
 //---------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------
 /////////////////////////////////////////////////////////////////////////////////////////
-// ENTITY TRANSLATE ACTION 
+// ENTITY TRANSLATE ACTION
 /////////////////////////////////////////////////////////////////////////////////////////
 //---------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------
@@ -343,15 +343,15 @@ void cEditorActionEntitySelect::Undo()
 
 //---------------------------------------------------------------------------------------
 
-cEditorActionEntityTranslate::cEditorActionEntityTranslate(iEditorWorld* apEditorWorld, 
-														   tIntList& alstEntityIDs, 
-														   const cVector3f& avTranslate, 
+cEditorActionEntityTranslate::cEditorActionEntityTranslate(iEditorWorld* apEditorWorld,
+														   tIntList& alstEntityIDs,
+														   const cVector3f& avTranslate,
 														   bool abUseSnap, bool abRelativeTransform) : iEditorActionWorldModifier("Translate", apEditorWorld)
 {
 	mpEditorWorld = apEditorWorld;
 
 	mlstEntityIDs = alstEntityIDs;
-	
+
 	tIntListIt it = mlstEntityIDs.begin();
 
 	for(;it!=mlstEntityIDs.end();++it)
@@ -411,7 +411,7 @@ void cEditorActionEntityTranslate::Apply(tVector3fList &alstParam)
 //---------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------
 /////////////////////////////////////////////////////////////////////////////////////////
-// ENTITY ROTATE ACTION 
+// ENTITY ROTATE ACTION
 /////////////////////////////////////////////////////////////////////////////////////////
 //---------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------
@@ -425,15 +425,15 @@ void cEditorActionEntityTranslate::Apply(tVector3fList &alstParam)
 
 //---------------------------------------------------------------------------------------
 
-cEditorActionEntityRotate::cEditorActionEntityRotate(iEditorWorld* apEditorWorld, 
-													 tIntList& alstEntityIDs, 
-													 const cVector3f& avRotate, 
+cEditorActionEntityRotate::cEditorActionEntityRotate(iEditorWorld* apEditorWorld,
+													 tIntList& alstEntityIDs,
+													 const cVector3f& avRotate,
 													 bool abRelativeTransform) : iEditorActionWorldModifier("Rotate", apEditorWorld)
 {
 	mpEditorWorld = apEditorWorld;
-	
+
 	mlstEntityIDs = alstEntityIDs;
-	
+
 	tIntListIt it = mlstEntityIDs.begin();
 	for(;it!=mlstEntityIDs.end();++it)
 	{
@@ -503,15 +503,15 @@ void cEditorActionEntityRotate::Apply(tVector3fList &alstParam)
 
 //---------------------------------------------------------------------------------------
 
-cEditorActionEntityScale::cEditorActionEntityScale(iEditorWorld* apEditorWorld, 
-														   tIntList& alstEntityIDs, 
-														   const cVector3f& avScale, 
+cEditorActionEntityScale::cEditorActionEntityScale(iEditorWorld* apEditorWorld,
+														   tIntList& alstEntityIDs,
+														   const cVector3f& avScale,
 														   bool abRelativeTransform) : iEditorActionWorldModifier("Scale", apEditorWorld)
 {
 	mpEditorWorld = apEditorWorld;
 
 	mlstEntityIDs = alstEntityIDs;
-	
+
 	tIntListIt it = mlstEntityIDs.begin();
 
 	for(;it!=mlstEntityIDs.end();++it)

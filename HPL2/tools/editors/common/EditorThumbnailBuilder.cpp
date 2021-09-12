@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -75,7 +75,7 @@ cEditorThumbnailBuilder::cEditorThumbnailBuilder(iEditorBase* apEditor)
 	pLight->SetVisible(false);
 	pLight->SetCastShadows(false);
 	pLight->SetRadius(50);
-	
+
 	pLight = pWorld->CreateLightPoint("ThumbFillLight","",false);
 	pLight->SetDiffuseColor(cColor(1,1,1,0));
 	pLight->SetVisible(false);
@@ -139,7 +139,7 @@ void cEditorThumbnailBuilder::BuildThumbnailFromMeshEntity(cMeshEntity* apEntity
 	apEntity->SetWorld(pWorld);
 	apEntity->SetPosition(0);
 	apEntity->SetVisible(true);
-	
+
 	FocusCameraOnEntity(apEntity);
 
 	pKeyLight->SetPosition(10);
@@ -148,17 +148,17 @@ void cEditorThumbnailBuilder::BuildThumbnailFromMeshEntity(cMeshEntity* apEntity
 
 	//////////////////////////////////////
 	// Render 128x128 thumbnail
-	mpViewport->GetRenderer()->Render(	1.0f/60.0f, 
-										pCamera->GetFrustum(), 
+	mpViewport->GetRenderer()->Render(	1.0f/60.0f,
+										pCamera->GetFrustum(),
 										pWorld,
-										mpViewport->GetRenderSettings(), 
-										mpViewport->GetRenderTarget(), 
-										false, 
+										mpViewport->GetRenderSettings(),
+										mpViewport->GetRenderTarget(),
+										false,
 										mpViewport->GetRendererCallbackList() );
 	pGfx->WaitAndFinishRendering();
-	
+
 	mThumbnailCallback.mpObject = NULL;
-	
+
 	//////////////////////////////////
 	// Now scale to 64x64
 	pGfx->SetDepthTestActive(false);
@@ -171,7 +171,7 @@ void cEditorThumbnailBuilder::BuildThumbnailFromMeshEntity(cMeshEntity* apEntity
 	pGfx->DrawQuad(0,128,cVector2f(0,1),cVector2f(1,0));
 	pGfx->WaitAndFinishRendering();
 	pGfx->SetTexture(0,NULL);
-	
+
 	/////////////////////////////////
 	// Save to file
 	cBitmap *pBmp = pGfx->CopyFrameBufferToBitmap();
@@ -229,20 +229,20 @@ void cEditorThumbnailBuilder::BuildThumbnailFromMesh(const tWString& asMeshFilen
 	pBackLight->SetPosition(cVector3f(0,10,10));
 
 	mThumbnailCallback.mpObject = pEnt;
-	
+
 	//////////////////////////////////////
 	// Render 128x128 thumbnail
-	mpViewport->GetRenderer()->Render(	1.0f/60.0f, 
-										pCamera->GetFrustum(), 
+	mpViewport->GetRenderer()->Render(	1.0f/60.0f,
+										pCamera->GetFrustum(),
 										pWorld,
-										mpViewport->GetRenderSettings(), 
-										mpViewport->GetRenderTarget(), 
-										false, 
+										mpViewport->GetRenderSettings(),
+										mpViewport->GetRenderTarget(),
+										false,
 										mpViewport->GetRendererCallbackList() );
 	pGfx->WaitAndFinishRendering();
-	
+
 	mThumbnailCallback.mpObject = NULL;
-	
+
 	//////////////////////////////////
 	// Now scale to 64x64
 	pGfx->SetDepthTestActive(false);
@@ -255,7 +255,7 @@ void cEditorThumbnailBuilder::BuildThumbnailFromMesh(const tWString& asMeshFilen
 	pGfx->DrawQuad(0,128,cVector2f(0,1),cVector2f(1,0));
 	pGfx->WaitAndFinishRendering();
 	pGfx->SetTexture(0,NULL);
-	
+
 	/////////////////////////////////
 	// Save to file
 	cBitmap *pBmp = pGfx->CopyFrameBufferToBitmap();
@@ -279,7 +279,7 @@ void cEditorThumbnailBuilder::BuildThumbnailFromImage(const tWString& asImageFil
 	int lHeight = pTex->GetHeight();
 
 	if(cMath::IsPow2(lWidth)== false || cMath::IsPow2(lHeight)==false)
-		pTex = pManager->Create2D(cString::To8Char(asImageFilename), true, eTextureType_Rect);	
+		pTex = pManager->Create2D(cString::To8Char(asImageFilename), true, eTextureType_Rect);
 
 	iLowLevelGraphics* pGfx = mpEditor->GetEngine()->GetGraphics()->GetLowLevel();
 
@@ -289,8 +289,8 @@ void cEditorThumbnailBuilder::BuildThumbnailFromImage(const tWString& asImageFil
 	pGfx->SetBlendActive(true);
 	pGfx->SetBlendFunc(eBlendFunc_SrcAlpha, eBlendFunc_OneMinusSrcAlpha);
 	pGfx->DrawQuad(0,128,cVector2f(0,0),cVector2f(1,1));
-	pGfx->WaitAndFinishRendering();	
-	
+	pGfx->WaitAndFinishRendering();
+
 	pGfx->SetTexture(0,NULL);
 	mpEditor->GetEngine()->GetResources()->GetTextureManager()->Destroy(pTex);
 
@@ -359,14 +359,14 @@ void cEditorThumbnailBuilder::FocusCameraOnEntity(cMeshEntity *apEntity)
 	{
 		meshBV = *apEntity->GetBoundingVolume();
 	}
-	
+
 
 	/////////////////////////
 	// Calculate direction most tris face
 	cVector3f vVecSum =0;
 	float fVecCount=0;
 	for(int i=0; i<pMesh->GetSubMeshNum(); ++i)
-	{	
+	{
 		cSubMesh *pSubMesh = pMesh->GetSubMesh(i);
 		cSubMeshEntity *pSubEnt = apEntity->GetSubMeshEntity(i);
 
@@ -377,7 +377,7 @@ void cEditorThumbnailBuilder::FocusCameraOnEntity(cMeshEntity *apEntity)
 	}
 
 	vVecSum.Normalize();
-	
+
 	/////////////////////////
 	// Calculate position
 	cVector3f vDir=1;
@@ -392,7 +392,7 @@ void cEditorThumbnailBuilder::FocusCameraOnEntity(cMeshEntity *apEntity)
 	float fDist = meshBV.GetSize().x;
 	if(fDist < meshBV.GetSize().y) fDist = meshBV.GetSize().y;
 	if(fDist < meshBV.GetSize().z) fDist = meshBV.GetSize().z;
-	
+
 	//Making the 2.0 larger might reduce some of the perspective distortion if needed
 	fDist = sqrt(fDist*fDist)*2.0f;
 
@@ -433,14 +433,14 @@ void cEditorThumbnailBuilder::FocusCameraOnEntity(cMeshEntity *apEntity)
 	for(int i=0;i<8; ++i)
 	{
 		cVector3f vToCorner =  cMath::Vector3Normalize(vCorners[i] - vCamPos);
-		
+
 		float fAngle = cMath::Vector3Angle(vToCorner, vDirToCenter);
 		if(fAngle > fLargestAngle) fLargestAngle = fAngle;
 	}
-	
+
 	pCam->SetFOV(fLargestAngle*2);
 	pCam->SetAspect(1); //<- this makes it looks stretch but since u render to a square it should be like this for you!
-	
+
 	/////////////////////////
 	// Light
 	pLight->SetRadius(fDist*4);
@@ -460,7 +460,7 @@ void cEditorThumbnailBuilder::VtxBufferAddNormals(const cMatrixf a_mtxTransform,
 	for(int tri=0; tri<lIndexNum; tri+=3)
 	{
 		///////////////////////
-		//Get positions 
+		//Get positions
 		cVector3f vPos[3];
 		cVector3f vCenterPos=0;
 		for(int i=0; i<3; ++i)
@@ -489,7 +489,7 @@ void cEditorThumbnailBuilder::VtxBufferAddNormals(const cMatrixf a_mtxTransform,
 
 		//Make sure that 2 times normals need to point down in order to view it from below.
 		if(vNormal.y < 0) vNormal = vNormal * 0.45f;
-		
+
 		//In case both sides have equal amount of polygons
 		if(vNormal.x < 0) vNormal = vNormal * 0.85f;
 		else if(vNormal.z < 0) vNormal = vNormal * 0.8f;

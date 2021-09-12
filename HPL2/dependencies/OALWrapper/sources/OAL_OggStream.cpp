@@ -145,19 +145,19 @@ bool cOAL_OggStream::Stream(cOAL_Buffer* apDestBuffer)
 			break;
 		}
 		// If we get a negative value, then something went wrong. Clean up and set error status.
-		else if(lChunkSize == OV_HOLE)										
+		else if(lChunkSize == OV_HOLE)
 			;
-		else if(lChunkSize==OV_EINVAL || 
-				lChunkSize==OV_EBADLINK || 
+		else if(lChunkSize==OV_EINVAL ||
+				lChunkSize==OV_EBADLINK ||
 				lChunkSize<0)
 			mbStatus = false;
 		else
 			lDataSize += lChunkSize;
 	}
 	// Bind the data to the Buffer Object
-	if(lDataSize) 
+	if(lDataSize)
 		mbStatus = apDestBuffer->Feed(mpPCMBuffer, lDataSize, fStartTime);
-	else 
+	else
 		mbEOF = true;
 
 	return (lDataSize != 0);
@@ -175,7 +175,7 @@ bool cOAL_OggStream::Stream(cOAL_Buffer* apDestBuffer)
 void cOAL_OggStream::Seek(float afWhere, bool abForceRebuffer)
 {
 	mbEOF = false;
-	
+
 	if(afWhere < 0)
 		afWhere = 0;
 	if(afWhere > 1)
@@ -208,7 +208,7 @@ double cOAL_OggStream::GetTime()
 bool cOAL_OggStream::CreateFromFile(const wstring &asFilename)
 {
 	DEF_FUNC_NAME("cOAL_OggStream::CreateFromFile()");
-	
+
 	if(mbStatus==false)
 		return false;
 
@@ -224,7 +224,7 @@ bool cOAL_OggStream::CreateFromFile(const wstring &asFilename)
 
 	lOpenResult = ov_open_callbacks(pStreamFile, &movStreamHandle,
 									NULL, 0, OV_CALLBACKS_DEFAULT);
-	if(lOpenResult<0)	
+	if(lOpenResult<0)
 	{
 		fclose(pStreamFile);
 		mbIsValidHandle = false;
@@ -297,7 +297,7 @@ bool cOAL_OggStream::CreateFromBuffer(const void *apBuffer, size_t aSize)
 void cOAL_OggStream::Destroy()
 {
 	DEF_FUNC_NAME("cOAL_OggStream::Unload()");
-	
+
 	// If we loaded a stream, clear the handle to the Ogg Vorbis file
 	if(mbIsValidHandle)
 		ov_clear(&movStreamHandle);

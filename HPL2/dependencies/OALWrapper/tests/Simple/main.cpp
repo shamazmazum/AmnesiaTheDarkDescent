@@ -30,7 +30,7 @@ int main (int argc, char *argv[])
     printf ("Initializing OpenAL... ");
     fflush(stdout);
     OAL_SetupLogging(true,eOAL_LogOutput_File,eOAL_LogVerbose_High);
-    
+
     cOAL_Init_Params oal_parms;
     oal_parms.mlStreamingBufferSize = 8192;
 

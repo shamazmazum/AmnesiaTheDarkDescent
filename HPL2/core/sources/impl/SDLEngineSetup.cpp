@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -39,7 +39,7 @@
 #include "impl/LowLevelSoundOpenAL.h"
 #include "impl/LowLevelPhysicsNewton.h"
 
-#ifdef INCLUDE_HAPTIC 
+#ifdef INCLUDE_HAPTIC
 	#include "impl/LowLevelHapticHaptX.h"
 #endif
 
@@ -71,7 +71,7 @@ namespace hpl {
 		if(alHplSetupFlags & (eHplSetup_Screen | eHplSetup_Video))
 		{
 			if(SDL_Init( SDL_INIT_VIDEO | SDL_INIT_TIMER ) < 0) {
-				FatalError("Error Initializing Display: %s",SDL_GetError()); 
+				FatalError("Error Initializing Display: %s",SDL_GetError());
 				exit(1);
 			}
 #if SDL_VERSION_ATLEAST(2,0,0)
@@ -85,7 +85,7 @@ namespace hpl {
 			{
 				DEV_BROADCAST_DEVICEINTERFACE notificationFilter;
 				ZeroMemory(&notificationFilter, sizeof(notificationFilter));
- 
+
 				// set up filtering, so we only get notified of input device changes
 				notificationFilter.dbcc_devicetype = DBT_DEVTYP_DEVICEINTERFACE;
 				static const GUID GuidDevInterfaceHID = {0x745a17a0, 0x74d3, 0x11d0,
@@ -93,12 +93,12 @@ namespace hpl {
 				notificationFilter.dbcc_classguid = GuidDevInterfaceHID;
 
 				notificationFilter.dbcc_size = sizeof(notificationFilter);
- 
+
 				HDEVNOTIFY hDevNotify;
 				hDevNotify = RegisterDeviceNotification(info.window, &notificationFilter,
 					DEVICE_NOTIFY_WINDOW_HANDLE |
 					DEVICE_NOTIFY_ALL_INTERFACE_CLASSES);
- 
+
 				if(hDevNotify == NULL) {
 				}
 			}
@@ -108,39 +108,39 @@ namespace hpl {
 		{
 			SDL_Init( SDL_INIT_TIMER );
 		}
-		
+
 		//////////////////////////
 		// System
 		mpLowLevelSystem = hplNew( cLowLevelSystemSDL, () );
-		
+
 		//////////////////////////
 		// Graphics
 		mpLowLevelGraphics = hplNew( cLowLevelGraphicsSDL,() );
-		
+
 		//////////////////////////
 		// Input
 		mpLowLevelInput = hplNew( cLowLevelInputSDL,(mpLowLevelGraphics) );
-		
+
 		//////////////////////////
 		// Resources
 		mpLowLevelResources = hplNew( cLowLevelResourcesSDL,(mpLowLevelGraphics) );
-		
+
 		//////////////////////////
 		// Sound
 		mpLowLevelSound	= hplNew( cLowLevelSoundOpenAL,() );
-		
+
 		//////////////////////////
 		// Physics
 		mpLowLevelPhysics = hplNew( cLowLevelPhysicsNewton,() );
-		
+
 		//////////////////////////
 		// Haptic
-#ifdef INCLUDE_HAPTIC 
+#ifdef INCLUDE_HAPTIC
 		mpLowLevelHaptic = hplNew( cLowLevelHapticHaptX,() );
-#else 
+#else
 		mpLowLevelHaptic = NULL;
 #endif
-		
+
 	}
 
 	//-----------------------------------------------------------------------
@@ -148,7 +148,7 @@ namespace hpl {
 	cSDLEngineSetup::~cSDLEngineSetup()
 	{
 		Log("- Deleting lowlevel stuff.\n");
-		
+
 		Log("  Physics\n");
 		hplDelete(mpLowLevelPhysics);
 		Log("  Sound\n");
@@ -162,7 +162,7 @@ namespace hpl {
 		Log("  Graphics\n");
 		hplDelete(mpLowLevelGraphics);
 		Log("  Haptic\n");
-#ifdef INCLUDE_HAPTIC 	
+#ifdef INCLUDE_HAPTIC
 		hplDelete(mpLowLevelHaptic);
 #endif
 
@@ -179,7 +179,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	cScene* cSDLEngineSetup::CreateScene(cGraphics* apGraphics, cResources *apResources, cSound* apSound,
 										cPhysics *apPhysics, cSystem *apSystem,cAI *apAI,cGui *apGui,
 										cHaptic *apHaptic)
@@ -190,18 +190,18 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	
+
 	/**
 	 * \todo Lowlevelresource and resource both use lowlevel graphics. Can this be fixed??
-	 * \param apGraphics 
-	 * \return 
+	 * \param apGraphics
+	 * \return
 	 */
 	cResources* cSDLEngineSetup::CreateResources(cGraphics* apGraphics)
 	{
 		cResources *pResources = hplNew( cResources, (mpLowLevelResources,mpLowLevelGraphics) );
 		return pResources;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cInput* cSDLEngineSetup::CreateInput(cGraphics* apGraphics)
@@ -209,7 +209,7 @@ namespace hpl {
 		cInput *pInput = hplNew( cInput, (mpLowLevelInput) );
 		return pInput;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cSystem* cSDLEngineSetup::CreateSystem()
@@ -217,7 +217,7 @@ namespace hpl {
 		cSystem *pSystem = hplNew( cSystem, (mpLowLevelSystem) );
 		return pSystem;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cGraphics* cSDLEngineSetup::CreateGraphics()
@@ -226,15 +226,15 @@ namespace hpl {
 		return pGraphics;
 	}
 	//-----------------------------------------------------------------------
-	
+
 	cSound* cSDLEngineSetup::CreateSound()
 	{
 		cSound *pSound = hplNew( cSound, (mpLowLevelSound) );
 		return pSound;
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	cPhysics* cSDLEngineSetup::CreatePhysics()
 	{
 		cPhysics *pPhysics = hplNew( cPhysics, (mpLowLevelPhysics) );

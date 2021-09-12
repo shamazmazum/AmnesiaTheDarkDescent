@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -55,8 +55,8 @@ void cEdGrid::SetSnapSeparation(const float afSeparation)
 
 /** Given a World Position as parameter, return the closest point on the grid
  *
- * \param avWorldPos 
- * \return 
+ * \param avWorldPos
+ * \return
  */
 cVector3f cEdGrid::GetSnappedPosOnGrid(const cVector3f& avWorldPos, bool abForceSnap)
 {
@@ -146,7 +146,7 @@ void cEdGrid::Draw(cRendererCallbackFunctions *apFunctions, const cVector3f& avP
 		vStartCorner.z -= fHalfGridSize;
 		vLineEnd1.z = mfSize;
 		vLineEnd2.y = mfSize;
-		
+
 		break;
 	case ePlaneNormal_Y:
 		vAxisStart1 = cVector3f(-fHalfGridSize, 0, 0);
@@ -163,7 +163,7 @@ void cEdGrid::Draw(cRendererCallbackFunctions *apFunctions, const cVector3f& avP
 		vStartCorner.z -= fHalfGridSize;
 		vLineEnd1.z = mfSize;
 		vLineEnd2.x = mfSize;
-		
+
 		break;
 	case ePlaneNormal_Z:
 		vAxisStart1 = cVector3f(-fHalfGridSize, 0, 0);
@@ -180,22 +180,22 @@ void cEdGrid::Draw(cRendererCallbackFunctions *apFunctions, const cVector3f& avP
 		vStartCorner.y -= fHalfGridSize;
 		vLineEnd1.y = mfSize;
 		vLineEnd2.x = mfSize;
-		
+
 		break;
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
-	// Start actual drawing: Starting from one of the grid corners, this loop draws 2 perpendicular lines per iteration, 
+	// Start actual drawing: Starting from one of the grid corners, this loop draws 2 perpendicular lines per iteration,
 	// then adds the grid separation for the next one, until the grid size is covered
 	vLineStart1 = GetSnappedPosOnGrid(vStartCorner,true);
 	vLineStart2 = vLineStart1;
 
-	
+
 	apFunctions->SetDepthTest(true);
 	apFunctions->SetDepthWrite(false);
-	
+
 	apFunctions->SetBlendMode(eMaterialBlendMode_Alpha);
-	
+
 	apFunctions->SetProgram(NULL);
 	apFunctions->SetTextureRange(NULL,0);
 	apFunctions->SetMatrix(NULL);
@@ -210,7 +210,7 @@ void cEdGrid::Draw(cRendererCallbackFunctions *apFunctions, const cVector3f& avP
 
 		vLineStart1 += vAdd1;
 		vLineStart2 += vAdd2;
-        
+
 		fCount += mfSnapSeparation;
 	}
 

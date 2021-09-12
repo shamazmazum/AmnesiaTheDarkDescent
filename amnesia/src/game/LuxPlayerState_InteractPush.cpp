@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -36,17 +36,17 @@ cLuxPlayerState_InteractPush::cLuxPlayerState_InteractPush(cLuxPlayer *apPlayer)
 {
 	mfWalkMaxSpeed = gpBase->mpGameCfg->GetFloat("Player_Interaction","PushMaxSpeedWalk",0);
 	mfWalkForce = gpBase->mpGameCfg->GetFloat("Player_Interaction","PushForceWalk",0);
-	
+
 	mfRunMaxSpeed = gpBase->mpGameCfg->GetFloat("Player_Interaction","PushMaxSpeedRun",0);
 	mfRunForce = gpBase->mpGameCfg->GetFloat("Player_Interaction","PushForceRun",0);
-	
+
 	mfCrouchMaxSpeed = gpBase->mpGameCfg->GetFloat("Player_Interaction","PushMaxSpeedCrouch",0);
 	mfCrouchForce = gpBase->mpGameCfg->GetFloat("Player_Interaction","PushForceCrouch",0);
-	
+
 	mfYawRange = cMath::ToRad(gpBase->mpGameCfg->GetFloat("Player_Interaction","PushYawRange",0));
 	mfPitchMinRange = cMath::ToRad(gpBase->mpGameCfg->GetFloat("Player_Interaction","PushPitchMinRange",0));
 	mfPitchMaxRange = cMath::ToRad(gpBase->mpGameCfg->GetFloat("Player_Interaction","PushPitchMaxRange",0));
-	
+
 	mfMaxForce = gpBase->mpGameCfg->GetFloat("Player_Interaction","PushMaxForce",0);
 
 	mVelocityPid.SetErrorNum(20);
@@ -65,7 +65,7 @@ cLuxPlayerState_InteractPush::cLuxPlayerState_InteractPush(cLuxPlayer *apPlayer)
 
 cLuxPlayerState_InteractPush::~cLuxPlayerState_InteractPush()
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -81,20 +81,20 @@ void cLuxPlayerState_InteractPush::OnEnterState(eLuxPlayerState aPrevState)
 	/////////////////////////////////
 	//Get the static variables
 	SetupInteractVars();
-	
+
 	cVector3f vInteractPos = cLuxPlayerStateVars::mvInteractPos;
 
 	mpPushData = mpCurrentProp->GetPushData();
-	
+
 	/////////////////////////////////
 	//Reset variables
 	ClearMoveVars();
 
 	mVelocityPid.Reset();
 	mStopVelocityPid.Reset();
-	
+
 	mvPushDir =0;
-	
+
 	/////////////////////////////////
 	//Set up character body
 	iCharacterBody *pCharBody = mpPlayer->GetCharacterBody();
@@ -109,7 +109,7 @@ void cLuxPlayerState_InteractPush::OnEnterState(eLuxPlayerState aPrevState)
 	pCam->SetPitchLimits(pCam->GetPitch() - mfPitchMinRange, pCam->GetPitch() + mfPitchMaxRange);
 	pCam->SetYawLimits(pCam->GetYaw() - mfYawRange, pCam->GetYaw() + mfYawRange);
 
-	
+
 	/////////////////////////////////
 	//Calculate the local attach pos (if in attach at point)
 	if(mpPushData->mbPushAtPoint)
@@ -179,34 +179,34 @@ void cLuxPlayerState_InteractPush::Update(float afTimeStep)
 	{
 		if(mbMoving[i]) mvPushDir += vDirAdd[i] * mfTotalMoveMul[i];
 	}
-	
+
 	///////////////////////////////////////
 	// Check if there was any movement
     if(mvPushDir == 0)
 	{
-	
+
 		cVector3f vBodyVel = mpPushData->mbPushAtPoint ?  mpCurrentBody->GetVelocityAtPosition(vAttachPos) : mpCurrentBody->GetLinearVelocity();
-		cVector3f vVelError = cVector3f(0) - vBodyVel; 
+		cVector3f vVelError = cVector3f(0) - vBodyVel;
 		vVelError.y =0; //Skip fixing y and concentrate on ground plane.
 		cVector3f vForce = mStopVelocityPid.Output(vVelError,afTimeStep) * mpCurrentBody->GetMass();
 
 		vForce = cMath::Vector3MaxLength(vForce, mfMaxForce);
-		
+
 		if(mpPushData->mbPushAtPoint)
-			mpCurrentBody->AddForceAtPosition(vForce,vAttachPos);    
+			mpCurrentBody->AddForceAtPosition(vForce,vAttachPos);
 		else
-			mpCurrentBody->AddForce(vForce); 
-		
+			mpCurrentBody->AddForce(vForce);
+
 		return;
 	}
 
 	mvPushDir.Normalize();
-	
+
 	///////////////////////////////////////
 	// Update speed so it only travels in the correct direction!
 	cVector3f vBodyVel = mpPushData->mbPushAtPoint ?  mpCurrentBody->GetVelocityAtPosition(vAttachPos) : mpCurrentBody->GetLinearVelocity();
 	cVector3f vVelInDir = mvPushDir * cMath::Vector3Dot(mvPushDir, vBodyVel);
-	
+
 	mVelocityPid.p = 12;
 	mVelocityPid.i = 0;
 	mVelocityPid.d = 0.2f;
@@ -217,11 +217,11 @@ void cLuxPlayerState_InteractPush::Update(float afTimeStep)
 	vCorrectForce = cMath::Vector3MaxLength(vCorrectForce, mfMaxForce);
 
 	if(mpPushData->mbPushAtPoint)
-		mpCurrentBody->AddForceAtPosition(vCorrectForce,vAttachPos);    
+		mpCurrentBody->AddForceAtPosition(vCorrectForce,vAttachPos);
 	else
-		mpCurrentBody->AddForce(vCorrectForce); 
+		mpCurrentBody->AddForce(vCorrectForce);
 
-	
+
 	///////////////////////////////////////
 	// GetMax Speed and force
 	float fMaxSpeed = mfWalkMaxSpeed;
@@ -229,7 +229,7 @@ void cLuxPlayerState_InteractPush::Update(float afTimeStep)
 	if(mpPlayer->GetCurrentMoveState() == eLuxMoveState_Normal)
 	{
 		cLuxMoveState_Normal *pNormalMove = static_cast<cLuxMoveState_Normal*>(mpPlayer->GetMoveStateData(eLuxMoveState_Normal));
-		
+
 		if(pNormalMove->IsRunning())
 		{
 			fMaxSpeed = mfRunMaxSpeed;
@@ -241,8 +241,8 @@ void cLuxPlayerState_InteractPush::Update(float afTimeStep)
 			fPushForce = mfCrouchForce;
 		}
 	}
-	
-	
+
+
 	///////////////////////////////////////
 	// Update the box force
 	if(vVelInDir.Length() < fMaxSpeed || cMath::Vector3Dot(vVelInDir,mvPushDir)<0)
@@ -263,11 +263,11 @@ void cLuxPlayerState_InteractPush::Update(float afTimeStep)
 		}
 	}
 
-	
+
 	///////////////////////////////////////////
 	//Get the max speed the player may have
 	cVector3f vMaxPlayerVel = 0;
-	
+
 	//Make sure box is moving in right direction.
 	if(cMath::Vector3Dot(vVelInDir,mvPushDir)>0)
 	{
@@ -278,7 +278,7 @@ void cLuxPlayerState_InteractPush::Update(float afTimeStep)
 	// Check if the body will collide with the player!
 	cCollideData collideData;collideData.SetMaxSize(1);
 	cMatrixf mtxNextTransform = cMath::MatrixMul(cMath::MatrixTranslate(mvPushDir * 0.1f), mpCurrentBody->GetLocalMatrix());
-    
+
 	bool bWillCollideWithPlayer = pPhysicsWorld->CheckShapeCollision(
 										pCharBody->GetCurrentShape(), cMath::MatrixTranslate(pCharBody->GetPosition()),
 										mpCurrentBody->GetShape(), mtxNextTransform,
@@ -305,7 +305,7 @@ void cLuxPlayerState_InteractPush::Update(float afTimeStep)
 		if(mbMoving[i])
 			pCharBody->Move((eCharDir)i, mfTotalMoveMul[i]);
 	}
-	
+
 }
 
 void cLuxPlayerState_InteractPush::PostUpdate(float afTimeStep)
@@ -347,7 +347,7 @@ bool cLuxPlayerState_InteractPush::OnDoAction(eLuxPlayerAction aAction,bool abPr
 				mpCurrentBody->AddImpulse(mvPushDir * mpPushData->mfPushImpulse);
 			}
 
-			mpPlayer->ChangeState(mPreviousState);	
+			mpPlayer->ChangeState(mPreviousState);
 			return false;
 		}
 	}
@@ -358,7 +358,7 @@ bool cLuxPlayerState_InteractPush::OnDoAction(eLuxPlayerAction aAction,bool abPr
 
 void cLuxPlayerState_InteractPush::OnScroll(float afAmount)
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -396,14 +396,14 @@ float cLuxPlayerState_InteractPush::DrawDebug(cGuiSet *apSet,iFontData *apFont, 
 {
 	cVector3f vBodyVel = mpCurrentBody->GetLinearVelocity(); //TODO: Get vel at point if pick at point!
 	cVector3f vVelInDir = mvPushDir * cMath::Vector3Dot(mvPushDir, vBodyVel);
-	
+
 	apSet->DrawFont(apFont,cVector3f(5,afStartY,5),12,cColor(1,1),_W("CurrentVel: %ls"), cString::To16Char(vBodyVel.ToString()).c_str());
 	afStartY += 13.0f;
-	
+
 	apSet->DrawFont(apFont,cVector3f(5,afStartY,5),12,cColor(1,1),_W("WantedVel: %ls"), cString::To16Char(vVelInDir.ToString()).c_str());
 	afStartY += 13.0f;
 
-	return afStartY;	
+	return afStartY;
 }
 
 //-----------------------------------------------------------------------

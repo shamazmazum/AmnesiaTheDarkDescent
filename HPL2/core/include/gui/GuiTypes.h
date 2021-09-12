@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -38,9 +38,9 @@ namespace hpl {
 		eGuiWindowZDest_ContextMenu,
 		eGuiWindowZDest_LastEnum,
 	};
-	
+
 	//--------------------------------
-	
+
 	enum eGuiMouseButton
 	{
 		eGuiMouseButton_Left =		0x00000001,
@@ -99,9 +99,9 @@ namespace hpl {
 		eGuiMaterial_PremulAlpha,
 		eGuiMaterial_LastEnum,
 	};
-	
+
 	//--------------------------------
-	
+
 	enum eWidgetType
 	{
 		eWidgetType_Root,
@@ -149,7 +149,7 @@ namespace hpl {
 	};
 
 	//--------------------------------
-	
+
 	enum eGuiSkinFont
 	{
 		eGuiSkinFont_Default,
@@ -185,7 +185,7 @@ namespace hpl {
 		eGuiSkinAttribute_ContextMenuItemTextLeftPadding,
 		eGuiSkinAttribute_ContextMenuItemTextRightPadding,
 		eGuiSkinAttribute_ContextMenuSeparatorPadding,
-		
+
 		eGuiSkinAttribute_MainMenuItemTextPadding,
 		eGuiSkinAttribute_MainMenuItemVPadding,
 		eGuiSkinAttribute_MainMenuItemSeparation,
@@ -210,7 +210,7 @@ namespace hpl {
 		eGuiSkinAttribute_LastEnum
 	};
 	//--------------------------------
-		
+
 	enum eGuiSkinGfx
 	{
 		///////////////////////////////////
@@ -350,7 +350,7 @@ namespace hpl {
 		eGuiSkinGfx_TabLabelCornerRU,
 		eGuiSkinGfx_TabLabelCornerRD,
 		eGuiSkinGfx_TabLabelCornerLD,
-		
+
 		eGuiSkinGfx_TabBorderRight,
 		eGuiSkinGfx_TabBorderLeft,
 		eGuiSkinGfx_TabBorderUp,
@@ -413,7 +413,7 @@ namespace hpl {
 		eWidgetTextBoxInputType_Numeric,
 		eWidgetTextBoxInputType_LastEnum
 	};
-	
+
 	//--------------------------------
 
 	enum eGuiMessage
@@ -443,7 +443,7 @@ namespace hpl {
 		eGuiMessage_KeyRelease,			//pos= mouse pos, lVal=char code.
 
 		eGuiMessage_GamepadInput,
-		
+
 		eGuiMessage_UIArrowPress,		//mlVal = arrow dir
 		eGuiMessage_UIArrowRelease,
 		eGuiMessage_UIButtonPress,		//mlVal = button
@@ -452,7 +452,7 @@ namespace hpl {
 
 		eGuiMessage_GetUINavFocus,
 		eGuiMessage_LoseUINavFocus,
-		
+
 		eGuiMessage_SliderMove,			//val=slider value
 		eGuiMessage_SliderRelease,		//val=slider value
 
@@ -472,7 +472,7 @@ namespace hpl {
 
 	//--------------------------------
 
-	
+
 	struct cGuiMessageData
 	{
 		cGuiMessageData(){}
@@ -511,14 +511,14 @@ namespace hpl {
 
 
 	typedef tFlag tWidgetWindowButtonFlag;
-	
+
 	#define eWidgetWindowButtonFlag_None			(0x00000000)
 	#define eWidgetWindowButtonFlag_ButtonClose		(0x00000001)
 
-	
+
 	//--------------------------------
-	
-	
+
+
 	class iWidget;
 
 	typedef bool (*tGuiCallbackFunc)(void *,iWidget*, const cGuiMessageData&);
@@ -531,22 +531,22 @@ namespace hpl {
 		{\
 			return ((ThisClass*)apObject)->FuncName(apWidget, aData); \
 		}
-		
+
 	#define kGuiCallbackFuncEnd(ThisClass,FuncName) \
 		static bool FuncName##_static_gui(void *apObject,iWidget* apWidget,const cGuiMessageData& aData) \
 		{ \
 			return ((ThisClass*)apObject)->FuncName(apWidget, aData); \
-		} 
+		}
 
 	#define kGuiCallback(FuncName) & FuncName##_static_gui
-	
+
 	//--------------------------------
-	
+
 	typedef std::list<iWidget*> tWidgetList;
 	typedef tWidgetList::iterator tWidgetListIt;
 
 	//--------------------------------
-	
+
 	typedef std::vector<iWidget*>	tWidgetVec;
 	typedef tWidgetVec::iterator	tWidgetVecIt;
 
@@ -554,7 +554,7 @@ namespace hpl {
 
 	class cGuiGfxElement;
 	class cGuiSet;
-	
+
 	typedef std::list<cGuiGfxElement*> tGuiGfxElementList;
 	typedef tGuiGfxElementList::iterator tGuiGfxElementListIt;
 

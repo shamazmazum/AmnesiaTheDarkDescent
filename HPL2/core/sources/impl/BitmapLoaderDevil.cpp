@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -42,12 +42,12 @@ namespace hpl {
 	iBitmapLoaderDevil::iBitmapLoaderDevil()
 	{
 	}
-	
+
 	iBitmapLoaderDevil::~iBitmapLoaderDevil()
 	{
-		
+
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -55,7 +55,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	bool iBitmapLoaderDevil::SaveBitmap(cBitmap* apBitmap,const tWString& asFile, tBitmapSaveFlag aFlags)
 	{
 		Initialize();
@@ -70,7 +70,7 @@ namespace hpl {
 		////////////////////////////////////////
 		//Set the data from bitmap
 		ILubyte lBytesPerPixel = apBitmap->GetBytesPerPixel();
-		ILenum lILFormat = HPLPixelFormatToDevil(apBitmap->GetPixelFormat());	
+		ILenum lILFormat = HPLPixelFormatToDevil(apBitmap->GetPixelFormat());
 
 		if(lILFormat ==0)
 		{
@@ -78,11 +78,11 @@ namespace hpl {
 			ilDeleteImages(1,&lImageId);
 			return false;
 		}
-		
+
 		ilTexImage(	apBitmap->GetWidth(), apBitmap->GetHeight(),apBitmap->GetDepth(),lBytesPerPixel,
 					lILFormat,IL_UNSIGNED_BYTE, apBitmap->GetData(0,0)->mpData);
-		
-		
+
+
 		////////////////////////////////////////
 		//Save to file
 		//Get the type of file
@@ -103,14 +103,14 @@ namespace hpl {
 		//Save the image to file
 		int	lRet = ilSaveF(lType, pFile);
 		if(lRet ==0) Error("Error when saving image '%s' to file!\n",cString::To8Char(asFile).c_str());
-		
+
 		//Close file pointer
 		fclose(pFile);
 
 		////////////////////////////////////////
 		//Exit
 		ilDeleteImages(1,&lImageId);
-		
+
 
 		return lRet != 0;
 	}
@@ -121,7 +121,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// PRIVATE METHODS
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
 
 	bool iBitmapLoaderDevil::LoadDevilImageW(const tWString& asFile)
@@ -137,7 +137,7 @@ namespace hpl {
 			Error("Could not open file %s for reading!\n",cString::To8Char(asFile).c_str());
 			return false;
 		}
-		
+
 		int lRet = ilLoadF(lType, pFile);
 
 		fclose(pFile);
@@ -208,7 +208,7 @@ namespace hpl {
 		Log("  Version String: %s\n", ilGetString(IL_VERSION_NUM));
 		int libVersion = ilGetInteger(IL_VERSION_NUM);
 		Log("  Version Number: %d\n", libVersion);
-		
+
 		if (libVersion != IL_VERSION) {
 			Log("  ***** WARNING *****\n");
 			Log("  Expecting IL version %d and found version %d\n",IL_VERSION,libVersion);
@@ -259,12 +259,12 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	ILenum iBitmapLoaderDevil::FileNameToDevilTypeW(const tWString& asFile)
 	{
 		tWString sExt = cString::ToLowerCaseW(cString::GetFileExtW(asFile));
         if(sExt==_W("")) return 0;
-		
+
 		if(sExt == _W("bmp"))	return IL_BMP;
 		if(sExt == _W("jpeg"))	return IL_JPG;
 		if(sExt == _W("jpg"))	return IL_JPG;
@@ -275,7 +275,7 @@ namespace hpl {
 		if(sExt == _W("dds"))	return IL_DDS;
 		if(sExt == _W("psd"))	return IL_PSD;
 		if(sExt == _W("sgi"))	return IL_SGI;
-		
+
 		return 0;
 	}
 

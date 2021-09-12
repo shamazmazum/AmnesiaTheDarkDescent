@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -35,14 +35,14 @@
 
 cLuxPlayerState_InteractLever::cLuxPlayerState_InteractLever(cLuxPlayer *apPlayer) : iLuxPlayerState_InteractRotateBase(apPlayer, eLuxPlayerState_InteractLever)
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
 
 cLuxPlayerState_InteractLever::~cLuxPlayerState_InteractLever()
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -107,7 +107,7 @@ float cLuxPlayerState_InteractLever::GetSpeedAdd(cCamera *apCam)
 	cVector3f vUp = apCam->GetUp();
 	cVector3f vRight = apCam->GetRight();
 	cVector3f vForward = apCam->GetForward();
-	
+
 	cVector3f vUpJointForward = cMath::Vector3Cross(vUp, mpCurrentJoint->GetPinDir());
 	cVector3f vUpAdd = vUpJointForward * cMath::Vector3Dot(vUp, vJointToBody);
 	vUp = cMath::Vector3Normalize(vUpAdd + vUp);
@@ -115,7 +115,7 @@ float cLuxPlayerState_InteractLever::GetSpeedAdd(cCamera *apCam)
 	cVector3f vRightJointForward = cMath::Vector3Cross(vRight, mpCurrentJoint->GetPinDir());
 	cVector3f vRightAdd = vRightJointForward * cMath::Vector3Dot(vRight, vJointToBody);
 	vRight = cMath::Vector3Normalize(vRightAdd + vRight);
-	
+
 	cVector3f vPushAmount = (vUp) * mvMouseAdd.y + (vRight) * -mvMouseAdd.x;
 	cVector3f vPushRotateDir = cMath::Vector3Cross(vJointToBody, vPushAmount);
 

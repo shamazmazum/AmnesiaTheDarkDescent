@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -54,12 +54,12 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// DEFINES
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
 
 	#define kBeginWorldEntityLoad()		\
 		tString sName = apElement->GetAttributeString("Name");
-	
+
 	#define kEndWorldEntityLoad(pEntity)		\
 		SetupWorldEntity(pEntity, apElement);	\
 		return pEntity;
@@ -96,7 +96,7 @@ namespace hpl {
 	cParticleSystem* cEngineFileLoading::LoadParticleSystem(cXmlElement* apElement, const tString& asNamePrefix, cWorld *apWorld)
 	{
 		kBeginWorldEntityLoad();
-		
+
 		tString sFile = apElement->GetAttributeString("File");
 
 		cParticleSystem *pPS = apWorld->CreateParticleSystem(asNamePrefix+sName,sFile,1);
@@ -110,16 +110,16 @@ namespace hpl {
 			pPS->SetMaxFadeDistanceStart(apElement->GetAttributeFloat("MaxFadeDistanceStart"));
 			pPS->SetMaxFadeDistanceEnd(apElement->GetAttributeFloat("MaxFadeDistanceEnd"));
 		}
-		
+
 		kEndWorldEntityLoad(pPS);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cSoundEntity* cEngineFileLoading::LoadSound(cXmlElement* apElement, const tString& asNamePrefix, cWorld *apWorld)
 	{
 		kBeginWorldEntityLoad();
-		
+
 		tString sSoundFile = apElement->GetAttributeString("SoundEntityFile");
 		bool bUseDefault = apElement->GetAttributeBool("UseDefault");
 
@@ -137,7 +137,7 @@ namespace hpl {
 		kEndWorldEntityLoad(pSound);
 	}
 
-	
+
 	//-----------------------------------------------------------------------
 
 	static eBillboardType ToBillboardType(const tString& asType)
@@ -153,7 +153,7 @@ namespace hpl {
 													tEFL_LightBillboardConnectionList *apLightBillboardList)
 	{
 		kBeginWorldEntityLoad();
-		
+
 		cVector2f vSize = apElement->GetAttributeVector2f("BillboardSize");
 		tString sMat = apElement->GetAttributeString("MaterialFile");
 		eBillboardType bbType = ToBillboardType(apElement->GetAttributeString("BillboardType"));
@@ -171,18 +171,18 @@ namespace hpl {
 		if(apLightBillboardList && sConnectLight!="")
 		{
 			cEFL_LightBillboardConnection lightBBConnection;
-			
+
 			lightBBConnection.msBillboardID = apElement->GetAttributeInt("ID");
 			lightBBConnection.msLightName = asNamePrefix+apElement->GetAttributeString("ConnectLight");
 
 			apLightBillboardList->push_back(lightBBConnection);
 		}
-		
+
 		kEndWorldEntityLoad(pBillboard);
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	static eShadowMapResolution ToShadowMapResolution(const tString& asType)
 	{
 		tString sLowType = cString::ToLowerCase(asType);
@@ -201,11 +201,11 @@ namespace hpl {
 
 		return eTextureAnimMode_None;
 	}
-	
+
 	iLight* cEngineFileLoading::LoadLight(	cXmlElement* apElement, const tString& asNamePrefix, cWorld *apWorld, cResources *apResources, bool abStatic)
 	{
 		kBeginWorldEntityLoad();
-		
+
 		iLight *pLight = NULL;
 
 		bool bStatic = abStatic;
@@ -224,7 +224,7 @@ namespace hpl {
 		// Spotlightt
 		else if(apElement->GetValue() == "SpotLight")
 		{
-			cLightSpot *pLightSpot = apWorld->CreateLightSpot(asNamePrefix+sName,"", bStatic); 
+			cLightSpot *pLightSpot = apWorld->CreateLightSpot(asNamePrefix+sName,"", bStatic);
 			pLight = pLightSpot;
 
 			//Frustum related
@@ -244,7 +244,7 @@ namespace hpl {
 		// Point Light
 		else if(apElement->GetValue() == "PointLight")
 		{
-			cLightPoint *pLightPoint  = apWorld->CreateLightPoint(asNamePrefix+sName,"", bStatic); 
+			cLightPoint *pLightPoint  = apWorld->CreateLightPoint(asNamePrefix+sName,"", bStatic);
 			pLight = pLightPoint;
 		}
 		else
@@ -290,7 +290,7 @@ namespace hpl {
 					else
 						pGoboTex = apResources->GetTextureManager()->CreateAnim(sGobo,true, eTextureType_CubeMap);
 				}
-	
+
 				if(pGoboTex)
 				{
 					pLight->SetGoboTexture(pGoboTex);
@@ -306,7 +306,7 @@ namespace hpl {
 		pLight->SetRadius(apElement->GetAttributeFloat("Radius", 1));
 
 		pLight->SetShadowMapResolution( ToShadowMapResolution(apElement->GetAttributeString("ShadowResolution", "High")) );
-		
+
 		bool bShadowsAffectDynamic = apElement->GetAttributeBool("ShadowsAffectDynamic", true);
 		bool bShadowsAffectStatic = apElement->GetAttributeBool("ShadowsAffectStatic", true);
 		tObjectVariabilityFlag lFlags =0;
@@ -337,20 +337,20 @@ namespace hpl {
 			apElement->GetAttributeBool("FlickerFade"),
 			apElement->GetAttributeFloat("FlickerOnFadeMinLength", fDefaultFadeOn),
 			apElement->GetAttributeFloat("FlickerOnFadeMaxLength", fDefaultFadeOn),
-			
+
 			apElement->GetAttributeFloat("FlickerOffFadeMinLength", fDefaultFadeOff),
 			apElement->GetAttributeFloat("FlickerOffFadeMaxLength", fDefaultFadeOff)
 			);
- 
+
 
 		kEndWorldEntityLoad(pLight);
 	}
-	
+
 
 	//-----------------------------------------------------------------------
 
 	int glDecalNumOfElements[4] = {4,3,3,4};
-	eVertexBufferElement glDecalElementType[4] = {	eVertexBufferElement_Position, 
+	eVertexBufferElement glDecalElementType[4] = {	eVertexBufferElement_Position,
 													eVertexBufferElement_Normal,
 													eVertexBufferElement_Texture0,
 													eVertexBufferElement_Texture1Tangent};
@@ -368,7 +368,7 @@ namespace hpl {
 			Warning("Decal %s is missing geometry, skipping!\n", asName.c_str());
 			return NULL;
 		}
-			
+
 		cXmlElement *pDataArrayElem[4];
 		pDataArrayElem[0] = apElement->GetFirstElement("Positions");
 		pDataArrayElem[1] = apElement->GetFirstElement("Normals");
@@ -386,17 +386,17 @@ namespace hpl {
 		}
 		vIdxArray.reserve(lNumOfIdx);
 		cString::GetIntVec(pIndicesElem->GetAttributeString("Array"), vIdxArray,&sSepp);
-	
+
 		//////////////////////////////////
 		// Create vertex buffer
-		iVertexBuffer *pVtxBuffer = apGraphics->GetLowLevel()->CreateVertexBuffer(eVertexBufferType_Software, eVertexBufferDrawType_Tri, 
+		iVertexBuffer *pVtxBuffer = apGraphics->GetLowLevel()->CreateVertexBuffer(eVertexBufferType_Software, eVertexBufferDrawType_Tri,
 																					eVertexBufferUsageType_Static,lNumOfVtx, lNumOfIdx);
 
-		//Create arrays	
+		//Create arrays
 		for(int i=0; i<4; ++i)
 			pVtxBuffer->CreateElementArray(glDecalElementType[i],eVertexBufferElementFormat_Float, glDecalNumOfElements[i]);
 		pVtxBuffer->CreateElementArray(eVertexBufferElement_Color0,eVertexBufferElementFormat_Float,4);
-		
+
 		//Copy the data!
 		// TODO: This needs to be made faster so that data is loaded directly into mesh!
 		for(int vtx=0; vtx<lNumOfVtx; ++vtx)
@@ -421,13 +421,13 @@ namespace hpl {
 
 		//Compile
 		pVtxBuffer->Compile(0);
-		
+
 		/////////////////////////
 		// Create the mesh
 		cMesh *pMesh = hplNew( cMesh, (asName, _W(""), apResources->GetMaterialManager(), apResources->GetAnimationManager()) );
 
 		cSubMesh *pSubMesh = pMesh->CreateSubMesh("Main");
-		
+
 		cMaterial *pMat = apResources->GetMaterialManager()->CreateMaterial(asMaterial);
 		pSubMesh->SetMaterial(pMat);
 		pSubMesh->SetVertexBuffer(pVtxBuffer);

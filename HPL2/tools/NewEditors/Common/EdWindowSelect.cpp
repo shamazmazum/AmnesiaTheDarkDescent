@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -69,7 +69,7 @@ void cEdWindowSelect::SetSelectableTools(bool abTranslate, bool abRotate, bool a
 	mvButtons[0]->SetEnabled(abTranslate);
 	mvButtons[1]->SetEnabled(abRotate);
 	mvButtons[2]->SetEnabled(abScale);
-	
+
 	eSelectToolMode oldMode = mToolMode;
 	if(mToolMode==eSelectToolMode_LastEnum)
 		mToolMode = eSelectToolMode_Translate;
@@ -87,11 +87,11 @@ void cEdWindowSelect::SetSelectableTools(bool abTranslate, bool abRotate, bool a
 	if(abTranslate==false)
 		if(mToolMode==eSelectToolMode_Translate)
 			mToolMode = eSelectToolMode_LastEnum;
-	
+
 	//static_cast<cEdEditModeSelect*>(mpEditMode)->SetSelectToolMode(mToolMode);
-	
+
 	UpdateButtonHighLight();
-	
+
 }
 */
 
@@ -245,7 +245,7 @@ bool cEdWindowSelect::FilterButtonPressed(iWidget* apWidget, const cGuiMessageDa
 		{
 			cWidgetButton* pButton = static_cast<cWidgetButton*>(*it);
 			iEdObjectType* pType = static_cast<iEdObjectType*>(pButton->GetUserData());
-			
+
 			bool bFilterSet = false;
 			if(mpCBSelectMultipleTypes->IsChecked())
 			{
@@ -275,7 +275,7 @@ kGuiCallbackDeclaredFuncEnd(cEdWindowSelect, FilterButtonPressed);
 //---------------------------------------------------------------------------
 
 void cEdWindowSelect::OnCreateLayout()
-{	
+{
 	iEdPane::OnCreateLayout();
 	SetHeight(95.0f);
 
@@ -297,7 +297,7 @@ void cEdWindowSelect::OnCreateLayout()
 	//for(int i=0;i<3;++i)
 	/*
 	{
-		
+
 		cGuiGfxElement* pGfx = mpSet->GetGui()->CreateGfxImage("editmode_select_"+cString::ToLowerCase(sButtonText[i])+".tga", eGuiMaterial_Alpha);
 		cWidgetButton* pButton = mpSet->CreateWidgetButton(vPos, cVector2f(25),_W(""), mpBGWidget);
 

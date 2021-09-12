@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -61,7 +61,7 @@ void cEdEditPaneLight::Create()
 
 	const tWString& sType = mpObject->GetTypeName();
 	pTab = mpTabs->AddTab(sType);
-	
+
 	if(sType==_W("Box"))
 		AddPropertySetBox(pTab);
 	else if(sType==_W("Point"))
@@ -102,7 +102,7 @@ void cEdEditPaneLight::AddPropertyGobo(cWidgetTab *apParentTab)
         mpInpGobo = CreateInputTexture2D(vPos, _W("Gobo"), mpGroupGobo, 120, mpEditor->GetMainLookUpDir(eDir_Lights));
 	else
 		mpInpGobo = CreateInputCubeMap(vPos, _W("Gobo"), mpGroupGobo, 120, mpEditor->GetMainLookUpDir(eDir_Lights));
-	
+
 	vPos.y += mpInpGobo->GetSize().y;
 
 	mpInpGoboAnimMode = CreateInputEnum(vPos, _W("Anim Mode"), mpGroupGobo, 75);
@@ -121,7 +121,7 @@ void cEdEditPaneLight::AddPropertyFalloffMap(cWidgetTab* apParentTab)
 {
 	mpGroupFalloff = mpSet->CreateWidgetDummy(0,apParentTab);
 
-	mpInpFalloffMap = CreateInputTexture1D(cVector3f(0,0,0.1f), _W("Falloff Map"), mpGroupFalloff, 
+	mpInpFalloffMap = CreateInputTexture1D(cVector3f(0,0,0.1f), _W("Falloff Map"), mpGroupFalloff,
 											120, mpEditor->GetMainLookUpDir(eDir_Lights));
 }
 
@@ -176,14 +176,14 @@ void cEdEditPaneLight::AddPropertySetFlicker(cWidgetTab* apParentTab)
 	cVector3f vPos = cVector3f(10,30,0.1f);
 
 	mpInpFlickerActive = CreateInputBool(vPos, _W("Flicker Active"),  apParentTab);
-	
+
 	///////////////////////////////////////
 	// On Parameters
 	vPos.y += mpInpFlickerActive->GetSize().y;
 	mpGFlickerOn = mpSet->CreateWidgetDummy(vPos, apParentTab);
 
 	vPos = cVector3f(0,0,0.1f);
-	
+
 	mpInpFlickerOnMinLength = CreateInputNumber(vPos, _W("On Min time"),  mpGFlickerOn,50, 0.1f);
 	mpInpFlickerOnMinLength->SetLowerBound(true, 0);
 	vPos.x += mpInpFlickerOnMinLength->GetSize().x + 10;
@@ -193,10 +193,10 @@ void cEdEditPaneLight::AddPropertySetFlicker(cWidgetTab* apParentTab)
 	vPos.y += mpInpFlickerOnMinLength->GetSize().y + 10;
 	// Time Params
 	mpInpFlickerOnSound = CreateInputSound(vPos, _W("On Sound"), mpGFlickerOn);
-	
+
 	vPos.y += mpInpFlickerOnSound->GetSize().y;
 	mpInpFlickerOnPS = CreateInputParticleSystem(vPos, _W("On PS"),  mpGFlickerOn, 100);
-	
+
 	////////////////////////////////////////////
 	// Off Parameters
 	vPos = mpGFlickerOn->GetLocalPosition() + cVector3f(0,mpGFlickerOn->GetSize().y + 10,0);
@@ -227,7 +227,7 @@ void cEdEditPaneLight::AddPropertySetFlicker(cWidgetTab* apParentTab)
 	////////////////////////////////////////
 	// Fade Parameters
 	vPos = mpGFlickerOff->GetLocalPosition() + cVector3f(0,mpGFlickerOff->GetSize().y + 10,0);
-	
+
 	mpGFlickerFade = mpSet->CreateWidgetDummy(vPos, apParentTab);
 
 	vPos = cVector3f(0,0,0.1f);
@@ -241,7 +241,7 @@ void cEdEditPaneLight::AddPropertySetFlicker(cWidgetTab* apParentTab)
 	vPos.x += mpInpFlickerFadeOnMinLength->GetSize().x+10;
 	mpInpFlickerFadeOnMaxLength = CreateInputNumber(vPos, _W("On Max time"),  mpGFlickerFade,50, 0.1f);
 	mpInpFlickerFadeOnMaxLength->SetLowerBound(true, 0);
-	
+
 	vPos.x = 0;
 	vPos.y += mpInpFlickerFadeOnMaxLength->GetSize().y+10;
 
@@ -326,7 +326,7 @@ void cEdEditPaneLight::OnUpdate()
 		mpInpGoboAnimMode->SetValue(cString::To16Char(pLight->GetGoboAnimMode()), false);
 		mpInpGoboAnimFrameTime->SetValue(pLight->GetGoboAnimFrameTime(), false);
 	}
-		
+
 	if(mpGroupFalloff)
 	{
 		mpInpFalloffMap->SetValue(cString::To16Char(pLight->GetFalloffMap()), false);
@@ -345,7 +345,7 @@ void cEdEditPaneLight::OnUpdate()
 				mpInpShadowRes->SetValue(i, false);
 				break;
 			}
-		}	
+		}
 		mpInpShadowAffectStatic->SetValue(pLight->GetShadowsAffectStatic(),false);
 		mpInpShadowAffectDynamic->SetValue(pLight->GetShadowsAffectDynamic(),false);
 	}
@@ -353,7 +353,7 @@ void cEdEditPaneLight::OnUpdate()
 	mpInpDiffuse->SetValue(pLight->GetDiffuseColor(), false);
 
 	mpInpFlickerActive->SetValue(pLight->GetFlickerActive(), false);
-	
+
 	mpInpFlickerOnMinLength->SetValue(pLight->GetFlickerOnMinLength(), false);
 	mpInpFlickerOnMaxLength->SetValue(pLight->GetFlickerOnMaxLength(), false);
 	mpInpFlickerOnSound->SetValue(cString::To16Char(pLight->GetFlickerOnSound()), false);
@@ -366,7 +366,7 @@ void cEdEditPaneLight::OnUpdate()
 
 	mpInpFlickerOffRadius->SetValue(pLight->GetFlickerOffRadius(), false);
 	mpInpFlickerOffColor->SetValue(pLight->GetFlickerOffColor(), false);
-	
+
 	mpInpFlickerFade->SetValue(pLight->GetFlickerFade(), false);
 
 	mpInpFlickerFadeOnMinLength->SetValue(pLight->GetFlickerOnFadeMinLength(), false);
@@ -377,7 +377,7 @@ void cEdEditPaneLight::OnUpdate()
 	if(mpInpRadius) mpInpRadius->SetValue(pLight->GetRadius(), false);
 
 	// TODO : MOVE THIS TO SUBCLASSES
-	
+
 	if(mpInpBoxBlendFunc)
 	{
 		cEdObjBoxLight* pLight = static_cast<cEdObjBoxLight*>(mpObject);
@@ -404,7 +404,7 @@ void cEdEditPaneLight::OnUpdate()
 bool cEdEditPaneLight::WindowSpecificInputCallback(iEdInput* apInput)
 {
 	iEdAction* pAction = NULL;
-	
+
 	tString strFilename;
 
 	/////////////////////////////////////////////////////

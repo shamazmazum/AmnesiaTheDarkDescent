@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -25,10 +25,10 @@ cVector2f iEditorInput::mvFontSize = cVector2f(12);
 
 //--------------------------------------------------------
 
-iEditorInput::iEditorInput(iEditorWindow* apWindow, 
-						   const cVector3f& avPos, 
+iEditorInput::iEditorInput(iEditorWindow* apWindow,
+						   const cVector3f& avPos,
 						   const tWString& asLabel,
-						   const tString& asName, 
+						   const tString& asName,
 						   iWidget* apParent,
 						   eEditorInputLayoutStyle aStyle)
 {
@@ -39,7 +39,7 @@ iEditorInput::iEditorInput(iEditorWindow* apWindow,
 
 	if(apParent==NULL)
 		apParent = apWindow->GetBGFrame();
-	
+
 	mpHandle = mpSet->CreateWidgetDummy(avPos, apParent, asName);
 	mpHandle->SetUserData(this);
 
@@ -207,11 +207,11 @@ bool cEditorInputBool::GetValue()
 //--------------------------------------------------------
 
 cEditorInputText::cEditorInputText(iEditorWindow* apWindow,
-								   const cVector3f& avPos, 
+								   const cVector3f& avPos,
 								   const tWString& asLabel,
 								   const tString& asName,
 								   float afTextBoxWidth,
-								   int alAmount, 
+								   int alAmount,
 								   bool abNumeric,
                                    float afNumericAdd,
 								   iWidget* apParent,
@@ -230,9 +230,9 @@ cEditorInputText::cEditorInputText(iEditorWindow* apWindow,
 		// Setup TextBox control
 		cWidgetTextBox* pTB = mpSet->CreateWidgetTextBox(0,
 														 cVector2f(afTextBoxWidth,25),
-														 _W(""), 
-														 mpHandle, 
-														 abNumeric?eWidgetTextBoxInputType_Numeric:eWidgetTextBoxInputType_Normal, 
+														 _W(""),
+														 mpHandle,
+														 abNumeric?eWidgetTextBoxInputType_Numeric:eWidgetTextBoxInputType_Normal,
 														 afNumericAdd,
 														 afNumericAdd!=0);
 
@@ -347,7 +347,7 @@ void cEditorInputText::UpdateLayout()
 		mpL->SetPosition(0);
 		vPos.y += vLabelSize.y;
 	}
-	
+
 	float fMaxLabelLength = 0;
 	for(int i=0;i<(int)mvL.size();++i)
 		if(fMaxLabelLength<mvL[i]->GetSize().x)
@@ -366,13 +366,13 @@ void cEditorInputText::UpdateLayout()
 		case eEditorInputLayoutStyle_RowLabelOnLeft:
 		case eEditorInputLayoutStyle_RowLabelOnTop:
 			vInputPos = vPos + cVector3f(pL->GetSize().x,0,0);
-			
+
 			vPos = vInputPos + cVector3f(pTB->GetSize().x,0,0);
 			break;
 		case eEditorInputLayoutStyle_ColumnLabelOnLeft:
 		case eEditorInputLayoutStyle_ColumnLabelOnTop:
 			vInputPos = vPos + cVector3f(fMaxLabelLength,0,0);
-			
+
 			vPos.y = vInputPos.y + pTB->GetSize().y;
 			break;
 		}
@@ -406,14 +406,14 @@ kGuiCallbackDeclaredFuncEnd(cEditorInputText, TBIdCheckerCallback);
 //--------------------------------------------------------
 
 cEditorInputFile::cEditorInputFile(iEditorWindow* apWindow,
-								   const cVector3f& avPos, 
-								   const tWString& asLabel, 
-								   const tString& asName, 
+								   const cVector3f& avPos,
+								   const tWString& asLabel,
+								   const tString& asName,
 								   float afTextBoxWidth,
 								   iWidget* apParent) : cEditorInputText(apWindow,
 																			   avPos,
-																			   asLabel, 
-																			   asName, 
+																			   asLabel,
+																			   asName,
 																			   afTextBoxWidth,
 																			   1, false, 0,
 																			   apParent)
@@ -476,7 +476,7 @@ void cEditorInputFile::SetShowPath(bool abX)
 		return;
 
 	mbShowPath = abX;
-	
+
 	CopyValueToInput();
 }
 
@@ -621,7 +621,7 @@ bool cEditorInputFile::Browser_OnOkay(iWidget* apWidget, const cGuiMessageData& 
 			sFile = mvTempLoadedFiles.front();
 		else
 			sFile = msTempLoadedFile;
-		
+
 		msFilename = sFile;
 		msFullPath = sFile;
 
@@ -737,7 +737,7 @@ cColor cEditorInputColor::GetValue()
 	{
         value.v[i] = mvTB[i]->GetNumericValue();
 	}
-    
+
 	return value;
 }
 
@@ -811,7 +811,7 @@ void cEditorInputEnum::CopyValueToInput()
 			break;
 		}
 	}
-	
+
 	mpCB->SetSelectedItem(lIndex,false,false);
 }
 
@@ -846,7 +846,7 @@ void cEditorInputEnum::UpdateLayout()
 		mpL->SetPosition(0);
 		vPos.y += vLabelSize.y;
 	}
-	
+
 	mpCB->SetPosition(vPos);
 
 	UpdateSize();
@@ -886,10 +886,10 @@ const tWString& cEditorInputEnum::GetEnumValue(int alIndex)
 //--------------------------------------------------------
 //--------------------------------------------------------
 
-cEditorInputColorFrame::cEditorInputColorFrame(iEditorWindow* apWindow, 
-											   const cVector3f& avPos, 
-											   const tWString& asLabel, 
-											   const tString& asName, 
+cEditorInputColorFrame::cEditorInputColorFrame(iEditorWindow* apWindow,
+											   const cVector3f& avPos,
+											   const tWString& asLabel,
+											   const tString& asName,
 											   iWidget* apParent) : iEditorInputLabeled(apWindow, avPos, asLabel, asName, apParent, eEditorInputLayoutStyle_RowLabelOnLeft)
 {
 	mCol = cColor(1,1);

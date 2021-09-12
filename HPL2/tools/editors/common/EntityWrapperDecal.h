@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -81,7 +81,7 @@ enum eDecalCol
 class cEntityWrapperTypeDecal : public iEntityWrapperType
 {
 public:
-	cEntityWrapperTypeDecal(); 
+	cEntityWrapperTypeDecal();
 
 	bool AllowNullEngineEntity() { return true; }
 
@@ -126,9 +126,9 @@ protected:
 
 	/**
 	 * Helper to save stuff in vertex arrays
-	 * \param asOutput 
-	 * \param alNumElements 
-	 * \param apData 
+	 * \param asOutput
+	 * \param alNumElements
+	 * \param apData
 	 */
 	void SaveGeometryDataToString(tString& asOutput, int alNumElements, float* apData);
 
@@ -140,7 +140,7 @@ protected:
 
 ///////////////////////////////////////////////////////////////////////
 // Decal Entity Wrapper
-//  Represents a decal object in a map. Has means of controlling 
+//  Represents a decal object in a map. Has means of controlling
 //  the mesh output by the engine Decal Creator.
 class cEntityWrapperDecal : public iEntityWrapper
 {
@@ -198,7 +198,7 @@ public:
 
 	int GetFileIndex() { return mlFileIndex; }
 	void SetFileIndex(int alIdx) { mlFileIndex = alIdx; }
-	
+
 	/**
 	 * Recreates geometry if needed
 	 */
@@ -211,10 +211,10 @@ public:
 
 	/**
 	 * Sets up the engine decal creator state for creation and returns a non null value if a decal vertex buffer is output
-	 * \return 
+	 * \return
 	 */
 	static iVertexBuffer* BuildDecalVertexBuffer(cWorld* apWorld, cDecalCreator* apCreator,
-											const cVector3f& avPos, const cVector3f& avSize, float afOffset, 
+											const cVector3f& avPos, const cVector3f& avSize, float afOffset,
 											const cVector3f& avRight, const cVector3f& avUp, const cVector3f& avFwd,
 											const tString& asMaterial, const cColor& aCol,
 											const cVector2l& avSubDivs,int alSubDiv, int alMaxTris,
@@ -226,14 +226,14 @@ protected:
 
 	/**
 	 * Helper func to create actual mesh
-	 * \return 
+	 * \return
 	 */
 	cMesh* CreateDecalMesh();
 
 	/**
 	 * Helper func to cast out unwanted geometry
 	 */
-	static void IterateRenderableNode(iRenderableContainerNode *apNode, cDecalCreator* apCreator, 
+	static void IterateRenderableNode(iRenderableContainerNode *apNode, cDecalCreator* apCreator,
 										bool abAffectStaticObject, bool abAffectPrimitive, bool abAffectEntity);
 
 	tString msMaterial;

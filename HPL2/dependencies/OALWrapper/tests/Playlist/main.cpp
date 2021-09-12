@@ -42,7 +42,7 @@ public:
         mCurrentSong = mSongs.begin();
         Init();
     }
-    
+
     ~Playlist()
     {
         stopSong();
@@ -52,13 +52,13 @@ public:
             mUpdaterThread = 0;
         }
     }
-    
+
     void Init()
     {
         mThreadAlive = true;
         mUpdaterThread = SDL_CreateThread(Playlist::UpdaterThread, this);
     }
-    
+
     void playSong()
     {
         stopSong();
@@ -67,7 +67,7 @@ public:
         mStream = OAL_Stream_Load ((*mCurrentSong));
 
         printf("%s\n", mStream ? "Success" : "Failed");
-        
+
         if (mStream) {
             printf("\tChannels : %d\n\tFrequency : %d\n", mStream->GetChannels(), mStream->GetFrequency() );
 
@@ -93,7 +93,7 @@ public:
         }
         return 0;
     }
-    
+
     void stopSong()
     {
         if (mSource) {
@@ -129,7 +129,7 @@ int main (int argc, const char *const argv[])
     printf ("Initializing OpenAL... ");
     fflush(stdout);
     OAL_SetupLogging(true,eOAL_LogOutput_File,eOAL_LogVerbose_High);
-    
+
     cOAL_Init_Params oal_parms;
     oal_parms.mlStreamingBufferSize = 8192;
 
@@ -142,9 +142,9 @@ int main (int argc, const char *const argv[])
         printf ("Success\n");
 
     lPlaylist->playSong();
-    
+
     signal(SIGINT, sighandler);
-    
+
     while (!done) {
         SDL_Delay(1000);
     }

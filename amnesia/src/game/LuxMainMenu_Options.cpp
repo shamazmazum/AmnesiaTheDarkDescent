@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -191,7 +191,7 @@ void cLuxMainMenu_Options::CreateMainGui()
 	float fButtonSepp = 3;
 	vPos.x = mpWindow->GetSize().x - fButtonWidth*2-fButtonSepp-5;
 	vPos.y = mpWindow->GetSize().y - 25 - 10;
-	
+
 	mpBOK = mpGuiSet->CreateWidgetButton(vPos,cVector2f(fButtonWidth,30),kTranslate("MainMenu","OK"),mpWindow);
 	mpBOK->AddCallback(eGuiMessage_ButtonPressed,this, kGuiCallback(PressOK));
 
@@ -205,7 +205,7 @@ void cLuxMainMenu_Options::CreateMainGui()
 	mpBCancel->SetFocusNavigation(eUIArrow_Left, mpBOK);
 
 
-    
+
 
 	vPos = cVector3f(fLeftBorderSize, 35+fUpperBorderSize,1);
 
@@ -293,9 +293,9 @@ void cLuxMainMenu_Options::AddGameOptions(cWidgetTab* apTab)
 	mpCBLanguage = mpGuiSet->CreateWidgetComboBox(vPos + cVector3f(pLabel->GetSize().x + 5,-2,0), cVector2f(150,25), _W(""), apTab);
 	SetUpInput(pLabel, mpCBLanguage, false, kTranslate("OptionsMenu", "LanguageTip"));
 	mpCBLanguage->AddCallback(eGuiMessage_SelectionChange, this, kGuiCallback(ChangeLanguage));
-	
+
 	vPos.y += mpCBLanguage->GetSize().y + 15;
-	
+
 	///////////////////////////////////////////////
 	// Subtitles Checkbox
 	mpChBShowSubtitles = mpGuiSet->CreateWidgetCheckBox(vPos, 0, kTranslate("OptionsMenu","ShowSubtitles"), apTab);
@@ -312,14 +312,14 @@ void cLuxMainMenu_Options::AddGameOptions(cWidgetTab* apTab)
 	// Hints Checkbox
 	mpChBShowHints = mpGuiSet->CreateWidgetCheckBox(vPos, 0, kTranslate("OptionsMenu","ShowHints"), apTab);
 	SetUpInput(NULL, mpChBShowHints, false, kTranslate("OptionsMenu", "ShowHintsTip"));
-	
+
 	vPos.y += mpChBShowHints->GetSize().y + 15;
 
 	///////////////////////////////////////////////
 	// Death Hints subtitles Checkbox
 	mpChBShowDeathHints = mpGuiSet->CreateWidgetCheckBox(vPos, 0, kTranslate("OptionsMenu","ShowDeathHints"), apTab);
 	SetUpInput(NULL, mpChBShowDeathHints, false, kTranslate("OptionsMenu", "ShowDeathHintsTip"));
-	
+
 	vPos.y += mpChBShowDeathHints->GetSize().y + 15;
 
 	///////////////////////////////////////////////
@@ -345,7 +345,7 @@ void cLuxMainMenu_Options::AddGameOptions(cWidgetTab* apTab)
 		SetUpInput(NULL, mpChBShowCommentary, false, kTranslate("OptionsMenu", "CommentaryTip"));
 		vPos.y += mpChBShowCommentary->GetSize().y + 15;
 	}
-	
+
 	// Populate languages
 	PopulateLanguageList();
 
@@ -422,24 +422,24 @@ void cLuxMainMenu_Options::AddGraphicsOptions(cWidgetTab* apTab)
 	vToggleButtonStrings.push_back(kTranslate("OptionsMenu","BasicOptions"));
 
 	float fButtonWidth=0;
-	mpBToggleShowGfxOptions = mpGuiSet->CreateWidgetButton(0, 
-														   cVector2f(0,25), 
+	mpBToggleShowGfxOptions = mpGuiSet->CreateWidgetButton(0,
+														   cVector2f(0,25),
 														   vToggleButtonStrings[0],
 														   apTab);
 	mpBToggleShowGfxOptions->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(PressToggleShowGfxOptions));
 	for(int i=0;i<(int)vToggleButtonStrings.size();++i)
 	{
-		float fStringLength = mpBToggleShowGfxOptions->GetDefaultFontType()->GetLength(mpBToggleShowGfxOptions->GetDefaultFontSize(), 
+		float fStringLength = mpBToggleShowGfxOptions->GetDefaultFontType()->GetLength(mpBToggleShowGfxOptions->GetDefaultFontSize(),
 																					mpBToggleShowGfxOptions->GetText().c_str()) + 10;
 
 		if(fButtonWidth < fStringLength)
 			fButtonWidth = fStringLength;
 	}
 
-	
+
 	mpBToggleShowGfxOptions->SetSize(cVector2f(fButtonWidth, mpBToggleShowGfxOptions->GetSize().y));
 	mpBToggleShowGfxOptions->SetPosition(cVector3f(apTab->GetSize())-cVector3f(fButtonWidth, 50, -2));
-	
+
 	SetUpInput(NULL, mpBToggleShowGfxOptions, true, _W(""));
 
 	mpBToggleShowGfxOptions->SetFocusNavigation(eUIArrow_Down, mpBOK);
@@ -549,7 +549,7 @@ void cLuxMainMenu_Options::AddBasicGfxOptions(cWidgetDummy* apDummy)
 //	mpChBVSync->SetFocusNavigation(eUIArrow_Right, mpChBAdaptiveVSync);
 	mpChBVSync->SetFocusNavigation(eUIArrow_Up, mpChBFullScreen);
 	mpChBVSync->SetFocusNavigation(eUIArrow_Down, mpCBTextureSizeLevel);
-	
+
 //	mpChBAdaptiveVSync->SetFocusNavigation(eUIArrow_Left, mpChBVSync);
 //	mpChBAdaptiveVSync->SetFocusNavigation(eUIArrow_Up, mpChBFullScreen);
 //	mpChBAdaptiveVSync->SetFocusNavigation(eUIArrow_Down, mpCBTextureSizeLevel);
@@ -558,7 +558,7 @@ void cLuxMainMenu_Options::AddBasicGfxOptions(cWidgetDummy* apDummy)
 	mpCBTextureSizeLevel->SetFocusNavigation(eUIArrow_Down, mpSGamma);
 
 	mpSGamma->SetFocusNavigation(eUIArrow_Up, mpCBTextureSizeLevel);
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -638,7 +638,7 @@ void cLuxMainMenu_Options::AddAdvancedGfxOptions(cWidgetDummy* apDummy)
 
 		/////////////////////////////
 		// Shadow Resolution
-		pLabel = mpGuiSet->CreateWidgetLabel(vPosInGroup, -1, kTranslate("OptionsMenu", "ShadowRes"), pGroup);	
+		pLabel = mpGuiSet->CreateWidgetLabel(vPosInGroup, -1, kTranslate("OptionsMenu", "ShadowRes"), pGroup);
 		mpCBShadowRes = mpGuiSet->CreateWidgetComboBox(cVector3f(0,pLabel->GetSize().y+5,0), cVector2f(100,25), _W(""), pLabel);
 		SetUpInput(pLabel, mpCBShadowRes, true, kTranslate("OptionsMenu","ShadowResTip"));
 
@@ -810,7 +810,7 @@ void cLuxMainMenu_Options::AddAdvancedGfxOptions(cWidgetDummy* apDummy)
 	mpChBImageTrail; mpChBRadialBlur;
 
 	mpChBSSAO; mpCBSSAOSamples; mpCBSSAOResolution;
-	
+
 	mpChEdgeSmooth;  mpChBWorldReflection;
 	mpChBRefraction;
 
@@ -978,14 +978,14 @@ void cLuxMainMenu_Options::AddInputOptions(cWidgetTab* apTab)
 	// Down
 	mpChBInvertMouse->SetFocusNavigation(eUIArrow_Down, mpChBSmoothMouse);
 	mpChBSmoothMouse->SetFocusNavigation(eUIArrow_Down, mpSMouseSensitivity);
-	mpSMouseSensitivity->SetFocusNavigation(eUIArrow_Down, mpBKeyConfig);	
+	mpSMouseSensitivity->SetFocusNavigation(eUIArrow_Down, mpBKeyConfig);
 #ifdef USE_GAMEPAD
-	mpSMouseSensitivity->SetFocusNavigation(eUIArrow_Down, mpChBGamepadInvertLook);	
+	mpSMouseSensitivity->SetFocusNavigation(eUIArrow_Down, mpChBGamepadInvertLook);
 	mpChBGamepadInvertLook->SetFocusNavigation(eUIArrow_Down, mpSGamepadLookSensitivity);
 	mpSGamepadLookSensitivity->SetFocusNavigation(eUIArrow_Down, mpBKeyConfig);
 #endif
 	mpBKeyConfig->SetFocusNavigation(eUIArrow_Down, mpBOK);
-	
+
 	// Up
 	mpChBSmoothMouse->SetFocusNavigation(eUIArrow_Up, mpChBInvertMouse);
 	mpSMouseSensitivity->SetFocusNavigation(eUIArrow_Up, mpChBSmoothMouse);
@@ -1030,7 +1030,7 @@ void cLuxMainMenu_Options::AddSoundOptions(cWidgetTab* apTab)
 
 	mpSVolume->SetFocusNavigation(eUIArrow_Up, mpCBSndDevice);
 	mpSVolume->SetFocusNavigation(eUIArrow_Down, mpBOK);
-	
+
 	apTab->SetUserData(mpSVolume);
 	apTab->GetTabLabel()->SetUserData(mpCBSndDevice);
 
@@ -1081,7 +1081,7 @@ void cLuxMainMenu_Options::SetInputValues(cResourceVarsObject& aObj)
 	////////////////////////////////
 	// Graphics options
 	{
-		
+
 		/////////////////////////
 		// Resolution
 		{
@@ -1136,7 +1136,7 @@ void cLuxMainMenu_Options::SetInputValues(cResourceVarsObject& aObj)
                 {
 					sRes = cString::ToStringW(mode.mvScreenSize.x) + _W("x") + cString::ToStringW(mode.mvScreenSize.y);
             	}
-// Since the same resolution on display 0 will have the same text as display 1, this won't work 
+// Since the same resolution on display 0 will have the same text as display 1, this won't work
 //				if(mpCBResolution->HasItem(sRes))
 //					continue;
 
@@ -1172,7 +1172,7 @@ void cLuxMainMenu_Options::SetInputValues(cResourceVarsObject& aObj)
 			/////////////////////////////////
 			// Texture Quality
 			mpCBTextureSizeLevel->SetSelectedItem((mpCBTextureSizeLevel->GetItemNum()-1) - aObj.GetVarInt("TextureQuality"), true, false);
-		
+
 			/////////////////////////////////
 			// Texture filtering
 			tWStringVec vTexFilterStrings;
@@ -1224,13 +1224,13 @@ void cLuxMainMenu_Options::SetInputValues(cResourceVarsObject& aObj)
 				mpCBShadowQuality->AddItem(vOptionStrings[i]);
 				mpCBShadowRes->AddItem(vOptionStrings[i]);
 			}
-			
+
 			mpCBShadowQuality->SetSelectedItem(aObj.GetVarInt("ShadowQuality"), true, false);
 			mpCBShadowRes->SetSelectedItem(aObj.GetVarInt("ShadowResolution"), true, false);
 
 			mpCBParallaxQuality->AddItem(kTranslate("Launcher","Off"));
 			mpCBParallaxQuality->AddItem(kTranslate("Launcher","On"));//Skipping medium since high and medium is really the same!
-			
+
 			int lParallax = aObj.GetVarBool("ParallaxEnabled")? 1 : 0;
 			mpCBParallaxQuality->SetSelectedItem(lParallax, true, false);
 		}
@@ -1238,14 +1238,14 @@ void cLuxMainMenu_Options::SetInputValues(cResourceVarsObject& aObj)
 		/////////////////////////
 		// Water
 		{
-			mpChBWorldReflection->SetChecked(aObj.GetVarBool("WorldReflection"), false); 
-			mpChBRefraction->SetChecked(aObj.GetVarBool("Refraction"), false); 
+			mpChBWorldReflection->SetChecked(aObj.GetVarBool("WorldReflection"), false);
+			mpChBRefraction->SetChecked(aObj.GetVarBool("Refraction"), false);
 		}
 
 		/////////////////////////
 		// SSAO
 		{
-			
+
 			/////////////////////////////
 			// Active
 			mpChBSSAO->SetChecked(aObj.GetVarBool("SSAOActive"), false);
@@ -1280,13 +1280,13 @@ void cLuxMainMenu_Options::SetInputValues(cResourceVarsObject& aObj)
 			// Bloom
 			mpChBBloom->SetChecked(aObj.GetVarBool("BloomActive"), false);
 			// ImageTrail
-			mpChBImageTrail->SetChecked(aObj.GetVarBool("ImageTrailActive"), false); 
+			mpChBImageTrail->SetChecked(aObj.GetVarBool("ImageTrailActive"), false);
 			// Sepia
-			mpChBSepia->SetChecked(aObj.GetVarBool("SepiaActive"), false); 
+			mpChBSepia->SetChecked(aObj.GetVarBool("SepiaActive"), false);
 			// RadialBlur
-			mpChBRadialBlur->SetChecked(aObj.GetVarBool("RadialBlurActive"), false); 
+			mpChBRadialBlur->SetChecked(aObj.GetVarBool("RadialBlurActive"), false);
 			//Insanity
-			mpChBInsanity->SetChecked(aObj.GetVarBool("InsanityActive"), false); 
+			mpChBInsanity->SetChecked(aObj.GetVarBool("InsanityActive"), false);
 		}
 
 		// Gamma
@@ -1297,8 +1297,8 @@ void cLuxMainMenu_Options::SetInputValues(cResourceVarsObject& aObj)
 #endif
 	////////////////////////////////
 	// Input
-	mpChBInvertMouse->SetChecked(aObj.GetVarBool("InvertMouse"), false); 
-	mpChBSmoothMouse->SetChecked(aObj.GetVarBool("SmoothMouse"), false); 
+	mpChBInvertMouse->SetChecked(aObj.GetVarBool("InvertMouse"), false);
+	mpChBSmoothMouse->SetChecked(aObj.GetVarBool("SmoothMouse"), false);
 
 	float fSensitivity = aObj.GetVarFloat("MouseSensitivity");
 	SetSliderValue(mpSMouseSensitivity, fSensitivity, false, mfMouseSensitivityMin, mfMouseSensitivityMax);
@@ -1329,7 +1329,7 @@ void cLuxMainMenu_Options::SetInputValues(cResourceVarsObject& aObj)
 			break;
 		}
 	}
-	
+
 
 	if(lSndDevIdx==-1)
         mpCBSndDevice->SetSelectedItem(mpCBSndDevice->GetItemNum()-1, true, false);
@@ -1426,7 +1426,7 @@ void cLuxMainMenu_Options::ApplyChanges()
 		gpBase->mpPlayer->SetFocusIconStyle((eLuxFocusIconStyle)mpCBFocusIconStyle->GetSelectedItem());
 	}
 
-	
+
 	///////////////////////////
 	// Graphics
 	{
@@ -1457,7 +1457,7 @@ void cLuxMainMenu_Options::ApplyChanges()
 
 		pMatMgr->SetTextureAnisotropy(pCfgHdr->mfTextureAnisotropy);
 		pMatMgr->SetTextureFilter((eTextureFilter)pCfgHdr->mlTextureFilter);
-		
+
 		// Shadows
 		pCfgHdr->mbShadowsActive = mpChBShadows->IsChecked();
 		pCfgHdr->mlShadowQuality = mpCBShadowQuality->GetSelectedItem();
@@ -1500,7 +1500,7 @@ void cLuxMainMenu_Options::ApplyChanges()
 		pCfgHdr->mlSSAOSamples = GetSSAOSamplesFromIndex(mpCBSSAOSamples->GetSelectedItem());
 		pCfgHdr->mlSSAOResolution = mpCBSSAOResolution->GetSelectedItem();
 	}
-	
+
 
 	//////////////////////////////
 	// Input
@@ -1597,7 +1597,7 @@ void cLuxMainMenu_Options::PopulateLanguageList()
 	{
 		tWString sLang = *it;
 
-		tWString sLangEntry = cString::ToLowerCaseW(cString::SubW(sLang, 0, 
+		tWString sLangEntry = cString::ToLowerCaseW(cString::SubW(sLang, 0,
 																	cString::GetLastStringPosW(sLang, _W("."))));
 
 		mpCBLanguage->AddItem(kTranslate("Languages", cString::To8Char(sLangEntry)));
@@ -1629,7 +1629,7 @@ void cLuxMainMenu_Options::PopulateSoundDevices()
 			iSoundDeviceIdentifier* pSndDev = mvSoundDevices[i];
 			if(bCurrentDevFound==false && pSndDev==pCurSndDev)
 				bCurrentDevFound = true;
-			
+
 			cWidgetItem* pItem = mpCBSndDevice->AddItem(pSndDev->GetName());
 			pItem->SetUserData(pSndDev);
 		}
@@ -1673,7 +1673,7 @@ void cLuxMainMenu_Options::SetSliderValue(cWidgetSlider* apSlider, float afValue
 	float fRange = afMaxValue-afMinValue;
 
 	int lValue = cMath::RoundToInt((afValue-afMinValue)*fMaxSliderValue/fRange);
-	
+
 	apSlider->SetValue(lValue, abGenCallback);
 }
 
@@ -1709,7 +1709,7 @@ void cLuxMainMenu_Options::SetSliderLabelString(cWidgetLabel* apLabel, float afV
 		else
 			sText = asMax;
 	}
-	
+
 	if(sText.empty())
 		sText = cString::ToStringW(afValue, 3, true);
 
@@ -1751,7 +1751,7 @@ void cLuxMainMenu_Options::DumpInitialValues(cResourceVarsObject &aObj)
 		aObj.AddVarBool("FullScreen", gpBase->mpConfigHandler->mbFullscreen);
 		aObj.AddVarBool("VSync", gpBase->mpConfigHandler->mbVSync);
 		aObj.AddVarBool("AdaptiveVsync", gpBase->mpConfigHandler->mbAdaptiveVSync);
-		
+
 		/////////////////////////
 		// Texture quality and filtering
 		aObj.AddVarInt("TextureQuality", gpBase->mpConfigHandler->mlTextureQuality);
@@ -1761,7 +1761,7 @@ void cLuxMainMenu_Options::DumpInitialValues(cResourceVarsObject &aObj)
 		/////////////////////////
 		// Smoothing
 		aObj.AddVarBool("EdgeSmooth", gpBase->mpConfigHandler->mbEdgeSmooth);
-		
+
 		/////////////////////////
 		// Shadows & Parallax
 		aObj.AddVarBool("ShadowsActive", gpBase->mpConfigHandler->mbShadowsActive);
@@ -1774,7 +1774,7 @@ void cLuxMainMenu_Options::DumpInitialValues(cResourceVarsObject &aObj)
 		// Water
 		aObj.AddVarBool("WorldReflection", gpBase->mpConfigHandler->mbWorldReflection);
 		aObj.AddVarBool("Refraction", gpBase->mpConfigHandler->mbRefraction);
-		
+
 		/////////////////////////
 		// SSAO
 		aObj.AddVarBool("SSAOActive", gpBase->mpConfigHandler->mbSSAOActive);
@@ -1840,13 +1840,13 @@ void cLuxMainMenu_Options::DumpCurrentValues(cResourceVarsObject &aObj)
 		const cVideoMode& vResolution = mvScreenSizes[mpCBResolution->GetSelectedItem()];
 		cVector2f vResolutionf = cVector2f((float)vResolution.mvScreenSize.x, (float)vResolution.mvScreenSize.y);
 		aObj.AddVarVector2f("Resolution", vResolutionf);
-        aObj.AddVarInt("Display", vResolution.mlDisplay); 
+        aObj.AddVarInt("Display", vResolution.mlDisplay);
 
 		/////////////////////////
 		// Fullscreen & vsync
 		aObj.AddVarBool("FullScreen",	mpChBFullScreen->IsChecked());
 		aObj.AddVarBool("VSync",		mpChBVSync->IsChecked());
-		
+
 		/////////////////////////
 		// Texture quality and filtering
 		aObj.AddVarInt("TextureQuality", (mpCBTextureSizeLevel->GetItemNum()-1) - mpCBTextureSizeLevel->GetSelectedItem());
@@ -1856,7 +1856,7 @@ void cLuxMainMenu_Options::DumpCurrentValues(cResourceVarsObject &aObj)
 		/////////////////////////
 		// Smoothing
 		aObj.AddVarBool("EdgeSmooth", mpChEdgeSmooth->IsChecked());
-		
+
 		/////////////////////////
 		// Shadows & Parallax
 		aObj.AddVarBool("ShadowsActive", mpChBShadows->IsChecked());
@@ -1869,7 +1869,7 @@ void cLuxMainMenu_Options::DumpCurrentValues(cResourceVarsObject &aObj)
 		// Water
 		aObj.AddVarBool("WorldReflection", mpChBWorldReflection->IsChecked());
 		aObj.AddVarBool("Refraction", mpChBRefraction->IsChecked());
-		
+
 		/////////////////////////
 		// SSAO
 		aObj.AddVarBool("SSAOActive", mpChBSSAO->IsChecked());
@@ -1911,7 +1911,7 @@ void cLuxMainMenu_Options::DumpCurrentValues(cResourceVarsObject &aObj)
 		lDevID = pSndDev->GetID();
 	}
 
-	aObj.AddVarInt("SoundDeviceID", lDevID);			
+	aObj.AddVarInt("SoundDeviceID", lDevID);
 }
 
 
@@ -1959,10 +1959,10 @@ bool cLuxMainMenu_Options::Window_OnUpdate(iWidget* apWidget, const cGuiMessageD
 			mbTipTextReset = true;
 		}
 	}
-    
+
 	///////////////////////////////////////////////////
 	// Update Tip label text
-	
+
 	if(mbTipWidgetUpdated)
 	{
 		mbTipWidgetUpdated = false;
@@ -2248,7 +2248,7 @@ bool cLuxMainMenu_Options::TabFrame_OnPageChange(iWidget* apWidget, const cGuiMe
 {
 	cWidgetTabFrame* pTabFrame = static_cast<cWidgetTabFrame*>(apWidget);
 	cWidgetTab* pTab = pTabFrame->GetTab(aData.mlVal);
-	
+
 	SetTabNavigation(pTab, true);
 
 	return true;
@@ -2265,7 +2265,7 @@ void cLuxMainMenu_Options::SetTabNavigation(cWidgetTab* apTab, bool abSetFocus)
 	mpGuiSet->SetDefaultFocusNavWidget(pFirstWidget);
 	if(abSetFocus)
 		mpGuiSet->SetFocusedWidget(pFirstWidget);
-	
+
 	mpBOK->SetFocusNavigation(eUIArrow_Up, pLastWidget);
 	mpBCancel->SetFocusNavigation(eUIArrow_Up, pLastWidget);
 }

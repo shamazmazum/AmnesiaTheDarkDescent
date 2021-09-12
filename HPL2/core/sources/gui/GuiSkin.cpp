@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -110,7 +110,7 @@ namespace hpl {
 		if(apString==NULL) return eGuiMaterial_Alpha;
 
 		tString sLow = cString::ToLowerCase(apString);
-				
+
 		if(sLow=="alpha") return eGuiMaterial_Alpha;
 		if(sLow=="diffuse") return eGuiMaterial_Diffuse;
 		if(sLow=="font_normal") return eGuiMaterial_FontNormal;
@@ -122,7 +122,7 @@ namespace hpl {
 
 		return eGuiMaterial_Alpha;
 	}
-	
+
 	bool cGuiSkin::LoadFromFile(const tWString &asFile)
 	{
 		//////////////////////////////////
@@ -169,11 +169,11 @@ namespace hpl {
 			tFloatVec vValues;
             tString sSepp=" ";
 			cString::GetFloatVec(sValue,vValues,&sSepp);
-            
+
 			if(vValues.size()>0) vVal.x = vValues[0];
 			if(vValues.size()>1) vVal.y = vValues[1];
 			if(vValues.size()>2) vVal.z = vValues[2];
-			
+
 			mvAttributes[type] = vVal;
 			vAttribLoaded[type] = true;
 		}
@@ -202,7 +202,7 @@ namespace hpl {
 			tString sFontFile = cString::ToString(pFontElem->Attribute("file"),"");
 			cVector2f vSize = cString::ToVector2f(pFontElem->Attribute("size"),1);
 			cColor color = cString::ToColor(pFontElem->Attribute("color"),cColor(1,1));
-			
+
 			cGuiSkinFont *pFont = hplNew( cGuiSkinFont, (mpGui) );
 
 			pFont->mpFont = mpGui->GetResources()->GetFontManager()->CreateFontData(sFontFile);
@@ -222,7 +222,7 @@ namespace hpl {
 
 		//////////////////////////////////////
 		// GFX ELEMENTS
-		
+
 		//Get gfx element
 		TiXmlElement* pGfxElementsElement = pRootElem->FirstChildElement("GfxElements");
 
@@ -231,7 +231,7 @@ namespace hpl {
 		for(; pGfxElem != NULL; pGfxElem = pGfxElem->NextSiblingElement())
 		{
 			tString sType = cString::ToString(pGfxElem->Attribute("type"),"");
-			
+
 			eGuiSkinGfx type = mpGui->GetSkinGfxFromString(sType);
 			if(type == eGuiSkinGfx_LastEnum) continue;
 
@@ -244,7 +244,7 @@ namespace hpl {
 			bool bAnimated = cString::ToBool(pGfxElem->Attribute("animated"),false);
 			float fAnimFrameTime = cString::ToFloat(pGfxElem->Attribute("anim_frame_time"),1);
 			eGuiGfxAnimationType animType = ToAnimType(pGfxElem->Attribute("anim_mode"));
-			
+
 			cGuiGfxElement *pGfx = NULL;
 			if(sFile != "")
 			{
@@ -271,10 +271,10 @@ namespace hpl {
 					pAnim->SetType(animType);
 				}
 
-				if(vSize.x >=0) 
+				if(vSize.x >=0)
 					pGfx->SetActiveSize(vSize);
 				pGfx->SetOffset(cVector3f(vOffset.x, vOffset.y,0));
-				
+
 				mvGfxElements[type] = pGfx;
 			}
 		}
@@ -313,7 +313,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	//-----------------------------------------------------------------------
 
 }

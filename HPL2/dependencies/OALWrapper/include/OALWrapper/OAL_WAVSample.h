@@ -10,7 +10,7 @@
 	@author Luis Rodero
 	@date 2006-10-02
 	@version 0.1
-	Derived class for containing WAV Sample data 
+	Derived class for containing WAV Sample data
 */
 
 #ifndef _OAL_WAVSAMPLE_H
@@ -23,7 +23,7 @@
 
 class cOAL_WAVSample : public cOAL_Sample
 {
-public:	
+public:
 	bool CreateFromFile(const std::wstring& asFilename);
 	bool CreateFromBuffer(const void *apBuffer, size_t aSize);
 protected:

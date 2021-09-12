@@ -2,23 +2,23 @@
    AngelCode Scripting Library
    Copyright (c) 2003-2010 Andreas Jonsson
 
-   This software is provided 'as-is', without any express or implied 
-   warranty. In no event will the authors be held liable for any 
+   This software is provided 'as-is', without any express or implied
+   warranty. In no event will the authors be held liable for any
    damages arising from the use of this software.
 
-   Permission is granted to anyone to use this software for any 
-   purpose, including commercial applications, and to alter it and 
+   Permission is granted to anyone to use this software for any
+   purpose, including commercial applications, and to alter it and
    redistribute it freely, subject to the following restrictions:
 
-   1. The origin of this software must not be misrepresented; you 
+   1. The origin of this software must not be misrepresented; you
       must not claim that you wrote the original software. If you use
-      this software in a product, an acknowledgment in the product 
+      this software in a product, an acknowledgment in the product
       documentation would be appreciated but is not required.
 
-   2. Altered source versions must be plainly marked as such, and 
+   2. Altered source versions must be plainly marked as such, and
       must not be misrepresented as being the original software.
 
-   3. This notice may not be removed or altered from any source 
+   3. This notice may not be removed or altered from any source
       distribution.
 
    The original version of this library can be located at:
@@ -117,7 +117,7 @@ asETokenClass asCTokenizer::ParseToken()
 bool asCTokenizer::IsWhiteSpace()
 {
 	// Treat UTF8 byte-order-mark (EF BB BF) as whitespace
-	if( sourceLength >= 3 && 
+	if( sourceLength >= 3 &&
 		asBYTE(source[0]) == 0xEFu &&
 		asBYTE(source[1]) == 0xBBu &&
 		asBYTE(source[2]) == 0xBFu )
@@ -306,14 +306,14 @@ bool asCTokenizer::IsConstant()
 				// Double-byte characters are only allowed for ASCII
 				if( (source[n] & 0x80) && engine->ep.scanner == 0 )
 				{
-					// This is a leading character in a double byte character, 
+					// This is a leading character in a double byte character,
 					// include both in the string and continue processing.
 					n++;
 					continue;
 				}
 #endif
 
-				if( source[n] == '\n' ) 
+				if( source[n] == '\n' )
 					tokenType = ttMultilineStringConstant;
 				if( source[n] == quote && evenSlashes )
 				{
@@ -394,9 +394,9 @@ bool asCTokenizer::IsKeyWord()
 		{
 			if( tokenWords[words[i]].word[n] == '\0' )
 			{
-				// tokens that end with a character that can be part of an 
-				// identifier require an extra verification to guarantee that 
-				// we don't split an identifier token, e.g. the "!is" token 
+				// tokens that end with a character that can be part of an
+				// identifier require an extra verification to guarantee that
+				// we don't split an identifier token, e.g. the "!is" token
 				// and the "!isTrue" expression.
 				if( ((tokenWords[words[i]].word[n-1] >= 'a' && tokenWords[words[i]].word[n-1] <= 'z') ||
 					 (tokenWords[words[i]].word[n-1] >= 'A' && tokenWords[words[i]].word[n-1] <= 'Z')) &&
@@ -405,13 +405,13 @@ bool asCTokenizer::IsKeyWord()
 					 (source[n] >= '0' && source[n] <= '9') ||
 					 (source[n] == '_')) )
 				{
-					// The token doesn't really match, even though 
+					// The token doesn't really match, even though
 					// the start of the source matches the token
 					words[i--] = words[--numWords];
 				}
 				else if( numWords > 1 )
 				{
-					// It's possible that a longer token matches, so let's 
+					// It's possible that a longer token matches, so let's
 					// remember this match and continue searching
 					lastPossible = words[i];
 					words[i--] = words[--numWords];

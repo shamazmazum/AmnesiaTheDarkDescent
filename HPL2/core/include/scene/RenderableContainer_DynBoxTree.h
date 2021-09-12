@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -45,7 +45,7 @@ namespace hpl {
 		cRenderableContainer_DynBoxTree *mpContainer;
 	};
 
-	
+
 	//-------------------------------------------
 
 	class cRCNode_DynBoxTree : public iRenderableContainerNode
@@ -85,7 +85,7 @@ namespace hpl {
 	};
 
 	//-------------------------------------------
-	
+
 	class cRenderableContainer_DynBoxTree : public iRenderableContainer
 	{
 	friend class cRCNode_DynBoxTree;
@@ -99,12 +99,12 @@ namespace hpl {
 
 		iRenderableContainerNode* GetRoot();
 
-        void Compile();	
+        void Compile();
 
 		void RebuildNodes();
 
 		void RenderDebug(cRendererCallbackFunctions *apFunctions);
-	
+
 	private:
 		void AddNodeObjectsToRoot(cRCNode_DynBoxTree *apNode);
 		void SpecificUpdateBeforeRendering();
@@ -113,7 +113,7 @@ namespace hpl {
 
 		void RemoveNode(cRCNode_DynBoxTree *apNode);
 		void CheckNodeAABBNeedsUpdateIterative(cRCNode_DynBoxTree *apNode, iRenderable *apObject);
-		
+
 		cRCNode_DynBoxTree *GetAddNode(cRCNode_DynBoxTree *apStartNode, iRenderable *apObject);
 		void AddObjectToNodeIterative(cRCNode_DynBoxTree *apNode, iRenderable *apObject);
 
@@ -122,7 +122,7 @@ namespace hpl {
 		void UpdateObjectInContainer(iRenderable* apObject);
 		void CheckForFitIterative(cRCNode_DynBoxTree *apNode, cBoundingVolume *apBV);
 
-		
+
 		cRCNode_DynBoxTree mRoot;
 
 		int mlSplitThreshold;

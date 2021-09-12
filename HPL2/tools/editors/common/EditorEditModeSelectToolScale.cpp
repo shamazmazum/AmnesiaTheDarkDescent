@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -107,7 +107,7 @@ void cEditorEditModeSelectToolScale::DrawAxes(cEditorWindowViewport* apViewport,
 		//apFunctions->GetLowLevelGfx()->DrawBoxMinMax(mvAxisMin[i], mvAxisMax[i], cColor(1,1));
 		//apFunctions->GetLowLevelGfx()->DrawBoxMinMax(mvHeadMin[i], mvHeadMax[i], cColor(1,1));
 	}
-	
+
 	float fCubeCenterOffset = 0.05f*afAxisLength;
 	cMatrixf mtxTranslate[3];
 	mtxTranslate[0] = cMath::MatrixMul(mtxTransform,cMath::MatrixTranslate(vAxes[0] - cVector3f(fCubeCenterOffset,0,0)));
@@ -135,7 +135,7 @@ cMatrixf& cEditorEditModeSelectToolScale::GetTransformMatrix()
 											   cMath::MatrixTranslate(mpSelection->GetCenterTranslation()*-1));
 	//	mpSelection->mbTransformed = false;
 	//}
-	
+
 	return mmtxTransformMatrix;
 }
 
@@ -173,7 +173,7 @@ void cEditorEditModeSelectToolScale::UpdateTransformation()
 		mvAxisAddedLength.v[i] = vDisplacement.v[i];
 	}
 
-	
+
 
 	mpSelection->SetRelativeScale(vDisplacement,mpEditMode->GetEditor()->GetGrid()->GetSnapToGrid());
 
@@ -190,10 +190,10 @@ void cEditorEditModeSelectToolScale::CheckMouseOverAxis()
 	iEditorBase* pEditor = mpEditMode->GetEditor();
 	cEditorWindowViewport* pViewport = pEditor->GetFocusedViewport();
 
-	bool bAllAxesSelected = cMath::CheckAABBLineIntersection(mvAllAxesHandleMin, 
-															 mvAllAxesHandleMax, 
-															 mvTransformedRayStart, 
-															 mvTransformedRayEnd, 
+	bool bAllAxesSelected = cMath::CheckAABBLineIntersection(mvAllAxesHandleMin,
+															 mvAllAxesHandleMax,
+															 mvTransformedRayStart,
+															 mvTransformedRayEnd,
 															 NULL,NULL);
 
 	for(int i=eSelectToolAxis_X;i<eSelectToolAxis_LastEnum;++i)
@@ -228,7 +228,7 @@ void cEditorEditModeSelectToolScale::CheckMouseOverAxis()
 	mvOldMousePos = pViewport->GetMouseViewportPosition();
 	mvOldMousePos.y = pViewport->GetGuiViewportSize().y - mvOldMousePos.y;
 
-	
+
 
 /*
 	mvAxisMouseOver[eSelectToolAxis_X] = mvAxisMouseOver[eSelectToolAxis_X] || bRayIntersectedPlane[0] || bRayIntersectedPlane[2];
@@ -288,7 +288,7 @@ void cEditorEditModeSelectToolScale::UpdateToolBoundingVolume()
 	mvAxisMin[eSelectToolAxis_X] = cVector3f(0,-fAxisHalfWidth,-fAxisHalfWidth);
 	mvAxisMin[eSelectToolAxis_Y] = cVector3f(-fAxisHalfWidth,0, -fAxisHalfWidth);
 	mvAxisMin[eSelectToolAxis_Z] = cVector3f(-fAxisHalfWidth,-fAxisHalfWidth,0);
-	
+
 	mvAxisMax[eSelectToolAxis_X] = mvAxisMin[eSelectToolAxis_X] + cVector3f(fAxisLength,fAxisWidth,fAxisWidth);
 	mvAxisMax[eSelectToolAxis_Y] = mvAxisMin[eSelectToolAxis_Y] + cVector3f(fAxisWidth,fAxisLength,fAxisWidth);
 	mvAxisMax[eSelectToolAxis_Z] = mvAxisMin[eSelectToolAxis_Z] + cVector3f(fAxisWidth,fAxisWidth,fAxisLength);
@@ -322,9 +322,9 @@ void cEditorEditModeSelectToolScale::UpdateToolBoundingVolume()
 	mvAxisMin[eSelectToolAxis_X] = cVector3f(0,-fAxisHalfWidth,-fAxisHalfWidth);
 	mvAxisMin[eSelectToolAxis_Y] = cVector3f(-fAxisHalfWidth,0, -fAxisHalfWidth);
 	mvAxisMin[eSelectToolAxis_Z] = cVector3f(-fAxisHalfWidth,-fAxisHalfWidth,0);
-	
+
 	mvAxisMax[eSelectToolAxis_X] = mvAxisMin[eSelectToolAxis_X] + cVector3f(mfUsedAxisLength,fAxisWidth,fAxisWidth);
-	mvAxisMax[eSelectToolAxis_Y] = mvAxisMin[eSelectToolAxis_Y] + cVector3f(fAxisWidth,mfUsedAxisLength,fAxisWidth); 
+	mvAxisMax[eSelectToolAxis_Y] = mvAxisMin[eSelectToolAxis_Y] + cVector3f(fAxisWidth,mfUsedAxisLength,fAxisWidth);
 	mvAxisMax[eSelectToolAxis_Z] = mvAxisMin[eSelectToolAxis_Z] + cVector3f(fAxisWidth,fAxisWidth,mfUsedAxisLength);*/
 }
 

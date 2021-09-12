@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -106,7 +106,7 @@ void cLevelEditorGroup::SetVisibility(bool abX)
 	{
 		iEntityWrapper* pEnt = it->second;
 		cLevelEditorEntityExtData* pData = (cLevelEditorEntityExtData*)pEnt->GetEntityExtData();
-        
+
 		if(pData->mlGroupID==mlID)
 			pEnt->SetVisible(abX);
 	}
@@ -160,7 +160,7 @@ void cLevelEditor::AppSpecificReset()
 
 	///////////////////////////////////////
 	// Groups
-	// Remove all previously created groups and create a "None" group. 
+	// Remove all previously created groups and create a "None" group.
     mmapGroups.clear();
 	cLevelEditorGroup group(this,0,"None");
 	group.SetVisibility(true);
@@ -186,8 +186,8 @@ void cLevelEditor::LookAtEntity(int alEntityID)
 
 void cLevelEditor::Command_Import()
 {
-	ShowLoadFilePicker(mvLoadFilenames, msLastImportPath, 
-						this, kGuiCallback(ImportFileCallback), 
+	ShowLoadFilePicker(mvLoadFilenames, msLastImportPath,
+						this, kGuiCallback(ImportFileCallback),
 						_W("Exported objects"), tWStringList(1, _W("*.expobj")));
 }
 
@@ -197,8 +197,8 @@ void cLevelEditor::Command_Export()
 {
 	SetFlags(eEditorFlag_PopUpActive, true);
 
-	cGuiPopUpFilePicker* pPicker = mpSet->CreatePopUpSaveFilePicker(msLastImportFile, _W("Exported objects"), 
-																	_W("*.expobj"), msLastSavePath, 
+	cGuiPopUpFilePicker* pPicker = mpSet->CreatePopUpSaveFilePicker(msLastImportFile, _W("Exported objects"),
+																	_W("*.expobj"), msLastSavePath,
 																	false, this, kGuiCallback(ExportFileCallback));
 	pPicker->AddOnDestroyCallback(this, kGuiCallback(PopUpCloseCallback));
 }
@@ -465,7 +465,7 @@ void cLevelEditor::SaveEditorSession(iXmlDocument* apDoc, cXmlElement** apElemen
 		pXmlGroup->SetAttributeString("Name", pGroup->GetName());
 		pXmlGroup->SetAttributeBool("Visible", pGroup->GetVisibility());
 	}
-	
+
 	tEditorClipPlaneVec& vClipPlanes = mpEditorWorld->GetClipPlanes();
 	if(vClipPlanes.empty()==false)
 	{
@@ -474,7 +474,7 @@ void cLevelEditor::SaveEditorSession(iXmlDocument* apDoc, cXmlElement** apElemen
 		{
 			cEditorClipPlane* pPlane = vClipPlanes[i];
 			cXmlElement* pXmlPlane = pXmlClipPlanes->CreateChildElement();
-			
+
 			pPlane->Save(pXmlPlane);
 		}
 
@@ -538,7 +538,7 @@ void cLevelEditor::OnInit()
 //--------------------------------------------------------------------
 
 void cLevelEditor::OnInitLayout()
-{	
+{
 	///////////////////////////////////
 	// EditMode Tool box
 	mpEditModeSidebar->SetPosition(cVector3f(0,mpMainMenu->GetSize().y+2,1));
@@ -573,7 +573,7 @@ void cLevelEditor::OnSetUpDirectories()
 {
 	const tWString& sWorkingDir = GetWorkingDir();
 
-	mpDirHandler->AddLookUpDir(eDir_Maps, sWorkingDir + mpMainConfig->GetStringW("Directories", "MapsDir", _W("maps")), true); 
+	mpDirHandler->AddLookUpDir(eDir_Maps, sWorkingDir + mpMainConfig->GetStringW("Directories", "MapsDir", _W("maps")), true);
 	mpDirHandler->AddLookUpDir(eDir_StaticObjects, sWorkingDir + mpMainConfig->GetStringW("Directories", "StaticObjectsDir", _W("static_objects")), true);
 	mpDirHandler->AddLookUpDir(eDir_Entities, sWorkingDir + mpMainConfig->GetStringW("Directories", "EntitiesDir", _W("entities")), true);
 	mpDirHandler->AddLookUpDir(eDir_Decals, sWorkingDir + mpMainConfig->GetStringW("Directories", "DecalsDir", _W("textures/decals")), true);
@@ -585,7 +585,7 @@ void cLevelEditor::OnUpdate(float afTimeStep)
 {
 	/*iWidget* pWidget = mpSet->GetAttentionWidget();
 	iWidget* pWidgetParent = pWidget?pWidget->GetParent():NULL;
-	Log("Current attention widget: 0x%x - %s, parent: 0x%x - %s\n", pWidget, pWidget?pWidget->GetTypeString().c_str():"NULL", 
+	Log("Current attention widget: 0x%x - %s, parent: 0x%x - %s\n", pWidget, pWidget?pWidget->GetTypeString().c_str():"NULL",
 																	pWidgetParent, pWidgetParent?pWidgetParent->GetTypeString().c_str():"NULL");
 																	*/
 }
@@ -617,7 +617,7 @@ void cLevelEditor::OnPostUpdateLayout()
 
 		if(sRecent==_W(""))
 			break;
-		
+
 		if(cPlatform::FileExists(sRecent))
 		{
 			cWidgetMenuItem* pItem = mpMainMenuRecent->AddMenuItem(sRecent);
@@ -640,7 +640,7 @@ void cLevelEditor::OnInitInput()
 void cLevelEditor::OnLoadConfig()
 {
 	//////////////////////////////////////////////////////////////
-	// Set up loading stuff that is specific to this editor, 
+	// Set up loading stuff that is specific to this editor,
 	// and stuff like log filename (this is done pre engine creation)
 	tWString sConfigFile = GetHomeDir() + _W("LevelEditor.cfg");
 
@@ -679,14 +679,14 @@ void cLevelEditor::OnLoadConfig()
 			tWStringListIt itFoundString = find(mlstRecentFiles.begin(),mlstRecentFiles.end(), sRecent);
 			if(itFoundString!=mlstRecentFiles.end())
 				mlstRecentFiles.erase(itFoundString);
-            
+
 			mlstRecentFiles.push_back(sRecent);
 		}
 	}
 
 	// Window caption
 	msCaption = "HPL Level Editor";
-	
+
 	SetLogFile(GetHomeDir() + _W("LevelEditor.log"));
 
 	msLastLoadPath = mpLocalConfig->GetStringW("Directories", "LastUsedPath", GetMainLookUpDir(eDir_Maps));
@@ -763,7 +763,7 @@ void cLevelEditor::OnSaveConfig()
 
 		if(sRecent==_W(""))
 			break;
-		
+
 		if(cPlatform::FileExists(sRecent))
 		{
 			mpLocalConfig->SetString("RecentUsedFiles", "RecentFile" + cString::ToString(++i), cString::To8Char(sRecent));
@@ -776,13 +776,13 @@ void cLevelEditor::OnSaveConfig()
 	for(int j=0;j<(int)mvExtraSODirs.size();++j)
 	{
 		tString sExtraDir = cString::S16BitToUTF8(mvExtraSODirs[j]);
-		
+
 		mpLocalConfig->SetString("Directories", "ExtraStaticObjectDir" + cString::ToString(j+1), sExtraDir);
 	}
 	for(int j=0;j<(int)mvExtraEntDirs.size();++j)
 	{
 		tString sExtraDir = cString::S16BitToUTF8(mvExtraEntDirs[j]);
-		
+
 		mpLocalConfig->SetString("Directories", "ExtraEntityDir" + cString::ToString(j+1), sExtraDir);
 	}
 
@@ -798,7 +798,7 @@ cWidgetMainMenu* cLevelEditor::CreateMainMenu()
 	//Setup main menu
 	cWidgetMenuItem* pItem = NULL;
 	cWidgetMenuItem* pSubItem = NULL;
-    
+
 	mpMainMenu = mpSet->CreateWidgetMainMenu(mpBGFrame);
 
 	//File menu
@@ -833,7 +833,7 @@ cWidgetMainMenu* cLevelEditor::CreateMainMenu()
 	// Import
 	mpMainMenuImport = pItem->AddMenuItem(_W("Import objects"));
 	mpMainMenuImport->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(MainMenu_ItemClick));
-	
+
 	// Export
 	mpMainMenuExport = pItem->AddMenuItem(_W("Export selection"));
 	mpMainMenuExport->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(MainMenu_ItemClick));
@@ -850,7 +850,7 @@ cWidgetMainMenu* cLevelEditor::CreateMainMenu()
 #elif defined(__APPLE__)
 	mpMainMenuExit->AddShortcut(eKeyModifier_Ctrl, eKey_Q);
 #endif
-    
+
 	//Edit menu
 	pItem = mpMainMenu->AddMenuItem(_W("Edit"));
 	// Undo

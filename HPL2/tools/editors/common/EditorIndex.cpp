@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -36,10 +36,10 @@ static tString gsIndexVersion = "3";
 
 //-------------------------------------------------------------------
 
-iEditorObjectIndex::iEditorObjectIndex(iEditorBase* apEditor, 
-									   const tWString& asBaseFolder, 
-									   const tWString& asIndexExt, 
-									   const tString& asIndexTypeName, 
+iEditorObjectIndex::iEditorObjectIndex(iEditorBase* apEditor,
+									   const tWString& asBaseFolder,
+									   const tWString& asIndexExt,
+									   const tString& asIndexTypeName,
 									   const tString& asEntryTypeName,
 									   bool abCreateSubDirs)
 {
@@ -50,7 +50,7 @@ iEditorObjectIndex::iEditorObjectIndex(iEditorBase* apEditor,
 	msEntryTypeName = asEntryTypeName;
 
 	mpRootDir = NULL;
-	
+
 	int lLastSlashPos = cString::GetLastStringPosW(msBaseFolderFullPath, _W("/"));
 	if(lLastSlashPos==msBaseFolderFullPath.size()-1)
 	{
@@ -60,7 +60,7 @@ iEditorObjectIndex::iEditorObjectIndex(iEditorBase* apEditor,
 	}
 
 	msBaseFolder = cString::SubW(msBaseFolderFullPath, lLastSlashPos+1);
-	
+
 	msFilename = mpEditor->GetTempDir() + msBaseFolder + _W(".") + msIndexExt;
 
 	mbUpdated = false;
@@ -120,7 +120,7 @@ bool iEditorObjectIndex::Refresh()
 		if(mpRootDir)
 			mpRootDir->CreateFromDir(NULL, _W(""), mbCreateSubCategories);
 	}
-		
+
 	if(mbUpdated)
 	{
 		mbUpdated=false;
@@ -133,7 +133,7 @@ bool iEditorObjectIndex::Refresh()
 	{
 		mbRefreshThumbnails = false;
 		mpEditor->GetEngine()->GetResources()->AddResourceDir(mpEditor->GetThumbnailDir(), false);
-		
+
 		mpEditor->GetThumbnailBuilder()->CleanUp();
 	}
 
@@ -150,12 +150,12 @@ bool iEditorObjectIndex::Refresh()
 void iEditorObjectIndex::AddFilesInDir(tWStringList& asFileList, const tWString& asFolder, const tWString& asLocalPath, bool abAddFilesInSubDirs)
 {
 	/////////////////////////////////////////////////////////////
-	// Scan given dir for files using the filters 
+	// Scan given dir for files using the filters
 	tWStringList lstFiles;
 	for(int i=0;i<(int)mvFileFilters.size();++i)
 	{
 		tWString sFilter = mvFileFilters[i];
-		cPlatform::FindFilesInDir(lstFiles, asFolder, mvFileFilters[i]); 
+		cPlatform::FindFilesInDir(lstFiles, asFolder, mvFileFilters[i]);
 	}
 	lstFiles.sort();
 
@@ -224,7 +224,7 @@ bool iEditorObjectIndexDir::CreateFromDir(iEditorObjectIndexDir* apParentDir, co
 		return false;
 
 	mpParentDir = apParentDir;
-	Clear();	
+	Clear();
 
 	msDirName = asRelPath;
 
@@ -299,7 +299,7 @@ bool iEditorObjectIndexDir::Refresh(cXmlElement* apElement, bool abAddSubDirs)
 	bool bUpdated = false;
 
 	Clear();
-	
+
 	cResources* pRes = mpIndex->GetEditor()->GetEngine()->GetResources();
 	tWStringList lstFiles;
 	tWStringList lstDirs;
@@ -405,7 +405,7 @@ bool iEditorObjectIndexDir::Refresh(cXmlElement* apElement, bool abAddSubDirs)
 				}
 			}
 		}
-	
+
 
 		if(lstDirs.empty()==false)
 		{
@@ -427,7 +427,7 @@ bool iEditorObjectIndexDir::Refresh(cXmlElement* apElement, bool abAddSubDirs)
 
 	mpIndex->SetUpdated(bUpdated);
 
-	
+
 
 	return true;
 }
@@ -439,7 +439,7 @@ iEditorObjectIndexEntry* iEditorObjectIndexDir::GetEntry(const tString& asIndex)
 	tIndexEntryMapIt it = mmapEntries.find(asIndex);
 	if(it!=mmapEntries.end())
 		return it->second;
-	
+
 	return NULL;
 }
 
@@ -470,7 +470,7 @@ void iEditorObjectIndexDir::Save(cXmlElement* apIndexElement, bool abSaveSubDirs
 			iEditorObjectIndexDir* pDir = itSubDirs->second;
 
 			cXmlElement* pXmlDir = pDirs->CreateChildElement("Dir");
-			
+
 			pDir->Save(pXmlDir, abSaveSubDirs);
 		}
 	}
@@ -487,7 +487,7 @@ void iEditorObjectIndexDir::Save(cXmlElement* apIndexElement, bool abSaveSubDirs
 iEditorObjectIndexEntry::iEditorObjectIndexEntry(iEditorObjectIndexDir* apParentDir)
 {
 	mpParentDir = apParentDir;
-	
+
 	mbRemoved = false;
 	mbUpdated = false;
 }
@@ -596,7 +596,7 @@ void iEditorObjectIndexEntry::BuildEntryName(tString& asEntryName)
 	int lDotPos = cString::GetLastStringPos(asEntryName, ".");
 	asEntryName = cString::Sub(asEntryName,0,lDotPos);
 	asEntryName = cString::GetFileName(asEntryName);
-	
+
 	/*
 	int lBaseFolderLength = 0;
 	iEditorObjectIndex* pIndex = mpParentDir->GetIndex();

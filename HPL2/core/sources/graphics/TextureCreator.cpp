@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -57,11 +57,11 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	static bool SortFunc_ScatterOffset(const cVector2f& avVec1, const cVector2f& avVec2)
 	{
-		return avVec1.Length() > avVec2.Length(); 
-	}	
+		return avVec1.Length() > avVec2.Length();
+	}
 
 	void cTextureCreator::GenerateScatterDiskMap3D(iTexture *apOffsetTexture, int alSize, int alSamples, bool abSortSamples)
 	{
@@ -88,7 +88,7 @@ namespace hpl {
 
 		////////////////////////////
 		//Generate all the different sample collections
-		for(size_t sample_num=0; sample_num<vOffsetsVec.size(); ++sample_num)				
+		for(size_t sample_num=0; sample_num<vOffsetsVec.size(); ++sample_num)
 		{
 			////////////////////////////
 			// Fills a square "grid" size, and then normalizes each pos to be 0 - 1
@@ -120,7 +120,7 @@ namespace hpl {
 				}
 				Log(" --\n");*/
 
-				//Get the offsets and put the once we want from the grid here.		
+				//Get the offsets and put the once we want from the grid here.
 				tVector2fVec& vOffsets = vOffsetsVec[sample_num];
 				vOffsets.resize(alSamples);
 
@@ -129,7 +129,7 @@ namespace hpl {
 
 				for(size_t i=0; i<vOffsets.size(); ++i)
 				{
-					int lIdx = (int)fCurrentSample;	
+					int lIdx = (int)fCurrentSample;
 
 					vOffsets[i] = vTempGridArray[lIdx];
 
@@ -181,8 +181,8 @@ namespace hpl {
 				// Add the samples to the texture data
 				for(int depth=0; depth<vTextureSize.z; ++depth)
 				{
-					int lOffset = depth*vTextureSize.x*vTextureSize.y*4 + (int)sample_num*4;	
-					unsigned char* pPixelData = &vTextureData[lOffset];				
+					int lOffset = depth*vTextureSize.x*vTextureSize.y*4 + (int)sample_num*4;
+					unsigned char* pPixelData = &vTextureData[lOffset];
 
 					int lSample = depth*2;
 
@@ -213,9 +213,9 @@ namespace hpl {
 		Log("---- Depth %d -----\n", z);
 		}
 
-		int lOffset =	z*vTextureSize.x*vTextureSize.y*4 + 
-		y*vTextureSize.x*4 + 
-		x*4;	
+		int lOffset =	z*vTextureSize.x*vTextureSize.y*4 +
+		y*vTextureSize.x*4 +
+		x*4;
 		unsigned char* pPixelData = &vTextureData[lOffset];
 
 		Log("(%.3d %.3d %.3d %.3d) ",pPixelData[0],pPixelData[1],pPixelData[2],pPixelData[3]);
@@ -250,7 +250,7 @@ namespace hpl {
 
 		////////////////////////////
 		//Generate all the different sample collections
-		for(size_t sample_num=0; sample_num<vOffsetsVec.size(); ++sample_num)				
+		for(size_t sample_num=0; sample_num<vOffsetsVec.size(); ++sample_num)
 		{
 			////////////////////////////
 			// Fills a square "grid" size, and then normalizes each pos to be 0 - 1
@@ -270,7 +270,7 @@ namespace hpl {
 					vTempGridArray[y*lGridSize + x] = vPos;
 				}
 
-				//Get the offsets and put the once we want from the grid here.		
+				//Get the offsets and put the once we want from the grid here.
 				tVector2fVec& vOffsets = vOffsetsVec[sample_num];
 				vOffsets.resize(alSamples);
 
@@ -279,7 +279,7 @@ namespace hpl {
 
 				for(size_t i=0; i<vOffsets.size(); ++i)
 				{
-					int lIdx = (int)fCurrentSample;	
+					int lIdx = (int)fCurrentSample;
 
 					vOffsets[i] = vTempGridArray[lIdx];
 
@@ -316,9 +316,9 @@ namespace hpl {
 				// Add the samples to the texture data
 				for(int depth=0; depth<vTextureSize.z; ++depth)
 				{
-					int lOffset = depth*vTextureSize.x*vTextureSize.y*4 + (int)sample_num*4;	
+					int lOffset = depth*vTextureSize.x*vTextureSize.y*4 + (int)sample_num*4;
 
-					unsigned char* pPixelData = &vTextureData[lOffset];				
+					unsigned char* pPixelData = &vTextureData[lOffset];
 
 					int lSample = depth*2;
 
@@ -339,7 +339,7 @@ namespace hpl {
 		apOffsetTexture->CreateFromRawData(cVector3l(vTextureSize.x, vTextureSize.y*vTextureSize.z,1),ePixelFormat_RGBA, &vTextureData[0]);
 		apOffsetTexture->SetWrapSTR(eTextureWrap_Repeat);
 		apOffsetTexture->SetFilter(eTextureFilter_Nearest); //Do not use when using lightspace as lookup
-	}	
+	}
 
 	//-----------------------------------------------------------------------
 

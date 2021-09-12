@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -49,7 +49,7 @@ public:
 	const tString& GetName(){ return msName;}
 	const tString& GetSet(){ return msSet;}
 	float GetMaxSanity(){ return mfMaxSanity;}
-	
+
 	void SetUsed(bool abX){ mbUsed = abX; }
 	bool IsUsed(){ return mbUsed; }
 
@@ -64,7 +64,7 @@ private:
 	bool mbUsed;
 	bool mbOver;
 	float mfMaxSanity;
-    	
+    
 };
 
 //----------------------------------------------
@@ -116,7 +116,7 @@ private:
 
 	//////////////////
 	//Vars
-	std::vector<cLuxInstanityEvent_Bugs_Bug> mvBugs; 
+	std::vector<cLuxInstanityEvent_Bugs_Bug> mvBugs;
 
 	cSoundEntry *mpSoundEntry;
 	int mlSoundEntryID;
@@ -152,14 +152,14 @@ private:
 	tString msParticleSystem;
 
 	float mfDuration;
-	
+
 	//////////////////
 	//Vars
 	float mfTimeCount;
 
 	cSoundEntry *mpSoundEntry;
 	int mlSoundEntryID;
-	
+
 	cParticleSystem *mpPS;
 };
 
@@ -170,7 +170,7 @@ class cLuxInstanityEvent_SoundStream : public iLuxInstanityEvent
 public:
 	cLuxInstanityEvent_SoundStream();
 	~cLuxInstanityEvent_SoundStream();
-	
+
 	void OnLoadData(cXmlElement * apVarElem);
 
 	void OnStart();
@@ -178,7 +178,7 @@ public:
 
 	void Update(float afTimeStep);
 	void OnDraw(float afFrameTime);
-	
+
 private:
 	tString msFile;
 	float mfVolume;
@@ -225,7 +225,7 @@ private:
 	float mfStepTime;
 	int mlStepNum;
 	float mfDistance;
-	
+
 	float mfTimeMulPerStep;
 	float mfDistanceMulPerStep;
 
@@ -242,10 +242,10 @@ private:
 class cLuxInsanityHandler : public iLuxUpdateable
 {
 friend class cLuxInsanityHandler_SaveData;
-public:	
+public:
 	cLuxInsanityHandler();
 	~cLuxInsanityHandler();
-	
+
 	void OnStart();
 	void Reset();
 	void Update(float afTimeStep);
@@ -270,7 +270,7 @@ public:
 	float GetNewEventCount(){ return mfNewEventCount;}
 	int GetCurrentEvent(){ return mlCurrentEvent; }
 
- 
+
 private:
 	iLuxInstanityEvent* EventTypeToData(const tString& asType);
 	void LoadEvents(const tString& asFile);
@@ -288,9 +288,9 @@ private:
 	float mfTimeBetween_ShortWait;
 
 
-	
+
 	std::vector<iLuxInstanityEvent*> mvEvents;
-	
+
 	//////////////////
 	// Variables
 	float mfNewEventCount;

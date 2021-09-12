@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -594,7 +594,7 @@ const cMatrixf& iEdScnObject::GetWorldMatrix(bool abForceUpdate)
 {
 	if(mbTransformUpdated || abForceUpdate)
 	{
-		mmtxTransform = cMath::MatrixMul(GetTranslationMatrix(), 
+		mmtxTransform = cMath::MatrixMul(GetTranslationMatrix(),
 										 cMath::MatrixMul(GetRotationMatrix(), GetScaleMatrix()));
 	}
 
@@ -770,7 +770,7 @@ iEdAction* iEdScnObject::CreateSetFloatAction(int alPropID, float afX)
 iEdAction* iEdScnObject::CreateSetBoolAction(int alPropID, bool abX)
 {
 	iProp* pProp = mpType->GetPropByTypeAndID(eVariableType_Bool, alPropID);
-	cEdActionSetBool* pAction = hplNew(cEdActionSetBool,(GetWorld(), tIntList(1,GetID()), 
+	cEdActionSetBool* pAction = hplNew(cEdActionSetBool,(GetWorld(), tIntList(1,GetID()),
 																							pProp, abX));
 	return SetUpAction(pAction);
 }
@@ -778,7 +778,7 @@ iEdAction* iEdScnObject::CreateSetBoolAction(int alPropID, bool abX)
 iEdAction* iEdScnObject::CreateSetStringAction(int alPropID, const tString& asX)
 {
 	iProp* pProp = mpType->GetPropByTypeAndID(eVariableType_String, alPropID);
-	cEdActionSetString* pAction = hplNew(cEdActionSetString,(GetWorld(), tIntList(1,GetID()), 
+	cEdActionSetString* pAction = hplNew(cEdActionSetString,(GetWorld(), tIntList(1,GetID()),
 																							pProp, asX));
 	return SetUpAction(pAction);
 }
@@ -786,7 +786,7 @@ iEdAction* iEdScnObject::CreateSetStringAction(int alPropID, const tString& asX)
 iEdAction* iEdScnObject::CreateSetVector2fAction(int alPropID, const cVector2f& avX)
 {
 	iProp* pProp = mpType->GetPropByTypeAndID(eVariableType_Vec2, alPropID);
-	cEdActionSetVec2f* pAction = hplNew(cEdActionSetVec2f,(GetWorld(), tIntList(1,GetID()), 
+	cEdActionSetVec2f* pAction = hplNew(cEdActionSetVec2f,(GetWorld(), tIntList(1,GetID()),
 																							pProp, avX));
 	return SetUpAction(pAction);
 }
@@ -794,7 +794,7 @@ iEdAction* iEdScnObject::CreateSetVector2fAction(int alPropID, const cVector2f& 
 iEdAction* iEdScnObject::CreateSetVector3fAction(int alPropID, const cVector3f& avX)
 {
 	iProp* pProp = mpType->GetPropByTypeAndID(eVariableType_Vec3, alPropID);
-	cEdActionSetVec3f* pAction = hplNew(cEdActionSetVec3f,(GetWorld(), tIntList(1,GetID()), 
+	cEdActionSetVec3f* pAction = hplNew(cEdActionSetVec3f,(GetWorld(), tIntList(1,GetID()),
 																							pProp, avX));
 	return SetUpAction(pAction);
 }
@@ -802,7 +802,7 @@ iEdAction* iEdScnObject::CreateSetVector3fAction(int alPropID, const cVector3f& 
 iEdAction* iEdScnObject::CreateSetColorAction(int alPropID, const cColor& aX)
 {
 	iProp* pProp = mpType->GetPropByTypeAndID(eVariableType_Color, alPropID);
-	cEdActionSetColor* pAction = hplNew(cEdActionSetColor,(GetWorld(), tIntList(1,GetID()), 
+	cEdActionSetColor* pAction = hplNew(cEdActionSetColor,(GetWorld(), tIntList(1,GetID()),
 																							pProp, aX));
 	return SetUpAction(pAction);
 }
@@ -895,7 +895,7 @@ void iEdScnObject::AddToOutline(cWidgetListBox* apList, int alLevel, tScnObjList
 	for(int i=0;i<alLevel;++i)
 		sEntryText += _W("   ");
 	sEntryText += GetName();
-		
+
 	cWidgetItem* pItem = apList->AddItem(sEntryText);
 	pItem->SetUserData(this);
 	alstAddedChildren.push_back(this);
@@ -916,7 +916,7 @@ void iEdScnObject::DrawObject(const cModuleDrawData& aData, bool abHighlight, co
 {
 	if(mpIcon)
 		mpIcon->DrawIcon(aData.mpViewport, aData.mpFunctions, abHighlight, IsEnabled(), cColor(0.8f,1));
-	else if(mpEngObject) 
+	else if(mpEngObject)
 		mpEngObject->Draw(aData.mpViewport, aData.mpFunctions, abHighlight, true, aHighlightCol);
 }
 
@@ -995,7 +995,7 @@ bool iEdScnObject::OnUpdate(bool abForceUpdate)
 		mpEngObject->SetMatrix(mtxWorld);
 		return true;
 	}
-	
+
 	return static_cast<iEdScnObjType*>(mpType)->AllowNullEngineObject();
 }
 
@@ -1092,7 +1092,7 @@ bool iUserTypeRoot::Init()
 	for(int i=0; i<mpUserClassDef->GetNumClasses(); ++i)
 	{
 		cEdUserClass* pClass = static_cast<cEdUserClass*>(mpUserClassDef->GetClass(i));
-		
+
 		iUserTypeNode* pType = CreateSpecificUserTypeNode(pClass);
 		if(AddChildType(pType))
 		{
@@ -1173,7 +1173,7 @@ bool iUserTypeNode::Init()
 		bInit = bInit && AddChildType(pSubType);
 		if(bInit)
 		{
-			if(mpDefaultType==NULL || 
+			if(mpDefaultType==NULL ||
 				static_cast<cEdUserClass*>(mpClass)->GetDefaultChildClass()==pChildClass)
 				mpDefaultType = pSubType;
 		}
@@ -1321,7 +1321,7 @@ void iUserObject::SetType(iUserTypeNode* apType, bool abForce)
 {
 	iUserTypeNode* pOldType = static_cast<iUserTypeNode*>(mpType);
 
-	if(abForce==false && (apType==NULL || pOldType==apType || 
+	if(abForce==false && (apType==NULL || pOldType==apType ||
 		pOldType->GetUserTypeRoot()!=apType->GetUserTypeRoot()))
 		return;
 
@@ -1437,7 +1437,7 @@ void iBaseAggregateObjData::CopyToObject(iEdObject* apObj, ePropStep aStep)
 		for(size_t i=0;i<mvComponentData.size();++i)
 		{
 			iEdObjectData* pData = mvComponentData[i];
-			
+
 			iEdScnObject* pComponent = pWorld->GetScnObject(pData->GetID());
 			if(pComponent==NULL)
 				pComponent = static_cast<iEdScnObject*>(pWorld->CreateObjFromData(pData));
@@ -1549,7 +1549,7 @@ void iBaseAggregateObject::SetUpCloneData(iEdObjectData* apData, const tIntVec& 
 		iEdScnObject* pComponentClone = static_cast<iEdScnObject*>(pWorld->CreateObjFromData(pComponentData));
 		lstComponentClones.push_back(pComponentClone);
 	}
-	
+
 	itComponents = lstComponentClones.begin();
 	for(;itComponents!=lstComponentClones.end();++itComponents)
 	{
@@ -1672,7 +1672,7 @@ void iBaseAggregateObject::AddComponent(iEdScnObject* apObj)
 	tScnObjListIt it = find(mlstComponents.begin(), mlstComponents.end(), apObj);
 	if(it!=mlstComponents.end())
 		return;
-	
+
 	mlstComponents.push_back(apObj);
 	OnAddComponent(apObj);
 
@@ -1799,7 +1799,7 @@ bool iBaseAggregateObject::OnUpdate(bool abForce)
 void iBaseAggregateObject::OnDestroy()
 {
 	iEdScnObject::OnDestroy();
-	
+
 	iEdWorld* pWorld = GetWorld();
 	//iEntityWrapperTypeAggregate* pType = (iEntityWrapperTypeAggregate*)mpType;
 	if(pWorld->IsClearing()==false)
@@ -1825,7 +1825,7 @@ void iBaseAggregateObject::ApplyTransformToComponents()
 	tMatrixfListIt itMat = mlstRelWorldMatrices.begin();
 
 	const cMatrixf& mmtxParentWorldMatrix = GetWorldMatrix();
-	
+
 	for(;it!=mlstComponents.end() && itMat!=mlstRelWorldMatrices.end(); ++it, ++itMat)
 	{
 		iEdScnObject* pObj = *it;

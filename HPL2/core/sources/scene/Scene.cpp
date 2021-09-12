@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -92,12 +92,12 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// PUBLIC METHODS
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
 
 	cViewport* cScene::CreateViewport(cCamera *apCamera, cWorld *apWorld, bool abPushFront)
 	{
-		cViewport *pViewport = hplNew ( cViewport, (this) );	
+		cViewport *pViewport = hplNew ( cViewport, (this) );
 
 		pViewport->SetCamera(apCamera);
 		pViewport->SetWorld(apWorld);
@@ -112,7 +112,7 @@ namespace hpl {
 
 		return pViewport;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cScene::DestroyViewport(cViewport* apViewPort)
@@ -143,7 +143,7 @@ namespace hpl {
 			cWorld *pWorld = mpCurrentListener->GetWorld();
 			if(pWorld && WorldExists(pWorld)) pWorld->SetIsSoundEmitter(false);
 		}
-		
+
 		mpCurrentListener = apViewPort;
 		if(mpCurrentListener)
 		{
@@ -204,17 +204,17 @@ namespace hpl {
 			if(alFlags & tSceneRenderFlag_World)
 			{
 				pViewPort->RunViewportCallbackMessage(eViewportMessage_OnPreWorldDraw);
-				
-				if(pPostEffectComposite && (alFlags & tSceneRenderFlag_PostEffects)) 
+
+				if(pPostEffectComposite && (alFlags & tSceneRenderFlag_PostEffects))
 				{
 					bPostEffects = pPostEffectComposite->HasActiveEffects();
 				}
-				
+
 				if(pRenderer && pViewPort->GetWorld() && pFrustum)
 				{
 					START_TIMING(RenderWorld)
 					pRenderer->Render(	afFrameTime,pFrustum,
-										pViewPort->GetWorld(),pViewPort->GetRenderSettings(), 
+										pViewPort->GetWorld(),pViewPort->GetRenderSettings(),
 										pViewPort->GetRenderTarget(),
 										bPostEffects,
 										pViewPort->GetRendererCallbackList());
@@ -250,7 +250,7 @@ namespace hpl {
 				pPostEffectComposite->Render(afFrameTime, pFrustum, pInputTexture,pViewPort->GetRenderTarget());
 				STOP_TIMING(RenderPostEffects)
 			}
-			
+
 			//////////////////////////////////////////////
 			//Render Screen GUI
 			if(alFlags & tSceneRenderFlag_Gui)
@@ -303,7 +303,7 @@ namespace hpl {
 		{
 			if(cResources::GetCreateAndLoadCompressedMaps())
 				asPath = mpResources->GetFileSearcher()->GetFilePath(cString::SetFileExt(asFile,"cmap"));
-			
+
 			if(asPath == _W(""))
 			{
 				Error("World '%s' doesn't exist\n",asFile.c_str());
@@ -350,7 +350,7 @@ namespace hpl {
 
 		return false;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -363,7 +363,7 @@ namespace hpl {
 	{
 		if(apViewPort->GetCamera()==NULL) return;
 
-		cGuiSetListIterator it = apViewPort->GetGuiSetIterator();	
+		cGuiSetListIterator it = apViewPort->GetGuiSetIterator();
 		while(it.HasNext())
 		{
 			cGuiSet *pSet = it.Next();
@@ -373,7 +373,7 @@ namespace hpl {
 			}
 		}
 	}
-	
+
 	void cScene::RenderScreenGui(cViewport *apViewPort,float afTimeStep)
 	{
 		///////////////////////////////////////
@@ -381,11 +381,11 @@ namespace hpl {
 		typedef std::multimap<int, cGuiSet*> tPrioMap;
 		tPrioMap mapSortedSets;
 
-        cGuiSetListIterator it = apViewPort->GetGuiSetIterator();	
+        cGuiSetListIterator it = apViewPort->GetGuiSetIterator();
 		while(it.HasNext())
 		{
 			cGuiSet *pSet = it.Next();
-			
+
 			if(pSet->Is3D()==false)
 				mapSortedSets.insert(tPrioMap::value_type(pSet->GetDrawPriority(),pSet));
 		}
@@ -397,7 +397,7 @@ namespace hpl {
 		for(; SortIt != mapSortedSets.end(); ++SortIt)
 		{
 			cGuiSet *pSet = SortIt->second;
-			
+
 			//Log("Rendering gui '%s'\n", pSet->GetName().c_str());
 
 			pSet->Render(NULL);

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -65,7 +65,7 @@ enum eLightFloatProperty
 {
 	eLightFloatProperty_Radius,
 
-	eLightFloatProperty_GoboAnimFrameTime, 
+	eLightFloatProperty_GoboAnimFrameTime,
 	eLightFloatProperty_FlickerOnMinLength,
 	eLightFloatProperty_FlickerOnMaxLength,
 	eLightFloatProperty_FlickerOffMinLength,
@@ -76,8 +76,8 @@ enum eLightFloatProperty
 	eLightFloatProperty_FlickerOnFadeMaxLength,
 	eLightFloatProperty_FlickerOffFadeMinLength,
 	eLightFloatProperty_FlickerOffFadeMaxLength,
-	
-	eLightFloatProperty_LastEnum,	
+
+	eLightFloatProperty_LastEnum,
 };
 
 enum eLightStringProperty
@@ -102,15 +102,15 @@ enum eLightSpotFloatProperty
 	eLightSpotFloatProperty_FOV,
 	eLightSpotFloatProperty_Aspect,
 	eLightSpotFloatProperty_NearClipPlane,
-	
-	eLightSpotFloatProperty_LastEnum,	
+
+	eLightSpotFloatProperty_LastEnum,
 };
 
 
 enum eLightSpotStringProperty
 {
 	eLightSpotStringProperty_FalloffMap,
-	
+
 	eLightSpotStringProperty_LastEnum,
 };
 
@@ -162,7 +162,7 @@ protected:
 
 	tString msOldValue;
 	tString msNewValue;
-	
+
 };
 
 //------------------------------------------------------------------------------
@@ -177,10 +177,10 @@ class cEditorActionLightSetFloatProperty : public iEditorActionWorldModifier
 {
 public:
 	cEditorActionLightSetFloatProperty(iEditorWorld* apEditorWorld, int alID,
-									   eLightFloatProperty aType, 
+									   eLightFloatProperty aType,
 									   float afNewValue, float afNewValueExt=0);
 	void DoModify();
-	
+
 	void UndoModify();
 
 protected:
@@ -223,7 +223,7 @@ protected:
 
 	cColor mcolOldValue;
 	cColor mcolNewValue;
-	
+
 };
 
 //------------------------------------------------------------------------------
@@ -252,7 +252,7 @@ protected:
 
 	bool mbOldValue;
 	bool mbNewValue;
-	
+
 };
 
 //------------------------------------------------------------------------------
@@ -279,7 +279,7 @@ protected:
 
 	cVector3f mvOldValue;
 	cVector3f mvNewValue;
-	
+
 };
 
 //------------------------------------------------------------------------------
@@ -306,7 +306,7 @@ protected:
 
 	eLightBoxBlendFunc mOldValue;
 	eLightBoxBlendFunc mNewValue;
-	
+
 };
 
 //------------------------------------------------------------------------------
@@ -335,7 +335,7 @@ protected:
 
 	tString msOldValue;
 	tString msNewValue;
-	
+
 };
 
 //------------------------------------------------------------------------------
@@ -350,7 +350,7 @@ class cEditorActionLightSpotSetFloatProperty : public iEditorActionWorldModifier
 {
 public:
 	cEditorActionLightSpotSetFloatProperty(iEditorWorld* apEditorWorld, int alID,
-									   eLightSpotFloatProperty aType, 
+									   eLightSpotFloatProperty aType,
 									   float afNewValue);
 	void DoModify();
 	void UndoModify();

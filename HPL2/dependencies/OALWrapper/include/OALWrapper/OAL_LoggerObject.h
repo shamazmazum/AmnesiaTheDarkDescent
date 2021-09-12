@@ -22,7 +22,7 @@ typedef enum
 } eOAL_LogMsg;
 
 
-typedef enum 
+typedef enum
 {
 	eOAL_LogVerbose_None,
 	eOAL_LogVerbose_Low,
@@ -45,7 +45,7 @@ class iOAL_LoggerObject
 {
 public:
 	static void LogMsg(const std::string& asIDStr,eOAL_LogVerbose aVerbose, eOAL_LogMsg aType, const char* asMessage, ...);
-	
+
 	static void Write(const std::string& asMessage);
 
 	inline static void SetLogEnabled ( bool abEnable ) { mbLogEnabled = abEnable; }

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -60,7 +60,7 @@ namespace hpl {
 
 #define GetAdress(sStr) if(sStr[0]=='#') sStr = cString::Sub(sStr,1);
 
-	bool cMeshLoaderCollada::mbConvertUnit = true; 
+	bool cMeshLoaderCollada::mbConvertUnit = true;
 
 	//////////////////////////////////////////////////////////////////////////
 	// CONSTRUCTORS
@@ -68,7 +68,7 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	cMeshLoaderCollada::cMeshLoaderCollada(iLowLevelGraphics *apLowLevelGraphics, cMeshLoaderMSH *apMeshLoaderMSH, bool abLoadAndSaveMSHFormat) 
+	cMeshLoaderCollada::cMeshLoaderCollada(iLowLevelGraphics *apLowLevelGraphics, cMeshLoaderMSH *apMeshLoaderMSH, bool abLoadAndSaveMSHFormat)
 		: iMeshLoader(apLowLevelGraphics)
 	{
 		mpMeshLoaderMSH = apMeshLoaderMSH;
@@ -185,7 +185,7 @@ namespace hpl {
 			tWString sMSHFile = cString::SetFileExtW(asFile, _W("msh"));
 			cDate currentDate = cPlatform::FileModifiedDate(asFile);
 			cDate mshDate = cPlatform::FileModifiedDate(sMSHFile);
-			
+
 			if(cResources::GetForceCacheLoadingAndSkipSaving() || mshDate > currentDate || cPlatform::FileExists(asFile)==false)
 			{
 				cMesh *pMesh = mpMeshLoaderMSH->LoadMesh(sMSHFile, aFlags);
@@ -196,7 +196,7 @@ namespace hpl {
 				}
 			}
 		}
-		
+
 		/////////////////////////////////////////////////
 		// SETUP TEMP DATA STRUCTURES
 		//Images
@@ -238,10 +238,10 @@ namespace hpl {
 			for(size_t i=0; i<pGeometry->mvVertexVec.size(); ++i)
 			{
 				cVector3f vNrm = pGeometry->mvVertexVec[i].norm;
-				
+
 				//Normalize the normal!
 				pGeometry->mvVertexVec[i].norm.Normalize();
-				
+
 				//Skip this test as some editors (Modo...) do not export proper normals!
 				/*float fSqrLength = vNrm.SqrLength();
 				if(fSqrLength < 0.97f || fSqrLength > 1.03)
@@ -317,7 +317,7 @@ namespace hpl {
 		for(size_t i=0;i<vColladaGeometries.size(); i++)
 		{
 			cColladaGeometry &Geom = vColladaGeometries[i];
-			
+
 			cColladaNode *pGeomNode = ColladaScene.GetNodeFromSource(Geom.msId);
 			if(pGeomNode==NULL)
 			{
@@ -340,11 +340,11 @@ namespace hpl {
 
 				tString sSpecialName = cString::ToLowerCase(vStrings[0]);
 				tString sTypeName = vStrings.size()<=1 ? "" : vStrings[1];
-				
+
 				bool bCreateMesh = true;
-				
+
 				bCollideMeshShape = true; //If mesh is created (is type name is "mesh"), then set it as a CollideSHape
-				
+
 				/////////////////////////////////////
 				//COLLIDER
 				if(	(sSpecialName == "collider" || sSpecialName == "charcollider") && vStrings.size()>1 && sTypeName != "mesh")
@@ -365,7 +365,7 @@ namespace hpl {
 					cBoundingVolume TempBV;
 					TempBV.AddArrayPoints(&vVertexVec[0],(int)vArray.size());
 					TempBV.CreateFromPoints(3);
-                
+
 					tString sShapeType = cString::ToLowerCase(vStrings[1]);
 					eCollideShapeType ShapeType = eCollideShapeType_Box;
 					cVector3f vShapeSize = TempBV.GetSize();
@@ -413,7 +413,7 @@ namespace hpl {
 						cVector3f vOffset = TempBV.GetWorldCenter() -
 											pNode->m_mtxWorldTransform.GetTranslation();
 						vOffset = vOffset * pNode->mvScale;
-					
+
 						//World postion add
 						meshCollider.m_mtxOffset = pNode->m_mtxWorldTransform;
 						cVector3f vRotOffset = cMath::MatrixMul(meshCollider.m_mtxOffset.GetRotation(),
@@ -425,8 +425,8 @@ namespace hpl {
 					{
 						meshCollider.m_mtxOffset = pNode->m_mtxWorldTransform;
 					}
-		
-					
+
+
 					//Add scale
 					meshCollider.mvSize = meshCollider.mvSize * pNode->mvScale;
 
@@ -461,11 +461,11 @@ namespace hpl {
 			// Sub mesh name and node name are the same.
 			//tString sSubMeshName = pNode->msName;
 			cSubMesh* pSubMesh = pMesh->CreateSubMesh(sNodeName);
-			
+
 			pSubMesh->SetLocalTransform(pGeomNode->m_mtxTransform);
 
 			pSubMesh->SetIsCollideShape(bCollideMeshShape);
-			
+
 			//Set the scale
 			pSubMesh->SetModelScale(pGeomNode->mvScale);
 
@@ -488,7 +488,7 @@ namespace hpl {
 			//Add material
 			tString sNodeMaterial = pGeomNode->msInstanceMaterial != "" ? pGeomNode->msInstanceMaterial : Geom.msMaterial;
             tString sMatName = GetMaterialTextureFile(sNodeMaterial,vColladaMaterials,vColladaTextures,	vColladaImages);
-			
+
 			//Log("Material name: '%s'\n",sMatName.c_str());
 			if(sMatName != "")
 			{
@@ -627,8 +627,8 @@ namespace hpl {
 				{
 					pSubMesh = pMesh->GetSubMesh(0);
 				}
-			
-                cMeshCollider *pCollider = pSubMesh->CreateCollider(meshCollider.mType);				
+
+                cMeshCollider *pCollider = pSubMesh->CreateCollider(meshCollider.mType);
 				*pCollider = meshCollider;
 			}
 		}
@@ -669,7 +669,7 @@ namespace hpl {
 				pMeshNode->SetMatrix(mtxNode);
 			}
 		}
-		
+
 		///////////////////////////////////////////////
 		// Create Animations
 		cAnimation *pAnimation = NULL;
@@ -691,7 +691,7 @@ namespace hpl {
 				cAnimationTrack *pTrack = CreateAnimTrack(pAnimation, pSkeleton,
 														vColladaAnimations[i],&ColladaScene);
 				if(pTrack==NULL) continue;
-				
+
 				//Update the state and end times if needed
 				if(pTrack->GetKeyFrameNum() >0)
 				{
@@ -702,7 +702,7 @@ namespace hpl {
 					if(fEnd < pLast->time)		fEnd = pLast->time;
 				}
 			}
-			
+
 			if(ColladaScene.mfDeltaTime >= 0)
 			{
 				pAnimation->SetLength(ColladaScene.mfDeltaTime);
@@ -711,7 +711,7 @@ namespace hpl {
 			{
 				pAnimation->SetLength(fEnd - fStart);
 			}
-			
+
 			CleanUpNonAnimatedNodes(pAnimation,pSkeleton, &ColladaScene);
 		}
 
@@ -723,7 +723,7 @@ namespace hpl {
 			//pSkeleton->GetRootBone()->SetTransform(cMath::MatrixMul(mtxScale, pSkeleton->GetRootBone()->GetLocalTransform()));
 
 			if(mbZToY) mtxScale = cMath::MatrixMul(mtxScale, m_mtxZToY);
-			
+
 			cBoneIterator BoneIt = pSkeleton->GetRootBone()->GetChildIterator();
 			while(BoneIt.HasNext())
 			{
@@ -752,11 +752,11 @@ namespace hpl {
 
 		/////////////////////////////////////////////////
 		// SAVE MSH FORMAT
-		if(	cResources::GetForceCacheLoadingAndSkipSaving()==false && 
+		if(	cResources::GetForceCacheLoadingAndSkipSaving()==false &&
 			mbLoadAndSaveMSHFormat && bMeshIsOKToCache)
 		{
 			tWString sMSHFile = cString::SetFileExtW(asFile, _W("msh"));
-			
+
 			mpMeshLoaderMSH->SaveMesh(pMesh, sMSHFile);
 		}
 
@@ -898,7 +898,7 @@ namespace hpl {
 			}
 		}
 
-		
+
 		///////////////////////////////////////////////
 		// Create Animations
 		cAnimation *pAnimation = NULL;
@@ -909,14 +909,14 @@ namespace hpl {
 
 			pAnimation->ReserveTrackNum((int)vColladaAnimations.size());
 
-			
+
 			float fStart = 9999999.0f;
 			float fEnd = 0;
 			for(size_t i=0; i < vColladaAnimations.size(); i++)
 			{
 				cAnimationTrack *pTrack = CreateAnimTrack(pAnimation, pSkeleton, vColladaAnimations[i],&ColladaScene);
 				if(pTrack==NULL) continue;
-								
+
 				//Update the state and end times if needed
 				if(pTrack->GetKeyFrameNum() >0)
 				{
@@ -948,7 +948,7 @@ namespace hpl {
 			//pSkeleton->GetRootBone()->SetTransform(cMath::MatrixMul(mtxScale, pSkeleton->GetRootBone()->GetLocalTransform()));
 
 			if(mbZToY) mtxScale = cMath::MatrixMul(mtxScale, m_mtxZToY);
-			
+
 			cBoneIterator BoneIt = pSkeleton->GetRootBone()->GetChildIterator();
 			while(BoneIt.HasNext())
 			{
@@ -1019,13 +1019,13 @@ namespace hpl {
 
 						cMatrixf mtxRotChange = cMath::MatrixMul(mtxLocal.GetRotation(), mtxInvBone.GetRotation());
 						cVector3f vTransChange = mtxLocal.GetTranslation() - mtxBone.GetTranslation();
-						
+
 						cAnimationTrack * pTrack = apAnimation->CreateTrack(pBone->GetName(),eAnimTransformFlag_Rotate | eAnimTransformFlag_Translate);
 						cKeyFrame *pFrame = pTrack->CreateKeyFrame(0);
 
 						//Translation
 						pFrame->trans = vTransChange;
-						
+
 						//Quaternion
 						pFrame->rotation = cQuaternion::Identity;
 						pFrame->rotation.FromRotationMatrix(mtxRotChange);
@@ -1043,9 +1043,9 @@ namespace hpl {
 		{
 			tColladaNodeListIt it = apColladaScene->mlstNodes.begin();
 			for(; it != apColladaScene->mlstNodes.end();++it)
-			{	
+			{
 				cColladaNode *pNode = *it;
-				
+
 				//Check if there is no animation for this node.
 				if(apAnimation->GetTrackByName(pNode->msName)==NULL)
 				{
@@ -1054,10 +1054,10 @@ namespace hpl {
 					cKeyFrame *pFrame = pTrack->CreateKeyFrame(0);
 
 					cMatrixf mtxFrameTransform = pNode->m_mtxTransform;
-					
+
 					//translation
 					pFrame->trans = mtxFrameTransform.GetTranslation();
-					
+
 					//Quaternion
 					mtxFrameTransform.SetTranslation(0);
 					pFrame->rotation = cQuaternion::Identity;
@@ -1121,7 +1121,7 @@ namespace hpl {
 
 		return false;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cMeshLoaderCollada::CreateHierarchyNodes(cMesh *apMesh, cNode3D* mpParentNode,
@@ -1130,7 +1130,7 @@ namespace hpl {
 	{
 		cNode3D* pNode = mpParentNode->CreateChild(apColladaNode->msName);
 		apMesh->AddNode(pNode);
-		
+
 		pNode->SetMatrix(apColladaNode->m_mtxTransform);
 
 		//Set if this node has any geometry source
@@ -1143,7 +1143,7 @@ namespace hpl {
 		//Log(" world transform: %s\n",apColladaNode->m_mtxWorldTransform.GetTranslation().ToString().c_str());
 
 		pNode->SetPosition(pNode->GetLocalPosition() * mfUnitScale);
-		
+
 		//Iterate children
 		tColladaNodeListIt it = apColladaNode->mlstChildren.begin();
 		for(; it != apColladaNode->mlstChildren.end(); ++it)
@@ -1190,5 +1190,5 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 }

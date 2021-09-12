@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -68,7 +68,7 @@ void cViewportCallback::OnPostSolidDraw(cRendererCallbackFunctions* apFunctions)
 	apFunctions->SetBlendMode(eMaterialBlendMode_Alpha);
 	apFunctions->SetTextureRange(NULL,0);
 	apFunctions->SetProgram(NULL);
-	
+
 	apFunctions->SetDepthTest(true);
 	apFunctions->SetDepthWrite(false);
 
@@ -106,7 +106,7 @@ void cViewportCallback::OnPostSolidDraw(cRendererCallbackFunctions* apFunctions)
 	apFunctions->SetBlendMode(eMaterialBlendMode_None);
 	apFunctions->SetTextureRange(NULL,0);
 	apFunctions->SetProgram(NULL);
-	
+
 	apFunctions->SetDepthTest(false);
 	apFunctions->SetDepthWrite(false);
 
@@ -115,9 +115,9 @@ void cViewportCallback::OnPostSolidDraw(cRendererCallbackFunctions* apFunctions)
 	const cVector3f& vMouseNewPos = mpViewport->GetVCamera()->GetTrackNewMousePos();
 	cVector3f vMousePos = mpViewport->GetMouseWorldPosition();
 	//mpViewport->GetVCamera()->ClampDistanceFromRefTarget(vMousePos, 40);
-	
+
 	//apFunctions->GetLowLevelGfx()->DrawSphere(vMousePos, 0.1f, cColor(0,1,0,1));
-	
+
 	//apFunctions->GetLowLevelGfx()->DrawLine(vRefMousePos, vMouseNewPos, cColor(1,0,0,1));
 	//apFunctions->GetLowLevelGfx()->DrawLine(vRefMousePos, 0, cColor(0,0,1,1));
 	//apFunctions->GetLowLevelGfx()->DrawLine(mpViewport->GetVCamera()->GetTrackRefMousePos(), mpViewport->GetVCamera()->GetTrackRefTargetPos()-mpViewport->GetVCamera()->GetTrackRefMousePos(), cColor(1,0,0,1));
@@ -139,7 +139,7 @@ void cViewportCallback::OnPostSolidDraw(cRendererCallbackFunctions* apFunctions)
 		apFunctions->GetLowLevelGfx()->DrawSphere(vPos2, 0.2f, cColor(0,1,0,1));
 		apFunctions->GetLowLevelGfx()->DrawSphere(vGridPos, 0.3f, cColor(1,0,0,1));
 		apFunctions->GetLowLevelGfx()->DrawSphere(vSnapPos, 0.3f, cColor(1,1,0,1));
-		
+
 		//apFunctions->GetLowLevelGfx()->DrawSphere(m->GetTarget(),0.1f, cColor(0,1,1,1));
 	}
 	apFunctions->SetBlendMode(eMaterialBlendMode_None);
@@ -157,7 +157,7 @@ void cViewportCallback::OnPostTranslucentDraw(cRendererCallbackFunctions* apFunc
 	apFunctions->SetMatrix(NULL);
 	apFunctions->SetTextureRange(NULL,0);
 	apFunctions->SetProgram(NULL);
-	
+
 	apFunctions->SetDepthTest(true);
 	apFunctions->SetDepthWrite(false);
 
@@ -190,7 +190,7 @@ void cViewportCallback::OnPostTranslucentDraw(cRendererCallbackFunctions* apFunc
 
 //----------------------------------------------------------------
 
-cEditorWindowViewport::cEditorWindowViewport(iEditorBase* apEditor, 
+cEditorWindowViewport::cEditorWindowViewport(iEditorBase* apEditor,
 											 iFrameBuffer* apFB,
 											 bool abAddViewMenu):	iEditorWindow(apEditor,
 																				  "Viewport Window"),
@@ -200,7 +200,7 @@ cEditorWindowViewport::cEditorWindowViewport(iEditorBase* apEditor,
 {
 	mbDrawGrid = true;
 	mbDrawDebug = false;
-	mbDrawAxes = true; 
+	mbDrawAxes = true;
 	mbAddViewMenu = abAddViewMenu;
 
 	////////////////////////////////////
@@ -275,7 +275,7 @@ void cEditorWindowViewport::SetPreset(eEditorWindowViewportPreset aPreset)
 	mCamera.UpdateCamera(0);
 
 	SetRenderMode(renderMode);
-	
+
 	UpdateMenu();
 }
 
@@ -384,7 +384,7 @@ void cEditorWindowViewport::SetEnlarged(bool abX)
 		vPos = mvEnlargedPosition;
 		vSize = mvEnlargedSize;
 		vFBPos = cVector2l(0);
-		vFBSize = mpFB->GetSize();		
+		vFBSize = mpFB->GetSize();
 	}
 	else
 	{
@@ -519,7 +519,7 @@ bool cEditorWindowViewport::OnViewportUpdate(const cGuiMessageData& aData)
 		mCamera.SetZoomActive(false);
 	}
 
-	mpEditor->SetFlags(eEditorFlag_ViewModeActive, 
+	mpEditor->SetFlags(eEditorFlag_ViewModeActive,
 			mpEditor->GetEngine()->GetInput()->GetKeyboard()->KeyIsDown(eKey_LeftAlt)
 #if defined(__linux__)
 			|| mpEditor->GetEngine()->GetInput()->GetKeyboard()->KeyIsDown(eKey_LeftSuper)
@@ -565,7 +565,7 @@ bool cEditorWindowViewport::OnViewportDraw(const cGuiMessageData& aData)
 	mpSet->DrawGfx(mpGfxRedFrame, vPos + cVector3f(0,vSize.y-2,0), cVector2f(vSize.x,2), color);
 	mpSet->DrawGfx(mpGfxRedFrame, vPos, cVector2f(2,vSize.y), color);
 	mpSet->DrawGfx(mpGfxRedFrame, vPos + cVector3f(vSize.x-2,0,0), cVector2f(2,vSize.y), color);
-	
+
 	return true;
 }
 
@@ -636,13 +636,13 @@ bool cEditorWindowViewport::OnViewportMouseUp(const cGuiMessageData& aData)
 	mpEditor->SetViewportLocked(false);
 	mpSet->SetAttentionWidget(NULL);
 
-	if(mpEditor->GetFlags(eEditorFlag_ViewLocked) || 
+	if(mpEditor->GetFlags(eEditorFlag_ViewLocked) ||
 		mpEditor->GetFlags(eEditorFlag_ViewModeActive)==false)
 		mpEditor->ViewportMouseUp(this, aData.mlVal);
-	
+
 	mCamera.SetTumbleActive(false);
 	mCamera.SetZoomActive(false);
-	mCamera.SetTrackActive(false);	
+	mCamera.SetTrackActive(false);
 
 	return true;
 }
@@ -657,7 +657,7 @@ bool cEditorWindowViewport::OnViewportMouseMove(const cGuiMessageData& aData)
 		return true;
 	}
 
-	if(mpSet->GetFocusedWidget()!=mpImgViewport || 
+	if(mpSet->GetFocusedWidget()!=mpImgViewport ||
 		mpEditor->GetFlags(eEditorFlag_PopUpActive))
 		return false;
 
@@ -692,11 +692,11 @@ void cEditorWindowViewport::OnInitLayout()
 	/////////////////////////////////////////////
 	// Gfx Init
 	mpGfxRedFrame = mpSet->GetGui()->CreateGfxFilledRect(cColor(1,1,1,1), eGuiMaterial_Diffuse);
-	
+
 	mpGfxPointerTumble = mpSet->GetGui()->CreateGfxImage("gui_def_pointer_tumble.tga",eGuiMaterial_Alpha);
 	mpGfxPointerTrack = mpSet->GetGui()->CreateGfxImage("gui_def_pointer_track.tga",eGuiMaterial_Alpha);
 	mpGfxPointerZoom = mpSet->GetGui()->CreateGfxImage("gui_def_pointer_zoom.tga",eGuiMaterial_Alpha);
-	
+
 	/////////////////////////////////////////////
 	// Layout init
 	mpBGFrame->SetDrawFrame(true);
@@ -721,7 +721,7 @@ void cEditorWindowViewport::OnInitLayout()
 		for(int i=0;i<2;++i)
 			mpMainMenuRenderModes[i]->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(MenuView_Rendering));
 
-		
+
 		pSubItem1 = pItem->AddMenuItem(_W("Presets"));
 
 		pSubItem2 = pSubItem1->AddMenuItem(_W("Front"));
@@ -747,7 +747,7 @@ void cEditorWindowViewport::OnInitLayout()
 
 		vMenuSize = mpMainMenu->GetSize();
 	}
-	
+
 	// Render view init
 	CreateGuiViewport(mpBGFrame);
 	SetGuiViewportPos(cVector3f(0,vMenuSize.y,0.05f));

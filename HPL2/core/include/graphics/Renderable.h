@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -71,7 +71,7 @@ namespace hpl {
 		virtual bool RetrieveOcculsionQuery(iRenderer *apRenderer){ return true;}
 
 		virtual void SetRenderFlagBit(tRenderableFlag alFlagBit, bool abSet);
-		bool GetRenderFlagBit(tRenderableFlag alFlagBit){ return (mlRenderFlags & alFlagBit)!=0;} 
+		bool GetRenderFlagBit(tRenderableFlag alFlagBit){ return (mlRenderFlags & alFlagBit)!=0;}
 		inline tRenderableFlag GetRenderFlags() const { return mlRenderFlags;}
 
 		virtual bool IsVisible(){ return mbIsVisible && mfCoverageAmount >0; }
@@ -81,10 +81,10 @@ namespace hpl {
 		 */
 		bool GetVisibleVar(){ return mbIsVisible;}
 		virtual void OnChangeVisible(){}
-		
+
 		virtual void SetIlluminationAmount(float afX){ mfIlluminationAmount = afX;}
 		inline float GetIlluminationAmount()const { return mfIlluminationAmount;}
-		
+
 		void SetCoverageAmount(float afX);
 		inline float GetCoverageAmount()const { return mfCoverageAmount;}
 
@@ -115,7 +115,7 @@ namespace hpl {
 
 		inline int GetRenderFrameCount() const { return mlRenderFrameCount;}
 		inline void SetRenderFrameCount(const int alCount) { mlRenderFrameCount = alCount;}
-		
+
 		bool GetIsOneSided(){ return mbIsOneSided;}
 		const cVector3f& GetOneSidedNormal(){ return mvOneSidedNormal;}
 
@@ -146,7 +146,7 @@ namespace hpl {
 		bool mbStatic;
 
 		bool mbForceShadow;
-		
+
 		int mlLargePlaneSurfacePlacement;
 
 		int mlRenderFrameCount;

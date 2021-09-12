@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -62,10 +62,10 @@ class cLuxPlayer : public iLuxUpdateable, public iLuxCollideCallbackContainer
 {
 friend class cLuxPlayer_SaveData;
 friend class cLuxHelpFuncs;
-public:	
+public:
 	cLuxPlayer();
 	~cLuxPlayer();
-	
+
 	///////////////////
 	//Main callbacks
 	void LoadFonts();
@@ -86,14 +86,14 @@ public:
 
 	void OnEnterContainer(const tString& asOldContainer);
 	void OnLeaveContainer(const tString& asNewContainer);
-	
+
 	void RenderSolid(cRendererCallbackFunctions* apFunctions);
 	void RenderTrans(cRendererCallbackFunctions* apFunctions);
 
 	////////////////////
 	// Actions
 	void GiveDamage(float afAmount, int alStrength, eLuxDamageType aType, bool abSpinHead, bool abLethal);
-	
+
 	void GiveSanityDamage(float afAmount);
 	void LowerSanity(float afAmount, bool abUseEffect);
 
@@ -102,15 +102,15 @@ public:
 	void AddPitch(float afAmount);
 	void SetLean(float afMul);
 	void AddLean(float afAdd);
-	
+
 	void Scroll(float afAmount);
-	
+
 	void DoAction(eLuxPlayerAction aAction, bool abPressed);
-	
+
 	void Run(bool abPressed);
 	void Jump(bool abPressed);
 	void Crouch(bool abPressed);
-	
+
 	void ChangeState(eLuxPlayerState aState);
 	eLuxPlayerState GetCurrentState(){ return mState;}
 	iLuxPlayerState* GetStateData(eLuxPlayerState aState){ return mvStates[aState];}
@@ -120,7 +120,7 @@ public:
 	eLuxMoveState GetCurrentMoveState(){ return mMoveState;}
 	iLuxMoveState* GetMoveStateData(eLuxMoveState aState){ return mvMoveStates[aState];}
 	iLuxMoveState* GetCurrentMoveStateData(){ return mvMoveStates[mMoveState];}
-	
+
 	void MoveHeadPosAdd(eLuxHeadPosAdd aType, const cVector3f& avGoal, float afSpeed, float afSlowdownDist);
 
 	void PlaceAtStartNode(cLuxNode_PlayerStart *apNode);
@@ -160,7 +160,7 @@ public:
 	float GetLampOil(){ return mfLampOil; }
 
 	float GetTerror(){ return mfTerror; }
-	
+
 	void SetTerror(float afX){ mfTerror=afX; }
 	void AddTerrorEnemy(iLuxEnemy *apEnemy);
 	void RemoveTerrorEnemy(iLuxEnemy *apEnemy);
@@ -189,7 +189,7 @@ public:
 	int GetTinderboxes(){ return mlTinderboxes;}
 	void SetTinderboxes(int alX){ mlTinderboxes = alX; }
 	void AddTinderboxes(int alX){ mlTinderboxes += alX; }
-	
+
 	bool IsDead(){ return mfHealth <=0;}
 
 	float GetDefaultMass() {return mfDefaultMass;}
@@ -198,7 +198,7 @@ public:
 
 	const cVector3f& GetBodySize(){ return mvBodySize;}
 	const cVector3f& GetBodyCrouchSize(){ return mvBodyCrouchSize;}
-	
+
 	bool GetPressedMove(){ return mbPressedMove;}
 	bool IsPressingRun(){ return mbPressingRun;}
 	bool IsPressingJump(){ return mbPressingJump;}
@@ -219,7 +219,7 @@ public:
 	void SetEventRunSpeedMul(float afX){ mfEventRunSpeedMul = afX;}
 	float GetEventMoveSpeedMul(){ return mfEventMoveSpeedMul;}
 	float GetEventRunSpeedMul(){ return mfEventRunSpeedMul;}
-	
+
 	void SetScriptMoveSpeedMul(float afX){ mfScriptMoveSpeedMul = afX;}
 	void SetScriptRunSpeedMul(float afX){ mfScriptRunSpeedMul = afX;}
 	float GetScriptMoveSpeedMul(){ return mfScriptMoveSpeedMul;}
@@ -230,12 +230,12 @@ public:
 
 	void SetInsanityCollapseSpeedMul(float afX){ mfInsanityCollapseSpeedMul = afX;}
 	float GetInsanityCollapseSpeedMul(){ return mfInsanityCollapseSpeedMul;}
-	
+
 	void SetScriptJumpForceMul(float afX){ mfScriptJumpForceMul = afX;}
 	float GetScriptJumpForceMul(){ return mfScriptJumpForceMul;}
 
 	void SetCurrentFocusDistance(float afX){ mfCurrentFocusDistance = afX;}
-	
+
 	void SetEntityInFocus(iLuxEntity *apEntity){ mpEntityInFocus =apEntity;}
 	iLuxEntity* GetEntityInFocus(){ return mpEntityInFocus;}
 
@@ -244,7 +244,7 @@ public:
 	iPhysicsBody* GetBodyInFocus(){ return mpBodyInFocus;}
 
 	void SetScriptShowFocusIconAndCrossHair(bool abX){ mbScriptShowFocusIconAndCrossHair = abX;}
-	
+
 	void SetCurrentHandObjectDrawn(bool abX);
 
 	float GetAvgSpeed(){ return mfAvgSpeed; }
@@ -266,12 +266,12 @@ public:
 
 	static eLuxFocusIconStyle StringToFocusIconStyle(const tString& asX);
 	static tString FocusIconStyleToString(eLuxFocusIconStyle aX);
-	
+
 	////////////////////
 	// Free cam
 	void SetFreeCamActive(bool abX);
 	void SetFreeCamSpeed(float afSpeed);
-	
+
 	////////////////////
 	// Helpers
 	cLuxPlayerLightLevel *GetHelperLightLevel(){ return mpHelperLightLevel;}
@@ -291,7 +291,7 @@ public:
 	void RunHelperMessage(eUpdateableMessage aMessage, float afX);
 	void RunHelperLuxMessage(eLuxUpdateableMessage aMessage, void *apData);
 
-	
+
 private:
 	bool CanDrawCrossHair();
 	void DrawHud(float afFrameTime);
@@ -302,7 +302,7 @@ private:
 	void UpdateLean(float afTimeStep);
 	void UpdateFocusText(float afTimeStep);
 	void UpdateAvgSpeed(float afTimeStep);
-	
+
 	void SpinHead(float afSpeed);
 	void UpdateHeadSpin(float afTimeStep);
 
@@ -361,7 +361,7 @@ private:
 	cVector2f mvHeadSpinSpeed;
 
 	cVector3f mvHeadPosAddSum;
-	
+
 	float mfCurrentFocusDistance;
 	iLuxEntity *mpEntityInFocus;
 	iPhysicsBody* mpBodyInFocus;
@@ -377,7 +377,7 @@ private:
 	float mfFOVMulGoal;
 	float mfAspectMulSpeed;
 	float mfFOVMulSpeed;
-	
+
 	float mfRoll;
 	float mfRollGoal;
 	float mfRollSpeedMul;
@@ -392,7 +392,7 @@ private:
 	cVector3f mvCamAnimPosGoal;
 	float mfCamAnimPosSpeedMul;
 	float mfCamAnimPosMaxSpeed;
-	
+
 	tWString msFocusText;
 	tWString msLastFocusText;
 	float mfFocusTextAlpha;
@@ -446,7 +446,7 @@ private:
 	cLuxPlayerSpawnPS *mpSpawnPS;
 	cLuxPlayerCamDirEffects *mpCamDirEffects;
 	cLuxPlayerInsanityCollapse *mpInsanityCollapse;
-	
+
 
 	cLuxPlayerHands *mpHands;
 

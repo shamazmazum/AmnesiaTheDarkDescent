@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -44,7 +44,7 @@ cMeshEntity* cEditorObjectIndexEntryEntity::CreateTempEntity(cWorld* apWorld)
 	tString sSourceFile = cString::To8Char(GetFileNameFullPath());
 
 	cMeshEntity* pEnt = pEditor->GetEngineEntityLoader()->LoadEntFile(-1, "TempObject_"+sSourceFile, sSourceFile, apWorld, false, false, false, false, false);
-	
+
 	pEnt->SetSourceFile(sSourceFile);
 	pEnt->SetActive(false);
 	pEnt->SetVisible(false);
@@ -197,9 +197,9 @@ cMeshEntity* cEditorWindowEntities::CreatePreviewEntity(iEditorObjectIndexEntryM
 	tWString sFullPath = pRes->GetFileSearcher()->GetFilePath(apEntry->GetFileName());
 	cWorld* pWorld = mpEditor->GetEditorWorld()->GetWorld();
 	cEditorEntityLoader* pLoader = mpEditor->GetEngineEntityLoader();
-	
+
 	cMeshEntity* pEntity = pLoader->LoadEntFile(0, "PreviewEntity", apEntry->GetFileName(), pWorld, false, false, false, false, false);
-	
+
 	return pEntity;
 }
 

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -30,7 +30,7 @@
 // Static members init
 bool cModelEditorWindowPhysicsTest::mbBuoyancyActive = false;
 float cModelEditorWindowPhysicsTest::mfBuoyancyDensity = 100;
-float cModelEditorWindowPhysicsTest::mfBuoyancyLinearViscosity = 0.2f; 
+float cModelEditorWindowPhysicsTest::mfBuoyancyLinearViscosity = 0.2f;
 float cModelEditorWindowPhysicsTest::mfBuoyancyAngularViscosity = 0.2f;
 cPlanef cModelEditorWindowPhysicsTest::mBuoyancySurface = cPlanef(0,1,0,-1);
 
@@ -97,7 +97,7 @@ void cPhysicsTestRenderCallback::OnPostSolidDraw(cRendererCallbackFunctions* apF
 		for(size_t i=0;i<vJoints.size(); ++i)
 		{
 			iPhysicsJoint *pJoint = vJoints[i];
-            
+
 			cVector3f vPivot = pJoint->GetPivotPoint();
 			apFunctions->GetLowLevelGfx()->DrawSphere(vPivot,0.2f,cColor(1,0,0,1));
 			apFunctions->GetLowLevelGfx()->DrawLine(vPivot,vPivot + pJoint->GetPinDir()*0.25 ,cColor(0,1,0,1));
@@ -107,7 +107,7 @@ void cPhysicsTestRenderCallback::OnPostSolidDraw(cRendererCallbackFunctions* apF
 	if(mbDrawSkeleton && pEntity && pEntity->GetMesh()->GetSkeleton())
 	{
 		apFunctions->SetDepthTest(false);
-		
+
 		cNode3DIterator it = mpWindow->mpTestEntity->GetBoneStateRoot()->GetChildIterator();
 
 		while(it.HasNext())
@@ -131,11 +131,11 @@ void cPhysicsTestRenderCallback::OnPostSolidDraw(cRendererCallbackFunctions* apF
 
 void cPhysicsTestRenderCallback::DrawSkeletonRec(cRendererCallbackFunctions* apFunctions, cNode3D* apBoneState)
 {
-	cVector3f vCameraSpacePos = cMath::MatrixMul(apFunctions->GetFrustum()->GetViewMatrix(), apBoneState->GetWorldPosition());		
+	cVector3f vCameraSpacePos = cMath::MatrixMul(apFunctions->GetFrustum()->GetViewMatrix(), apBoneState->GetWorldPosition());
 	float fSize = cMath::Min(-0.01f * vCameraSpacePos.z, 0.03f);
 	apFunctions->GetLowLevelGfx()->DrawSphere(apBoneState->GetWorldPosition(),fSize,cColor(1,0,0,1));
-	
-	
+
+
 	cNode3DIterator it = apBoneState->GetChildIterator();
 	while(it.HasNext())
 	{
@@ -153,10 +153,10 @@ void cPhysicsTestRenderCallback::DrawSkeletonRec(cRendererCallbackFunctions* apF
 
 //------------------------------------------------------------------------------------
 
-cModelEditorWindowPhysicsTest::cModelEditorWindowPhysicsTest(iEditorBase* apEditor, iFrameBuffer* apFB): iEditorWindow(apEditor, 
+cModelEditorWindowPhysicsTest::cModelEditorWindowPhysicsTest(iEditorBase* apEditor, iFrameBuffer* apFB): iEditorWindow(apEditor,
 																													   "Physics Test Window"),
-																										 iEditorViewport(apEditor, 
-																														 apEditor->GetEngine()->GetScene()->CreateWorld("PhysicsTestWorld"), 
+																										 iEditorViewport(apEditor,
+																														 apEditor->GetEngine()->GetScene()->CreateWorld("PhysicsTestWorld"),
 																														 apFB)
 {
 	mpTestWorld = mpEngineViewport->GetWorld();
@@ -272,7 +272,7 @@ bool cModelEditorWindowPhysicsTest::WindowSpecificInputCallback(iEditorInput* ap
 
 	if(bBuoyancyUpdated)
 		UpdateBuoyancy();
-		
+
 
 	return true;
 }
@@ -285,7 +285,7 @@ void cModelEditorWindowPhysicsTest::SetUpRender()
 
 	cScene* pScene = mpEngine->GetScene();
 	cPhysics* pPhysics = mpEngine->GetPhysics();
-	
+
 	mpMainLight = mpTestWorld->CreateLightPoint("", "", false);
 	mpMainLight->SetPosition(cVector3f(0,2, 3));
 	mpMainLight->SetRadius(20);
@@ -345,12 +345,12 @@ void cModelEditorWindowPhysicsTest::SetUpModel()
 	pModel->Save(pDoc);
 
 	cEditorEntityLoader* pLoader = mpEditor->GetEngineEntityLoader();
-	
+
 	mpTestEntity = (cMeshEntity*)pLoader->LoadEntityFromElement(0,
 																"TestEntity",
-																pDoc, 
+																pDoc,
 																mpTestWorld,
-																"",sFullPath, 
+																"",sFullPath,
 																true, true, true, true, true);
 	mvJoints = pLoader->GetJoints();
 	if(mpTestEntity==NULL)
@@ -361,7 +361,7 @@ void cModelEditorWindowPhysicsTest::SetUpModel()
 	for(int i=0;i<mpTestEntity->GetAnimationStateNum();++i)
 	{
 		cAnimationState* pAnimState = mpTestEntity->GetAnimationState(i);
-		
+
 		mpInpAnimations->AddValue(cString::To16Char(pAnimState->GetName()));
 
 		pAnimState->SetSpeed(pAnimState->GetBaseSpeed());
@@ -430,7 +430,7 @@ void cModelEditorWindowPhysicsTest::OnSetActive(bool abX)
 		pScene->SetCurrentListener(mpEditor->GetEngineViewport());
 		((cModelEditor*)mpEditor)->SetLastSelectedAnimation(mpInpAnimations->GetValue());
 	}
-		
+
 
 	SetViewportActive(abX);
 
@@ -547,7 +547,7 @@ bool cModelEditorWindowPhysicsTest::OnViewportUpdate(const cGuiMessageData& aDat
 	if(mBodyPicker.mpPickedBody)
 	{
 		//Get pos of start.
-		mBodyPicker.mvPos = cMath::MatrixMul(mBodyPicker.mpPickedBody->GetLocalMatrix(), 
+		mBodyPicker.mvPos = cMath::MatrixMul(mBodyPicker.mpPickedBody->GetLocalMatrix(),
 			mBodyPicker.mvLocalPos);
 
 		//Get Drag pos
@@ -557,7 +557,7 @@ bool cModelEditorWindowPhysicsTest::OnViewportUpdate(const cGuiMessageData& aDat
 		mRenderCallback.mvDragPos = vStart + vDir*mBodyPicker.mfDist;
 
 		//Spring testing:
-		cVector3f vForce = (vDragPos - mBodyPicker.mvPos)*20 - 
+		cVector3f vForce = (vDragPos - mBodyPicker.mvPos)*20 -
 			(mBodyPicker.mpPickedBody->GetLinearVelocity()*0.4f);
 
 
@@ -592,7 +592,7 @@ bool cModelEditorWindowPhysicsTest::OnViewportMouseDown(const cGuiMessageData& a
 		{
 			const cVector3f& vStart = GetUnprojectedStart();
 			const cVector3f& vDir = GetUnprojectedDir();
-			
+
 			cVector3f vEnd = vStart + vDir*100.0f;
 
 			mBodyPicker.Clear();
@@ -634,7 +634,7 @@ bool cModelEditorWindowPhysicsTest::OnViewportMouseDown(const cGuiMessageData& a
 		if(aData.mlVal&eGuiMouseButton_Right)
 			mCamera.SetZoomActive(true);
 	}
-	
+
 	return true;
 }
 
@@ -662,7 +662,7 @@ bool cModelEditorWindowPhysicsTest::OnViewportMouseUp(const cGuiMessageData& aDa
 		if(aData.mlVal&eGuiMouseButton_Right)
 			mCamera.SetZoomActive(false);
 	}
-	
+
 	return true;
 }
 

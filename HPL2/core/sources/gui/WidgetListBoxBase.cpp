@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -70,7 +70,7 @@ namespace hpl {
 	{
 		if(mpSet->IsDestroyingSet()==false)
 		{
-			mpSet->DestroyWidget(mpSlider);			
+			mpSet->DestroyWidget(mpSlider);
 		}
 	}
 
@@ -81,8 +81,8 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
-	void iWidgetListBoxBase::SetSelectedItem(int alX, bool abMoveList, bool abGenerateCallback, eListBoxSelectType aType, 
+
+	void iWidgetListBoxBase::SetSelectedItem(int alX, bool abMoveList, bool abGenerateCallback, eListBoxSelectType aType,
 												bool abClearPrevious)
 	{
 		if(abClearPrevious || mbAllowMultiSelection==false)
@@ -126,14 +126,14 @@ namespace hpl {
 		if(abGenerateCallback)
 			ProcessMessage(eGuiMessage_SelectionChange, cGuiMessageData(alX));
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	int iWidgetListBoxBase::GetSelectedItem()
 	{
 		if(mlstSelectedItems.empty())
 			return -1;
-		
+
 		return mlstSelectedItems.back();
 	}
 
@@ -209,7 +209,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	void iWidgetListBoxBase::UpdateProperties()
 	{
 		mlNumItems = (int)mvItems.size();
@@ -217,7 +217,7 @@ namespace hpl {
 
         if(mpSlider == NULL)
 			return;
-		
+
 		if((int)mvItems.size() > mlMaxItems)
 		{
 			mpSlider->SetBarValueSize(mlMaxItems);
@@ -293,7 +293,7 @@ namespace hpl {
 		return true;
 	}
 	kGuiCallbackDeclaredFuncEnd(iWidgetListBoxBase,MoveSlider)
-	
+
 	//-----------------------------------------------------------------------
 
 	void iWidgetListBoxBase::OnLoadGraphics()
@@ -321,15 +321,15 @@ namespace hpl {
 		// Background
 		mpSet->DrawGfx(	mpGfxBackground,GetGlobalPosition() +cVector3f(0,0,mfBackgroundZ),
 						mvSize);
-		
-		
+
+
 		////////////////////////////////
 		// Borders
-		DrawBordersAndCorners(	NULL, mvGfxBorders, mvGfxCorners, 
-								GetGlobalPosition() - 
+		DrawBordersAndCorners(	NULL, mvGfxBorders, mvGfxCorners,
+								GetGlobalPosition() -
 									cVector3f(	mvGfxCorners[0]->GetActiveSize().x,
-												mvGfxCorners[0]->GetActiveSize().y,0), 
-									mvSize +	mvGfxCorners[0]->GetActiveSize() + 
+												mvGfxCorners[0]->GetActiveSize().y,0),
+									mvSize +	mvGfxCorners[0]->GetActiveSize() +
 												mvGfxCorners[2]->GetActiveSize());
 	}
 
@@ -348,7 +348,7 @@ namespace hpl {
 			if(lIndex!=-1)
 			{
 				cVector3f vPosition = GetItemStartPos();
-				
+
 				cVector3f vUpperLeftCorner = vPosition + cVector3f(-1,lIndex*(mvDefaultFontSize.y+2),0);
 				cVector2f vWidth = cVector2f(mvSize.x-mfSliderWidth,1);
 				cVector2f vHeight = cVector2f(1, mvDefaultFontSize.y);
@@ -364,7 +364,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	bool iWidgetListBoxBase::OnMouseMove(const cGuiMessageData& aData)
 	{
 		return true;
@@ -400,7 +400,7 @@ namespace hpl {
 
 		eListBoxSelectType type = bUsingShift? eListBoxSelectType_FromAnchorPos :
 												(bUsingCtrl? eListBoxSelectType_Toggle : eListBoxSelectType_Select);
-		
+
 		SetCursorPos(lSelection,true,false);
 
 		if(bUsingShift==false)
@@ -453,9 +453,9 @@ namespace hpl {
 	{
 		return false;
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	bool iWidgetListBoxBase::OnMouseLeave(const cGuiMessageData& aData)
 	{
 		return false;
@@ -476,7 +476,7 @@ namespace hpl {
 			SetCursorPos(mlCursorPos-1, true, true);
 			if(bUsingCtrl==false && bUsingShift==false)
 				SetAnchorPos(mlCursorPos);
-			
+
 			if(bUsingCtrl==false && bUsingShift==false)
 			{
 				SetSelectedItem(mlCursorPos, false, true, eListBoxSelectType_Select, true);
@@ -493,7 +493,7 @@ namespace hpl {
 			SetCursorPos(mlCursorPos+1, true, true);
 			if(bUsingCtrl==false && bUsingShift==false)
 				SetAnchorPos(mlCursorPos);
-			
+
 			if(bUsingCtrl==false && bUsingShift==false)
 			{
 				SetSelectedItem(mlCursorPos, false, true, eListBoxSelectType_Select, true);
@@ -525,7 +525,7 @@ namespace hpl {
 
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -598,7 +598,7 @@ namespace hpl {
 				if(mbLocked == false) return false;
 				mbLocked=false;
 			}
-		
+
 			return true;
 		}
 

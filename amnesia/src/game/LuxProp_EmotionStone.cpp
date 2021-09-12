@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -112,7 +112,7 @@ bool cLuxProp_EmotionStone::OnInteract(iPhysicsBody *apBody, const cVector3f &av
 
 void cLuxProp_EmotionStone::OnSetupAfterLoad(cWorld *apWorld)
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -126,7 +126,7 @@ void cLuxProp_EmotionStone::OnResetProperties()
 
 void cLuxProp_EmotionStone::UpdatePropSpecific(float afTimeStep)
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -156,7 +156,7 @@ tWString cLuxProp_EmotionStone::GetFocusText()
 
 void cLuxProp_EmotionStone::OnConnectionStateChange(iLuxEntity *apEntity, int alState)
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -224,7 +224,7 @@ void cLuxProp_EmotionStone::LoadFromSaveData(iLuxEntity_SaveData* apSaveData)
 	//Init
 	super_class::LoadFromSaveData(apSaveData);
 	cLuxProp_EmotionStone_SaveData *pData = static_cast<cLuxProp_EmotionStone_SaveData*>(apSaveData);
-	
+
 	//////////////////
 	//Set variables
 	kCopyFromVar(pData, msDescCat);

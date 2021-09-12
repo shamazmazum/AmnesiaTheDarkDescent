@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -51,7 +51,7 @@ namespace hpl {
 
 	using namespace HaptX;
 	using namespace Vectors;
-	
+
 	HaptXInterface* gpInterface;
 	iHapticDeviceID	gDeviceID;
 
@@ -94,7 +94,7 @@ namespace hpl {
 
 		if(mDeviceID >=0)
 			mpInterface->DeviceDestroy(mDeviceID);
-		
+
 		HaptX::ReleaseHaptXInterface();
 	}
 
@@ -109,12 +109,12 @@ namespace hpl {
 	{
 		//Get the interface
 		mpInterface = HaptX::GetHaptXInterface();
-		if (!mpInterface){ 
+		if (!mpInterface){
 			Error("Failed to retrieve HaptX interface\n");
 			return false;
 		}
 		gpInterface = mpInterface;
-		
+
 		//Initalize the interface
 		if (mpInterface->HaptXInit( _W("Frictional Games"),
 									_W("Penumbra Overture"),
@@ -126,10 +126,10 @@ namespace hpl {
 			HaptX::ReleaseHaptXInterface();
 			return false;
 		}
-		
+
 		//Get the active device
 		gDeviceID = -1;
-		mpInterface->HaptXHookMessages(HX_INFO_MSG, HaptXMsgCallback); //Register to recieve all messages with a severity down to and including Information messages. 
+		mpInterface->HaptXHookMessages(HX_INFO_MSG, HaptXMsgCallback); //Register to recieve all messages with a severity down to and including Information messages.
 		mpInterface->AllDevicesEnum(HapticDeviceEnumFunc);
 		mDeviceID = gDeviceID;
 		if (mDeviceID < 0){
@@ -137,14 +137,14 @@ namespace hpl {
 			HaptX::ReleaseHaptXInterface();
 			return false;
 		}
-		
+
 		//Set up world
 		mpInterface->DeviceSetWorldScale(mDeviceID,0.03f);
 		mpInterface->HaptXSetRightHanded();
 		mpInterface->DeviceSetCameraRelative(mDeviceID,true);
 
 		//Create default surface
-		mpInterface->SurfaceCreateSimple(&mpDefaultSurfaceInfo); 
+		mpInterface->SurfaceCreateSimple(&mpDefaultSurfaceInfo);
 
 		//Set up variables
 		mvPreviousHardwarePos = GetHardwarePosition();
@@ -154,7 +154,7 @@ namespace hpl {
 
 		return true;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cLowLevelHapticHaptX::UpdateLowLevel(float afTimeStep)
@@ -173,13 +173,13 @@ namespace hpl {
 																	mpCamera->GetYaw(),
 																	mpCamera->GetRoll()),
 																	eEulerRotationOrder_XYZ);
-			
+
 			cVector3f vProxyCamPos = mpCamera->GetPosition() +
 									 mpCamera->GetForward() * mvCameraOffset.z +
 									 mpCamera->GetRight() * mvCameraOffset.x +
 									 mpCamera->GetUp() * mvCameraOffset.y;
 
-			
+
 			mtxProxyCam.SetTranslation(vProxyCamPos * GetWorldScale());
 			mpInterface->DeviceSetCameraMatrix(mDeviceID,mtxProxyCam.v);
 		}
@@ -255,9 +255,9 @@ namespace hpl {
 		mpInterface->DeviceGetButton(abPressed, mDeviceID,alNum);
 		return abPressed;
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	cVector3f cLowLevelHapticHaptX::GetHardwarePosition()
 	{
 		Vec3f vPos;
@@ -343,7 +343,7 @@ namespace hpl {
 	//-----------------------------------------------------------------------
 
 
-	iHapticSurface* cLowLevelHapticHaptX::CreateRoughSurface(const tString &asName, 
+	iHapticSurface* cLowLevelHapticHaptX::CreateRoughSurface(const tString &asName,
 		float afDeviation, float afMean,
 		float afDamping, float afStiffness,
 		float afDynamicFriction, float afStartingFriction,
@@ -362,7 +362,7 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	iHapticSurface* cLowLevelHapticHaptX::CreateStickySurface(const tString &asName, 
+	iHapticSurface* cLowLevelHapticHaptX::CreateStickySurface(const tString &asName,
 		float afDeadHeight, float afStickyStiffness,
 		float afDamping, float afStiffness,
 		float afDynamicFriction, float afStartingFriction,
@@ -377,7 +377,7 @@ namespace hpl {
 		m_mapSurfaces.insert(Val);
 
 		return pSurface;
-	}	
+	}
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -417,15 +417,15 @@ namespace hpl {
 	iHapticShape* cLowLevelHapticHaptX::CreateMeshShape(const tString &asName, iVertexBuffer *apVtxBuffer)
 	{
 		cHapticShapeHaptX *pShape = hplNew( cHapticShapeHaptX, (asName,eHapticShapeType_Mesh,1,this) );
-		
+
 		pShape->CreateFromVertices(	apVtxBuffer->GetIndices(),apVtxBuffer->GetIndexNum(),
-									
+
 									apVtxBuffer->GetFloatArray(eVertexBufferElement_Position),
 									apVtxBuffer->GetElementNum(eVertexBufferElement_Position),
 
 									NULL,
 									3,
-									
+
 									apVtxBuffer->GetVertexNum());
 
 		mlstShapes.push_back(pShape);
@@ -442,7 +442,7 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	iHapticShape* cLowLevelHapticHaptX::CreateShapeFromPhysicsBody(	const tString &asName, 
+	iHapticShape* cLowLevelHapticHaptX::CreateShapeFromPhysicsBody(	const tString &asName,
 																	iPhysicsBody *apBody)
 	{
 		iCollideShape *pBaseShape = apBody->GetShape();
@@ -464,7 +464,7 @@ namespace hpl {
 
 		int *pIndices = hplNewArray(int, lIndexNum );
 		Vec3f *pPositions = hplNewArray(Vec3f,lPosNum);
-		
+
 		/////////////////////////////////////////////////////////
 		//Create data from all sub shapes.
 		int lIndexCount =0;
@@ -473,7 +473,7 @@ namespace hpl {
 		{
 			iCollideShape *pShape = pBaseShape->GetSubShape(i);
 			eHaptXShapeModelType modelType = GetModelShapeType(pShape->GetType());
-			
+
 			ShapeModelToHaptXData(	modelType,pShape->GetSize(),pShape->GetOffset(),
 									&pIndices[lIndexCount], lPosCount,
 									&pPositions[lPosCount]);
@@ -485,9 +485,9 @@ namespace hpl {
 		/////////////////////////////////////////////////////////
 		//Create final shape
 		cHapticShapeHaptX *pShape = hplNew( cHapticShapeHaptX, (asName,eHapticShapeType_Mesh,1,this) );
-		
+
 		iHapticShapeID hShapeID;
-		mpInterface->ShapeCreate(hShapeID, 
+		mpInterface->ShapeCreate(hShapeID,
 								pPositions,lPosNum,
 								pIndices, lIndexNum,
 								GetDefaultSurface()->GetSurfaceID(),
@@ -502,7 +502,7 @@ namespace hpl {
 
 		hplDeleteArray(pIndices);
 		hplDeleteArray(pPositions);
-		
+
 		pShape->SetBody(apBody);
 		mlstShapes.push_back(pShape);
 
@@ -516,7 +516,7 @@ namespace hpl {
 		{
 			pShape->SetSurface(pSurface);
 		}
-        
+
 
 		return pShape;
 	}
@@ -550,7 +550,7 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	iHapticForce* cLowLevelHapticHaptX::CreateSawWaveForce(	const cVector3f& avDirection, 
+	iHapticForce* cLowLevelHapticHaptX::CreateSawWaveForce(	const cVector3f& avDirection,
 															float afAmp, float afFreq)
 	{
 		iHapticForce *pForce = hplNew( cHapticForceHaptX_SawWave, (mpInterface,mDeviceID,avDirection,afAmp,afFreq) );
@@ -561,7 +561,7 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	iHapticForce* cLowLevelHapticHaptX::CreateSpringForce(	const cVector3f& avPostition, 
+	iHapticForce* cLowLevelHapticHaptX::CreateSpringForce(	const cVector3f& avPostition,
 															float afStiffness, float afDamping)
 	{
 		iHapticForce *pForce = hplNew( cHapticForceHaptX_Spring, (mpInterface,mDeviceID,avPostition,afStiffness, afDamping) );
@@ -608,7 +608,7 @@ namespace hpl {
 		{
 			mtxFinal = cMath::MatrixScale(avSize);
 		}
-		
+
 		mtxFinal = cMath::MatrixMul( a_mtxTransform, mtxFinal);
 
 		//Copy indices
@@ -624,28 +624,28 @@ namespace hpl {
 			apPostions[i] = Vec3f(vPos.x,vPos.y,vPos.z);
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cHaptXShapeModel * cLowLevelHapticHaptX::CreateShapeModelFromMesh(cMesh *apMesh)
 	{
 		iVertexBuffer* pVtxBuff = apMesh->GetSubMesh(0)->GetVertexBuffer();
-		
+
 		cHaptXShapeModel *pShapeModel = hplNew( cHaptXShapeModel, () );
 
 		////////////////////
 		//Indices
 		pShapeModel->mvIndices.resize(pVtxBuff->GetIndexNum());
-		for(int i=0; i< pVtxBuff->GetIndexNum(); ++i) 
+		for(int i=0; i< pVtxBuff->GetIndexNum(); ++i)
 		{
 			pShapeModel->mvIndices[i] = (int)(pVtxBuff->GetIndices())[i];
 		}
-		
+
 		////////////////////////
 		//Postions
 		float *pPosVec = pVtxBuff->GetFloatArray(eVertexBufferElement_Position);
 		int lPosStride = pVtxBuff->GetElementNum(eVertexBufferElement_Position);
-		
+
 		pShapeModel->mvPositions.resize(pVtxBuff->GetVertexNum());
 		for(int i=0; i<pVtxBuff->GetVertexNum(); ++i)
 		{
@@ -659,7 +659,7 @@ namespace hpl {
 
 		//Log("VertexNum: %d\n",pVtxBuff->GetVertexNum());
 
-		
+
 		return pShapeModel;
 	}
 
@@ -671,7 +671,7 @@ namespace hpl {
 		/////////////////////////////////
 		//Init
 		mvShapeModels.resize(eHaptXShapeModelType_LastEnum,NULL);
-		
+
 		cMeshLoaderHandler *pMeshHandler = mpResources->GetMeshLoaderHandler();
 		cMesh *pMesh = NULL;
 
@@ -708,10 +708,10 @@ namespace hpl {
 		hplDelete(pMesh);
 
 	}
-	
+
 	//-----------------------------------------------------------------------
 
-	int cLowLevelHapticHaptX::HapticDeviceEnumFunc(	std::wstring* asDeviceName, 
+	int cLowLevelHapticHaptX::HapticDeviceEnumFunc(	std::wstring* asDeviceName,
 													std::wstring* asDeviceModel,
 													void* apVendorData)
 	{
@@ -728,7 +728,7 @@ namespace hpl {
 	{
 		Log("%s", cString::To8Char(asMessage).c_str());
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 }

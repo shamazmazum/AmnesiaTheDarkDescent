@@ -244,7 +244,7 @@ int CallSystemFunction(int id, asCContext *context, void *objectPointer)
                 {
 			        void *obj = (void*)args[spos++];
 
-                    // Running the destructor here results in the destructor being 
+                    // Running the destructor here results in the destructor being
                     // run twice as it has already been called in the native function.
                     // TODO: Should this be an ifdef or removed completely?
 //			        asSTypeBehaviour *beh = &descr->parameterTypes[n].GetObjectType()->beh;

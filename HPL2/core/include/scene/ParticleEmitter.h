@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -69,7 +69,7 @@ namespace hpl {
 	public:
 		cVector3f mvUV[4];
 	};
-	
+
 	//-------------------------------------------------------------------
 
 	enum ePENoiseType
@@ -81,8 +81,8 @@ namespace hpl {
 		ePENoiseType_LastEnum,
 	};
 
-	
-	typedef struct 
+
+	typedef struct
 	{
 		float				fRelToBeamPos;
 		float				fRelToBendPos;
@@ -96,7 +96,7 @@ namespace hpl {
 
 
 	//////////////////////////////////////////////////////
-	/////////////// PARTICLE ///////////////////////////// 
+	/////////////// PARTICLE /////////////////////////////
 	//////////////////////////////////////////////////////
 
 	//-------------------------------------------------------------------
@@ -163,13 +163,13 @@ namespace hpl {
 	//-------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////
-	/////////////// PARTICLE SYSTEM ////////////////////// 
+	/////////////// PARTICLE SYSTEM //////////////////////
 	//////////////////////////////////////////////////////
 
 	class iParticleEmitter :public iRenderable
 	{
 	public:
-		iParticleEmitter(	tString asName,tMaterialVec* avMaterials,unsigned int alMaxParticles, 
+		iParticleEmitter(	tString asName,tMaterialVec* avMaterials,unsigned int alMaxParticles,
 							cVector3f avSize, cGraphics* apGraphics,cResources *apResources);
 		virtual ~iParticleEmitter();
 
@@ -196,7 +196,7 @@ namespace hpl {
 		//Entity implementation
 		tString GetEntityType(){ return "ParticleEmitter"; }
 		bool IsVisible();
-		
+
 		//Renderable implementation
 		bool UpdateGraphicsForViewport(cFrustum *apFrustum,float afFrameTime);
 
@@ -216,7 +216,7 @@ namespace hpl {
 
 		virtual void UpdateMotion(float afTimeStep)=0;
 		virtual void SetParticleDefaults(cParticle *apParticle)=0;
-		
+
 		cGraphics *mpGraphics;
 		cResources *mpResources;
 
@@ -281,7 +281,7 @@ namespace hpl {
 	//-----------------------------------------------------------------
 
 	//////////////////////////////////////////////////////
-	/////////////// PARTICLE EMITTER DATA //////////////// 
+	/////////////// PARTICLE EMITTER DATA ////////////////
 	//////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------
@@ -295,8 +295,8 @@ namespace hpl {
 		/**
 		* This inits the data needed for the particles system type
 		* \param &asName name of the type
-		* \param apResources 
-		* \param apGraphics 
+		* \param apResources
+		* \param apGraphics
 		*/
 		iParticleEmitterData(const tString &asName,cResources* apResources,cGraphics *apGraphics);
 		virtual ~iParticleEmitterData();

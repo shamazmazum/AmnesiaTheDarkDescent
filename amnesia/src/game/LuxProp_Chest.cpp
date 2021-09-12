@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -106,7 +106,7 @@ void cLuxChestMessageCallback::OnPress(bool abYes)
 
 cLuxProp_Chest::cLuxProp_Chest(const tString &asName, int alID, cLuxMap *apMap) : iLuxProp(asName,alID,apMap, eLuxPropType_Chest)
 {
-	mbLocked = false;	
+	mbLocked = false;
 
 	mpMessageCallback = hplNew(cLuxChestMessageCallback, (this));
 }
@@ -150,8 +150,8 @@ bool cLuxProp_Chest::OnInteract(iPhysicsBody *apBody, const cVector3f &avPos)
 		sText += kTranslate("Game", "InteractChest03_Question")+_W("\n");
 		gpBase->mpMessageHandler->StartPauseMessage(sText,true, mpMessageCallback);
 	}
-	
-	
+
+
 	return true;
 }
 
@@ -202,7 +202,7 @@ void cLuxProp_Chest::OnResetProperties()
 
 void cLuxProp_Chest::UpdatePropSpecific(float afTimeStep)
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -236,21 +236,21 @@ tWString cLuxProp_Chest::GetFocusText()
 
 void cLuxProp_Chest::ImplementedOnSetActive(bool abX)
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
 
 void cLuxProp_Chest::OnDamage(float afAmount, int alStrength)
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
 
 void cLuxProp_Chest::InFocusDraw(cGuiSet *apGuiSet, float afFrameTime)
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -356,7 +356,7 @@ void cLuxProp_Chest::SaveToSaveData(iLuxEntity_SaveData* apSaveData)
 	//Set variables
 	kCopyToVar(pData, mbLocked);
 	kCopyToVar(pData, mlCoinsNeeded);
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -367,7 +367,7 @@ void cLuxProp_Chest::LoadFromSaveData(iLuxEntity_SaveData* apSaveData)
 	//Init
 	super_class::LoadFromSaveData(apSaveData);
 	cLuxProp_Chest_SaveData *pData = static_cast<cLuxProp_Chest_SaveData*>(apSaveData);
-	
+
 	//////////////////
 	//Set variables
 	SetLocked(pData->mbLocked, false);

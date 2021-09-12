@@ -2,23 +2,23 @@
    AngelCode Scripting Library
    Copyright (c) 2003-2009 Andreas Jonsson
 
-   This software is provided 'as-is', without any express or implied 
-   warranty. In no event will the authors be held liable for any 
+   This software is provided 'as-is', without any express or implied
+   warranty. In no event will the authors be held liable for any
    damages arising from the use of this software.
 
-   Permission is granted to anyone to use this software for any 
-   purpose, including commercial applications, and to alter it and 
+   Permission is granted to anyone to use this software for any
+   purpose, including commercial applications, and to alter it and
    redistribute it freely, subject to the following restrictions:
 
-   1. The origin of this software must not be misrepresented; you 
+   1. The origin of this software must not be misrepresented; you
       must not claim that you wrote the original software. If you use
-      this software in a product, an acknowledgment in the product 
+      this software in a product, an acknowledgment in the product
       documentation would be appreciated but is not required.
 
-   2. Altered source versions must be plainly marked as such, and 
+   2. Altered source versions must be plainly marked as such, and
       must not be misrepresented as being the original software.
 
-   3. This notice may not be removed or altered from any source 
+   3. This notice may not be removed or altered from any source
       distribution.
 
    The original version of this library can be located at:
@@ -113,7 +113,7 @@ void asCString::Allocate(size_t len, bool keepData)
 {
 	// If we stored the capacity of the dynamically allocated buffer it would be possible
 	// to save some memory allocations if a string decreases in size then increases again,
-	// but this would require extra bytes in the string object itself, or a decrease of 
+	// but this would require extra bytes in the string object itself, or a decrease of
 	// the static buffer, which in turn would mean extra memory is needed. I've tested each
 	// of these options, and it turned out that the current choice is what best balanced
 	// the number of allocations against the size of the allocations.
@@ -253,7 +253,7 @@ size_t asCString::Format(const char *format, ...)
 	return length;
 }
 
-char &asCString::operator [](size_t index) 
+char &asCString::operator [](size_t index)
 {
 	asASSERT(index < length);
 
@@ -292,7 +292,7 @@ int asCString::Compare(const asCString &str) const
 
 int asCString::Compare(const char *str, size_t len) const
 {
-	if( length == 0 ) 
+	if( length == 0 )
 	{
 		if( str == 0 || len == 0 ) return 0; // Equal
 
@@ -301,7 +301,7 @@ int asCString::Compare(const char *str, size_t len) const
 
 	if( str == 0 )
 	{
-		if( length == 0 ) 
+		if( length == 0 )
 			return 0; // Equal
 
 		return -1; // The other string is smaller than this

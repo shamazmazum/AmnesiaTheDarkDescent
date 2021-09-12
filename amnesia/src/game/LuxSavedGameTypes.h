@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -49,7 +49,7 @@ class cLuxLoadScreenHandler_SaveData : public iSerializable
 public:
 	void FromLoadScreenHandler(cLuxLoadScreenHandler *apData);
 	void ToLoadScreenHandler(cLuxMap *apMap, cLuxLoadScreenHandler *apData);
-	
+
 	tString msLoadTextCat;
 	tString msLoadTextEntry;
 	tString msLoadTextImage;
@@ -86,7 +86,7 @@ class cLuxInsanityHandler_SaveData : public iSerializable
 public:
 	void FromInsanityHandler(cLuxInsanityHandler *apData);
 	void ToInsanityHandler(cLuxMap *apMap, cLuxInsanityHandler *apData);
-	
+
 	float mfNewEventCount;
 	cContainerVec<cLuxInsanityHandler_Event_SaveData> mvEvents;
 	cContainerVec<cLuxInsanityHandler_Set_SaveData> mvDisabledSets;
@@ -134,13 +134,13 @@ class cLuxEffectHandler_SoundMul_SaveData : public iSerializable
 public:
 	void FromEntry(cMultipleSettingsHandler::cGSEntry* apEntry);
 	void ToEntry(int alIdx, cMultipleSettingsHandler *apHandler);
-	
+
 	bool mbActive;
 	float mfVal;
 	float mfDest;
 	float mfSpeed;
 	tFlag mTypes;
-	bool mbDestroyAtDest;		
+	bool mbDestroyAtDest;
 };
 
 
@@ -150,7 +150,7 @@ class cLuxEffectHandler_SaveData : public iSerializable
 public:
 	void FromEffectHandler(cLuxEffectHandler *apEffects);
 	void ToEffectHandler(cLuxMap *apMap, cLuxEffectHandler *apEffects);
-	
+
 	bool mbFade_Active;
 	float mfFade_GoalAlpha;
 	float mfFade_Alpha;
@@ -208,7 +208,7 @@ public:
 	float mfCurrentMusicMaxVolume;
 	float mfCurrentMusicTime;
 	bool mbCurrentMusicLoop;
-	
+
 	int mlCurrentMaxPrio;
 	bool mbEnemyClosePlaying;
 	bool mbAttackPlaying;
@@ -258,10 +258,10 @@ class cLuxInventory_Item_SaveData : public iSerializable
 	kSerializableClassInit(cLuxInventory_Item_SaveData)
 public:
 	void FromItem(cLuxInventory_Item *apItem);
-	
-	tString msName;	
+
+	tString msName;
 	int mlType;
-	tString msSubType;	
+	tString msSubType;
 	tString msVal;
 	tString msExtraVal;
 
@@ -301,7 +301,7 @@ class cLuxPlayerHands_SaveData : public iSerializable
 public:
 	void FromPlayerHands(cLuxPlayerHands *apPlayerHands);
 	void ToPlayerHands(cLuxMap *apMap, cLuxPlayerHands *apPlayerHands);
-	
+
 	int mlState;
 	tString msCurrentHandObject;
 	tString msCurrentAnim;
@@ -439,7 +439,7 @@ public:
 	cContainerVec<cLuxHeadPosAdd> mvHeadPosAdds;
 
 	cContainerVec<int> mvTerrorEnemyIDs;
-	
+
 	cLuxPlayerHands_SaveData mPlayerHands;
 	cContainerList<cLuxCollideCallback_SaveData> mlstCollideCallbacks;
 };
@@ -451,7 +451,7 @@ class cLuxSaveGame_SaveData: public iSerializable
 	kSerializableClassInit(cLuxSaveGame_SaveData)
 public:
 	cLuxSaveGame_SaveData();
-	
+
 	//////////////////////
 	//HARDMODE
 	bool mbHardmode;

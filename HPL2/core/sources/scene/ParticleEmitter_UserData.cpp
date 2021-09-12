@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -43,13 +43,13 @@
 
 namespace hpl {
 
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// LOADER
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	cParticleEmitterData_UserData::cParticleEmitterData_UserData(
 		const tString &asName,cResources* apResources,cGraphics *apGraphics)
 		: iParticleEmitterData(asName,apResources,apGraphics)
@@ -60,9 +60,9 @@ namespace hpl {
 
 	iParticleEmitter* cParticleEmitterData_UserData::Create(tString asName, cVector3f avSize)
 	{
-		iParticleEmitter *pPE = hplNew( cParticleEmitter_UserData, (asName,&mvMaterials,avSize, 
+		iParticleEmitter *pPE = hplNew( cParticleEmitter_UserData, (asName,&mvMaterials,avSize,
 																mpGraphics,mpResources,this) );
-		
+
 		cMatrixf mtxOffset = cMath::MatrixRotate(mvAngleOffset,eEulerRotationOrder_XYZ);
 		mtxOffset.SetTranslation(mvPosOffset);
 		pPE->SetMatrix(mtxOffset);
@@ -93,7 +93,7 @@ namespace hpl {
 		if(apString==NULL) return ePEStartPosType_Box;
 
 		tString sType = cString::ToLowerCase(apString);
-		
+
         if(sType == "box") return ePEStartPosType_Box;
 		else if(sType == "sphere") return ePEStartPosType_Sphere;
 
@@ -101,7 +101,7 @@ namespace hpl {
 	}
 
 	/////////////////////////
-	
+
 	static eParticleEmitterCoordSystem GetCoordSystem(const char *apString)
 	{
 		if(apString==NULL) return eParticleEmitterCoordSystem_World;
@@ -110,7 +110,7 @@ namespace hpl {
 
 		if(sType=="world") return eParticleEmitterCoordSystem_World;
 		else if(sType=="local") return eParticleEmitterCoordSystem_Local;
-		
+
 		return eParticleEmitterCoordSystem_World;
 	}
 
@@ -141,7 +141,7 @@ namespace hpl {
 
 		return eParticleEmitterType_DynamicPoint;
 	}
-	
+
 	/////////////////////////
 
 	static ePEGravityType GetGravityType(const char *apString)
@@ -167,7 +167,7 @@ namespace hpl {
 
 		if(sType == "random") return ePESubDivType_Random;
 		else if(sType == "animation") return ePESubDivType_Animation;
-		
+
 		return ePESubDivType_Random;
 	}
 
@@ -223,14 +223,14 @@ namespace hpl {
 		mvAngleOffset.y = cMath::ToRad(mvAngleOffset.y);
 		mvAngleOffset.z = cMath::ToRad(mvAngleOffset.z);
 
-		/////////// MATERIAL  ////////  
+		/////////// MATERIAL  ////////
 		int lMaterialNum = cString::ToInt(apElement->GetAttribute("MaterialNum"),1);
 		float fAnimationLength = cString::ToFloat(apElement->GetAttribute("AnimationLength"),1);
 		tString sMaterial = cString::ToString(apElement->GetAttribute("Material"),"");
 
 		mvSubDiv = cString::ToVector2l(apElement->GetAttribute("SubDiv"),1);
 		mSubDivType = GetSubDivType(apElement->GetAttribute("SubDivType"));
-		
+
 		if(lMaterialNum <= 1)
 		{
 			sMaterial = cString::SetFileExt(sMaterial,"mat");
@@ -247,7 +247,7 @@ namespace hpl {
 				else		sFileName = sMaterial + "0"+cString::ToString(i);
 
 				sFileName = cString::SetFileExt(sFileName,"mat");
-				
+
 				cMaterial *pMaterial = mpResources->GetMaterialManager()->CreateMaterial(sFileName);
 				if(pMaterial) mvMaterials.push_back(pMaterial);
 			}
@@ -255,7 +255,7 @@ namespace hpl {
 
 		mfFrameStep = 1/(fAnimationLength/(float)mvMaterials.size());
 		mfMaxFrameTime = ((float)mvMaterials.size())-0.0001f;
-		
+
 		///////// START POS //////////
 		mStartPosType = GetStartPosType(apElement->GetAttribute("StartPosType"));
 
@@ -276,11 +276,11 @@ namespace hpl {
 //		cMesh *mshTempMesh = mpResources->GetMeshManager()->CreateMesh("character_roach.dae");
 //		mVBMeshData = mshTempMesh->GetSubMeshName("polySurfaceShape38")->GetVertexBuffer();
 //		mpfMeshVtxData = mVBMeshData->GetArray(eVertexElementFlag_Position);
-		
-		
+
+
 // ---
 
-		
+
 		/////////// MOVEMENT ////////
 		mStartVelType = GetStartPosType(apElement->GetAttribute("StartVelType"));
 
@@ -307,7 +307,7 @@ namespace hpl {
 		mfMaxVelMaximum = cString::ToFloat(apElement->GetAttribute("MaxVelMaximum"),0);
 
 		mbUsesDirection = cString::ToBool(apElement->GetAttribute("UsesDirection"),false);
-		
+
 		mGravityType = GetGravityType(apElement->GetAttribute("GravityType"));
 
 		mvGravityAcc = cString::ToVector3f(apElement->GetAttribute("GravityAcc"),0);
@@ -353,7 +353,7 @@ namespace hpl {
 
 		mbMultiplyRGBWithAlpha = cString::ToBool(apElement->GetAttribute("MultiplyRGBWithAlpha"),false);
 
-		/////////// COLOR  ////////  
+		/////////// COLOR  ////////
 
 		mMinStartColor = cString::ToColor(apElement->GetAttribute("MinStartColor"),cColor(1,1));
 		mMaxStartColor = cString::ToColor(apElement->GetAttribute("MaxStartColor"),cColor(1,1));
@@ -364,7 +364,7 @@ namespace hpl {
 		mfMiddleRelColorLength = cString::ToFloat(apElement->GetAttribute("MiddleRelColorLength"),0);
 		mEndRelColor = cString::ToColor(apElement->GetAttribute("EndRelColor"),cColor(1,1));
 
-		/////////// COLLISION  ////////  
+		/////////// COLLISION  ////////
 		mbCollides = cString::ToBool(apElement->GetAttribute("Collides"),false);
 
 		mfMinBounceAmount = cString::ToFloat(apElement->GetAttribute("MinBounceAmount"),0);
@@ -389,7 +389,7 @@ namespace hpl {
 
 		mvMinHighFreqNoise = cString::ToVector3f(apElement->GetAttribute("MinHighFreqNoise"),0);
 		mvMaxHighFreqNoise = cString::ToVector3f(apElement->GetAttribute("MaxHighFreqNoise"),0);
-        
+
 		// ---
 	}
 
@@ -410,10 +410,10 @@ namespace hpl {
 			*mpIntersectNormal = apParams->mvNormal;
 		}
 
-		return true;		
+		return true;
 	}
 
-	bool cParticleEmitterData_UserData::CheckCollision(	const cVector3f& avStart, 
+	bool cParticleEmitterData_UserData::CheckCollision(	const cVector3f& avStart,
 																const cVector3f &avEnd,
 																iPhysicsWorld *apPhysicsWorld,
 																cVector3f *apNormalVec,
@@ -430,7 +430,7 @@ namespace hpl {
 
 		return mbIntersected;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -457,11 +457,11 @@ namespace hpl {
 		mfPauseCount=0;
 		mfPauseWaitCount =0;
 		mbPaused = false;
-		
+
         mfCollideCount = 1.0f/(float)mpData->mlCollisionUpdateRate;
 
 		mCoordSystem = apData->mCoordSystem;
-		
+
 		mbMultiplyRGBWithAlpha =  apData->mbMultiplyRGBWithAlpha;
 
 		mDrawType = apData->mDrawType;
@@ -470,13 +470,13 @@ namespace hpl {
 
 		//mbDying = !apData->mbRespawn;
 		mbRespawn = apData->mbRespawn;
-		
+
 		SetSubDivUV(mpData->mvSubDiv);
 
 		// NEW
 		mbUsePartSpin = apData->mbUsePartSpin;
 		mbUseRevolution = apData->mbUseRevolution;
-		
+
 		mPEType = apData->mPEType;
 
 
@@ -488,7 +488,7 @@ namespace hpl {
 
 
 
-/*		int i = 0;										
+/*		int i = 0;
 		int j = 0;
 		int k = 0;
 		switch ( mPEType )
@@ -504,14 +504,14 @@ namespace hpl {
 					{
 						float fLowRelPos = (float) i / (apData->mlLowFreqPoints -1 );
 						float fHighRelPos = (float) j / (apData->mlHighFreqPoints -1 );
-						float fLastLowRelPos = 0.0f;	
+						float fLastLowRelPos = 0.0f;
 
 						tBeamNoisePoint tempBNP;
-					
+
 			//			tempBNP.lLowFreqNoiseIdx = i;
 			//			tempBNP.lHighFreqNoiseIdx = j;
 						tempBNP.fRelToBendPos = (fHighRelPos-fLastLowRelPos)/(fLowRelPos-fLastLowRelPos);
-							
+
 						if ( fLowRelPos <= fHighRelPos )
 						{
 							if ( fLowRelPos == fHighRelPos )
@@ -525,17 +525,17 @@ namespace hpl {
 								tempBNP.noiseType = ePENoiseType_LowFreq;
 								++i;
 							}
-							
+
 							tempBNP.fRelToBeamPos = fLowRelPos;
 							apData->mvLFIndices.push_back (k);
-							
+
 						}
 						else
 						{
 							tempBNP.fRelToBeamPos = fHighRelPos;
 							tempBNP.noiseType = ePENoiseType_HighFreq;
 							++j;
-						}		
+						}
 
 						fLastLowRelPos = fLowRelPos;
 
@@ -573,7 +573,7 @@ namespace hpl {
 						mpVtxBuffer->AddIndex(lStart);		// Half quad ( tri )
 						mpVtxBuffer->AddIndex(lStart+1);
 						mpVtxBuffer->AddIndex(lStart+3);
-							
+
 						mpVtxBuffer->AddIndex(lStart+3);	// The other half
 						mpVtxBuffer->AddIndex(lStart+2);
 						mpVtxBuffer->AddIndex(lStart);
@@ -588,7 +588,7 @@ namespace hpl {
 						mpVtxBuffer->AddVertex(eVertexElementFlag_Texture0, cVector2f(mpData->mvBeamNoisePoints[j].fRelToBeamPos,1));
 						mpVtxBuffer->AddVertex(eVertexElementFlag_Texture0, cVector2f(mpData->mvBeamNoisePoints[j].fRelToBeamPos,0));
 					}
-				}		
+				}
 
 				for ( int i = 0; i < (int) mlMaxParticles; ++i )
 				{
@@ -601,17 +601,17 @@ namespace hpl {
 
 				mpVtxBuffer->Compile(0);
 
-				
-				
-				
-				
+
+
+
+
 				break;
 			case ePEType_Normal:
 				break;
 			default:
 				break;
 			}
-*/		
+*/
 		// ---
 
 	}
@@ -619,7 +619,7 @@ namespace hpl {
 	//-----------------------------------------------------------------------
 
 	cParticleEmitter_UserData::~cParticleEmitter_UserData()
-	{	
+	{
 
 	}
 
@@ -630,7 +630,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	bool cParticleEmitter_UserData::IsDying()
 	{
 		if(mbRespawn==false || mbDying) return true;
@@ -661,7 +661,7 @@ namespace hpl {
 		apParticle->mStartColor = cMath::RandRectColor(mpData->mMinStartColor,mpData->mMaxStartColor);
 		apParticle->mColor = apParticle->mStartColor * mpData->mStartRelColor;
 
-		
+
 		///////////////////////////////////
 		//Start Size
 		if(mpData->mvMinStartSize.y == 0 && mpData->mvMaxStartSize.y==0)
@@ -669,7 +669,7 @@ namespace hpl {
 		else
 			apParticle->mvStartSize = cMath::RandRectVector2f(mpData->mvMinStartSize,mpData->mvMaxStartSize);
 		apParticle->mvSize = apParticle->mvStartSize * mpData->mfStartRelSize;
-		
+
 		////////////////////////////////////
 		//Start sub division
 		if(mvSubDivUV.size() > 1)
@@ -689,7 +689,7 @@ namespace hpl {
 		apParticle->mfBounceAmount = cMath::RandRectf(mpData->mfMinBounceAmount, mpData->mfMaxBounceAmount);
 		apParticle->mlBounceCount = cMath::RandRectl(mpData->mlMinCollisionMax, mpData->mlMaxCollisionMax);
 
-		
+
 		////////////////////////////////////
 		//Start Position
 
@@ -702,11 +702,11 @@ namespace hpl {
 			//Not what should be here, perhaps only identity.
 			mtxStart = GetLocalMatrix();
 		}
-		
+
 		//Sphere or box start
 		if(mpData->mStartPosType == ePEStartPosType_Box)
 		{
-			apParticle->mvPos = mtxStart.GetTranslation() + 
+			apParticle->mvPos = mtxStart.GetTranslation() +
 								cMath::RandRectVector3f(mpData->mvMinStartPos,mpData->mvMaxStartPos);
 		}
 		else if(mpData->mStartPosType == ePEStartPosType_Sphere)
@@ -747,7 +747,7 @@ namespace hpl {
 
 		////////////////////////////////////
 		//Start Velocity
-		
+
 		//Sphere or box start
 		if(mpData->mStartVelType == ePEStartPosType_Box)
 		{
@@ -762,11 +762,11 @@ namespace hpl {
 
 			apParticle->mvVel = cMath::MatrixMul(mtxRot,vPos);
 		}
-		
-		//If it uses the direction, 
+
+		//If it uses the direction,
 		if(mpData->mbUsesDirection && mpData->mCoordSystem == eParticleEmitterCoordSystem_World)
 		{
-			apParticle->mvVel = cMath::MatrixMul(mtxStart.GetRotation(), apParticle->mvVel);		
+			apParticle->mvVel = cMath::MatrixMul(mtxStart.GetRotation(), apParticle->mvVel);
 		}
 
 		apParticle->mfMaxSpeed = cMath::RandRectf(mpData->mfMinVelMaximum,mpData->mfMaxVelMaximum);
@@ -790,11 +790,11 @@ namespace hpl {
 			apParticle->mfSpinVel = 0.0f;
 		}
 		apParticle->mfSpin = apParticle->mfSpin = cMath::RandRectf ( 0.0f, k2Pif );
-		
+
 		////////////////////////////////////
 		//Start Revolution Velocity
 		apParticle->mvRevolutionVel = cMath::RandRectVector3f ( mpData->mvMinRevVel, mpData->mvMaxRevVel );
-		
+
 		// ---
 
 
@@ -805,11 +805,11 @@ namespace hpl {
 		apParticle->mfLife = apParticle->mfStartLife;
 
 		apParticle->mfLifeSize_MiddleStart = apParticle->mfLife * (1 - mpData->mfMiddleRelSizeTime);
-		apParticle->mfLifeSize_MiddleEnd  = apParticle->mfLife * (1 - (mpData->mfMiddleRelSizeTime + 
+		apParticle->mfLifeSize_MiddleEnd  = apParticle->mfLife * (1 - (mpData->mfMiddleRelSizeTime +
 																		mpData->mfMiddleRelSizeLength));
 
 		apParticle->mfLifeColor_MiddleStart  = apParticle->mfLife * (1 - mpData->mfMiddleRelColorTime);
-		apParticle->mfLifeColor_MiddleEnd  = apParticle->mfLife * (1 - (mpData->mfMiddleRelColorTime + 
+		apParticle->mfLifeColor_MiddleEnd  = apParticle->mfLife * (1 - (mpData->mfMiddleRelColorTime +
 																		mpData->mfMiddleRelColorLength));
 
 		/*Log("Created particle with Pos: (%s) Color: (%s) Size (%s) Vel: (%s) Acc: (%s) Life: %f SizeMiddleStart: %f SizeMiddleEnd: %f\n",
@@ -832,7 +832,7 @@ namespace hpl {
 				for (int i = 0; i < (int) mpData->mvBeamNoisePoints.size(); ++i)
 					apParticle->mvBeamPoints.push_back(cVector(0.0f));
 			}
-			
+
 
 			int j = 1;
 			cVector3f vLFPointPos = apParticle->mvPos + apParticle->mvVel * mpData->mvBeamNoisePoints.at(mpData->mvLFIndices[j]).fRelToBeamPos;
@@ -843,8 +843,8 @@ namespace hpl {
 				apParticle->mvBeamPoints[i] = vLastLFPointPos + vDir * mpData->mvBeamNoisePoints[i].fRelToBendPos;
 
 				switch (mpData->mvBeamNoisePoints[i].noiseType)
-				{					
-				
+				{
+
 				case ePENoiseType_HighFreq:
 					apParticle->mvBeamPoints[i] += cMath::RandRectVector3f(mpData->mvMinHighFreqNoise, mpData->mvMaxHighFreqNoise);
 					break;
@@ -867,7 +867,7 @@ namespace hpl {
 			}
 			*/
 		}
-        
+
 
 		// ---
 	}
@@ -883,7 +883,7 @@ namespace hpl {
 			mfTime += afTimeStep;
 			return;
 		}
-			
+
 		///////////////////////////////////////////
 		//Delay check
 		if(mbPaused)
@@ -892,7 +892,7 @@ namespace hpl {
 			if(mfPauseCount <= 0)
 			{
 				mbPaused = false;
-				
+
 				mfPauseWaitCount = cMath::RandRectf(mpData->mfMinPauseInterval,mpData->mfMaxPauseInterval);
 			}
 		}
@@ -971,7 +971,7 @@ namespace hpl {
 						//Perhaps on mvPos is needed.. and no substraction.
 						vDir = pParticle->mvPos - GetLocalMatrix().GetTranslation();
 					}
-					
+
 					vDir.Normalize();
 
 					pParticle->mvVel += vDir * mpData->mvGravityAcc.y * afTimeStep;
@@ -979,8 +979,8 @@ namespace hpl {
 					break;
 				}
 			}
-			
-			
+
+
 			if(pParticle->mfMaxSpeed > 0)
 			{
 				float fSpeed = pParticle->mvVel.Length();
@@ -1001,17 +1001,17 @@ namespace hpl {
 			if (mpData->mbUsePartSpin)
 			{
 				pParticle->mfSpin += pParticle->mfSpinVel * afTimeStep;
-				
+
 				if (mpData->mPartSpinType == ePEPartSpinType_Movement)
-					pParticle->mfSpinVel = pParticle->mvVel.Length() * pParticle->mfSpinFactor; 
-				
-				if (pParticle->mfSpin >= k2Pif) 
+					pParticle->mfSpinVel = pParticle->mvVel.Length() * pParticle->mfSpinFactor;
+
+				if (pParticle->mfSpin >= k2Pif)
 					pParticle->mfSpin -= k2Pif;
 				else if (pParticle->mfSpin <= -k2Pif)
 					pParticle->mfSpin += k2Pif;
 
 			}
-		
+
 			// ---
 
 			// NEW
@@ -1025,7 +1025,7 @@ namespace hpl {
 			}
 
 			// ---
-			
+
 
 			////////////
 			//Collison update
@@ -1039,15 +1039,15 @@ namespace hpl {
 				{
 					//Log("Coll pos: %s\n",vPos.ToString().c_str());
 					//Log("Coll normal: %s\n",vNormal.ToString().c_str());
-					
+
 					pParticle->mvPos = vPos;
-					
+
 					float fSpeed = pParticle->mvVel.Length();
-					
-					cVector3f vReflection = pParticle->mvVel - 
+
+					cVector3f vReflection = pParticle->mvVel -
 											(vNormal * 2* cMath::Vector3Dot(pParticle->mvVel,vNormal));
 					vReflection.Normalize();
-					
+
 					pParticle->mvVel = vReflection * (fSpeed * pParticle->mfBounceAmount);
 
 					pParticle->mlBounceCount--;
@@ -1056,10 +1056,10 @@ namespace hpl {
 						pParticle->mfLife =0;
 					}
 				}
-				
+
 				pParticle->mvLastCollidePos = pParticle->mvPos;
 			}
-			
+
 			////////////
 			//Life Update
 			pParticle->mfLife -= afTimeStep;
@@ -1096,7 +1096,7 @@ namespace hpl {
 
 			////////////
 			//Color Update
-			
+
 			//Start
 			if(pParticle->mfLife > pParticle->mfLifeColor_MiddleStart)
 			{
@@ -1115,7 +1115,7 @@ namespace hpl {
 			else
 			{
 				float fT =	pParticle->mfLife / pParticle->mfLifeColor_MiddleEnd;
-							
+
 				pParticle->mColor = (pParticle->mStartColor * mpData->mMiddleRelColor * fT) +
 									(pParticle->mStartColor * mpData->mEndRelColor * (1-fT));
 			}

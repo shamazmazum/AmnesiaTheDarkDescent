@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -39,23 +39,23 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	int cMath::RandRectl(int alMin, int alMax)
 	{
 		return (rand()%(alMax-alMin+1))+alMin;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	float cMath::RandRectf(float afMin, float afMax)
 	{
 		float fRand= (float)rand()/(float)RAND_MAX;
-        				
+
 		return afMin + fRand*(afMax-afMin);
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	cVector2f cMath::RandRectVector2f(const cVector2f &avMin,const cVector2f &avMax)
 	{
 		return cVector2f(	RandRectf(avMin.x, avMax.x),
@@ -72,7 +72,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	cColor cMath::RandRectColor(const cColor &aMin,const cColor &aMax)
 	{
 		return cColor(	RandRectf(aMin.r, aMax.r),
@@ -151,35 +151,35 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// INTERSECTIONS
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	bool cMath::CheckRectIntersection(cRect2l aRect1, cRect2l aRect2)
 	{
-		if(aRect1.w<0) 
+		if(aRect1.w<0)
 		{
 			aRect1.w*=-1;
 			aRect1.x-=aRect1.w;
 		}
 
-		if(aRect1.h<0) 
+		if(aRect1.h<0)
 		{
 			aRect1.h*=-1;
 			aRect1.y-=aRect1.h;
 		}
 
-		if(aRect2.w<0) 
+		if(aRect2.w<0)
 		{
 			aRect2.w*=-1;
 			aRect2.x-=aRect2.w;
 		}
 
-		if(aRect2.h<0) 
+		if(aRect2.h<0)
 		{
 			aRect2.h*=-1;
 			aRect2.y-=aRect2.h;
 		}
-		
+
 		return (aRect1.x>aRect2.x+(aRect2.w-1) || aRect2.x>aRect1.x+(aRect1.w-1) ||
 			aRect1.y>aRect2.y+(aRect2.h-1) || aRect2.y>aRect1.y+(aRect1.h-1))==false;
 	}
@@ -188,25 +188,25 @@ namespace hpl {
 
 	bool cMath::CheckRectIntersection(cRect2f aRect1, cRect2f aRect2)
 	{
-		if(aRect1.w<0) 
+		if(aRect1.w<0)
 		{
 			aRect1.w*=-1;
 			aRect1.x-=aRect1.w;
 		}
 
-		if(aRect1.h<0) 
+		if(aRect1.h<0)
 		{
 			aRect1.h*=-1;
 			aRect1.y-=aRect1.h;
 		}
 
-		if(aRect2.w<0) 
+		if(aRect2.w<0)
 		{
 			aRect2.w*=-1;
 			aRect2.x-=aRect2.w;
 		}
 
-		if(aRect2.h<0) 
+		if(aRect2.h<0)
 		{
 			aRect2.h*=-1;
 			aRect2.y-=aRect2.h;
@@ -230,8 +230,8 @@ namespace hpl {
 	bool cMath::CheckRectFit(const cRect2l& aRectSrc, const cRect2l& aRectDest)
 	{
 		//check is size is smaller and doesn't overlap
-		if(aRectSrc.w>aRectDest.w || aRectSrc.h>aRectDest.h || 
-			aRectSrc.x+aRectSrc.w > aRectDest.x+aRectDest.w || 
+		if(aRectSrc.w>aRectDest.w || aRectSrc.h>aRectDest.h ||
+			aRectSrc.x+aRectSrc.w > aRectDest.x+aRectDest.w ||
 			aRectSrc.y+aRectSrc.h > aRectDest.y+aRectDest.h) return false;
 
 		//check if x,y is in borders
@@ -246,8 +246,8 @@ namespace hpl {
 	bool cMath::CheckRectFit(const cRect2f& aRectSrc, const cRect2f& aRectDest)
 	{
 		//check is size is smaller and doesn't overlap
-		if(aRectSrc.w>aRectDest.w || aRectSrc.h>aRectDest.h || 
-			aRectSrc.x+aRectSrc.w > aRectDest.x+aRectDest.w || 
+		if(aRectSrc.w>aRectDest.w || aRectSrc.h>aRectDest.h ||
+			aRectSrc.x+aRectSrc.w > aRectDest.x+aRectDest.w ||
 			aRectSrc.y+aRectSrc.h > aRectDest.y+aRectDest.h) return false;
 
 		//check if x,y is in borders
@@ -258,7 +258,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	cRect2f cMath::GetClipRect(const cRect2f& aRectSrc,const cRect2f& aRectDest)
 	{
 		cRect2f outputRect = aRectSrc;
@@ -321,7 +321,7 @@ namespace hpl {
 				bIntersect = true;
 
 				if(apT1) *apT1 = fT1;
-				
+
 				if(apIntersection1)
 					*apIntersection1 = avLineStart + vUnitDirectionVector*fT1;
 			}
@@ -352,22 +352,22 @@ namespace hpl {
 	//-----------------------------------------------------------------------
 
 	bool cMath::CheckPointInFlatPolygon( const cVector3f& avRayStart, const cVector3f& avRayEnd,
-										 const cVector2f& avPoint, const cVector2f& avViewportSize, 
-										 int alNumIndices, unsigned int* avIndices, float* avVertexPos, int alStride, 
-										 const cMatrixf& amtxObjWorldMatrix, 
-										 const cMatrixf& amtxCamViewMatrix, const cMatrixf& amtxCamProjMatrix, 
+										 const cVector2f& avPoint, const cVector2f& avViewportSize,
+										 int alNumIndices, unsigned int* avIndices, float* avVertexPos, int alStride,
+										 const cMatrixf& amtxObjWorldMatrix,
+										 const cMatrixf& amtxCamViewMatrix, const cMatrixf& amtxCamProjMatrix,
 										 unsigned int* apIntersectedTriIndex, cVector3f* apIntersectionWorldSpace, tVector3fVec* apTriangle)
 	{
 		////////////////////////////////////////////////////////////////////////////////////////////////
-		// HUGE inconvenience with this algo: if one of the vertices of a triangle lies 
+		// HUGE inconvenience with this algo: if one of the vertices of a triangle lies
 		// behind the camera, the normal is inverted and the triangle automatically skipped.
 		// No improvement if forced to check anyway, as the CheckPointInsideTriangle2D will also fail
 		// because of this.
-		// Need to find a way around for this. 
+		// Need to find a way around for this.
 		bool bInside = false;
 
 		cVector2f vPoint = (avPoint*2)/avViewportSize - 1;
-		
+
 		cMatrixf mtxScreenSpaceTransform = cMath::MatrixMul(amtxCamProjMatrix,
 															amtxCamViewMatrix);
 
@@ -386,13 +386,13 @@ namespace hpl {
 		vTriangleScreenSpace.resize(3);
 
 		cPlanef trianglePlane;
-		
+
 		for(int i=0; i<alNumIndices;i+=3)
 		{
 			for(int j=0;j<3;++j)
 			{
 				int lBaseIndex = avIndices[i+j]*alStride;
-				vTriangleWorldSpace[j] = cMath::MatrixMul(amtxObjWorldMatrix, 
+				vTriangleWorldSpace[j] = cMath::MatrixMul(amtxObjWorldMatrix,
 														  cVector3f(
 																	avVertexPos[lBaseIndex],
 																	avVertexPos[lBaseIndex+1],
@@ -418,7 +418,7 @@ namespace hpl {
 			cVector3f vIntersection;
 			if(cMath::CheckPointInsideTriangle2D(vPoint, vTriangleScreenSpace))
 			{
-				trianglePlane.FromPoints(vTriangleWorldSpace[0],vTriangleWorldSpace[1],vTriangleWorldSpace[2]); 
+				trianglePlane.FromPoints(vTriangleWorldSpace[0],vTriangleWorldSpace[1],vTriangleWorldSpace[2]);
 				if(cMath::CheckPlaneLineIntersection(trianglePlane, avRayStart, avRayEnd, &vIntersection, &fT))
 				{
 					if(fT<fShortestT)
@@ -489,10 +489,10 @@ namespace hpl {
 			if(bInside==false)
 				break;
 		}
-		
+
 		return bInside;*/
 
-		
+
 		cVector3f vPoint = avPoint;
 		vPoint.z = 0;
 
@@ -507,11 +507,11 @@ namespace hpl {
 		//Log("Point:\n\t(%f %f)\nTriangle:\n\t(%f %f)\n\t(%f %f)\n\t(%f %f)\n", vPoint.x, vPoint.y,
 		//																	   vTri[0].x, vTri[0].y,
 		//																	   vTri[1].x, vTri[1].y,
-		//																	   vTri[2].x, vTri[2].y); 
+		//																	   vTri[2].x, vTri[2].y);
 
 		return (cMath::CheckPointSameSideOfEdge2D(vPoint, vTri[0], vTri[1], vTri[2]) &&
 				cMath::CheckPointSameSideOfEdge2D(vPoint, vTri[1], vTri[0], vTri[2]) &&
-				cMath::CheckPointSameSideOfEdge2D(vPoint, vTri[2], vTri[0], vTri[1]));		
+				cMath::CheckPointSameSideOfEdge2D(vPoint, vTri[2], vTri[0], vTri[1]));
 	}
 
 	//-----------------------------------------------------------------------
@@ -694,7 +694,7 @@ namespace hpl {
 						cVector3f& vConnectPos = vCorners[ lConnection ];
 						if(vConnectPos.z >=0) continue;
 
-						//The relationships between connection-pos and connection-nearplane can be seen as 
+						//The relationships between connection-pos and connection-nearplane can be seen as
 						//two equal triangles. Use that to get T and use that to calculate the postion.
 						//This is a special case for intersection with the nearplane!
 						cVector3f vDelta = vPos - vConnectPos;
@@ -740,7 +740,7 @@ namespace hpl {
 		//Go through all screen position and get min/max
 		avDestMax = -10000.0f;
 		avDestMin = 10000.0f;
-		for(tVector3fListIt it= lstScreenSpacePos.begin(); it != lstScreenSpacePos.end(); ++it)		
+		for(tVector3fListIt it= lstScreenSpacePos.begin(); it != lstScreenSpacePos.end(); ++it)
 		{
 			cVector3f& vPos = *it;
 
@@ -785,10 +785,10 @@ namespace hpl {
 		destRect.y = vTopLeft.y;
 		destRect.w = (vBottomRight.x - vTopLeft.x);
 		destRect.h = (vBottomRight.y - vTopLeft.y);
-		
+
 		return destRect;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 
@@ -800,7 +800,7 @@ namespace hpl {
 		//Get the normalized clip coordinates
 		cVector3f vMin, vMax;
 		bool bVisible = GetNormalizedClipRectFromBV(vMin, vMax, aBV, apFrustum, afTanHalfFov);
-		
+
 		////////////////////////
 		// If no point in front, it is not visible and just return full screen rect.
 		if(bVisible == false)
@@ -831,71 +831,71 @@ namespace hpl {
 		{
 			vLightPos = MatrixMul(mtxView, vLightPos);
 		}
-		
+
 		//////////////////////////////////////
 		//Set up the size of the near plane
 		float fTan = afTanHalfFov > 0 ? afTanHalfFov : tan(apFrustum->GetFOV()*0.5f);
 		float fNearPlane =apFrustum->GetNearPlane();
 		float fNearTop =  fTan * fNearPlane;
 		float fNearRight = apFrustum->GetAspect() * fNearTop;
-		
+
 		/////////////////////////////////////////////
 		//Set up variables determining screen size
         cVector2f vHalfScreenSize = cVector2f((float)avScreenSize.x, (float)avScreenSize.y) *0.5f;
 
 		int lRight = avScreenSize.x-1;
 		int lTop = 0;
-		int lLeft = 0; 
+		int lLeft = 0;
 		int lBottom = avScreenSize.y-1;
-		
+
 		/////////////////////////////////////////////
 		//Set up variables to speed up calculations
 		float fD;
 		float fSqrRadius= afRadius*afRadius;
 		cVector3f vSqrLightPos = vLightPos*vLightPos;
-		
+
 		//////////////////////
 		//Check if the XZ-planes have valid solutions, if not skip
 		fD = fSqrRadius*vSqrLightPos.x - (vSqrLightPos.x + vSqrLightPos.z) * (fSqrRadius - vSqrLightPos.z);
 		if (fD>=0)
 		{
 			fD= sqrtf(fD);
-		
+
 			//Get the two solutions for the Plane's Normal X coordinate
 			float fNx1 = (afRadius*vLightPos.x + fD) / (vSqrLightPos.x+vSqrLightPos.z);
 			float fNx2 = (afRadius*vLightPos.x - fD) / (vSqrLightPos.x+vSqrLightPos.z);
-			
+
 			//Get the two solutions for the Plane's Normal Z coordinate
 			float fNz1 = (afRadius-fNx1*vLightPos.x) / vLightPos.z;
 			float fNz2 = (afRadius-fNx2*vLightPos.x) / vLightPos.z;
-			
+
 			//Get the two solutions for the Plane-Sphere intersection point Z coordinate
 			float Pz1 = (vSqrLightPos.x+vSqrLightPos.z-fSqrRadius) / (vLightPos.z-(fNz1/fNx1)*vLightPos.x);
 			float Pz2 = (vSqrLightPos.x+vSqrLightPos.z-fSqrRadius) / (vLightPos.z-(fNz2/fNx2)*vLightPos.x);
-			
+
 			//Check if position1 is in front of frustum
 			if (Pz1<0)
 			{
 				//Project X to near plane and normalize
-				float fNearX = fNz1 * fNearPlane/fNx1;		
+				float fNearX = fNz1 * fNearPlane/fNx1;
 				fNearX = fNearX/fNearRight;
-				
+
 				//Get screen coordinate
 				int lScreenX = (int)(vHalfScreenSize.x + vHalfScreenSize.x * fNearX);
-				
-				//Check if position is left or right of the light position 
+
+				//Check if position is left or right of the light position
 				float fPx= -Pz1 * fNz1/fNx1;
 				if (fPx < vLightPos.x)	lLeft = Max(lLeft,lScreenX);
 				else					lRight = Min(lRight,lScreenX);
 			}
-			
+
 			//Check if position1 is in front of frustum
 			if (Pz2<0)
 			{
 				//Project X to near plane and normalize
 				float fNearX = fNz2 * fNearPlane/fNx2;
 				fNearX = fNearX/fNearRight;
-				
+
 				//Get screen coordinate
 				int lScreenX = (int)(vHalfScreenSize.x + vHalfScreenSize.x * fNearX);
 
@@ -905,59 +905,59 @@ namespace hpl {
 				else					lRight = Min(lRight,lScreenX);
 			}
 		}
-		
+
 		//////////////////////
 		//Check if the YZ-planes have valid solutions, if not skip
 		fD=fSqrRadius*vSqrLightPos.y - (vSqrLightPos.y+vSqrLightPos.z)*(fSqrRadius-vSqrLightPos.z);
 		if (fD>=0)
 		{
 			fD = sqrtf(fD);
-			
+
 			//Get the two solutions for the Plane's Normal Y coordinate
 			float fNy1 = (afRadius*vLightPos.y + fD) / (vSqrLightPos.y+vSqrLightPos.z);
 			float fNy2 = (afRadius*vLightPos.y - fD) / (vSqrLightPos.y+vSqrLightPos.z);
-			
+
 			//Get the two solutions for the Plane's Normal Z coordinate
 			float fNz1 = (afRadius-fNy1*vLightPos.y) / vLightPos.z;
 			float fNz2 = (afRadius-fNy2*vLightPos.y) / vLightPos.z;
-			
+
 			//Get the two solutions for the Plane-Sphere intersection point Z coordinate
 			float fPz1 = (vSqrLightPos.y+vSqrLightPos.z-fSqrRadius) / (vLightPos.z-(fNz1/fNy1)*vLightPos.y);
 			float fPz2 = (vSqrLightPos.y+vSqrLightPos.z-fSqrRadius) / (vLightPos.z-(fNz2/fNy2)*vLightPos.y);
-			
+
 			//Check if position1 is in front of frustum
 			if (fPz1<0)
 			{
 				//Project Y to near plane and normalize
 				float fNearY = fNz1 * fNearPlane/fNy1;
 				fNearY = fNearY/fNearTop;
-				
+
 				//Get screen coordinate
 				int lScreenY = (int)(vHalfScreenSize.y - vHalfScreenSize.y*fNearY);
-				
+
 				//Check if position is below or above of the light position
 				float fPy = -fPz1*fNz1/fNy1;
 				if (fPy>vLightPos.y)	lTop = Max(lTop,lScreenY);
 				else					lBottom = Min(lBottom,lScreenY);
 			}
-			
+
 			//Check if position1 is in front of frustum
 			if (fPz2<0)
 			{
 				//Project Y to near plane and normalize
 				float fNearY= fNz2 *fNearPlane/fNy2;
 				fNearY = fNearY/fNearTop;
-				
+
 				//Get screen coordinate
 				int lScreenY = (int)(vHalfScreenSize.y - vHalfScreenSize.y*fNearY);
-				
+
 				//Check if position is below or above of the light position
 				float fPy=-fPz2*fNz2/fNy2;
 				if (fPy>vLightPos.y)	lTop = Max(lTop,lScreenY);
 				else					lBottom = Min(lBottom,lScreenY);
 			}
 		}
-		
+
 		cRect2l outputRect;
 		outputRect.x = lLeft;
 		outputRect.y = lTop;
@@ -1045,7 +1045,7 @@ namespace hpl {
 
 		cMatrixf mtxNormalTrans = cMath::MatrixInverse(a_mtxTransform.GetRotation()).GetTranspose();
 
-        return cPlanef( Vector3Normalize(MatrixMul(mtxNormalTrans, vNormal)), 
+        return cPlanef( Vector3Normalize(MatrixMul(mtxNormalTrans, vNormal)),
 						MatrixMul(a_mtxTransform, vPoint) );
 	}
 
@@ -1076,13 +1076,13 @@ namespace hpl {
 				cPlanef(cVector3f(-1,0,0),avMin), //Left
 				cPlanef(cVector3f(1,0,0), avMax), //Right
 
-				cPlanef(cVector3f(0,-1,0),avMin), //Bottom	
+				cPlanef(cVector3f(0,-1,0),avMin), //Bottom
 				cPlanef(cVector3f(0,1,0) ,avMax), //Top
-				
+
 				cPlanef(cVector3f(0,0,-1),avMin), //Back
 				cPlanef(cVector3f(0,0,1), avMax), //Front
 		};
-		
+
 		cVector3f vLargerMin = avMin - cVector3f(0.001f);
 		cVector3f vLargerMax = avMax + cVector3f(0.001f);
 
@@ -1100,7 +1100,7 @@ namespace hpl {
 					//Log("    Intersected!\n");
 					if(apIntersectionPos) *apIntersectionPos = vIntersection;
 					bIntersected = true;
-                    fShortestT = fT;					
+                    fShortestT = fT;
 				}
 			}
 		}
@@ -1113,7 +1113,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// FLOAT OPERATIONS
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
 
 	float cMath::RoundFloatToDecimals(float afVal, int alPrecision)
@@ -1207,7 +1207,7 @@ namespace hpl {
 
 			if(fDist1>0) fDist2 = -fDist2;
 
-			if(std::abs(fDist1) < std::abs(fDist2)) 
+			if(std::abs(fDist1) < std::abs(fDist2))
 				return fDist1;
 			else
 				return fDist2;
@@ -1221,7 +1221,7 @@ namespace hpl {
 		if(afAngle!=afFinalAngle)
 		{
 			float fAngleDist = afFinalAngle-afAngle;
-			if( (afFinalAngle>afAngle && fAngleDist<afMaxAngle) || 
+			if( (afFinalAngle>afAngle && fAngleDist<afMaxAngle) ||
 				(afFinalAngle<afAngle && fAngleDist<(-afMaxAngle)))
 				afAngle = afAngle + afSpeed;
 			else
@@ -1350,11 +1350,11 @@ namespace hpl {
 
 	float cMath::Interpolate(float afA,float afB,float afT)
 	{
-		return afA * (1-afT) + afB * afT; 
+		return afA * (1-afT) + afB * afT;
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	float cMath::IncreaseTo(float afX, float afAdd, float afDest)
 	{
 		if(afX < afDest){
@@ -1365,7 +1365,7 @@ namespace hpl {
 			afX -= afAdd;
 			if(afX < afDest) afX = afDest;
 		}
-		
+
 		return afX;
 	}
 
@@ -1378,14 +1378,14 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// VECTOR 2D
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
 
-	
+
 	float cMath::Vector2Dist(const cVector2f &avPosA,const cVector2f &avPosB)
 	{
 		float fDx = avPosA.x - avPosB.x;
@@ -1393,7 +1393,7 @@ namespace hpl {
 
 		return sqrt(fDx*fDx + fDy*fDy);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	float cMath::Vector2DistXY(const cVector3f &avPosA,const cVector3f &avPosB)
@@ -1411,7 +1411,7 @@ namespace hpl {
 
 		return sqrt(fDx*fDx + fDz*fDz);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	float cMath::Vector2DistSqr(const cVector2f &avPosA,const cVector2f &avPosB)
@@ -1455,7 +1455,7 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	
+
 	cVector2f cMath::GetVectorFromAngle2D(float afAngle, float afLength)
 	{
 		cVector2f vVec;
@@ -1465,7 +1465,7 @@ namespace hpl {
 
 		return vVec;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cMath::GetAngleFromVector(const cVector2f &avVec, float *apAngle, float *apLength)
@@ -1484,9 +1484,9 @@ namespace hpl {
 
 		return  avDestVec * fTemp;
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// VECTOR 3D
 	//////////////////////////////////////////////////////////////////////////
@@ -1505,7 +1505,7 @@ namespace hpl {
 			return avVec;
 		}
 	}
-	
+
 	cVector3f cMath::Vector3MinLength(const cVector3f &avVec, float afMinLength)
 	{
 		float fLength = avVec.Length();
@@ -1518,7 +1518,7 @@ namespace hpl {
 			return avVec;
 		}
 	}
-	
+
 	cVector3f cMath::Vector3ClampLength(const cVector3f &avVec,float afMinLength, float afMaxLength)
 	{
 		float fLength = avVec.Length();
@@ -1554,17 +1554,17 @@ namespace hpl {
 	{
 		return Vector3AngleDistance(avAngles1, avAngles2, 360.0f);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cVector3f cMath::Vector3Cross(const cVector3f& avVecA,const cVector3f& avVecB)
 	{
 		cVector3f vResult;
-		
+
 		vResult.x = avVecA.y * avVecB.z - avVecA.z * avVecB.y;
 		vResult.y = avVecA.z * avVecB.x - avVecA.x * avVecB.z;
 		vResult.z = avVecA.x * avVecB.y - avVecA.y * avVecB.x;
-		
+
 		return vResult;
 	}
 
@@ -1599,13 +1599,13 @@ namespace hpl {
 		float fCos = Vector3Dot(avVecA,avVecB);
 
 		if(std::abs(fCos - 1) <= kEpsilonf) return 0;
-		
+
 		return acos(fCos);
 	}
 
 	//-----------------------------------------------------------------------
 
-	cVector3f cMath::Vector3UnProject(const cVector3f& avVec,const cRect2f &aScreenRect, 
+	cVector3f cMath::Vector3UnProject(const cVector3f& avVec,const cRect2f &aScreenRect,
 										cMatrixf a_mtxViewProj)
 	{
 		cMatrixf mtxInvViewProj = MatrixInverse(a_mtxViewProj);
@@ -1616,13 +1616,13 @@ namespace hpl {
 		vNormalized.z = 2.0f*avVec.z - 1.0f;
 
 		//Log("Normalized: %s\n",vNormalized.ToString().c_str());
-		
+
 		// Object coordinates.
 		vNormalized = MatrixMulDivideW(mtxInvViewProj,vNormalized);
 		//vNormalized = MatrixMul(mtxInvViewProj,vNormalized);
 
 		//Log("Normalized After: %s\n",vNormalized.ToString().c_str());
-		
+
 		return vNormalized *-1;
 	}
 
@@ -1649,12 +1649,12 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	//Helper function for GetAnglesFromPoints3D
 	static float GetAngleFromPoints2DSimple(const cVector3f &avStartPos, const cVector3f &avGoalPos)
 	{
 		cVector3f vDelta = avGoalPos - avStartPos;
-		
+
 		if(vDelta.x == 0)vDelta.x = -kEpsilonf;
 		if(vDelta.y == 0)vDelta.y = kEpsilonf;
 
@@ -1678,7 +1678,7 @@ namespace hpl {
 	cVector3f cMath::GetAngleFromPoints3D(const cVector3f &avStartPos, const cVector3f &avGoalPos)
 	{
 		cVector3f vAngle = cVector3f(0,0,0);
-		
+
 		vAngle.y = -GetAngleFromPoints2D(cVector2f(avStartPos.x,avStartPos.z),
 										cVector2f(avGoalPos.x, avGoalPos.z));
 
@@ -1688,7 +1688,7 @@ namespace hpl {
 
 		cMatrixf mtxRot = MatrixRotateY(-vAngle.y);
 		cVector3f vDelta = avGoalPos - avStartPos;
-		
+
 		//Log("vDelta: %s\n",vDelta.ToString().c_str());
 
 		cVector3f vGoal = MatrixMul(mtxRot, vDelta);
@@ -1696,11 +1696,11 @@ namespace hpl {
 		//Log("vGoal: %s\n",vGoal.ToString().c_str());
 
 		vAngle.x = GetAngleFromPoints2DSimple(cVector3f(0,0,0),cVector2f(vGoal.z, vGoal.y));
-		
+
 		//Log("X Angle: %f\n",vAngle.x);
 
-		vAngle.x = Wrap(vAngle.x,0.0f, k2Pif); 
-		
+		vAngle.x = Wrap(vAngle.x,0.0f, k2Pif);
+
 		return vAngle;
 	}
 
@@ -1743,18 +1743,18 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// PLANES
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
 
 	float cMath::PlaneToPointDist(const cPlanef& aPlane, const cVector3f& avVec)
 	{
 		return (aPlane.a * avVec.x) + (aPlane.b * avVec.y) + (aPlane.c * avVec.z) + aPlane.d;
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	//TODO: This only works when there is no 0 in the planes.
-	void cMath::PlaneIntersectionLine(	const cPlanef& aPA, const cPlanef& aPB, 
+	void cMath::PlaneIntersectionLine(	const cPlanef& aPA, const cPlanef& aPB,
 										cVector3f &avDir, cVector3f &avPoint)
 	{
         avDir = Vector3Cross(cVector3f(aPA.a,aPA.b,aPA.c), cVector3f(aPB.a,aPB.b,aPB.c));
@@ -1765,7 +1765,7 @@ namespace hpl {
 		//find a value that sets b + b to 0.
 		float fVal = (-aPB.b) / aPA.b;
 
-		//Get z 
+		//Get z
 		avPoint.z = ((aPA.d * fVal) + aPB.d) / ((aPA.c * fVal) + aPB.c);
 
 		//Get y
@@ -1787,7 +1787,7 @@ namespace hpl {
         cVector3f vCross12 = Vector3Cross(vN1, vN2);
 		cVector3f vCross31 = Vector3Cross(vN3, vN1);
 		cVector3f vCross23 = Vector3Cross(vN2, vN3);
-		
+
 		avPoint = (vCross23* -aP1.d + vCross31*-aP2.d + vCross12*-aP3.d) / Vector3Dot(vN1,vCross23);
 		return true;
 	}
@@ -1804,12 +1804,12 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	eCollision cMath::CheckPlaneBVCollision(const cPlanef& aPlane, cBoundingVolume &aBV)
 	{
 		return CheckPlaneAABBCollision(aPlane, aBV.GetMin(), aBV.GetMax());//, aBV.GetWorldCenter(), aBV.GetRadius());
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	eCollision cMath::CheckPlaneAABBCollision(	const cPlanef& aPlane, const cVector3f &avMin, const cVector3f &avMax)
@@ -1835,7 +1835,7 @@ namespace hpl {
 
 		if(lInCount==0)			return eCollision_Outside;
 		else if(lInCount == 8)	return eCollision_Inside;
-		else					return eCollision_Intersect;	
+		else					return eCollision_Intersect;
 	}
 
 	//-----------------------------------------------------------------------
@@ -1847,7 +1847,7 @@ namespace hpl {
 		///////////////////////////////
 		// Sphere collision
 		float fDist = cMath::PlaneToPointDist(aPlane, avSphereCenter);
-		
+
 		if(fDist < -afSphereRadius) return eCollision_Outside;
 		if(fDist > afSphereRadius)	return eCollision_Inside;
 
@@ -1894,7 +1894,7 @@ namespace hpl {
 		{
 			cPlanef& plane = apPlanes[i];
 			int lInCount=alNumOfVertices;
-			
+
 			////////////////////////////
 			// Iterate points and check if inside
 			for(int j=0;j<alNumOfVertices;j++)
@@ -1953,16 +1953,16 @@ namespace hpl {
 			for(int plane=0; plane<lNumOfPlanes; ++plane)
 			{
 				cVector3f vNormal = pPlanes[plane].GetNormal();
-				
+
 				/////////////////////////////////
 				// Iterate points and project on normal
                 for(int vtxvec=0; vtxvec < 2; ++vtxvec)
 				{
 					cVector3f *pVertices = vVtxVec[vtxvec];
 					int lNumOfVertices = vVtxNumVec[vtxvec];
-					
+
 					if(pVertices==NULL || lNumOfVertices==0) continue;
-					
+
 					/////////////////////////////////
 					// Project the points and get min / max
 					vMax[vtxvec] = vMin[vtxvec] = 	Vector3Dot(pVertices[0], vNormal);
@@ -1989,12 +1989,12 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	bool cMath::CheckLineTriangleIntersection(	const cVector3f& avLineStart, const cVector3f& avLineEnd, 
+	bool cMath::CheckLineTriangleIntersection(	const cVector3f& avLineStart, const cVector3f& avLineEnd,
 												const cVector3f& avP0, const cVector3f& avP1, const cVector3f& avP2,
 												float *apT, bool abSkipBackfacing)
 	{
 		cVector3f vLineDelta = avLineEnd - avLineStart;
-		
+
 		cVector3f vEdge1 = avP1 - avP0;
 		cVector3f vEdge2 = avP2 - avP0;
 
@@ -2012,11 +2012,11 @@ namespace hpl {
 
         float fEDotN = Vector3Dot(vEdge1, vDCrossE);
 		if(fabs(fEDotN) < 0.00001f) return false; //Line is parallel
-		
+
 		float fF = 1.0f / fEDotN;
-		
+
 		cVector3f vTriToStart = avLineStart - avP0;
-		
+
 		//Get U
 		float fU = fF * Vector3Dot(vTriToStart, vDCrossE);
 		if(fU < 0.0f || fU > 1.0f) return false;
@@ -2033,7 +2033,7 @@ namespace hpl {
 		if(apT) *apT = fT;
 		return true;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	bool cMath::CheckLineTriMeshIntersection(	const cVector3f& avLineStart, const cVector3f& avLineEnd,
@@ -2046,13 +2046,13 @@ namespace hpl {
 		// Transform the line to local mesh space
 		cVector3f vLocalLineStart = MatrixMul(a_mtxInvMeshMtx, avLineStart);
 		cVector3f vLocalLineEnd = MatrixMul(a_mtxInvMeshMtx, avLineEnd);
-		
+
 
 		////////////////////////////
 		// Set up variables
 		float fMinT = 99999.0f;
 		int lTriIdx = -1;
-        
+
 		////////////////////////////
 		// Iterate triangles
 		for(int idx=0; idx < alIndexNum; idx+=3)
@@ -2061,7 +2061,7 @@ namespace hpl {
 			const float *pVtx0 = &apVertexArray[apIndexArray[idx]*alVtxStride];
 			const float *pVtx1 = &apVertexArray[apIndexArray[idx+1]*alVtxStride];
 			const float *pVtx2 = &apVertexArray[apIndexArray[idx+2]*alVtxStride];
-            
+
 			//Get triangles positions
             cVector3f vP0(pVtx0[0], pVtx0[1], pVtx0[2]);
 			cVector3f vP1(pVtx1[0], pVtx1[1], pVtx1[2]);
@@ -2103,10 +2103,10 @@ namespace hpl {
 														const cMatrixf& a_mtxInvMeshMtx, iVertexBuffer *apVtxBuffer,
 														cVector3f *apIntersectionPos, float *apT, int *apTriIndex, bool abSkipBackfacing)
 	{
-		return CheckLineTriMeshIntersection(avLineStart, avLineEnd, 
+		return CheckLineTriMeshIntersection(avLineStart, avLineEnd,
 											a_mtxInvMeshMtx,
 											apVtxBuffer->GetIndices(), apVtxBuffer->GetIndexNum(),
-											apVtxBuffer->GetFloatArray(eVertexBufferElement_Position), 
+											apVtxBuffer->GetFloatArray(eVertexBufferElement_Position),
 											apVtxBuffer->GetElementNum(eVertexBufferElement_Position),
 											apIntersectionPos, apT, apTriIndex, abSkipBackfacing);
 	}
@@ -2116,9 +2116,9 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// QUATERNIONS
 	////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	float cMath::QuaternionDot(const cQuaternion& aqA,const cQuaternion& aqB)
 	{
 		return aqA.w*aqB.w + aqA.v.x*aqB.v.x + aqA.v.y*aqB.v.y + aqA.v.z*aqB.v.z;
@@ -2135,16 +2135,16 @@ namespace hpl {
 		qOut.v.y =	aqA.w * aqB.v.y +	aqA.v.y * aqB.w +		aqA.v.z * aqB.v.x -		aqA.v.x * aqB.v.z;
 		qOut.v.z =	aqA.w * aqB.v.z +	aqA.v.z * aqB.w +		aqA.v.x * aqB.v.y -		aqA.v.y * aqB.v.x;
 
-		return qOut;		
+		return qOut;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
-	cQuaternion cMath::QuaternionSlerp(float afT,const cQuaternion& aqA, const cQuaternion& aqB, 
+	cQuaternion cMath::QuaternionSlerp(float afT,const cQuaternion& aqA, const cQuaternion& aqB,
 									bool abShortestPath)
 	{
 		float fCos = QuaternionDot(aqA,aqB);
-		
+
 		//If the rotations are the same, return linear interpolation instead of spherical
 		if ( std::abs(fCos - 1) <= kEpsilonf)
 		{
@@ -2182,7 +2182,7 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	cMatrixf cMath::MatrixSlerp(float afT,const cMatrixf& a_mtxA, const cMatrixf& a_mtxB, 
+	cMatrixf cMath::MatrixSlerp(float afT,const cMatrixf& a_mtxA, const cMatrixf& a_mtxB,
 										bool abShortestPath)
 	{
 		if(afT <= 0) return a_mtxA;
@@ -2206,7 +2206,7 @@ namespace hpl {
 	cMatrixf cMath::MatrixMul(const cMatrixf &a_mtxA,const cMatrixf &a_mtxB)
 	{
 		cMatrixf mtxC;
-		
+
 		mtxC.m[0][0] = a_mtxA.m[0][0] * a_mtxB.m[0][0] + a_mtxA.m[0][1] * a_mtxB.m[1][0] + a_mtxA.m[0][2] * a_mtxB.m[2][0] + a_mtxA.m[0][3] * a_mtxB.m[3][0];
 		mtxC.m[0][1] = a_mtxA.m[0][0] * a_mtxB.m[0][1] + a_mtxA.m[0][1] * a_mtxB.m[1][1] + a_mtxA.m[0][2] * a_mtxB.m[2][1] + a_mtxA.m[0][3] * a_mtxB.m[3][1];
 		mtxC.m[0][2] = a_mtxA.m[0][0] * a_mtxB.m[0][2] + a_mtxA.m[0][1] * a_mtxB.m[1][2] + a_mtxA.m[0][2] * a_mtxB.m[2][2] + a_mtxA.m[0][3] * a_mtxB.m[3][2];
@@ -2227,15 +2227,15 @@ namespace hpl {
 		mtxC.m[3][2] = a_mtxA.m[3][0] * a_mtxB.m[0][2] + a_mtxA.m[3][1] * a_mtxB.m[1][2] + a_mtxA.m[3][2] * a_mtxB.m[2][2] + a_mtxA.m[3][3] * a_mtxB.m[3][2];
 		mtxC.m[3][3] = a_mtxA.m[3][0] * a_mtxB.m[0][3] + a_mtxA.m[3][1] * a_mtxB.m[1][3] + a_mtxA.m[3][2] * a_mtxB.m[2][3] + a_mtxA.m[3][3] * a_mtxB.m[3][3];
 
-		return mtxC;	
+		return mtxC;
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	cVector3f cMath::MatrixMul(const cMatrixf &a_mtxA,const cVector3f &avB)
 	{
 		cVector3f vC;
-		
+
 		vC.x = ( a_mtxA.m[0][0] * avB.x + a_mtxA.m[0][1] * avB.y + a_mtxA.m[0][2] * avB.z + a_mtxA.m[0][3] );
 		vC.y = ( a_mtxA.m[1][0] * avB.x + a_mtxA.m[1][1] * avB.y + a_mtxA.m[1][2] * avB.z + a_mtxA.m[1][3] );
 		vC.z = ( a_mtxA.m[2][0] * avB.x + a_mtxA.m[2][1] * avB.y + a_mtxA.m[2][2] * avB.z + a_mtxA.m[2][3] );
@@ -2285,7 +2285,7 @@ namespace hpl {
 		return mtxC;
 	}
 
-	
+
 	//-----------------------------------------------------------------------
 
 	cMatrixf cMath::MatrixRotate(cVector3f avRot, eEulerRotationOrder aOrder)
@@ -2331,7 +2331,7 @@ namespace hpl {
 						0,sin(afAngle),cos(afAngle),0,
 						0,0,0,1);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cMatrixf cMath::MatrixRotateY(float afAngle)
@@ -2351,7 +2351,7 @@ namespace hpl {
 						0,0,1,0,
 						0,0,0,1);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cMatrixf cMath::MatrixQuaternion(const cQuaternion &aqRot)
@@ -2375,9 +2375,9 @@ namespace hpl {
 	{
 		cQuaternion qOut(a_mtxA);
 		return qOut;
-		
+
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cMatrixf cMath::MatrixScale(cVector3f avScale)
@@ -2389,7 +2389,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	cMatrixf cMath::MatrixTranslate(cVector3f avTrans)
 	{
 		return cMatrixf(1, 0,0,avTrans.x,
@@ -2399,16 +2399,16 @@ namespace hpl {
 
 	}
 	//-----------------------------------------------------------------------
-	
+
 	float cMath::MatrixMinor(const cMatrixf &a_mtxA,
-		const size_t r0, const size_t r1, const size_t r2, 
+		const size_t r0, const size_t r1, const size_t r2,
 		const size_t c0, const size_t c1, const size_t c2)
 	{
 		return a_mtxA.m[r0][c0] * (a_mtxA.m[r1][c1] * a_mtxA.m[r2][c2] - a_mtxA.m[r2][c1] * a_mtxA.m[r1][c2]) -
 				a_mtxA.m[r0][c1] * (a_mtxA.m[r1][c0] * a_mtxA.m[r2][c2] - a_mtxA.m[r2][c0] * a_mtxA.m[r1][c2]) +
 				a_mtxA.m[r0][c2] * (a_mtxA.m[r1][c0] * a_mtxA.m[r2][c1] - a_mtxA.m[r2][c0] * a_mtxA.m[r1][c1]);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cMatrixf cMath::MatrixAdjoint(const cMatrixf &a_mtxA)
@@ -2433,7 +2433,7 @@ namespace hpl {
 						-MatrixMinor(a_mtxA, 0, 1, 3, 0, 1, 2),
 						MatrixMinor(a_mtxA, 0, 1, 2, 0, 1, 2));
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	float cMath::MatrixDeterminant(const cMatrixf &a_mtxA)
@@ -2468,14 +2468,14 @@ namespace hpl {
 		cVector3f vAngles;
 
 		/*if (a_mtxA.m[2][0] > 0.998f) // singularity at north pole
-		{ 
+		{
 			vAngles.y = atan2(a_mtxA.m[0][2],a_mtxA.m[2][2]);
 			vAngles.z = kPif/2;
 			vAngles.x = 0;
 			Log("Special case 1\n");
 		}
 		if (a_mtxA.m[2][0] < -0.998f) // singularity at south pole
-		{ 
+		{
 			vAngles.y = atan2(a_mtxA.m[0][2],a_mtxA.m[2][2]);
 			vAngles.z = -kPif/2;
 			vAngles.x = 0;
@@ -2496,7 +2496,7 @@ namespace hpl {
 	{
 		//Transform so check is done local to matrix B.
 		cMatrixf mtxBTrans = a_mtxB.GetTranspose();
-		
+
 		cMatrixf mtxLocalA = MatrixMul(mtxBTrans, a_mtxA);
 		cMatrixf mtxLocalATrans = mtxLocalA.GetTranspose();
 
@@ -2513,7 +2513,7 @@ namespace hpl {
 
 		////////////////
 		//X Rotation (align fwd vector with z-axis)
-        if(fabs(vFwd.y)<0.0001f && fabs(vFwd.z)<0.0001f) 
+        if(fabs(vFwd.y)<0.0001f && fabs(vFwd.z)<0.0001f)
 		{
 			vOutput.x = 0;
 		}
@@ -2531,7 +2531,7 @@ namespace hpl {
 		// Rotate forward
 		cMatrixf mtxRot = MatrixRotateX(vOutput.x);
 		vFwd = MatrixMul3x3(mtxRot, vFwd);
-		
+
 		//Log("Rotated Fwd: (%s)\n", vFwd.ToString().c_str());
 
 		////////////////
@@ -2549,7 +2549,7 @@ namespace hpl {
 			vOutput.y = acos(Clamp(vXZ.y,-1,1));
 			if(vXZ.x>0) vOutput.y = -vOutput.y;
 		}
-		
+
 		////////////////
 		// Rotate up
 		mtxRot = MatrixMul(MatrixRotateY(vOutput.y), mtxRot);
@@ -2574,7 +2574,7 @@ namespace hpl {
 			if(vXY.x<0) vOutput.z = -vOutput.z;
 		}
 
-		
+
 		vOutput = MatrixMul3x3(a_mtxB, vOutput);
 		return vOutput;
 	}
@@ -2625,7 +2625,7 @@ namespace hpl {
 		float fA = (2.0f*fNear) / (fRight - fLeft);
 		float fB = (2.0f*fNear) / (fTop - fBottom);
 		float fD = -1.0f;
-		
+
 		float fC,fZ;
 		if(abInfFarPlane)
 		{
@@ -2675,7 +2675,7 @@ namespace hpl {
 							a_mtxA.m[3][0],a_mtxA.m[3][1],a_mtxA.m[3][2],a_mtxA.m[3][3]);
 
 		return mpTempChar;
-	}	
+	}
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -2684,14 +2684,14 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	
+
 	static inline cVector3f GetVector3(const float* apVertexArray, int alIdx,int alStride)
 	{
 		const float* apVec = &apVertexArray[alIdx *alStride];
 
 		return cVector3f(apVec[0],apVec[1],apVec[2]);
 	}
-	
+
 	static inline void AddVector3(float* apArray, int alIdx,const cVector3f &avVec,int alStride)
 	{
 		float* apVec = &apArray[alIdx * alStride];
@@ -2711,7 +2711,7 @@ namespace hpl {
 
 	static inline bool Vector3Equal(const float* apArrayA, int alIdxA,const float* apArrayB, int alIdxB,
 					int alStride)
-	{	
+	{
 		if(apArrayA[alIdxA*alStride + 0] == apArrayB[alIdxB*alStride + 0] &&
 			apArrayA[alIdxA*alStride + 1] == apArrayB[alIdxB*alStride + 1] &&
 			apArrayA[alIdxA*alStride + 2] == apArrayB[alIdxB*alStride + 2])
@@ -2722,10 +2722,10 @@ namespace hpl {
 		return false;
 	}
 
-	bool cMath::CreateTriTangentVectors(float* apDestArray, 
+	bool cMath::CreateTriTangentVectors(float* apDestArray,
 										const unsigned int* apIndexArray,int alIndexNum,
-										const float* apVertexArray, int alVtxStride, 
-										const float *apTexArray, 
+										const float* apVertexArray, int alVtxStride,
+										const float *apTexArray,
 										const float *apNormalArray,
 										int alVertexNum)
 	{
@@ -2736,10 +2736,10 @@ namespace hpl {
 		//Log("Creating tangents:\n");
 		//Log("Num of indices: %d\n",alIndexNum);
 		//Log("Num of vertrices: %d\n",alVertexNum);
-		
+
 		vTempTangents1.resize(alVertexNum,cVector3f(0,0,0));
 		vTempTangents2.resize(alVertexNum,cVector3f(0,0,0));
-		
+
 		//Iterate through the triangles
 		for(int triIdx=0; triIdx<alIndexNum; triIdx+=3)
 		{
@@ -2756,12 +2756,12 @@ namespace hpl {
 			cVector3f vPos1 = GetVector3(apVertexArray,idx1,alVtxStride);
 			cVector3f vPos2 = GetVector3(apVertexArray,idx2,alVtxStride);
 			cVector3f vPos3 = GetVector3(apVertexArray,idx3,alVtxStride);
-			
+
 			//Get the 3 texture coords in the triangle.
 			cVector3f vTex1 = GetVector3(apTexArray,idx1,3);
 			cVector3f vTex2 = GetVector3(apTexArray,idx2,3);
 			cVector3f vTex3 = GetVector3(apTexArray,idx3,3);
-			
+
 			//Get the vectors between the positions.
             cVector3f vPos1To2 = vPos2 - vPos1;
 			cVector3f vPos1To3 = vPos3 - vPos1;
@@ -2769,14 +2769,14 @@ namespace hpl {
 			//Get the vectors between the tex coords
 			cVector3f vTex1To2 = vTex2 - vTex1;
 			cVector3f vTex1To3 = vTex3 - vTex1;
-			
+
 			//Get the direction of the S and T tangents
 			float fR = 1.0f / (vTex1To2.x * vTex1To3.y - vTex1To2.y * vTex1To3.x);
 
-			cVector3f vSDir((vTex1To3.y * vPos1To2.x - vTex1To2.y * vPos1To3.x) * fR, 
+			cVector3f vSDir((vTex1To3.y * vPos1To2.x - vTex1To2.y * vPos1To3.x) * fR,
 							(vTex1To3.y * vPos1To2.y - vTex1To2.y * vPos1To3.y) * fR,
 							(vTex1To3.y * vPos1To2.z - vTex1To2.y * vPos1To3.z) * fR
-							); 
+							);
 
 			cVector3f vTDir((vTex1To2.x * vPos1To3.x - vTex1To3.x * vPos1To2.x) * fR,
 							(vTex1To2.x * vPos1To3.y - vTex1To3.x * vPos1To2.y) * fR,
@@ -2794,7 +2794,7 @@ namespace hpl {
 
 			//Log("\n");
 		}
-		
+
 		//Log("Looking for duplicates: \n");
 		//Go through the vertrices and find normal and vertex copies. Smooth the tangents on these
 		float fMaxCosAngle = -1.0f;
@@ -2806,7 +2806,7 @@ namespace hpl {
 				//Log(" vs ");
 				//Log("(%.1f, %.1f, %.1f)\n", apVertexArray[j+0],apVertexArray[j+1],apVertexArray[j+2]);
 
-				if(Vector3Equal(apVertexArray, i, apVertexArray, j,alVtxStride) && 
+				if(Vector3Equal(apVertexArray, i, apVertexArray, j,alVtxStride) &&
 					Vector3Equal(apNormalArray, i, apNormalArray, j,3))
 				{
 					//Log("Found at %d and %d!\n", i, j);
@@ -2817,7 +2817,7 @@ namespace hpl {
 					cVector3f vBT1 = vTempTangents1[j];
 					cVector3f vBT2 = vTempTangents2[j];
 
-					
+
 					if(Vector3Dot(vAT1, vBT1)>= fMaxCosAngle)
 					{
 						vTempTangents1[j] += vAT1;
@@ -2836,7 +2836,7 @@ namespace hpl {
 		//Iterate through the dest array and set tangent values
 		for(int vtxIdx=0; vtxIdx < alVertexNum; vtxIdx++)
 		{
-			
+
 			cVector3f vNormal = GetVector3(apNormalArray,vtxIdx,3);
 			cVector3f &vTempTan1 = vTempTangents1[vtxIdx];
 			cVector3f &vTempTan2 = vTempTangents2[vtxIdx];
@@ -2844,17 +2844,17 @@ namespace hpl {
             // Gram-Schmidt orthogonalize
 			cVector3f vTan = vTempTan1 - (vNormal * cMath::Vector3Dot(vNormal, vTempTan1));
 			vTan.Normalize();
-			
+
 			//Log("Add tangent %d: ",vtxIdx);
 			//Log(" %.1f, %.1f, %.1f ",vTan.x, vTan.y, vTan.z);
 			//Log("\n");
-			
+
 			//Calculate if left or right handed.
 			float fW = (cMath::Vector3Dot(cMath::Vector3Cross(vNormal, vTempTan1), vTempTan2) < 0.0f) ? -1.0f : 1.0f;
 
 			SetVector4(vTan, fW, apDestArray,vtxIdx);
 		}
-		
+
 		return true;
 	}
 
@@ -2866,7 +2866,7 @@ namespace hpl {
 	{
 		int lNumOfTri = alIndexNum / 3;
 		if((int)avTriangles.size() < lNumOfTri) avTriangles.resize(lNumOfTri);
-		
+
 		//Log("Creating triangle data:\n");
 		for(int tri=0, idx=0; tri < lNumOfTri; tri++,idx+=3)
 		{
@@ -2875,20 +2875,20 @@ namespace hpl {
 			const float *pVtx0 = &apVertexArray[apIndexArray[idx]*alVtxStride];
 			const float *pVtx1 = &apVertexArray[apIndexArray[idx+1]*alVtxStride];
 			const float *pVtx2 = &apVertexArray[apIndexArray[idx+2]*alVtxStride];
-			
+
 			cVector3f vEdge1( pVtx1[0] - pVtx0[0], pVtx1[1] - pVtx0[1], pVtx1[2] - pVtx0[2]);
 			cVector3f vEdge2( pVtx2[0] - pVtx0[0], pVtx2[1] - pVtx0[1], pVtx2[2] - pVtx0[2]);
 
 			avTriangles[tri].normal = Vector3Cross(vEdge2, vEdge1);
 		}
-		
+
 		return true;
 	}
 
-	
+
 	//-----------------------------------------------------------------------
 
-	static bool EdgePointEqual(const float* apVertexArray, 
+	static bool EdgePointEqual(const float* apVertexArray,
 								const cTriEdge &edge1,  const cTriEdge &edge2, int alStride)
 	{
 		if(Vector3Equal(apVertexArray, edge1.point1,apVertexArray, edge2.point1,alStride) &&
@@ -2905,7 +2905,7 @@ namespace hpl {
 
 		return false;
 	}
-    
+
 	/////////////////////////
 
 	static bool EdgeTriEqual(const cTriEdge &edge1,  const cTriEdge &edge2)
@@ -2925,7 +2925,7 @@ namespace hpl {
 	}
 
 	/////////////////////////
-	
+
 	static const float *gpVertexArray;
 	static const unsigned int *gpIndexArray;
 	static int glVertexStride;
@@ -2939,12 +2939,12 @@ namespace hpl {
 		cVertexIndices(unsigned int alIdx){
 			mlstIndices.push_back(alIdx);
 		}
-		tUIntList mlstIndices;	
+		tUIntList mlstIndices;
 	};
 
 	typedef std::map<cVector3f,cVertexIndices> tVtxIdxMap;
 	typedef tVtxIdxMap::iterator tVtxIdxMapIt;
-	
+
 	//////////////////////////////////////////////////////
 
 	class cEdgeCompare
@@ -2957,7 +2957,7 @@ namespace hpl {
 			cVector3f vPoint1_2 = GetVector3(gpVertexArray,Edge1.point2,glVertexStride);
 			cVector3f vPoint2_1 = GetVector3(gpVertexArray,Edge2.point1,glVertexStride);
 			cVector3f vPoint2_2 = GetVector3(gpVertexArray,Edge2.point2,glVertexStride);
-			
+
 			//1 - 1
 			if(vPoint1_1.x != vPoint2_1.x) return vPoint1_1.x > vPoint2_1.x;
 			if(vPoint1_1.y != vPoint2_1.y) return vPoint1_1.y > vPoint2_1.y;
@@ -2975,7 +2975,7 @@ namespace hpl {
 	typedef tTriEdgeListMap::iterator tTriEdgeListMapIt;
 
 	//////////////////////////////////////////////////////
-	
+
 	static void CheckEdgeSwitch(cTriEdge *apEdge)
 	{
 		cVector3f vPoint1 = GetVector3(gpVertexArray,apEdge->point1,glVertexStride);
@@ -3000,7 +3000,7 @@ namespace hpl {
 		}
 		//if added check if there already exist an edge with the triangles
 		else
-		{	
+		{
 			if(it->tri2 != -1) return;
 			if(it->tri1 == aEdge.tri1) return;
 
@@ -3106,9 +3106,9 @@ namespace hpl {
 				//Switch points if they 1 < 2
 				CheckEdgeSwitch(&edge1);
 				CheckEdgeSwitch(&edge2);
-				
+
 				AddEdgeToMap(edge1,mapTriEdgeLists);
-				AddEdgeToMap(edge2,mapTriEdgeLists);	
+				AddEdgeToMap(edge2,mapTriEdgeLists);
 			}
 		}
 		if(bLog){
@@ -3133,14 +3133,14 @@ namespace hpl {
 			const unsigned int *pTri2 = NULL;
 			if(Edge.tri2 >= 0) pTri2 = &apIndexArray[Edge.tri2 * 3];
 
-			if(Edge.tri2 == -1){	
+			if(Edge.tri2 == -1){
 				Edge.invert_tri2 = true;
 				*apIsDoubleSided = true;
 			}
 			else{
 				Edge.invert_tri2 = false;
 			}
-			
+
 			//Get position of point1 in triangle
 			int lPoint1InTri=0;
 			for(int i=0; i < 3; i++){
@@ -3165,11 +3165,11 @@ namespace hpl {
 				Edge.point2 = lTemp;
 				//if(bLog)Log("Switching points\n");
 			}
-			
+
 			//Add the final edge.
 			avEdges.push_back(Edge);
 		}
-		
+
 		return true;
 	}
 
@@ -3202,7 +3202,7 @@ namespace hpl {
 			if(lCount==0){
 				Warning("Found unreferenced vertex when building edges!\n");
 			}
-			else 
+			else
 			{
 				///////////////////////////////////////////
 				//Create the edges
@@ -3212,7 +3212,7 @@ namespace hpl {
 				{
 					//Get the triangle start index.
 					int lTriIdx = ((*it)/3)*3;
-					
+
 					//if(bLog)Log("Tri index: %d!\n",lTriIdx);
 					//Create edges
 					cTriEdge edge1,edge2;
@@ -3220,18 +3220,18 @@ namespace hpl {
 					edge2.point1 = vtx;
 					edge1.tri1 = lTriIdx/3;
 					edge2.tri1 = lTriIdx/3;
-                    
+
 					//Get the index the vertex has in the tri (0 -2)
 					int lIdxInTri = (*it) % 3;
 					//Log("Idx in tri: %d\n",lIdxInTri);
-					
+
 					//Get the end points of the edge.
 					int lPoint1 = lIdxInTri+1;
 					if(lPoint1>2) lPoint1 =0;
 					int lPoint2 = lIdxInTri-1;
 					if(lPoint2<0) lPoint2 =2;
 
-					//if(bLog)Log("P1: %d P2: %d!\n",apIndexArray[lTriIdx +lPoint1], 
+					//if(bLog)Log("P1: %d P2: %d!\n",apIndexArray[lTriIdx +lPoint1],
 					//							apIndexArray[lTriIdx +lPoint2]);
 
 					//Set the end points.
@@ -3248,7 +3248,7 @@ namespace hpl {
 		//Check for triangles that share the same edge. Pair these.
 		if(bLog)Log("Looking for shared edges on triangles.\n");
 		tTriEdgeVec vTempEdges;
-		
+
 		//Check for the last element as well incase it has no pair..
 		for(int e1 =0; e1 < (int)avEdges.size(); e1++)
 		{
@@ -3264,7 +3264,7 @@ namespace hpl {
 				cTriEdge edge2 = avEdges[e2];
 
 				//if(bLog)Log("Checking %d to %d\n",e1,e2);
-				
+
 				//Check if the edges has different triangles but the same points.
 				if(edge1.tri1 != edge2.tri1 && EdgePointEqual(apVertexArray,edge1,edge2,alVtxStride))
 				{
@@ -3272,25 +3272,25 @@ namespace hpl {
 
 					if(bLog)Log("Found a pair: p(%d)-p(%d)|(%d)\n",edge2.point1,edge2.point2,
 														edge2.tri1);
-					
+
 					edge1.tri2 = edge2.tri1;
 					edge1.invert_tri2 = false;
-					
+
 					break;
 				}
 			}
-				
+
 			//If no edge was found it is at a hole.
 			if(bFound == false)
 			{
 				edge1.tri2 = edge1.tri1;
 				edge1.invert_tri2 = true;
-				
+
 				if(bLog) Log("No pair found, at a hole\n");
 			}
 
 			bFound = false;
-			
+
 			//SLOW AS HELL THIS IS...
 			for(size_t i=0; i< vTempEdges.size(); i++)
 			{
@@ -3298,10 +3298,10 @@ namespace hpl {
 					bFound = true;
 					break;
 				}
-				
+
 				//if it is the last edge, don't add it if there is another edge with
 				//the same points and different triangle sides.
-				if(EdgePointEqual(apVertexArray,vTempEdges[i],edge1,alVtxStride) && 
+				if(EdgePointEqual(apVertexArray,vTempEdges[i],edge1,alVtxStride) &&
 					vTempEdges[i].tri1 != vTempEdges[i].tri2)
 				{
 					bFound = true;
@@ -3311,7 +3311,7 @@ namespace hpl {
 
 			//If not already added, add
 			if(bFound== false){
-				
+
 				//If a face with inverted tri was added, the mesh is double sided.
 				if(edge1.invert_tri2){
 					*apIsDoubleSided = true;
@@ -3327,10 +3327,10 @@ namespace hpl {
 		//Clear the old list and add the new nice pairs.
         avEdges.clear();
 		avEdges.reserve(vTempEdges.size());
-		
+
 		//Log("FINAL EDGES:\n");
-		//Create the final edges. This means making sure so that 
-		//edge point 1 is before point 2 in triangle 1 and 2 point 2 before 
+		//Create the final edges. This means making sure so that
+		//edge point 1 is before point 2 in triangle 1 and 2 point 2 before
 		//1 in triangle 2.
 		for(size_t edge=0; edge< vTempEdges.size(); edge++)
 		{
@@ -3344,7 +3344,7 @@ namespace hpl {
 						apVertexArray[pTri1[0]*alVtxStride+0],apVertexArray[pTri1[0]*alVtxStride+1],apVertexArray[pTri1[0]*alVtxStride+2],
 						apVertexArray[pTri1[1]*alVtxStride+0],apVertexArray[pTri1[1]*alVtxStride+1],apVertexArray[pTri1[1]*alVtxStride+2],
 						apVertexArray[pTri1[2]*alVtxStride+0],apVertexArray[pTri1[2]*alVtxStride+1],apVertexArray[pTri1[2]*alVtxStride+2]);
-			
+
 			if(bLog)Log("Tri2: 0:(%.2f %.2f %.2f) 1:(%.2f %.2f %.2f) 2:(%.2f %.2f %.2f)\n",
 						apVertexArray[pTri2[0]*alVtxStride+0],apVertexArray[pTri2[0]*alVtxStride+1],apVertexArray[pTri2[0]*alVtxStride+2],
 						apVertexArray[pTri2[1]*alVtxStride+0],apVertexArray[pTri2[1]*alVtxStride+1],apVertexArray[pTri2[1]*alVtxStride+2],
@@ -3353,7 +3353,7 @@ namespace hpl {
 			if(bLog)Log("Point1: (%.2f %.2f %.2f) Point2: (%.2f %.2f %.2f)\n",
 						apVertexArray[Edge.point1*alVtxStride+0],apVertexArray[Edge.point1*alVtxStride+1],apVertexArray[Edge.point1*alVtxStride+2],
 						apVertexArray[Edge.point2*alVtxStride+0],apVertexArray[Edge.point2*alVtxStride+1],apVertexArray[Edge.point2*alVtxStride+2]);
-			
+
 			//Get position of point1 in triangle
 			int lPoint1InTri=0;
 			for(int i=0; i < 3; i++){
@@ -3368,7 +3368,7 @@ namespace hpl {
 			if(lNextInTri >=3 ) lNextInTri =0;
 
 			if(bLog)Log("Point in: %d Next: %d\n",lPoint1InTri,lNextInTri);
-			
+
 			//If next point is NOT point 2, then the edge
 			//must be switched.
             if(Vector3Equal(apVertexArray,pTri1[ lNextInTri],apVertexArray,Edge.point2,alVtxStride))
@@ -3378,13 +3378,13 @@ namespace hpl {
 				Edge.point2 = lTemp;
 				if(bLog)Log("Switching points\n");
 			}
-			
+
 			if(bLog)Log("%d: p(%d)-p(%d)|(%d)-(%d)\n",edge,
 				Edge.point1,Edge.point2,
 				Edge.tri1, Edge.tri2);
 
 			//Log("-----------\n");
-			
+
 			avEdges.push_back(Edge);
 		}
 
@@ -3392,6 +3392,6 @@ namespace hpl {
 	}*/
 
 
-	
+
 
 }

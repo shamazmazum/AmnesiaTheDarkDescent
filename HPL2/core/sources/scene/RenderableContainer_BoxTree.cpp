@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -34,7 +34,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	cRCNode_BoxTree::cRCNode_BoxTree()
 	{
 		mpParent = NULL;
@@ -56,7 +56,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	cRenderableContainer_BoxTree::cRenderableContainer_BoxTree()
 	{
 		mlMinLeafObjects = 12;		//The minimum number of objects in each leaf.
@@ -80,7 +80,7 @@ namespace hpl {
 
 		mpObjectCalllback = hplNew( cRenderableContainerObjectCallback, () );
 	}
-	
+
 	cRenderableContainer_BoxTree::~cRenderableContainer_BoxTree()
 	{
 		if(mpRoot) hplDelete(mpRoot);
@@ -95,7 +95,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	void cRenderableContainer_BoxTree::Add(iRenderable *apRenderable)
 	{
 		m_mlstTempObjects.push_back(apRenderable);
@@ -128,7 +128,7 @@ namespace hpl {
 
 		//Set up temp root node.
 		cBoxTreeTempNode tempRoot(NULL);
-		
+
 		/////////////////////////////////////////////////
 		//Start by building the temp nodes where every node contains all children (that will later be in child nodes) and
 		//will later be used to easily calculated bounding volume for each node.
@@ -158,7 +158,7 @@ namespace hpl {
 			glDrawLevel++;
 			if(glDrawLevel > 5) glDrawLevel =0;
 		}
-		
+
 		apFunctions->SetDepthTest(true);
 		apFunctions->SetDepthWrite(false);
 		apFunctions->SetBlendMode(eMaterialBlendMode_None);
@@ -170,19 +170,19 @@ namespace hpl {
 
 		RenderDebugNode(apFunctions, mpRoot,0);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
 	// PRIVATE METHODS
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	static tString gsTempSpaces="";
 
 	const char *GetSpaces(int alNum)
 	{
 		gsTempSpaces.resize(alNum,'\t');
-        return gsTempSpaces.c_str();		
+        return gsTempSpaces.c_str();
 	}
 
 	//-----------------------------------------------------------------------
@@ -224,7 +224,7 @@ namespace hpl {
 		return apObjectA->GetBoundingVolume()->GetWorldCenter().z < apObjectB->GetBoundingVolume()->GetWorldCenter().z;
 	}
 
-	typedef bool (*tSortFunc)(iRenderable*,iRenderable*); 
+	typedef bool (*tSortFunc)(iRenderable*,iRenderable*);
 	static tSortFunc gvSortFunctions[3] = {SortFunc_X, SortFunc_Y,SortFunc_Z};
 
 	//-----------------------------------------------------------------------
@@ -236,7 +236,7 @@ namespace hpl {
 	{
 		float fMinVal =   GetAxisFromVec(apObject->GetBoundingVolume()->GetMin(),alAxis);
 		float fMaxVal =   GetAxisFromVec(apObject->GetBoundingVolume()->GetMax(),alAxis);
-		
+
 		//////////////////////////
 		//Above cut plane
 		if(fMinVal >= afCutPlane)
@@ -257,7 +257,7 @@ namespace hpl {
 			//Calculate how much the object crosses over on each side
 			float fAboveDist = fMaxVal - afCutPlane;
 			float fBelowDist = afCutPlane - fMinVal;
-			
+
 			float fNodeSize = GetAxisFromVec(avNodeSize, alAxis);	//Using the size of entire node since it one side might be very small.
 
 			/////////////////////
@@ -269,18 +269,18 @@ namespace hpl {
 				fMinDist = fBelowDist;
 				lDestDir =0;
 			}
-			
+
 			/////////////////////
 			//Check if the amount of cross over is small enough to not treat it as an intersection.
 			float fMinCrossOverAmount = fMinDist / fNodeSize;
 			if(fMinCrossOverAmount <= mfMaxIntersectionAmount) return lDestDir;
-			
+
 			return 2;
 		}
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	float cRenderableContainer_BoxTree::CalculateObjectsVolume(tRenderableList &alstObjects)
 	{
 		if(alstObjects.empty()) return 0;
@@ -294,7 +294,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	float cRenderableContainer_BoxTree::CalculateBestCutPlane(tRenderableList &alstObjects, int alAxis, const cVector3f &avNodeSize)
 	{
 		float fBestCutPlane =0;
@@ -318,7 +318,7 @@ namespace hpl {
 				iRenderable *pTestObject = *testObjectIt;
 
 				int lGroup = GetSplitGroup(pTestObject,fCutPlaneVal,alAxis,avNodeSize);
-				
+
 				//Above cut plane
 				if(lGroup==0)		vObjectGroup[0].push_back(pTestObject);
 				//Below cut plane
@@ -355,7 +355,7 @@ namespace hpl {
 		return fLongestSide;
 	}
 
-	
+
 	void cRenderableContainer_BoxTree::CompileTempNode(cBoxTreeTempNode *apNode, int alLevel, int alSplitAxis)
 	{
 		const bool bLog = false;
@@ -383,7 +383,7 @@ namespace hpl {
 		int lNumOfObjects = (int)apNode->mlstObjects.size();
 		if(	lNumOfObjects < mlMinLeafObjects *2 &&	//Multiplied by two, because we want to split it too.
 			apNode->mpParent != NULL &&				//Always try and split first node independant of object number!
-			fLongestSide < mfMaxSideLength)			//Override number of objects if the longest side is long enough!			
+			fLongestSide < mfMaxSideLength)			//Override number of objects if the longest side is long enough!
 		{
 			if(bLog)
 			{
@@ -393,18 +393,18 @@ namespace hpl {
 			}
 			return;
 		}
-				
+
 		///////////////////////////
 		// Calculate the axis
 		int lAxis = alSplitAxis;
 		if(lAxis <0) //If axis < 0, make it depend on largest side
 		{
-			if(fLongestSide == vNodeSize.x)			lAxis =0;			
+			if(fLongestSide == vNodeSize.x)			lAxis =0;
 			else if(fLongestSide == vNodeSize.y)	lAxis =1;
 			else if(fLongestSide == vNodeSize.z)	lAxis =2;
 		}
-		
-		
+
+
 		if(bLog)
 		{
 			Log("%sNode %d Parent: %d level %d. Axis: %d Size: (%s) Objects: %d\n",GetSpaces(alLevel),apNode,apNode->mpParent, alLevel,lAxis,vNodeSize.ToString().c_str(), lNumOfObjects);
@@ -445,23 +445,23 @@ namespace hpl {
 			//Get the cut value
 			fCutPlaneVal = GetAxisFromVec(vSortedObjects[lMedian]->GetBoundingVolume()->GetMin(), lAxis);
 		}
-				
-		
+
+
 		////////////////////////////////////////
 		//Add objects to children depending on where they are in the clipping plane
-		
+
 		if(bLog) Log("%s ---------------\n",GetSpaces(alLevel));
-        
+
 		cBoxTreeTempNode *pHighChild=NULL;			//For objects above fCutPlaneVal
 		cBoxTreeTempNode *pLowChild=NULL;			//For objects below fCutPlaneVal
 		cBoxTreeTempNode *pIntersectChild=NULL;		//For object both above and below
-				
+
 		for(size_t i=0; i<vSortedObjects.size(); ++i)
 		{
 			iRenderable *pObject = vSortedObjects[i];
-			if(bLog) Log("%s object: '%s', pos: (%s)",GetSpaces(alLevel), pObject->GetName().c_str(), 
+			if(bLog) Log("%s object: '%s', pos: (%s)",GetSpaces(alLevel), pObject->GetName().c_str(),
 													pObject->GetBoundingVolume()->GetWorldCenter().ToString().c_str());
-			
+
 			int lGroup = GetSplitGroup(pObject,fCutPlaneVal,lAxis,vNodeSize);
 
             //////////////////////////
@@ -486,8 +486,8 @@ namespace hpl {
 				CreateNodeIfNeeded(apNode, pIntersectChild)->mlstObjects.push_back(pObject);
 			}
 		}
-		
-		
+
+
 
 		/////////////////////////////////////
 		//Get longest sides of each group
@@ -505,11 +505,11 @@ namespace hpl {
 			if(pLowChild) Log("%s objects below: %d Longest side: %f\n",GetSpaces(alLevel), pLowChild->mlstObjects.size(), fLow_LongestSide);
 			if(pIntersectChild) Log("%s objects intersected: %d Longest side: %f\n",GetSpaces(alLevel), pIntersectChild->mlstObjects.size(), fIntersect_LongestSide);
 		}
-		
+
 		/////////////////////////////////////
 		//Check if any child node as less than minimum objects, if so rearrange.
 		bool bMovedObjects = false;
-		
+
 		// Intersected:
 		// If intersected is too small then spread these out among high and low.
 		if(pIntersectChild && (int)pIntersectChild->mlstObjects.size() < mlMinLeafObjects && fIntersect_LongestSide < mfMaxSideLength)
@@ -519,16 +519,16 @@ namespace hpl {
 			for(; it != pIntersectChild->mlstObjects.end();)
 			{
 				iRenderable *pObject = *it;
-				
+
 				float fMinVal =   GetAxisFromVec(pObject->GetBoundingVolume()->GetMin(),lAxis);
 				float fMaxVal =   GetAxisFromVec(pObject->GetBoundingVolume()->GetMax(),lAxis);
-				float fNodeSize = GetAxisFromVec(vNodeSize, lAxis);	
+				float fNodeSize = GetAxisFromVec(vNodeSize, lAxis);
 				float fObjectSize = fMaxVal - fMinVal;
 
 				float fAboveDist = fMaxVal - fCutPlaneVal;
 				float fBelowDist = fCutPlaneVal - fMinVal;
-				
-				
+
+
 				//Check if object is large enough to remain.
 				if(fObjectSize > fNodeSize * mfMinForceIntersectionRelativeSize)
 				{
@@ -539,7 +539,7 @@ namespace hpl {
 				else if( pHighChild && (fAboveDist > fBelowDist || pLowChild==NULL) )
 				{
 					if(bLog) Log("%s  moving '%s' to high!\n",GetSpaces(alLevel),pObject->GetName().c_str());
-					pHighChild->mlstObjects.push_back(pObject);	
+					pHighChild->mlstObjects.push_back(pObject);
 					it = pIntersectChild->mlstObjects.erase(it);
 					bMovedObjects = true;
 				}
@@ -547,7 +547,7 @@ namespace hpl {
 				else if(pLowChild)
 				{
 					if(bLog) Log("%s  moving '%s' to low!\n",GetSpaces(alLevel),pObject->GetName().c_str());
-					pLowChild->mlstObjects.push_back(pObject);	
+					pLowChild->mlstObjects.push_back(pObject);
 					it = pIntersectChild->mlstObjects.erase(it);
 					bMovedObjects = true;
 				}
@@ -558,7 +558,7 @@ namespace hpl {
 					++it;
 				}
 			}
-			
+
 			//If not all objects where moved, then do not delete node.
 			if(bSkippedMoving ==false)
 			{
@@ -570,7 +570,7 @@ namespace hpl {
 		if(pHighChild && (int)pHighChild->mlstObjects.size() < mlMinLeafObjects && pIntersectChild && fHigh_LongestSide < mfMaxSideLength)
 		{
 			if(bLog) Log("%s moving high to intersected!\n",GetSpaces(alLevel));
-			pIntersectChild->mlstObjects.splice(pIntersectChild->mlstObjects.end(),pHighChild->mlstObjects);		
+			pIntersectChild->mlstObjects.splice(pIntersectChild->mlstObjects.end(),pHighChild->mlstObjects);
 			STLFindAndDelete(apNode->mlstChildren, pHighChild);
 			pHighChild = NULL;
 			bMovedObjects = true;
@@ -579,21 +579,21 @@ namespace hpl {
 		if(pLowChild && (int)pLowChild->mlstObjects.size() < mlMinLeafObjects && pIntersectChild && fLow_LongestSide < mfMaxSideLength)
 		{
 			if(bLog) Log("%s moving low to intersected!\n",GetSpaces(alLevel));
-			pIntersectChild->mlstObjects.splice(pIntersectChild->mlstObjects.end(),pLowChild->mlstObjects);		
+			pIntersectChild->mlstObjects.splice(pIntersectChild->mlstObjects.end(),pLowChild->mlstObjects);
 			STLFindAndDelete(apNode->mlstChildren, pLowChild);
 			pLowChild = NULL;
 			bMovedObjects = true;
 		}
-		
+
 		if(bLog && bMovedObjects)
 		{
 			if(pHighChild) Log("%s objects above: %d\n",GetSpaces(alLevel), pHighChild->mlstObjects.size());
 			if(pLowChild) Log("%s objects below: %d\n",GetSpaces(alLevel), pLowChild->mlstObjects.size());
 			if(pIntersectChild) Log("%s objects intersected: %d\n",GetSpaces(alLevel), pIntersectChild->mlstObjects.size());
 		}
-		
+
 		if(bLog) Log("%s ---------------\n",GetSpaces(alLevel));
-		
+
 		///////////////////////////////////////
 		//If only one child node was created, try splitting on another axis
 		// only one child means no change in the space partition so no use.
@@ -603,7 +603,7 @@ namespace hpl {
 			if(bLog) Log("%s==================================\n",GetSpaces(alLevel));
 
 			STLDeleteAll(apNode->mlstChildren);
-			
+
 			//If not all split directions have been tried, try another.
 			apNode->mlSplitAxisCount++;
 			if(apNode->mlSplitAxisCount < 3)
@@ -613,13 +613,13 @@ namespace hpl {
 
 				CompileTempNode(apNode,alLevel, lNewAxis);
 			}
-			
+
 			return;
 		}
 
 		////////////////////////////////////////
 		// Compile all of the nodes created.
-		
+
 		if(pHighChild)
 		{
 			CompileTempNode(pHighChild,alLevel+1, -1);
@@ -662,7 +662,7 @@ namespace hpl {
 
 		apNode->mvCenter = (apNode->mvMax + apNode->mvMin) *0.5f;
 		apNode->mfRadius = (apNode->mvMax - apNode->mvMin).Length()*0.5f;
-				
+
 		////////////////////////////
 		//If leaf, add objects.
 		if(bIsLeaf)
@@ -671,7 +671,7 @@ namespace hpl {
                 Log("%sIs leaf so adding all objects to it!\n",GetSpaces(alLevel));
 				Log("%s-----------------------------------\n",GetSpaces(alLevel));
 			}
-			
+
 			tRenderableListIt it = apTempNode->mlstObjects.begin();
 			for(; it != apTempNode->mlstObjects.end(); ++it)
 			{
@@ -684,7 +684,7 @@ namespace hpl {
 				pObject->SetRenderContainerNode(apNode);
 			}
 		}
-		
+
 
 		////////////////////////////
 		//Add children
@@ -695,7 +695,7 @@ namespace hpl {
 			cRCNode_BoxTree *pChildNode = hplNew(cRCNode_BoxTree, () );
             pChildNode->mpParent = apNode;
 			apNode->mlstChildNodes.push_back(pChildNode);
-			
+
             BuildNodeFromTemp(pTempChildNode, pChildNode,alLevel+1);
 	   }
 	}
@@ -722,7 +722,7 @@ namespace hpl {
 		{
 			iRenderable *pObj = *objIt;
 			//cBoundingVolume *pBV = pObj->GetBoundingVolume();
-			//apFunctions->GetLowLevelGfx()->DrawBoxMinMax(pBV->GetMin(),pBV->GetMax(),LevelColor[alLevel % 10]);	
+			//apFunctions->GetLowLevelGfx()->DrawBoxMinMax(pBV->GetMin(),pBV->GetMax(),LevelColor[alLevel % 10]);
 		}
 	}
 

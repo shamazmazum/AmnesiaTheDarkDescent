@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -70,9 +70,9 @@ namespace hpl {
 		msName = asName;
 
 		mlNumOfMainModes = alNumOfMainModes;
-		
+
 		mvCombinationNum.resize(mlNumOfMainModes);
-		
+
 		mvProgramSets.resize(mlNumOfMainModes);
 		mvVtxShaderSets.resize(mlNumOfMainModes);
 		mvFragShaderSets.resize(mlNumOfMainModes);
@@ -107,24 +107,24 @@ namespace hpl {
 			// Create data and add to map
 			pProgData = hplNew(cProgramComboProgram, () );
 			mvProgramSets[alMainMode].insert(tProgramComboProgramMap::value_type(alFlags, pProgData));
-			
+
 			cProgramComboSettings& comboSettings = mvSettings[alMainMode];
 			tString sProgramName = GenerateProgramName(alMainMode, alFlags);
-			
+
 			////////////////////////////////////
 			// Create (or get) shaders
-			iGpuShader *pVtxShader = GetShaderForCombo(alMainMode, alFlags, comboSettings.msVtxShader, kPC_VertexBit);			
+			iGpuShader *pVtxShader = GetShaderForCombo(alMainMode, alFlags, comboSettings.msVtxShader, kPC_VertexBit);
 			iGpuShader *pFragShader = GetShaderForCombo(alMainMode, alFlags, comboSettings.msFragShader, kPC_FragmentBit);
 
 			////////////////////////////////////
 			// Create program
 			iGpuProgram* pProgram = NULL;
-			
+
 			if(pVtxShader && pFragShader)
 				pProgram = CreateProgramFromShaders(sProgramName, pVtxShader, pFragShader,false);
-			
+
 			pProgData->mpProgram = pProgram;
-						
+
 			////////////////////////////////////
 			// Init variables
 			if(pProgram)
@@ -136,7 +136,7 @@ namespace hpl {
 				for(; it != endIt; ++it)
 				{
 					cProgramComboVariable &var = *it;
-					pProgram->GetVariableAsId(var.msVarName,var.mlId);		                
+					pProgram->GetVariableAsId(var.msVarName,var.mlId);		
 				}
 
 				//Log(" -- Creating program '%s' / %d\n", sProgramName.c_str(), pProgram);
@@ -152,16 +152,16 @@ namespace hpl {
 		//////////////////////////////////////
 		// Increase user count
 		pProgData->mlUserCount++;
-		
+
 		return pProgData->mpProgram;
 	}
 
 	//--------------------------------------------------------------------------
 
-	
+
 	void cProgramComboManager::SetupGenerateProgramData(int alMainMode, const tString &asModeName,
 														const tString &asVtxShaderName, const tString &asFragShaderName,
-														cProgramComboFeature *apFeatures, int alFeatureNum, 
+														cProgramComboFeature *apFeatures, int alFeatureNum,
 														cParserVarContainer &avDefaultVars)
 	{
 		////////////////////////////////
@@ -169,18 +169,18 @@ namespace hpl {
 		int lFeatureNum = alFeatureNum;
 		int lCombinations = (int)(pow(2.0,(double)lFeatureNum)+0.49);
 		mvCombinationNum[alMainMode] = lCombinations;
-				
+
 		////////////////////////////////
 		//Save settings
 		cProgramComboSettings& comboSettings = mvSettings[alMainMode];
 		comboSettings.msName = asModeName;
 		comboSettings.msVtxShader = asVtxShaderName;
 		comboSettings.msFragShader = asFragShaderName;
-		
+
 		comboSettings.mvFeatures.resize(alFeatureNum);
 		for(int i=0;i<alFeatureNum; ++i)
-			comboSettings.mvFeatures[i] = apFeatures[i];		
-		
+			comboSettings.mvFeatures[i] = apFeatures[i];
+
 		tParseVarMap* pVarMap = avDefaultVars.GetMapPtr();
 		comboSettings.mvDefaultVars.reserve(pVarMap->size());
 
@@ -190,7 +190,7 @@ namespace hpl {
 			comboSettings.mvDefaultVars.push_back(cProgramComboSettingsVar(it->first, it->second));
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cProgramComboManager::AddGenerateProgramVariableId(const tString& asVarName, int alId, int alMainMode)
@@ -211,7 +211,7 @@ namespace hpl {
 
 		cProgramComboProgram *pProgData = it->second;
 		iGpuProgram *pProgram = pProgData->mpProgram;
-		
+
 		/////////////////////////
 		//Dec user count and destroy if 0
 		pProgData->mlUserCount--;
@@ -219,7 +219,7 @@ namespace hpl {
 		{
 			iGpuShader *pVtxShader = pProgram->GetShader(eGpuShaderType_Vertex);
 			iGpuShader *pFragShader = pProgram->GetShader(eGpuShaderType_Fragment);
-			
+
 			/////////////////////////
 			//Destroy program
 			//Log("    Destroying program '%s'/%d id: %d\n", pProgram->GetName().c_str(),pProgram, pProgram->GetUserId());
@@ -241,7 +241,7 @@ namespace hpl {
 	void cProgramComboManager::DestroyGeneratedShader(int alMainMode, iGpuShader* apShader, eGpuShaderType aType)
 	{
 		tProgramComboShaderMap* pShaderSet = aType== eGpuShaderType_Vertex ? &mvVtxShaderSets[alMainMode] : &mvFragShaderSets[alMainMode];
-		
+
 		/////////////////////////
 		//Search for shader using id (which is the saved bitflags)
 		tProgramComboShaderMapIt it = pShaderSet->find(apShader->GetUserId());
@@ -293,7 +293,7 @@ namespace hpl {
 			return NULL;
 		}
 
-		if(pShader && abAddtoList) 
+		if(pShader && abAddtoList)
 		{
 			mlstExtraShaders.push_back(pShader);
 		}
@@ -308,7 +308,7 @@ namespace hpl {
 		if(apShader == NULL) return;
 
 		STLFindAndRemove(mlstExtraShaders, apShader);
-		
+
 		mpResources->GetGpuShaderManager()->Destroy(apShader);
 	}
 
@@ -322,7 +322,7 @@ namespace hpl {
 	//-----------------------------------------------------------------------
 
 	iGpuProgram* cProgramComboManager::CreateProgramFromShaders(const tString &asProgramName,
-																const tString &asVtxShaderName, 
+																const tString &asVtxShaderName,
 																const tString &asFragShaderName,
 																cParserVarContainer *apVars,
 																bool abAddtoList)
@@ -360,7 +360,7 @@ namespace hpl {
 			{
 				mpResources->GetGpuShaderManager()->Destroy(pVtxShader);
 				mpResources->GetGpuShaderManager()->Destroy(pFragShader);
-				hplDelete(pProgram);		
+				hplDelete(pProgram);
 			}
 
 			return NULL;
@@ -377,7 +377,7 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	iGpuProgram* cProgramComboManager::CreateProgramFromShaders(const tString &asProgramName, iGpuShader *apVtxShader,iGpuShader *apFragShader, 
+	iGpuProgram* cProgramComboManager::CreateProgramFromShaders(const tString &asProgramName, iGpuShader *apVtxShader,iGpuShader *apFragShader,
 																bool abAddtoList)
 	{
 		iGpuProgram *pProgram;
@@ -399,7 +399,7 @@ namespace hpl {
 		return pProgram;
 	}
 
-	
+
 	//-----------------------------------------------------------------------
 
 	void cProgramComboManager::DestroyShadersAndPrograms()
@@ -431,14 +431,14 @@ namespace hpl {
 
 			///////////////////////////////
 			// Destroy Extra Content
-			
+
 			//Programs
 			STLDeleteAll(mlstExtraPrograms);
 
 			//Shaders (must be after programs!)
 			for(tGpuShaderListIt it = mlstExtraShaders.begin(); it!= mlstExtraShaders.end(); ++it)
 			{
-				mpResources->GetGpuShaderManager()->Destroy(*it);	
+				mpResources->GetGpuShaderManager()->Destroy(*it);
 			}
 			mlstExtraShaders.clear();
 		}
@@ -460,7 +460,7 @@ namespace hpl {
 		tString sName = msName + "_" + settings.msName;
 		for(size_t i=0; i<settings.mvFeatures.size(); ++i)
 		{
-			if(alBitFlags & cMath::GetFlagBit((int)i)) 
+			if(alBitFlags & cMath::GetFlagBit((int)i))
 			{
 				sName += "_" + settings.mvFeatures[i].msVariable;
 			}
@@ -486,10 +486,10 @@ namespace hpl {
 			if( (alBitFlags & lCurrentBit) &&
 				(comboSettings.mvFeatures[i].mlShaders & aShaderType) )
 			{
-				lValidBits |= lCurrentBit; 
+				lValidBits |= lCurrentBit;
 			}
 		}
-		
+
 		//////////////////////////////
 		// Check if program exists and if so return it
 		tProgramComboShaderMap* pShaderSet = aShaderType== kPC_VertexBit ? &mvVtxShaderSets[alMainMode] : &mvFragShaderSets[alMainMode];
@@ -497,7 +497,7 @@ namespace hpl {
 		if(it != pShaderSet->end())
 		{
 			cProgramComboShader *pShaderData = it->second;
-			
+
 			pShaderData->mlUserCount++;
 			return pShaderData->mpShader;
 		}
@@ -505,8 +505,8 @@ namespace hpl {
 		//////////////////////////////
 		// Create program, add to set and return it
 		cProgramComboShader *pShaderData = hplNew(cProgramComboShader , ());
-		iGpuShader* pShader = CreateShaderFromFeatures(	asShaderName, aShaderType, alBitFlags, 
-														&comboSettings.mvFeatures[0], (int)comboSettings.mvFeatures.size(), 
+		iGpuShader* pShader = CreateShaderFromFeatures(	asShaderName, aShaderType, alBitFlags,
+														&comboSettings.mvFeatures[0], (int)comboSettings.mvFeatures.size(),
 														&comboSettings.mvDefaultVars[0], (int)comboSettings.mvDefaultVars.size());
 		pShaderData->mpShader = pShader;
 		pShaderData->mlUserCount++;
@@ -523,7 +523,7 @@ namespace hpl {
 	//--------------------------------------------------------------------
 
 	iGpuShader* cProgramComboManager::CreateShaderFromFeatures(	const tString& asShaderFile, tFlag aShaderType,
-																int alBitFlags, cProgramComboFeature* apFeatures, int alFeatureNum, 
+																int alBitFlags, cProgramComboFeature* apFeatures, int alFeatureNum,
 																cProgramComboSettingsVar *apDefaultVars, int alDefaultVarsNum)
 	{
 		cParserVarContainer vars;
@@ -541,7 +541,7 @@ namespace hpl {
 				}
 			}
 		}
-		
+
 		/////////////////////////
 		//Add the default variables,
 		for(int i=0; i<alDefaultVarsNum; ++i)
@@ -557,7 +557,7 @@ namespace hpl {
 
 	//--------------------------------------------------------------------------
 
-	
-	
+
+
 
 }

@@ -26,7 +26,7 @@ void cOAL_Effect_Reverb::SetDensity( float afDensity)
 
 	RUN_AL_FUNC( alEffectf( mlEffectId, lParameter, mfDensity));
 
-	mbNeedsUpdate = true; 
+	mbNeedsUpdate = true;
 
 	Unlock();
 }
@@ -35,7 +35,7 @@ void cOAL_Effect_Reverb::SetDiffusion ( float afDiffusion)
 {
 	DEF_FUNC_NAME("");
 	FUNC_USES_AL;
-	
+
 	if (mfDiffusion == afDiffusion)
 		return;
 
@@ -48,7 +48,7 @@ void cOAL_Effect_Reverb::SetDiffusion ( float afDiffusion)
 
 	RUN_AL_FUNC( alEffectf( mlEffectId, lParameter, mfDiffusion));
 
-	mbNeedsUpdate = true; 
+	mbNeedsUpdate = true;
 
 	Unlock();
 }
@@ -70,7 +70,7 @@ void cOAL_Effect_Reverb::SetGain ( float afGain)
 
 	RUN_AL_FUNC( alEffectf( mlEffectId, lParameter, mfGain));
 
-	mbNeedsUpdate = true; 
+	mbNeedsUpdate = true;
 
 	Unlock();
 }
@@ -92,7 +92,7 @@ void cOAL_Effect_Reverb::SetGainHF ( float afGainHF)
 
 	RUN_AL_FUNC( alEffectf( mlEffectId, lParameter, mfGainHF));
 
-	mbNeedsUpdate = true; 
+	mbNeedsUpdate = true;
 
 	Unlock();
 }
@@ -117,7 +117,7 @@ void cOAL_Effect_Reverb::SetGainLF ( float afGainLF)
 
 	RUN_AL_FUNC( alEffectf( mlEffectId, AL_EAXREVERB_GAINLF, mfGainLF));
 
-	mbNeedsUpdate = true; 
+	mbNeedsUpdate = true;
 
 	Unlock();
 }
@@ -139,7 +139,7 @@ void cOAL_Effect_Reverb::SetDecayTime ( float afDecayTime)
 
 	RUN_AL_FUNC( alEffectf( mlEffectId, lParameter, mfDecayTime));
 
-	mbNeedsUpdate = true; 
+	mbNeedsUpdate = true;
 
 	Unlock();
 }
@@ -161,7 +161,7 @@ void cOAL_Effect_Reverb::SetDecayHFRatio ( float afDecayHFRatio )
 
 	RUN_AL_FUNC( alEffectf( mlEffectId, lParameter, mfDecayHFRatio));
 
-	mbNeedsUpdate = true; 
+	mbNeedsUpdate = true;
 
 	Unlock();
 }
@@ -179,7 +179,7 @@ void cOAL_Effect_Reverb::SetDecayLFRatio ( float afDecayLFRatio )
 	mfDecayLFRatio = afDecayLFRatio;
 	ClampValue(&mfDecayLFRatio, 0.1f, 2.0f);
 
-	mbNeedsUpdate = true; 
+	mbNeedsUpdate = true;
 
 	Unlock();
 
@@ -207,7 +207,7 @@ void cOAL_Effect_Reverb::SetReflectionsGain ( float afReflectionsGain )
 
 	RUN_AL_FUNC( alEffectf( mlEffectId, lParameter, mfReflectionsGain));
 
-	mbNeedsUpdate = true; 
+	mbNeedsUpdate = true;
 
 	Unlock();
 }
@@ -229,7 +229,7 @@ void cOAL_Effect_Reverb::SetReflectionsDelay( float afReflectionsDelay )
 
 	RUN_AL_FUNC( alEffectf( mlEffectId, lParameter, mfReflectionsDelay));
 
-	mbNeedsUpdate = true; 
+	mbNeedsUpdate = true;
 
 	Unlock();
 }
@@ -239,13 +239,13 @@ void cOAL_Effect_Reverb::SetReflectionsPan( float afReflectionsPan[3] )
 	DEF_FUNC_NAME("");
 	FUNC_USES_AL;
 
-	if ( (mfReflectionsPan[0] == afReflectionsPan[0]) && 
-		 (mfReflectionsPan[1] == afReflectionsPan[1]) && 
+	if ( (mfReflectionsPan[0] == afReflectionsPan[0]) &&
+		 (mfReflectionsPan[1] == afReflectionsPan[1]) &&
 		 (mfReflectionsPan[2] == afReflectionsPan[2]) )
 		return;
 
 	Lock();
-    
+
 	mfReflectionsPan[0] = afReflectionsPan[0];
 	mfReflectionsPan[1] = afReflectionsPan[1];
 	mfReflectionsPan[2] = afReflectionsPan[2];
@@ -254,7 +254,7 @@ void cOAL_Effect_Reverb::SetReflectionsPan( float afReflectionsPan[3] )
 	ClampValue(&mfReflectionsPan[1], -1.0f, 1.0f);
 	ClampValue(&mfReflectionsPan[2], -1.0f, 1.0f);
 
-	mbNeedsUpdate = true; 
+	mbNeedsUpdate = true;
 
 	Unlock();
 
@@ -262,7 +262,7 @@ void cOAL_Effect_Reverb::SetReflectionsPan( float afReflectionsPan[3] )
 		return;
 
 	RUN_AL_FUNC( alEffectfv( mlEffectId, AL_EAXREVERB_REFLECTIONS_PAN, mfReflectionsPan));
-	
+
 }
 
 void cOAL_Effect_Reverb::SetLateReverbGain( float afLateReverbGain)
@@ -282,7 +282,7 @@ void cOAL_Effect_Reverb::SetLateReverbGain( float afLateReverbGain)
 
 	RUN_AL_FUNC( alEffectf( mlEffectId, lParameter, mfLateReverbGain));
 
-	mbNeedsUpdate = true; 
+	mbNeedsUpdate = true;
 
 	Unlock();
 }
@@ -304,7 +304,7 @@ void cOAL_Effect_Reverb::SetLateReverbDelay ( float afLateReverbDelay)
 
 	RUN_AL_FUNC( alEffectf( mlEffectId, lParameter, mfLateReverbDelay));
 
-	mbNeedsUpdate = true; 
+	mbNeedsUpdate = true;
 
 	Unlock();
 }
@@ -314,13 +314,13 @@ void cOAL_Effect_Reverb::SetLateReverbPan (float afLateReverbPan[3])
 	DEF_FUNC_NAME("");
 	FUNC_USES_AL;
 
-	if ( (mfLateReverbPan[0] == afLateReverbPan[0]) && 
-		 (mfLateReverbPan[1] == afLateReverbPan[1]) && 
+	if ( (mfLateReverbPan[0] == afLateReverbPan[0]) &&
+		 (mfLateReverbPan[1] == afLateReverbPan[1]) &&
 		 (mfLateReverbPan[2] == afLateReverbPan[2]) )
 		return;
 
 	Lock();
-    
+
 	mfLateReverbPan[0] = afLateReverbPan[0];
 	mfLateReverbPan[1] = afLateReverbPan[1];
 	mfLateReverbPan[2] = afLateReverbPan[2];
@@ -329,7 +329,7 @@ void cOAL_Effect_Reverb::SetLateReverbPan (float afLateReverbPan[3])
 	ClampValue(&mfLateReverbPan[1], -1.0f, 1.0f);
 	ClampValue(&mfLateReverbPan[2], -1.0f, 1.0f);
 
-	mbNeedsUpdate = true; 
+	mbNeedsUpdate = true;
 
 	Unlock();
 
@@ -344,7 +344,7 @@ void cOAL_Effect_Reverb::SetEchoTime (float afEchoTime)
 {
 	DEF_FUNC_NAME("");
 	FUNC_USES_AL;
-    
+
 	if (mfEchoTime == afEchoTime)
 		return;
 
@@ -354,7 +354,7 @@ void cOAL_Effect_Reverb::SetEchoTime (float afEchoTime)
 
 	ClampValue(&mfEchoTime, 0.075f, 0.25f);
 
-	mbNeedsUpdate = true; 
+	mbNeedsUpdate = true;
 
 	Unlock();
 
@@ -381,7 +381,7 @@ void cOAL_Effect_Reverb::SetEchoDepth (float afEchoDepth)
 
 	ClampValue(&mfEchoDepth, 0.0f, 1.0f);
 
-	mbNeedsUpdate = true; 
+	mbNeedsUpdate = true;
 
 	Unlock();
 
@@ -406,7 +406,7 @@ void cOAL_Effect_Reverb::SetModulationTime (float afModulationTime)
 
 	ClampValue(&mfModulationTime, 0.04f, 4.0f);
 
-	mbNeedsUpdate = true; 
+	mbNeedsUpdate = true;
 
 	Unlock();
 
@@ -431,7 +431,7 @@ void cOAL_Effect_Reverb::SetModulationDepth (float afModulationDepth)
 
 	ClampValue(&mfModulationDepth, 0.0f, 1.0f);
 
-	mbNeedsUpdate = true; 
+	mbNeedsUpdate = true;
 
 	Unlock();
 
@@ -440,7 +440,7 @@ void cOAL_Effect_Reverb::SetModulationDepth (float afModulationDepth)
 
 	RUN_AL_FUNC( alEffectf( mlEffectId, AL_EAXREVERB_MODULATION_DEPTH, mfModulationDepth));
 
-	
+
 }
 
 void cOAL_Effect_Reverb::SetAirAbsorptionGainHF (float afAirAbsorptionGainHF)
@@ -456,7 +456,7 @@ void cOAL_Effect_Reverb::SetAirAbsorptionGainHF (float afAirAbsorptionGainHF)
 	mfAirAbsorptionGainHF = afAirAbsorptionGainHF;
 	ClampValue(&mfAirAbsorptionGainHF, 0.892f, 1.0f);
 
-	mbNeedsUpdate = true; 
+	mbNeedsUpdate = true;
 
 	Unlock();
 
@@ -464,7 +464,7 @@ void cOAL_Effect_Reverb::SetAirAbsorptionGainHF (float afAirAbsorptionGainHF)
 
 	RUN_AL_FUNC( alEffectf( mlEffectId, lParameter, mfAirAbsorptionGainHF));
 
-	
+
 }
 
 void cOAL_Effect_Reverb::SetHFReference (float afHFReference)
@@ -481,7 +481,7 @@ void cOAL_Effect_Reverb::SetHFReference (float afHFReference)
 
 	ClampValue(&mfHFReference, 1000.0f, 20000.0f);
 
-	mbNeedsUpdate = true; 
+	mbNeedsUpdate = true;
 
 	Unlock();
 
@@ -507,7 +507,7 @@ void cOAL_Effect_Reverb::SetLFReference (float afLFReference)
 
 	ClampValue(&mfLFReference, 20.0f, 1000.0f);
 
-	mbNeedsUpdate = true; 
+	mbNeedsUpdate = true;
 
 	Unlock();
 
@@ -531,7 +531,7 @@ void cOAL_Effect_Reverb::SetRoomRolloffFactor (float afRoomRolloffFactor)
 	mfRoomRolloffFactor = afRoomRolloffFactor;
 	ClampValue(&mfRoomRolloffFactor, 0.0f, 1.0f);
 
-	mbNeedsUpdate = true; 
+	mbNeedsUpdate = true;
 
 	Unlock();
 
@@ -553,7 +553,7 @@ void cOAL_Effect_Reverb::SetDecayHFLimit (ALboolean abDecayHFLimit)
 	Lock();
 
 	mbDecayHFLimit = abDecayHFLimit;
-	
+
 	ALuint lParameter = (mbEAXReverb? AL_EAXREVERB_DECAY_HFLIMIT : AL_REVERB_DECAY_HFLIMIT);
 
 	RUN_AL_FUNC( alEffectf( mlEffectId, lParameter, mbDecayHFLimit));

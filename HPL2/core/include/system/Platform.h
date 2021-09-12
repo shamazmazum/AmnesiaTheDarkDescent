@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -58,7 +58,7 @@ namespace hpl {
 		static bool FolderExists(const tWString& asPath);
 		static tWString GetFullFilePath(const tWString& asFilePath);
 		static FILE *OpenFile(const tWString& asFileName, const tWString asMode);
-		
+
 		static cDate FileModifiedDate(const tWString& asFilePath);
 		static cDate FileCreationDate(const tWString& asFilePath);
 
@@ -83,7 +83,7 @@ namespace hpl {
 
         static tString GetDataDir();
 		static tWString GetWorkingDir();
-		
+
 
 		//////////////////////////////////////////////////////
 		////////// APPLICATION ///////////////////////////////
@@ -95,13 +95,13 @@ namespace hpl {
 		//////////////////////////////////////////////////////
 		////////// DIALOG ////////////////////////////////////
 		//////////////////////////////////////////////////////
-		
+
 		static void CreateMessageBox( eMsgBoxType eType, const wchar_t* asCaption, const wchar_t* fmt, ...);
 		static void CreateMessageBox( const wchar_t* asCaption, const wchar_t* fmt, ...);
 		static void CreateMessageBox( const wchar_t* asCaption, const wchar_t *fmt, va_list ap);
 		static void CreateMessageBox( eMsgBoxType eType, const wchar_t* asCaption, const wchar_t *fmt, va_list ap);
 
-		
+
 		//////////////////////////////////////////////////////
 		////////// SYSTEM DATA //////////////////////////////
 		//////////////////////////////////////////////////////
@@ -110,7 +110,7 @@ namespace hpl {
 		static const tString& GetPlatformName() { return msName; }
 
 		static iTimer * CreateTimer();
-		
+
 		static cDate GetDate();
 
 		static void CopyTextToClipboard(const tWString &asText);
@@ -121,7 +121,7 @@ namespace hpl {
 		static unsigned long GetSystemAvailableDrives();
 
 		static void GetAvailableVideoModes(tVideoModeVec& avDestVidModes, int alMinBpp=-1, int alMinRefreshRate=-1);
-		
+
 		static tWString GetDisplayName(int alDisplay);
 
 		static void GetDisplayResolution(int alDisplay, int& alHorizontal, int& alVertical);
@@ -129,7 +129,7 @@ namespace hpl {
 		//////////////////////////////////////////////////////
 		////////// SYSTEM COMMANDS ///////////////////////////
 		//////////////////////////////////////////////////////
-		
+
 		static void OpenBrowserWindow ( const tWString& asURL );
 
 		static bool RunProgram( const tWString& asPath, const tWString& asParams );
@@ -143,7 +143,7 @@ namespace hpl {
 		static iThread* CreateThread(iThreadClass* apThreadClass);
 
 		static iMutex* CreateMutEx(); // If you name this method CreateMutex strange stuff will happen :S
-	
+
 	private:
         static void CreateMessageBoxBase(eMsgBoxType eType, const wchar_t* asCaption, const wchar_t* fmt, va_list ap);
 

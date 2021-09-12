@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -36,13 +36,13 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////////
 
     //---------------------------------------------
-	
+
 	class iFrameBuffer;
 	class iDepthStencilBuffer;
 	class iTexture;
 	class iLight;
 	class cSubMeshEntity;
-	
+
 	//---------------------------------------------
 
 	enum eDeferredLightList
@@ -98,9 +98,9 @@ namespace hpl {
 		eGBufferComponents_LinearDepth,
 		eGBufferComponents_LastEnum,
 	};
-	
+
 	//---------------------------------------------
-	
+
 	class cDeferredLight
 	{
 	public:
@@ -120,13 +120,13 @@ namespace hpl {
 	};
 
 	//---------------------------------------------
-	
+
 	class cRendererDeferred : public  iRenderer
 	{
 	public:
 		cRendererDeferred(cGraphics *apGraphics,cResources* apResources);
 		~cRendererDeferred();
-		
+
 		bool LoadData();
 		void DestroyData();
 
@@ -162,7 +162,7 @@ namespace hpl {
 		static void SetSSAOType(eDeferredSSAO aType) {mSSAOType = aType;}
 		static void SetSSAODepthDiffMul(float afX){ mfSSAODepthDiffMul = afX;}
 		static void SetSSAOSkipEdgeLimit(float afX){mfSSAOSkipEdgeLimit = afX;}
-		
+
 		static bool GetSSAOLoaded(){ return mbSSAOLoaded;}
 		static int GetSSAONumOfSamples(){ return mlSSAONumOfSamples;}
 		static int GetSSAOBufferSizeDiv(){ return mlSSAOBufferSizeDiv;}
@@ -172,7 +172,7 @@ namespace hpl {
 		static eDeferredSSAO GetSSAOType() {return mSSAOType;}
 		static float GetSSAODepthDiffMul(){ return mfSSAODepthDiffMul;}
 		static float GetSSAOSkipEdgeLimit(){ return mfSSAOSkipEdgeLimit;}
-		
+
 		static void SetEdgeSmoothLoaded(bool abX){ mbEdgeSmoothLoaded = abX;}
 		static bool GetEdgeSmoothLoaded(){ return mbEdgeSmoothLoaded;}
 
@@ -181,7 +181,7 @@ namespace hpl {
 
 		static void SetDebugRenderFrameBuffers(bool abX){ mbDebugRenderFrameBuffers = abX;}
 		static bool GetDebugRenderFrameBuffers(){ return mbDebugRenderFrameBuffers;}
-	
+
 	private:
 		void CopyToFrameBuffer();
 		void SetupRenderList();
@@ -197,7 +197,7 @@ namespace hpl {
 		void RenderSSAO();
 		void RenderEdgeSmooth();
 		void RenderDeferredSkyBox();
-		
+
 		void SetupLightsAndRenderQueries();
 		void InitLightRendering();
 		void RenderLights();
@@ -207,7 +207,7 @@ namespace hpl {
 		void RenderLights_Batches();
 		void RenderLights_Box_StencilFront_RenderBack();
 		void RenderLights_Box_RenderBack();
-        
+
 		void RenderIllumination();
 
 		void RenderReflection(iRenderable *apObject);
@@ -217,39 +217,39 @@ namespace hpl {
 		void RenderFullScreenFog();
 		void RenderFog();
 		void RenderTranslucent();
-		
+
 		void SetAccumulationBuffer();
 		void SetGBuffer(eGBufferComponents aComponents);
 		iTexture* GetBufferTexture(int alIdx);
-		
-		
+
+
 		void RenderGbufferContent();
 		void RenderReflectionContent();
 
 		////////////////
 		//Draw helpers
 		void RenderBoxLight(cDeferredLight* apLightData);
-		
+
 		////////////////
 		//Misc Helpers
 		void RenderLightShadowMap(cDeferredLight* apLightData);
 		void SetupLightProgramVariables(iGpuProgram *apProgram, cDeferredLight* apLightData);
 		iGpuProgram* SetupProgramAndTextures(cDeferredLight* apLightData, tFlag alExtraFlags);
 		iVertexBuffer* GetLightShape(iLight *apLight, eDeferredShapeQuality aQuality);
-		
-		
+
+
 		iVertexBuffer *mpShapeSphere[eDeferredShapeQuality_LastEnum];
 		iVertexBuffer *mpShapePyramid;
-		
+
 		iVertexBuffer *mpBatchBuffer;
 		int mlMaxBatchLights;
 		int mlMaxBatchVertices;
 		int mlMaxBatchIndices;
-		
+
 		iVertexBuffer *mpFullscreenLightQuad;
 		float mfLastFrustumFOV;
 		float mfLastFrustumFarPlane;
-		
+
 		float mfFarPlane;
 		float mfFarBottom;
 		float mfFarTop;
@@ -262,25 +262,25 @@ namespace hpl {
 		int mlMinLargeLightArea;
 
 		float mfMinRenderReflectionNormilzedLength;
-		
+
 		float mfShadowDistanceMedium;
 		float mfShadowDistanceLow;
 		float mfShadowDistanceNone;
 
 		bool mbStencilNeedClearing;
 		cRect2l mStencilDirtyRect;
-		
+
 		iFrameBuffer *mpGBuffer[2][eGBufferComponents_LastEnum]; //[2] = reflection or not
-		
+
 		iFrameBuffer *mpAccumBuffer;
 		iFrameBuffer *mpReflectionBuffer;
-		
+
 		iTexture *mpGBufferTexture[2][4];	//[2] = reflection or not
 		iTexture *mpAccumBufferTexture;
 		iTexture *mpRefractionTexture;
 		iTexture *mpReflectionTexture;
 		iDepthStencilBuffer* mpDepthStencil[2];	//[2] = reflection or not
-		
+
 
 		bool mbReflectionTextureCleared;
 
@@ -313,14 +313,14 @@ namespace hpl {
 		std::vector<cDeferredLight*> mvTempDeferredLights;
 		std::vector<cDeferredLight*> mvSortedLights[eDeferredLightList_LastEnum];
 
-		iGpuProgram *mpSkyBoxProgram; 
+		iGpuProgram *mpSkyBoxProgram;
 		iGpuProgram *mpLightStencilProgram;
 		iGpuProgram *mpLightBoxProgram[2];//1=SSAO used, 0=no SSAO
 
 		cProgramComboManager* mpFogProgramManager;
-		
+
 		cMatrixf m_mtxTempLight;
-		
+
 		//Static setting variables
 		static eDeferredGBuffer mGBufferType;
 		static int mlNumOfGBufferTextures;

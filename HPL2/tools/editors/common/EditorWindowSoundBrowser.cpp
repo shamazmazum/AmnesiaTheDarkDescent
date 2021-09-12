@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -39,9 +39,9 @@
 
 //----------------------------------------------------------------------------------------
 
-cEditorWindowSoundBrowser::cEditorWindowSoundBrowser(iEditorBase* apEditor, 
-													 const tWString& asStartDir, 
-													 tWString& asFilename, 
+cEditorWindowSoundBrowser::cEditorWindowSoundBrowser(iEditorBase* apEditor,
+													 const tWString& asStartDir,
+													 tWString& asFilename,
 													 void* apCallbackObject, tGuiCallbackFunc apCallback) : iEditorWindowPopUp(apEditor, "Sound Browser",true,true,true, cVector2f(570,430)),
 																							iFileBrowser(asFilename.empty()?asStartDir : cString::GetFilePathW(asFilename)),
 																							msFilename(asFilename)
@@ -86,18 +86,18 @@ void cEditorWindowSoundBrowser::OnInitLayout()
 	mpWindow->AddCallback(eGuiMessage_OnUpdate, this, kGuiCallback(Window_OnUpdate));
 
 	cVector3f vPos = cVector3f(15,30,0.1f);
-	
+
 	mpCBCurrentDirectory = mpSet->CreateWidgetComboBox(vPos-cVector3f(1,0,0), cVector2f(200,25), _W(""), mpWindow);
 	mpCBCurrentDirectory->SetCanEdit(false);
 	mpCBCurrentDirectory->AddCallback(eGuiMessage_SelectionChange, this, kGuiCallback(CurrentDirectory_OnSelectionChange));
 
 	vPos.y += mpCBCurrentDirectory->GetSize().y + 5;
 
-	// File ListBox        
+	// File ListBox
 	mpLBFiles = mpSet->CreateWidgetMultiPropertyListBox(vPos,cVector2f(540,300),mpWindow);
 
-	mpLBFiles->AddCallback(eGuiMessage_SelectionChange, this, kGuiCallback(FileList_OnClick)); 
-	mpLBFiles->AddCallback(eGuiMessage_SelectionDoubleClick, this, kGuiCallback(FileList_OnDblClick)); 
+	mpLBFiles->AddCallback(eGuiMessage_SelectionChange, this, kGuiCallback(FileList_OnClick));
+	mpLBFiles->AddCallback(eGuiMessage_SelectionDoubleClick, this, kGuiCallback(FileList_OnDblClick));
 	mpLBFiles->SetBackgroundZ(-0.01f);
 	mpLBFiles->AddColumn("",0);
 	mpLBFiles->SetColumnWidth(0,24);
@@ -132,7 +132,7 @@ void cEditorWindowSoundBrowser::OnInitLayout()
 	}
 	mvButtons[0]->SetText(_W("Load"));
 	mvButtons[1]->SetText(_W("Cancel"));
-	
+
 	mvGfxTypes[0] = mpSkin->GetGfx(eGuiSkinGfx_FilePickerIconFolder);
 	mvGfxTypes[1] = mpSkin->GetGfx(eGuiSkinGfx_FilePickerIconSounds);
 
@@ -210,7 +210,7 @@ bool cEditorWindowSoundBrowser::Window_OnUpdate(iWidget* apWidget, const cGuiMes
 		else
 			mpBPlayStop->SetImage(mvGfxButtons[1]);
 	}
-	
+
 	return true;
 }
 kGuiCallbackDeclaredFuncEnd(cEditorWindowSoundBrowser, Window_OnUpdate);
@@ -223,7 +223,7 @@ bool cEditorWindowSoundBrowser::CurrentDirectory_OnSelectionChange(iWidget* apWi
 	int lSelection = mpCBCurrentDirectory->GetSelectedItem();
 
 	tWString sDir;
-	
+
 	////////////////////////////////////////
 	// If selection is not last item, remove items from selection onwards, then navigate to selection
 	if(lSelection != lNumItems-1)
@@ -235,7 +235,7 @@ bool cEditorWindowSoundBrowser::CurrentDirectory_OnSelectionChange(iWidget* apWi
 
 		NavigateTo(sDir);
 	}
-	
+
 	return true;
 }
 kGuiCallbackDeclaredFuncEnd(cEditorWindowSoundBrowser, CurrentDirectory_OnSelectionChange);
@@ -282,7 +282,7 @@ void cEditorWindowSoundBrowser::PopulateFileList()
 		cWidgetItem* pItem = mpLBFiles->AddItem();
 		if(sFilenameFullPath==msFilename)
 			lSelectedItem = i;
-        
+
 		eFileBrowserFileType type = GetFileTypeByName(sFilename);
 		cGuiGfxElement* pGfx = NULL;
 		tWString sFileDate = cString::To16Char(cPlatform::FileModifiedDate(sFilenameFullPath).ToString());
@@ -304,7 +304,7 @@ void cEditorWindowSoundBrowser::PopulateFileList()
 	}
 	if(lSelectedItem!=-1)
 		mpLBFiles->SetSelectedItem(lSelectedItem, true, true);
-		
+
 }
 
 //----------------------------------------------------------------------------------------
@@ -317,10 +317,10 @@ bool cEditorWindowSoundBrowser::FileList_OnClick(iWidget* apWidget, const cGuiMe
 	int lSelection = mpLBFiles->GetSelectedItem();
 
 	tWString sPath = _W("");
-	if(lSelection != -1) 
+	if(lSelection != -1)
 	{
 		cWidgetItem* pItem = (cWidgetItem*)mpLBFiles->GetItem(lSelection);
-		
+
 		if(pItem)
 			// Property 1 : file name
 			sPath = pItem->GetProperty(1)->GetText();

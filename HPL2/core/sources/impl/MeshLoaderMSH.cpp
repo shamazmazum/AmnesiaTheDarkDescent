@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -44,11 +44,11 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// PUBLIC DATA
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	bool gbLogMSHLoad = false;
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -100,7 +100,7 @@ namespace hpl {
 		// Header
 		int lMagicNum = binBuff.GetInt32();
 		int lVersion = binBuff.GetInt32();
-		
+
 		//Check magic number
 		if(lMagicNum != MSH_FORMAT_MAGIC_NUMBER)
 		{
@@ -122,7 +122,7 @@ namespace hpl {
 		bool bSkeleton = binBuff.GetBool();
 
 		if(gbLogMSHLoad) Log("General: %d %d %d\n", lSubMeshNum, lAnimationNum, bSkeleton);
-		
+
 		// Create the mesh
 		tString sMeshName = cString::GetFileName(cString::To8Char(asFile));
 		cMesh* pMesh = hplNew( cMesh, (sMeshName, asFile,mpMaterialManager,mpAnimationManager) );
@@ -132,7 +132,7 @@ namespace hpl {
 		if(bSkeleton)
 		{
 			cSkeleton* pSkeleton = hplNew( cSkeleton, () );
-            
+
 			int lRootChildNum = binBuff.GetInt32();
 			for(int i=0; i<lRootChildNum; ++i)
 			{
@@ -146,7 +146,7 @@ namespace hpl {
 		// Nodes
 		{
 			cNode3D *pRootNode = pMesh->GetRootNode();
-			
+
 			int lRootChildNum = binBuff.GetInt32();
 			if(gbLogMSHLoad) Log("Nodes num: %d\n", lRootChildNum);
 
@@ -155,7 +155,7 @@ namespace hpl {
 				GetNodeFromBuffer(pRootNode, pMesh, &binBuff, 0);
 			}
 		}
-		
+
 		/////////////////////////////////////////////////
 		// Sub Meshes
 		for(int sub=0; sub<lSubMeshNum; ++sub)
@@ -171,7 +171,7 @@ namespace hpl {
             binBuff.GetMatrixf(&mtxTransform);
 			binBuff.GetVector3f(&vModelScale);
 			bool bCollideShape = binBuff.GetBool();
-						
+
 			//Create sub mesh and set up data
 			cSubMesh *pSubMesh = pMesh->CreateSubMesh(sName);
 
@@ -202,7 +202,7 @@ namespace hpl {
 				int lColliderNum = binBuff.GetInt32();
 
 				if(gbLogMSHLoad) Log(" Colliders: %d\n",lColliderNum);
-				
+
 				for(int i=0; i<lColliderNum; ++i)
 				{
 					eCollideShapeType type = (eCollideShapeType)binBuff.GetShort16();
@@ -212,7 +212,7 @@ namespace hpl {
 					binBuff.GetVector3f(&pCollider->mvSize);
 					pCollider->mbCharCollider = binBuff.GetBool();
 
-					if(gbLogMSHLoad) Log("  Collider%d: %d %s %s %d\n",i,	type, pCollider->m_mtxOffset.ToString().c_str(), 
+					if(gbLogMSHLoad) Log("  Collider%d: %d %s %s %d\n",i,	type, pCollider->m_mtxOffset.ToString().c_str(),
 																			pCollider->mvSize.ToString().c_str(), pCollider->mbCharCollider);
 				}
 			}
@@ -234,7 +234,7 @@ namespace hpl {
 				}
 			}
 
-						
+
 			////////////////////
 			// Vertex data
 			iVertexBuffer* pVtxBuff = mpLowLevelGraphics->CreateVertexBuffer(	eVertexBufferType_Hardware, eVertexBufferDrawType_Tri,
@@ -242,9 +242,9 @@ namespace hpl {
 			{
 				int lVtxNum = binBuff.GetInt32();
 				int lVtxTypeNum = binBuff.GetInt32();
-				
+
 				if(gbLogMSHLoad) Log(" VertexBuffers num: %d typenum: %d\n",lVtxNum, lVtxTypeNum);
-				
+
 				////////////////////
 				// Get vertex arrays
 				for(int i=0; i< lVtxTypeNum; ++i)
@@ -260,7 +260,7 @@ namespace hpl {
 					//Create the array
 					pVtxBuff->CreateElementArray(arrayType, elementFormat, lElementNum, lProgramVarIndex);
 					pVtxBuff->ResizeArray(arrayType, lVtxNum * lElementNum);
-					
+
 					//Get and fill the array data
 					void *pData = GetVertexBufferWithFormat(pVtxBuff, arrayType, elementFormat);
 					GetBinaryBufferDataWithFormat(&binBuff, pData, (size_t)(lVtxNum * lElementNum), elementFormat);
@@ -278,7 +278,7 @@ namespace hpl {
 				binBuff.GetInt32Array((int*)pVtxBuff->GetIndices(), lIdxNum);
 			}
 
-			
+
 			///////////////////
 			//Compile vertex buffer and set to submesh
 			pVtxBuff->Compile(0);
@@ -304,7 +304,7 @@ namespace hpl {
 				pMesh->AddAnimation(pAnim);
 			}
 		}
-	
+
 
 		return pMesh;
 	}
@@ -321,7 +321,7 @@ namespace hpl {
 		// Header
         binBuff.AddInt32(MSH_FORMAT_MAGIC_NUMBER);
 		binBuff.AddInt32(MSH_FORMAT_VERSION);
-		
+
 		////////////////////////////////////////
 		// General Data
 		binBuff.AddInt32(apMesh->GetSubMeshNum());
@@ -365,11 +365,11 @@ namespace hpl {
 		{
 			cSubMesh* pSubMesh = apMesh->GetSubMesh(sub);
 			iVertexBuffer *pVtxBuff = pSubMesh->GetVertexBuffer();
-			
+
 			////////////////////////////
 			//Add variables
 			binBuff.AddString(pSubMesh->GetName());
-			
+
 			binBuff.AddString(pSubMesh->GetMaterialName());
 			binBuff.AddMatrixf(pSubMesh->GetLocalTransform());
 			binBuff.AddVector3f(pSubMesh->GetModelScale());
@@ -394,7 +394,7 @@ namespace hpl {
 					binBuff.AddVector3f(pCollider->mvSize);
 					binBuff.AddBool(pCollider->mbCharCollider);
 
-					if(gbLogMSHLoad) Log("  Collider%d: %d %s %s %d\n",i, pCollider->mType, pCollider->m_mtxOffset.ToString().c_str(), 
+					if(gbLogMSHLoad) Log("  Collider%d: %d %s %s %d\n",i, pCollider->mType, pCollider->m_mtxOffset.ToString().c_str(),
 																		pCollider->mvSize.ToString().c_str(), pCollider->mbCharCollider);
 				}
 			}
@@ -429,9 +429,9 @@ namespace hpl {
 					if(pVtxBuff->GetElementNum((eVertexBufferElement)i) > 0) ++lVtxTypeNum;
 				}
 				binBuff.AddInt32(lVtxTypeNum);
-				
+
 				if(gbLogMSHLoad) Log(" VertexBuffers num: %d typenum: %d\n",lVtxNum, lVtxTypeNum);
-			
+
 				//////////////////////////////
 				// Iterate the Vertices
 				for(int i=0; i < eVertexBufferElement_LastEnum;i++)
@@ -442,7 +442,7 @@ namespace hpl {
 
 					int lElementNum = pVtxBuff->GetElementNum(arrayType);
 					eVertexBufferElementFormat elementFormat = pVtxBuff->GetElementFormat(arrayType);
-					
+
 					binBuff.AddShort16(arrayType);
 					binBuff.AddShort16(elementFormat);
 					binBuff.AddInt32(pVtxBuff->GetElementProgramVarIndex(arrayType));
@@ -467,7 +467,7 @@ namespace hpl {
 			}
 		}
 
-		
+
 		////////////////////////////
 		// Animations
 		{
@@ -479,15 +479,15 @@ namespace hpl {
 				AddAnimation(apMesh->GetAnimation(i), &binBuff);
 			}
 		}
-		
+
 		////////////////////////////
 		// Save data
 		bool bRet = binBuff.Save();
 		if(bRet==false) 	Error("Couldn't save mesh to '%s'", cString::To8Char(asFile).c_str());
-		
+
 		return bRet;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cAnimation* cMeshLoaderMSH::LoadAnimation(const tWString& asFile)
@@ -524,10 +524,10 @@ namespace hpl {
 		/////////////////////////////////////////////////
 		// Animation
 		cAnimation *pAnimation = GetAnimation(&binBuff, asFile);
-		
+
 		return pAnimation;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	bool cMeshLoaderMSH::SaveAnimation(cAnimation* apAnimation, const tWString& asFile)
@@ -591,7 +591,7 @@ namespace hpl {
 			{
 				cKeyFrame *pFrame = pTrack->GetKeyFrame(frame);
 
-				//if(gbLogMSHLoad) Log("   Frame%d (%s) (%s, %f) %f\n",	frame, pFrame->trans.ToString().c_str(), 
+				//if(gbLogMSHLoad) Log("   Frame%d (%s) (%s, %f) %f\n",	frame, pFrame->trans.ToString().c_str(),
 				//														pFrame->rotation.v.ToString().c_str(), pFrame->rotation.w, pFrame->time);
 
                 apBuffer->AddFloat32(pFrame->time);
@@ -600,7 +600,7 @@ namespace hpl {
 			}
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cAnimation* cMeshLoaderMSH::GetAnimation(cBinaryBuffer* apBuffer, const tWString &asFullPath)
@@ -611,7 +611,7 @@ namespace hpl {
 		apBuffer->GetString(&sAnimName);
 		float fLength = apBuffer->GetFloat32();
 		int lTrackNum = apBuffer->GetInt32();
-		
+
 		cAnimation *pAnimation = hplNew(cAnimation, (cString::To8Char(asFullPath), asFullPath, cString::GetFileName(cString::To8Char(asFullPath))));
 		pAnimation->SetLength(fLength);
 
@@ -630,7 +630,7 @@ namespace hpl {
 			int lFrameNum = apBuffer->GetInt32();
 
 			cAnimationTrack *pTrack = pAnimation->CreateTrack(sTrackName,transFlag);
-			
+
 			if(gbLogMSHLoad) Log("  Track %d %s: %d %d\n", track, pTrack->GetName().c_str(), pTrack->GetTransformFlags(), lFrameNum);
 
 			/////////////////////////
@@ -641,8 +641,8 @@ namespace hpl {
 
 				apBuffer->GetVector3f(&pFrame->trans);
 				apBuffer->GetQuaternion(&pFrame->rotation);
-				
-				//if(gbLogMSHLoad) Log("   Frame%d (%s) (%s, %f) %f\n",	frame, pFrame->trans.ToString().c_str(), 
+
+				//if(gbLogMSHLoad) Log("   Frame%d (%s) (%s, %f) %f\n",	frame, pFrame->trans.ToString().c_str(),
 				//														pFrame->rotation.v.ToString().c_str(), pFrame->rotation.w, pFrame->time);
 
 			}
@@ -652,7 +652,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	static tString gsLevelTemp = "";
 	const char* GetLevelSpaces(int alLevel)
 	{
@@ -668,10 +668,10 @@ namespace hpl {
 		apBuffer->AddString(apNode->GetName());
 		apBuffer->AddMatrixf(apNode->GetLocalMatrix());
 		apBuffer->AddInt32(apNode->GetCustomFlags());
-		
+
 		apBuffer->AddInt32((int)apNode->GetChildList()->size());
-		
-		if(gbLogMSHLoad) Log("%s Node '%s' %d %d (%s)\n",	GetLevelSpaces(alLevel), apNode->GetName().c_str(),apNode->GetCustomFlags(), 
+
+		if(gbLogMSHLoad) Log("%s Node '%s' %d %d (%s)\n",	GetLevelSpaces(alLevel), apNode->GetName().c_str(),apNode->GetCustomFlags(),
 															apNode->GetChildList()->size(), apNode->GetLocalMatrix().ToString().c_str());
 
 		cNode3DIterator nodeIt = apNode->GetChildIterator();
@@ -702,7 +702,7 @@ namespace hpl {
 		pNode->SetMatrix(mtxTransform);
 		pNode->SetCustomFlags(lCustomFlags);
 
-		if(gbLogMSHLoad) Log("%s Node '%s' %d %d (%s)\n",	GetLevelSpaces(alLevel), pNode->GetName().c_str(), pNode->GetCustomFlags(), 
+		if(gbLogMSHLoad) Log("%s Node '%s' %d %d (%s)\n",	GetLevelSpaces(alLevel), pNode->GetName().c_str(), pNode->GetCustomFlags(),
 															lChildNum, pNode->GetLocalMatrix().ToString().c_str());
 
 		///////////////////////////////
@@ -721,7 +721,7 @@ namespace hpl {
 		apBuffer->AddMatrixf(apBone->GetLocalTransform());
 		apBuffer->AddInt32((int)apBone->GetChildList()->size());
 
-		if(gbLogMSHLoad) Log("%s Bone '%s' '%s' %d (%s)\n",	GetLevelSpaces(alLevel), apBone->GetName().c_str(), apBone->GetSid().c_str(), 
+		if(gbLogMSHLoad) Log("%s Bone '%s' '%s' %d (%s)\n",	GetLevelSpaces(alLevel), apBone->GetName().c_str(), apBone->GetSid().c_str(),
 															apBone->GetChildList()->size(), apBone->GetLocalTransform().ToString().c_str());
 
 		cBoneIterator boneIt = apBone->GetChildIterator();
@@ -730,7 +730,7 @@ namespace hpl {
 			AddBoneToBuffer(boneIt.Next(), apBuffer, alLevel+1);
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cMeshLoaderMSH::GetBoneFromBuffer(cBone *apParentBone, cBinaryBuffer* apBuffer, int alLevel)
@@ -745,8 +745,8 @@ namespace hpl {
 
 		cBone *pBone = apParentBone->CreateChildBone(sName, sSid);
 		pBone->SetTransform(mtxTransform);
-		
-		if(gbLogMSHLoad) Log("%s Bone '%s' '%s' %d (%s)\n",	GetLevelSpaces(alLevel), pBone->GetName().c_str(), pBone->GetSid().c_str(), 
+
+		if(gbLogMSHLoad) Log("%s Bone '%s' '%s' %d (%s)\n",	GetLevelSpaces(alLevel), pBone->GetName().c_str(), pBone->GetSid().c_str(),
 															lChildNum, pBone->GetLocalTransform().ToString().c_str());
 
         for(int i=0; i<lChildNum; ++i)
@@ -765,13 +765,13 @@ namespace hpl {
 		case eVertexBufferElementFormat_Float:		return (void*)apVtxBuffer->GetFloatArray(aElement);
 		case eVertexBufferElementFormat_Byte:		return (void*)apVtxBuffer->GetByteArray(aElement);
 		}
-		
+
 		Error("Vertex buffer has incorrect format when getting vertexbuffer data during loading of MSH file!\n");
 		return NULL;
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	void cMeshLoaderMSH::AddBinaryBufferDataWithFormat(cBinaryBuffer* apBuffer, void *apSrcData, size_t alSize, eVertexBufferElementFormat aFormat)
 	{
 		switch(aFormat)
@@ -782,7 +782,7 @@ namespace hpl {
 		case eVertexBufferElementFormat_Float:
 			apBuffer->AddFloat32Array((float*)apSrcData, alSize);
 			break;
-		case eVertexBufferElementFormat_Byte:		
+		case eVertexBufferElementFormat_Byte:
 			apBuffer->AddCharArray((char*)apSrcData, alSize);
 			break;
 		default:
@@ -790,7 +790,7 @@ namespace hpl {
 			break;
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cMeshLoaderMSH::GetBinaryBufferDataWithFormat(cBinaryBuffer* apBuffer, void *apDestData, size_t alSize, eVertexBufferElementFormat aFormat)
@@ -803,7 +803,7 @@ namespace hpl {
 		case eVertexBufferElementFormat_Float:
 			apBuffer->GetFloat32Array((float*)apDestData, alSize);
 			break;
-		case eVertexBufferElementFormat_Byte:		
+		case eVertexBufferElementFormat_Byte:
 			apBuffer->GetCharArray((char*)apDestData, alSize);
 			break;
 		default:

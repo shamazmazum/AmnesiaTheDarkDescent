@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -50,7 +50,7 @@ cCamControllerPE::cCamControllerPE(cEdCamera* apCam) : iCamController(apCam, _W(
 
 bool cCamControllerPE::OnViewportMouseDown(const cViewportClick& aClick)
 {
-	if(aClick.mbLeft) 
+	if(aClick.mbLeft)
 		mbOrbiting = true;
 	if(aClick.mbMid)
 		mbTracking = true;
@@ -68,13 +68,13 @@ bool cCamControllerPE::OnViewportMouseDown(const cViewportClick& aClick)
 
 bool cCamControllerPE::OnViewportMouseUp(const cViewportClick& aClick)
 {
-	if(aClick.mbLeft) 
+	if(aClick.mbLeft)
 		mbOrbiting = false;
 	if(aClick.mbMid)
 		mbTracking = false;
 	if(aClick.mbRight)
 		mbZooming = false;
-	
+
 
 	return aClick.mbLeft || aClick.mbMid;
 }
@@ -110,11 +110,11 @@ void cCamControllerPE::OnUpdate(const cViewportClick& aData)
 		cVector3f vNewTargetPosition;
 
 		cCamera* pEngCam = mpCam->GetEngineCamera();
-		cVector3f vDisplacement = (pEngCam->GetUp()*vMouseRel.y + 
+		cVector3f vDisplacement = (pEngCam->GetUp()*vMouseRel.y +
 									pEngCam->GetRight()*(-vMouseRel.x));
 		vNewTargetPosition = vTargetPosition + vDisplacement;
 
-		mpCam->SetTargetPosition(vNewTargetPosition);	
+		mpCam->SetTargetPosition(vNewTargetPosition);
 		mpCam->SetCameraPosition(vNewTargetPosition-vOffset);
 	}
 	if(mbZooming)
@@ -141,13 +141,13 @@ void cCamControllerPE::OnUpdate(const cViewportClick& aData)
 
 //----------------------------------------------------------------
 
-cEdPEViewport::cEdPEViewport(iEditor* apEditor, iFrameBuffer* apFB): iEdViewport(apEditor, _W("Edition"), 
+cEdPEViewport::cEdPEViewport(iEditor* apEditor, iFrameBuffer* apFB): iEdViewport(apEditor, _W("Edition"),
 																				apEditor->GetWorld()->GetEngWorld(),
 																				apFB)
 {
 	mbDrawGrid = true;
 	mbDrawDebug = false;
-	mbDrawAxes = false; 
+	mbDrawAxes = false;
 
 	mpCamera->AddCamMode(hplNew(cCamModePE,(mpCamera)));
 	mpGrid->SetPlaneNormal(ePlaneNormal_Y);
@@ -351,11 +351,11 @@ void cEdPEViewport::OnCreateLayout()
 	/////////////////////////////////////////////
 	// Gfx Init
 	mpGfxRedFrame = mpSet->GetGui()->CreateGfxFilledRect(cColor(1,1,1,1), eGuiMaterial_Diffuse);
-	
+
 	mpGfxPointerTumble = mpSet->GetGui()->CreateGfxImage("gui_def_pointer_tumble.tga",eGuiMaterial_Alpha);
 	mpGfxPointerTrack = mpSet->GetGui()->CreateGfxImage("gui_def_pointer_track.tga",eGuiMaterial_Alpha);
 	mpGfxPointerZoom = mpSet->GetGui()->CreateGfxImage("gui_def_pointer_zoom.tga",eGuiMaterial_Alpha);
-	
+
 	/////////////////////////////////////////////
 	// Layout init
 	cWidgetFrame* pFrame = static_cast<cWidgetFrame*>(GetBG());
@@ -363,7 +363,7 @@ void cEdPEViewport::OnCreateLayout()
 
 	mpPresetLabel = mpSet->CreateWidgetLabel(cVector3f(5,5,1),0,_W(""), GetBG());
 	mpPresetLabel->SetDefaultFontColor(cColor(1,1));
-	
+
 	// Render view init
 	CreateGuiViewport(GetBG());
 	SetGuiViewportPos(cVector3f(0,0,0.05f));

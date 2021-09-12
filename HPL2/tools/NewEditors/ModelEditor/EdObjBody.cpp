@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -51,7 +51,7 @@ cTypeBody::cTypeBody() : iBaseAggregateType(_W("Body"), "Body", "Shape")
 	AddBool(eBodyBool_UseSurfaceEffects, "UseSurfaceEffects", true);
 	AddBool(eBodyBool_HasGravity, "HasGravity", true);
 
-	
+
 	AddAttachableType(_W("Light"));
 	AddAttachableType(_W("Billboard"));
 	AddAttachableType(_W("Sound"));
@@ -82,7 +82,7 @@ void cEdObjBodyData::CopyFromObject(iEdObject* apObj)
 
 	mvParentJointIDs.clear();
 	mvChildJointIDs.clear();
-	
+
 	const tEdJointVec& vParentJoints = pBody->GetParentJoints();
 	for(size_t i=0;i<vParentJoints.size();++i)
 	{
@@ -96,7 +96,7 @@ void cEdObjBodyData::CopyFromObject(iEdObject* apObj)
 		iEdObjJoint* pJoint = vChildJoints[i];
 		mvChildJointIDs.push_back(pJoint->GetID());
 	}
-	
+
 }
 
 //---------------------------------------------------------------------------
@@ -139,7 +139,7 @@ iEdObject* cEdObjBodyData::CreateTypeSpecificObject()
 //---------------------------------------------------------------------------
 
 cEdObjBody::cEdObjBody(iEdObjectData* apData) : iBaseAggregateObject(apData)
-												
+
 {
 	mfAngularDamping = 0;
 	mfLinearDamping = 0;
@@ -346,7 +346,7 @@ void cEdObjBody::Draw(iEdViewport* apViewport, cRendererCallbackFunctions* apFun
 			//apFunctions->GetLowLevelGfx()->DrawBoxMinMax(pShape->GetPickBV()->GetMin(), pShape->GetPickBV()->GetMax(), cColor(1));
 			pShape->Draw(apViewport, apFunctions, apEditMode, true, cColor(1,1,1,1));
 		}
-		
+
 		apFunctions->SetMatrix(NULL);
 		apFunctions->GetLowLevelGfx()->DrawSphere(mvPosition, 0.2f, cColor(1,0,0,1));
 	}
@@ -404,7 +404,7 @@ void cEdObjBody::RemoveJoint(iEdObjJoint* apJoint, bool abModifyJoint)
 		{
 			vJoints.erase(it);
 			RemoveJointHelper(apJoint, abModifyJoint);
-			
+
 			break;
 		}
 	}
@@ -457,7 +457,7 @@ void cEdObjBody::AddToOutlineSpecific(cWidgetListBox* apList, int alLevel, tScnO
 	for(;it!=mlstComponents.end();++it)
 	{
 		iEdScnObject* pShape = *it;
-		pShape->AddToOutline(apList, alLevel+1, alstAddedChildren); 
+		pShape->AddToOutline(apList, alLevel+1, alstAddedChildren);
 	}
 }
 
@@ -516,7 +516,7 @@ void cEdObjBody::UpdateComponents()
 	for(;it!=mlstComponents.end(); ++it)
 	{
 		iEdObjShape* pObj = static_cast<iEdObjShape*>(*it);
-		
+
 		cMatrixf mtxRelMatrix = pObj->GetRelativeWorldMatrix(mmtxInvWorldMatrix);
 
 		mlstRelWorldMatrices.push_back(mtxRelMatrix);

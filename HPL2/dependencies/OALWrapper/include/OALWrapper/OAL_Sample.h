@@ -24,7 +24,7 @@
 class cOAL_Sample : public iOAL_AudioData
 {
 public:
-	
+
 	cOAL_Sample();
 	virtual ~cOAL_Sample();
 

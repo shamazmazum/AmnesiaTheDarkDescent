@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -33,7 +33,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	cAnimationState::cAnimationState(cAnimation* apAnimation, const tString &asName,
 									cAnimationManager *apAnimationManager)
 	{
@@ -60,7 +60,7 @@ namespace hpl {
 
 		mfFadeStep=0;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cAnimationState::~cAnimationState()
@@ -91,7 +91,7 @@ namespace hpl {
 		if(mfFadeStep!=0)
 		{
 			mfWeight += mfFadeStep*afTimeStep;
-			
+
 			if(mfFadeStep<0 && mfWeight<=0)
 			{
 				mfWeight =0;
@@ -113,9 +113,9 @@ namespace hpl {
 		return mfFadeStep!=0;
 	}
 
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	bool cAnimationState::IsOver()
 	{
 		if(mbLoop) return false;
@@ -134,14 +134,14 @@ namespace hpl {
 	{
 		mfFadeStep = -1.0f / std::abs(afTime);
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	void cAnimationState::SetLength(float afLength)
 	{
 		mfLength = afLength;
 	}
-	
+
 	float cAnimationState::GetLength()
 	{
 		return mfLength;
@@ -169,7 +169,7 @@ namespace hpl {
 	{
 		return mfSpeed;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cAnimationState::SetBaseSpeed(float afSpeed)
@@ -216,7 +216,7 @@ namespace hpl {
 	{
 		return mfTimePos / mfLength;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	bool cAnimationState::IsActive()
@@ -226,7 +226,7 @@ namespace hpl {
 	void cAnimationState::SetActive(bool abActive)
 	{
 		if(mbActive == abActive) return;
-		
+
 		mbActive = abActive;
 
 		//Should this really be here?
@@ -235,7 +235,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	bool cAnimationState::IsLooping()
 	{
 		return mbLoop;
@@ -248,10 +248,10 @@ namespace hpl {
 	//-----------------------------------------------------------------------
 
 	bool cAnimationState::IsPaused()
-	{	
+	{
 		return mbPaused;
 	}
-	
+
 	void cAnimationState::SetPaused(bool abPaused)
 	{
 		mbPaused = abPaused;
@@ -263,10 +263,10 @@ namespace hpl {
 	{
 		return mfTimePos > mfSpecialEventTime;
 	}
-	
+
 	bool cAnimationState::IsBeforeSpecialEvent()
 	{
-		return mfTimePos < mfSpecialEventTime;	
+		return mfTimePos < mfSpecialEventTime;
 	}
 
 	//-----------------------------------------------------------------------
@@ -274,14 +274,14 @@ namespace hpl {
 	void cAnimationState::AddTimePosition(float afAdd)
 	{
 		if(mbPaused) return;
-		
+
 		mfPrevTimePos = mfTimePos;
 
 		mfTimePos += afAdd*mfSpeed*mfBaseSpeed;
 
 		SetTimePosition(mfTimePos);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cAnimation* cAnimationState::GetAnimation()
@@ -306,11 +306,11 @@ namespace hpl {
 	{
 		return mvEvents[alIdx];
 	}
-	
+
 	int cAnimationState::GetEventNum()
 	{
 		return (int)mvEvents.size();
 	}
-	
+
 	//-----------------------------------------------------------------------
 }

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -48,9 +48,9 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	void iRenderFunctions::InitAndResetRenderFunctions(	cFrustum *apFrustum, cRenderTarget *apRenderTarget, bool abLog,
-														bool abUseGlobalScissorRect, 
+														bool abUseGlobalScissorRect,
 														const cVector2l& avGlobalScissorRectPos, const cVector2l& avGlobalScissorRectSize)
 	{
 		mpCurrentFrustum = apFrustum;
@@ -107,7 +107,7 @@ namespace hpl {
 		if(mbUseGlobalScissorRect)
 		{
 			mbUseGlobalScissorRect = false;
-			
+
 			if(mbLog) Log("  Setting scissor active: 0\n");
 			mpLowLevelGraphics->SetScissorActive(false);
 		}
@@ -118,7 +118,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// PROTECTED METHODS
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
 
 	void iRenderFunctions::SetFlatProjection(const cVector2f &avSize,float afMin,float afMax)
@@ -157,7 +157,7 @@ namespace hpl {
 	void iRenderFunctions::SetFrustumProjection(cFrustum *apFrustum)
 	{
 		SetProjectionMatrix(&apFrustum->GetProjectionMatrix());
-		
+
 		SetInvertCullMode(mpCurrentFrustum->GetInvertsCullMode());
 	}
 
@@ -208,7 +208,7 @@ namespace hpl {
 	{
 		if(mCurrentDepthTestFunc == aFunc) return false;
 
-		if(mbLog) 
+		if(mbLog)
 		{
 			tString sFunc="Unknown";
 			switch(aFunc)
@@ -293,19 +293,19 @@ namespace hpl {
 	{
 		mpLowLevelGraphics->SetStencilWriteMask(alMask);
 	}
-	
+
 	void iRenderFunctions::SetStencil(	eStencilFunc aFunc,int alRef, unsigned int aMask,
 										eStencilOp aFailOp,eStencilOp aZFailOp,eStencilOp aZPassOp)
 	{
 		mpLowLevelGraphics->SetStencil(aFunc, alRef, aMask, aFailOp, aZFailOp, aZPassOp);
 	}
-	
+
 	void iRenderFunctions::SetStencilTwoSide(	eStencilFunc aFrontFunc,eStencilFunc aBackFunc,
 												int alRef, unsigned int aMask,
 												eStencilOp aFrontFailOp,eStencilOp aFrontZFailOp,eStencilOp aFrontZPassOp,
 												eStencilOp aBackFailOp,eStencilOp aBackZFailOp,eStencilOp aBackZPassOp)
 	{
-		mpLowLevelGraphics->SetStencilTwoSide(	aFrontFunc, aBackFunc, 
+		mpLowLevelGraphics->SetStencilTwoSide(	aFrontFunc, aBackFunc,
 												alRef, aMask,
 												aFrontFailOp, aFrontZFailOp, aFrontZPassOp,
 												aBackFailOp, aBackZFailOp, aBackZPassOp);
@@ -342,10 +342,10 @@ namespace hpl {
 			mpLowLevelGraphics->SetScissorActive(abX);
 			mbCurrentScissorActive = abX;
 		}
-		
+
 		return true;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	bool iRenderFunctions::SetScissorRect(const cRect2l& aClipRect, bool abAutoEnabling)
@@ -365,7 +365,7 @@ namespace hpl {
 
 		if(vFinalPos.x < vMin.x) vFinalPos.x = vMin.x;
 		if(vFinalPos.y < vMin.y) vFinalPos.y = vMin.y;
-		
+
 		if(vFinalPos.x+vFinalSize.x > vMax.x) vFinalSize.x = vMax.x - vFinalPos.x;
 		if(vFinalPos.y+vFinalSize.y > vMax.y) vFinalSize.y = vMax.y - vFinalPos.y;
 
@@ -388,10 +388,10 @@ namespace hpl {
 		else
 		{
 			if(abAutoEnabling) SetScissorActive(true);
-			
+
 			if(mbLog)
 				Log("  Setting scissor rect: %d, %d, %dx%d\n",	vFinalPos.x, vFinalPos.y, vFinalSize.x,vFinalSize.y);
-			
+
 			mpLowLevelGraphics->SetScissorRect(mvCurrentScissorRectPos, mvCurrentScissorRectSize);
 			return true;
 		}
@@ -483,7 +483,7 @@ namespace hpl {
 
 			switch(aMode)
 			{
-			case eMaterialBlendMode_Add: 
+			case eMaterialBlendMode_Add:
 				if(mbLog) Log("  Setting blend mode: Add\n");
 				mpLowLevelGraphics->SetBlendFunc(eBlendFunc_One,eBlendFunc_One);
 				break;
@@ -520,7 +520,7 @@ namespace hpl {
 		if(apProgram)
 		{
 			if(mbLog) Log("  Setting gpu program %d : '%s'\n", apProgram, apProgram->GetName().c_str());
-			apProgram->Bind();	
+			apProgram->Bind();
 		}
 		else
 		{
@@ -654,10 +654,10 @@ namespace hpl {
 
 		mbInvertCullMode = abX;
 		if(mbLog) Log(" Inverting Cull Modes!\n");
-		
+
 		SetCullMode(mCurrentCullMode == eCullMode_Clockwise ? eCullMode_CounterClockwise : eCullMode_Clockwise, false);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void iRenderFunctions::SetFrameBuffer(iFrameBuffer *apFrameBuffer, bool abUsePosAndSize, bool abUseGlobalScissor)
@@ -701,25 +701,25 @@ namespace hpl {
 					if(mbLog)
 					{
 						Log("  Setting scissor active: 1\n");
-						
+
 					}
-				
+
 					mpLowLevelGraphics->SetScissorActive(true);
 				}
-				
+
 				////////////////////////////////////
 				//Setup rect
 				if(mbGlobalScissorRectActive==false || mvCurrentFrameBufferSize != vPrevFrameBufferSize)
 				{
 					if(mbLog)
 					{
-						Log("  Setting scissor rect: %d, %d, %dx%d\n",	mvGlobalScissorRectPos.x, mvGlobalScissorRectPos.y, 
+						Log("  Setting scissor rect: %d, %d, %dx%d\n",	mvGlobalScissorRectPos.x, mvGlobalScissorRectPos.y,
 																		mvGlobalScissorRectSize.x,mvGlobalScissorRectSize.y);
 					}
 
 					mpLowLevelGraphics->SetScissorRect(mvGlobalScissorRectPos, mvGlobalScissorRectSize);
 				}
-				
+
 				mbGlobalScissorRectActive = true;
 			}
 			////////////////////////////////////
@@ -729,7 +729,7 @@ namespace hpl {
 				if(mbGlobalScissorRectActive)
 				{
 					if(mbLog) Log("  Setting scissor active: 0\n");
-				
+
 					mpLowLevelGraphics->SetScissorActive(false);
 					mbGlobalScissorRectActive = false;
 				}
@@ -791,7 +791,7 @@ namespace hpl {
 										bool abInvertY, const cColor& aColor)
 	{
 		if(mbLog){
-			Log("   Drawing quad to: pos (%s) size (%s) uv: (%s)-(%s)\n",	aPos.ToString().c_str(), 
+			Log("   Drawing quad to: pos (%s) size (%s) uv: (%s)-(%s)\n",	aPos.ToString().c_str(),
 				avSize.ToString().c_str(),
 				avMinUV.ToString().c_str(),
 				avMaxUV.ToString().c_str());
@@ -806,15 +806,15 @@ namespace hpl {
 			mpLowLevelGraphics->DrawQuad(aPos, avSize,avMinUV,avMaxUV,aColor);
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
-	void iRenderFunctions::DrawQuad(	const cVector3f& aPos, const cVector2f& avSize, 
+	void iRenderFunctions::DrawQuad(	const cVector3f& aPos, const cVector2f& avSize,
 										const cVector2f& avMinUV0, const cVector2f& avMaxUV0, const cVector2f& avMinUV1, const cVector2f& avMaxUV1,
 										bool abInvertY0,bool abInvertY1, const cColor& aColor)
 	{
 		if(mbLog){
-			Log("   Drawing quad to: pos (%s) size (%s) uv0: (%s)-(%s) uv1: (%s)-(%s)\n",	aPos.ToString().c_str(), 
+			Log("   Drawing quad to: pos (%s) size (%s) uv0: (%s)-(%s) uv1: (%s)-(%s)\n",	aPos.ToString().c_str(),
 				avSize.ToString().c_str(),
 				avMinUV0.ToString().c_str(),
 				avMaxUV0.ToString().c_str(),
@@ -847,7 +847,7 @@ namespace hpl {
 		if(mpCurrentVtxBuffer) mpCurrentVtxBuffer->Draw(aDrawType);
 
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void iRenderFunctions::DrawWireFrame(iVertexBuffer *apVtxBuffer, const cColor &aColor)
@@ -862,7 +862,7 @@ namespace hpl {
 		int lVertexStride = apVtxBuffer->GetElementNum(eVertexBufferElement_Position);
 
 		cVector3f vTriPos[3];
-	
+
 		///////////////////////////////////////
 		//Iterate through each triangle and draw it as 3 lines
 		for(int tri = 0; tri < lIndexNum; tri+=3)
@@ -888,7 +888,7 @@ namespace hpl {
 		}
 
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	iTexture* iRenderFunctions::CreateRenderTexture(const tString& asName, const cVector2l& avSize, ePixelFormat aPixelFormat,
@@ -901,7 +901,7 @@ namespace hpl {
 			Error("Could not create texture '%s'\n", asName.c_str());
 			return pTexture;
 		}
-				
+
 		pTexture->SetWrapSTR(eTextureWrap_ClampToEdge);
 		pTexture->SetFilter(aFilter);
 
@@ -918,14 +918,14 @@ namespace hpl {
 			if(abTextureOffsetUsesRenderTargetPos)
 				Log(" Copying current to texture '%s' (%d). Pos: %d:%d Size: %dx%d TextureOffset: %d:%d\n",
 								apTexture->GetName().c_str(), apTexture,
-								avPos.x, avPos.y, avSize.x, avSize.y, 
-								avTextureOffset.x+mpCurrentRenderTarget->mvPos.x, 
+								avPos.x, avPos.y, avSize.x, avSize.y,
+								avTextureOffset.x+mpCurrentRenderTarget->mvPos.x,
 								avTextureOffset.y+mpCurrentRenderTarget->mvPos.y);
 			else
 				Log(" Copying current to texture '%s' (%d). Pos: %d:%d Size: %dx%d TextureOffset: %d:%d\n",
 								apTexture->GetName().c_str(), apTexture,
 								avPos.x, avPos.y, avSize.x, avSize.y, avTextureOffset.x, avTextureOffset.y);
-								
+
 
 		}
 		if(abTextureOffsetUsesRenderTargetPos)

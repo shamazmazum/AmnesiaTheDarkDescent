@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -45,7 +45,7 @@ namespace hpl {
 	{
 		mlCurrentVisibleNodeSet++;
 		if(mlCurrentVisibleNodeSet>=2) mlCurrentVisibleNodeSet=0;
-		
+
 		m_setVisibleNodes[mlCurrentVisibleNodeSet].clear();
 	}
 
@@ -87,18 +87,18 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	static void PushUpNeedPropertyUpdate(iRenderableContainerNode *apNode)
 	{
 		apNode->SetNeedPropertyUpdate(true);
-		
+
 		if(apNode->GetParent()) PushUpNeedPropertyUpdate(apNode->GetParent());
 	}
 
 	static inline void PushUpNeedPropertyUpdateFromObject(iRenderable *apObject)
 	{
 		iRenderableContainerNode *pNode = apObject->GetRenderContainerNode();
-		
+
 		if(pNode) PushUpNeedPropertyUpdate(pNode);
 	}
 
@@ -108,12 +108,12 @@ namespace hpl {
 	{
 		PushUpNeedPropertyUpdateFromObject(apObject);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cRenderableContainerObjectCallback::OnRenderFlagsChange(iRenderable *apObject)
 	{
-		PushUpNeedPropertyUpdateFromObject(apObject);	
+		PushUpNeedPropertyUpdateFromObject(apObject);
 	}
 
 	//-----------------------------------------------------------------------
@@ -121,7 +121,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// RENDERABLE CONTAINER NODE
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	iRenderableContainerNode::iRenderableContainerNode()
 	{
 		mvMin =0;
@@ -151,7 +151,7 @@ namespace hpl {
 	{
 		cVector3f vNodeMin(100000.0f);
 		cVector3f vNodeMax(-100000.0f);
-		
+
 		tRenderableListIt it = mlstObjects.begin();
 		for(; it != mlstObjects.end(); ++it)
 		{
@@ -178,7 +178,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	void iRenderableContainer::UpdateBeforeRendering()
 	{
 		iRenderableContainerNode *pRoot = GetRoot();
@@ -219,9 +219,9 @@ namespace hpl {
 			for(; childIt != apNode->GetChildNodeList()->end(); ++childIt)
 			{
 				iRenderableContainerNode *pChildNode = *childIt;
-				
+
 				if(pChildNode->GetNeedPropertyUpdate()) CheckNeedPropertyUpdateIteration(pChildNode);
-				
+
 				//Update flags according to node.
 				if(pChildNode->HasVisibleObjects()) apNode->mbVisibleObjects = true;
 				apNode->mlRenderFlags |= pChildNode->GetRenderFlags();
@@ -249,16 +249,16 @@ namespace hpl {
 	{
 		apNode->mbNeedAABBUpdate = false;
 
-		if(apNode->HasObjects()) 
+		if(apNode->HasObjects())
 		{
-			apNode->CalculateMinMaxFromObjects();		
+			apNode->CalculateMinMaxFromObjects();
 		}
 		else
 		{
 			apNode->mvMin = 100000;
 			apNode->mvMax = -100000;
 		}
-		
+
 		/////////////////////////////
 		// See if child nodes need update and update variables according to nodes too
 		if(apNode->HasChildNodes())
@@ -269,7 +269,7 @@ namespace hpl {
 				iRenderableContainerNode *pChildNode = *childIt;
 
 				if(pChildNode->GetNeedAABBUpdate()) CheckNeedAABBUpdateIteration(pChildNode);
-				
+
 				cMath::ExpandAABB(apNode->mvMin, apNode->mvMax, pChildNode->mvMin, pChildNode->mvMax);
 			}
 		}

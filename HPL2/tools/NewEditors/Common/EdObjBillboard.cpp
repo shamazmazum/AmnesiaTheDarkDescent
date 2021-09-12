@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -69,12 +69,12 @@ void cIconEntityBB::Update()
 			pParent->mbColorUpdated=false;
 			pBB->SetColor(pParent->GetBillboardColor());
 		}
-		
+
 		if(pParent->mbMatUpdated)
 		{
 			cMaterial* pMat = NULL;
 			cEdLoader::LoadMaterial(pParent->GetMaterialFile(), &pMat);
-			
+
 			pBB->SetMaterial(pMat);
 			pParent->mbMatUpdated=false;
 		}
@@ -119,7 +119,7 @@ void cIconEntityBB::DestroyBB()
 
 //------------------------------------------------------------------------------
 
-static tString gsBillboardTypeString[] = 
+static tString gsBillboardTypeString[] =
 {
 	"Point",
 	"Axis",
@@ -133,7 +133,7 @@ cTypeBillboard::cTypeBillboard() : iEdScnObjType(_W("Billboard"), "Billboard")
 	//GetPropVec3f(eScnVec3f_Scale)->SetSaved(false);
 
 	AddString(eBillboardStr_Type, "BillboardType", gsBillboardTypeString[0], ePropStep_PreCreate);
-	
+
 	AddString(eBillboardStr_Material, "MaterialFile", "", ePropStep_PreCreate);
 	AddBool(eBillboardBool_IsHalo, "IsHalo", false, ePropStep_PreCreate);
 	AddVec2f(eBillboardVec2f_Size, "BillboardSize", 1, ePropStep_PreCreate);
@@ -396,7 +396,7 @@ void cEdObjBillboard::OnDraw(const cModuleDrawData& aData)
 
 	aData.mpFunctions->SetMatrix(NULL);
 	aData.mpFunctions->SetProgram(NULL);
-	
+
 	cBoundingVolume* pBV = mpEngObject->GetRenderBV();
 	if(pBV)
 		aData.mpFunctions->GetLowLevelGfx()->DrawBoxMinMax(pBV->GetMin(), pBV->GetMax(), cColor(1,1));
@@ -538,7 +538,7 @@ void cEdObjBillboard::SetConnectedLight(iEdObjLight* apLight)
 {
 	if(mpConnectedLight==apLight)
 		return;
-    
+
 	mpConnectedLight = apLight;
 	tWString sLightName = apLight?apLight->GetName():_W("");
 	msConnectedLightName = cString::To8Char(sLightName);
@@ -607,7 +607,7 @@ void cEdObjBillboard::SetScale(const cVector3f& avScale)
 		}
 	}
 	*/
-	
+
 
 	//mlLastTransformedAxis = alAxis;
 //}

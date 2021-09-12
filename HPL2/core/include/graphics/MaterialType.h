@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -28,7 +28,7 @@
 namespace hpl {
 
 	//---------------------------------------------------
-	
+
 	class cGraphics;
 	class cResources;
 	class iTexture;
@@ -48,13 +48,13 @@ namespace hpl {
 	#define kPC_FragmentBit		eFlagBit_1
 
 	//---------------------------------------------------
-	
+
 	class cMaterialUsedTexture
 	{
 	public:
 		eMaterialTexture mType;
 	};
-	
+
 	typedef std::vector<cMaterialUsedTexture> tMaterialUsedTextureVec;
 	typedef tMaterialUsedTextureVec::iterator tMaterialUsedTextureVecIt;
 
@@ -93,9 +93,9 @@ namespace hpl {
 
 		virtual iTexture* GetTextureForUnit(cMaterial *apMaterial,eMaterialRenderMode aRenderMode, int alUnit)=0;
 		virtual iGpuProgram* GetGpuProgram(cMaterial *apMaterial, eMaterialRenderMode aRenderMode, char alSkeleton)=0;
-		
+
 		virtual void SetupTypeSpecificData(eMaterialRenderMode aRenderMode, iGpuProgram* apProgram, iRenderer *apRenderer)=0;
-		virtual void SetupMaterialSpecificData(	eMaterialRenderMode aRenderMode, iGpuProgram* apProgram, cMaterial *apMaterial, 
+		virtual void SetupMaterialSpecificData(	eMaterialRenderMode aRenderMode, iGpuProgram* apProgram, cMaterial *apMaterial,
 												iRenderer *apRenderer)=0;
 		virtual void SetupObjectSpecificData(	eMaterialRenderMode aRenderMode, iGpuProgram* apProgram, iRenderable *apObject,
 												iRenderer *apRenderer)=0;
@@ -120,7 +120,7 @@ namespace hpl {
 		virtual void CompileMaterialSpecifics(cMaterial *apMaterial)=0;
 
 		inline bool HasTypeSpecifics(eMaterialRenderMode aMode) const { return mbHasTypeSpecifics[aMode];}
-		
+
 
 	protected:
 		void AddUsedTexture(eMaterialTexture aType);
@@ -135,7 +135,7 @@ namespace hpl {
 		void AddVarString(const tString& asName, const tString& asDefaultValue, const tString& asDesc="");
 		void AddVarColor(const tString& asName, const cColor& aDefaultValue, const tString& asDesc="");
 		void AddVarEnum(const tString& asName, const tString& asDefaultValue, const tStringVec& avEnumValues, const tString& asDesc="");
-		
+
 		cGraphics *mpGraphics;
 		cResources *mpResources;
 
@@ -143,11 +143,11 @@ namespace hpl {
 
 		bool mbIsTranslucent;
 		bool mbIsDecal;
-		
+
 		bool mbHasTypeSpecifics[eMaterialRenderMode_LastEnum];
-		
+
 		tMaterialUsedTextureVec mvUsedTextures;
-		
+
 		tMaterialUserVariableVec mvUserVariables;
 
 		cProgramComboManager *mpProgramManager;

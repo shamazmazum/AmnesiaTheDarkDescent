@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -74,15 +74,15 @@ namespace hpl {
 	GLenum GetGLCompressionFormatFromPixelFormat(ePixelFormat aFormat);
 
 	GLenum TextureTypeToGLTarget(eTextureType aType);
-    
+
 	GLenum GetGLTextureTargetEnum(eTextureType aType);
 
 	GLenum GetGLTextureCompareMode(eTextureCompareMode aMode);
 	GLenum GetGLTextureCompareFunc(eTextureCompareFunc aFunc);
 
 	GLenum GetGLWrapEnum(eTextureWrap aMode);
-	
-	//-------------------------------------------------	
+
+	//-------------------------------------------------
 
 	class cColorWriteDL
 	{
@@ -122,9 +122,9 @@ namespace hpl {
         void SetWindowCaption(const tString &asName);
 
         bool GetWindowMouseFocus();
-        
+
         bool GetWindowInputFocus();
-        
+
         bool GetWindowIsVisible();
 
 		bool GetFullscreenModeActive() { return mbFullscreen; }
@@ -140,7 +140,7 @@ namespace hpl {
 
 		cVector2f GetScreenSizeFloat();
 		const cVector2l& GetScreenSizeInt();
-		
+
 		/////////////////////////////////////////////////////
 		/////////////// DATA CREATION //////////////////////
 		/////////////////////////////////////////////////////
@@ -161,30 +161,30 @@ namespace hpl {
 		iDepthStencilBuffer* CreateDepthStencilBuffer(const cVector2l& avSize, int alDepthBits, int alStencilBits);
 
 		iOcclusionQuery* CreateOcclusionQuery();
-		
+
 		/////////////////////////////////////////////////////
 		/////////// FRAME BUFFER OPERATIONS ///////
 		/////////////////////////////////////////////////////
-	
+
 		void ClearFrameBuffer(tClearFrameBufferFlag aFlags);
 
 		void SetClearColor(const cColor& aCol);
 		void SetClearDepth(float afDepth);
 		void SetClearStencil(int alVal);
-		
+
 		void CopyFrameBufferToTexure(	iTexture* apTex, const cVector2l &avPos,
 									const cVector2l &avSize, const cVector2l &avTexOffset=0);
 		cBitmap* CopyFrameBufferToBitmap(const cVector2l &avScreenPos=0, const cVector2l &avScreenSize=-1);
-		
+
 		void WaitAndFinishRendering();
 		void FlushRendering();
 		void SwapBuffers();
-		
+
 		void SetCurrentFrameBuffer(iFrameBuffer* apFrameBuffer, const cVector2l &avPos = 0, const cVector2l& avSize = -1);
 		iFrameBuffer* GetCurrentFrameBuffer() { return mpFrameBuffer; }
 
 		void SetFrameBufferDrawTargets(int *apTargets, int alNumOfTargets);
-		
+
 		/////////////////////////////////////////////////////
 		/////////// RENDER STATE ////////////////////////////
 		/////////////////////////////////////////////////////
@@ -209,7 +209,7 @@ namespace hpl {
 								int alRef, unsigned int aMask,
 								eStencilOp aFrontFailOp,eStencilOp aFrontZFailOp,eStencilOp aFrontZPassOp,
 								eStencilOp aBackFailOp,eStencilOp aBackZFailOp,eStencilOp aBackZPassOp);
-		
+
 		void SetScissorActive(bool abX);
 		void SetScissorRect(const cVector2l& avPos, const cVector2l& avSize);
 
@@ -249,7 +249,7 @@ namespace hpl {
 		void SetTextureEnv(eTextureParam aParam, int alVal);
 		void SetTextureConstantColor(const cColor &aColor);
 
-		
+
 		/////////////////////////////////////////////////////
 		/////////// DRAWING ///////////////////////////////
 		/////////////////////////////////////////////////////
@@ -264,7 +264,7 @@ namespace hpl {
 						const cVector2f &avMinTexCoord0,const cVector2f &avMaxTexCoord0,
 						const cVector2f &avMinTexCoord1,const cVector2f &avMaxTexCoord1,
 						const cColor& aColor=cColor(1,1));
-		
+
 		void DrawQuad(const tVertexVec &avVtx);
 		void DrawQuad(const tVertexVec &avVtx, const cColor aCol);
 		void DrawQuad(const tVertexVec &avVtx,const float afZ);
@@ -280,7 +280,7 @@ namespace hpl {
 
 		void DrawLineQuad(const cRect2f& aRect, float afZ, cColor aCol);
 		void DrawLineQuad(const cVector3f &avPos,const cVector2f &avSize, cColor aCol);
-				
+
 		/////////////////////////////////////////////////////
 		/////////// VERTEX BATCHING /////////////////////////
 		/////////////////////////////////////////////////////
@@ -304,7 +304,7 @@ namespace hpl {
 		void FlushTriBatch(tVtxBatchFlag aTypeFlags, bool abAutoClear=true);
 		void FlushQuadBatch(tVtxBatchFlag aTypeFlags, bool abAutoClear=true);
 		void ClearBatch();
-		
+
 		/////////////////////////////////////////////////////
 		/////////// IMPLEMENTION SPECIFICS /////////////////
 		/////////////////////////////////////////////////////
@@ -336,21 +336,21 @@ namespace hpl {
 		//Render state settings
 		cColorWriteDL mColorWrite;
 		bool mbDepthWrite;
-		
+
 		bool mbCullActive;
 		eCullMode mCullMode;
-		
+
 		bool mbDepthTestActive;
 		eDepthTestFunc mDepthTestFunc;
 
 		bool mbAlphaTestActive;
 		eAlphaTestFunc mAlphaTestFunc;
 		float mfAlphaTestFuncRef;
-		
+
 		bool mbScissorActive;
 		cVector2l mvScissorPos;
 		cVector2l mvScissorSize;
-		
+
 		bool mbBlendActive;
 
 		iFrameBuffer* mpFrameBuffer;
@@ -358,7 +358,7 @@ namespace hpl {
 		cVector2l mvFrameBufferSize;
 		cVector2l mvFrameBufferTotalSize;
 
-		
+
 		//////////////////////////////////////
 		//Gamma
 		Uint16 mvStartGammaArray[3][256];
@@ -378,7 +378,7 @@ namespace hpl {
 		SDL_Surface *mpScreen;
 #endif
         bool mbGrab;
-		
+
 		//////////////////////////////////////
 		//Vertex Array variables
 		//The vertex arrays used:
@@ -398,7 +398,7 @@ namespace hpl {
 		//////////////////////////////////////
 		//Texture
 		GLenum mvCurrentTextureTarget[kMaxTextureUnits];
-		
+
 #ifdef WITH_CG
 		//////////////////////////////////////
 		//CG Compiler Variables
@@ -419,7 +419,7 @@ namespace hpl {
 		void InitCG();
 		void ExitCG();
 #endif
-		
+
 		//////////////////////////////////////
 		//Matrix helper
 		void SetMatrixMode(eMatrix mType);
@@ -427,7 +427,7 @@ namespace hpl {
 		//////////////////////////////////////
 		//Batch helper
 		void SetUpBatchArrays();
-	
+
 		//////////////////////////////////////
 		//Vtx helper
 		void SetVtxBatchStates(tVtxBatchFlag aFlags);

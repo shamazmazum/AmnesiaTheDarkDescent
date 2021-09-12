@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -30,7 +30,7 @@ namespace hpl {
 		eBinTreeNode_Right
 	};
 
-	
+
 
 	//////////////////////////////////////////////////////////////////////////
 	// TREE NODE CLASS
@@ -42,7 +42,7 @@ namespace hpl {
 		{
 			return &mData;
 		}
-	
+
 		BinTreeNode(T aData, BinTreeNode<T> *aParent, eBinTreeNode aParentDir)
 		{
 			for(int i=0;i<2;i++) mChild[i]=NULL;
@@ -69,7 +69,7 @@ namespace hpl {
 		{
 			return mParent;
 		}
-	
+
 	private:
 		BinTreeNode<T>* mChild[2];
 		BinTreeNode<T>* mParent;
@@ -80,8 +80,8 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// MAIN TREE CLASS
 	//////////////////////////////////////////////////////////////////////////
-	
-	
+
+
 	template<class T> class BinTree {
 	public:
 		BinTree(){
@@ -110,7 +110,7 @@ namespace hpl {
 		 * Insert a node to the tree.
 		 * \todo only works to set the root node.
 		 * \param aData the data to insert
-		 * \return 
+		 * \return
 		 */
 		BinTreeNode<T>* Insert(T aData)
 		{
@@ -143,7 +143,7 @@ namespace hpl {
 				}
 			}
 			mlNumOfNodes++;
-			
+
 			return Node;
 		}
 
@@ -152,7 +152,7 @@ namespace hpl {
 		 * \param aData the data to insert
 		 * \param aNode the node to insert the data in
 		 * \param aChild what child to insert at
-		 * \return 
+		 * \return
 		 */
 		BinTreeNode<T>* InsertAt(T aData,BinTreeNode<T>* aNode, eBinTreeNode aChild=eBinTreeNode_Left)
 		{
@@ -168,7 +168,7 @@ namespace hpl {
 
 		/**
 		 * Get the size of the tree
-		 * \return 
+		 * \return
 		 */
 		int Size()
 		{
@@ -177,7 +177,7 @@ namespace hpl {
 
 		const std::vector<BinTreeNode<T>*>& GetLeafList()
 		{
-			mvNodes.clear(); 
+			mvNodes.clear();
 			mvNodes.reserve(mlNumOfNodes);
 			PopulateLeafList(mFirstNode);
 			return  mvNodes;
@@ -185,7 +185,7 @@ namespace hpl {
 
 		/**
 		 * Get a list of all the nodes in the tree
-		 * \return 
+		 * \return
 		 */
 		const std::vector<BinTreeNode<T>*>& GetNodeList()
 		{
@@ -194,13 +194,13 @@ namespace hpl {
 			PopulateNodeList(mFirstNode);
 			return  mvNodes;
 		}
-	    
+
 	private:
 		int mlNumOfNodes;
 		BinTreeNode<T>* mFirstNode;
 		int mlNum;
-		
-		std::vector<BinTreeNode<T>*> mvNodes; 
+
+		std::vector<BinTreeNode<T>*> mvNodes;
 
 		void DeleteNode(BinTreeNode<T>* aNode)
 		{
@@ -208,7 +208,7 @@ namespace hpl {
 
 			DeleteNode(aNode->GetChild(eBinTreeNode_Left));
 			DeleteNode(aNode->GetChild(eBinTreeNode_Right));
-			
+
 			hplDelete(aNode);
 			mlNum++;
 		}
@@ -218,14 +218,14 @@ namespace hpl {
 			if(aNode==NULL)	return;
 
 			PopulateNodeList(aNode->GetChild(eBinTreeNode_Left));
-			mvNodes.push_back(aNode);			
+			mvNodes.push_back(aNode);
 			PopulateNodeList(aNode->GetChild(eBinTreeNode_Right));
 		}
 
 		void PopulateLeafList(BinTreeNode<T>* aNode)
 		{
 			if(aNode==NULL)	return;
-			
+
 			if(aNode->GetChild(eBinTreeNode_Left)==NULL &&
 				aNode->GetChild(eBinTreeNode_Right)==NULL)
 			{

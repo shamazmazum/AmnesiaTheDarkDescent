@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -100,7 +100,7 @@ class cSimplePathNodeLoader : public iAreaLoader
 public:
 	cSimplePathNodeLoader(const tString& asName) : iAreaLoader(asName)
 	{
-		
+
 	}
 
 	void Load(const tString &asName, int alID, bool abActive, const cVector3f &avSize, const cMatrixf &a_mtxTransform,cWorld *apWorld)
@@ -210,11 +210,11 @@ public:
 const int glObjectDebugColorNum = 21;
 cColor gObjectDebugColor[glObjectDebugColorNum] = {	cColor(1,1,1),cColor(1,0,1),cColor(1,1,0),
 													cColor(0,1,1),cColor(0,0,1),cColor(0,1,0),
-													cColor(1,0,0),cColor(0.5f,0.5f,1),cColor(1,1,0.5f), 
+													cColor(1,0,0),cColor(0.5f,0.5f,1),cColor(1,1,0.5f),
 													cColor(1,0.5f,0.5f), cColor(1,0.75f,0.25f),cColor(0.75f,1,0.25f),
 													cColor(1,0.75f,1),cColor(1,0.25f,1),cColor(1,0.75f,0),
 													cColor(0,1,0.75f),cColor(0.25f,0.25f,1),cColor(0.25f,1,0.25f),
-													cColor(1,0.25f,0.25f),cColor(0.75f,0.75f,1),cColor(0.75f,1,0.25f) 
+													cColor(1,0.25f,0.25f),cColor(0.75f,0.75f,1),cColor(0.75f,1,0.25f)
 													};
 class cSimpleRenderCallback : public iRendererCallback
 {
@@ -289,7 +289,7 @@ public:
 			}
 		}
 	}
-	
+
 	void OnPostSolidDraw(cRendererCallbackFunctions *apFunctions)
 	{
 		apFunctions->SetDepthTest(false);
@@ -302,19 +302,19 @@ public:
 
 		cRenderSettings *pSettings = gpSimpleCamera->GetViewport()->GetRenderSettings();
 		cRenderList *pRenderList = pSettings->mpRenderList;
-		
+
 		/////////////////////////////////////
 		//Draw outlines on objects, so you can see what mesh each belongs to (after having been combined)
 		if(gbDrawSepperateObjects)
 		{
 			///////////////////////////////////
-			// Iterate the static mesh any draw the 
+			// Iterate the static mesh any draw the
 			int lCount = 0;
 			cMeshEntityIterator meshIt = mpWorld->GetStaticMeshEntityIterator();
 			while(meshIt.HasNext())
 			{
 				cMeshEntity *pEntity = meshIt.Next();
-				
+
 				for(int i=0; i<pEntity->GetSubMeshEntityNum(); ++i)
 				{
 					cSubMeshEntity *pSubEnt = pEntity->GetSubMeshEntity(i);
@@ -322,12 +322,12 @@ public:
 
 					int lColNum = lCount % glObjectDebugColorNum;
 					const cColor &currentColor = gObjectDebugColor[lColNum];
-					
+
 					apFunctions->SetMatrix(pSubEnt->GetModelMatrix(NULL));
 					apFunctions->DrawWireFrame(pSubEnt->GetVertexBuffer(), currentColor);
 
 					//cBoundingVolume *pBV = pObject->GetBoundingVolume();
-					//apFunctions->GetLowLevelGfx()->DrawBoxMinMax(pBV->GetMin(), pBV->GetMax(),);				
+					//apFunctions->GetLowLevelGfx()->DrawBoxMinMax(pBV->GetMin(), pBV->GetMax(),);
 					lCount++;
 				}
 			}
@@ -375,7 +375,7 @@ public:
 
 			apFunctions->GetLowLevelGfx()->DrawLine(mpBodyPicker->mvPos, mvDragPos, cColor(1,1,1,1));
 		}
-		
+
 		/////////////////////////////////////////
 		//Draws how the level have been grouped
 		if(gbDrawContainerDebug)
@@ -394,7 +394,7 @@ public:
 		{
 			apFunctions->SetDepthTest(false);
 
-            			
+
 			/////////////////////////
 			//Solid objects (reverse order = back to front)
 			int lNum = pRenderList->GetSolidObjectNum();
@@ -426,7 +426,7 @@ public:
 
 			apFunctions->SetDepthTest(true);
 		}
-		
+
 		/////////////////////////////////////////
 		//Draws physics debug
 		if(gbDrawPhysicsDebug && mpWorld)
@@ -436,14 +436,14 @@ public:
 			cPhysicsBodyIterator bodyIt = pPhysicsWorld->GetBodyIterator();
 
 			cCamera *pCam = gpSimpleCamera->GetCamera();
-			
+
 			while(bodyIt.HasNext())
 			{
 				iPhysicsBody *pBody = bodyIt.Next();
-				if(pCam->GetFrustum()->CollideBoundingVolume(pBody->GetBoundingVolume())== eCollision_Outside) continue; //Frustum test for some extra speed!				
+				if(pCam->GetFrustum()->CollideBoundingVolume(pBody->GetBoundingVolume())== eCollision_Outside) continue; //Frustum test for some extra speed!
 
 				cColor col = pBody->GetCollide() ? cColor(1,1) : cColor(1,0,1,1);
-				
+
 				pBody->RenderDebugGeometry(apFunctions->GetLowLevelGfx(),col);
 			}
 		}
@@ -472,12 +472,12 @@ public:
 		/////////////////////////////////////////
 		//Draws bounding boxes
    	}
-	
+
 	void OnPostTranslucentDraw(cRendererCallbackFunctions *apFunctions)
 	{
 
 	}
-	
+
 	cWorld *mpWorld;
 	cBodyPicker *mpBodyPicker;
 	cVector3f mvDragPos;
@@ -514,19 +514,19 @@ public:
 
 			lCount++;
 		}
-		
+
 		/////////////////////////
 		//Trans
 		lNum = pRenderList->GetTransObjectNum();
 		for(int i=0; i<lNum; ++i)
 		{
 			iRenderable *pObject = pRenderList->GetTransObject(i);
-			
+
 			cColor col = gObjectDebugColor[(size_t)pObject % glObjectDebugColorNum];
 
 			apFunctions->SetMatrix(pObject->GetModelMatrix(NULL));
 			apFunctions->DrawWireFrame(pObject->GetVertexBuffer(), col);
-			
+
 			lCount++;
 		}
 	}
@@ -546,19 +546,19 @@ public:
 	cSimpleUpdate() : iUpdateable("Simple3D")
 	{
 		mpLowLevelGraphics = gpEngine->GetGraphics()->GetLowLevel();
-		
+
 		////////////////////////////////
 		// Rendering setup
 		gpEngine->GetResources()->GetMaterialManager()->SetTextureFilter(eTextureFilter_Trilinear);
 		gpEngine->GetResources()->GetMaterialManager()->SetTextureSizeDownScaleLevel(0);
-		
+
 		////////////////////////////////
 		// Input setup.
 		gpEngine->GetInput()->CreateAction("MouseMode")->AddKey(eKey_Space);
 		gpEngine->GetInput()->CreateAction("ContainerBugCheck")->AddKey(eKey_C);
 		gpEngine->GetInput()->CreateAction("RebuildDynamic")->AddKey(eKey_V);
 
-		
+
 		////////////////////////////////
 		// Misc setup
 		gpEngine->GetPhysics()->LoadSurfaceData("materials.cfg");
@@ -582,7 +582,7 @@ public:
 		{
 			mpWorld = gpEngine->GetScene()->CreateWorld("Temp");
 			mpPhysicsWorld = NULL;
-			
+
 			iTexture *pSkyBox = gpEngine->GetResources()->GetTextureManager()->CreateCubeMap("cubemap_evening.dds",false);
 			if(pSkyBox)
 			{
@@ -592,13 +592,13 @@ public:
 
 			mpAmbientBox = NULL;
 		}
-				
+
 		////////////////////////////////
 		// Render callback
 		renderCallback.mpWorld = mpWorld;
 		renderCallback.mpBodyPicker = &mBodyPicker;
-			
-		
+
+
 		/////////////////////////////////
 		// Init variables
 		msCurrentFilePath = _W("");
@@ -622,7 +622,7 @@ public:
 		mpTestRenderGfx = gpEngine->GetGui()->CreateGfxTexture(mpTestRenderTexture,false,eGuiMaterial_Diffuse);
 
 		iDepthStencilBuffer *pDepthBuffer = gpEngine->GetGraphics()->CreateDepthStencilBuffer(vTestWindowSize,24,8,false);
-		
+
 		mpTestFrameBuffer->SetDepthStencilBuffer(pDepthBuffer);
 		mpTestFrameBuffer->SetTexture2D(0,mpTestRenderTexture);
 
@@ -630,7 +630,7 @@ public:
 
 		mpTestViewPort = gpEngine->GetScene()->CreateViewport(gpSimpleCamera->GetCamera(),mpTestWorld);
 		mpTestViewPort->SetRenderer(gpEngine->GetGraphics()->GetRenderer(eRenderer_WireFrame));
-		
+
 		mpTestViewPort->SetFrameBuffer(mpTestFrameBuffer);
 		mpTestViewPort->SetSize(cVector2l(mpTestRenderTexture->GetWidth(),mpTestRenderTexture->GetHeight()));
 
@@ -644,13 +644,13 @@ public:
 
 		testRenderCallback.mpWorld = mpWorld;
 		mpTestViewPort->AddRendererCallback(&testRenderCallback);
-		
-        				
+
+
 		/////////////////////////////////
 		//Set up normal view port camera
 		cRenderSettings *pSettings = gpSimpleCamera->GetViewport()->GetRenderSettings();
 		gpSimpleCamera->GetViewport()->AddRendererCallback(&renderCallback);
-		
+
 		gpSimpleCamera->SetMouseMode(true);
 
 		//pSettings->mbLog = true;
@@ -690,13 +690,13 @@ public:
 		//gpSimpleCamera->GetCamera()->SetPosition(cVector3f(7.121649, 0.488335, 30.064392));
 		//gpSimpleCamera->GetCamera()->SetPitch(-0.053125);
 		//gpSimpleCamera->GetCamera()->SetYaw(-7.040731);
-	
+
 		//Shadow disappears
 		//gpSimpleCamera->GetCamera()->SetPosition(cVector3f(-56.677223, -0.390131, -33.132439));
 		//gpSimpleCamera->GetCamera()->SetPitch(-0.265625);
 		//gpSimpleCamera->GetCamera()->SetYaw(0.011622);
 
-		
+
 		//Level02 view of chamber
 		//gpSimpleCamera->GetCamera()->SetPosition(cVector3f(22.688457, 2.444717, 24.260900));
 		//gpSimpleCamera->GetCamera()->SetPitch(0.132813);
@@ -737,7 +737,7 @@ public:
 		//gpSimpleCamera->GetCamera()->SetPitch(-0.035417);
 		//gpSimpleCamera->GetCamera()->SetYaw(-1.542286);
 
-		
+
 		gpSimpleCamera->SetMouseMode(true);
 		gpEngine->GetInput()->GetLowLevel()->LockInput(false);
 		gpEngine->GetInput()->GetLowLevel()->RelativeMouse(false);
@@ -747,7 +747,7 @@ public:
 
 	void OnExit()
 	{
-	
+
 	}
 
 	//--------------------------------------------------------------
@@ -757,7 +757,7 @@ public:
 		if(asFileName == "") return;
 
 		if(mpWorld)
-		{ 
+		{
 			gpEngine->GetScene()->DestroyWorld(mpWorld);
 			mpWorld = NULL;
 			mpPhysicsWorld = NULL;
@@ -791,7 +791,7 @@ public:
 
 			cMesh *pMesh = gpEngine->GetResources()->GetMeshManager()->CreateMesh(asFileName);
 			if(pMesh==NULL)FatalError("Could not load world '%s'\n", asFileName.c_str());
-			
+
 			cMeshEntity* pEntity = mpWorld->CreateMeshEntity("Level",pMesh,true);
 
 			pEntity->SetRenderFlagBit(eRenderableFlag_ShadowCaster, true);
@@ -802,9 +802,9 @@ public:
 		{
 			FatalError("Invalid map format!\n");
 		}
-		
+
 		mpPhysicsWorld = mpWorld->GetPhysicsWorld();
-		
+
 		//Ambient
 		mpAmbientBox = NULL;
 		mpAmbientBox = mpWorld->CreateLightBox("AmbientBoxLight");
@@ -818,7 +818,7 @@ public:
 		//////////////////////////////////
 		//Node container
        	gpNodeContainer = mpWorld->CreateAINodeContainer( gsNodeCont_Name, "Default", gvNodeCont_BodySize, gbNodeCont_NodeAtCenter,
-																glNodeCont_MinEdges , glNodeCont_MaxEdges , 
+																glNodeCont_MinEdges , glNodeCont_MaxEdges ,
 																gfNodeCont_MaxEdgeDistance, gfNodeCont_MaxHeight);
 
 
@@ -832,7 +832,7 @@ public:
 
 			mpCheckAmbientActive->SetChecked(mpAmbientBox->IsVisible());
 			mpSliderAmbientColor->SetValue( (int)(mpAmbientBox->GetDiffuseColor().r * 255.0 + 0.5f));
-			
+
 			if(abKeepPosition==false && gvStartPostions.size() > 0)
 				gpSimpleCamera->GetCamera()->SetPosition(gvStartPostions[0]);
 
@@ -851,7 +851,7 @@ public:
 			mpWorld->SetSkyBox(pSkyBox,true);
 			mpWorld->SetSkyBoxActive(true);
 		}
-		
+
 		//////////////////////////////////
 		//Debug output
 		return;
@@ -864,8 +864,8 @@ public:
 
 			Log(" '%s' Material: '%s'\n", pBody->GetName().c_str(), pBody->GetMaterial()->GetName().c_str());
 		}
-		
-		
+
+
 		return;
         iRenderableContainer *pContainer = mpWorld->GetRenderableContainer(eWorldContainerType_Static);
 		Log("\nCONTAINER DATA START:\n");
@@ -885,7 +885,7 @@ public:
 		///////////////////////////////////////
 		//Make sure node is updated
 		apNode->UpdateBeforeUse();
-		
+
 		Log("%s-- Node %d ------\n",GetTab(alLevel).c_str(), apNode);
 
 		/////////////////////////////
@@ -897,7 +897,7 @@ public:
 			for(; it != apNode->GetObjectList()->end(); ++it)
 			{
 				iRenderable *pObject = *it;
-                Log("%s %s (%s)\n", GetTab(alLevel).c_str(), pObject->GetName().c_str(),pObject->GetEntityType().c_str());				
+                Log("%s %s (%s)\n", GetTab(alLevel).c_str(), pObject->GetName().c_str(),pObject->GetEntityType().c_str());
 			}
 		}
 
@@ -926,7 +926,7 @@ public:
 		pContainer->UpdateBeforeRendering();
 		CheckDynamicContainerBugsRec(pContainer->GetRoot(), 0);
 		gpSimpleCamera->ListContainerNodeData(pContainer->GetRoot(), 0);
-		
+
 
 		Log("---------- STOP CHECK DYNAMIC BUGS ---------------\n");
 	}
@@ -972,7 +972,7 @@ public:
 				cBoundingVolume *pBV = pObject->GetBoundingVolume();
 
 				cMath::ExpandAABB(vBoxMin, vBoxMax, pBV->GetMin(), pBV->GetMax());
-				
+
                 iRenderableContainerNode *pCheckNode = apNode;
 				int lLevel =0;
 				while(pCheckNode && pCheckNode->GetParent())
@@ -1063,11 +1063,11 @@ public:
 			}
 		}
 	}
-		
+
 	//--------------------------------------------------------------
 
 	void InitGuiAfterLoad()
-	{	
+	{
 	}
 
 	//--------------------------------------------------------------
@@ -1091,7 +1091,7 @@ public:
 		cGuiSet *pSet = gpSimpleCamera->GetSet();
 
 		cRenderSettings *pSettings = gpSimpleCamera->GetViewport()->GetRenderSettings();
-		
+
 
 		cVector3f vGroupPos =0;
 		cVector2f vGroupSize =0;
@@ -1160,10 +1160,10 @@ public:
 			pCheckBox->SetChecked(gbDrawDynContainerDebug);
 			pCheckBox->AddCallback(eGuiMessage_CheckChange,this, kGuiCallback(ChangeDynamicContainerDebug));
 			vGroupPos.y += 22;
-			
 
 
-			
+
+
 			//Container debug
 			pCheckBox = pSet->CreateWidgetCheckBox(vGroupPos,vSize,_W("Draw container info"),pGroup);
 			pCheckBox->SetChecked(gbDrawContainerDebug);
@@ -1199,7 +1199,7 @@ public:
 			pCheckBox->SetChecked(gbRenderPathNodes);
 			pCheckBox->AddCallback(eGuiMessage_CheckChange,this, kGuiCallback(ChangeRenderPathNodes));
 			vGroupPos.y += 22;
-			
+
 
 			//Group end
 			vGroupSize.y = vGroupPos.y + 15;
@@ -1213,7 +1213,7 @@ public:
 			//Group
 			vGroupPos = cVector3f(5,10,0.1f);
 			pGroup = pSet->CreateWidgetGroup(vPos,100,_W("Graphics"),mpOptionWindow);
-			
+
 			//SSAO
 			pCheckBox = pSet->CreateWidgetCheckBox(vGroupPos,vSize,_W("SSAO Active"),pGroup);
 			pCheckBox->SetChecked(pSettings->mbSSAOActive);
@@ -1263,7 +1263,7 @@ public:
 			pCheckBox->AddCallback(eGuiMessage_CheckChange,this, kGuiCallback(ChangeDrawShadows));
 			vGroupPos.y += 22;
 
-			
+
 			/////////////////////////////
 			//SSAO settings
 			cVector2f vLabelSize = vSize; vLabelSize.x *=0.5f;
@@ -1272,7 +1272,7 @@ public:
 			/*{
 				float fVal = cRendererDeferred::GetSSAOScatterLengthMul();
 				pLabel = pSet->CreateWidgetLabel(vGroupPos, vLabelSize, _W("Scatter Length:"), pGroup);
-				pLabel = pSet->CreateWidgetLabel(vGroupPos+cVector3f(vLabelSize.x,0,0), vLabelSize, 
+				pLabel = pSet->CreateWidgetLabel(vGroupPos+cVector3f(vLabelSize.x,0,0), vLabelSize,
 												cString::ToStringW(fVal,4), pGroup);
 				mpLabelScatterLength = pLabel;
 
@@ -1281,7 +1281,7 @@ public:
 				pSlider = pSet->CreateWidgetSlider(eWidgetSliderOrientation_Horisontal,vGroupPos,vSize,200,pGroup);
 				pSlider->AddCallback(eGuiMessage_SliderMove,this, kGuiCallback(ChangeScatterLength));
 				pSlider->SetValue(  (int)((fVal-gfScatterLengthMinVal) / (gfScatterLengthMaxVal-)*200.0f)  );
-				
+
 				vGroupPos.y += 22;
 			}
 
@@ -1290,7 +1290,7 @@ public:
 			{
 				float fVal = cRendererDeferred::GetSSAOScatterLengthMin();
 				pLabel = pSet->CreateWidgetLabel(vGroupPos, vLabelSize, _W("Scatter Min:"), pGroup);
-				pLabel = pSet->CreateWidgetLabel(vGroupPos+cVector3f(vLabelSize.x,0,0), vLabelSize, 
+				pLabel = pSet->CreateWidgetLabel(vGroupPos+cVector3f(vLabelSize.x,0,0), vLabelSize,
 					cString::ToStringW(fVal,4), pGroup);
 				mpLabelScatterMin = pLabel;
 
@@ -1307,7 +1307,7 @@ public:
 			{
 				float fVal = cRendererDeferred::GetSSAOScatterLengthMax();
 				pLabel = pSet->CreateWidgetLabel(vGroupPos, vLabelSize, _W("Scatter Max:"), pGroup);
-				pLabel = pSet->CreateWidgetLabel(vGroupPos+cVector3f(vLabelSize.x,0,0), vLabelSize, 
+				pLabel = pSet->CreateWidgetLabel(vGroupPos+cVector3f(vLabelSize.x,0,0), vLabelSize,
 					cString::ToStringW(fVal,4), pGroup);
 				mpLabelScatterMax = pLabel;
 
@@ -1352,7 +1352,7 @@ public:
 			pCheckBox->AddCallback(eGuiMessage_CheckChange,this, kGuiCallback(ChangeLargeLightTest));
 			vGroupPos.y += 22;
 
-			
+
 			//Group end
 			vGroupSize.y = vGroupPos.y + 15;
 			pGroup->SetSize(vGroupSize);
@@ -1362,7 +1362,7 @@ public:
 		//////////////////////////
 		//Physics
 		{
-			
+
 		}
 
 
@@ -1370,7 +1370,7 @@ public:
 
 		InitGuiAfterLoad();
 	}
-	
+
 	//--------------------------------------------------------------
 
 	bool PressLoadWorld(iWidget* apWidget,const cGuiMessageData& aData)
@@ -1380,12 +1380,12 @@ public:
 		cGuiPopUpFilePicker* pPicker = pSet->CreatePopUpLoadFilePicker(mvPickedFiles,false,msCurrentFilePath,false, this, kGuiCallback(LoadWorldFromFilePicker));
 		pPicker->AddCategory(_W("Scenes"),_W("*.map"));
 		pPicker->AddFilter(0, _W("*.dae"));
-		
+
 		//pPicker->SetSaveFileDest(_W("maps"));
 
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,PressLoadWorld)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,PressLoadWorld)
 
 	bool PressReload(iWidget* apWidget,const cGuiMessageData& aData)
 	{
@@ -1394,7 +1394,7 @@ public:
 
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,PressReload)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,PressReload)
 
 	bool LoadWorldFromFilePicker(iWidget* apWidget,const cGuiMessageData& aData)
 	{
@@ -1406,25 +1406,25 @@ public:
 		gpEngine->GetResources()->AddResourceDir(msCurrentFilePath,false);
 
 		gsMapFile = cString::To8Char(cString::GetFileNameW(sFilePath));
-		LoadWorld(gsMapFile, true, false);  
+		LoadWorld(gsMapFile, true, false);
 		InitGuiAfterLoad();
 
-		return true;		
+		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,LoadWorldFromFilePicker)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,LoadWorldFromFilePicker)
 
 	//--------------------------------------------------------------
 
 	bool ChangeOcclusionTextInfo(iWidget* apWidget,const cGuiMessageData& aData)
 	{
-		gbDrawOcclusionTextInfo = aData.mlVal == 1;	
+		gbDrawOcclusionTextInfo = aData.mlVal == 1;
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeOcclusionTextInfo)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeOcclusionTextInfo)
 
 	bool ChangeOcclusionGfxInfo(iWidget* apWidget,const cGuiMessageData& aData)
 	{
-		gbDrawOcclusionGfxInfo = aData.mlVal == 1;	
+		gbDrawOcclusionGfxInfo = aData.mlVal == 1;
 
 		//mpTestViewPort->SetVisible(gbDrawOcclusionGfxInfo);
 		//mpTestViewPort->SetActive(gbDrawOcclusionGfxInfo);
@@ -1435,19 +1435,19 @@ public:
 
 	bool ChangeStaticOcclusionGfxInfo(iWidget* apWidget,const cGuiMessageData& aData)
 	{
-		gbDrawStaticOcclusionGfxInfo = aData.mlVal == 1;	
+		gbDrawStaticOcclusionGfxInfo = aData.mlVal == 1;
 		return true;
 	}
 	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeStaticOcclusionGfxInfo)
 
 	bool ChangeDynamicContainerDebug(iWidget* apWidget,const cGuiMessageData& aData)
 	{
-		gbDrawDynContainerDebug = aData.mlVal == 1;	
+		gbDrawDynContainerDebug = aData.mlVal == 1;
 		return true;
 	}
 	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeDynamicContainerDebug)
 
-	
+
 	bool ChangeContainerInfo(iWidget* apWidget,const cGuiMessageData& aData)
 	{
 		gbDrawContainerDebug = aData.mlVal == 1;
@@ -1462,7 +1462,7 @@ public:
 	}
 	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeCombinedObjectInfo)
 
-		
+
 	bool ChangePhysicsDebugInfo(iWidget* apWidget,const cGuiMessageData& aData)
 	{
 		gbDrawPhysicsDebug = aData.mlVal == 1;
@@ -1490,9 +1490,9 @@ public:
 		return true;
 	}
 	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeRenderPathNodes)
-	
+
 	//--------------------------------------------------------------
-	
+
 	bool ChangeSSAOActive(iWidget* apWidget,const cGuiMessageData& aData)
 	{
 		cRenderSettings *pSettings = gpSimpleCamera->GetViewport()->GetRenderSettings();
@@ -1510,7 +1510,7 @@ public:
 		return true;
 	}
 	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeBloomActive)
-	
+
 
 	bool ChangeAmbientActive(iWidget* apWidget,const cGuiMessageData& aData)
 	{
@@ -1519,25 +1519,25 @@ public:
 		return true;
 	}
 	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeAmbientActive)
-		
+
 	bool ChangeAmbientColor(iWidget* apWidget,const cGuiMessageData& aData)
 	{
 		mpAmbientBox->SetDiffuseColor(cColor( ((float)aData.mlVal) / 255.0f, 1.0f ));
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeAmbientColor)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeAmbientColor)
 
 
 	bool ChangeScatterLength(iWidget* apWidget,const cGuiMessageData& aData)
 	{
 		float fVal = ((float)aData.mlVal)/200.0f * gfScatterLengthMaxVal + gfScatterLengthMinVal;
-		
+
 		cRendererDeferred::SetSSAOScatterLengthMul(fVal);
 		mpLabelScatterLength->SetText(cString::ToStringW(fVal,4));
 
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeScatterLength)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeScatterLength)
 
 
 	bool ChangeScatterMin(iWidget* apWidget,const cGuiMessageData& aData)
@@ -1549,7 +1549,7 @@ public:
 
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeScatterMin)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeScatterMin)
 
 	bool ChangeScatterMax(iWidget* apWidget,const cGuiMessageData& aData)
 	{
@@ -1560,8 +1560,8 @@ public:
 
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeScatterMax)  
-  
+	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeScatterMax)
+
 
 	bool ChangeDrawParticles(iWidget* apWidget,const cGuiMessageData& aData)
 	{
@@ -1608,7 +1608,7 @@ public:
 	}
 	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeDrawShadows)
 
-		
+
 
 	//--------------------------------------------------------------
 
@@ -1617,25 +1617,25 @@ public:
 		gpSimpleCamera->GetViewport()->GetRenderSettings()->mbUseOcclusionCulling = aData.mlVal==1 ? true : false;
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeOcclusionTest)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeOcclusionTest)
 
 	bool ChangeReflectWorld(iWidget* apWidget,const cGuiMessageData& aData)
 	{
 		gpSimpleCamera->GetViewport()->GetRenderSettings()->mbRenderWorldReflection = aData.mlVal==1 ? true : false;
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeReflectWorld)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeReflectWorld)
 
 	bool ChangeLargeLightTest(iWidget* apWidget,const cGuiMessageData& aData)
 	{
 		cRendererDeferred::SetOcclusionTestLargeLights(aData.mlVal==1 ? true : false);
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeLargeLightTest)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeLargeLightTest)
 
 	//--------------------------------------------------------------
 
-	
+
 	void CheckObjectsInFrustum(iRenderableContainer *apContainer, int *apLights, int *apObjects)
 	{
 		apContainer->UpdateBeforeRendering();
@@ -1655,7 +1655,7 @@ public:
 		//Get frustum collision, if previous was inside, then this is too!
 		eCollision frustumCollision = pCurrentFrustum->CollideNode(apNode);
 
-		if(	frustumCollision == eCollision_Outside && apNode->GetParent()) //Always iterate the root node!	
+		if(	frustumCollision == eCollision_Outside && apNode->GetParent()) //Always iterate the root node!
 		{
 			return;
 		}
@@ -1681,7 +1681,7 @@ public:
 			{
 				iRenderable *pObject = *it;
 				if(pObject->IsVisible()==false) continue;
-				
+
 				///////////////////////////////////
 				//Check if object is in frustum
 				if(	frustumCollision == eCollision_Inside ||
@@ -1706,9 +1706,9 @@ public:
 		}
 	}
 
-	
+
 	//--------------------------------------------------------------
-	
+
 	void OnDraw(float afFrameTime)
 	{
 		if(gpSimpleCamera->GetFont()==NULL) return;
@@ -1717,7 +1717,7 @@ public:
 		iFontData *pFont = gpSimpleCamera->GetFont();
 
 		float fY =25;
-		
+
 		////////////////////////////////
 		//Texture memory used:
 		int lTexMem = gpEngine->GetResources()->GetTextureManager()->GetMemoryUsage()/1024;
@@ -1731,7 +1731,7 @@ public:
 			//float fY = gpSimpleCamera->GetSet()->GetVirtualSize().y - 300;
 			//gpSimpleCamera->GetSet()->DrawGfx(mpTestRenderGfx,cVector3f(0,fY,0));
 		}
-			
+
 		//////////////////////
 		//Occlusion info
 		if(gbDrawOcclusionTextInfo)
@@ -1740,7 +1740,7 @@ public:
 			//Calculate how much would be seen using a normal frustum check
 			int lLightsInFrustum=0;
 			int lObjectsInFrustum=0;
-			
+
             CheckObjectsInFrustum(mpWorld->GetRenderableContainer(eWorldContainerType_Dynamic),
 								&lLightsInFrustum,&lObjectsInFrustum);
 			CheckObjectsInFrustum(mpWorld->GetRenderableContainer(eWorldContainerType_Static),
@@ -1893,7 +1893,7 @@ public:
 			if(mBodyPicker.mpPickedBody)
 			{
 				//Get pos of start.
-				mBodyPicker.mvPos = cMath::MatrixMul(mBodyPicker.mpPickedBody->GetLocalMatrix(), 
+				mBodyPicker.mvPos = cMath::MatrixMul(mBodyPicker.mpPickedBody->GetLocalMatrix(),
 					mBodyPicker.mvLocalPos);
 
 				//Get Drag pos
@@ -1902,7 +1902,7 @@ public:
 				renderCallback.mvDragPos = pCam->GetPosition() + vDir*mBodyPicker.mfDist;
 
 				//Spring testing:
-				cVector3f vForce = (renderCallback.mvDragPos - mBodyPicker.mvPos)*20 - 
+				cVector3f vForce = (renderCallback.mvDragPos - mBodyPicker.mvPos)*20 -
 					(mBodyPicker.mpPickedBody->GetLinearVelocity()*0.4f);
 
 
@@ -1935,7 +1935,7 @@ public:
 		{
 			if(mBodyPicker.mpPickedBody) mBodyPicker.mpPickedBody->SetAutoDisable(true);
 			mBodyPicker.Clear();
-		}		
+		}
 
 	}
 
@@ -1944,16 +1944,16 @@ public:
 
 	~cSimpleUpdate()
 	{
-	
+
 	}
 
 public:
 	iLowLevelGraphics* mpLowLevelGraphics;
 	cWorld* mpWorld;
-	
+
 	cSimpleRenderCallback renderCallback;
 	cTestRenderCallback testRenderCallback;
-	
+
 	cWidgetWindow *mpOptionWindow;
 
 	cLightBox *mpAmbientBox;
@@ -2013,7 +2013,7 @@ int hplMain(const tString &asCommandline)
 #endif
 
 	//iResourceBase::SetLogCreateAndDelete(true);
-	//iGpuProgram::SetLogDebugInformation(true); 
+	//iGpuProgram::SetLogDebugInformation(true);
 	cRendererDeferred::SetGBufferType(eDeferredGBuffer_32Bit);
 	cRendererDeferred::SetNumOfGBufferTextures(3);
 	cRendererDeferred::SetSSAOLoaded(true);
@@ -2041,7 +2041,7 @@ int hplMain(const tString &asCommandline)
 	gpConfig = hplNew( cConfigFile, (sPersonalDir + PERSONAL_RELATIVEROOT _W("HPL2/mapview.cfg") ));
 
 	gpConfig->Load();
-	
+
 	//Init the game engine
 	cEngineInitVars vars;
 	vars.mGraphics.mvScreenSize.x = gpConfig->GetInt("Screen","Width",1024);
@@ -2072,7 +2072,7 @@ int hplMain(const tString &asCommandline)
 
 		gsMapFile = cString::GetFileName(gsMapFile);
 	}
-	
+
 	//Add resources
 #ifdef USERDIR_RESOURCES
 	gpEngine->GetResources()->LoadResourceDirsFile("resources.cfg", sUserResourceDir);
@@ -2086,9 +2086,9 @@ int hplMain(const tString &asCommandline)
 	//Add updates
 	cSimpleUpdate Update;
 	gpEngine->GetUpdater()->AddUpdate("Default", &Update);
-	
+
 	gpSimpleCamera = hplNew(cSimpleCamera, (Update.GetName(),gpEngine, Update.mpWorld, 10, cVector3f(0,0,9), true) );
-	
+
 	gpEngine->GetUpdater()->AddUpdate("Default", gpSimpleCamera);
 
 	Update.SetupView();
@@ -2096,7 +2096,7 @@ int hplMain(const tString &asCommandline)
 	//Run the engine
 	gpEngine->Run();
 
-	
+
 	hplDelete (gpSimpleCamera);
 
 	//Delete the engine

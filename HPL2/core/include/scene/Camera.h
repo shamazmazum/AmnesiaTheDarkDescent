@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -25,7 +25,7 @@
 #include "scene/Node3D.h"
 
 namespace hpl {
-	
+
 	//--------------------------------------------
 
 	enum eCameraMoveMode
@@ -34,7 +34,7 @@ namespace hpl {
 		eCameraMoveMode_Fly,
 		eCameraMoveMode_LastEnum
 	};
-	
+
 	enum eCameraRotateMode
 	{
 		eCameraRotateMode_EulerAngles,
@@ -46,7 +46,7 @@ namespace hpl {
 
 	class iLowLevelGraphics;
 	class iEntity3D;
-	
+
 	class cCamera
 	{
 	public:
@@ -58,17 +58,17 @@ namespace hpl {
 
 		/**
 		 * Move forward (or back) according to the move mode.
-		 * \param afDist 
+		 * \param afDist
 		 */
 		void MoveForward(float afDist);
 		/**
 		* Move right (or left) according to the move mode.
-		* \param afDist 
+		* \param afDist
 		*/
 		void MoveRight(float afDist);
 		/**
 		* Move up (or down) according to the move mode.
-		* \param afDist 
+		* \param afDist
 		*/
 		void MoveUp(float afDist);
 
@@ -80,7 +80,7 @@ namespace hpl {
 
 		void SetFarClipPlane(float afX);
 		float GetFarClipPlane() { return mfFarClipPlane;}
-		
+
 		void SetNearClipPlane(float afX);
 		float GetNearClipPlane() { return mfNearClipPlane;}
 
@@ -89,10 +89,10 @@ namespace hpl {
 
 		void SetOrthoViewSize(const cVector2f &avSize);
 		const cVector2f& GetOrthoViewSize(){ return mvViewSize;}
-		
+
 		/**
 		 * This sets the far plane so that no far clipping is made.
-		 * The FarClipPlane is still used for creating bounding box and frustum and 
+		 * The FarClipPlane is still used for creating bounding box and frustum and
 		 * should be set to some value.
 		 */
 		void SetInifintiveFarPlane(bool abX){ mbInfFarPlane = abX; mbProjectionUpdated = true;}
@@ -101,7 +101,7 @@ namespace hpl {
 		cFrustum* GetFrustum();
 
 		eCameraRotateMode GetRotateMode(){return mRotateMode;}
-		
+
 		eCameraMoveMode GetMoveMode(){return mMoveMode;}
 		/**
 		* Set the mode to calculate the rotation angles.
@@ -120,7 +120,7 @@ namespace hpl {
 		 * Resets all rotation
 		 */
 		void ResetRotation();
-		
+
 		/**
 		 * Unproject the screen coordinate to a world space position and direction
 		*/
@@ -137,11 +137,11 @@ namespace hpl {
 		//////////////////////////////////////////////////
 		////////// EULER ANGLES ROTATION /////////////////
 		//////////////////////////////////////////////////
-		
+
 		void SetPitch(float afAngle);
 		void SetYaw(float afAngle);
 		void SetRoll(float afAngle);
-		
+
 		void AddPitch(float afAngle);
 		void AddYaw(float afAngle);
 		void AddRoll(float afAngle);
@@ -180,24 +180,24 @@ namespace hpl {
 		//////////////////////////////////////////////////
 		////////// PROPERTIES /////////////////
 		//////////////////////////////////////////////////
-		
+
 		const cMatrixf& GetViewMatrix();
 		const cMatrixf& GetProjectionMatrix();
-		
+
 		const cMatrixf& GetMoveMatrix();
 
 		//iCamera stuff:
 		void SetModelViewMatrix(iLowLevelGraphics* apLowLevel);
 		void SetProjectionMatrix(iLowLevelGraphics* apLowLevel);
-		cVector3f GetEyePosition(); 
+		cVector3f GetEyePosition();
 
 		//////////////////////////////////////////////////
 		////////// RENDER SPECIFIC ///////////////////////
 		//////////////////////////////////////////////////
-		
+
 		void SetPrevView(const cMatrixf &a_mtxA){ m_mtxPrevView = a_mtxA;}
 		void SetPrevProjection(const cMatrixf &a_mtxA){m_mtxPrevProjection = a_mtxA;}
-		
+
 		cMatrixf& GetPrevView(){ return m_mtxPrevView;}
 		cMatrixf& GetPrevProjection(){ return m_mtxPrevProjection;}
 
@@ -222,7 +222,7 @@ namespace hpl {
 		float mfPitchLimitMax;
 		float mfYawLimitMin;
 		float mfYawLimitMax;
-		
+
 		eCameraRotateMode mRotateMode;
 		eCameraMoveMode mMoveMode;
 

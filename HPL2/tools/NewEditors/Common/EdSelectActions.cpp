@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -31,7 +31,7 @@ static void Select(cEdSelection* apSelection, const tIntList& alstIDs)
 	for(;it!=alstIDs.end();++it)
 	{
 		int lID = *it;
-		
+
 		iEdObject* pObj = pWorld->GetObject(lID);
 		apSelection->AddComponent(static_cast<iEdScnObject*>(pObj));
 	}
@@ -59,7 +59,7 @@ cEdActionSelectObjects::cEdActionSelectObjects(cEdSelection* apSel, const tScnOb
 		iEdScnObject* pObj = *it;
 		if(pObj->IsSelected()==false)
 			mbValid = true;
-		
+
 		mlstObjectsToSelectIDs.push_back(pObj->GetID());
 	}
 
@@ -68,7 +68,7 @@ cEdActionSelectObjects::cEdActionSelectObjects(cEdSelection* apSel, const tScnOb
 	for(;itOld!=lstOldSelection.end(); ++itOld)
 	{
 		iEdScnObject* pObj = *itOld;
-        
+
 		mlstOldSelectedIDs.push_back(pObj->GetID());
 	}
 }
@@ -110,7 +110,7 @@ cEdActionDeselectObjects::cEdActionDeselectObjects(cEdSelection* apSel, const tS
 		iEdScnObject* pObj = *it;
 		if(pObj->IsSelected())
 			mbValid = true;
-		
+
 		mlstObjectsToDeselectIDs.push_back(pObj->GetID());
 	}
 
@@ -119,7 +119,7 @@ cEdActionDeselectObjects::cEdActionDeselectObjects(cEdSelection* apSel, const tS
 	for(;itOld!=lstOldSelection.end(); ++itOld)
 	{
 		iEdScnObject* pObj = *itOld;
-        
+
 		mlstOldSelectedIDs.push_back(pObj->GetID());
 	}
 }
@@ -222,8 +222,8 @@ void iEdActionSelectionTransform::UndoModify()
 
 //----------------------------------------------------------------------
 
-cEdActionTranslateSelection::cEdActionTranslateSelection(cEdSelection* apSelection, 
-														 bool abGlobal, 
+cEdActionTranslateSelection::cEdActionTranslateSelection(cEdSelection* apSelection,
+														 bool abGlobal,
 														 const cVector3f& avX) : iEdActionSelectionTransform(apSelection, abGlobal, avX)
 {
 }
@@ -247,8 +247,8 @@ const cVector3f& cEdActionTranslateSelection::GetTransform()
 
 //----------------------------------------------------------------------
 
-cEdActionRotateSelection::cEdActionRotateSelection(cEdSelection* apSelection, 
-														 bool abGlobal, 
+cEdActionRotateSelection::cEdActionRotateSelection(cEdSelection* apSelection,
+														 bool abGlobal,
 														 const cVector3f& avX) : iEdActionSelectionTransform(apSelection, abGlobal, avX)
 {
 }
@@ -271,8 +271,8 @@ const cVector3f& cEdActionRotateSelection::GetTransform()
 
 //----------------------------------------------------------------------
 
-cEdActionScaleSelection::cEdActionScaleSelection(cEdSelection* apSelection, 
-														 bool abGlobal, 
+cEdActionScaleSelection::cEdActionScaleSelection(cEdSelection* apSelection,
+														 bool abGlobal,
 														 const cVector3f& avX) : iEdActionSelectionTransform(apSelection, abGlobal, avX)
 {
 }

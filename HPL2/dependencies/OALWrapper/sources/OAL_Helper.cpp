@@ -82,7 +82,7 @@ FILE *OpenFileW(const wstring& asFileName, const wstring asMode)
 #else
     string sFileName = WString2String(asFileName);
     string sMode = WString2String(asMode);
-    
+
 	FILE *fileHandle = fopen(sFileName.c_str(),sMode.c_str());
     return fileHandle;
 #endif

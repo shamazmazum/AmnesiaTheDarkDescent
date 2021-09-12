@@ -2,23 +2,23 @@
    AngelCode Scripting Library
    Copyright (c) 2003-2010 Andreas Jonsson
 
-   This software is provided 'as-is', without any express or implied 
-   warranty. In no event will the authors be held liable for any 
+   This software is provided 'as-is', without any express or implied
+   warranty. In no event will the authors be held liable for any
    damages arising from the use of this software.
 
-   Permission is granted to anyone to use this software for any 
-   purpose, including commercial applications, and to alter it and 
+   Permission is granted to anyone to use this software for any
+   purpose, including commercial applications, and to alter it and
    redistribute it freely, subject to the following restrictions:
 
-   1. The origin of this software must not be misrepresented; you 
+   1. The origin of this software must not be misrepresented; you
       must not claim that you wrote the original software. If you use
-      this software in a product, an acknowledgment in the product 
+      this software in a product, an acknowledgment in the product
       documentation would be appreciated but is not required.
 
-   2. Altered source versions must be plainly marked as such, and 
+   2. Altered source versions must be plainly marked as such, and
       must not be misrepresented as being the original software.
 
-   3. This notice may not be removed or altered from any source 
+   3. This notice may not be removed or altered from any source
       distribution.
 
    The original version of this library can be located at:
@@ -128,9 +128,9 @@ asCScriptFunction::asCScriptFunction(asCScriptEngine *engine, asCModule *mod, in
 	refCount.set(1);
 	this->engine           = engine;
 	funcType               = _funcType;
-	module                 = mod; 
-	objectType             = 0; 
-	name                   = ""; 
+	module                 = mod;
+	objectType             = 0;
+	name                   = "";
 	isReadOnly             = false;
 	isPrivate              = false;
 	stackNeeded            = 0;
@@ -150,9 +150,9 @@ asCScriptFunction::asCScriptFunction(asCScriptEngine *engine, asCModule *mod, in
 // internal
 asCScriptFunction::~asCScriptFunction()
 {
-	// Imported functions are not reference counted, nor are dummy 
+	// Imported functions are not reference counted, nor are dummy
 	// functions that are allocated on the stack
-	asASSERT( funcType == -1              || 
+	asASSERT( funcType == -1              ||
 		      funcType == asFUNC_IMPORTED ||
 		      refCount.get() == 0         );
 
@@ -217,7 +217,7 @@ asIObjectType *asCScriptFunction::GetObjectType() const
 }
 
 // interface
-const char *asCScriptFunction::GetObjectName() const 
+const char *asCScriptFunction::GetObjectName() const
 {
 	if( objectType )
 		return objectType->GetName();
@@ -272,9 +272,9 @@ asCString asCScriptFunction::GetDeclarationStr(bool includeObjectName) const
 	asCString str;
 
 	// Don't add the return type for constructors and destructors
-	if( !(returnType.GetTokenType() == ttVoid && 
-		  objectType && 
-		  (name == objectType->name || (name.GetLength() > 0 && name[0] == '~'))) ) 
+	if( !(returnType.GetTokenType() == ttVoid &&
+		  objectType &&
+		  (name == objectType->name || (name.GetLength() > 0 && name[0] == '~'))) )
 	{
 		str = returnType.Format();
 		str += " ";
@@ -342,7 +342,7 @@ int asCScriptFunction::GetLineNumber(int programPosition)
 			if( lineNumbers[i*2+2] > programPosition ) return lineNumbers[i*2+1];
 
 			min = i + 1;
-			i = (max + min)/2; 
+			i = (max + min)/2;
 		}
 		else if( lineNumbers[i*2] > programPosition )
 		{
@@ -373,15 +373,15 @@ void asCScriptFunction::AddVariable(asCString &name, asCDataType &type, int stac
 // internal
 void asCScriptFunction::ComputeSignatureId()
 {
-	// This function will compute the signatureId based on the 
-	// function name, return type, and parameter types. The object 
-	// type for methods is not used, so that class methods and  
+	// This function will compute the signatureId based on the
+	// function name, return type, and parameter types. The object
+	// type for methods is not used, so that class methods and
 	// interface methods match each other.
 	for( asUINT n = 0; n < engine->signatureIds.GetLength(); n++ )
 	{
 		if( !IsSignatureEqual(engine->signatureIds[n]) ) continue;
 
-		// We don't need to increment the reference counter here, because 
+		// We don't need to increment the reference counter here, because
 		// asCScriptEngine::FreeScriptFunctionId will maintain the signature
 		// id as the function is freed.
 		signatureId = engine->signatureIds[n]->signatureId;
@@ -396,7 +396,7 @@ void asCScriptFunction::ComputeSignatureId()
 bool asCScriptFunction::IsSignatureEqual(const asCScriptFunction *func) const
 {
 	if( !IsSignatureExceptNameEqual(func) || name != func->name ) return false;
-	
+
 	return true;
 }
 
@@ -425,7 +425,7 @@ void asCScriptFunction::AddReferences()
 	asCArray<void*> ptrs;
 
 	// Only count references if there is any bytecode
-	if( byteCode.GetLength() ) 
+	if( byteCode.GetLength() )
 	{
 		if( returnType.IsObject() )
 			returnType.GetObjectType()->AddRef();
@@ -547,7 +547,7 @@ void asCScriptFunction::ReleaseReferences()
 		case asBC_REFCPY:
 			{
 				asCObjectType *objType = (asCObjectType*)(size_t)asBC_PTRARG(&byteCode[n]);
-				if( objType ) 
+				if( objType )
 					objType->Release();
 			}
 			break;
@@ -577,7 +577,7 @@ void asCScriptFunction::ReleaseReferences()
 			{
 				void *gvarPtr = (void*)(size_t)asBC_PTRARG(&byteCode[n]);
 				asCGlobalProperty *prop = GetPropertyByGlobalVarPtr(gvarPtr);
-				
+
 				// Only release the properties once
 				if( !ptrs.Exists(gvarPtr) )
 				{
@@ -673,7 +673,7 @@ const char *asCScriptFunction::GetScriptSectionName() const
 {
 	if( scriptSectionIdx >= 0 )
 		return engine->scriptSectionNames[scriptSectionIdx]->AddressOf();
-	
+
 	return 0;
 }
 
@@ -830,7 +830,7 @@ void asCScriptFunction::EnumReferences(asIScriptEngine *)
 void asCScriptFunction::ReleaseAllHandles(asIScriptEngine *)
 {
 	// Release paramaters
-	if( byteCode.GetLength() ) 
+	if( byteCode.GetLength() )
 	{
 		if( returnType.IsObject() )
 		{
@@ -901,7 +901,7 @@ void asCScriptFunction::ReleaseAllHandles(asIScriptEngine *)
 			}
 			break;
 
-		// The global variables are not released here. It is enough that the global 
+		// The global variables are not released here. It is enough that the global
 		// variable itself release the function to break the circle
 		}
 	}

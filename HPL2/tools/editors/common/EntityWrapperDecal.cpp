@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -126,7 +126,7 @@ bool cEntityWrapperDataDecal::Load(cXmlElement* apElement)
 	float fOffset = GetFloat(eDecalFloat_Offset);
 	float fOffsetMin = cEntityWrapperTypeDecal::GetDecalOffsetMin();
 	float fOffsetMax = cEntityWrapperTypeDecal::GetDecalOffsetMax();
-	if(fOffset < fOffsetMin || 
+	if(fOffset < fOffsetMin ||
 		fOffset > fOffsetMax)
 	{
 		fOffset = cMath::RandRectf(fOffsetMin, fOffsetMax);
@@ -135,7 +135,7 @@ bool cEntityWrapperDataDecal::Load(cXmlElement* apElement)
 	}
 
 	cEngine* pEng = mpType->GetWorld()->GetEditor()->GetEngine();
-	mpMesh = cEngineFileLoading::LoadDecalMeshHelper(apElement->GetFirstElement("DecalMesh"), pEng->GetGraphics(), pEng->GetResources(), GetName(), sMaterial, GetColor(eDecalCol_Color)); 
+	mpMesh = cEngineFileLoading::LoadDecalMeshHelper(apElement->GetFirstElement("DecalMesh"), pEng->GetGraphics(), pEng->GetResources(), GetName(), sMaterial, GetColor(eDecalCol_Color));
 
 	/////////////////////////////////////////////////
 	// Load affected entity IDs
@@ -219,7 +219,7 @@ bool cEntityWrapperDataDecal::SaveSpecific(cXmlElement* apElement)
 
 	sIndices = cString::ToString((int)pIndices[0]);
 	for(int i=1;i<pVB->GetIndexNum();++i)
-		sIndices += " " + cString::ToString((int)pIndices[i]);		
+		sIndices += " " + cString::ToString((int)pIndices[i]);
 
 	/////////////////////////////////////////////////
 	// Save strings to elements
@@ -271,7 +271,7 @@ cEntityWrapperDecal::cEntityWrapperDecal(iEntityWrapperData* apData) : iEntityWr
 	mbMaterialUpdated=true;
 	mColor = 1;
 	mvSubDivisions = 1;
-	
+
 	mbAffectsStaticObjects = true;
 	mbAffectsEntities = true;
 	mbAffectsPrimitives = true;
@@ -357,7 +357,7 @@ bool cEntityWrapperDecal::SetProperty(int alPropID, const tString& asX)
 	default:
 		return iEntityWrapper::SetProperty(alPropID, asX);
 	}
-	
+
 	return true;
 }
 
@@ -369,7 +369,7 @@ bool cEntityWrapperDecal::SetProperty(int alPropID, const cVector2f& avX)
 	{
 	case eDecalVec2f_SubDivs:
 		{
-			cVector2l vSubDivs = cVector2l((int)avX.x, (int)avX.y);	
+			cVector2l vSubDivs = cVector2l((int)avX.x, (int)avX.y);
 			SetUVSubDivisions(vSubDivs);
 		}
 		break;
@@ -468,7 +468,7 @@ bool cEntityWrapperDecal::GetProperty(int alPropID, tString& asX)
 	default:
 		return iEntityWrapper::GetProperty(alPropID, asX);
 	}
-	
+
 	return true;
 }
 
@@ -543,7 +543,7 @@ void cEntityWrapperDecal::Draw(cEditorWindowViewport* apViewport, cRendererCallb
 		apFunctions->GetLowLevelGfx()->DrawLine(0, cVector3f(1,0,0), cColor(1,0,0,1));
 		apFunctions->GetLowLevelGfx()->DrawLine(0, cVector3f(0,1,0), cColor(0,1,0,1));
 		apFunctions->GetLowLevelGfx()->DrawLine(0, cVector3f(0,0,1), cColor(0,0,1,1));
-		
+
 		apFunctions->GetLowLevelGfx()->DrawBoxMinMax(-0.5f, 0.5f, cColor(1));*/
 	}
 }
@@ -729,7 +729,7 @@ void cEntityWrapperDecal::SetAbsScale(const cVector3f& avScale, int alAxis)
 void cEntityWrapperDecal::UpdateEntity()
 {
 	if(mbDeployed==false) return;
-	
+
 	UpdateMatrix();
 	UpdateDecal();
 
@@ -762,12 +762,12 @@ iVertexBuffer* cEntityWrapperDecal::BuildDecalVertexBuffer(cWorld* apWorld, cDec
 	apCreator->SetColor(aCol);
 	apCreator->SetUVSubDivisions(avSubDivs);
 	apCreator->SetCurrentSubDiv(alSubDiv);
-	apCreator->SetMaxTrianglesPerDecal( (alMaxTris>=0)? alMaxTris : 
+	apCreator->SetMaxTrianglesPerDecal( (alMaxTris>=0)? alMaxTris :
 														cEntityWrapperTypeDecal::GetGlobalMaxTriangles() );
 
 	if(apCreator->IsUpdated()==false)
 		return apCreator->GetVB();
-	
+
 	apCreator->ClearMeshes();
 
 	/////////////////////////////
@@ -782,12 +782,12 @@ iVertexBuffer* cEntityWrapperDecal::BuildDecalVertexBuffer(cWorld* apWorld, cDec
 	for(int i=0; i<2; ++i)
 	{
 		pContainers[i]->UpdateBeforeRendering();
-		IterateRenderableNode(pContainers[i]->GetRoot(), apCreator, 
+		IterateRenderableNode(pContainers[i]->GetRoot(), apCreator,
 								abAffectStaticObject, abAffectPrimitive, abAffectEntity);
 	}
 
 	apCreator->CanCreateDecal();
-	
+
 	return apCreator->GetVB();
 }
 
@@ -823,11 +823,11 @@ cMesh* cEntityWrapperDecal::CreateDecalMesh()
 	}
 	//////////////////////////////////////////
 	// Check if current parameters are valid
-	iVertexBuffer* pVB = BuildDecalVertexBuffer(pWorld->GetWorld(), pCreator, 
-							mvPosition, mvScale, mfOffset, 
+	iVertexBuffer* pVB = BuildDecalVertexBuffer(pWorld->GetWorld(), pCreator,
+							mvPosition, mvScale, mfOffset,
 							mtxOrientation.GetRight(), mtxOrientation.GetUp(), mtxOrientation.GetForward(),
-							msMaterial, mColor,	
-							mvSubDivisions, mlCurrentSubDiv, 
+							msMaterial, mColor,
+							mvSubDivisions, mlCurrentSubDiv,
 							mlMaxTriangles,
 							mbAffectsStaticObjects, mbAffectsPrimitives, mbAffectsEntities);
 
@@ -888,7 +888,7 @@ void cEntityWrapperDecal::IterateRenderableNode(iRenderableContainerNode *apNode
 		for(; childIt != apNode->GetChildNodeList()->end(); ++childIt)
 		{
 			iRenderableContainerNode *pChildNode = *childIt;
-			IterateRenderableNode(pChildNode, apCreator, 
+			IterateRenderableNode(pChildNode, apCreator,
 									abAffectStaticObject, abAffectPrimitive, abAffectEntity);
 		}
 	}

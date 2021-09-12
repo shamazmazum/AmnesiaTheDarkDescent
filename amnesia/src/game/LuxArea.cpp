@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -44,7 +44,7 @@ void iLuxAreaLoader::Load(const tString &asName, int alID, bool abActive, const 
 	pBody->SetCollideCharacter(false);
 	pBody->SetMatrix(a_mtxTransform);
 	pBody->SetUserData(pArea);
-	
+
 	pArea->mpBody = pBody;
 
 	//////////////////////////////
@@ -108,7 +108,7 @@ void iLuxArea::OnRenderSolid(cRendererCallbackFunctions* apFunctions)
     /*if(mpBody==NULL) return;
 
 	cBoundingVolume* pBV = mpBody->GetBoundingVolume();
-	
+
 	apFunctions->GetLowLevelGfx()->DrawBoxMinMax(pBV->GetMin(), pBV->GetMax(),cColor(1,1,1,1));*/
 }
 
@@ -148,7 +148,7 @@ iEntity3D* iLuxArea::GetAttachEntity()
 //////////////////////////////////////////////////////////////////////////
 
 void iLuxArea::OnSetActive(bool abX)
-{	
+{
 	///////////////
 	//Bodies
 	if(mpBody)
@@ -159,7 +159,7 @@ void iLuxArea::OnSetActive(bool abX)
 
 void iLuxArea::OnUpdate(float afTimeStep)
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -220,7 +220,7 @@ void iLuxArea::LoadFromSaveData(iLuxEntity_SaveData* apSaveData)
 	pBody->SetActive(mbActive);
 
 	mpBody = pBody;
-	
+
 	///////////////////
 	//Do setup
 	SetupAfterLoad(mpMap->GetWorld());

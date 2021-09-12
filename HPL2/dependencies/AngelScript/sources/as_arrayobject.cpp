@@ -2,23 +2,23 @@
    AngelCode Scripting Library
    Copyright (c) 2003-2010 Andreas Jonsson
 
-   This software is provided 'as-is', without any express or implied 
-   warranty. In no event will the authors be held liable for any 
+   This software is provided 'as-is', without any express or implied
+   warranty. In no event will the authors be held liable for any
    damages arising from the use of this software.
 
-   Permission is granted to anyone to use this software for any 
-   purpose, including commercial applications, and to alter it and 
+   Permission is granted to anyone to use this software for any
+   purpose, including commercial applications, and to alter it and
    redistribute it freely, subject to the following restrictions:
 
-   1. The origin of this software must not be misrepresented; you 
+   1. The origin of this software must not be misrepresented; you
       must not claim that you wrote the original software. If you use
-      this software in a product, an acknowledgment in the product 
+      this software in a product, an acknowledgment in the product
       documentation would be appreciated but is not required.
 
-   2. Altered source versions must be plainly marked as such, and 
+   2. Altered source versions must be plainly marked as such, and
       must not be misrepresented as being the original software.
 
-   3. This notice may not be removed or altered from any source 
+   3. This notice may not be removed or altered from any source
       distribution.
 
    The original version of this library can be located at:
@@ -48,7 +48,7 @@ static asCArrayObject* ArrayObjectFactory2(asIObjectType *ot, asUINT length)
 {
 	asCArrayObject *a = asNEW(asCArrayObject)(length, ot);
 
-	// It's possible the constructor raised a script exception, in which case we 
+	// It's possible the constructor raised a script exception, in which case we
 	// need to free the memory and return null instead, else we get a memory leak.
 	asIScriptContext *ctx = asGetActiveContext();
 	if( ctx && ctx->GetState() == asEXECUTION_EXCEPTION )
@@ -64,7 +64,7 @@ static asCArrayObject* ArrayObjectFactoryDefVal(asIObjectType *ot, asUINT length
 {
 	asCArrayObject *a = asNEW(asCArrayObject)(length, defVal, ot);
 
-	// It's possible the constructor raised a script exception, in which case we 
+	// It's possible the constructor raised a script exception, in which case we
 	// need to free the memory and return null instead, else we get a memory leak.
 	asIScriptContext *ctx = asGetActiveContext();
 	if( ctx && ctx->GetState() == asEXECUTION_EXCEPTION )
@@ -73,7 +73,7 @@ static asCArrayObject* ArrayObjectFactoryDefVal(asIObjectType *ot, asUINT length
 		return 0;
 	}
 
-	return a;	
+	return a;
 }
 
 asCArrayObject* ArrayObjectFactory(asIObjectType *ot)
@@ -250,7 +250,7 @@ void RegisterArrayObject(asIScriptEngine *engine)
 	r = engine->RegisterObjectBehaviour("_builtin_array_<T>", asBEHAVE_GETGCFLAG, "bool f()", asFUNCTION(ArrayObject_GetFlag_Generic), asCALL_GENERIC); asASSERT( r >= 0 );
 	r = engine->RegisterObjectBehaviour("_builtin_array_<T>", asBEHAVE_ENUMREFS, "void f(int&in)", asFUNCTION(ArrayObject_EnumReferences_Generic), asCALL_GENERIC); asASSERT( r >= 0 );
 	r = engine->RegisterObjectBehaviour("_builtin_array_<T>", asBEHAVE_RELEASEREFS, "void f(int&in)", asFUNCTION(ArrayObject_ReleaseAllHandles_Generic), asCALL_GENERIC); asASSERT( r >= 0 );
-#endif 
+#endif
 }
 
 asCArrayObject &asCArrayObject::operator=(asCArrayObject &other)
@@ -428,7 +428,7 @@ void asCArrayObject::Resize(asUINT numElements)
 		asDWORD **s = (asDWORD**)buffer->data;
 		for( int n = 0; n < c; n++ )
 			d[n] = s[n];
-		
+
 		if( numElements > buffer->numElements )
 		{
 			Construct(newBuffer, buffer->numElements, numElements);
@@ -457,7 +457,7 @@ void asCArrayObject::Resize(asUINT numElements)
 // internal
 bool asCArrayObject::CheckMaxSize(asUINT numElements)
 {
-	// This code makes sure the size of the buffer that is allocated 
+	// This code makes sure the size of the buffer that is allocated
 	// for the array doesn't overflow and becomes smaller than requested
 
 	asUINT maxSize = 0xFFFFFFFFul - sizeof(sArrayBuffer) + 1;
@@ -605,7 +605,7 @@ void asCArrayObject::CopyBuffer(sArrayBuffer *dst, sArrayBuffer *src)
 			asDWORD **max = (asDWORD**)(dst->data + count * sizeof(void*));
 			asDWORD **d   = (asDWORD**)dst->data;
 			asDWORD **s   = (asDWORD**)src->data;
-			
+
 			for( ; d < max; d++, s++ )
 			{
 				*d = *s;

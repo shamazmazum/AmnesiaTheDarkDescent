@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -35,7 +35,7 @@ namespace hpl {
 
 	class cPostEffectComposite;
 	class iPostEffect;
-	
+
 
 	//------------------------------------------
 
@@ -47,11 +47,11 @@ namespace hpl {
 		void LoadFrom(iPostEffectParams* apSrcParams) {				\
 			aClass *pCastParams = static_cast< aClass *>(apSrcParams);	\
 			*this = *pCastParams;										\
-		}		
-		
+		}
+
 
 	//------------------------------------------
-	
+
 	class iPostEffectParams
 	{
 	public:
@@ -61,13 +61,13 @@ namespace hpl {
 
 		virtual void CopyTo(iPostEffectParams* apDestParams)=0;
 		virtual void LoadFrom(iPostEffectParams* apSrcParams)=0;
-		
+
 	private:
 		tString msName;
 	};
 
 	//------------------------------------------
-	
+
 	class iPostEffectType
 	{
 	public:
@@ -77,14 +77,14 @@ namespace hpl {
 		const tString& GetName(){ return msName;}
 
 		virtual iPostEffect *CreatePostEffect(iPostEffectParams *apParams)=0;
-	
+
 	protected:
 		cGraphics *mpGraphics;
 		cResources *mpResources;
 
 		tString msName;
 	};
-	
+
 	//------------------------------------------
 
 	class iPostEffect
@@ -98,7 +98,7 @@ namespace hpl {
 		/** SetDisabled - Method to disable the Effect completely, meaning IsActive will always return false even
 		 * after a SetActive(true) call
 		 *
-		 * \param abX 
+		 * \param abX
 		 */
 		void SetDisabled(bool abX) { mbDisabled = abX; }
 		bool IsDisabled() { return mbDisabled; }
@@ -116,7 +116,7 @@ namespace hpl {
 		virtual void OnSetParams()=0;
 		virtual iPostEffectParams *GetTypeSpecificParams()=0;
 		virtual iTexture* RenderEffect(iTexture *apInputTexture, iFrameBuffer *apFinalTempBuffer)=0;
-		
+
 		/**
 		 * Very important! Only set this if the contents of the final buffer does not matter!
 		 * This function will set the frame buffer if the post effect is last!
@@ -127,9 +127,9 @@ namespace hpl {
 
 		void SetFrameBuffer(iFrameBuffer *apFrameBuffer);
 		void DrawQuad(	const cVector3f& avPos,  const cVector2f& avSize, iTexture *apTexture, bool abFlipY);
-		void DrawQuad(	const cVector3f& avPos,  const cVector2f& avSize, iTexture *apTexture0, iTexture *apTexture1, 
+		void DrawQuad(	const cVector3f& avPos,  const cVector2f& avSize, iTexture *apTexture0, iTexture *apTexture1,
 						bool abFlipY0,bool abFlipY1);
-		
+
 		cGraphics *mpGraphics;
 		cResources *mpResources;
 		iLowLevelGraphics* mpLowLevelGraphics;
@@ -138,7 +138,7 @@ namespace hpl {
 
 		bool mbDisabled;
 		bool mbActive;
-		
+
 		cPostEffectComposite *mpCurrentComposite;
 		bool mbIsLastEffect;
 

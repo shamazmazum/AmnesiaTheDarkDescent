@@ -47,7 +47,7 @@ const bool	OAL_Source_IsBufferUnderrun ( const int alSource );
 
 
 
-void		OAL_Listener_SetAttributes ( const float* apPos, const float* apVel, const float* apForward, const float* apUpward ); 
+void		OAL_Listener_SetAttributes ( const float* apPos, const float* apVel, const float* apForward, const float* apUpward );
 void		OAL_Listener_SetMasterVolume ( const float afVolume );
 
 

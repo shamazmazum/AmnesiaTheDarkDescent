@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -52,7 +52,7 @@ void cLuxStaticPropLoader::AfterLoad(cXmlElement *apRootElem, const cMatrixf &a_
 	if(pMap==NULL) return;
 
 	// ATTENTION!
-	// The entity classes is only be used if for some reason 
+	// The entity classes is only be used if for some reason
 	// static props needs to be turned of or what not.
 
 	/*cLuxStaticProp *pStaticProp = hplNew( cLuxStaticProp, (msName, mlID) );
@@ -78,7 +78,7 @@ void cLuxStaticPropLoader::AfterLoad(cXmlElement *apRootElem, const cMatrixf &a_
 	//////////////////////////////
 	//Add to the current map
 	pMap->AddStaticProp(pStaticProp);*/
-	
+
 	///////////////////////////////
 	// Instance vars
 	if(apInstanceVars)
@@ -143,7 +143,7 @@ cLuxStaticProp::~cLuxStaticProp()
 		for(size_t i=0; i<mvLights.size(); ++i) pWorld->DestroyLight(mvLights[i]);
 
 		//Particle systems
-		for(size_t i=0; i<mvParticleSystems.size(); ++i) 
+		for(size_t i=0; i<mvParticleSystems.size(); ++i)
 		{
 			cParticleSystem *pPS = mvParticleSystems[i];
 			if(pPS && pWorld->ParticleSystemExists(pPS)) pPS->Kill();
@@ -157,7 +157,7 @@ cLuxStaticProp::~cLuxStaticProp()
 
 		//Sound entities
 		for(size_t i=0; i<mvSoundEntities.size(); ++i) 	pWorld->DestroySoundEntity(mvSoundEntities[i]);
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------

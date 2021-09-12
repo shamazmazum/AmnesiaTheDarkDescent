@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -27,12 +27,12 @@ namespace hpl {
 
 	class iLowLevelSound;
 	class iSoundChannel;
-	
-	
+
+
 	////////////////////////////////////////////////////
 	//////////// MUSIC LOCK ///////////////////////////
 	////////////////////////////////////////////////////
-	
+
 	class cMusicLock
 	{
 	public:
@@ -42,7 +42,7 @@ namespace hpl {
 		float mfVolume;
 		bool mbLoop;
 	};
-	
+
 	////////////////////////////////////////////////////
 	//////////// MUSIC ENTRY ///////////////////////////
 	////////////////////////////////////////////////////
@@ -50,7 +50,7 @@ namespace hpl {
 	class cMusicEntry
 	{
 	public:
-		cMusicEntry() : msFileName(""), mpStream(NULL), mfMaxVolume(1), 
+		cMusicEntry() : msFileName(""), mpStream(NULL), mfMaxVolume(1),
 			mfVolume(0), mfVolumeAdd(0.01f){}
 
 		tString msFileName;
@@ -96,10 +96,10 @@ namespace hpl {
 		 * \param afVolume volume to be played at
 		 * \param afFadeStepSize volume increse/decrease per app step when fading to new volume.
 		 * \param abLoop If the music should be looped or not.
-		 * \return 
+		 * \return
 		 */
 		bool Play(const tString& asFileName,float afVolume, float afFadeStepSize, bool abLoop, bool abResume);
-		
+
 		/**
 		 * Stop playing the current music.
 		 * \param afFadeStepSize volume increse/decrease per app step when fading volume to 0.
@@ -111,11 +111,11 @@ namespace hpl {
 		void FadeVolumeMul(float afDest, float afSpeed);
 		void SetVolumeMul(float afMul);
 		float GetVolumeMul(){ return mfVolumeMul;}
-		
-		
+
+
 		/**
 		 * No more music can be played when locked. Latest song that has been tried to be palyed is saved in lock.
-		 * \param apLock 
+		 * \param apLock
 		 */
 		void Lock(cMusicLock* apLock);
 		/**
@@ -124,9 +124,9 @@ namespace hpl {
 		void UnLock();
 		tString GetCurrentSongName();
 		float GetCurrentSongVolume();
-		
+
 		cMusicEntry* GetCurrentSong();
-		
+
 		void Update(float afTimeStep);
 
 		void ResetResumeData();

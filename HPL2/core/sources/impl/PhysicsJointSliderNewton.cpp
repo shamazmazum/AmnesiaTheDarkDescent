@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -32,8 +32,8 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	cPhysicsJointSliderNewton::cPhysicsJointSliderNewton(const tString &asName, 
-		iPhysicsBody *apParentBody, iPhysicsBody *apChildBody, 
+	cPhysicsJointSliderNewton::cPhysicsJointSliderNewton(const tString &asName,
+		iPhysicsBody *apParentBody, iPhysicsBody *apChildBody,
 		iPhysicsWorld *apWorld,const cVector3f &avPivotPoint, const cVector3f& avPinDir)
 		: iPhysicsJointNewton<iPhysicsJointSlider>(asName,apParentBody,apChildBody,apWorld,avPivotPoint,avPinDir)
 	{
@@ -63,7 +63,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	void cPhysicsJointSliderNewton::SetMaxDistance(float afX)
 	{
 		mfMaxDistance = afX;
@@ -80,7 +80,7 @@ namespace hpl {
 	{
 		return mfMinDistance;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cVector3f cPhysicsJointSliderNewton::GetVelocity()
@@ -110,9 +110,9 @@ namespace hpl {
 	{
 		return 0;
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// STATIC CALLBACKS
 	//////////////////////////////////////////////////////////////////////////
@@ -122,9 +122,9 @@ namespace hpl {
 	unsigned cPhysicsJointSliderNewton::LimitCallback(const NewtonJoint* pSlider, NewtonHingeSliderUpdateDesc* pDesc)
 	{
 		cPhysicsJointSliderNewton* pSliderJoint = (cPhysicsJointSliderNewton*)NewtonJointGetUserData(pSlider);
-		
+
 		//pSliderJoint->OnPhysicsUpdate();
-		
+
 		float fDistance = NewtonSliderGetJointPosit (pSlider);
 		//Log("Dist: %f\n",fDistance);
 
@@ -141,15 +141,15 @@ namespace hpl {
 			pDesc->m_minFriction =0;
 
 			//Log("Under Min. Acc: %f Dist %f\n",pDesc->m_accel,fDistance);
-			
+
 			pSliderJoint->mfPreviousDist = fDistance;
 
 			return 1;
-		} 
+		}
 		else if (fDistance > pSliderJoint->mfMaxDistance)
 		{
 			pSliderJoint->OnMaxLimit();
-			
+
 			pDesc->m_accel = NewtonSliderCalculateStopAccel (pSlider, pDesc, pSliderJoint->mfMaxDistance);
 			pDesc->m_maxFriction =0;
 
@@ -162,7 +162,7 @@ namespace hpl {
 		{
 			if(pSliderJoint->mpParentBody ==NULL || pSliderJoint->mpParentBody->GetMass()==0)
 			{
-				if( (pSliderJoint->mbStickyMaxLimit && pSliderJoint->mfPreviousDist > pSliderJoint->mfMaxDistance) || 
+				if( (pSliderJoint->mbStickyMaxLimit && pSliderJoint->mfPreviousDist > pSliderJoint->mfMaxDistance) ||
 					(pSliderJoint->mbStickyMinLimit && pSliderJoint->mfPreviousDist < pSliderJoint->mfMinDistance) )
 				{
 					pSliderJoint->mpChildBody->SetAngularVelocity(0);

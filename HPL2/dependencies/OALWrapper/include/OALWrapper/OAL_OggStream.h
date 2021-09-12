@@ -28,7 +28,7 @@ class cOAL_OggStream : public cOAL_Stream
 public:
 	cOAL_OggStream();
 	~cOAL_OggStream();
-	
+
 	void Seek(float afWhere, bool abForceRebuffer);
 protected:
 	bool CreateFromFile(const std::wstring &asFileName);

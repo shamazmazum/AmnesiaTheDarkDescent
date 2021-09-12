@@ -2,23 +2,23 @@
    AngelCode Scripting Library
    Copyright (c) 2003-2009 Andreas Jonsson
 
-   This software is provided 'as-is', without any express or implied 
-   warranty. In no event will the authors be held liable for any 
+   This software is provided 'as-is', without any express or implied
+   warranty. In no event will the authors be held liable for any
    damages arising from the use of this software.
 
-   Permission is granted to anyone to use this software for any 
-   purpose, including commercial applications, and to alter it and 
+   Permission is granted to anyone to use this software for any
+   purpose, including commercial applications, and to alter it and
    redistribute it freely, subject to the following restrictions:
 
-   1. The origin of this software must not be misrepresented; you 
+   1. The origin of this software must not be misrepresented; you
       must not claim that you wrote the original software. If you use
-      this software in a product, an acknowledgment in the product 
+      this software in a product, an acknowledgment in the product
       documentation would be appreciated but is not required.
 
-   2. Altered source versions must be plainly marked as such, and 
+   2. Altered source versions must be plainly marked as such, and
       must not be misrepresented as being the original software.
 
-   3. This notice may not be removed or altered from any source 
+   3. This notice may not be removed or altered from any source
       distribution.
 
    The original version of this library can be located at:
@@ -62,36 +62,36 @@ const asDWORD asOBJ_TEMPLATE_SUBTYPE = 0x20000000;
 
 
 
-// asOBJ_GC is used to indicate that the type can potentially 
+// asOBJ_GC is used to indicate that the type can potentially
 // form circular references, thus is garbage collected.
 
-// The fact that an object is garbage collected doesn't imply that an object that 
-// can references it also must be garbage collected, only if the garbage collected 
+// The fact that an object is garbage collected doesn't imply that an object that
+// can references it also must be garbage collected, only if the garbage collected
 // object can reference it as well.
 
-// For registered types however, we set the flag asOBJ_GC if the GC 
-// behaviours are registered. For script types that contain any such type we 
+// For registered types however, we set the flag asOBJ_GC if the GC
+// behaviours are registered. For script types that contain any such type we
 // automatically make garbage collected as well, because we cannot know what type
 // of references that object can contain, and must assume the worst.
 
 
 struct asSTypeBehaviour
 {
-	asSTypeBehaviour() 
+	asSTypeBehaviour()
 	{
 		factory = 0;
 		listFactory = 0;
 		copyfactory = 0;
-		construct = 0; 
+		construct = 0;
 		copyconstruct = 0;
-		destruct = 0; 
-		copy = 0; 
-		addref = 0; 
-		release = 0; 
-		gcGetRefCount = 0; 
-		gcSetFlag = 0; 
-		gcGetFlag = 0; 
-		gcEnumReferences = 0; 
+		destruct = 0;
+		copy = 0;
+		addref = 0;
+		release = 0;
+		gcGetRefCount = 0;
+		gcSetFlag = 0;
+		gcGetFlag = 0;
+		gcEnumReferences = 0;
 		gcReleaseAllReferences = 0;
 		templateCallback = 0;
 	}
@@ -106,14 +106,14 @@ struct asSTypeBehaviour
 	int addref;
 	int release;
 	int templateCallback;
-	
+
 	// GC behaviours
 	int gcGetRefCount;
 	int gcSetFlag;
 	int gcGetFlag;
 	int gcEnumReferences;
 	int gcReleaseAllReferences;
-	
+
 	asCArray<int> factories;
 	asCArray<int> constructors;
 	asCArray<int> operators;
@@ -180,7 +180,7 @@ public:
 // Internal
 //===========================================
 public:
-	asCObjectType(); 
+	asCObjectType();
 	asCObjectType(asCScriptEngine *engine);
 	~asCObjectType();
 

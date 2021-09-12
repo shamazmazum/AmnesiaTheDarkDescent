@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -117,7 +117,7 @@ enum eLayoutVec2
 
 //////////////////////////////////////////////////////////////
 // cEnditorEntityLoader
-//	Class derived from EntityLoader_Object used to load Entities in editors 
+//	Class derived from EntityLoader_Object used to load Entities in editors
 //	(mainly for physics test in ModelEditor)
 //	Can choose what portions of the entity to load at a time (bodies, animations, ...)
 class cEditorEntityLoader : public cEntityLoader_Object
@@ -126,10 +126,10 @@ public:
 	cEditorEntityLoader(iEditorBase* apEditor);
 
 	void BeforeLoad(cXmlElement *apRootElem, const cMatrixf &a_mtxTransform,cWorld *apWorld, cResourceVarsObject *apInstanceVars){}
-	
+
 	void AfterLoad(cXmlElement *apRootElem, const cMatrixf &a_mtxTransform,cWorld *apWorld, cResourceVarsObject *apInstanceVars){}
 
-	cMeshEntity* LoadEntFile(int alID, const tString& asName, const tString& asFilename, 
+	cMeshEntity* LoadEntFile(int alID, const tString& asName, const tString& asFilename,
 							 cWorld* apWorld,
 							 bool abLoadAnims=false,
 							 bool abLoadParticles=false,
@@ -137,8 +137,8 @@ public:
 							 bool abLoadSounds=false,
 							 bool abLoadLights=true);
 
-	cMeshEntity* LoadEntityFromElement(int alID, const tString& asName, cXmlElement* apElement, 
-									   cWorld* apWorld, const tString& asFilename="", const tWString& asFullPath=_W(""), 
+	cMeshEntity* LoadEntityFromElement(int alID, const tString& asName, cXmlElement* apElement,
+									   cWorld* apWorld, const tString& asFilename="", const tWString& asFullPath=_W(""),
 									   bool abLoadAnims=false,
 									   bool abLoadParticles=false,
 									   bool abLoadBillboards=false,
@@ -183,7 +183,7 @@ public:
 
 	///////////////////////////////////////////////
 	// User variable definitions
-	// Called by implemented class 
+	// Called by implemented class
 	virtual void SetUpClassDefinitions(cEditorUserClassDefinitionManager* apManager)=0;
 	cEditorUserClassDefinitionManager* GetClassDefinitionManager() { return mpClassDefManager; }
 
@@ -202,17 +202,17 @@ public:
 
 	virtual void OnNew(){}
 	virtual void OnPostWorldLoad(){}
-	
+
 	void AddRecentFile(const tWString& asFilename);
 
 	///////////////////////////////////////////////
 	// Regular Pop Ups
 	virtual void ShowLoadFilePicker(tWStringVec& avLoadFilenames,const tWString& asStartPath, void* apCallbackObject, tGuiCallbackFunc apCallback, const tWString& asCategoryName=_W(""), const tWStringList& alstCategoryStrings=tWStringList());
 	virtual void ShowSaveFilePicker(void* apCallbackObject, tGuiCallbackFunc apCallback);
-	
-	void ShowMessageBox(const tWString& asCaption, 
-						const tWString& asText, 
-						const tWString& asButton1, 
+
+	void ShowMessageBox(const tWString& asCaption,
+						const tWString& asText,
+						const tWString& asButton1,
 						const tWString& asButton2,
 						void* apCallbackObject,
 						tGuiCallbackFunc apCallback);
@@ -229,7 +229,7 @@ public:
 
 	cEditorWindowMaterialEditor* ShowMaterialEditor(cEditorInputFile* apInput=NULL, const tWString& asFile=_W(""));
 
-	cEditorWindowSoundBrowser* ShowSoundBrowser(const tWString& asStartDir, tWString& asDestFilename, 
+	cEditorWindowSoundBrowser* ShowSoundBrowser(const tWString& asStartDir, tWString& asDestFilename,
 												void *apCallbackObject, tGuiCallbackFunc apCallback);
 
 	virtual iEditorWindowLowerToolbar* CreateLowerToolbar();
@@ -245,7 +245,7 @@ public:
 	virtual void OnSetUpDirectories()=0;
 
 	cDirectoryHandler* GetDirHandler() { return mpDirHandler; }
-	
+
 	const tWString& GetWorkingDir();
 	const tWString& GetHomeDir();
 	const tWString& GetTempDir();
@@ -295,7 +295,7 @@ public:
 	void AddEditMode(iEditorEditMode* apEditMode);
 
 	iEditorEditMode* GetEditMode(const tString& asName);
-	tEditorEditModeVec& GetEditModes() { return mvEditModes;} 
+	tEditorEditModeVec& GetEditModes() { return mvEditModes;}
 
 
 	///////////////////////////////////////////////
@@ -308,7 +308,7 @@ public:
 
 	///////////////////////////////////////////////
 	// Hotkeys
-    
+
 
 	///////////////////////////////////////////////
 	// Viewport Management
@@ -333,7 +333,7 @@ public:
 	iEditorAction* CreateFocusOnSelectionAction();
 
 	///////////////////////////////////////////////
-	// Viewport Interaction event control	
+	// Viewport Interaction event control
 	virtual void ViewportMouseDown(cEditorWindowViewport* apViewport, int alButtons);
 	virtual void ViewportMouseUp(cEditorWindowViewport* apViewport, int alButtons);
 
@@ -360,10 +360,10 @@ public:
 	// Execution Control
 	/**
 	 * Init the editor
-	 * \param apEngine If this is null, then the editor will will init engine by itself and use settings from the setting file. Else current settings are used. 
+	 * \param apEngine If this is null, then the editor will will init engine by itself and use settings from the setting file. Else current settings are used.
 	 */
 	cEngine* Init(cEngine* apEngine, const char* asName, const char* asBuildDate, bool abDestroyEngineOnExit=false);
-	
+
 
 	///////////////////////////////////
 	// HPL Engine stuff
@@ -467,7 +467,7 @@ protected:
 	bool QuitCallback(iWidget* apWidget, const cGuiMessageData& aData);
 	kGuiCallbackDeclarationEnd(QuitCallback);
 
-	
+
 	bool PopUpCloseCallback(iWidget* apWidget, const cGuiMessageData& aData);
 	kGuiCallbackDeclarationEnd(PopUpCloseCallback);
 
@@ -515,7 +515,7 @@ protected:
 	std::map<tString, tString> mmapEditorSettings;
 
 	/////////////////////////
-	// Engine stuff	
+	// Engine stuff
 	cEngine* mpEngine;
 	iFrameBuffer* mpFrameBuffer;
 	cGuiSet* mpSet;

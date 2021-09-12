@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -327,7 +327,7 @@ void cEntityWrapperPrimitivePlane::Draw(cEditorWindowViewport* apViewport, cRend
 										const cColor& aHighlightCol, const cColor& aDisabledCol)
 {
 	if(abIsSelected==false) return;
-	
+
 	apFunctions->SetProgram(NULL);
 	apFunctions->SetMatrix(NULL);
 	apFunctions->SetTextureRange(NULL,0);
@@ -355,7 +355,7 @@ void cEntityWrapperPrimitivePlane::SetTileOffset(const cVector3f& avOffset)
 	if(mvTileOffset==avOffset) return;
 	mvTileOffset=avOffset;
 
-	UpdateUVMapping();	
+	UpdateUVMapping();
 }
 
 //------------------------------------------------------------------------
@@ -474,9 +474,9 @@ cMesh* cEntityWrapperPrimitivePlane::CreatePrimitiveMesh()
 		if(vEndCorner.v[i]!=0)
 			vEndCorner.v[i] /= vEndCorner.v[i];
 	}
-	cMesh* pMesh = GetEditorWorld()->GetEditor()->GetEngine()->GetGraphics()->GetMeshCreator()->CreatePlane("", 0, vEndCorner, 
-																											cVector2f(1,0), 0, 
-																											cVector2f(0,1), 1, 
+	cMesh* pMesh = GetEditorWorld()->GetEditor()->GetEngine()->GetGraphics()->GetMeshCreator()->CreatePlane("", 0, vEndCorner,
+																											cVector2f(1,0), 0,
+																											cVector2f(0,1), 1,
 																											msMaterial);
 
 	return pMesh;
@@ -505,7 +505,7 @@ void cEntityWrapperPrimitivePlane::SaveToElement(cXmlElement* apElement)
 
 	for(int i=0;i<4;++i)
 		apElement->SetAttributeVector2f("Corner" + cString::ToString(i+1) + "UV", mvUVCorners[i]);
-	
+
 	apElement->SetAttributeVector3f("TileAmount", mvTileAmount);
 	apElement->SetAttributeVector3f("TileOffset", mvTileOffset);
 	apElement->SetAttributeBool("AlignToWorldCoords", mbAlignToWorldCoords);

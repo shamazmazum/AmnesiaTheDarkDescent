@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -29,13 +29,13 @@ namespace hpl {
 	bool cMemoryManager::mbLogDeletion = false;
 	bool cMemoryManager::mbLogCreation = false;
 	int cMemoryManager::mlCreationCount =0;
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// ALLOCATED POINTER
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-		
+
 	cAllocatedPointer::cAllocatedPointer(void *apData,const std::string &asFile, int alLine, size_t alMemory)
 	{
 		mpData = apData;
@@ -52,7 +52,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	void* cMemoryManager::AddPointer(const cAllocatedPointer& aAllocatedPointer)
 	{
 		m_mapPointers.insert(tAllocatedPointerMap::value_type(aAllocatedPointer.mpData,aAllocatedPointer));
@@ -74,7 +74,7 @@ namespace hpl {
 		RemovePointer(apOldData, aNewAllocatedPointer.msFile.c_str(), aNewAllocatedPointer.mlLine);
         return AddPointer(aNewAllocatedPointer);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	bool cMemoryManager::RemovePointer(void *apData,const char* apFileString, int alLine)
@@ -86,18 +86,18 @@ namespace hpl {
 		{
 			char* apTest = (char*)it->second.mpData;
 			size_t testSize = it->second.mlMemory;
-            if(apData >= apTest && apData < apTest + testSize) bFound = true;				
+            if(apData >= apTest && apData < apTest + testSize) bFound = true;
 		}
 
 		if(bFound==false)
 		{
 			Warning("Trying to delete pointer %d in file %s at line %d that does not exist!\n",apData,apFileString,alLine);
-			return false; 
+			return false;
 		}
 
-		
+
 		mlTotalMemoryUsage -= it->second.mlMemory;
-		
+
 		m_mapPointers.erase(it);
 
 		return true;
@@ -113,12 +113,12 @@ namespace hpl {
 		{
 			char* apTest = (char*)it->second.mpData;
 			size_t testSize = it->second.mlMemory;
-			if(apData >= apTest && apData < apTest + testSize) return true;				
+			if(apData >= apTest && apData < apTest + testSize) return true;
 		}
 
 		return false;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cMemoryManager::LogResults()
@@ -134,7 +134,7 @@ namespace hpl {
 		{
 			Log("| Memory leaks detected: \n");
 			Log("|\n");
-			
+
 			Log("| address\t file");
 
 			//Get max length of file name
@@ -148,10 +148,10 @@ namespace hpl {
 			lMax += 5;
 
 			for(int i=0; i<lMax-4; ++i) Log(" ");
-			
+
 
 			Log("line\t\t memory usage\t  \n");
-			
+
 			Log("|------------------------------------------------------------\n");
 
 			it = m_mapPointers.begin();

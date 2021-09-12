@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -43,7 +43,7 @@
 
 //------------------------------------------------------------------
 
-tVertexVec iEntityWrapper::mvArrowQuads[4] = 
+tVertexVec iEntityWrapper::mvArrowQuads[4] =
 {
 	tVertexVec(4),
 	tVertexVec(4),
@@ -66,7 +66,7 @@ iPropVal::iPropVal(iProp* apProp)
 
 void iPropVal::Save(cXmlElement* apElement)
 {
-	if(mpProp->IsSaved()) 
+	if(mpProp->IsSaved())
 		SaveSpecific(apElement);
 }
 
@@ -406,7 +406,7 @@ iEntityWrapperType::~iEntityWrapperType()
 iEntityWrapperData* iEntityWrapperType::CreateData()
 {
 	iEntityWrapperData* pData = CreateSpecificData();
-	
+
 	return pData;
 }
 
@@ -455,9 +455,9 @@ bool iEntityWrapperType::IsAppropriateDefaultType(cXmlElement* apElement)
 
 void iEntityWrapperType::SetVisible(bool abX)
 {
-	if(mbVisible==abX) 
-		return; 
-	
+	if(mbVisible==abX)
+		return;
+
 	mbVisible = abX;
 	mpWorld->SetVisibilityUpdated();
 }
@@ -1105,14 +1105,14 @@ bool iEntityWrapper::Create()
 	mpData->CopyToEntity(this, ePropCopyStep_PreEnt);
 	mpIcon = CreateIcon();
 	if(CreateEngineEntity()==false &&
-		mpIcon==NULL && 
+		mpIcon==NULL &&
 		mpEngineEntity==NULL && mpType->AllowNullEngineEntity()==false)
 	{
-		Error("Could not create entity '%s' id: %d of type '%s'\n", 
-				msName.c_str(), 
-				mlID, 
+		Error("Could not create entity '%s' id: %d of type '%s'\n",
+				msName.c_str(),
+				mlID,
 				mpType->GetXmlElementName().c_str());
-                
+
 		return false;
 	}
 
@@ -1144,8 +1144,8 @@ void iEntityWrapper::OnPostDeployAll(bool abDestroyData)
 //------------------------------------------------------------------
 
 iEditorWorld* iEntityWrapper::GetEditorWorld()
-{ 
-	return mpType->GetWorld(); 
+{
+	return mpType->GetWorld();
 }
 
 //------------------------------------------------------------------
@@ -1178,7 +1178,7 @@ iEntityWrapper* iEntityWrapper::Clone(const tIntVec& avIDs, bool abDeleteData)
 	pCloneData->SetName(GetEditorWorld()->GenerateName(msName));
 
 	SetUpCloneData(pCloneData, avIDs);
-	
+
 	iEntityWrapper* pClone = GetEditorWorld()->CreateEntityWrapperFromData(pCloneData);
 	pClone->OnPostDeployAll(abDeleteData);
 
@@ -1317,7 +1317,7 @@ void iEntityWrapper::SetAbsRotation(const cVector3f& avRotation)
 	if(mvRotation==avRotation) return;
 
 	mvRotation = avRotation;
-    
+
 	mbEntityUpdated = true;
 	mbRotationUpdated = true;
 
@@ -1433,7 +1433,7 @@ void iEntityWrapper::UpdateEntity()
 {
 	if(mpCompoundObject)
 		mpCompoundObject->SetComponentsUpdated();
-	
+
 	UpdateMatrix();
 
 	CheckCulledByClipPlanes(GetEditorWorld()->GetClipPlanes());
@@ -1484,7 +1484,7 @@ void iEntityWrapper::CheckCulledByClipPlanes(tEditorClipPlaneVec& avPlanes)
 		return;
 
 	mbCulledByPlane = bCulled;
-	
+
 	OnSetCulled(mbCulledByPlane);
 }
 
@@ -1532,7 +1532,7 @@ cBoundingVolume* iEntityWrapper::GetRenderBV()
 {
 	if(mpEngineEntity)
 		return mpEngineEntity->GetRenderBV();
-	
+
 	return NULL;
 }
 
@@ -1544,7 +1544,7 @@ cBoundingVolume* iEntityWrapper::GetPickBV(cEditorWindowViewport* apViewport)
 		return mpEngineEntity->GetPickBV(apViewport);
 	if(mpIcon)
 		return mpIcon->GetPickBV(apViewport);
-	
+
 	return NULL;
 }
 
@@ -1664,7 +1664,7 @@ iEditorAction* iEntityWrapper::CreateModifyRotationAction(cEditorEditModeSelect*
 //------------------------------------------------------------------
 
 iEditorAction* iEntityWrapper::CreateModifyScaleAction(cEditorEditModeSelect* apEditMode,const cVector3f& avScale)
-{	
+{
 	cVector3f vAdd = avScale - mvScale;
 	bool bZeroScale = true;
 	for(int i=0;i<3;++i)
@@ -1732,7 +1732,7 @@ bool iEntityWrapper::CreateEngineEntity()
 	{
 		if(mpEngineEntity->Create(cString::ToString(GetID()))==false)
 		{
-			hplDelete(mpEngineEntity);		
+			hplDelete(mpEngineEntity);
 			mpEngineEntity = NULL;
 
 			return false;
@@ -1753,7 +1753,7 @@ void iEntityWrapper::Save(cXmlElement* apParentElement)
 {
 	if(apParentElement==NULL)
 	{
-		Error("Failed saving of entity named %s of type %s - no parent element found\n", 
+		Error("Failed saving of entity named %s of type %s - no parent element found\n",
 				GetName().c_str(), mpType->GetXmlElementName().c_str());
 		return;
 	}
@@ -1772,7 +1772,7 @@ void iEntityWrapper::Save(cXmlElement* apParentElement)
 
 	iEntityWrapperData* pData = CreateCopyData();
 	if(pData->Save(apParentElement)==false)
-		Error("Failed saving of entity named %s of type %s\n", 
+		Error("Failed saving of entity named %s of type %s\n",
 				pData->GetName().c_str(), mpType->GetXmlElementName().c_str());
 
 	hplDelete(pData);
@@ -1790,13 +1790,13 @@ bool iEntityWrapper::GetProperty(int alPropID, int& alX)
 	default:
 		return false;
 	}
-	
+
 	return true;
 }
 
 bool iEntityWrapper::GetProperty(int alPropID, float& afX)
 {
-	return false;	
+	return false;
 }
 
 bool iEntityWrapper::GetProperty(int alPropID, bool& abX)
@@ -1874,13 +1874,13 @@ bool iEntityWrapper::SetProperty(int alPropID, const int& alX)
 	default:
 		return false;
 	}
-	
+
 	return true;
 }
 
 bool iEntityWrapper::SetProperty(int alPropID, const float& afX)
 {
-	return false;	
+	return false;
 }
 
 bool iEntityWrapper::SetProperty(int alPropID, const bool& abX)
@@ -1951,7 +1951,7 @@ bool iEntityWrapper::SetProperty(int alPropID, const cColor& aX)
 iEditorAction* iEntityWrapper::CreateSetPropertyActionInt(int alPropID, int alX)
 {
 	iProp* pProp = mpType->GetPropByTypeAndID(eVariableType_Int, alPropID);
-	cEditorActionSetInt* pAction = hplNew(cEditorActionSetInt,(GetEditorWorld(), tIntList(1,GetID()), 
+	cEditorActionSetInt* pAction = hplNew(cEditorActionSetInt,(GetEditorWorld(), tIntList(1,GetID()),
 																							pProp, alX));
 	return SetUpAction(pAction);
 }
@@ -1959,7 +1959,7 @@ iEditorAction* iEntityWrapper::CreateSetPropertyActionInt(int alPropID, int alX)
 iEditorAction* iEntityWrapper::CreateSetPropertyActionFloat(int alPropID, float afX)
 {
 	iProp* pProp = mpType->GetPropByTypeAndID(eVariableType_Float, alPropID);
-	cEditorActionSetFloat* pAction = hplNew(cEditorActionSetFloat,(GetEditorWorld(), tIntList(1,GetID()), 
+	cEditorActionSetFloat* pAction = hplNew(cEditorActionSetFloat,(GetEditorWorld(), tIntList(1,GetID()),
 																							pProp, afX));
 
 	return SetUpAction(pAction);
@@ -1968,7 +1968,7 @@ iEditorAction* iEntityWrapper::CreateSetPropertyActionFloat(int alPropID, float 
 iEditorAction* iEntityWrapper::CreateSetPropertyActionBool(int alPropID, bool abX)
 {
 	iProp* pProp = mpType->GetPropByTypeAndID(eVariableType_Bool, alPropID);
-	cEditorActionSetBool* pAction = hplNew(cEditorActionSetBool,(GetEditorWorld(), tIntList(1,GetID()), 
+	cEditorActionSetBool* pAction = hplNew(cEditorActionSetBool,(GetEditorWorld(), tIntList(1,GetID()),
 																							pProp, abX));
 	return SetUpAction(pAction);
 }
@@ -1976,7 +1976,7 @@ iEditorAction* iEntityWrapper::CreateSetPropertyActionBool(int alPropID, bool ab
 iEditorAction* iEntityWrapper::CreateSetPropertyActionString(int alPropID, const tString& asX)
 {
 	iProp* pProp = mpType->GetPropByTypeAndID(eVariableType_String, alPropID);
-	cEditorActionSetString* pAction = hplNew(cEditorActionSetString,(GetEditorWorld(), tIntList(1,GetID()), 
+	cEditorActionSetString* pAction = hplNew(cEditorActionSetString,(GetEditorWorld(), tIntList(1,GetID()),
 																							pProp, asX));
 	return SetUpAction(pAction);
 }
@@ -1984,7 +1984,7 @@ iEditorAction* iEntityWrapper::CreateSetPropertyActionString(int alPropID, const
 iEditorAction* iEntityWrapper::CreateSetPropertyActionVector2f(int alPropID, const cVector2f& avX)
 {
 	iProp* pProp = mpType->GetPropByTypeAndID(eVariableType_Vec2, alPropID);
-	cEditorActionSetVec2f* pAction = hplNew(cEditorActionSetVec2f,(GetEditorWorld(), tIntList(1,GetID()), 
+	cEditorActionSetVec2f* pAction = hplNew(cEditorActionSetVec2f,(GetEditorWorld(), tIntList(1,GetID()),
 																							pProp, avX));
 	return SetUpAction(pAction);
 }
@@ -1992,7 +1992,7 @@ iEditorAction* iEntityWrapper::CreateSetPropertyActionVector2f(int alPropID, con
 iEditorAction* iEntityWrapper::CreateSetPropertyActionVector3f(int alPropID, const cVector3f& avX)
 {
 	iProp* pProp = mpType->GetPropByTypeAndID(eVariableType_Vec3, alPropID);
-	cEditorActionSetVec3f* pAction = hplNew(cEditorActionSetVec3f,(GetEditorWorld(), tIntList(1,GetID()), 
+	cEditorActionSetVec3f* pAction = hplNew(cEditorActionSetVec3f,(GetEditorWorld(), tIntList(1,GetID()),
 																							pProp, avX));
 	return SetUpAction(pAction);
 }
@@ -2000,7 +2000,7 @@ iEditorAction* iEntityWrapper::CreateSetPropertyActionVector3f(int alPropID, con
 iEditorAction* iEntityWrapper::CreateSetPropertyActionColor(int alPropID, const cColor& aX)
 {
 	iProp* pProp = mpType->GetPropByTypeAndID(eVariableType_Color, alPropID);
-	cEditorActionSetColor* pAction = hplNew(cEditorActionSetColor,(GetEditorWorld(), tIntList(1,GetID()), 
+	cEditorActionSetColor* pAction = hplNew(cEditorActionSetColor,(GetEditorWorld(), tIntList(1,GetID()),
 																							pProp, aX));
 	return SetUpAction(pAction);
 }
@@ -2064,7 +2064,7 @@ void iEntityWrapper::DrawArrow(cEditorWindowViewport* apViewport, cRendererCallb
 	mvArrowQuads[2][2].pos = cVector3f(0,0,0);
 	mvArrowQuads[2][3].pos = cVector3f(0,0,0);
 	mvArrowQuads[2][1].pos = cVector3f(fXZ,-fY,fXZ);
-	
+
 	mvArrowQuads[3][0].pos = cVector3f(-fXZ,-fY,-fXZ);
 	mvArrowQuads[3][1].pos = cVector3f(0,0,0);
 	mvArrowQuads[3][2].pos = cVector3f(0,0,0);
@@ -2072,7 +2072,7 @@ void iEntityWrapper::DrawArrow(cEditorWindowViewport* apViewport, cRendererCallb
 
 	cMatrixf mtxWorld = cMath::MatrixMul(amtxTransform, cMath::MatrixTranslate(cVector3f(0,afLength,0)));;
 	apFunctions->SetMatrix(&mtxWorld);
-	
+
 	apFunctions->GetLowLevelGfx()->DrawLine(cVector3f(0,-afLength,0), 0, aCol);
 	for(int i=0; i<4;++i)
 		apFunctions->GetLowLevelGfx()->DrawQuad(mvArrowQuads[i],aCol);
@@ -2129,7 +2129,7 @@ iEntityWrapperDataUserDefinedEntity::~iEntityWrapperDataUserDefinedEntity()
 void iEntityWrapperDataUserDefinedEntity::CopyFromEntity(iEntityWrapper* apEnt)
 {
 	iEntityWrapperData::CopyFromEntity(apEnt);
-	
+
 	iEntityWrapperUserDefinedEntity* pEnt = (iEntityWrapperUserDefinedEntity*)apEnt;
 	if(mpClass)
 		hplDelete(mpClass);
@@ -2259,7 +2259,7 @@ void iEntityWrapperUserDefinedEntity::SetVar(const tWString& asName, const tWStr
 
 iEditorAction* iEntityWrapperUserDefinedEntity::CreateActionSetUserType()
 {
-	//iEditorAction* pAction = hplNew(cEditorActionUserDefinedObjectSetType,(GetEditorWorld(), mlID, 
+	//iEditorAction* pAction = hplNew(cEditorActionUserDefinedObjectSetType,(GetEditorWorld(), mlID,
 
 	return NULL;
 }
@@ -2280,10 +2280,10 @@ iEditorAction* iEntityWrapperUserDefinedEntity::CreateActionSetUserVariable(cons
 //-------------------------------------------------------------------
 //-------------------------------------------------------------------
 
-iEntityWrapperTypeAggregate::iEntityWrapperTypeAggregate(int alType, const tWString& asName, 
+iEntityWrapperTypeAggregate::iEntityWrapperTypeAggregate(int alType, const tWString& asName,
 														 const tString& asElementName, const tString& asComponentElementName,
 														 bool abDestroyComponentsOnDeletion) : iEntityWrapperType(alType, asName, asElementName)
-														 
+														
 {
 	msComponentElementName = asComponentElementName;
 	mbDestroyComponentsOnDeletion = abDestroyComponentsOnDeletion;
@@ -2335,7 +2335,7 @@ void iEntityWrapperDataAggregate::CopyToEntity(iEntityWrapper* apEntity, int alC
 		for(int i=0;i<(int)mvComponentsData.size();++i)
 		{
 			iEntityWrapperData* pData = mvComponentsData[i];
-			
+
 			iEntityWrapper* pSubEntity = pWorld->GetEntity(pData->GetID());
 			if(pSubEntity==NULL)
 				pSubEntity = pWorld->CreateEntityWrapperFromData(pData);
@@ -2412,7 +2412,7 @@ void iEntityWrapperAggregate::OnDestroy()
 	if(GetEditorWorld()->IsClearingEntities()==false)
 	{
 		tEntityWrapperList lstEntities = mlstComponents;
-		
+
 		iEditorWorld* pWorld = GetEditorWorld();
 		tEntityWrapperListIt it = lstEntities.begin();
 		for(;it!=lstEntities.end();++it)
@@ -2458,7 +2458,7 @@ void iEntityWrapperAggregate::SetUpCloneData(iEntityWrapperData* apData, const t
 		iEntityWrapper* pComponentClone = pWorld->CreateEntityWrapperFromData(pComponentData);
 		lstComponentClones.push_back(pComponentClone);
 	}
-	
+
 	itComponents = lstComponentClones.begin();
 	for(;itComponents!=lstComponentClones.end();++itComponents)
 	{
@@ -2580,7 +2580,7 @@ void iEntityWrapperAggregate::AddComponent(iEntityWrapper* apEntity)
 	tEntityWrapperListIt it = find(mlstComponents.begin(), mlstComponents.end(), apEntity);
 	if(it!=mlstComponents.end())
 		return;
-	
+
 	OnAddComponent(apEntity);
 	mlstComponents.push_back(apEntity);
 
@@ -2627,7 +2627,7 @@ void iEntityWrapperAggregate::UpdateRelativeTransforms()
 	for(tEntityWrapperListIt it = mlstComponents.begin();it!=mlstComponents.end();++it)
 	{
 		iEntityWrapper* pEnt = *it;
-		
+
 		///////////////////////////////////////////////
 		// This is used to calculate the center of the aggregate later
 		cMath::ExpandAABB(vMin,vMax, pEnt->GetPosition(),pEnt->GetPosition());
@@ -2659,7 +2659,7 @@ void iEntityWrapperAggregate::UpdateRelativeTransforms()
 
 		const cMatrixf& mtxComponentWorldMatrix = pComponent->GetWorldMatrix();
 		cMatrixf mtxRelativeComponentMatrix = cMath::MatrixMul(mtxInvAggregateMatrix, mtxComponentWorldMatrix);
-		
+
 		mlstRelMatrices.push_back(mtxRelativeComponentMatrix);
 		OnUpdateRelativeTransform(pComponent, mlstRelMatrices.back());
 	}
@@ -2680,7 +2680,7 @@ void iEntityWrapperAggregate::UpdateEntity()
 	{
 		iEntityWrapper* pEnt = *itEnts;
 		cMatrixf mtxRelMatrix = *itRelMtx;
-		
+
 		pEnt->SetWorldMatrix(cMath::MatrixMul(mmtxTransform,mtxRelMatrix));
 
 		pEnt->UpdateEntity();

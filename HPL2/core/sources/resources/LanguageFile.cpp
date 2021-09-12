@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -34,7 +34,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	cLanguageFile::cLanguageFile(cResources *apResources)
 	{
 		mpResources = apResources;
@@ -54,7 +54,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	bool cLanguageFile::AddFromFile(const tWString& asFile, bool abAddResourceDirs, const tWString& asAltPath)
 	{
 		const bool bLog =false;
@@ -116,7 +116,7 @@ namespace hpl {
 			}
 		}
 
-		
+
 		///////////////////////////
 		//Iterate the categories
         TiXmlElement *pCatElem = pRootElem->FirstChildElement("CATEGORY");
@@ -132,7 +132,7 @@ namespace hpl {
 			{
 				pCategory = hplNew( cLanguageCategory, () );
 				m_mapCategories.insert(tLanguageCategoryMap::value_type(sCatName, pCategory));
-				
+
 				if(bLog) Log("Creating category '%s'\n",sCatName.c_str());
 			}
 			else
@@ -142,14 +142,14 @@ namespace hpl {
 				if(bLog) Log("Got existing category '%s'\n",sCatName.c_str());
 			}
 
-			
+
 			///////////////////////////
             //Iterate the entries
 			TiXmlElement *pEntryElem = pCatElem->FirstChildElement("Entry");
 			for(; pEntryElem != NULL; pEntryElem = pEntryElem->NextSiblingElement("Entry"))
 			{
 				tString sEntryName = pEntryElem->Attribute("Name");
-				
+
 				///////////////////////////////////
 				//Check if the entry already exists, if so, just continue.
 				if(pCategory->m_mapEntries.find(sEntryName) != pCategory->m_mapEntries.end())
@@ -158,11 +158,11 @@ namespace hpl {
 
 					continue;
 				}
-				
+
 				////////////////////////
 				//Create entry
 				cLanguageEntry *pEntry = hplNew( cLanguageEntry, () );
-				
+
 				if(bLog) Log("Creating Entry '%s'\n",sEntryName.c_str());
 
 
@@ -202,7 +202,7 @@ namespace hpl {
 								}
 								else if(sCommand[0]=='u')
 								{
-									int lNum = cString::ToInt(sCommand.substr(1).c_str(),0);	
+									int lNum = cString::ToInt(sCommand.substr(1).c_str(),0);
 									pEntry->mwsText += (wchar_t)lNum;
 								}
 								else
@@ -264,19 +264,19 @@ namespace hpl {
 
 		/*{
 			FILE *pFile = fopen("raw_lang_text.txt","w+");
-			
+
 			tLanguageCategoryMapIt CatIt = m_mapCategories.begin();
 			for(; CatIt != m_mapCategories.end(); ++CatIt)
 			{
 				cLanguageCategory *pCategory = CatIt->second;
 				tLanguageEntryMapIt EntryIt = pCategory->m_mapEntries.begin();
-                for(; EntryIt != pCategory->m_mapEntries.end(); ++EntryIt)				
+                for(; EntryIt != pCategory->m_mapEntries.end(); ++EntryIt)
 				{
 					cLanguageEntry *pEntry = EntryIt->second;
 					fputs(cString::To8Char(pEntry->mwsText + _W("\n\n")).c_str(), pFile);
 				}
 			}
-			
+
 			fclose(pFile);
 		}*/
 
@@ -294,7 +294,7 @@ namespace hpl {
 			Warning("Could not find language file category '%s'\n",asCat.c_str());
 			return mwsEmpty;
 		}
-		
+
         cLanguageCategory *pCategory = CatIt->second;
 		tLanguageEntryMapIt EntryIt = pCategory->m_mapEntries.find(asName);
 		if(EntryIt == pCategory->m_mapEntries.end())
@@ -307,7 +307,7 @@ namespace hpl {
 
 		return pEntry->mwsText;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -316,6 +316,6 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	
+
 	//-----------------------------------------------------------------------
 }

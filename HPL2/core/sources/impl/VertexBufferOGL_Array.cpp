@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -39,7 +39,7 @@ namespace hpl {
 										int alReserveVtxSize,int alReserveIdxSize) :
 	iVertexBufferOpenGL(apLowLevelGraphics,eVertexBufferType_Software, aDrawType,aUsageType, alReserveVtxSize, alReserveIdxSize)
 	{
-		
+
 	}
 
 	cVertexBufferOGL_Array::~cVertexBufferOGL_Array()
@@ -56,7 +56,7 @@ namespace hpl {
 
 	void cVertexBufferOGL_Array::UpdateData(tVertexElementFlag aTypes, bool abIndices)
 	{
-		
+
 	}
 	//-----------------------------------------------------------------------
 
@@ -69,10 +69,10 @@ namespace hpl {
 		///////////////////////////////
 		//Get the draw type
 		GLenum mode = GetDrawModeFromDrawType(drawType);
-		
+
 		int lSize = mlElementNum;
 		if(mlElementNum<0) lSize = GetIndexNum();
-		
+
 		glDrawElements(mode,lSize,GL_UNSIGNED_INT, &mvIndexArray[0]);
 	}
 
@@ -165,7 +165,7 @@ namespace hpl {
 				glNormalPointer(GLType, 0, pElement->GetArrayPtr());
 				break;
 
-			case eVertexBufferElement_Position:	
+			case eVertexBufferElement_Position:
 				glVertexPointer(lSize,GLType, 0, pElement->GetArrayPtr());
 				break;
 
@@ -177,14 +177,14 @@ namespace hpl {
 				glSecondaryColorPointerEXT(lSize,GLType, 0, pElement->GetArrayPtr());
 				break;
 
-			case eVertexBufferElement_Texture1Tangent:	
-			case eVertexBufferElement_Texture0:			
-			case eVertexBufferElement_Texture1:			
-			case eVertexBufferElement_Texture2:			
-			case eVertexBufferElement_Texture3:			
-			case eVertexBufferElement_Texture4:			
+			case eVertexBufferElement_Texture1Tangent:
+			case eVertexBufferElement_Texture0:
+			case eVertexBufferElement_Texture1:
+			case eVertexBufferElement_Texture2:
+			case eVertexBufferElement_Texture3:
+			case eVertexBufferElement_Texture4:
 				glTexCoordPointer(lSize,GLType,0, pElement->GetArrayPtr());
-				break;					
+				break;
 			//TODO: User types
 			}
 		}

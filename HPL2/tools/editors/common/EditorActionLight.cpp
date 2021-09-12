@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -41,7 +41,7 @@
 ///////////////////////////////////////////////////////////////
 //-------------------------------------------------------------
 /*
-cEditorActionLightSetIntProperty::cEditorActionLightSetIntProperty(int alID, 
+cEditorActionLightSetIntProperty::cEditorActionLightSetIntProperty(int alID,
 																   iEditorWorld* apEditorWorld,
 																   eLightIntProperty aProp,
 																   int alX) : iEditorActionObjectSetProperty<cEntityWrapperLight,int>("Set light int prop",
@@ -106,7 +106,7 @@ int cEditorActionLightSetIntProperty::FetchOldValue(iEditorWorld* apEditorWorld,
 ///////////////////////////////////////////////////////////////
 //-------------------------------------------------------------
 
-cEditorActionLightSetStringProperty::cEditorActionLightSetStringProperty(iEditorWorld* apEditorWorld, int alID, 
+cEditorActionLightSetStringProperty::cEditorActionLightSetStringProperty(iEditorWorld* apEditorWorld, int alID,
 																	   eLightStringProperty aType,
 																	   const tString& asNewValue) : iEditorActionWorldModifier("Set Light string", apEditorWorld)
 {
@@ -239,8 +239,8 @@ void cEditorActionLightSetStringProperty::UndoModify()
 ///////////////////////////////////////////////////////////////
 //-------------------------------------------------------------
 
-cEditorActionLightSetFloatProperty::cEditorActionLightSetFloatProperty(iEditorWorld* apEditorWorld, int alID, 
-									   eLightFloatProperty aType, 
+cEditorActionLightSetFloatProperty::cEditorActionLightSetFloatProperty(iEditorWorld* apEditorWorld, int alID,
+									   eLightFloatProperty aType,
 									   float afNewValue, float afNewValueExt) : iEditorActionWorldModifier("Set light float property", apEditorWorld)
 {
 	mpEditorWorld = apEditorWorld;
@@ -301,12 +301,12 @@ cEditorActionLightSetFloatProperty::cEditorActionLightSetFloatProperty(iEditorWo
 
 void cEditorActionLightSetFloatProperty::DoModify()
 {
-	Apply(mfNewValue, mfNewValueExt);	
+	Apply(mfNewValue, mfNewValueExt);
 }
 
 void cEditorActionLightSetFloatProperty::UndoModify()
 {
-	Apply(mfOldValue, mfOldValueExt);	
+	Apply(mfOldValue, mfOldValueExt);
 }
 
 //-------------------------------------------------------------
@@ -475,8 +475,8 @@ void cEditorActionLightSetColorProperty::UndoModify()
 ///////////////////////////////////////////////////////////////
 //-------------------------------------------------------------
 
-cEditorActionLightSetBoolProperty::cEditorActionLightSetBoolProperty(iEditorWorld* apEditorWorld, int alID, 
-																	 eLightBoolProperty aType, 
+cEditorActionLightSetBoolProperty::cEditorActionLightSetBoolProperty(iEditorWorld* apEditorWorld, int alID,
+																	 eLightBoolProperty aType,
 																	 bool abNewValue)  : iEditorActionWorldModifier("Set light bool property",apEditorWorld)
 {
 	mpEditorWorld = apEditorWorld;
@@ -591,7 +591,7 @@ cEditorActionLightBoxSetSizeProperty::cEditorActionLightBoxSetSizeProperty(iEdit
 	mvNewValue = avNewValue;
 
 	cEntityWrapperLightBox* pLight = (cEntityWrapperLightBox*)mpEditorWorld->GetEntity(mlID);
-	
+
 	mvOldValue = pLight->GetSize();
 }
 
@@ -644,9 +644,9 @@ cEditorActionLightBoxSetBlendFuncProperty::cEditorActionLightBoxSetBlendFuncProp
 	mpEditorWorld = apEditorWorld;
 	mlID = alID;
 	mNewValue = aFunc;
-	
+
 	cEntityWrapperLightBox* pLight = (cEntityWrapperLightBox*)mpEditorWorld->GetEntity(mlID);
-	
+
 	mOldValue = pLight->GetBlendFunc();
 }
 
@@ -701,7 +701,7 @@ cEditorActionLightSpotSetStringProperty::cEditorActionLightSpotSetStringProperty
 	mPropertyType = aType;
 	msNewValue = asNewValue;
 
-	cEntityWrapperLightSpot* pLight = (cEntityWrapperLightSpot*)mpEditorWorld->GetEntity(mlID);	
+	cEntityWrapperLightSpot* pLight = (cEntityWrapperLightSpot*)mpEditorWorld->GetEntity(mlID);
 	switch(mPropertyType)
 	{
 	case eLightSpotStringProperty_FalloffMap:
@@ -766,8 +766,8 @@ void cEditorActionLightSpotSetStringProperty::UndoModify()
 ///////////////////////////////////////////////////////////////
 //-------------------------------------------------------------
 
-cEditorActionLightSpotSetFloatProperty::cEditorActionLightSpotSetFloatProperty(iEditorWorld* apEditorWorld, int alID, 
-																			   eLightSpotFloatProperty aType, 
+cEditorActionLightSpotSetFloatProperty::cEditorActionLightSpotSetFloatProperty(iEditorWorld* apEditorWorld, int alID,
+																			   eLightSpotFloatProperty aType,
 																			   float afNewValue) : iEditorActionWorldModifier("Set Spotlight float property", apEditorWorld)
 {
 	mpEditorWorld = apEditorWorld;
@@ -776,7 +776,7 @@ cEditorActionLightSpotSetFloatProperty::cEditorActionLightSpotSetFloatProperty(i
 	mfNewValue = afNewValue;
 
 	cEntityWrapperLightSpot* pLight = (cEntityWrapperLightSpot*)mpEditorWorld->GetEntity(mlID);
-	
+
 	switch(mPropertyType)
 	{
 	case eLightSpotFloatProperty_FOV:

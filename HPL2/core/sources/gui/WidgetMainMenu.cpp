@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -57,7 +57,7 @@ namespace hpl {
 	void cWidgetMainMenu::UpdateMenuItemsPos(cWidgetMenuItem* apNewItem)
 	{
 		cVector3f vPos = cVector3f(3,mfItemVPadding,1);
-		
+
 		size_t lNumItems = mvMenuItems.size();
 
 		/////////////////////////////////////
@@ -78,7 +78,7 @@ namespace hpl {
 	void cWidgetMainMenu::UpdateMenuItemsSize(cWidgetMenuItem* apNewItem)
 	{
 		//////////////////////////////////////
-		// Set item text length as items size 
+		// Set item text length as items size
 		float fLength = apNewItem->GetTextLength();
 
         apNewItem->SetSize(cVector2f(fLength + 2*mfItemTextPadding, mpDefaultFont->mvSize.y + 2*mfItemVPadding));
@@ -93,7 +93,7 @@ namespace hpl {
 	{
 		mpSet->SetAttentionWidget(mpPrevAttention);
 	}
-    
+
 	//-----------------------------------------------------------------------
 
 	void cWidgetMainMenu::Hide()
@@ -114,7 +114,7 @@ namespace hpl {
 	void cWidgetMainMenu::OnDraw(float afTimeStep, cGuiClipRegion *apClipRegion)
 	{
 		////////////////////////////////
-		// Draw background 
+		// Draw background
 		mpSet->DrawGfx( mpGfxBackground,GetGlobalPosition(),mvSize-cVector2f(0,1));
 		//mpSet->DrawGfx( mpGfxBackground, GetGlobalPosition()+cVector3f(0,mvSize.y-1,0.05f), cVector2f(mvSize.x,1), cColor(0.5f,1));
 

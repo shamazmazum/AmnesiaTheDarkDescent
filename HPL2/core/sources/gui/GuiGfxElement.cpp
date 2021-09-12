@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -53,7 +53,7 @@ namespace hpl {
 	{
 		mfFrameLength = afLength;
 	}
-		
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -182,7 +182,7 @@ namespace hpl {
 			{
 				//Log("Over max!\n");
 				//Stop at end
-				if(pAnim->mType == eGuiGfxAnimationType_StopAtEnd) 
+				if(pAnim->mType == eGuiGfxAnimationType_StopAtEnd)
 				{
 					lFrame = (int)mvImageBufferVec.size()-1;
 					mfCurrentFrame = (float)lFrame;
@@ -202,7 +202,7 @@ namespace hpl {
 				}
 			}
 			//Log("Frame %d %f actual_frame: %d size: %d\n",lFrame,mfCurrentFrame,((int)mvImageBufferVec.size()-1) - lFrame,mvImageBufferVec.size());
-			
+
 			//Oscillate fix
 			if(mbForwardAnim== false && pAnim->mType == eGuiGfxAnimationType_Oscillate)
 			{
@@ -237,13 +237,13 @@ namespace hpl {
 			SetImage(mvImageBufferVec[mlActiveImage],0);
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	void cGuiGfxElement::AddImage(cFrameSubImage* apImage)
 	{
 		SetImage(apImage, mlTextureNum);
-		
+
 		mvActiveSize = GetImageSize();
 
 		++mlTextureNum;
@@ -265,7 +265,7 @@ namespace hpl {
 			if(apTexture->GetType() == eTextureType_Rect)
 			{
 				//If a rect, give new texture coordinates
-				
+
 				mvVtx[0].tex.x = avStartUV.x * vSize.x;
 				mvVtx[0].tex.y = avStartUV.y * vSize.y;
 
@@ -274,7 +274,7 @@ namespace hpl {
 
 				mvVtx[2].tex.x = avEndUV.x * vSize.x;
 				mvVtx[2].tex.y = avEndUV.y * vSize.y;
-				
+
 				mvVtx[3].tex.x = avStartUV.x * vSize.x;
 				mvVtx[3].tex.y = avEndUV.y * vSize.y;
 			}
@@ -288,7 +288,7 @@ namespace hpl {
 
 				mvVtx[2].tex.x = avEndUV.x;
 				mvVtx[2].tex.y = avEndUV.y;
-				
+
 				mvVtx[3].tex.x = avStartUV.x;
 				mvVtx[3].tex.y = avEndUV.y;
 
@@ -322,7 +322,7 @@ namespace hpl {
 		pAnimation->msName = asName;
 
 		mvAnimations.push_back(pAnimation);
-        		
+
 		return pAnimation;
 	}
 
@@ -393,7 +393,7 @@ namespace hpl {
 
 				mvVtx[2].tex.y = mvVtx[1].tex.y;
 				mvVtx[3].tex.y = mvVtx[0].tex.y;
-				
+
 				mvVtx[0].tex.y = fOldY3;
 				mvVtx[1].tex.y = fOldY2;
 			}
@@ -401,14 +401,14 @@ namespace hpl {
 			{
 				float fOldY0 = mvVtx[0].tex.y;
 				float fOldY1 = mvVtx[1].tex.y;
-				
+
 				mvVtx[0].tex.y = mvVtx[3].tex.y;
 				mvVtx[1].tex.y = mvVtx[2].tex.y;
-				
+
 				mvVtx[2].tex.y = fOldY1;
 				mvVtx[3].tex.y = fOldY0;
 			}
-		
+
 		}
 
 	}
@@ -435,12 +435,12 @@ namespace hpl {
 			if(pImage) pImage->Flush();
 
 		}
-		
+
 		//Check if the image has been changed, if so update UV.
 		if(mlImageUpdateCount != pMainImage->GetUpdateCount())
 		{
 			const tVertexVec& vImageVtx = pMainImage->GetVertexVec();
-			for(int i=0; i<4; ++i) mvVtx[i].tex = vImageVtx[i].tex;	
+			for(int i=0; i<4; ++i) mvVtx[i].tex = vImageVtx[i].tex;
 			if(mbFlipUvYAxis) SetFlipUvYAxis(mbFlipUvYAxis);
 
 			mlImageUpdateCount = pMainImage->GetUpdateCount();

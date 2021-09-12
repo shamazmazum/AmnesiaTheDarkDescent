@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -50,10 +50,10 @@ namespace hpl {
 	//-------------------------------------------------------------------------------
 
 	cGuiPopUpFilePicker::cGuiPopUpFilePicker(cGuiSet* apSet, cGuiSkin* apSkin,
-											 eFilePickerType aType, 
+											 eFilePickerType aType,
 											 const tWString &asStartPath, bool abShowHiddenFiles,
-											 void *apCallbackObject, tGuiCallbackFunc apCallback, 
-											 const tWString& asStartFilename) : iGuiPopUp(apSet,false,cVector2f(600,500)), 
+											 void *apCallbackObject, tGuiCallbackFunc apCallback,
+											 const tWString& asStartFilename) : iGuiPopUp(apSet,false,cVector2f(600,500)),
 																				iFileBrowser(asStartPath, abShowHiddenFiles)
 	{
 		mpSkin = apSkin;
@@ -121,7 +121,7 @@ namespace hpl {
 		// Go Up one folder button
 		if(apWidget == mvButtons[0])
 		{
-			NavigateUp();			
+			NavigateUp();
 		}
 		/////////////////////////////
 		// Save/Load button
@@ -129,9 +129,9 @@ namespace hpl {
 				apWidget == mpCurrentFileName)
 		{
 			if(mpCurrentFileName->GetText() == _W(""))
-				mpSet->CreatePopUpMessageBox(	_W("Error"), 
-												_W("File name must not be empty"), 
-												_W("OK"), 
+				mpSet->CreatePopUpMessageBox(	_W("Error"),
+												_W("File name must not be empty"),
+												_W("OK"),
 												_W(""),
 												NULL,NULL);
 			else
@@ -151,12 +151,12 @@ namespace hpl {
 
 						bFileExists = bFileExists || cPlatform::FileExists(sFilenameFullPath);
 					}
-					
+
 					if(bFileExists)
 					{
-						mpSet->CreatePopUpMessageBox(	_W("Warning"), 
+						mpSet->CreatePopUpMessageBox(	_W("Warning"),
 														_W("File already exists. Overwrite?"),
-														_W("Yes"), _W("No"), 
+														_W("Yes"), _W("No"),
 														this, kGuiCallback(MessageBoxReturnCallback));
 					}
 					else
@@ -169,9 +169,9 @@ namespace hpl {
 				case eFilePickerType_Load:
 					if(bFileExists==false)
 					{
-						mpSet->CreatePopUpMessageBox(	_W("Error"), 
-														_W("File does not exist. Please choose a valid file."), 
-														_W("OK"), _W(""), 
+						mpSet->CreatePopUpMessageBox(	_W("Error"),
+														_W("File does not exist. Please choose a valid file."),
+														_W("OK"), _W(""),
 														NULL, NULL);
 					}
 					else
@@ -226,7 +226,7 @@ namespace hpl {
 		int lSelection = pBox->GetSelectedItem();
 
 		tWString sDir;
-		
+
 		////////////////////////////////////////
         // If the selection is a system item (e.g. begins with "<") handle it differently
         if(lSelection < (lNumItems - mvCurrentDirFullPath.size())) {
@@ -245,7 +245,7 @@ namespace hpl {
 
 			NavigateTo(sDir);
 		}
-		
+
 		return true;
 	}
 	kGuiCallbackDeclaredFuncEnd(cGuiPopUpFilePicker, Directory_OnSelectionChange);
@@ -285,10 +285,10 @@ namespace hpl {
 
 		tWString sPath = _W("");
 
-		if(lSelection != -1) 
+		if(lSelection != -1)
 		{
 			cWidgetItem* pItem = (cWidgetItem*)mpFileList->GetItem(lSelection);
-			
+
 			if(pItem)
 				// Property 1 : file name
 				sPath = pItem->GetProperty(1)->GetText();
@@ -342,7 +342,7 @@ namespace hpl {
 		// and then repopulates it with the new filter values:
 		// it adds an item per category, and writes the filters on the item text
 		mpFilterList->ClearItems();
-		
+
 		for(int i=0;i<(int)mvCategories.size();++i)
 		{
 			cFileBrowserCategory* pCat = mvCategories[i];
@@ -432,7 +432,7 @@ namespace hpl {
 			tWString sFilename = *it;
 
 			cWidgetItem* pItem = mpFileList->AddItem();
-            
+
 			cGuiGfxElement* pGfx = mvGfxFileTypeIcons[GetFileTypeByName(sFilename)];
 			tWString sFileDate = cString::To16Char(cPlatform::FileModifiedDate(sCurrentFullPath + sFilename).ToString());
 			tWString sFileSize = GetHumanReadableSize(cPlatform::GetFileSize(sCurrentFullPath + sFilename));
@@ -442,12 +442,12 @@ namespace hpl {
 			pItem->AddProperty(sFileSize);
 			pItem->AddProperty(sFileDate);
 		}
-		
+
 	}
 
 
 	//-------------------------------------------------------------------------
-	
+
 	/** Builds the window and sets up stuff
 	 *
 	 */
@@ -480,14 +480,14 @@ namespace hpl {
 
 		/////////////////////////////////
 		// Init widgets
-		
+
 		// Main window
 		mpWindow->SetText(sCaption);
-		
+
 		// Current directory TextBox
 		mpCurrentDirectory = mpSet->CreateWidgetComboBox(cVector3f(30,60,0.1f),
 														cVector2f(400, mpWindow->GetDefaultFontSize().y+2),
-														_W(""), 
+														_W(""),
 														mpWindow);
 		mpCurrentDirectory->SetCanEdit(false);
 		mpCurrentDirectory->AddCallback(eGuiMessage_SelectionChange,this, kGuiCallback(Directory_OnSelectionChange));
@@ -497,7 +497,7 @@ namespace hpl {
 		{
 			mvButtons[i] = mpSet->CreateWidgetButton(	0,
 														0,
-														_W(""), 
+														_W(""),
 														mpWindow);
 
 			mvButtons[i]->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(Button_Pressed));
@@ -506,11 +506,11 @@ namespace hpl {
         if(mpGfxUpButton) mvButtons[0]->SetImage( mpGfxUpButton, false);
 		mvButtons[0]->SetPosition(cVector3f(435,60,0.1f));
 		mvButtons[0]->SetSize(23);
-		
+
 		mvButtons[1]->SetText(sCaption);
 		mvButtons[1]->SetPosition(cVector3f(500,425, 0.5f));
 		mvButtons[1]->SetSize(cVector2f(70,20));
-		
+
 		mvButtons[2]->SetText(_W("Cancel"));
 		mvButtons[2]->SetPosition(cVector3f(500,450, 0.5f));
 		mvButtons[2]->SetSize(cVector2f(70,20));
@@ -518,7 +518,7 @@ namespace hpl {
 		// Current file name TextBox
 		mpCurrentFileName = mpSet->CreateWidgetTextBox(	cVector3f(30,425,0.5f),
 														cVector2f(400,mpWindow->GetDefaultFontSize().y+2),
-														msStartFilename, 
+														msStartFilename,
 														mpWindow);
 		mpCurrentFileName->SetForceCallBackOnEnter(true);
 		mpCurrentFileName->SetCallbackOnLostFocus(false);
@@ -526,15 +526,15 @@ namespace hpl {
 
 		mpSet->SetFocusedWidget(mpCurrentFileName);
 		mpCurrentFileName->SetSelectedText();
-		
+
 		// Filters ComboBox
-		mpFilterList = mpSet->CreateWidgetComboBox(	cVector3f(30, 450, 0.5f), 
+		mpFilterList = mpSet->CreateWidgetComboBox(	cVector3f(30, 450, 0.5f),
 													cVector2f(300, mpWindow->GetDefaultFontSize().y+2),
-													_W(""), 
+													_W(""),
 													mpWindow);
 		mpFilterList->AddCallback(eGuiMessage_SelectionChange, this, kGuiCallback(FilterList_OnSelectionChange));
 
-		// File ListBox        
+		// File ListBox
 		mpFileList = mpSet->CreateWidgetMultiPropertyListBox(cVector3f(30,90,1),
 															 cVector2f(540,300),
 															 mpWindow);

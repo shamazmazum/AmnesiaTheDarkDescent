@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -86,7 +86,7 @@ const tWString& cEdUserClass::GetFullNameNoBaseClass()
 		msFullNameNoBaseClass = GetFullName();
 
 		cEdUserClass* pBaseClass = GetBaseClass();
-		if(pBaseClass) 
+		if(pBaseClass)
 			msFullNameNoBaseClass = cString::SubW(msFullNameNoBaseClass, (int)pBaseClass->GetFullName().size()+1);
 	}
 
@@ -146,7 +146,7 @@ bool cEdUserClass::Create()
 			mbBaseClass = true;
 		else
 		{
-			mpDefinition->RaiseFatalError( _W("on creating User Class \"") + msName + _W("\"\n - illegal declaration \"") + cString::To16Char(sDeclaration) + 
+			mpDefinition->RaiseFatalError( _W("on creating User Class \"") + msName + _W("\"\n - illegal declaration \"") + cString::To16Char(sDeclaration) +
 												_W("\"") );
 			return false;
 		}
@@ -203,14 +203,14 @@ void cEdUserClass::SetUpHierarchy()
 	cEdUserClass* pParent = static_cast<cEdUserClass*>(mpDefinition->GetClassByName(msParentName));
 	if(pParent==NULL)
 	{
-		mpDefinition->RaiseFatalError(_W("on setting up hierarchy for class \"") + msName + 
+		mpDefinition->RaiseFatalError(_W("on setting up hierarchy for class \"") + msName +
 										_W("\" - Parent class \"") + msParentName + _W("\" not found!"));
 	}
 	else
 	{
 		if(IsBaseClass() && pParent->IsBaseClass()==false)
 		{
-			mpDefinition->RaiseFatalError(_W("on setting up hierarchy for class \"") + msName + 
+			mpDefinition->RaiseFatalError(_W("on setting up hierarchy for class \"") + msName +
 										_W("\" - Base class cannot inherit from a non-base class!"));
 		}
 		else
@@ -293,7 +293,7 @@ iEdVar* cEdUserClass::CreateClassSpecificVariableFromElement(cXmlElement* apElem
 			mvVariables[lIdx].insert(mvVariables[lIdx].end(), vTempVars.begin(), vTempVars.end());
 		}
 	}
-	
+
 	return CreateVariableFromElement(apElement);
 }
 
@@ -325,7 +325,7 @@ void cEdUserClass::AddVariablesToInstance(eEdVarCategory aCat, cEdUserClassInsta
 	{
 		iEdVar* pVar = vVars[i];
 		cEdVarInstance* pVarInstance = pVar->CreateInstance();
-		
+
 		apInstance->AddVarInstance(pVarInstance);
 	}
 }
@@ -447,7 +447,7 @@ iEditorVar* cEdUserClassType::GetVariable(eEditorVarCategory aCat, const tWStrin
 	if(pVar)
 		return pVar;
 
-	if(mpBaseClass) 
+	if(mpBaseClass)
 		return ((cEdUserClassBase*)mpBaseClass)->GetVariable(aCat, asName);
 
 	return NULL;
@@ -613,7 +613,7 @@ cEdUserClassDefinition::~cEdUserClassDefinition()
 void cEdUserClassDefinition::RegisterVarCatName(eEdVarCategory aCat, const tString& asName)
 {
 	if(aCat==eEdVarCategory_LastEnum) return;
-	
+
 	mvCatNames[aCat] = asName;
 }
 
@@ -657,7 +657,7 @@ bool cEdUserClassDefinition::Create()
 
 		return false;
 	}
-		
+
 	bool bSuccessfullyCreated = true;
 
 	////////////////////////////////////////////

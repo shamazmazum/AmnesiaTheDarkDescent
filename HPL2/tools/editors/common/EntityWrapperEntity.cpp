@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -108,7 +108,7 @@ bool cEntityWrapperTypeEntity::IsAppropriateType(cXmlElement* apElement)
 		{
 			if(msLastCheckedSubType!="")
 				Log("Inconsistency found in file %s : no subtype %s in type %s\n", sFilename.c_str(), msLastCheckedSubType.c_str(), sType.c_str());
-				
+
 			return true;
 		}
 	}
@@ -153,7 +153,7 @@ bool cEntityWrapperTypeEntity::IsAppropriateDefaultType(cXmlElement* apElement)
 	}
 
 	if(mpUserType->GetDefinition()->GetType(msLastCheckedType)==NULL)
-	{	
+	{
 		mpWorld->SetShowLoadErrorPopUp();
 		Log("Inconsistency found in file %s : no entity type %s is defined\n", sFilename.c_str(), msLastCheckedSubType.c_str());
 		return true;
@@ -196,12 +196,12 @@ iEditorVar* cEntityWrapperTypeEntity::GetLinkedEditorSetupVar(const tWString& as
 
 //------------------------------------------------------------------------------
 
-iEntityWrapperData* cEntityWrapperTypeEntity::CreateSpecificData() 
+iEntityWrapperData* cEntityWrapperTypeEntity::CreateSpecificData()
 {
-	return hplNew(cEntityWrapperDataEntity,(this)); 
+	return hplNew(cEntityWrapperDataEntity,(this));
 }
 
-cEntityWrapperDataEntity::cEntityWrapperDataEntity(iEntityWrapperType* apType) : iEntityWrapperDataUserDefinedEntity(apType, 
+cEntityWrapperDataEntity::cEntityWrapperDataEntity(iEntityWrapperType* apType) : iEntityWrapperDataUserDefinedEntity(apType,
 																													eUserClassDefinition_Entity)
 {
 }
@@ -266,7 +266,7 @@ iEntityWrapper* cEntityWrapperDataEntity::CreateSpecificEntity()
 
 //---------------------------------------------------------------------------
 
-cEntityWrapperEntity::cEntityWrapperEntity(iEntityWrapperData* apData) : iEntityWrapperUserDefinedEntity(apData)												
+cEntityWrapperEntity::cEntityWrapperEntity(iEntityWrapperData* apData) : iEntityWrapperUserDefinedEntity(apData)
 {
 	mbAffectedByDecal = true;
 	/*
@@ -372,11 +372,11 @@ bool cEntityWrapperEntity::SetProperty(int alPropID, const tString& asX)
 	return true;
 }
 
-//--------------------------------------------------------------------------- 
+//---------------------------------------------------------------------------
 
 bool cEntityWrapperEntity::IsAffectedByDecal(bool abAffectsStaticObject, bool abAffectsPrimitive, bool abAffectsEntity)
 {
-	return abAffectsEntity && mbAffectedByDecal && 
+	return abAffectsEntity && mbAffectedByDecal &&
 		IsVisible() && IsActive() && IsCulledByClipPlanes()==false;
 }
 
@@ -415,7 +415,7 @@ void cEntityWrapperEntity::OnSetVar(const tWString& asName, const tWString& asVa
 	iEditorVar* pAffectParticles = pType->GetLinkedEditorSetupVar(_W("AffectParticlesVar"), eVariableType_Bool);
 	iEditorVar* pAffectBillboards = pType->GetLinkedEditorSetupVar(_W("AffectBillboardsVar"), eVariableType_Bool);
 	iEditorVar* pIsAffectedByDecal = pType->GetLinkedEditorSetupVar(_W("AffectedByDecalVar"), eVariableType_Bool);
-	
+
 	bool bUpdateEnt = false;
 	if(pAffectShadows && asName==pAffectShadows->GetName())
 	{
@@ -503,7 +503,7 @@ iEngineEntity* cEntityWrapperEntity::CreateSpecificEngineEntity()
 		else
 			Log("Error creating Entity named %s, ID %d\n", msName.c_str(), mlID);
 	}
-	
+
 	return hplNew(cEngineEntityLoadedMeshAggregate,(this, msFilename));
 }
 
@@ -511,7 +511,7 @@ iEngineEntity* cEntityWrapperEntity::CreateSpecificEngineEntity()
 
 bool cEntityWrapperEntity::SetEntityType(iEntityWrapperType* apType)
 {
-	if(apType==NULL || 
+	if(apType==NULL ||
 		apType->GetID()!=eEditorEntityType_Entity)
 		return false;
 

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -43,30 +43,30 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// DEFINES
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//------------------------------
 	// Variables
 	//------------------------------
-	#define kVar_a_mtxUV						0	
-	
+	#define kVar_a_mtxUV						0
+
 	//------------------------------
 	//Diffuse Features and data
 	//------------------------------
 	#define eFeature_Diffuse_UvAnimation	eFlagBit_0
 
 	#define kDiffuseFeatureNum 1
-	
+
 	static cProgramComboFeature vDiffuseFeatureVec[] =
 	{
-		cProgramComboFeature("UseUvAnimation", kPC_VertexBit),							
+		cProgramComboFeature("UseUvAnimation", kPC_VertexBit),
 	};
 
 	//////////////////////////////////////////////////////////////////////////
 	// DECAL
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//--------------------------------------------------------------------------
-	
+
 	cMaterialType_Decal::cMaterialType_Decal(cGraphics *apGraphics, cResources *apResources) : iMaterialType(apGraphics, apResources)
 	{
 		mbIsTranslucent = true;
@@ -96,8 +96,8 @@ namespace hpl {
 		cParserVarContainer defaultVars;
 		defaultVars.Add("UseUv");
 		defaultVars.Add("UseColor");
-		
-		mpProgramManager->SetupGenerateProgramData(	eMaterialRenderMode_Diffuse,"Diffuse","deferred_base_vtx.glsl", "deferred_decal_frag.glsl", 
+
+		mpProgramManager->SetupGenerateProgramData(	eMaterialRenderMode_Diffuse,"Diffuse","deferred_base_vtx.glsl", "deferred_decal_frag.glsl",
 											vDiffuseFeatureVec,kDiffuseFeatureNum, defaultVars);
 
 		////////////////////////////////
@@ -135,9 +135,9 @@ namespace hpl {
 	{
 		return NULL;
 	}
-	
+
 	//--------------------------------------------------------------------------
-	
+
 	iGpuProgram* cMaterialType_Decal::GetGpuProgram(cMaterial *apMaterial, eMaterialRenderMode aRenderMode, char alSkeleton)
 	{
 		////////////////////////////
@@ -158,7 +158,7 @@ namespace hpl {
 	void cMaterialType_Decal::SetupTypeSpecificData(eMaterialRenderMode aRenderMode, iGpuProgram* apProgram,iRenderer *apRenderer)
 	{
 	}
-	
+
 	//--------------------------------------------------------------------------
 
 	void cMaterialType_Decal::SetupMaterialSpecificData(eMaterialRenderMode aRenderMode, iGpuProgram* apProgram, cMaterial *apMaterial,iRenderer *apRenderer)
@@ -177,7 +177,7 @@ namespace hpl {
 			}
 		}
 	}
-	
+
 	//--------------------------------------------------------------------------
 
 	void cMaterialType_Decal::SetupObjectSpecificData(eMaterialRenderMode aRenderMode, iGpuProgram* apProgram, iRenderable *apObject,iRenderer *apRenderer)
@@ -223,12 +223,12 @@ namespace hpl {
 		{
 			apMaterial->SetHasSpecificSettings(eMaterialRenderMode_Diffuse,true);
 		}
-		
+
 		/////////////////////////////////////
 		//Set up the blend mode
 		//apMaterial->SetBlendMode(eMaterialBlendMode_Alpha);
 	}
-	
+
 	//--------------------------------------------------------------------------
 
 

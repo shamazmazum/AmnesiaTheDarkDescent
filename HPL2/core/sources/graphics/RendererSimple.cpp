@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -53,7 +53,7 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	cRendererSimple::cRendererSimple(cGraphics *apGraphics,cResources* apResources) 
+	cRendererSimple::cRendererSimple(cGraphics *apGraphics,cResources* apResources)
 		: iRenderer("Simple",apGraphics, apResources,0)
 	{
 		////////////////////////////////////
@@ -75,7 +75,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	bool cRendererSimple::LoadData()
 	{
 		cParserVarContainer programVars;
@@ -84,7 +84,7 @@ namespace hpl {
 		// Z shader
 		programVars.Clear();
 		programVars.Add("UseUv");
-		
+
 		mpFlatProgram = mpGraphics->CreateGpuProgramFromShaders("DiffuseShader","deferred_base_vtx.glsl", "deferred_base_frag.glsl",  &programVars);
 
 		////////////////////////
@@ -96,14 +96,14 @@ namespace hpl {
 		programVars.Add("UseDiffuse");
 
 		mpDiffuseProgram = mpGraphics->CreateGpuProgramFromShaders("DiffuseShader","deferred_base_vtx.glsl", "deferred_base_frag.glsl",  &programVars);
-        
+
 
 		return true;
 	}
 
 	//-----------------------------------------------------------------------
 
-	
+
 	void cRendererSimple::DestroyData()
 	{
 		mpGraphics->DestroyGpuProgram(mpFlatProgram);
@@ -123,9 +123,9 @@ namespace hpl {
 		//Do Nothing
 	}
 
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	void cRendererSimple::SetupRenderList()
 	{
 		mpCurrentRenderList->Setup(mfCurrentFrameTime,mpCurrentFrustum);
@@ -141,7 +141,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	void cRendererSimple::RenderObjects()
 	{
 		START_RENDER_PASS(Simple);
@@ -203,7 +203,7 @@ namespace hpl {
 				cMaterial *pMaterial = pObject->GetMaterial();
 
 				SetTexture(0,pMaterial->GetTexture(eMaterialTexture_Diffuse));
-			
+
 				SetMatrix(pObject->GetModelMatrixPtr());
 
 				SetVertexBuffer(pObject->GetVertexBuffer());
@@ -254,7 +254,7 @@ namespace hpl {
 			{
 				SetProgram(mpDiffuseProgram);
 			}
-			
+
 			cRenderableVecIterator transIt = mpCurrentRenderList->GetArrayIterator(eRenderListType_Translucent);
 			while(transIt.HasNext())
 			{
@@ -274,13 +274,13 @@ namespace hpl {
 				DrawCurrent();
 			}
 		}
-		
+
 		RunCallback(eRendererMessage_PostTranslucent);
-		
-		
+
+
 		END_RENDER_PASS();
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 }

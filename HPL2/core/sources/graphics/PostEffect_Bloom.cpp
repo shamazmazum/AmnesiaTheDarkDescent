@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -31,7 +31,7 @@
 #include "system/PreprocessParser.h"
 
 namespace hpl {
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// PROGRAM VARS
 	//////////////////////////////////////////////////////////////////////////
@@ -39,7 +39,7 @@ namespace hpl {
 	#define kVar_avRgbToIntensity	0
 
 	#define kVar_afBlurSize			2
-	
+
 
 
 	//////////////////////////////////////////////////////////////////////////
@@ -47,7 +47,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	cPostEffectType_Bloom::cPostEffectType_Bloom(cGraphics *apGraphics, cResources *apResources) : iPostEffectType("Bloom",apGraphics,apResources)
 	{
 		///////////////////////////
@@ -75,7 +75,7 @@ namespace hpl {
 			mpBloomProgram->GetVariableAsId("avRgbToIntensity",kVar_avRgbToIntensity);
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cPostEffectType_Bloom::~cPostEffectType_Bloom()
@@ -92,7 +92,7 @@ namespace hpl {
 
 		return pEffect;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -104,7 +104,7 @@ namespace hpl {
 	cPostEffect_Bloom::cPostEffect_Bloom(cGraphics *apGraphics, cResources *apResources, iPostEffectType *apType) : iPostEffect(apGraphics,apResources,apType)
 	{
 		cVector2l vSize = mpLowLevelGraphics->GetScreenSizeInt();
-		
+
 		for(int i=0;i<2; ++i)
 		{
 			mpBlurBuffer[i] = mpGraphics->GetTempFrameBuffer(vSize/4,ePixelFormat_RGBA,i);
@@ -126,7 +126,7 @@ namespace hpl {
 
 	void cPostEffect_Bloom::OnSetParams()
 	{
-		
+
 	}
 
 	//-----------------------------------------------------------------------
@@ -145,10 +145,10 @@ namespace hpl {
 			//Reverse order so blur program is not set unneeded times
 			if(mpBloomType->mpBlurProgram[1-i])
 			{
-				mpBloomType->mpBlurProgram[1-i]->SetFloat(kVar_afBlurSize, mParams.mfBlurSize);	
+				mpBloomType->mpBlurProgram[1-i]->SetFloat(kVar_afBlurSize, mParams.mfBlurSize);
 			}
 		}
-		
+
 		/////////////////////////
 		// Render blur
 		RenderBlur(apInputTexture);
@@ -156,7 +156,7 @@ namespace hpl {
 		{
 			RenderBlur(mpBlurTexture[1]);
 		}
-		
+
 
 		/////////////////////////
 		// Render the input and blur as bloom onto the final buffer.
@@ -165,15 +165,15 @@ namespace hpl {
 
 		mpCurrentComposite->SetTexture(0, mpBlurTexture[1]);
 		mpCurrentComposite->SetTexture(1, apInputTexture);
-		
+
 		mpCurrentComposite->SetProgram(mpBloomType->mpBloomProgram);
 		if(mpBloomType->mpBloomProgram)
 		{
 			mpBloomType->mpBloomProgram->SetVec3f(kVar_avRgbToIntensity, mParams.mvRgbToIntensity);
 		}
-		
+
 		DrawQuad(0,1,mpBlurTexture[1], apInputTexture, true, true);
-		
+
 		return apFinalTempBuffer->GetColorBuffer(0)->ToTexture();
 	}
 

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -66,9 +66,9 @@ void cPrimitiveMeshCreatorPlane::Draw(iEdViewport* apViewport, cRendererCallback
 	{
 		apFunctions->SetProgram(NULL);
 		apFunctions->SetTextureRange(NULL,0);
-	
+
 		apFunctions->SetMatrix(NULL);
-		
+
 		cVector3f vFirstCorner = mvCorners[0];
 		cVector3f vMousePos = apViewport->GetMouseWorldPosition();
 
@@ -100,7 +100,7 @@ void cPrimitiveMeshCreatorPlane::SetUpData(iEdWindow* apWindow, iEdObjectData* a
 void cPrimitiveMeshCreatorPlane::SortCorners()
 {
 	////////////////////////////////////////////////
-	// Really strange algo to determine the corner 
+	// Really strange algo to determine the corner
 	// which is "most negative" (closest to (-inf,-inf) in the plane of creation)
 	cVector3f vCorner1 = mvCorners[0];
 	cVector3f vCorner2 = mvCorners[1];
@@ -110,15 +110,15 @@ void cPrimitiveMeshCreatorPlane::SortCorners()
 	int lNumNegativeCoords = 0;
 	for(int i=0;i<3;++i)
 	{
-		if(vDiff.v[i]<0) 
+		if(vDiff.v[i]<0)
 		{
 			lNumNegativeCoords++;
-			if(lFirstNegativeIndex==-1) 
+			if(lFirstNegativeIndex==-1)
 				lFirstNegativeIndex = i;
 		}
 		else if(vDiff.v[i]>0)
 		{
-			if(lFirstPositiveIndex==-1) 
+			if(lFirstPositiveIndex==-1)
 				lFirstPositiveIndex = i;
 		}
 	}
@@ -140,12 +140,12 @@ void cPrimitiveMeshCreatorPlane::SortCorners()
 		// Bake the corners to store, since we are not that interested in the ones given by the user
 		float fWidth = cMath::Abs(vCorner2.v[lFirstNegativeIndex]-vCorner1.v[lFirstNegativeIndex]);
 		float fHeight = cMath::Abs(vCorner2.v[lFirstPositiveIndex]-vCorner1.v[lFirstPositiveIndex]);
-        
+
 		cVector3f vAdd1 = cVector3f(0);
 		cVector3f vAdd2 = cVector3f(0);
 		vAdd1.v[lFirstNegativeIndex] = fWidth;
 		vAdd2.v[lFirstPositiveIndex] = fHeight;
-		
+
 		mvCorners.clear();
 		mvCorners.push_back(vCorner1-vAdd1);
 		mvCorners.push_back(vCorner1+vAdd2);
@@ -425,7 +425,7 @@ void cEdObjPlane::SetTileOffset(const cVector3f& avOffset)
 	if(mvTileOffset==avOffset) return;
 	mvTileOffset=avOffset;
 
-	UpdateUVMapping();	
+	UpdateUVMapping();
 }
 
 //------------------------------------------------------------------------
@@ -510,7 +510,7 @@ void cEdObjPlane::UpdateUVMapping()
 	//////////////////////////////////////////////////////////////
 	// VERY IMPORTANT TO CLEAR THE CURRENT UVS (for god's sake)
 	mvUVCorners.clear();
-	
+
 
 	iVertexBuffer* pVB = ((cEngineGeneratedMesh*)mpEngObject)->GetVertexBuffer();
 
@@ -557,9 +557,9 @@ cMesh* cEdObjPlane::CreatePrimitiveMesh()
 		if(vEndCorner.v[i]!=0)
 			vEndCorner.v[i] /= vEndCorner.v[i];
 	}
-	cMesh* pMesh = GetWorld()->GetEditor()->GetEngine()->GetGraphics()->GetMeshCreator()->CreatePlane("", 0, vEndCorner, 
-																											cVector2f(1,0), 0, 
-																											cVector2f(0,1), 1, 
+	cMesh* pMesh = GetWorld()->GetEditor()->GetEngine()->GetGraphics()->GetMeshCreator()->CreatePlane("", 0, vEndCorner,
+																											cVector2f(1,0), 0,
+																											cVector2f(0,1), 1,
 																											msMaterial);
 
 	return pMesh;
@@ -588,7 +588,7 @@ void cEdObjPlane::SaveToElement(cXmlElement* apElement)
 
 	for(int i=0;i<4;++i)
 		apElement->SetAttributeVector2f("Corner" + cString::ToString(i+1) + "UV", mvUVCorners[i]);
-	
+
 	apElement->SetAttributeVector3f("TileAmount", mvTileAmount);
 	apElement->SetAttributeVector3f("TileOffset", mvTileOffset);
 	apElement->SetAttributeBool("AlignToWorldCoords", mbAlignToWorldCoords);
@@ -599,7 +599,7 @@ void cEdObjPlane::SaveToElement(cXmlElement* apElement)
 void cEdObjPlane::UpdateEntity()
 {
 	//iEntityWrapper::UpdateEntity();
-	
+
 	//UpdateUVMapping();
 }
 

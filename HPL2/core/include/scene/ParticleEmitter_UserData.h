@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -35,7 +35,7 @@ namespace hpl {
 		ePEStartPosType_Sphere,
 		ePEStartPosType_LastEnum,
 	};
-	
+
 	enum ePEDeathType
 	{
 		ePEDeathType_Age,
@@ -65,7 +65,7 @@ namespace hpl {
 		ePEPartSpinType_LastEnum,
 	};
 
-	
+
 	//------------------------------------
 
 	class iPhysicsWorld;
@@ -101,9 +101,9 @@ namespace hpl {
 		// ---
 
 		int mlMaxParticleNum;
-		
+
 		bool mbRespawn;
-		
+
 		float mfParticlesPerSecond;
 		float mfStartTimeOffset;
 
@@ -112,7 +112,7 @@ namespace hpl {
 
 		float mfMinPauseInterval;
 		float mfMaxPauseInterval;
-		
+
 		cVector3f mvPosOffset;
 		cVector3f mvAngleOffset;
 
@@ -126,10 +126,10 @@ namespace hpl {
 
 		///////// START POS //////////
 		ePEStartPosType mStartPosType;
-		
+
 		cVector3f mvMinStartPos;
 		cVector3f mvMaxStartPos;
-		
+
 		cVector2f mvMinStartAngles;
 		cVector2f mvMaxStartAngles;
 
@@ -144,28 +144,28 @@ namespace hpl {
 
 		cVector2f mvMinStartVelAngles;
 		cVector2f mvMaxStartVelAngles;
-		
+
 		float mfMinStartVelSpeed;
 		float mfMaxStartVelSpeed;
 
 		float mfMinSpeedMultiply;
 		float mfMaxSpeedMultiply;
-		
+
 		cVector3f mvMinStartAcc;
 		cVector3f mvMaxStartAcc;
-		
+
 		float mfMinVelMaximum;
 		float mfMaxVelMaximum;
-				
+
 		bool mbUsesDirection;
 		ePEGravityType mGravityType;
-		
+
 		cVector3f mvGravityAcc;
 
 		eParticleEmitterCoordSystem mCoordSystem;
 
 		// NEW
-		
+
 		bool	mbUsePartSpin;
 		ePEPartSpinType mPartSpinType;
 		float	mfMinSpinRange;
@@ -174,12 +174,12 @@ namespace hpl {
 		bool	mbUseRevolution;
 		cVector3f	mvMinRevVel;
 		cVector3f	mvMaxRevVel;
-	
+
 //		iVertexBuffer *mVBMeshData;
 //		float *mpfMeshVtxData;
-	
+
 		// ---
-		
+
 		/////////// LIFESPAN ////////
 		float mfMinLifeSpan;
 		float mfMaxLifeSpan;
@@ -190,7 +190,7 @@ namespace hpl {
 
 		/////////// RENDERING ////////
 		eParticleEmitterType mDrawType;
-				
+
 		cVector2f mvMinStartSize;
 		cVector2f mvMaxStartSize;
 
@@ -201,8 +201,8 @@ namespace hpl {
 		float mfEndRelSize;
 
 		bool mbMultiplyRGBWithAlpha;
-	
-		/////////// COLOR  ////////  
+
+		/////////// COLOR  ////////
 
 		cColor mMinStartColor;
 		cColor mMaxStartColor;
@@ -213,12 +213,12 @@ namespace hpl {
 		float mfMiddleRelColorLength;
 		cColor mEndRelColor;
 
-		/////////// COLLISION  ////////  
+		/////////// COLLISION  ////////
 		bool mbCollides;
-		
+
 		float mfMinBounceAmount;
 		float mfMaxBounceAmount;
-		
+
 		int  mlMinCollisionMax;
 		int  mlMaxCollisionMax;
 
@@ -233,21 +233,21 @@ namespace hpl {
 		std::vector<unsigned int> mvLFIndices;
 		cVector3f mvMinLowFreqNoise;
 		cVector3f mvMaxLowFreqNoise;
-		        
+
 		int mlHighFreqPoints;
 		cVector3f mvMinHighFreqNoise;
 		cVector3f mvMaxHighFreqNoise;
 
 		std::vector<tBeamNoisePoint> mvBeamNoisePoints;
-		
-		
+
+
 		// ---
 
 
 
-		
+
 	};
-	
+
 	//----------------------------------------------------------
 
 	class cParticleEmitter_UserData : public iParticleEmitter
@@ -281,7 +281,7 @@ namespace hpl {
 
 		bool mbRespawn;
 	};
-	
+
 
 };
 

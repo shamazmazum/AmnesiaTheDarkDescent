@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -168,7 +168,7 @@ void cLuxCritter_Spider::UpdateVelocity(float afTimeStep)
 	if(mState != eLuxCritterState_Flee && gpBase->mpPlayer->GetHelperLantern()->IsActive())
 	{
 		float fDist = gpBase->mpPlayer->GetHelperLantern()->GetLight()->GetRadius();
-		
+
 		if(GetDistanceToPlayer() < fDist)
 		{
 			mState = eLuxCritterState_Flee;
@@ -201,7 +201,7 @@ void cLuxCritter_Spider::UpdateVelocity(float afTimeStep)
 		{
 			mState = eLuxCritterState_Idle;
 			mfCount = cMath::RandRectf(mvIdleTimeMinMax.x, mvIdleTimeMinMax.y);
-		}	
+		}
 	}
 	////////////////////////
 	// Move
@@ -209,11 +209,11 @@ void cLuxCritter_Spider::UpdateVelocity(float afTimeStep)
 	{
 		mfMaxSpeed = mfMaxIdleSpeed;
 
-		/////////////////// 
+		///////////////////
 		// Wandering
 		vMoveVelAdd += GetWanderAdd(1,2, afTimeStep);
 
-		/////////////////// 
+		///////////////////
 		// Swarm around point
 		{
 			float fSwarmPointDist = cMath::Vector3Dist(mvSwarmPoint, mpBody->GetWorldPosition());
@@ -226,7 +226,7 @@ void cLuxCritter_Spider::UpdateVelocity(float afTimeStep)
 			vMoveVelAdd += vForce * afTimeStep;
 		}
 
-		/////////////////// 
+		///////////////////
 		// Pause or Hunt
 		if(mfCount<=0)
 		{
@@ -239,11 +239,11 @@ void cLuxCritter_Spider::UpdateVelocity(float afTimeStep)
 			//Pause
 			else*/
 
-			/////////////////// 
+			///////////////////
 			// Check attack
 			float fDistToPlayer = GetDistanceToPlayer2D();
-			if(	gpBase->mpPlayer->IsDead()==false && 
-				fDistToPlayer < mvAttackPlayerDistMinMax.y && 
+			if(	gpBase->mpPlayer->IsDead()==false &&
+				fDistToPlayer < mvAttackPlayerDistMinMax.y &&
 				fDistToPlayer > mvAttackPlayerDistMinMax.x)
 			{
 				mState = eLuxCritterState_Attack_1;
@@ -257,7 +257,7 @@ void cLuxCritter_Spider::UpdateVelocity(float afTimeStep)
 				mfCount = 0.8f;
 				mvGroundNormal = cVector3f(0,1,0);
 			}
-			/////////////////// 
+			///////////////////
 			// Paus
 			else
 			{
@@ -272,13 +272,13 @@ void cLuxCritter_Spider::UpdateVelocity(float afTimeStep)
 	{
 		mfMaxSpeed = mfMaxHuntSpeed;
 
-		/////////////////// 
+		///////////////////
 		// Move toward player
 		vMoveVelAdd += GetTowardPlayerAdd(false, afTimeStep)*3;
 
 		vMoveVelAdd += GetWanderAdd(1,2, afTimeStep);
-		
-		/////////////////// 
+
+		///////////////////
 		// Check attack
 		float fDistToPlayer = GetDistanceToPlayer2D();
 		if(fDistToPlayer < mvAttackPlayerDistMinMax.y && fDistToPlayer > mvAttackPlayerDistMinMax.x)
@@ -295,7 +295,7 @@ void cLuxCritter_Spider::UpdateVelocity(float afTimeStep)
 			mvGroundNormal = cVector3f(0,1,0);
 		}
 
-		/////////////////// 
+		///////////////////
 		// Give up
 		if(mfCount<=0)
 		{
@@ -333,7 +333,7 @@ void cLuxCritter_Spider::UpdateVelocity(float afTimeStep)
 		vMoveVelAdd += GetTowardPlayerAdd(false, afTimeStep);
 		if(mfCount<=0) mState= eLuxCritterState_Idle;
 	}
-	
+
 	/////////////////////
 	// Update velocity
 	mvVel += vMoveVelAdd;
@@ -349,8 +349,8 @@ void cLuxCritter_Spider::UpdateVelocity(float afTimeStep)
 			PlaySound("Critter_SpiderSound",msIdleSound,true, true);
 		}
 	}
-	
-	/////////////////// 
+
+	///////////////////
 	// Cap speed
 
 	mvVel = cMath::Vector3MaxLength(mvVel, mfMaxSpeed);
@@ -435,7 +435,7 @@ void cLuxCritter_Spider::OnShapeCollision(const cVector3f& avPushVec, float afTi
 	cVector3f vEndPos = vStartPos + vPushDir*0.1f;
 
 	cVector3f mvIntersectNormal(0);
-	
+
 	mpRayCallback->Reset();
 	pPhysicsWorld->CastRay(mpRayCallback, vStartPos, vEndPos, false,true,true, true);
 	if(mpRayCallback->GetIntersected())
@@ -446,7 +446,7 @@ void cLuxCritter_Spider::OnShapeCollision(const cVector3f& avPushVec, float afTi
         mvIntersectNormal = mpRayCallback->GetNormal();
 
 		if(mvIntersectNormal ==0) return;
-		
+
 		//Must be enough difference!
 		if(cMath::Vector3Dot(mvIntersectNormal, mvGroundNormal) > 8)//0.71f)
 		{
@@ -465,9 +465,9 @@ void cLuxCritter_Spider::OnShapeCollision(const cVector3f& avPushVec, float afTi
 
 	vStartPos = mpBody->GetLocalPosition() - vPushDir * mpBody->GetShape()->GetRadius();
 	vEndPos = vStartPos + mvGroundNormal * fTestHeight;
-	
+
 	mpRayCallback->Reset();
-	
+
 	pPhysicsWorld->CastRay(mpRayCallback, vStartPos, vEndPos, false,false,false, true);
     if(mpRayCallback->GetIntersected())
 	{
@@ -477,7 +477,7 @@ void cLuxCritter_Spider::OnShapeCollision(const cVector3f& avPushVec, float afTi
 
 	//////////////////////////////////
 	// Check so that there is something to climb on
-	int lTestPoints = 5; 
+	int lTestPoints = 5;
 	int lClimbPointCount =0;
 	for(int i=1; i<=5; ++i)
 	{
@@ -499,7 +499,7 @@ void cLuxCritter_Spider::OnShapeCollision(const cVector3f& avPushVec, float afTi
 	// Set new ground normal
     cVector3f vOldGroundNormal = mvGroundNormal;
 	mvGroundNormal = mvIntersectNormal;
-	
+
     //Calculate new forward
 	cVector3f vForward = cMath::Vector3Normalize(mvVel);
 	cVector3f vRight = cMath::Vector3Cross(vOldGroundNormal, vForward);
@@ -508,7 +508,7 @@ void cLuxCritter_Spider::OnShapeCollision(const cVector3f& avPushVec, float afTi
 	vForward.Normalize();
 
 	mvVel = vForward * mvVel.Length();
-	
+
 	//mfNewGroundNormalCount = 2.0f;
 	//gpBase->mpDebugHandler->AddMessage(_W("New ground normal! ")+cString::ToStringW(mvGroundNormal.x)+_W(":")+cString::ToStringW(mvGroundNormal.y)+_W(":")
 	//															+cString::ToStringW(mvGroundNormal.z), false);
@@ -571,7 +571,7 @@ void cLuxCritter_Spider::LoadFromSaveData(iLuxEntity_SaveData* apSaveData)
 	//Init
 	super_class::LoadFromSaveData(apSaveData);
 	cLuxCritter_Spider_SaveData *pData = static_cast<cLuxCritter_Spider_SaveData*>(apSaveData);
-	
+
 	//////////////////
 	//Set variables
 	mState = (eLuxCritterState)pData->mlState;

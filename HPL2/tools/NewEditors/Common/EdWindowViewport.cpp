@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -88,7 +88,7 @@ bool cCamControllerOrtho::OnViewportMouseDown(const cViewportClick& aClick)
 	if(IsViewModeActive())
 	{
 		if(IsActive())	return true;
-			
+
 		if(aClick.mbMid)
 		{
 			mbIsTracking = true;
@@ -159,7 +159,7 @@ bool cCamControllerOrtho::SaveState(cXmlElement* apStateElem)
 		return false;
 
 	apStateElem->SetAttributeFloat("OrthoSize", mpCam->GetEngineCamera()->GetOrthoViewSize().x);
-	
+
 	return true;
 }
 
@@ -197,8 +197,8 @@ void cCamControllerOrtho::Track(const cVector2f& avMouseRelPos)
 
 	vRayEnd = vRayStart + vRayDir*pViewport->GetRayEndDistance();
 
-	cMath::CheckPlaneLineIntersection(pGrid->GetPlane(), 
-										vRayStart, vRayEnd, 
+	cMath::CheckPlaneLineIntersection(pGrid->GetPlane(),
+										vRayStart, vRayEnd,
 										&mvTrackNewMousePos, NULL);
 
 	cVector3f vNewTargetPos = mvTrackRefTargetPos - mvTrackNewMousePos+mvTrackRefMousePos;
@@ -397,8 +397,8 @@ void cCamControllerMaya::Track(const cVector2f& avMouseRel)
 	{
 		cEdGrid* pGrid = pViewport->GetGrid();
 
-		cMath::CheckPlaneLineIntersection(pGrid->GetPlane(), 
-											vRayStart, vRayEnd, 
+		cMath::CheckPlaneLineIntersection(pGrid->GetPlane(),
+											vRayStart, vRayEnd,
 											&mvTrackNewMousePos, NULL);
 
 		vNewTargetPosition = mvTrackRefTargetPos - mvTrackNewMousePos+mvTrackRefMousePos;
@@ -407,12 +407,12 @@ void cCamControllerMaya::Track(const cVector2f& avMouseRel)
 	else
 	{
 		cCamera* pEngCam = mpCam->GetEngineCamera();
-		cVector3f vDisplacement = (pEngCam->GetUp()*avMouseRel.y + 
+		cVector3f vDisplacement = (pEngCam->GetUp()*avMouseRel.y +
 									pEngCam->GetRight()*(-avMouseRel.x));
 		vNewTargetPosition = vTargetPosition + vDisplacement;
 	}
 
-	mpCam->SetTargetPosition(vNewTargetPosition);	
+	mpCam->SetTargetPosition(vNewTargetPosition);
 	mpCam->SetCameraPosition(vNewTargetPosition-mvTrackCamTargetOffset);
 }
 
@@ -450,7 +450,7 @@ cCamModeOrtho::cCamModeOrtho(cEdCamera* apCam, int alID, const tWString& asName,
 
 //--------------------------------------------------------------------------------
 
-void cCamModeOrtho::GetViewSpacePositionAndSize(const cVector3f& avWorldPosition, const cVector3f& avWorldSize, 
+void cCamModeOrtho::GetViewSpacePositionAndSize(const cVector3f& avWorldPosition, const cVector3f& avWorldSize,
 													 cVector3f& avViewSpacePosition, cVector3f& avViewSpaceSize)
 {
 	cCamera* pEngineCam = mpCam->GetEngineCamera();
@@ -567,7 +567,7 @@ cCamModePerspective::cCamModePerspective(cEdCamera* apCam, int alID) : iCamMode(
 
 //--------------------------------------------------------------------------------
 
-void cCamModePerspective::GetViewSpacePositionAndSize(const cVector3f& avWorldPosition, const cVector3f& avWorldSize, 
+void cCamModePerspective::GetViewSpacePositionAndSize(const cVector3f& avWorldPosition, const cVector3f& avWorldSize,
 													 cVector3f& avViewSpacePosition, cVector3f& avViewSpaceSize)
 {
 	cCamera* pEngineCam = mpCam->GetEngineCamera();
@@ -614,7 +614,7 @@ void cCamModePerspective::OnSetActive(bool abX)
 		pEngCam->SetInifintiveFarPlane(false);
 
 		iEdViewport* pViewport = mpCam->GetViewport();
-		
+
 		cEdGrid* pGrid = pViewport->GetGrid();
 		pGrid->SetPlaneNormal(ePlaneNormal_Y);
 
@@ -634,13 +634,13 @@ void cCamModePerspective::OnSetActive(bool abX)
 
 //----------------------------------------------------------------
 
-cEdWindowViewport::cEdWindowViewport(iEditor* apEditor, iFrameBuffer* apFB): iEdViewport(apEditor, _W("Edition"), 
+cEdWindowViewport::cEdWindowViewport(iEditor* apEditor, iFrameBuffer* apFB): iEdViewport(apEditor, _W("Edition"),
 																				apEditor->GetWorld()->GetEngWorld(),
 																				apFB)
 {
 	mbDrawGrid = true;
 	mbDrawDebug = false;
-	mbDrawAxes = true; 
+	mbDrawAxes = true;
 
 	mpPrevAttention = NULL;
 
@@ -819,7 +819,7 @@ bool cEdWindowViewport::OnViewportDraw(const cGuiMessageData& aData)
 	mpSet->DrawGfx(mpGfxRedFrame, vPos + cVector3f(0,vSize.y-2,0), cVector2f(vSize.x,2), color);
 	mpSet->DrawGfx(mpGfxRedFrame, vPos, cVector2f(2,vSize.y), color);
 	mpSet->DrawGfx(mpGfxRedFrame, vPos + cVector3f(vSize.x-2,0,0), cVector2f(2,vSize.y), color);
-	
+
 	return true;
 }
 
@@ -917,11 +917,11 @@ void cEdWindowViewport::OnCreateLayout()
 	/////////////////////////////////////////////
 	// Gfx Init
 	mpGfxRedFrame = mpSet->GetGui()->CreateGfxFilledRect(cColor(1,1,1,1), eGuiMaterial_Diffuse);
-	
+
 	//mpGfxPointerTumble = mpSet->GetGui()->CreateGfxImage("gui_def_pointer_tumble.tga",eGuiMaterial_Alpha);
 	//mpGfxPointerTrack = mpSet->GetGui()->CreateGfxImage("gui_def_pointer_track.tga",eGuiMaterial_Alpha);
 	//mpGfxPointerZoom = mpSet->GetGui()->CreateGfxImage("gui_def_pointer_zoom.tga",eGuiMaterial_Alpha);
-	
+
 	/////////////////////////////////////////////
 	// Layout init
 	cWidgetFrame* pFrame = static_cast<cWidgetFrame*>(GetBG());
@@ -929,7 +929,7 @@ void cEdWindowViewport::OnCreateLayout()
 
 	mpPresetLabel = mpSet->CreateWidgetLabel(cVector3f(5,5+fMenuHeight,1),0,_W(""), GetBG());
 	mpPresetLabel->SetDefaultFontColor(cColor(1,1));
-	
+
 	// Render view init
 	CreateGuiViewport(GetBG());
 	SetGuiViewportPos(cVector3f(0,fMenuHeight,0.05f));

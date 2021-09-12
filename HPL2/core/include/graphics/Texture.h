@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -36,7 +36,7 @@ namespace hpl {
 				mUsage(aUsage),
 				mType(aType),
 				mpLowLevelGraphics(apLowLevelGraphics),
-				mbUseMipMaps(false), 
+				mbUseMipMaps(false),
 				mbIsCompressed(false),
 				mlMemorySize(0),
 				mPixelFormat(ePixelFormat_Unknown),
@@ -57,14 +57,14 @@ namespace hpl {
 		virtual bool CreateAnimFromBitmapVec(std::vector<cBitmap*> *avBitmaps)=0;
 		virtual bool CreateCubeFromBitmapVec(std::vector<cBitmap*> *avBitmaps)=0;
 		virtual bool CreateFromRawData(const cVector3l &avSize,ePixelFormat aPixelFormat, unsigned char *apData)=0;
-		
-		virtual void SetRawData(	int alLevel, const cVector3l& avOffset, const cVector3l& avSize, 
+
+		virtual void SetRawData(	int alLevel, const cVector3l& avOffset, const cVector3l& avSize,
 									ePixelFormat aPixelFormat, void *apData)=0;
 
 		virtual void Update(float afTimeStep)=0;
 
 		inline ePixelFormat GetPixelFormat() const { return mPixelFormat;}
-		
+
 		inline const cVector3l& GetSize() const { return mvSize;}
 		inline int GetWidth() const { return mvSize.x;}
 		inline int GetHeight() const { return mvSize.y;}
@@ -77,7 +77,7 @@ namespace hpl {
 		virtual void SetAnisotropyDegree(float afX)=0;
 		eTextureFilter GetFilter(){ return mFilter;}
 		float GetAnisotropyDegree(float afX){ return mfAnisotropyDegree;}
-		
+
 		virtual void SetWrapS(eTextureWrap aMode)=0;
 		virtual void SetWrapT(eTextureWrap aMode)=0;
 		virtual void SetWrapR(eTextureWrap aMode)=0;
@@ -106,17 +106,17 @@ namespace hpl {
 
 		eTextureUsage GetUsage(){ return mUsage; }
 		eTextureType GetType(){ return mType;}
-		
-		void SetUseMipMaps(bool abX){mbUseMipMaps = abX;} 
+
+		void SetUseMipMaps(bool abX){mbUseMipMaps = abX;}
 		bool UsesMipMaps(){ return mbUseMipMaps; }
 
 		bool IsCompressed(){ return mbIsCompressed; }
-		
+
 		void SetSizeDownScaleLevel(unsigned int alLevel){mlSizeDownScaleLevel = alLevel;}
 		void SetMinLevelSize(const cVector2l& avSize){ mvMinDownScaleSize = avSize;}
 
 		eFrameBufferAttachment GetFrameBufferAttachmentType(){ return eFrameBufferAttachment_Texture;}
-		
+
 		virtual bool HasAnimation()=0;
 		virtual void NextFrame()=0;
 		virtual void PrevFrame()=0;
@@ -132,7 +132,7 @@ namespace hpl {
 		cVector3l mvSize;
 
 		int mlMemorySize;
-		
+
 		eTextureWrap mWrapS;
 		eTextureWrap mWrapT;
 		eTextureWrap mWrapR;
@@ -141,14 +141,14 @@ namespace hpl {
 
 		eTextureCompareMode mCompareMode;
 		eTextureCompareFunc mCompareFunc;
-		
+
 		bool mbUseMipMaps;
 		bool mbIsCompressed;
 		ePixelFormat mPixelFormat;
 		iLowLevelGraphics* mpLowLevelGraphics;
 		float mfFrameTime;
 		eTextureAnimMode mAnimMode;
-		
+
 		unsigned int mlSizeDownScaleLevel;
 		cVector3l mvMinDownScaleSize;
 

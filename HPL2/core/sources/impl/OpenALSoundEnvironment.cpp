@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -23,8 +23,8 @@
 namespace hpl
 {
 
-	cOpenALSoundEnvironment::cOpenALSoundEnvironment ( ) /*:	
-										mfDensity(1.0f), 
+	cOpenALSoundEnvironment::cOpenALSoundEnvironment ( ) /*:
+										mfDensity(1.0f),
 										mfDiffusion(1.0f),
 										mfGain(0.32f),
 										mfGainHF(0.89f),
@@ -51,7 +51,7 @@ namespace hpl
 	cOpenALSoundEnvironment::~cOpenALSoundEnvironment()
 	{
 	}
-		
+
 	bool cOpenALSoundEnvironment::CreateFromFile(const tString &asFile)
 	{
 		tString strType;
@@ -81,7 +81,7 @@ namespace hpl
 		mfDiffusion = cString::ToFloat(pParams->Attribute("Diffusion"),0);
 		mfGain = cString::ToFloat(pParams->Attribute("Gain"),0);
 		mfGainHF = cString::ToFloat(pParams->Attribute("GainHF"),0);
-		mfGainLF = cString::ToFloat(pParams->Attribute("GainLF"),0); 
+		mfGainLF = cString::ToFloat(pParams->Attribute("GainLF"),0);
 		mfDecayTime = cString::ToFloat(pParams->Attribute("DecayTime"),0);
 		mfDecayHFRatio = cString::ToFloat (pParams->Attribute("DecayHFRatio"),0);
 		mfDecayLFRatio = cString::ToFloat (pParams->Attribute("DecayLFRatio"),0);
@@ -106,7 +106,7 @@ namespace hpl
 		mfLFReference = cString::ToFloat(pParams->Attribute("LFReference"),0);
 		mfRoomRolloffFactor =cString::ToFloat(pParams->Attribute("RoomRolloffFactor"),0);
 		mbDecayHFLimit = cString::ToInt(pParams->Attribute("DecayHFLimit"),0);
-		
+
 		doc.Clear();
 		pParams = NULL;
 

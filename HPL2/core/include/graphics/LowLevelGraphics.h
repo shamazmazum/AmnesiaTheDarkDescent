@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -25,7 +25,7 @@
 #include "graphics/GraphicsTypes.h"
 
 namespace hpl {
-	
+
 	class iFontData;
 	class iOcclusionQuery;
 	class iGpuShader;
@@ -38,12 +38,12 @@ namespace hpl {
 	class iMutex;
 
 	//----------------------------------------
-		
+
 	class iLowLevelGraphics
 	{
 	public:
 		virtual ~iLowLevelGraphics(){}
-		
+
 
 		/////////////////////////////////////////////////////
 		/////////////// GENERAL SETUP ///////////////////////
@@ -54,13 +54,13 @@ namespace hpl {
 							const cVector2l &avWindowPos)=0;
 
 		virtual eGpuProgramFormat GetGpuProgramFormat()=0;
-		
+
 		/**
 		 * Get the capabilities of the graphics. Th return value depends on the capability
-		 * \return 
+		 * \return
 		 */
 		virtual int GetCaps(eGraphicCaps aType)=0;
-		
+
 		/**
 		 * Show the cursor or not. Default is false
 		 */
@@ -79,7 +79,7 @@ namespace hpl {
         virtual bool GetWindowIsVisible()=0;
 
 		virtual int GetMultisampling()=0;
-		
+
 		/**
 		 * Get Size of screen
 		 */
@@ -90,7 +90,7 @@ namespace hpl {
 		* Get fullscreen mode
 		*/
 		virtual bool GetFullscreenModeActive() = 0;
-		
+
 		/**
 		 * Set if vsync should be active
 		 */
@@ -109,9 +109,9 @@ namespace hpl {
 
 		virtual iGpuProgram* CreateGpuProgram(const tString& asName)=0;
 		virtual iGpuShader* CreateGpuShader(const tString& asName, eGpuShaderType aType)=0;
-		
+
 		virtual iTexture* CreateTexture(const tString &asName,eTextureType aType,  eTextureUsage aUsage)=0;
-		
+
 		virtual iVertexBuffer* CreateVertexBuffer(	eVertexBufferType aType,
 													eVertexBufferDrawType aDrawType,
 													eVertexBufferUsageType aUsageType,
@@ -121,7 +121,7 @@ namespace hpl {
 		virtual iDepthStencilBuffer* CreateDepthStencilBuffer(const cVector2l& avSize, int alDepthBits, int alStencilBits)=0;
 
 		virtual iOcclusionQuery* CreateOcclusionQuery()=0;
-		
+
 		/////////////////////////////////////////////////////
 		/////////// FRAME BUFFER OPERATIONS ///////
 		/////////////////////////////////////////////////////
@@ -131,7 +131,7 @@ namespace hpl {
 		virtual void SetClearColor(const cColor& aCol)=0;
 		virtual void SetClearDepth(float afDepth)=0;
 		virtual void SetClearStencil(int alVal)=0;
-		
+
 		virtual void FlushRendering()=0;
 		virtual void WaitAndFinishRendering()=0;
 		virtual void SwapBuffers()=0;
@@ -143,7 +143,7 @@ namespace hpl {
 		* \param &avSize The size of the screen.
 		* \param &avTexOffset The position on the texture.
 		*/
-		virtual void CopyFrameBufferToTexure(	iTexture* apTex, const cVector2l &avPos, 
+		virtual void CopyFrameBufferToTexure(	iTexture* apTex, const cVector2l &avPos,
 												const cVector2l &avSize, const cVector2l &avTexOffset=0)=0;
 
 		/**
@@ -159,20 +159,20 @@ namespace hpl {
 		* \param pTex Texture to render to. NULL = screen (frame buffer)
 		*/
 		virtual void SetCurrentFrameBuffer(iFrameBuffer* apFrameBuffer, const cVector2l &avPos = 0, const cVector2l& avSize = -1)=0;
-		
+
 		/**
 		* Returns current FrameBuffer
-		* 
+		*
 		*/
 		virtual iFrameBuffer* GetCurrentFrameBuffer()=0;
 
 		/**
-		 * Permanently sets a different setting of draw targets to current frame buffer. 
-		 * \param *apTargets a vector of integers, each corresponding to a draw buffer in the current 
-		 * \param alNumOfTargets 
+		 * Permanently sets a different setting of draw targets to current frame buffer.
+		 * \param *apTargets a vector of integers, each corresponding to a draw buffer in the current
+		 * \param alNumOfTargets
 		 */
 		virtual void SetFrameBufferDrawTargets(int *apTargets, int alNumOfTargets)=0;
-		
+
 		/////////////////////////////////////////////////////
 		/////////// RENDER STATE ////////////////////////////
 		/////////////////////////////////////////////////////
@@ -197,7 +197,7 @@ namespace hpl {
 										int alRef, unsigned int aMask,
 										eStencilOp aFrontFailOp,eStencilOp aFrontZFailOp,eStencilOp aFrontZPassOp,
 										eStencilOp aBackFailOp,eStencilOp aBackZFailOp,eStencilOp aBackZPassOp)=0;
-		
+
 		virtual void SetScissorActive(bool abX)=0;
 		virtual void SetScissorRect(const cVector2l& avPos, const cVector2l& avSize)=0;
 
@@ -215,7 +215,7 @@ namespace hpl {
 		virtual void SetPolygonOffsetActive(bool abX)=0;
 		virtual void SetPolygonOffset(float afBias, float afSlopeScaleBias)=0;
 
-		
+
 		/////////////////////////////////////////////////////
 		/////////// MATRIX //////////////////////////////////
 		/////////////////////////////////////////////////////
@@ -225,10 +225,10 @@ namespace hpl {
 		virtual void SetIdentityMatrix(eMatrix aMtxType)=0;
 
 		virtual void SetMatrix(eMatrix aMtxType, const cMatrixf& a_mtxA)=0;
-		
+
 		virtual void SetOrthoProjection(const cVector2f& avSize, float afMin, float afMax)=0;
 		virtual void SetOrthoProjection(const cVector3f& avMin, const cVector3f& avMax)=0;
-				
+
 		/////////////////////////////////////////////////////
 		/////////// TEXTURE OPERATIONS ///////////////////////
 		/////////////////////////////////////////////////////
@@ -244,7 +244,7 @@ namespace hpl {
 		/////////////////////////////////////////////////////
 
 		virtual void DrawTriangle(tVertexVec& avVtx)=0;
-			
+
 		virtual void DrawQuad(	const cVector3f &avPos,const cVector2f &avSize, const cColor& aColor=cColor(1,1))=0;
 		virtual void DrawQuad(	const cVector3f &avPos,const cVector2f &avSize,
 								const cVector2f &avMinTexCoord,const cVector2f &avMaxTexCoord,
@@ -268,27 +268,27 @@ namespace hpl {
 
 		virtual void DrawLineQuad(const cRect2f& aRect, float afZ, cColor aCol)=0;
 		virtual void DrawLineQuad(const cVector3f &avPos,const cVector2f &avSize, cColor aCol)=0;
-		
+
 		/////////////////////////////////////////////////////
 		/////////// VERTEX BATCHING /////////////////////////
 		/////////////////////////////////////////////////////
-		
+
 		virtual void AddVertexToBatch(const cVertex *apVtx)=0;
 		virtual void AddVertexToBatch(const cVertex *apVtx, const cVector3f* avTransform)=0;
 		virtual void AddVertexToBatch(const cVertex *apVtx, const cMatrixf* aMtx)=0;
 
 		virtual void AddVertexToBatch_Size2D(const cVertex *apVtx, const cVector3f* avTransform,
 									const cColor* apCol,const float& mfW, const float& mfH)=0;
-		
+
 		virtual void AddVertexToBatch_Raw(	const cVector3f& avPos, const cColor &aColor,
 											const cVector3f& avTex)=0;
-											
+
 
 		virtual void AddIndexToBatch(int alIndex)=0;
 
 		virtual void AddTexCoordToBatch(unsigned int alUnit,const cVector3f *apCoord)=0;
 		virtual void SetBatchTextureUnitActive(unsigned int alUnit,bool abActive)=0;
-		
+
 		virtual void FlushTriBatch(tVtxBatchFlag aTypeFlags, bool abAutoClear=true)=0;
 		virtual void FlushQuadBatch(tVtxBatchFlag aTypeFlags, bool abAutoClear=true)=0;
 		virtual void ClearBatch()=0;
@@ -299,7 +299,7 @@ namespace hpl {
 
 		static void SetForceShaderModel3And4Off(bool abX){ mbForceShaderModel3And4Off = abX;}
 		static bool GetForceShaderModel3And4Off(){	return mbForceShaderModel3And4Off;}
-	
+
 	protected:
 		static bool mbForceShaderModel3And4Off;
 	};

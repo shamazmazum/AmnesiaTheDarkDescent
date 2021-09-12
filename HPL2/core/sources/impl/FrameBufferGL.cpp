@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -27,21 +27,21 @@
 
 
 namespace hpl {
-	
+
 
 	//////////////////////////////////////////////////////////////////////////
 	// DEPTH AND STENCIL BUFFER
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	cDepthStencilBufferGL::cDepthStencilBufferGL(const cVector2l& avSize, int alDepthBits, int alStencilBits)
 		: iDepthStencilBuffer(avSize,alDepthBits,alStencilBits)
 	{
 		mlHandle =0;
 
 		;
-		
+
 		///////////////////////////////////
 		// Create packed depth and stencil
 		if(alDepthBits>0 && alStencilBits>0)
@@ -101,7 +101,7 @@ namespace hpl {
 				case 8:		stencilType = GL_STENCIL_INDEX8_EXT; break;
 				case 16:	stencilType = GL_STENCIL_INDEX16_EXT; break;
 			};
-			
+
 			if(stencilType == 0)
 			{
 				Error("Invalid stencil format: %d bits! Could not create stencil buffer\n",alStencilBits);
@@ -117,13 +117,13 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	cDepthStencilBufferGL::~cDepthStencilBufferGL()
 	{
 		;
 		if(mlHandle != 0)	glDeleteRenderbuffersEXT(1, &mlHandle);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 
@@ -132,7 +132,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	cFrameBufferGL::cFrameBufferGL(const tString& asName, iLowLevelGraphics* apLowLevelGraphics) : iFrameBuffer(asName, apLowLevelGraphics)
 	{
 		;
@@ -149,7 +149,7 @@ namespace hpl {
 		;
 		glDeleteFramebuffersEXT(1, &mlHandle);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -197,10 +197,10 @@ namespace hpl {
 
 		if(apTexture->GetType() != eTextureType_2D && apTexture->GetType() != eTextureType_Rect) return;
 		//TODO: Check so it is a depth texture.
-		
+
 		AttachTexture(GL_DEPTH_ATTACHMENT_EXT,0,apTexture,alMipmapLevel,0);
 	}
-	
+
 	void cFrameBufferGL::SetDepthTextureCubeMap(iTexture *apTexture, int alFace, int alMipmapLevel)
 	{
 		if(CheckIfNullTexture(GL_DEPTH_ATTACHMENT_EXT,0,apTexture)) return;
@@ -234,7 +234,7 @@ namespace hpl {
 		//Attach depth buffer
 		if(pBufferSDL->GetDepthBits() > 0)
 		{
-			glFramebufferRenderbufferEXT(	GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, 
+			glFramebufferRenderbufferEXT(	GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT,
 											GL_RENDERBUFFER_EXT, pBufferSDL->GetHandle());
 
 			mpDepthBuffer = apBuffer;
@@ -244,7 +244,7 @@ namespace hpl {
 		//Attach stencil buffer
 		if(pBufferSDL->GetStencilBits() > 0)
 		{
-			glFramebufferRenderbufferEXT(	GL_FRAMEBUFFER_EXT, GL_STENCIL_ATTACHMENT_EXT, 
+			glFramebufferRenderbufferEXT(	GL_FRAMEBUFFER_EXT, GL_STENCIL_ATTACHMENT_EXT,
 											GL_RENDERBUFFER_EXT, pBufferSDL->GetHandle());
 			mpStencilBuffer = apBuffer;
 		}
@@ -267,7 +267,7 @@ namespace hpl {
 		bool bRet = false;
 
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, mlHandle);
-		
+
 		/////////////////////////////////////////
 		//Check color buffers
 		std::vector<GLenum> vColorBuffers;
@@ -292,12 +292,12 @@ namespace hpl {
 			glDrawBuffer(vColorBuffers[0]);
 			glReadBuffer(vColorBuffers[0]);
 		}
-		//Multiple color buffers 
+		//Multiple color buffers
 		else
 		{
 			glDrawBuffers(lNumOfColorBuffers, &vColorBuffers[0]);
 		}
-		
+
 		/////////////////////////////////////////
 		//Check for errors in fram buffer
 		GLenum GLStatus = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
@@ -337,10 +337,10 @@ namespace hpl {
 				Error("Frame buffer '%s' is not complete! Unknown error!\n");
 				break;
 			};
-			
+
 		}
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
-		
+
 		return bRet;
 	}
 
@@ -355,7 +355,7 @@ namespace hpl {
         if(mpDepthBuffer) PostBindUpdateAttachment(mpDepthBuffer);
 		if(mpStencilBuffer) PostBindUpdateAttachment(mpStencilBuffer);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -384,7 +384,7 @@ namespace hpl {
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, mlHandle);
 		glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, alAttachmentType + alAttachmentIdx,GL_TEXTURE_2D, 0,0);
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
-		
+
 		return true;
 	}
 
@@ -396,20 +396,20 @@ namespace hpl {
 		eTextureType texType = apTexture->GetType();
 		GLenum GLTarget = TextureTypeToGLTarget(texType);
 
-		cSDLTexture *pTextureSDL = static_cast<cSDLTexture*>(apTexture); 
+		cSDLTexture *pTextureSDL = static_cast<cSDLTexture*>(apTexture);
 
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, mlHandle);
-		
+
 
 		/////////////////////////////////////////////////
 		//2D, Rect or Cube Texture
-        if(	texType == eTextureType_2D || 
-			texType == eTextureType_Rect || 
+        if(	texType == eTextureType_2D ||
+			texType == eTextureType_Rect ||
 			texType == eTextureType_CubeMap)
 		{
-			glFramebufferTexture2DEXT(	GL_FRAMEBUFFER_EXT, alAttachmentType + alAttachmentIdx, 
-										texType == eTextureType_CubeMap ? 
-											GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB + alExtra : GLTarget, 
+			glFramebufferTexture2DEXT(	GL_FRAMEBUFFER_EXT, alAttachmentType + alAttachmentIdx,
+										texType == eTextureType_CubeMap ?
+											GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB + alExtra : GLTarget,
 										pTextureSDL->GetTextureHandle(),alMipmapLevel);
 
 		}
@@ -417,8 +417,8 @@ namespace hpl {
 		//3D Texture
 		else if(texType == eTextureType_3D)
 		{
-			glFramebufferTexture3DEXT(	GL_FRAMEBUFFER_EXT, alAttachmentType + alAttachmentIdx, 
-										GLTarget, 
+			glFramebufferTexture3DEXT(	GL_FRAMEBUFFER_EXT, alAttachmentType + alAttachmentIdx,
+										GLTarget,
 										pTextureSDL->GetTextureHandle(),alMipmapLevel,
 										alExtra);
 		}
@@ -449,11 +449,11 @@ namespace hpl {
 	//-----------------------------------------------------------------------
 
 	void cFrameBufferGL::SetFirstSize(const cVector2l &avSize)
-	{	
+	{
 		if(mvSize.x > -1) return;
 
         mvSize = avSize;
 	}
-	
+
 	//-----------------------------------------------------------------------
 }

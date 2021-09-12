@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -34,7 +34,7 @@ namespace hpl {
 	{
 		msName = asName;
 		mbIsActive = true;
-		
+
 		mpParentNode = NULL;
 
 		m_mtxLocalTransform = cMatrixf::Identity;
@@ -61,7 +61,7 @@ namespace hpl {
 	{
 		if(mpParentNode)
 			mpParentNode->RemoveEntity(this);
-		else if(mpParent) 
+		else if(mpParent)
 			mpParent->RemoveChild(this);
 
 		for(tEntity3DListIt it = mlstChildren.begin(); it != mlstChildren.end();++it)
@@ -84,7 +84,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	cVector3f iEntity3D::GetLocalPosition()
 	{
 		return m_mtxLocalTransform.GetTranslation();
@@ -105,16 +105,16 @@ namespace hpl {
 
 		return m_mtxWorldTransform.GetTranslation();
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cMatrixf& iEntity3D::GetWorldMatrix()
 	{
 		UpdateWorldTransform();
-		
+
 		return m_mtxWorldTransform;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void iEntity3D::SetPosition(const cVector3f& avPos)
@@ -125,7 +125,7 @@ namespace hpl {
 
 		SetTransformUpdated();
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void iEntity3D::SetMatrix(const cMatrixf& a_mtxTransform)
@@ -163,9 +163,9 @@ namespace hpl {
 			SetMatrix(a_mtxWorldTransform);
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	void iEntity3D::SetTransformUpdated(bool abUpdateCallbacks)
 	{
 		mbTransformUpdated = true;
@@ -174,14 +174,14 @@ namespace hpl {
 		mbUpdateBoundingVolume = true;
 
 		OnTransformUpdated();
-		
+
 		//Update children
 		for(tEntity3DListIt EntIt = mlstChildren.begin(); EntIt != mlstChildren.end();++EntIt)
 		{
 			iEntity3D *pChild = *EntIt;
 			pChild->SetTransformUpdated(true);
 		}
-		
+
 		//Update node children
 		for(tNode3DListIt nodeIt = mlstNodeChildren.begin(); nodeIt != mlstNodeChildren.end();++nodeIt)
 		{
@@ -206,9 +206,9 @@ namespace hpl {
 	{
 		return mbTransformUpdated;
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	int iEntity3D::GetTransformUpdateCount()
 	{
 		return mlCount;
@@ -233,7 +233,7 @@ namespace hpl {
 	{
 		mlstCallbacks.push_back(apCallback);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void iEntity3D::RemoveCallback(iEntityCallback *apCallback)
@@ -256,7 +256,7 @@ namespace hpl {
 
 		apEntity->SetTransformUpdated(true);
 	}
-	
+
 	void iEntity3D::RemoveChild(iEntity3D *apEntity)
 	{
 		for(tEntity3DListIt it = mlstChildren.begin(); it != mlstChildren.end();)
@@ -293,7 +293,7 @@ namespace hpl {
 	{
 		return cEntity3DIterator(&mlstChildren);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void iEntity3D::AddNodeChild(cNode3D *apNode)
@@ -308,7 +308,7 @@ namespace hpl {
 
 		apNode->SetWorldTransformUpdated();
 	}
-	
+
 	void iEntity3D::RemoveNodeChild(cNode3D *apNode)
 	{
 		for(tNode3DListIt it = mlstNodeChildren.begin(); it != mlstNodeChildren.end();)
@@ -325,7 +325,7 @@ namespace hpl {
 			}
 		}
 	}
-	
+
 	bool iEntity3D::IsNodeChild(cNode3D *apNode)
 	{
 		for(tNode3DListIt it = mlstNodeChildren.begin(); it != mlstNodeChildren.end();++it)
@@ -335,9 +335,9 @@ namespace hpl {
 		}
 		return false;
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// PRIVATE METHODS
 	//////////////////////////////////////////////////////////////////////////
@@ -350,7 +350,7 @@ namespace hpl {
 			//Log("CREATING Entity '%s' world transform!\n",msName.c_str());
 
 			mbTransformUpdated = false;
-			
+
 			//first check if there is a node parent
 			if(mpParentNode)
 			{
@@ -369,6 +369,6 @@ namespace hpl {
 			}
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 }

@@ -76,7 +76,7 @@ bool cOAL_EffectSlot::AttachEffect ( cOAL_Effect *apEffect )
     mpEffect = apEffect;
 
 	RUN_AL_FUNC ( alAuxiliaryEffectSloti (mlObjectId, AL_EFFECTSLOT_EFFECT, ((mpEffect == NULL)? AL_EFFECT_NULL : mpEffect->GetEffectID()) ) );
-	
+
 	return !AL_ERROR_OCCURED;
 }
 

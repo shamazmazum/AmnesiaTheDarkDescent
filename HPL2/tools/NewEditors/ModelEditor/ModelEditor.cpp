@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -143,10 +143,10 @@ void cModelEditor::CreateAppSpecificLayout()
 
 	///////////////////////////////////////////////////////////////////////
 	// Layout blocks definition
-	const cLayoutBlock* pSidebarBlock = mpWindowHandler->AddLayoutBlock(eLayoutBlock_Sidebar, 
-																		false, false, 
+	const cLayoutBlock* pSidebarBlock = mpWindowHandler->AddLayoutBlock(eLayoutBlock_Sidebar,
+																		false, false,
 																		cVector3f(0,fBaseY,1),
-																		false, false, 
+																		false, false,
 																		cVector2f(32,0));
 
 	const cLayoutBlock* pEditModeBlock = mpWindowHandler->AddLayoutBlock(eLayoutBlock_EditMode,
@@ -160,12 +160,12 @@ void cModelEditor::CreateAppSpecificLayout()
 																		cVector3f(pSidebarBlock->mvPosition.x+pSidebarBlock->mvSize.x, pBGBlock->mvSize.y-50, 1),
 																		false, false,
 																		cVector2f(pEditModeBlock->mvPosition.x-pSidebarBlock->mvSize.x, -1));
-																	
+
 	const cLayoutBlock* pViewportBlock = mpWindowHandler->AddLayoutBlock(eLayoutBlock_ViewportArea,
-																		false, false, 
+																		false, false,
 																		pSidebarBlock->mvPosition + cVector3f(pSidebarBlock->mvSize.x,0,0),
 																		false, false,
-																		cVector2f(pEditModeBlock->mvPosition.x-pSidebarBlock->mvSize.x, pLowerBlock->mvPosition.y-pSidebarBlock->mvSize.y-fBaseY)); 
+																		cVector2f(pEditModeBlock->mvPosition.x-pSidebarBlock->mvSize.x, pLowerBlock->mvPosition.y-pSidebarBlock->mvSize.y-fBaseY));
 
 	mpWindowHandler->AddMainWindow(hplNew(cEdWindowEditModeSidebar,(this)), eLayoutBlock_Sidebar);
 	mpWindowHandler->AddMainWindow(hplNew(cEdLowerToolbarModel,(this)), eLayoutBlock_LowerToolbar);
@@ -176,7 +176,7 @@ void cModelEditor::CreateAppSpecificLayout()
 		const cVector3f& vBasePos = pViewportBlock->mvPosition;
 		cVector2f vNormalSize = pViewportBlock->mvSize*0.5f;
 
-		cVector2f vNormalPositions[4] = 
+		cVector2f vNormalPositions[4] =
 		{
 			cVector2f(0,0),
 			cVector2f(vNormalSize.x, 0),
@@ -187,12 +187,12 @@ void cModelEditor::CreateAppSpecificLayout()
 		for(int i=0; i<4; ++i)
 		{
 			const cVector2f& vPos = vNormalPositions[i];
-            AddViewport(hplNew(cEdWindowViewport,(this)), 
+            AddViewport(hplNew(cEdWindowViewport,(this)),
 						vBasePos+vPos, vNormalSize-cVector2f(4,4),
-						vPos, vNormalSize, 
+						vPos, vNormalSize,
 						i);
 		}
-	}	
+	}
 }
 
 //----------------------------------------------------------------------

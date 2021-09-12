@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -26,12 +26,12 @@
 
 #include <algorithm>
 
-iEdActionSetObjMatrix::iEdActionSetObjMatrix(const tWString& asName, 
-											 iEdWorld* apWorld, 
+iEdActionSetObjMatrix::iEdActionSetObjMatrix(const tWString& asName,
+											 iEdWorld* apWorld,
 											 iEdScnObject* apObj, const cMatrixf& amtxX) : iEdActionWorldModifier(asName, apWorld)
 {
 	mpObject = apObj;
-	
+
 	mmtxNewMatrix = amtxX;
 }
 
@@ -60,7 +60,7 @@ void iEdActionSetObjMatrix::UndoModify()
 	SetMatrix(pObj, mmtxOldMatrix);
 }
 
-cEdActionSetTranslationMatrix::cEdActionSetTranslationMatrix(iEdWorld* apWorld, 
+cEdActionSetTranslationMatrix::cEdActionSetTranslationMatrix(iEdWorld* apWorld,
 															 iEdScnObject* apObj, const cMatrixf& amtxX) : iEdActionSetObjMatrix(_W("Translation"), apWorld, apObj, amtxX)
 {
 }
@@ -76,7 +76,7 @@ void cEdActionSetTranslationMatrix::SetMatrix(iEdScnObject* apObj, const cMatrix
 }
 
 
-cEdActionSetRotationMatrix::cEdActionSetRotationMatrix(iEdWorld* apWorld, 
+cEdActionSetRotationMatrix::cEdActionSetRotationMatrix(iEdWorld* apWorld,
 															 iEdScnObject* apObj, const cMatrixf& amtxX) : iEdActionSetObjMatrix(_W("Rotation"), apWorld, apObj, amtxX)
 {
 }
@@ -91,7 +91,7 @@ void cEdActionSetRotationMatrix::SetMatrix(iEdScnObject* apObj, const cMatrixf& 
 	apObj->SetRotationMatrix(amtxX);
 }
 
-cEdActionSetScaleMatrix::cEdActionSetScaleMatrix(iEdWorld* apWorld, 
+cEdActionSetScaleMatrix::cEdActionSetScaleMatrix(iEdWorld* apWorld,
 															 iEdScnObject* apObj, const cMatrixf& amtxX) : iEdActionSetObjMatrix(_W("Scale"), apWorld, apObj, amtxX)
 {
 }
@@ -106,7 +106,7 @@ void cEdActionSetScaleMatrix::SetMatrix(iEdScnObject* apObj, const cMatrixf& amt
 	apObj->SetRotationMatrix(amtxX);
 }
 
-cEdActionSetWorldMatrix::cEdActionSetWorldMatrix(iEdWorld* apWorld, 
+cEdActionSetWorldMatrix::cEdActionSetWorldMatrix(iEdWorld* apWorld,
 															 iEdScnObject* apObj, const cMatrixf& amtxX) : iEdActionSetObjMatrix(_W("World"), apWorld, apObj, amtxX)
 {
 }
@@ -260,7 +260,7 @@ bool iEdActionAggregateRemoveComponents::Init()
 
 		mvOldAggregateData.push_back(pData);
 	}
-	
+
 	return true;
 }
 //---------------------------------------------------------------------
@@ -307,7 +307,7 @@ void iEdActionAggregateRemoveComponents::UndoModify()
 
 //---------------------------------------------------------------------
 
-cEdActionCompoundAddComponents::cEdActionCompoundAddComponents(iBaseAggregateObject* apObj, 
+cEdActionCompoundAddComponents::cEdActionCompoundAddComponents(iBaseAggregateObject* apObj,
 															   const tScnObjList& alstObjects) : iEdActionAggregateAddComponents(apObj, alstObjects)
 {
 }

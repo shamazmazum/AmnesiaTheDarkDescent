@@ -50,7 +50,7 @@ bool cOAL_CustomStream::Stream(cOAL_Buffer* apDestBuffer)
 void cOAL_CustomStream::Seek(float afWhere, bool abForceRebuffer)
 {
 	mbEOF = false;
-	
+
 	if(afWhere < 0)
 		afWhere = 0;
 	if(afWhere > 1)

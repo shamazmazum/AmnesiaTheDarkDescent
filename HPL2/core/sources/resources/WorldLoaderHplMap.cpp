@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -68,9 +68,9 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	bool gbLogCacheLoad = false;
-	
+
 	static bool gbLog = false;
 	static bool gbLogTiming = true;
 
@@ -88,12 +88,12 @@ namespace hpl {
 	{
 
 	}
-	
+
 	cHplMapShapeBody::~cHplMapShapeBody()
 	{
 		STLDeleteAll(mvColliders);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -101,14 +101,14 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	cWorldLoaderHplMap::cWorldLoaderHplMap()
 	{
 		AddSupportedExtension("map");
 		AddSupportedExtension("cmap");
 
 		mpCurrentWorld = NULL;
-		mpCurrentPhysicsWorld = NULL; 
+		mpCurrentPhysicsWorld = NULL;
 
 		///////////////////////////////////
 		// Generate some tables used by map loading
@@ -122,7 +122,7 @@ namespace hpl {
 		{
 			short lX = *((short*)&i);
 			float fX = ((float)lX);
-            mpShortNegPosFloatTable[i] = fX / 32767.0f;			
+            mpShortNegPosFloatTable[i] = fX / 32767.0f;
 		}
 
 		///////////////////////////////////
@@ -131,7 +131,7 @@ namespace hpl {
 		{
 			char lX = *((char*)&i);
 			float fX = ((float)lX);
-			mpByteNegPosFloatTable[i] = fX / 127.0f;		
+			mpByteNegPosFloatTable[i] = fX / 127.0f;
 		}
 
 		///////////////////////////////////
@@ -139,10 +139,10 @@ namespace hpl {
 		for(int i=0; i<=255; ++i)
 		{
 			float fX = (float)i;
-			mpBytePosFloatTable[i] = fX / 255.0f;		
+			mpBytePosFloatTable[i] = fX / 255.0f;
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cWorldLoaderHplMap::~cWorldLoaderHplMap()
@@ -159,7 +159,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	cWorld* cWorldLoaderHplMap::LoadWorld(const tWString& asFile,tWorldLoadFlag aFlags)
 	{
 		unsigned long lLoadStartTime = cPlatform::GetApplicationTime();
@@ -216,18 +216,18 @@ namespace hpl {
 			tWString sCompFile = cString::SetFileExtW(asFile,_W("cmap"));
 
 			//Only recreate if file does not exist or if out of date.
-			if(	cPlatform::FileExists(sCompFile)==false || 
+			if(	cPlatform::FileExists(sCompFile)==false ||
 				cPlatform::FileModifiedDate(sCompFile) < cPlatform::FileModifiedDate(asFile))
 			{
 				tString sData;
 				pDoc->SaveToString(&sData);
-				
+
 				cBinaryBuffer textBuff;
 				textBuff.AddCharArray(sData.c_str(), sData.size()+1);
 
 				cBinaryBuffer compBuff;
 				compBuff.CompressAndAdd(textBuff.GetDataPointer(), textBuff.GetSize());
-				
+
 				int lKey = kEncryptKey;
 				compBuff.XorTransform((char*)&lKey, sizeof(lKey));
 
@@ -248,8 +248,8 @@ namespace hpl {
 		{
 			msCacheFileExt = _W("map_cache_fastload");
 		}
-		
-		
+
+
 		////////////////////////////////
 		// Init some timing variables
 		unsigned long lStartTime;
@@ -258,8 +258,8 @@ namespace hpl {
 		mlSortingTimeTotal =0;
 		mlCombineMeshTimeTotal=0;
 		mlCombineBodyTimeTotal=0;
-		
-		
+
+
 		if(gbLogTiming) Log(" -------- Loading map '%s' ---------\n", cString::To8Char(cString::GetFileNameW(asFile)).c_str());
 
 		///////////////////////
@@ -268,14 +268,14 @@ namespace hpl {
 		mpCurrentWorld->SetFilePath(asFile);
 
 		mpCurrentPhysicsWorld = mpPhysics->CreateWorld(true);
-        
+
 		//Set up some default values.
 		mpCurrentPhysicsWorld->SetAccuracyLevel(ePhysicsAccuracy_Medium);
 		mpCurrentPhysicsWorld->SetWorldSize(-300,300);
 		mpCurrentPhysicsWorld->SetMaxTimeStep(1.0f / 60.0f);
 
 		mpCurrentWorld->SetPhysicsWorld(mpCurrentPhysicsWorld);
-		
+
 		////////////////////////////////////
 		// Try loading cache
 		LoadCacheFile(asFile);
@@ -329,8 +329,8 @@ namespace hpl {
 			lDeltaTime = cPlatform::GetApplicationTime() - lStartTime;
 			if(gbLogTiming) Log("  Static Objects: %d ms\n", lDeltaTime);
 		}
-		
-		
+
+
 		//////////////////////////////
 		// Load rest of entities
 		if( (mlCurrentFlags & eWorldLoadFlag_NoEntities)==0)
@@ -340,7 +340,7 @@ namespace hpl {
 			lDeltaTime = cPlatform::GetApplicationTime() - lStartTime;
 			if(gbLogTiming) Log("  Entities: %d ms\n", lDeltaTime);
 		}
-			
+
 		//////////////////////////////
 		// Compile
 		lStartTime = cPlatform::GetApplicationTime();
@@ -357,20 +357,20 @@ namespace hpl {
 		STLDeleteAll(mlstStaticShapeBodies);
 
 		hplDelete(pDoc);
-		
+
 		lDeltaTime = cPlatform::GetApplicationTime() - lLoadStartTime;
 		if(gbLogTiming) Log("  Total: %d ms\n", lDeltaTime);
 
 		if(gbLogTiming) Log("  Meshes created: %d\n", mlStaticMeshEntitiesCreated);
 		if(gbLogTiming) Log("  Bodies created: %d\n", mlStaticMeshBodiesCreated);
-	
+
 		if(gbLogTiming) Log(" -------- Loading complete ---------\n");
 
 		return mpCurrentWorld;
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// PRIVATE METHODS
 	//////////////////////////////////////////////////////////////////////////
@@ -402,7 +402,7 @@ namespace hpl {
 		case eVertexBufferElementFormat_Float:
 			apBuffer->AddFloat32Array((float*)apSrcData, alSize);
 			break;
-		case eVertexBufferElementFormat_Byte:		
+		case eVertexBufferElementFormat_Byte:
 			apBuffer->AddCharArray((char*)apSrcData, alSize);
 			break;
 		default:
@@ -423,7 +423,7 @@ namespace hpl {
 		case eVertexBufferElementFormat_Float:
 			apBuffer->GetFloat32Array((float*)apDestData, alSize);
 			break;
-		case eVertexBufferElementFormat_Byte:		
+		case eVertexBufferElementFormat_Byte:
 			apBuffer->GetCharArray((char*)apDestData, alSize);
 			break;
 		default:
@@ -431,7 +431,7 @@ namespace hpl {
 			break;
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cWorldLoaderHplMap::LoadCacheFile(const tWString& asFile)
@@ -440,12 +440,12 @@ namespace hpl {
 		return;
 #endif
 		tWString sCacheFile = cString::SetFileExtW(asFile, msCacheFileExt);
-		
+
 		////////////////////////////////////////
 		// Check if there is a cache file
 		cDate currentDate = cPlatform::FileModifiedDate(asFile);
 		cDate cacheDate = cPlatform::FileModifiedDate(sCacheFile);
-		
+
 		if(cResources::GetForceCacheLoadingAndSkipSaving()==false)
 		{
 			if(cacheDate < currentDate || cPlatform::FileExists(sCacheFile)==false)
@@ -481,7 +481,7 @@ namespace hpl {
 			Error("File '%s' does not have right MAP_CACHE version! Is %d, newest is %d\n", cString::To8Char(asFile).c_str(),lVersion,MAP_CACHE_FORMAT_VERSION);
 			return;
 		}
-		
+
 		////////////////////////////////////////
 		// General Data
 		unsigned long lStartTime = cPlatform::GetApplicationTime();
@@ -575,8 +575,8 @@ namespace hpl {
 
 				cMaterial *pMaterial = mpResources->GetMaterialManager()->CreateMaterial(sMaterial);
 				pSubMesh->SetMaterial(pMaterial);
-			}			
-			
+			}
+
 			////////////////////
 			// Vertex data
 			iVertexBuffer* pVtxBuff = mpGraphics->GetLowLevel()->CreateVertexBuffer(eVertexBufferType_Hardware, eVertexBufferDrawType_Tri,
@@ -617,7 +617,7 @@ namespace hpl {
 					{
 						float *pDestData = pVtxBuff->GetFloatArray(arrayType);
 						int lElemCount = lVtxNum * lElementNum;
-						
+
 						//////////////////////
 						// Byte Array
 						if(lCompressionType <= 2)
@@ -629,7 +629,7 @@ namespace hpl {
 								while(lElemCount > 0)
 								{
 									*pDestData = mpBytePosFloatTable[binBuff.GetUnsignedChar()];
-									
+
 									++pDestData; --lElemCount;
 								}
 							}
@@ -640,7 +640,7 @@ namespace hpl {
 								while(lElemCount > 0)
 								{
 									*pDestData = mpByteNegPosFloatTable[binBuff.GetUnsignedChar()];
-									
+
 									++pDestData; --lElemCount;
 								}
 							}
@@ -670,7 +670,7 @@ namespace hpl {
 				pVtxBuff->ResizeIndices(lIdxNum);
 				binBuff.GetInt32Array((int*)pVtxBuff->GetIndices(), lIdxNum);
 			}
-			
+
 			///////////////////
 			//Compile vertex buffer and set to sub mesh
 			pVtxBuff->Compile(0);
@@ -680,7 +680,7 @@ namespace hpl {
 
 			///////////////////
 			//Create mesh entity
-            cMeshEntity *pMeshEntity = mpCurrentWorld->CreateMeshEntity(sName, pMesh, true);	
+            cMeshEntity *pMeshEntity = mpCurrentWorld->CreateMeshEntity(sName, pMesh, true);
 			pMeshEntity->SetRenderFlagBit(eRenderableFlag_ShadowCaster, bCastShadows);
 		}
 
@@ -689,7 +689,7 @@ namespace hpl {
 		// Done loading
 		Log("    Cache Loading: %d ms\n", cPlatform::GetApplicationTime() - lStartTime);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cWorldLoaderHplMap::SaveCacheFile(const tWString& asFile)
@@ -779,7 +779,7 @@ namespace hpl {
 			binBuff.AddString(pSubMesh->GetMaterialName());
 			binBuff.AddBool(pSubEnt->GetRenderFlagBit(eRenderableFlag_ShadowCaster));
 
-			
+
 			////////////////////////////
 			//Add Vertices
 			{
@@ -792,7 +792,7 @@ namespace hpl {
 				for(int i=0; i < eVertexBufferElement_LastEnum;i++)
 				{
 					eVertexBufferElement arrayType = (eVertexBufferElement)i;
-					
+
 					if(pVtxBuff->GetElementNum((eVertexBufferElement)i) > 0) ++lVtxTypeNum;
 				}
 				binBuff.AddInt32(lVtxTypeNum);
@@ -802,7 +802,7 @@ namespace hpl {
 				for(int i=0; i < eVertexBufferElement_LastEnum;i++)
 				{
 					eVertexBufferElement arrayType = (eVertexBufferElement)i;
-					
+
 					if(pVtxBuff->GetElementNum(arrayType) <= 0) continue;
 
 					int lElementNum = pVtxBuff->GetElementNum(arrayType);
@@ -817,9 +817,9 @@ namespace hpl {
 					//Determine compression type
 					 //0=none, 1= 0-1->byte, 2= -1-1->byte 3=-1-1->short
 					int lCompressionType =0;
-					if(arrayType == eVertexBufferElement_Color0) 
+					if(arrayType == eVertexBufferElement_Color0)
 						lCompressionType = 1;
-					if(arrayType == eVertexBufferElement_Normal || arrayType == eVertexBufferElement_Texture1Tangent) 
+					if(arrayType == eVertexBufferElement_Normal || arrayType == eVertexBufferElement_Texture1Tangent)
 						lCompressionType = 2;
 
 					binBuff.AddInt32(lCompressionType);
@@ -878,13 +878,13 @@ namespace hpl {
 				binBuff.AddInt32Array((int*)pVtxBuff->GetIndices(), lIdxNum);
 			}
 		}
-		
+
 		////////////////////////////////////////
 		// Save
 		bool bRet = binBuff.Save();
 		if(bRet==false) 	Error("Couldn't save map cache to '%s'", cString::To8Char(sCacheFile).c_str());
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cWorldLoaderHplMap::LoadFileIndicies(cXmlElement* apXmlContents)
@@ -919,9 +919,9 @@ namespace hpl {
 			while(it.HasNext())
 			{
 				cXmlElement* pXmlFileIdx = it.Next()->ToElement();
-				
+
 				int lIdx = pXmlFileIdx->GetAttributeInt("Id", 0);
-				
+
 				mvFileIndices_Entities[lIdx] = pXmlFileIdx->GetAttributeString("Path", "");
 			}
 		}
@@ -944,12 +944,12 @@ namespace hpl {
 			}
 		}
 
-		
+
 
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	void cWorldLoaderHplMap::LoadStaticObjects(cXmlElement* apXmlContents)
 	{
 		unsigned long lStartTime;
@@ -973,7 +973,7 @@ namespace hpl {
 		mlCombinedBodyNameCount =0;
 
 		/////////////////////////////////
-		//Create and setup 
+		//Create and setup
 
 		if(mlCurrentFlags & eWorldLoadFlag_FastStaticLoad)
 			mpResources->GetMeshManager()->SetUseFastloadMaterial(true);
@@ -1002,7 +1002,7 @@ namespace hpl {
 			while(primIt.HasNext())
 			{
 				cXmlElement* pXmlEntity = primIt.Next()->ToElement();
-				
+
 				CreatePrimitive(pXmlEntity, lstMeshEntities, pTempContainer);
 			}
 			lDeltaTime = cPlatform::GetApplicationTime() - lStartTime;
@@ -1025,7 +1025,7 @@ namespace hpl {
 			lDeltaTime = cPlatform::GetApplicationTime() - lStartTime;
 			if(gbLogTiming) Log("    Decal Loading: %d ms\n", lDeltaTime);
 		}
-		
+
 
 		if(mlCurrentFlags & eWorldLoadFlag_FastStaticLoad)
 			mpResources->GetMeshManager()->SetUseFastloadMaterial(false);
@@ -1068,7 +1068,7 @@ namespace hpl {
 			Log("     Meshes: %d ms\n", mlCombineMeshTimeTotal);
 			Log("     Bodies: %d ms\n", mlCombineBodyTimeTotal);
 		}
-		
+
 		/////////////////////////////////
 		//Clean up
         STLDeleteAll(lstMeshEntities);
@@ -1124,7 +1124,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	void cWorldLoaderHplMap::IterateLeafNodesAndBuildMeshes(iRenderableContainerNode *apNode)
 	{
 		////////////////////////
@@ -1144,9 +1144,9 @@ namespace hpl {
 		if(apNode->HasObjects())
 		{
 			CombineAndCreateMeshesAndPhysics(apNode->GetObjectList());
-		}	
+		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cWorldLoaderHplMap::CombineAndCreateMeshesAndPhysics(tRenderableList *apObjectList)
@@ -1186,7 +1186,7 @@ namespace hpl {
 			}
 
 			/////////////////////
-			//Set object to arrays	
+			//Set object to arrays
 			vMeshObjects[i] = pObject;
 
 			if(bCreateBodies)
@@ -1304,7 +1304,7 @@ namespace hpl {
 		}
 		mlCombineBodyTimeTotal += cPlatform::GetApplicationTime() - lStartTime;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	struct cVertexDataArray
@@ -1346,7 +1346,7 @@ namespace hpl {
 		}
 
 		//Increase the name count
-		mlCombinedMeshNameCount++; 
+		mlCombinedMeshNameCount++;
 
 		///////////////////////////////////////////
 		//Create the vertex buffer (skipping color!)
@@ -1355,8 +1355,8 @@ namespace hpl {
 
 		//Set up what data arrays to use
 		const int lDataArrayNum = 5;
-		cVertexDataArray lDataArrayTypes[lDataArrayNum] = 
-		{ 
+		cVertexDataArray lDataArrayTypes[lDataArrayNum] =
+		{
 			{eVertexBufferElement_Position, 4},
 			{eVertexBufferElement_Normal, 3},
 			{eVertexBufferElement_Color0, 4},
@@ -1370,13 +1370,13 @@ namespace hpl {
 		{
 			pVtxBuffer->CreateElementArray(lDataArrayTypes[i].mType,eVertexBufferElementFormat_Float, lDataArrayTypes[i].mlElementNum);
 			pVtxBuffer->ResizeArray(lDataArrayTypes[i].mType, lTotalVtxAmount * lDataArrayTypes[i].mlElementNum);
-			pDataArray[i] = pVtxBuffer->GetFloatArray(lDataArrayTypes[i].mType);		
+			pDataArray[i] = pVtxBuffer->GetFloatArray(lDataArrayTypes[i].mType);
 		}
-				
+
 		//Set up and get indices
 		pVtxBuffer->ResizeIndices(lTotalIdxAmount);
 		unsigned int* pIndexArray = pVtxBuffer->GetIndices();
-		
+
 		///////////////////////////////////////////
 		//Fill vertex buffer with data
 		int lIdxOffset =0;
@@ -1396,14 +1396,14 @@ namespace hpl {
 			iVertexBuffer *pTransformedVtxBuffer = pSubVtxBuffer->CreateCopy(	eVertexBufferType_Software, eVertexBufferUsageType_Static,
 																				pSubVtxBuffer->GetVertexElementFlags());
 			pTransformedVtxBuffer->Transform(pObject->GetWorldMatrix());
-			
+
 			//////////////////////////////////////////////////
 			//Copy to each data array and increase the data pointer
             for(int i=0; i<lDataArrayNum;++i)
 			{
 				int lAmount = lDataArrayTypes[i].mlElementNum * pTransformedVtxBuffer->GetVertexNum();
 				if(gbLog) Log("    copy from data %d: %d elements\n", i, lAmount);
-				
+
 				memcpy(pDataArray[i], pTransformedVtxBuffer->GetFloatArray(lDataArrayTypes[i].mType), lAmount * sizeof(float));
 
 				pDataArray[i] += lAmount;
@@ -1434,7 +1434,7 @@ namespace hpl {
 		cMesh *pMesh = hplNew( cMesh, (sName, _W("") ,mpResources->GetMaterialManager(),mpResources->GetAnimationManager()) );
 
 		cSubMesh *pSubMesh = pMesh->CreateSubMesh("SubMesh");
-		
+
 		//Set the vertex buffer
 		pSubMesh->SetVertexBuffer(pVtxBuffer);
 
@@ -1446,14 +1446,14 @@ namespace hpl {
 			pSubMesh->SetMaterial(pMaterial);
 		}
 		pSubMesh->SetMaterialName(pFirstSubEnt->GetSubMesh()->GetMaterialName());
-		
+
 		//Compile
 		pSubMesh->Compile();
-		
+
 		///////////////////////////////////////////
 		//Create the mesh entity
 		cMeshEntity *pMeshEntity = mpCurrentWorld->CreateMeshEntity(sName,pMesh, true);
-		
+
 		//Set up variables
 		pMeshEntity->SetRenderFlagBit(eRenderableFlag_ShadowCaster, pFirstObject->GetRenderFlagBit(eRenderableFlag_ShadowCaster));
 
@@ -1479,10 +1479,10 @@ namespace hpl {
 			if(avObjects[i].mpUserData->mbCollides==false) continue;
 
 			iVertexBuffer *pVtxBuffer = avObjects[i].mpObject->GetVertexBuffer();
-			
+
 			//Do a special debug test and skip highpoly entities, loading the map faster.
             if((mlCurrentFlags & eWorldLoadFlag_FastPhysicsLoad) && pVtxBuffer->GetIndexNum() > lMaxIndices)	continue;
-			
+
 
 			lTotalVtxAmount += pVtxBuffer->GetVertexNum();
 			lTotalIdxAmount += pVtxBuffer->GetIndexNum();
@@ -1507,8 +1507,8 @@ namespace hpl {
 
 		pVtxBuffer->CreateElementArray(eVertexBufferElement_Position,eVertexBufferElementFormat_Float, 4);
 		pVtxBuffer->ResizeArray(eVertexBufferElement_Position, lTotalVtxAmount * 4);
-		float *pDataArray = pVtxBuffer->GetFloatArray(eVertexBufferElement_Position);		
-		
+		float *pDataArray = pVtxBuffer->GetFloatArray(eVertexBufferElement_Position);
+
 		//Set up and get indices
 		pVtxBuffer->ResizeIndices(lTotalIdxAmount);
 		unsigned int* pIndexArray = pVtxBuffer->GetIndices();
@@ -1525,10 +1525,10 @@ namespace hpl {
 			////////////////////////////
 			//Add colliders if any
 			cSubMesh *pSubMesh =  avObjects[vtxbuffer].mpObject->GetSubMesh();
-			
+
 			//Do a special debug test and skip highpoly entities, loading the map faster.
 			if((mlCurrentFlags & eWorldLoadFlag_FastPhysicsLoad) && pSubMesh->GetVertexBuffer()->GetIndexNum() > lMaxIndices) continue;
-			
+
 			if(gbLog) Log("   Copying position data from '%s'\n", pObject->GetName().c_str());
 
 			////////////////////////
@@ -1537,7 +1537,7 @@ namespace hpl {
 			iVertexBuffer *pTransformedVtxBuffer = pSubVtxBuffer->CreateCopy(	eVertexBufferType_Software, eVertexBufferUsageType_Static,
 																				eVertexElementFlag_Position);
 			pTransformedVtxBuffer->Transform(pObject->GetWorldMatrix());
-			
+
 			////////////////////////
 			//Copy the data
 			int lAmount = pTransformedVtxBuffer->GetVertexNum() * 4;
@@ -1566,10 +1566,10 @@ namespace hpl {
 		///////////////////////////////////////////
 		//Create the mesh physics body
 		iRenderable *pFirstObject = avObjects[alFirstIdx].mpObject;
-		
+
 		iCollideShape *pShape = mpCurrentPhysicsWorld->CreateMeshShape(pVtxBuffer);
 		hplDelete(pVtxBuffer);
-		
+
 		iPhysicsBody *pBody = mpCurrentPhysicsWorld->CreateBody(sName,pShape);
 		pBody->SetMass(0);
 
@@ -1594,7 +1594,7 @@ namespace hpl {
 		//Load properties
 		tString sName = apElement->GetAttributeString("Name");
 		tString sFileName;
-		
+
 		//File name
 		int lFileNameIdx = apElement->GetAttributeInt("FileIndex",-1);
 		if(lFileNameIdx < 0)
@@ -1614,11 +1614,11 @@ namespace hpl {
 				return;
 			}
 		}
-		
+
 		cVector3f vPosition = apElement->GetAttributeVector3f("WorldPos",0);
 		cVector3f vScale = apElement->GetAttributeVector3f("Scale",1);
 		cVector3f vRotation = apElement->GetAttributeVector3f("Rotation",0);
-		
+
 		bool bCollides = apElement->GetAttributeBool("Collides", true);
 		bool bCastsShadows = apElement->GetAttributeBool("CastShadows", true);
 
@@ -1637,18 +1637,18 @@ namespace hpl {
 			Error("Could not load mesh '%s'\n", sFileName.c_str());
 			return;
 		}
-		
+
 		//////////////////////
 		//RENDER_DEBUG
 		/*cMeshEntity* pDebugMeshEntity = mpCurrentWorld->CreateMeshEntity(sName, pMesh);
 		pDebugMeshEntity->SetWorldMatrix(cMath::MatrixMul(cMath::MatrixRotate(vRotation, eEulerRotationOrder_XYZ),cMath::MatrixScale(vScale)));
 		pDebugMeshEntity->SetPosition(vPosition);
 		return;*/
-		
-		
+
+
 		cMeshEntity* pMeshEntity = hplNew( cMeshEntity, (sName,pMesh,
 														mpResources->GetMaterialManager(),
-														mpResources->GetMeshManager(), 
+														mpResources->GetMeshManager(),
 														mpResources->GetAnimationManager()) );
 		pMeshEntity->SetRenderFlagBit(eRenderableFlag_ShadowCaster, bCastsShadows);
 		pMeshEntity->SetUniqueID(lID);
@@ -1686,13 +1686,13 @@ namespace hpl {
 			cMaterial *pMaterial = pSubEnt->GetMaterial();
 
             ////////////////////////////////
-			//If there are (non-char) collide shapes, do not create body from mesh! 
-			bool bCreateMeshCollider = bCollides; 
+			//If there are (non-char) collide shapes, do not create body from mesh!
+			bool bCreateMeshCollider = bCollides;
 			if(bCreateMeshCollider)
 			{
 				for(int j=0; j<pSubMesh->GetColliderNum(); ++j)
 				{
-					if(pSubMesh->GetCollider(j)->mbCharCollider==false) 
+					if(pSubMesh->GetCollider(j)->mbCharCollider==false)
 						bCreateMeshCollider = false;
 				}
 			}
@@ -1703,7 +1703,7 @@ namespace hpl {
 			bool bIsCharCollider = false;
 			{
 				//All non mesh shapes shall skip creating a collider if there is a normal collider shape.
-				if(bHasNormalColliderShapeMesh)	bCreateMeshCollider = false; 
+				if(bHasNormalColliderShapeMesh)	bCreateMeshCollider = false;
 
 				if( cString::Sub(pSubMesh->GetName(),0,1)== "_")
 				{
@@ -1723,7 +1723,7 @@ namespace hpl {
 
 			//No need to create mesh since it would be non-colliding and invisible!
 			if(bCollides == false && bIsColliderMeshShape) continue;
-			
+
 			////////////////////////////////
 			//Create user data
 			cHplMapStaticUserData *pUserData = hplNew(cHplMapStaticUserData, ());
@@ -1738,13 +1738,13 @@ namespace hpl {
 			else
 				pUserData->mbCombine = true;
 
-			
+
 			pSubEnt->SetUserData(pUserData);
 			mlstTempStaticUserData.push_back(pUserData);
 
 			apContainer->Add(pSubEnt);
 		}
-		
+
 		////////////////////////////////
 		//Create shape bodies
 		if(bCollides)
@@ -1759,7 +1759,7 @@ namespace hpl {
 			}
 		}
 
-		
+
 		////////////////////////////////
 		//Setup mesh entity
 		pMeshEntity->SetWorldMatrix(cMath::MatrixMul(cMath::MatrixRotate(vRotation, eEulerRotationOrder_XYZ),cMath::MatrixScale(vScale)));
@@ -1767,12 +1767,12 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	void cWorldLoaderHplMap::CreateSubMeshShapeBodies(cSubMeshEntity *apSubEnt, const cMatrixf &a_mtxTransform, const cVector3f& avScale)
 	{
 		cSubMesh *pSubMesh = apSubEnt->GetSubMesh();
 		if(pSubMesh->GetColliderNum() <= 0) return;
-		
+
 		std::vector<cHplMapShape*> vCharColliders;
 		std::vector<cHplMapShape*> vNormalColliders;
 
@@ -1786,7 +1786,7 @@ namespace hpl {
 			cMeshCollider *pMeshCollider = pSubMesh->GetCollider(i);
 
 			cHplMapShape *pMapShape = hplNew(cHplMapShape, ());
-			
+
 			pMapShape->m_mtxOffset = pMeshCollider->m_mtxOffset;
 			pMapShape->m_mtxOffset.SetTranslation(pMeshCollider->m_mtxOffset.GetTranslation() * avScale);
 			pMapShape->mType = pMeshCollider->mType;
@@ -1806,21 +1806,21 @@ namespace hpl {
 			if(i==1 && vCharColliders.empty()) continue;
 
 			std::vector<cHplMapShape*> *pColliderVec = i==0 ? &vNormalColliders : &vCharColliders;
-			
+
 			/////////////////////////////////////
 			// Create the saved data (to save in cache(
 			cHplMapShapeBody *pShapeBody = hplNew(cHplMapShapeBody, () );
-            pShapeBody->mbCharCollider = (i==1);			
+            pShapeBody->mbCharCollider = (i==1);
 			pShapeBody->m_mtxTransform = a_mtxTransform;
 			pShapeBody->mvColliders = *pColliderVec;
 			pShapeBody->mbBlocksLight = apSubEnt->GetRenderFlagBit(eRenderableFlag_ShadowCaster);
 			pShapeBody->msMaterial = apSubEnt->GetMaterial()->GetPhysicsMaterial();
-			
+
 			mlstStaticShapeBodies.push_back(pShapeBody);
 
 			/////////////////////////////////////
 			// Create Shapes Body
-			CreateShapeBody(pShapeBody);	
+			CreateShapeBody(pShapeBody);
 		}
 	}
 
@@ -1832,7 +1832,7 @@ namespace hpl {
 		// Create sub shapes
 		std::vector<iCollideShape*> vShapes;
 		vShapes.resize(apShapeBody->mvColliders.size());
-		
+
 		for(size_t i=0; i<vShapes.size(); ++i)
 		{
 			cHplMapShape* pMapShape = apShapeBody->mvColliders[i];
@@ -1840,16 +1840,16 @@ namespace hpl {
 
 			switch(pMapShape->mType)
 			{
-			case eCollideShapeType_Box: 
+			case eCollideShapeType_Box:
 				vShapes[i] = mpCurrentPhysicsWorld->CreateBoxShape(pMapShape->mvSize,pOffset);
 				break;
-			case eCollideShapeType_Sphere: 
+			case eCollideShapeType_Sphere:
 				vShapes[i] = mpCurrentPhysicsWorld->CreateSphereShape(pMapShape->mvSize,pOffset);
 				break;
-			case eCollideShapeType_Cylinder: 
+			case eCollideShapeType_Cylinder:
 				vShapes[i] = mpCurrentPhysicsWorld->CreateCylinderShape(pMapShape->mvSize.x,pMapShape->mvSize.y,pOffset);
 				break;
-			case eCollideShapeType_Capsule: 
+			case eCollideShapeType_Capsule:
 				vShapes[i] = mpCurrentPhysicsWorld->CreateCapsuleShape(pMapShape->mvSize.x,pMapShape->mvSize.y,pOffset);
 				break;
 			}
@@ -1892,7 +1892,7 @@ namespace hpl {
 
 		if((mlCurrentFlags & eWorldLoadFlag_FastStaticLoad))
 			sMaterial = mpResources->GetMeshManager()->GetFastloadMaterial();
-		
+
 		cVector3f vPosition = apElement->GetAttributeVector3f("WorldPos",0);
 		cVector3f vScale = apElement->GetAttributeVector3f("Scale",1);
 		cVector3f vRotation = apElement->GetAttributeVector3f("Rotation",0);
@@ -1915,7 +1915,7 @@ namespace hpl {
 
 			//Create the mesh
 			cMesh *pMesh = mpGraphics->GetMeshCreator()->CreatePlane(sName,vStartCorner,vEndCorner,
-																	 vUVCorners[0],vUVCorners[1], vUVCorners[2], vUVCorners[3], 
+																	 vUVCorners[0],vUVCorners[1], vUVCorners[2], vUVCorners[3],
 																	 sMaterial);
 
 
@@ -1929,7 +1929,7 @@ namespace hpl {
 			//Create mesh entity
 			pMeshEntity = hplNew( cMeshEntity, (sName,pMesh,
 												mpResources->GetMaterialManager(),
-												mpResources->GetMeshManager(), 
+												mpResources->GetMeshManager(),
 												mpResources->GetAnimationManager()) );
 			pMeshEntity->SetRenderFlagBit(eRenderableFlag_ShadowCaster, bCastsShadows);
 			pMeshEntity->GetSubMeshEntity(0)->GetSubMesh()->SetMaterialName(sMaterialName);
@@ -1961,17 +1961,17 @@ namespace hpl {
 				pUserData->mbCollides = bCollides;
 				pUserData->mbVisible = true;
 				pUserData->mbCharCollider = false;
-				
+
 				//If one sided and world reflector, do not combine!
 				if(pSubMesh->GetIsOneSided() && pMaterial->HasWorldReflection())
 					pUserData->mbCombine = false;
 				else
 					pUserData->mbCombine = true;
-				
+
 
 				pSubEnt->SetUserData(pUserData);
 				mlstTempStaticUserData.push_back(pUserData);
-				
+
 				apContainer->Add(pSubEnt);
 			}
 		}
@@ -2003,22 +2003,22 @@ namespace hpl {
 		{
 			if(lFileNameIdx < (int)mvFileIndices_Decals.size())
 			{
-				sMaterial = mvFileIndices_Decals[lFileNameIdx];			
+				sMaterial = mvFileIndices_Decals[lFileNameIdx];
 			}
 			else
 			{
 				Error("Could not load decal '%s'! File index %d is out of bounds!\n", sName.c_str(), lFileNameIdx);
 				return;
 			}
-			
+
 		}
-		
+
 		////////////////////////////////
 		//Load Vertex data
 		cXmlElement* pDecalMeshElem = apElement->GetFirstElement("DecalMesh");
 		cMesh* pMesh = cEngineFileLoading::LoadDecalMeshHelper(pDecalMeshElem, mpGraphics, mpResources, sName, sMaterial, decalColor);
 		if(pMesh==NULL)	return;
-		
+
 		//////////////////////
 		//RENDER_DEBUG:
 		/*cMeshEntity* pDebugMeshEntity = mpCurrentWorld->CreateMeshEntity(sName, pMesh);
@@ -2028,9 +2028,9 @@ namespace hpl {
 		// Create mesh entity
 		pMeshEntity = hplNew( cMeshEntity, (sName,pMesh,
 											mpResources->GetMaterialManager(),
-											mpResources->GetMeshManager(), 
+											mpResources->GetMeshManager(),
 											mpResources->GetAnimationManager()) );
-		
+
 		//////////////////////////////////
 		// General Final Stuff
 		if(pMeshEntity)
@@ -2040,7 +2040,7 @@ namespace hpl {
 
 			//Id
 			pMeshEntity->SetUniqueID(lID);
-            
+
 			// Add all sub meshes to a new vector
 			for(int i=0; i<pMeshEntity->GetSubMeshEntityNum(); ++i)
 			{
@@ -2060,7 +2060,7 @@ namespace hpl {
 		}
 
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	static cMeshEntity* GetAndRemoveMeshEntity(tMeshEntityList& alstMeshEntities, int alID)
@@ -2082,7 +2082,7 @@ namespace hpl {
 	{
 		tMeshEntityList lstCombineMeshes;
 		tRenderableList lstCombineSubMeshes;
-		
+
 		////////////////////////////
 		// Get the list of Ids
 		int lGroupID =  apElement->GetAttributeInt("ID", -1);
@@ -2104,7 +2104,7 @@ namespace hpl {
 				Warning(" Object id %d in group %d does not exist!\n", lID, lGroupID);
 				continue;
 			}
-		
+
 			lstCombineMeshes.push_back(pMeshEnt);
 			for(int i=0; i<pMeshEnt->GetSubMeshEntityNum(); ++i)
 			{
@@ -2117,13 +2117,13 @@ namespace hpl {
 		////////////////////////////
 		// Combine the sub meshes and create meshes and bodies
 		CombineAndCreateMeshesAndPhysics(&lstCombineSubMeshes);
-		
+
 		////////////////////////////
 		// Destroy all the mesh entities
 		for(tMeshEntityListIt it = lstCombineMeshes.begin(); it != lstCombineMeshes.end(); ++it)
 		{
 			cMeshEntity *pMeshEnt = *it;
-            
+
 			for(int i=0; i<pMeshEnt->GetSubMeshEntityNum(); ++i)
 			{
 				apContainer->Remove(pMeshEnt->GetSubMeshEntity(i));
@@ -2131,7 +2131,7 @@ namespace hpl {
 			hplDelete(pMeshEnt);
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cWorldLoaderHplMap::LoadEntities(cXmlElement* apXmlContents)
@@ -2176,8 +2176,8 @@ namespace hpl {
 
 			pLight->AttachBillboard(pBB, pBB->GetColor());
 		}
-		
-		
+
+
 		//Set fast entity load
 		if(mlCurrentFlags & eWorldLoadFlag_FastEntityLoad)
 			mpResources->GetMeshManager()->SetUseFastloadMaterial(false);
@@ -2211,7 +2211,7 @@ namespace hpl {
 			if(sObjectType == "Entity")
 			{
 				if(mlCurrentFlags & eWorldLoadFlag_NoGameEntities) return;
-				
+
 				LoadEntity(sName,lID,bActive, vPosition, vRotation, vScale,apElement);
 			}
 			//////////////////////////
@@ -2219,7 +2219,7 @@ namespace hpl {
 			else
 			{
 				if(mlCurrentFlags & eWorldLoadFlag_NoGameEntities) return;
-				
+
 				LoadArea(sName,lID,bActive, vPosition, vRotation, vScale,apElement);
 			}
 		}
@@ -2266,12 +2266,12 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	
+
 	void cWorldLoaderHplMap::LoadEntity(const tString& asName, int alID, bool abActive, const cVector3f& avPos, const cVector3f& avRot, const cVector3f& avScale, cXmlElement* apElement)
 	{
 		cMatrixf mtxTransform = cMath::MatrixRotate(avRot,eEulerRotationOrder_XYZ);
 		mtxTransform.SetTranslation(avPos);
-		
+
 		//File name
 		tString sFilename;
 		int lFileNameIdx = apElement->GetAttributeInt("FileIndex",-1);
@@ -2283,21 +2283,21 @@ namespace hpl {
 		{
 			if(lFileNameIdx < (int)mvFileIndices_Entities.size())
 			{
-				sFilename = mvFileIndices_Entities[lFileNameIdx];			
+				sFilename = mvFileIndices_Entities[lFileNameIdx];
 			}
 			else
 			{
 				Error("Could not load entity '%s'!\n File index %d is out of bounds!\n", asName.c_str(), lFileNameIdx);
 				return;
 			}
-			
+
 		}
 
 		//User variables
 		cResourceVarsObject userVars;
 		cXmlElement *pUserVarsElem = apElement->GetFirstElement("UserVariables");
 		if(pUserVarsElem) userVars.LoadVariables(pUserVarsElem);
-		
+
         //Create in world
 		bool bSkipNonStatic = (mlCurrentFlags & eWorldLoadFlag_NoDynamicGameEntities)!=0;
 		mpCurrentWorld->CreateEntity(asName, mtxTransform, sFilename,alID, abActive, avScale, &userVars, bSkipNonStatic);
@@ -2309,7 +2309,7 @@ namespace hpl {
 	{
 		cMatrixf mtxTransform = cMath::MatrixRotate(avRot,eEulerRotationOrder_XYZ);
 		mtxTransform.SetTranslation(avPos);
-		
+
         tString sType = apElement->GetAttributeString("AreaType","");
 
 		iAreaLoader *pLoader  = mpResources->GetAreaLoader(sType);
@@ -2327,7 +2327,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	bool cWorldLoaderHplMap::CheckTransformValidity(const tString& asName, const cVector3f& avPos, const cVector3f& avRot, const cVector3f& avScale)
 	{
 		if(cMath::Abs(avPos.x)>10000.0f || cMath::Abs(avPos.y)>10000.0f || cMath::Abs(avPos.z)>10000.0f)

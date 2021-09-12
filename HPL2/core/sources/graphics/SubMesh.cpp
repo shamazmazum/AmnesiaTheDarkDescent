@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -91,7 +91,7 @@ namespace hpl {
 		if(mpMaterial) mpMaterialManager->Destroy(mpMaterial);
 		mpMaterial = apMaterial;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cSubMesh::SetVertexBuffer(iVertexBuffer* apVtxBuffer)
@@ -116,7 +116,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	void cSubMesh::ResizeVertexBonePairs(int alSize)
 	{
 		mvVtxBonePairs.resize(alSize);
@@ -142,7 +142,7 @@ namespace hpl {
 	}
 
 
-	
+
 	//-----------------------------------------------------------------------
 
 	cMeshCollider* cSubMesh::CreateCollider(eCollideShapeType aType)
@@ -173,13 +173,13 @@ namespace hpl {
 
 		switch(pCollider->mType)
 		{
-		case eCollideShapeType_Box: 
+		case eCollideShapeType_Box:
 			return apWorld->CreateBoxShape(vSize,pOffset);
-		case eCollideShapeType_Sphere: 
+		case eCollideShapeType_Sphere:
 			return apWorld->CreateSphereShape(vSize,pOffset);
-		case eCollideShapeType_Cylinder: 
+		case eCollideShapeType_Cylinder:
 			return apWorld->CreateCylinderShape(vSize.x,vSize.y,pOffset);
-		case eCollideShapeType_Capsule: 
+		case eCollideShapeType_Capsule:
 			return apWorld->CreateCapsuleShape(vSize.x,vSize.y,pOffset);
 		}
 
@@ -226,11 +226,11 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	void cSubMesh::CheckOneSided()
 	{
 		//Log("--- %s\n",GetName().c_str());
-		
+
 		if(mpVtxBuffer==NULL) return;
 
 		int lIdxNum = mpVtxBuffer->GetIndexNum();
@@ -239,7 +239,7 @@ namespace hpl {
 
 		unsigned int* pIndices = mpVtxBuffer->GetIndices();
 		float *pPositions = mpVtxBuffer->GetFloatArray(eVertexBufferElement_Position);
-		
+
 		bool bFirst = true;
 		cVector3f vNormalSum;
 		cVector3f vFirstNormal;
@@ -262,11 +262,11 @@ namespace hpl {
 
 			cVector3f vEdge1( pVtx1[0] - pVtx0[0], pVtx1[1] - pVtx0[1], pVtx1[2] - pVtx0[2]);
 			cVector3f vEdge2( pVtx2[0] - pVtx0[0], pVtx2[1] - pVtx0[1], pVtx2[2] - pVtx0[2]);
-			
+
 			cVector3f vNormal = cMath::Vector3Normalize(cMath::Vector3Cross(vEdge2, vEdge1));
 
 			//Log(" normal: %s\n",vNormal.ToString().c_str());
-			
+
 			vPosSum += cVector3f(pVtx0[0], pVtx0[1], pVtx0[2]);
 
 			if(bFirst)

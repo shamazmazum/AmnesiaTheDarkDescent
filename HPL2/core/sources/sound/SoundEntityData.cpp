@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -48,7 +48,7 @@ namespace hpl {
 	{
 		mpResources = apResources;
 		mpSound = apSound;
-		
+
 		mbFadeStart = false;
 		mbFadeStop = false;
 
@@ -83,7 +83,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	static tString gsEmptyString = "";
 
 	const tString& cSoundEntityData::GetSoundName(eSoundEntityType aType, int alIdx)
@@ -98,7 +98,7 @@ namespace hpl {
 		if(mvSoundNameVecs[aType].empty()) return gsEmptyString;
 		int lSize = (int)mvSoundNameVecs[aType].size();
 		if(lSize==1) return mvSoundNameVecs[aType][0];
-		
+
 		int lStart = -1;
 		int lSizeAdd = -1;
 		if(abSkipPrevious && lSize > 2 && mlPrevious[aType] < lSize && mlPrevious[aType] > 0)
@@ -106,10 +106,10 @@ namespace hpl {
 			lStart = mlPrevious[aType];
 			lSizeAdd = lStart-1;
 		}
-		
+
 		int lRand = cMath::RandRectl(lStart+1, lSize + lSizeAdd);
 		if(lRand >= lSize) lRand = lRand - lSize;
-		
+
 		mlPrevious[aType] = lRand;
 
 		return mvSoundNameVecs[aType][lRand];
@@ -121,19 +121,19 @@ namespace hpl {
 	{
 		return (int) mvSoundNameVecs[aType].size();
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cSoundEntityData::SetSoundName(const tString& asName, eSoundEntityType aType, int alIdx)
 	{
 		if((int)mvSoundNameVecs[aType].size() <= alIdx) return;
 
-		mvSoundNameVecs[aType][alIdx] = asName;			
+		mvSoundNameVecs[aType][alIdx] = asName;
 	}
 
 	void cSoundEntityData::AddSoundName(const tString& asName, eSoundEntityType aType)
 	{
-		mvSoundNameVecs[aType].push_back(asName);			
+		mvSoundNameVecs[aType].push_back(asName);
 	}
 
 
@@ -153,7 +153,7 @@ namespace hpl {
 	void cSoundEntityData::PreloadSounds()
 	{
 		if(mbStream) return;
-		
+
 		for(int i=0; i<3; ++i) PreloadSoundsOfType( (eSoundEntityType)i );
 	}
 
@@ -161,7 +161,7 @@ namespace hpl {
 
 	void cSoundEntityData::LoadSoundsInElement(cXmlElement *apElement, tStringVec *apStringVec)
 	{
-		if(apElement == NULL) return;	
+		if(apElement == NULL) return;
 
 		cXmlNodeListIterator it = apElement->GetChildIterator();
 		while(it.HasNext())
@@ -183,7 +183,7 @@ namespace hpl {
 			hplDelete( pDoc );
 			return false;
 		}
-		
+
 		////////////////////////////////////////////////
 		// SOUNDS
 		cXmlElement *pSoundsElem = pDoc->GetFirstElement("SOUNDS");
@@ -192,7 +192,7 @@ namespace hpl {
 			hplDelete( pDoc );
 			return false;
 		}
-		
+
 		LoadSoundsInElement(pSoundsElem->GetFirstElement("Main"), &mvSoundNameVecs[eSoundEntityType_Main]);
 		LoadSoundsInElement(pSoundsElem->GetFirstElement("Start"), &mvSoundNameVecs[eSoundEntityType_Start]);
 		LoadSoundsInElement(pSoundsElem->GetFirstElement("Stop"), &mvSoundNameVecs[eSoundEntityType_Stop]);
@@ -210,7 +210,7 @@ namespace hpl {
 		mbUse3D = pPropElem->GetAttributeBool("Use3D",true);
 		mbLoop = pPropElem->GetAttributeBool("Loop",true);
 		mbStream = pPropElem->GetAttributeBool("Stream",true);
-		
+
 		mbBlockable = pPropElem->GetAttributeBool("Blockable",false);
 		mfBlockVolumeMul = pPropElem->GetAttributeFloat("BlockVolumeMul",0.6f);
 
@@ -220,7 +220,7 @@ namespace hpl {
 
 		mbFadeStart = pPropElem->GetAttributeBool("FadeStart",true);
 		mbFadeStop = pPropElem->GetAttributeBool("FadeStop",true);
-		
+
 		mfRandom = pPropElem->GetAttributeFloat("Random",1);
 		mfInterval = pPropElem->GetAttributeFloat("Interval",0);
 
@@ -231,7 +231,7 @@ namespace hpl {
         return true;
 	}
 
-	
+
 	//-----------------------------------------------------------------------
 
 }

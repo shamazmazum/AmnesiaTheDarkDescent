@@ -49,7 +49,7 @@ void iOAL_AudioData::Reset()
 int iOAL_AudioData::GetBytesPerSample()
 {
 	int lBytesPerSample;
-	if(mFormat==AL_FORMAT_MONO16 || 
+	if(mFormat==AL_FORMAT_MONO16 ||
 		mFormat==AL_FORMAT_STEREO16)
 		lBytesPerSample = 2;
 	else

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -147,7 +147,7 @@ cLuxArea_Sticky::~cLuxArea_Sticky()
 
 void cLuxArea_Sticky::SetupAfterLoad(cWorld *apWorld)
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -167,7 +167,7 @@ void cLuxArea_Sticky::AttachBody(iPhysicsBody *apBody)
 	//Log("Attaching body %s\n", pAttachBody->GetName().c_str());
 
 	/////////////////////////
-	//If in an interact state, set the previous state		
+	//If in an interact state, set the previous state
 	gpBase->mpPlayer->GetCurrentStateData()->OnAttachBodyToStickyArea(apBody);
 
 	/////////////////////////
@@ -251,7 +251,7 @@ void cLuxArea_Sticky::DetachBody()
 void cLuxArea_Sticky::UpdateAttachBody(float afTimeStep)
 {
 	if(mpAttachedBody==NULL || mfSetMtxTime >= 1) return;
-	
+
 	//////////////////////////////////
 	// Move and rotate
 	if(mbMoveBody && mbRotateBody)
@@ -372,7 +372,7 @@ void cLuxArea_Sticky::UpdateCollision(float afTimeStep)
 			//If this was the last body that was attached, it has now moved out and does not need to be rejected.
 			if(pBody == mpLastAttachedBody)
 				mpLastAttachedBody = NULL;
-			
+
 			continue;
 		}
 
@@ -396,7 +396,7 @@ void cLuxArea_Sticky::UpdateCollision(float afTimeStep)
 		{
 			continue;
 		}
-	
+
 		///////////////////////////
 		// Call callback and see if it should be attached.
 		if(msAttachFunction!="")
@@ -418,7 +418,7 @@ void cLuxArea_Sticky::UpdateCollision(float afTimeStep)
 
 tString cLuxArea_Sticky::GetCallbackFunc(const tString &asFunc,iPhysicsBody *apBody)
 {
-	return asFunc + "(\"" + msName + "\",\"" + apBody->GetName() + "\")"; 
+	return asFunc + "(\"" + msName + "\",\"" + apBody->GetName() + "\")";
 }
 
 //-----------------------------------------------------------------------
@@ -485,7 +485,7 @@ void cLuxArea_Sticky::SaveToSaveData(iLuxEntity_SaveData* apSaveData)
 	if(mpAttachedBody)
 	{
 		iLuxEntity *pEntity = static_cast<iLuxEntity*>(mpAttachedBody->GetUserData());
-		
+
 		pData->mlAttachedBodyID = mpAttachedBody->GetUniqueID();
 		pData->mlAttachedEntityID = pEntity->GetID();
 	}
@@ -554,7 +554,7 @@ void cLuxArea_Sticky::LoadFromSaveData(iLuxEntity_SaveData* apSaveData)
 		mpLastAttachedBody = NULL;
 	}
 
-	
+
 	/////////////////////////
 	// Properties
 	kCopyFromVar(pData,msAttachFunction);

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -31,7 +31,7 @@ class cLuxArea_Sticky_SaveData : public iLuxArea_SaveData
 	kSerializableClassInit(cLuxArea_Sticky_SaveData)
 public:
 	iLuxArea* CreateArea(cLuxMap *apMap);
-	
+
 	tString msAttachFunction;
 	tString msDetachFunction;
 
@@ -51,7 +51,7 @@ public:
 
 	int mlAttachedEntityID;
 	int mlAttachedBodyID;
-	
+
 	float mfAttachedBodyMass;
 	bool mbAttachedBodyGravity;
 	bool mbAttachedEntityFullGameSaved;
@@ -65,7 +65,7 @@ class cLuxArea_Sticky : public iLuxArea
 {
 typedef iLuxArea super_class;
 friend class cLuxAreaLoader_Sticky;
-public:	
+public:
 	cLuxArea_Sticky(const tString &asName, int alID, cLuxMap *apMap);
 	virtual ~cLuxArea_Sticky();
 
@@ -101,9 +101,9 @@ private:
 	void UpdateAttachBody(float afTimeStep);
 	void UpdateCollision(float afTimeStep);
 
-	
+
 	tString GetCallbackFunc(const tString &asFunc,iPhysicsBody *apBody);
-	
+
 	/////////////////////////
 	// Data
 	tString msAttachFunction;
@@ -151,10 +151,10 @@ public:
 	~cLuxAreaLoader_Sticky();
 
 	iLuxArea *CreateArea(const tString& asName, int alID, cLuxMap *apMap);
-	
+
 	void LoadVariables(iLuxArea *apArea, cWorld *apWorld);
 	void SetupArea(iLuxArea *apArea, cWorld *apWorld);
-	
+
 };
 
 //----------------------------------------------

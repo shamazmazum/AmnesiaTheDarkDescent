@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -60,7 +60,7 @@ void cLevelEditorActionGroupAdd::Do()
 	{
 		iEntityWrapper* pEnt = mpEditor->GetEditorWorld()->GetEntity(mvEntityIDs[i]);
 		cLevelEditorEntityExtData* pData = (cLevelEditorEntityExtData*)pEnt->GetEntityExtData();
-		
+
 		pData->mlGroupID = mlID;
 	}
 
@@ -79,7 +79,7 @@ void cLevelEditorActionGroupAdd::Undo()
 		pData->mlGroupID = mvEntityGroups[i];
 	}
 	((cLevelEditor*)mpEditor)->RemoveGroup(mlID);
-	
+
 	mpEditor->GetEditorWorld()->DecModifications();
 }
 
@@ -191,7 +191,7 @@ void cLevelEditorActionGroupDelete::Undo()
 
 		pData->mlGroupID = mlID;
 	}
-    ((cLevelEditor*)mpEditor)->GetGroup(mlID).SetVisibility(mbVis);	
+    ((cLevelEditor*)mpEditor)->GetGroup(mlID).SetVisibility(mbVis);
 }
 
 
@@ -378,7 +378,7 @@ cLevelEditorActionGroupSetName::cLevelEditorActionGroupSetName(iEditorBase* apEd
 	mpEditor = apEditor;
 
 	mlID = alID;
- 
+
 	msNewName = asName;
 	msOldName = ((cLevelEditor*)mpEditor)->GetGroup(mlID).GetName();
 }
@@ -407,7 +407,7 @@ cLevelEditorActionGroupSetVisibility::cLevelEditorActionGroupSetVisibility(iEdit
 	mpEditor = apEditor;
 
 	mlID = alID;
- 
+
 	mbNewValue = abNewValue;
 	mbOldValue = ((cLevelEditor*)mpEditor)->GetGroup(mlID).GetVisibility();
 }

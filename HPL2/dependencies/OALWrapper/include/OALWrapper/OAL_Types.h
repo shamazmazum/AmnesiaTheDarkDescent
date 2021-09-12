@@ -38,7 +38,7 @@
 #define OAL_EAX_RAM 10
 
 ////////////////////////////////////////////////////
-// Specifies the size of the memory unit in streaming ( currently 4 KB ) 
+// Specifies the size of the memory unit in streaming ( currently 4 KB )
 // (buffer sizes are set using multiples of this unit)
 #define STREAMING_BLOCK_SIZE 4096
 //#define BUFFERCOUNT 8
@@ -138,7 +138,7 @@ typedef tOALFilterList::iterator		tOALFilterListIt;
 typedef std::vector<cOAL_SourceSend*>			tSendVector;
 typedef tSendVector::iterator	tSendVectorIt;
 
-typedef enum 
+typedef enum
 {
 	eOAL_SourceStatus_Free,
 	eOAL_SourceStatus_Busy,
@@ -165,7 +165,7 @@ typedef enum
 //////////////////////////////////////////
 
 
-// Function pointers 
+// Function pointers
 ////////////////////
 
 // Effect slots

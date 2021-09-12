@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -94,7 +94,7 @@ void cEdEditPaneBody::AddPropertySetBody(cWidgetTab* apParentTab)
 {
 	cVector3f vPos = cVector3f(10,30,0.1f);
 	cVector2f vSize = cVector2f(120, 25);
-	
+
 	float fSep = 5;
 	float fLongSep = 10;
 
@@ -112,7 +112,7 @@ void cEdEditPaneBody::AddPropertySetBody(cWidgetTab* apParentTab)
 	mpInpMass = CreateInputNumber(vPos, _W("Mass"), apParentTab, 50, 0.5f);
 	mpInpMass->SetLowerBound(true, 0);
 	vPos.y += mpInpMass->GetSize().y + fSep;
-	
+
 	mpInpAngularDamping = CreateInputNumber(vPos, _W("Angular Damping"), apParentTab, 50, 0.5f);
 	vPos.y += mpInpAngularDamping->GetSize().y + fSep;
 
@@ -234,7 +234,7 @@ bool cEdEditPaneBody::WindowSpecificInputCallback(iEdInput* apInput)
 	}
 	///////////////////////////////////////////
 	// Max Linear Speed
-	else if(apInput == mpInpMaxLinearSpeed) 
+	else if(apInput == mpInpMaxLinearSpeed)
 	{
 		pAction = mpObject->CreateSetFloatAction(eBodyFloat_MaxLinearSpeed, mpInpMaxLinearSpeed->GetValue());
 	}

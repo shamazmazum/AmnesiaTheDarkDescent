@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -235,13 +235,13 @@ bool cUIPickMethodBox::PickSpecific(iEntityWrapper* apEnt)
 //----------------------------------------------------------------------
 
 
-cEditorEditModeSelect::cEditorEditModeSelect(iEditorBase* apEditor, 
+cEditorEditModeSelect::cEditorEditModeSelect(iEditorBase* apEditor,
 											 iEditorWorld* apEditorWorld) : iEditorEditMode(apEditor,"Select")
 {
 	mpEditorWorld = apEditorWorld;
 	mpType = hplNew(cEntityWrapperTypeCompoundObject,());
 	mpEditorWorld->AddEntityType(mpType);
-	
+
 	mpEditBox = NULL;
 
 	mfPickingLength = 100;
@@ -294,15 +294,15 @@ cEditorEditModeSelect::~cEditorEditModeSelect()
 
 void cEditorEditModeSelect::SetCurrentEntitySelector(iEntitySelector* apSelector)
 {
-	if(apSelector==NULL) 
+	if(apSelector==NULL)
 		apSelector = mpDefaultSelector;
 	if(apSelector == mpCurrentSelector)
 		return;
 
-	
+
 	if(mpCurrentSelector)
 		mpCurrentSelector->OnSetCurrent(false);
-	
+
 	mpCurrentSelector = apSelector;
 
 	if(mpCurrentSelector)
@@ -358,17 +358,17 @@ void cEditorEditModeSelect::OnEditorUpdate(float afTimeStep)
 	cEditorSelection* pSelection = mpEditor->GetSelection();
 	cInput* pInput = mpEditor->GetEngine()->GetInput();
 	int lKeyModifiers = pInput->GetKeyboard()->GetModifier();
-	
+
 	mbToggleSelect = (lKeyModifiers&eKeyModifier_Shift)!=0;
 	mbAlwaysDeselect = (lKeyModifiers&eKeyModifier_Ctrl)!=0;
 	mbCloneOnTransform = pInput->IsTriggerd("Duplicate");
 
 	if(mpCurrentTool && mbAllowTransform && pSelection->IsEmpty()==false)
 		mpCurrentTool->OnEditorUpdate();
-	
+
 	if(mpCurrentSelector)
 		mpCurrentSelector->OnEditorUpdate();
-	
+
 	if(mpEditor->GetSelection()->IsUpdated())
 	{
 		ShowEditBox();
@@ -384,7 +384,7 @@ void cEditorEditModeSelect::OnViewportMouseDown(int alButtons)
 	if((alButtons&eGuiMouseButton_Left)==0)
 		return;
 
-	if(mbAlwaysDeselect==false && mbToggleSelect==false && 
+	if(mbAlwaysDeselect==false && mbToggleSelect==false &&
 		mbAllowTransform && mpCurrentTool && mpCurrentTool->OnViewportMouseDown(alButtons))
 	{
 		cEditorSelection* pSelection = mpEditor->GetSelection();
@@ -431,7 +431,7 @@ void cEditorEditModeSelect::OnViewportMouseUp(int alButtons)
 	}
 	else
 	{
-		if(mpCurrentSelector) 
+		if(mpCurrentSelector)
 		{
 			mpCurrentSelector->OnViewportMouseUp();
 		}
@@ -448,7 +448,7 @@ void cEditorEditModeSelect::DrawPostGrid(cEditorWindowViewport* apViewport, cRen
 
 	apFunctions->SetProgram(NULL);
 	apFunctions->SetTextureRange(NULL,0);
-	
+
 	apFunctions->SetMatrix(NULL);
 
 	if(mpCurrentSelector)
@@ -498,7 +498,7 @@ void cEditorEditModeSelect::ShowEditBox()
 	cEditorWindowSelect* pWin = (cEditorWindowSelect*)mpWindow;
 	///////////////////////////////////////////
 	// Destroy old EditBox (if any)
-	if(mpEditBox!=NULL) 
+	if(mpEditBox!=NULL)
 	{
 		mpEditBox->SetActive(false);
 		cEditorWindowFactory::DestroyEditorWindow((iEditorWindow*)mpEditBox);
@@ -530,7 +530,7 @@ cEditorWindowEntityEditBox* cEditorEditModeSelect::CreateEditBoxWindow()
 	bool bCanScale = pSelection->CanScale();
 
 	iEntityWrapper* pFirstEnt = lstEntities.front();
-	
+
 
 	///////////////////////////////////////////////////////////
 	// If only one entity in selection, show specific EditBox
@@ -576,7 +576,7 @@ void cEditorEditModeSelect::SetSelectToolMode(eSelectToolMode aMode)
 
 	mpCurrentTool = mvTools[aMode];
 	if(mpCurrentTool)
-		mpCurrentTool->Reset();		
+		mpCurrentTool->Reset();
 }
 
 void cEditorEditModeSelect::OnSetCurrent(bool abX)
@@ -855,7 +855,7 @@ bool cEntitySelectorNormal::OnViewportMouseUp()
 	cEditorWindowSelect* pWSelect = (cEditorWindowSelect*)mpEditMode->GetEditorWindow();
 
 	cEntityPicker* pPicker = mpEditMode->GetEditorWorld()->GetPicker();
-	
+
 	cEditorSelection* pSelection = mpEditMode->GetEditor()->GetSelection();
 
 	////////////////////////////////////////////////////////
@@ -944,7 +944,7 @@ bool cEntitySelectorNormal::OnViewportMouseUp()
 			}
 		}
 	}
-	
+
 
 	if(bMustUpdateSelection)
 	{
@@ -1005,7 +1005,7 @@ void cEntitySelectorNormal::Draw(cEditorWindowViewport* apViewport, cRendererCal
 		apFunctions->GetLowLevelGfx()->DrawLineQuad(cRect2f((float)mMouseRect.x,(float)mMouseRect.y,
 															(float)mMouseRect.w,(float)mMouseRect.h),
 															0,
-															cColor(1,1)); 
+															cColor(1,1));
 		apFunctions->SetNormalFrustumProjection();
 	}
 }

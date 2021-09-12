@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -48,11 +48,11 @@ namespace hpl {
 	{
 		mpMaterialManager = apResources->GetMaterialManager();
 		mpLowLevelGraphics = apGraphics->GetLowLevel();
-		
+
 		mColor = cColor(1,1,1,1);
 
 		mpMaterial = NULL;
-		
+
 		mpRope = apRope;
 		mlMaxSegments = alMaxSegments;
 
@@ -62,7 +62,7 @@ namespace hpl {
 
 		mpVtxBuffer = mpLowLevelGraphics->CreateVertexBuffer(	eVertexBufferType_Hardware, eVertexBufferDrawType_Tri, eVertexBufferUsageType_Dynamic,
 																4 * mlMaxSegments, 6 * mlMaxSegments);
-		
+
 		mpVtxBuffer->CreateElementArray(eVertexBufferElement_Position,eVertexBufferElementFormat_Float,4);
 		mpVtxBuffer->CreateElementArray(eVertexBufferElement_Normal,eVertexBufferElementFormat_Float,3);
 		mpVtxBuffer->CreateElementArray(eVertexBufferElement_Color0,eVertexBufferElementFormat_Float,4);
@@ -143,7 +143,7 @@ namespace hpl {
 			pColors[3] = finalColor.a;
 			pColors+=4;
 		}
-		
+
 		mpVtxBuffer->UpdateData(eVertexElementFlag_Color0,false);
 	}
 
@@ -167,10 +167,10 @@ namespace hpl {
 			while(it.HasNext())
 			{
 				cVerletParticle *pPart = it.Next();
-				
+
 				cMath::ExpandAABB(vMin,vMax, pPart->GetPosition(), pPart->GetPosition());
 			}
-			
+
 			mBoundingVolume.SetLocalMinMax(vMin-cVector3f(mfRadius),vMax+cVector3f(mfRadius));
 
 			mlLastUpdateCount = mpRope->GetUpdateCount();
@@ -183,7 +183,7 @@ namespace hpl {
 
 	void cRopeEntity::UpdateGraphicsForFrame(float afFrameTime)
 	{
-		
+
 	}
 
 	//-----------------------------------------------------------------------
@@ -219,7 +219,7 @@ namespace hpl {
 
 		float fSegmentLength = mpRope->GetSegmentLength();
 
-		cVector3f vTexCoords[4] = {	
+		cVector3f vTexCoords[4] = {
 				cVector3f(1,1,0),	//Bottom left
 				cVector3f(0,1,0),	//Bottom right
 				cVector3f(0,0,0),	//Top left
@@ -241,7 +241,7 @@ namespace hpl {
 
 			if(lCount == 1){
 				vPrevPos = pPart->GetPosition();
-				continue; 
+				continue;
 			}
 
 			/////////////////////////
@@ -257,7 +257,7 @@ namespace hpl {
 			//Update position
 			for(int i=0; i<4; ++i)
 				SetVec4(&pPosArray[i*4], vPrevPos + vRight * gvPosAdd[i].x*mfRadius + vUp * gvPosAdd[i].y*fLength);
-			
+
 			/////////////////////////
 			//Update uv
 			if(lCount==2 && (fLength < fSegmentLength || fSegmentLength==0))
@@ -300,7 +300,7 @@ namespace hpl {
 				SetVec3(&pNrmArray[i*3], vFwd);
 				SetVec4(&pTanArray[i*4], vRight);
 			}
-						
+
 			/////////////////////////
 			//Update pointers
 			pPosArray += 4 * 4;
@@ -325,7 +325,7 @@ namespace hpl {
 	cMatrixf* cRopeEntity::GetModelMatrix(cFrustum *apFrustum)
 	{
 		if(apFrustum==NULL)return &GetWorldMatrix();
-		
+
 		return NULL;
 	}
 
@@ -345,11 +345,11 @@ namespace hpl {
 		return mbIsVisible;
 	}
 
-	
+
 	//-----------------------------------------------------------------------
 
 
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// PRIVATE METHODS
 	//////////////////////////////////////////////////////////////////////////

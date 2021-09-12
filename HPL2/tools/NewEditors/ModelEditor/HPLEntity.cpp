@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -116,7 +116,7 @@ bool cAnimationWrapper::IsValid()
 	}
 	else
 		return false;
-	
+
 	return true;
 }
 
@@ -218,7 +218,7 @@ void cHplEntity::SetClass(cEdUserClass* apClass)
 		return;
 
 	tVarValueMap vTempValues;
-	if(mpClassInstance) 
+	if(mpClassInstance)
 	{
 		mpClassInstance->SaveValuesToMap(vTempValues);
 		hplDelete(mpClassInstance);
@@ -266,8 +266,8 @@ void cHplEntity::SetMeshFromElement(cXmlElement* apMeshElement, cXmlElement* apB
 	////////////////////////////////////////////////////////////
 	// Load mesh using the submesh and bone data loaded above
 	// A comparison will take place and updates to data will come if necessary
-	mpTypeSubMesh->SetMesh(apMeshElement->GetAttributeString("Filename"), true, 
-							vSubMeshData, tIntList(), vBoneData, tIntList());	
+	mpTypeSubMesh->SetMesh(apMeshElement->GetAttributeString("Filename"), true,
+							vSubMeshData, tIntList(), vBoneData, tIntList());
 }
 
 iEdAction* cHplEntity::CreateSetClassAction(cEdUserClass* apClass)
@@ -295,7 +295,7 @@ bool cHplEntity::ToggleTestWindow()
 	if(mpActiveTestWindow)
 	{
 		pHandler->DestroyWindow(mpActiveTestWindow);
-		mpActiveTestWindow = NULL;		
+		mpActiveTestWindow = NULL;
 	}
 	else
 	{
@@ -363,7 +363,7 @@ void cHplEntity::OnInit()
 	AddType(mpTypeBody);
 	AddType(mpTypeSubMesh);
 	AddType(mpTypeBone);
-	
+
 	iEdScnWorld::OnInit();
 
 	mpClassDef->Create();
@@ -440,7 +440,7 @@ void cHplEntity::OnReset()
 	iEdWorld::OnReset();
 
 	mpTypeSubMesh->ClearMesh();
-	
+
 	mvAnimations.clear();
 
 	SetClass(static_cast<cEdUserClass*>(mpClassDef->GetDefaultClass()));
@@ -450,7 +450,7 @@ void cHplEntity::OnReset()
 
 bool cHplEntity::LoadContentsFromXmlDoc(iXmlDocument* apDoc)
 {
-	if(iEdScnWorld::LoadContentsFromXmlDoc(apDoc)==false)	
+	if(iEdScnWorld::LoadContentsFromXmlDoc(apDoc)==false)
 		return false;
 
 	cXmlElement* pModelData = apDoc->GetFirstElement("ModelData");
@@ -544,7 +544,7 @@ bool cHplEntity::SaveContentsToXmlDoc(iXmlDocument* apDoc)
 		return false;
 
 	cXmlElement* pModelData = apDoc->CreateChildElement("ModelData");
-	
+
 	tScnObjList lstObjects;
 	tEdObjectMapIt it = mmapObjects.begin();
 	for(;it!=mmapObjects.end();++it)
@@ -595,9 +595,9 @@ bool cHplEntity::ImportMesh(iWidget* apWidget, const cGuiMessageData& aData)
 
 	tWString sFilenameFullPath = mvDestFilenames.front();
 	tString sFilename = cString::To8Char(sFilenameFullPath);
-	
+
 	//if(msFilename.empty()) msFilename = cString::To16Char(cString::Sub(sFilename, 0, cString::GetLastStringPos(sFilename, "."))) + _W(".ent");
-	
+
 	cEdEditModeSelect* pMode = static_cast<cEdEditModeSelect*>(mpEditor->GetEditModeHandler()->GetMode(_W("Select")));
 	cEdSelection* pSelection = pMode->GetSelection();
 

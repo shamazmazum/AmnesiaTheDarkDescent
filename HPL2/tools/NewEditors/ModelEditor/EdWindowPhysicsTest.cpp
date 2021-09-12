@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -33,7 +33,7 @@
 // Static members init
 bool cEdWindowPhysicsTest::mbBuoyancyActive = false;
 float cEdWindowPhysicsTest::mfBuoyancyDensity = 100;
-float cEdWindowPhysicsTest::mfBuoyancyLinearViscosity = 0.2f; 
+float cEdWindowPhysicsTest::mfBuoyancyLinearViscosity = 0.2f;
 float cEdWindowPhysicsTest::mfBuoyancyAngularViscosity = 0.2f;
 cPlanef cEdWindowPhysicsTest::mBuoyancySurface = cPlanef(0,1,0,-1);
 
@@ -205,7 +205,7 @@ bool cEdWindowPhysicsTest::WindowSpecificInputCallback(iEdInput* apInput)
 
 	if(bBuoyancyUpdated)
 		UpdateBuoyancy();
-		
+
 
 	return true;
 }
@@ -216,7 +216,7 @@ void cEdWindowPhysicsTest::SetUpRender()
 {
 	cScene* pScene = mpEngine->GetScene();
 	cPhysics* pPhysics = mpEngine->GetPhysics();
-	
+
 	mpMainLight = mpTestWorld->CreateLightPoint("", "", false);
 	mpMainLight->SetPosition(cVector3f(0,2, 3));
 	mpMainLight->SetRadius(20);
@@ -271,7 +271,7 @@ void cEdWindowPhysicsTest::SetUpModel()
 	{
 		cAnimationState* pAnimState = mpTestEntity->GetAnimationState(i);
 		tWString sAnimName = cString::To16Char(pAnimState->GetName());
-		
+
 		mpInpAnimations->AddValue(sAnimName);
 
 		pAnimState->SetSpeed(pAnimState->GetBaseSpeed());
@@ -459,7 +459,7 @@ bool cEdWindowPhysicsTest::OnViewportUpdate(const cGuiMessageData& aData)
 	if(mBodyPicker.mpPickedBody)
 	{
 		//Get pos of start.
-		mBodyPicker.mvPos = cMath::MatrixMul(mBodyPicker.mpPickedBody->GetLocalMatrix(), 
+		mBodyPicker.mvPos = cMath::MatrixMul(mBodyPicker.mpPickedBody->GetLocalMatrix(),
 			mBodyPicker.mvLocalPos);
 
 		//Get Drag pos
@@ -469,7 +469,7 @@ bool cEdWindowPhysicsTest::OnViewportUpdate(const cGuiMessageData& aData)
 		mvDragPos = vStart + vDir*mBodyPicker.mfDist;
 
 		//Spring testing:
-		cVector3f vForce = (vDragPos - mBodyPicker.mvPos)*20 - 
+		cVector3f vForce = (vDragPos - mBodyPicker.mvPos)*20 -
 			(mBodyPicker.mpPickedBody->GetLinearVelocity()*0.4f);
 
 
@@ -508,7 +508,7 @@ bool cEdWindowPhysicsTest::OnViewportMouseDown(const cGuiMessageData& aData)
 			{
 				const cVector3f& vStart = GetUnprojectedStart();
 				const cVector3f& vDir = GetUnprojectedDir();
-				
+
 				cVector3f vEnd = vStart + vDir*100.0f;
 
 				mBodyPicker.Clear();
@@ -527,7 +527,7 @@ bool cEdWindowPhysicsTest::OnViewportMouseDown(const cGuiMessageData& aData)
 			}
 		}
 	}
-	
+
 	return true;
 }
 
@@ -543,7 +543,7 @@ bool cEdWindowPhysicsTest::OnViewportMouseUp(const cGuiMessageData& aData)
 		if(mBodyPicker.mpPickedBody) mBodyPicker.mpPickedBody->SetAutoDisable(true);
 		mBodyPicker.Clear();
 	}
-	
+
 	return true;
 }
 
@@ -581,7 +581,7 @@ void cEdWindowPhysicsTest::OnPostSolidDraw(cRendererCallbackFunctions* apFunctio
 		for(size_t i=0;i<mvJoints.size(); ++i)
 		{
 			iPhysicsJoint *pJoint = mvJoints[i];
-            
+
 			cVector3f vPivot = pJoint->GetPivotPoint();
 			apFunctions->GetLowLevelGfx()->DrawSphere(vPivot,0.2f,cColor(1,0,0,1));
 			apFunctions->GetLowLevelGfx()->DrawLine(vPivot,vPivot + pJoint->GetPinDir()*0.25 ,cColor(0,1,0,1));
@@ -591,7 +591,7 @@ void cEdWindowPhysicsTest::OnPostSolidDraw(cRendererCallbackFunctions* apFunctio
 	if(mbDrawSkeleton && mpTestEntity->GetMesh()->GetSkeleton())
 	{
 		apFunctions->SetDepthTest(false);
-		
+
 		cNode3DIterator it = mpTestEntity->GetBoneStateRoot()->GetChildIterator();
 
 		while(it.HasNext())
@@ -616,11 +616,11 @@ void cEdWindowPhysicsTest::OnPostSolidDraw(cRendererCallbackFunctions* apFunctio
 
 void cEdWindowPhysicsTest::DrawSkeletonRec(cRendererCallbackFunctions* apFunctions, cNode3D* apBoneState)
 {
-	cVector3f vCameraSpacePos = cMath::MatrixMul(apFunctions->GetFrustum()->GetViewMatrix(), apBoneState->GetWorldPosition());		
+	cVector3f vCameraSpacePos = cMath::MatrixMul(apFunctions->GetFrustum()->GetViewMatrix(), apBoneState->GetWorldPosition());
 	float fSize = cMath::Min(-0.01f * vCameraSpacePos.z, 0.03f);
 	apFunctions->GetLowLevelGfx()->DrawSphere(apBoneState->GetWorldPosition(),fSize,cColor(1,0,0,1));
-	
-	
+
+
 	cNode3DIterator it = apBoneState->GetChildIterator();
 	while(it.HasNext())
 	{

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -173,7 +173,7 @@ bool cEdObjDecalData::LoadSpecificData(cXmlElement* apElement)
 	float fOffset = GetFloat(eDecalFloat_Offset);
 	float fOffsetMin = cTypeDecal::GetDecalOffsetMin();
 	float fOffsetMax = cTypeDecal::GetDecalOffsetMax();
-	if(fOffset < fOffsetMin || 
+	if(fOffset < fOffsetMin ||
 		fOffset > fOffsetMax)
 	{
 		fOffset = cMath::RandRectf(fOffsetMin, fOffsetMax);
@@ -185,9 +185,9 @@ bool cEdObjDecalData::LoadSpecificData(cXmlElement* apElement)
 	if(pMeshDataElem)
 	{
 		cEngine* pEng = pWorld->GetEditor()->GetEngine();
-		mpMesh = cEngineFileLoading::LoadDecalMeshHelper(pMeshDataElem, 
-															pEng->GetGraphics(), pEng->GetResources(), 
-															cString::To8Char(GetName()), pFile->msRelativePath, GetColor(eDecalCol_Color)); 
+		mpMesh = cEngineFileLoading::LoadDecalMeshHelper(pMeshDataElem,
+															pEng->GetGraphics(), pEng->GetResources(),
+															cString::To8Char(GetName()), pFile->msRelativePath, GetColor(eDecalCol_Color));
 	}
 	else
 		mpMesh = NULL;
@@ -281,7 +281,7 @@ bool cEdObjDecalData::SaveSpecificData(cXmlElement* apElement)
 
 	sIndices = cString::ToString((int)pIndices[0]);
 	for(int i=1;i<pVB->GetIndexNum();++i)
-		sIndices += " " + cString::ToString((int)pIndices[i]);		
+		sIndices += " " + cString::ToString((int)pIndices[i]);
 
 	/////////////////////////////////////////////////
 	// Save strings to elements
@@ -338,7 +338,7 @@ cEdObjDecal::cEdObjDecal(iEdObjectData* apData) : iEdScnObject(apData)
 	mvSubDivisions = 1;
 
 	mpMatFile = NULL;
-	
+
 	/*
 	mbAffectsStaticObjects = true;
 	mbAffectsEntities = true;
@@ -426,7 +426,7 @@ bool cEdObjDecal::SetProperty(int alPropID, const tString& asX)
 	default:
 		return iEdObject::SetProperty(alPropID, asX);
 	}
-	
+
 	return true;
 }
 
@@ -438,7 +438,7 @@ bool cEdObjDecal::SetProperty(int alPropID, const cVector2f& avX)
 	{
 	case eDecalVec2f_SubDivs:
 		{
-			cVector2l vSubDivs = cVector2l((int)avX.x, (int)avX.y);	
+			cVector2l vSubDivs = cVector2l((int)avX.x, (int)avX.y);
 			SetUVSubDivisions(vSubDivs);
 		}
 		break;
@@ -540,7 +540,7 @@ bool cEdObjDecal::GetProperty(int alPropID, tString& asX)
 	default:
 		return iEdObject::GetProperty(alPropID, asX);
 	}
-	
+
 	return true;
 }
 
@@ -600,7 +600,7 @@ void cEdObjDecal::OnDraw(const cModuleDrawData& aData)
 
 	if(mpIcon)
 		mpIcon->DrawIcon(aData.mpViewport, aData.mpFunctions, mbSelected, IsEnabled(), cColor(0.8f,1));
-	if(mpEngObject) 
+	if(mpEngObject)
 		mpEngObject->Draw(aData.mpViewport, aData.mpFunctions, mbSelected, true, cColor(0.8f,0.25f));
 	//iEdScnObject::OnDraw(aData);
 	if(mbSelected)
@@ -608,7 +608,7 @@ void cEdObjDecal::OnDraw(const cModuleDrawData& aData)
 		//cDecalCreator* pCreator = GetEdWorld()->GetEditor()->GetEngine()->GetGraphics()->GetDecalCreator();
 		//pCreator->DrawDebug(apFunctions, true, true);
 		cMatrixf mtxOrientation = GetRotationMatrix().GetTranspose();
-		
+
 		cMatrixf mtxTransform = GetWorldMatrix();
 		aData.mpFunctions->SetTextureRange(NULL,0);
 		aData.mpFunctions->SetDepthTest(true);
@@ -625,7 +625,7 @@ void cEdObjDecal::OnDraw(const cModuleDrawData& aData)
 		apFunctions->GetLowLevelGfx()->DrawLine(0, cVector3f(0,1,0), cColor(0,1,0,1));
 		apFunctions->GetLowLevelGfx()->DrawLine(0, cVector3f(0,0,1), cColor(0,0,1,1));
 		*/
-		
+
 		aData.mpFunctions->GetLowLevelGfx()->DrawBoxMinMax(-0.5f, 0.5f, cColor(1));
 	}
 
@@ -807,7 +807,7 @@ void cEdObjDecal::UpdateDecal()
 			return;
 		}
 	}
-	
+
 	mbGeometryUpdated = false;
 }
 
@@ -880,12 +880,12 @@ iVertexBuffer* cEdObjDecal::BuildDecalVertexBuffer(cWorld* apWorld, cDecalCreato
 	apCreator->SetColor(aCol);
 	apCreator->SetUVSubDivisions(avSubDivs);
 	apCreator->SetCurrentSubDiv(alSubDiv);
-	apCreator->SetMaxTrianglesPerDecal( (alMaxTris>=0)? alMaxTris : 
+	apCreator->SetMaxTrianglesPerDecal( (alMaxTris>=0)? alMaxTris :
 														cTypeDecal::GetGlobalMaxTriangles() );
 
 	if(apCreator->IsUpdated()==false)
 		return apCreator->GetVB();
-	
+
 	apCreator->ClearMeshes();
 
 	/////////////////////////////
@@ -903,14 +903,14 @@ iVertexBuffer* cEdObjDecal::BuildDecalVertexBuffer(cWorld* apWorld, cDecalCreato
 	for(int i=0; i<2; ++i)
 	{
 		pContainers[i]->UpdateBeforeRendering();
-		IterateRenderableNode(pContainers[i]->GetRoot(), apCreator, 
+		IterateRenderableNode(pContainers[i]->GetRoot(), apCreator,
 								apPicker);
 	}
 
 	apCreator->CanCreateDecal();
 
 	apPicker->SetAffectedTypes(mapPrevAffected);
-	
+
 	return apCreator->GetVB();
 }
 
@@ -932,7 +932,7 @@ cMesh* cEdObjDecal::CreateDecalMesh()
 
 	cMatrixf mtxOrientation = GetRotationMatrix().GetTranspose();
 
-	
+
 	iEdScnWorld* pWorld = static_cast<iEdScnWorld*>(GetWorld());
 	cDecalCreator* pCreator = pWorld->GetEditor()->GetEngine()->GetGraphics()->GetDecalCreator();
 
@@ -948,11 +948,11 @@ cMesh* cEdObjDecal::CreateDecalMesh()
 	}
 	//////////////////////////////////////////
 	// Check if current parameters are valid
-	iVertexBuffer* pVB = BuildDecalVertexBuffer(pWorld->GetEngWorld(), pCreator, 
-							mvTranslation, mvScale, mfOffset, 
+	iVertexBuffer* pVB = BuildDecalVertexBuffer(pWorld->GetEngWorld(), pCreator,
+							mvTranslation, mvScale, mfOffset,
 							mtxOrientation.GetRight(), mtxOrientation.GetUp(), mtxOrientation.GetForward(),
-							mpMatFile->msRelativePath, mColor,	
-							mvSubDivisions, mlCurrentSubDiv, 
+							mpMatFile->msRelativePath, mColor,
+							mvSubDivisions, mlCurrentSubDiv,
 							mlMaxTriangles,
 							pWorld->GetSurfacePicker(), mmapAffectedTypes);
 
@@ -1013,7 +1013,7 @@ void cEdObjDecal::IterateRenderableNode(iRenderableContainerNode *apNode, cDecal
 		for(; childIt != apNode->GetChildNodeList()->end(); ++childIt)
 		{
 			iRenderableContainerNode *pChildNode = *childIt;
-			IterateRenderableNode(pChildNode, apCreator, 
+			IterateRenderableNode(pChildNode, apCreator,
 									apPicker);
 		}
 	}

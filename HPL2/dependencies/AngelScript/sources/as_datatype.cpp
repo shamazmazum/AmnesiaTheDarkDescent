@@ -2,23 +2,23 @@
    AngelCode Scripting Library
    Copyright (c) 2003-2010 Andreas Jonsson
 
-   This software is provided 'as-is', without any express or implied 
-   warranty. In no event will the authors be held liable for any 
+   This software is provided 'as-is', without any express or implied
+   warranty. In no event will the authors be held liable for any
    damages arising from the use of this software.
 
-   Permission is granted to anyone to use this software for any 
-   purpose, including commercial applications, and to alter it and 
+   Permission is granted to anyone to use this software for any
+   purpose, including commercial applications, and to alter it and
    redistribute it freely, subject to the following restrictions:
 
-   1. The origin of this software must not be misrepresented; you 
+   1. The origin of this software must not be misrepresented; you
       must not claim that you wrote the original software. If you use
-      this software in a product, an acknowledgment in the product 
+      this software in a product, an acknowledgment in the product
       documentation would be appreciated but is not required.
 
-   2. Altered source versions must be plainly marked as such, and 
+   2. Altered source versions must be plainly marked as such, and
       must not be misrepresented as being the original software.
 
-   3. This notice may not be removed or altered from any source 
+   3. This notice may not be removed or altered from any source
       distribution.
 
    The original version of this library can be located at:
@@ -221,13 +221,13 @@ int asCDataType::MakeHandle(bool b, bool acceptHandleForScope)
 	}
 	else if( b && !isObjectHandle )
 	{
-		// Only reference types are allowed to be handles, 
+		// Only reference types are allowed to be handles,
 		// but not nohandle reference types, and not scoped references (except when returned from registered function)
 		// funcdefs are special reference types, and support handles
-		if( !funcDef && 
-			(!objectType || 
-			!((objectType->flags & asOBJ_REF) || (objectType->flags & asOBJ_TEMPLATE_SUBTYPE)) || 
-			(objectType->flags & asOBJ_NOHANDLE) || 
+		if( !funcDef &&
+			(!objectType ||
+			!((objectType->flags & asOBJ_REF) || (objectType->flags & asOBJ_TEMPLATE_SUBTYPE)) ||
+			(objectType->flags & asOBJ_NOHANDLE) ||
 			((objectType->flags & asOBJ_SCOPED) && !acceptHandleForScope)) )
 			return -1;
 
@@ -247,7 +247,7 @@ int asCDataType::MakeArray(asCScriptEngine *engine)
 
 	isObjectHandle = false;
 	isConstHandle = false;
-	
+
 	objectType = at;
 	tokenType = ttIdentifier;
 
@@ -284,7 +284,7 @@ int asCDataType::MakeHandleToConst(bool b)
 bool asCDataType::SupportHandles() const
 {
 	if( objectType &&
-		(objectType->flags & asOBJ_REF) && 
+		(objectType->flags & asOBJ_REF) &&
 		!(objectType->flags & asOBJ_NOHANDLE) &&
 		!isObjectHandle )
 		return true;
@@ -295,7 +295,7 @@ bool asCDataType::SupportHandles() const
 bool asCDataType::CanBeInstanciated() const
 {
 	if( GetSizeOnStackDWords() == 0 ||
-		(IsObject() && 
+		(IsObject() &&
 		 (objectType->flags & asOBJ_REF) &&        // It's a ref type and
 		 ((objectType->flags & asOBJ_NOHANDLE) ||  // the ref type doesn't support handles or
 		  (!IsObjectHandle() &&                    // it's not a handle and
@@ -454,7 +454,7 @@ bool asCDataType::IsPrimitive() const
 bool asCDataType::IsSamePrimitiveBaseType(const asCDataType &dt) const
 {
 	if( !IsPrimitive() || !dt.IsPrimitive() ) return false;
-	
+
 	if( IsIntegerType()  && dt.IsIntegerType()  ) return true;
 	if( IsUnsignedType() && dt.IsUnsignedType() ) return true;
 	if( IsFloatType()    && dt.IsFloatType()    ) return true;
@@ -559,7 +559,7 @@ int asCDataType::GetSizeInMemoryDWords() const
 	int s = GetSizeInMemoryBytes();
 	if( s == 0 ) return 0;
 	if( s <= 4 ) return 1;
-	
+
 	return s/4;
 }
 
@@ -574,8 +574,8 @@ int asCDataType::GetSizeOnStackDWords() const
 }
 
 asSTypeBehaviour *asCDataType::GetBehaviour() const
-{ 
-	return objectType ? &objectType->beh : 0; 
+{
+	return objectType ? &objectType->beh : 0;
 }
 
 bool asCDataType::IsEnumType() const

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -87,7 +87,7 @@ int GetMipMapNum(int alW, int alH)
 	}
 	return lNum;
 }
- 
+
 
 bool ConvertFile(const tWString &asFile)
 {
@@ -111,7 +111,7 @@ bool ConvertFile(const tWString &asFile)
 	if(pBitMap->GetNumOfImages()>1)
 	{
 		printf(" Too many images (cubemap)!\n");
-		return false;	
+		return false;
 	}
 	if(pBitMap->GetNumOfMipMaps() > 1)
 	{
@@ -124,8 +124,8 @@ bool ConvertFile(const tWString &asFile)
 		printf(" Not compressed!!\n");
 		return false;
 	}
-	
-	
+
+
 	///////////////////////////////
 	//Get Argument
 	tWString sArg;
@@ -171,9 +171,9 @@ void ConvertFilesInDir(const tWString &asDir, const tWString &asMask)
 	{
 		ConvertFile(cString::SetFilePathW(*it, asDir) );
 	}
-	
+
 	if(gbDirs_SubDirs==false) return;
-	
+
 	//////////////////////////
 	//Iterate folders and convert
 	tWStringList lstFolders;
@@ -195,7 +195,7 @@ void ConvertInDirs()
 
 	tWString sDir = cString::GetFilePathW(gsFilePath);
 	tWString sMask = cString::GetFileNameW(gsFilePath);
-	
+
 	ConvertFilesInDir(sDir, sMask);
 }
 
@@ -229,7 +229,7 @@ int main(int argc, const char* argv[] )
 {
 	cEngineInitVars vars;
 	gpEngine = CreateHPLEngine(eHplAPI_OpenGL, 0, &vars);
-	
+
 	ParseCommandLine(argc, argv);
 	Init();
 
@@ -238,11 +238,11 @@ int main(int argc, const char* argv[] )
 	if(gbDirs)	ConvertInDirs();
 	else		ConvertFile();
 
-	printf("\n-------- TEX CONVERSION DONE! -----------\n");		
-	
+	printf("\n-------- TEX CONVERSION DONE! -----------\n");
+
 	Exit();
 	DestroyHPLEngine(gpEngine);
-	
+
 	return 0;
 }
 int hplMain(const tString &asCommandline){ return -1;}

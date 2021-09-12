@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -55,10 +55,10 @@ void cLuxHandObject_Melee::RenderSolid(cRendererCallbackFunctions* apFunctions)
 	cVector3f vRotation(pCam->GetPitch(), pCam->GetYaw(), pCam->GetRoll());
 	cMatrixf mtxHands = cMath::MatrixRotate(vRotation, eEulerRotationOrder_XYZ);
 	mtxHands.SetTranslation(pCam->GetPosition());
-	
+
 	cBoundingVolume shapeBV =  mpCollideShape->GetBoundingVolume();
 	shapeBV.SetTransform(cMath::MatrixMul(mtxHands, shapeBV.GetTransform()));
-	
+
 	apFunctions->GetLowLevelGfx()->DrawBoxMinMax(shapeBV.GetMin(), shapeBV.GetMax(), cColor(1,1));*/
 }
 
@@ -193,7 +193,7 @@ bool cLuxHandObject_Melee::AnimationIsOver()
 	//Charging
 	else if(mpHands->mlHandObjectState == 1)
 	{
-		return false;	
+		return false;
 	}
 	///////////////////////
 	//Swing
@@ -201,7 +201,7 @@ bool cLuxHandObject_Melee::AnimationIsOver()
 	{
 		mpHands->mlHandObjectState =0;
 		return true;
-		
+
 	}
 	return false;
 }
@@ -279,7 +279,7 @@ void cLuxHandObject_Melee::Swing()
 		mpHands->PlayAnim(msHandsAnim_Swing, false);
 		gpBase->mpHelpFuncs->PlayGuiSoundData(msSwingSound,eSoundEntryType_World);
 	}
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -289,7 +289,7 @@ void cLuxHandObject_Melee::Charge()
 	mpHands->mbHandObjectAttackDown = true;
 	mpHands->mfHandObjectChargeCount =0;
 	mpHands->mlHandObjectState =0;
-	
+
 	mpHands->PlayAnim(msHandsAnim_Charge, false);
 	gpBase->mpHelpFuncs->PlayGuiSoundData(msChargeSound,eSoundEntryType_World);
 }

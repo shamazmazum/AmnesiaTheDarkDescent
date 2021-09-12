@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -44,10 +44,10 @@
 
 //------------------------------------------------------------------------------------
 
-cModelEditorWindowOutlineHelper::cModelEditorWindowOutlineHelper(cModelEditorWindowOutline* apWindow, tIntList& alstIDs) : iEditorWindowPopUp(apWindow->GetEditor(), 
-																																			  "Attach helper window", 
+cModelEditorWindowOutlineHelper::cModelEditorWindowOutlineHelper(cModelEditorWindowOutline* apWindow, tIntList& alstIDs) : iEditorWindowPopUp(apWindow->GetEditor(),
+																																			  "Attach helper window",
 																																			  true, true, true,
-																																			  cVector2f(230,400)), 
+																																			  cVector2f(230,400)),
 																																			  mlstTempIDs(alstIDs)
 {
 	mpCallbackObject = NULL;
@@ -314,7 +314,7 @@ void cModelEditorWindowOutline::ClearEditPanel()
 		vWidgets.push_back(mpButtonDetachChild);
 		mpButtonDetachChild = NULL;
 	}
-	
+
 
 	for(int i=0;i<(int)vWidgets.size();++i)
 	{
@@ -433,7 +433,7 @@ void cModelEditorWindowOutline::AddObjectToList(iEntityWrapper* apEntity, int al
 		{
 			iEntityWrapperJoint* pJoint = (iEntityWrapperJoint*)apEntity;
 			cEntityWrapperBody* vBodies[] = { pJoint->GetParentBody(), pJoint->GetChildBody() };
-			
+
 			tString sJointConnectedEntryPrefix[] = { "Parent: ", "Child: " };
 
             for(int i=0;i<2;++i)
@@ -533,7 +533,7 @@ void cModelEditorWindowOutline::OnUpdate(float afTimeStep)
 {
 	iEditorWindowPopUp::OnUpdate(afTimeStep);
 
-	if(IsActive()) 
+	if(IsActive())
 	{
 		if(mpEditor->GetEditorWorld()->GetNumModifications()!=mlModificationStamp)
 			PopulateList();
@@ -552,11 +552,11 @@ bool cModelEditorWindowOutline::InputCallback(iWidget* apWidget, const cGuiMessa
 	bool bCreateHelper=false;
 	bool bHelperMultiSelect=false;
 	tGuiCallbackFunc pCallback = NULL;
-	
+
 	int lExcludedID = -1;
 	//if(mpListObjects->GetLastPerformedAction()==eListBoxActionType_SingleDeselect)
 	//	lExcludedID = mvIDList[mpListObjects->GetDeselectedItem()];
-			
+
 	for(int i=0;i<mpListObjects->GetMultiSelectionNum();++i)
 	{
 		int lIndex = mpListObjects->GetMultiSelection(i);
@@ -566,7 +566,7 @@ bool cModelEditorWindowOutline::InputCallback(iWidget* apWidget, const cGuiMessa
 	}
 
 	mlstTempIDs.clear();
-	
+
 	cModelEditorWindowOutlineHelper* pHelper = NULL;
 	iEditorAction* pAction = NULL;
 
@@ -577,12 +577,12 @@ bool cModelEditorWindowOutline::InputCallback(iWidget* apWidget, const cGuiMessa
 	else if(apWidget==mpListObjects)
 	{
 		cEditorEditModeSelect* pEditMode = (cEditorEditModeSelect*)mpEditor->GetEditMode("Select");
-	
+
 		pAction = pEditMode->CreateSelectEntityAction(lstIDs, eSelectActionType_Select);
 	}
 	else if(apWidget==mpButtonDetach)
 	{
-		if(pEnt) 
+		if(pEnt)
 			pAction = hplNew(cEditorActionEntityDetachChildren,(mpEditor->GetEditorWorld(), pEnt->GetParent()->GetID(), lstIDs));
 	}
 	else if(apWidget==mpButtonAttachParent)
@@ -644,7 +644,7 @@ bool cModelEditorWindowOutline::AttachParentBodyCallback(iWidget* apWidget, cons
 		mpEditor->AddAction(pJoint->CreateSetPropertyActionInt(eJointInt_ParentID, lBodyID));
 		//mpEditor->AddAction(hplNew(cEditorActionJointAttachBody,(pJoint->GetID(), mpEditor->GetEditorWorld(), eEditorJointAttachedBody_Parent, lBodyID)));
 	}
-	
+
 	return true;
 }
 kGuiCallbackDeclaredFuncEnd(cModelEditorWindowOutline, AttachParentBodyCallback);

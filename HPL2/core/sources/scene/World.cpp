@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -166,7 +166,7 @@ namespace hpl {
 		}
 
 		DestroyAllEntities(0);
-		
+
 		for(int i=0; i<2; ++i)
 		{
 			if(mpRenderableContainer[i]) hplDelete(mpRenderableContainer[i]);
@@ -187,7 +187,7 @@ namespace hpl {
 	{
 		if( (aFlags & eWorldDestroyAllFlag_SkipStaticEntities)==0)
 			STLDeleteAll(mlstStaticMeshEntities);
-		
+
 		STLDeleteAll(mlstDynamicMeshEntities);
 		STLDeleteAll(mlstLights);
 		STLDeleteAll(mlstBillboards);
@@ -227,7 +227,7 @@ namespace hpl {
 		START_TIMING(Entities);
 		UpdateEntities(afTimeStep);
 		STOP_TIMING(Entities);
-		
+
 		START_TIMING(Particles);
 		UpdateParticles(afTimeStep);
 		STOP_TIMING(Particles);
@@ -381,12 +381,12 @@ namespace hpl {
 									cResourceVarsObject *apInstanceVars, bool abSkipNonStaticEntity)
 	{
 		iEntity3D *pEntity = NULL;
-		
+
 		cEntFile *pEntFile = mpResources->GetEntFileManager()->CreateEntFile(asFile);
 		if(pEntFile==NULL) return NULL;
 
 		mlstEntFileCache.push_back(pEntFile);
-		
+
 		tString sEntityType = "";
 		iXmlDocument *pDoc = pEntFile->GetXmlDoc();
 
@@ -401,7 +401,7 @@ namespace hpl {
 			sEntityType = pVarRootElem->GetAttributeString("EntityType");
 		}
 
-		
+
 		//////////////////////////////////
 		// Get Loader and load data
 		iEntityLoader *pLoader = mpResources->GetEntityLoader(sEntityType);
@@ -417,7 +417,7 @@ namespace hpl {
 		{
 			Error("Couldn't find loader for type '%s' in file '%s'\n",sEntityType.c_str(),pEntFile->GetName().c_str());
 		}
-		
+
 		return pEntity;
 	}
 
@@ -426,7 +426,7 @@ namespace hpl {
 	cMeshEntity* cWorld::CreateMeshEntity(const tString &asName,cMesh *apMesh, bool abStatic)
 	{
 		cMeshEntity* pMeshEntity = hplNew( cMeshEntity, (asName,apMesh,mpResources->GetMaterialManager(),
-														mpResources->GetMeshManager(), 
+														mpResources->GetMeshManager(),
 														mpResources->GetAnimationManager()) );
 
 		//////////////////////////////
@@ -439,15 +439,15 @@ namespace hpl {
 
 		//////////////////////////////
 		// Add submeshes to renderable container
-		for(int i=0; i<pMeshEntity->GetSubMeshEntityNum(); ++i) 
+		for(int i=0; i<pMeshEntity->GetSubMeshEntityNum(); ++i)
 		{
 			cSubMeshEntity *pSubEntity = pMeshEntity->GetSubMeshEntity(i);
 			if(pSubEntity->GetSubMesh()->IsCollideShape()) continue; //Collide shapes are never rendered!
-            
+
 			pSubEntity->SetStatic(abStatic);
 			AddRenderableToContainer(pSubEntity);
 		}
-		
+
 		pMeshEntity->SetWorld(this);
 
 		return pMeshEntity;
@@ -459,7 +459,7 @@ namespace hpl {
 	{
 		if(apMesh==NULL) return;
 
-		for(int i=0; i<apMesh->GetSubMeshEntityNum(); ++i) 
+		for(int i=0; i<apMesh->GetSubMeshEntityNum(); ++i)
 		{
 			RemoveRenderableFromContainer(apMesh->GetSubMeshEntity(i));
 		}
@@ -488,7 +488,7 @@ namespace hpl {
 	{
 		return cMeshEntityIterator(&mlstStaticMeshEntities);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cWorld::DrawMeshBoundingBoxes(const cColor &aColor, bool abStatic)
@@ -524,7 +524,7 @@ namespace hpl {
 
 		pLight->SetStatic(abStatic);
 		AddRenderableToContainer(pLight);
-		
+
 		pLight->SetWorld(this);
 
 		return pLight;
@@ -549,9 +549,9 @@ namespace hpl {
 
 		pLight->SetStatic(abStatic);
 		AddRenderableToContainer(pLight);
-		
+
 		pLight->SetWorld(this);
-		
+
 		return pLight;
 	}
 
@@ -564,7 +564,7 @@ namespace hpl {
 
 		pLight->SetStatic(abStatic);
 		AddRenderableToContainer(pLight);
-		
+
 		pLight->SetWorld(this);
 
 		return pLight;
@@ -621,7 +621,7 @@ namespace hpl {
 
 		pBillboard->SetStatic(abStatic);
 		AddRenderableToContainer(pBillboard);
-		
+
 		return pBillboard;
 	}
 	//-----------------------------------------------------------------------
@@ -669,8 +669,8 @@ namespace hpl {
 
 		pBeam->SetStatic(abStatic);
 		AddRenderableToContainer(pBeam);
-			
-		
+
+
 		return pBeam;
 	}
 	//-----------------------------------------------------------------------
@@ -826,7 +826,7 @@ namespace hpl {
 		for(; it != mlstParticleSystems.end(); ++it)
 		{
 			cParticleSystem *pPS = *it;
-			
+
 			for(int i=0; i< pPS->GetEmitterNum();++i)
 			{
 				iParticleEmitter *pPE = pPS->GetEmitter(i);
@@ -847,17 +847,17 @@ namespace hpl {
 
 		pSetEntity->SetStatic(abStatic);
 		AddRenderableToContainer(pSetEntity);
-		
+
 		return pSetEntity;
 	}
-	
+
 	void cWorld::DestroyGuiSetEntity(cGuiSetEntity* apObject)
 	{
 		//TODO...RemoveRenderableFromContainer(...), etc
 
 		STLFindAndDelete(mlstGuiSetEntities, apObject);
 	}
-	
+
 	cGuiSetEntity* cWorld::GetGuiSetEntity(const tString& asName)
 	{
 		return static_cast<cGuiSetEntity*>(STLFindByName(mlstGuiSetEntities, asName));
@@ -871,12 +871,12 @@ namespace hpl {
 		}
 		return NULL;
 	}
-	
+
 	cGuiSetEntityIterator cWorld::GetGuiSetEntityIterator()
 	{
 		return cGuiSetEntityIterator(&mlstGuiSetEntities);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cRopeEntity* cWorld::CreateRopeEntity(const tString& asName, iPhysicsRope *apRope, int alMaxSegments)
@@ -885,7 +885,7 @@ namespace hpl {
 		mlstRopeEntities.push_back(pRope);
 
 		AddRenderableToContainer(pRope);
-		
+
 		return pRope;
 	}
 
@@ -991,7 +991,7 @@ namespace hpl {
 	void cWorld::DestroySoundEntity(cSoundEntity* apEntity)
 	{
 		//STLFindAndDelete(mlstSoundEntities,apEntity);
-		
+
 		//Only delete if found! (as it is possible that the sound entity is not longer a valid pointer!
 		tSoundEntityListIt it= mlstSoundEntities.begin();
 		for(; it != mlstSoundEntities.end(); ++it)
@@ -1027,7 +1027,7 @@ namespace hpl {
 				pJoint->SetSound(NULL);
 			}
 		}
-		
+
 		//Destroy all sound entities
 		STLDeleteAll(mlstSoundEntities);
 		mlstSoundEntities.clear();
@@ -1098,7 +1098,7 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	cAINodeContainer* cWorld::CreateAINodeContainer(const tString &asName, 
+	cAINodeContainer* cWorld::CreateAINodeContainer(const tString &asName,
 								const tString &asNodeName,
 								const cVector3f &avSize,
 								bool abNodeIsAtCenter,
@@ -1119,7 +1119,7 @@ namespace hpl {
 				pContainer = pCont;
 			}
 		}
-		
+
 
 		//////////////////////////////////
 		//Get file name
@@ -1161,7 +1161,7 @@ namespace hpl {
 				cTempAiNode& pNode = *NodeIt;
 				pContainer->AddNode(pNode.msName,pNode.mlID,pNode.mvPos,NULL);
 			}
-			
+
 			bool bLoadedFromFile=false;
 			if(cPlatform::FileExists(sAiFileName))
 			{
@@ -1174,7 +1174,7 @@ namespace hpl {
 					pContainer->LoadFromFile(sAiFileName);
 				}
 			}
-			
+
 			if(bLoadedFromFile==false)
 			{
 				Log("Rebuilding node connections and saving to '%s'\n",cString::To8Char(sAiFileName).c_str());
@@ -1189,7 +1189,7 @@ namespace hpl {
 				}
 			}
 		}
-		
+
 		//unsigned long lTime = mpSystem->GetLowLevel()->GetTime() - lStartTime;
 		//Log("Creating ai nodes took: %d\n",lTime);
 
@@ -1300,7 +1300,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// PRIVATE METHODS
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
 
 	void cWorld::AddRenderableToContainer(iRenderable *apObject)
@@ -1310,7 +1310,7 @@ namespace hpl {
 		else
 			mpRenderableContainer[eWorldContainerType_Dynamic]->Add(apObject);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cWorld::RemoveRenderableFromContainer(iRenderable *apObject)
@@ -1355,7 +1355,7 @@ namespace hpl {
 		//static size_t lLastSize = 0;
 		//bool bRenderDebug = lLastSize != mlstDynamicMeshEntities.size() && mlstDynamicMeshEntities.size()>=2;
 		//if(mlstDynamicMeshEntities.size()>=2) lLastSize = mlstDynamicMeshEntities.size();
-        	
+
 		tMeshEntityListIt MeshIt = mlstDynamicMeshEntities.begin();
 		tMeshEntityListIt endIt =mlstDynamicMeshEntities.end();
 		//if(bRenderDebug)Log("----\n");
@@ -1438,7 +1438,7 @@ namespace hpl {
 	kSerializeVar(m_mtxTransform, eSerializeType_Matrixf)
 	kEndSerialize()
 
-	
+
 	//-----------------------------------------------------------------------
 
 

@@ -2,23 +2,23 @@
    AngelCode Scripting Library
    Copyright (c) 2003-2008 Andreas Jonsson
 
-   This software is provided 'as-is', without any express or implied 
-   warranty. In no event will the authors be held liable for any 
+   This software is provided 'as-is', without any express or implied
+   warranty. In no event will the authors be held liable for any
    damages arising from the use of this software.
 
-   Permission is granted to anyone to use this software for any 
-   purpose, including commercial applications, and to alter it and 
+   Permission is granted to anyone to use this software for any
+   purpose, including commercial applications, and to alter it and
    redistribute it freely, subject to the following restrictions:
 
-   1. The origin of this software must not be misrepresented; you 
+   1. The origin of this software must not be misrepresented; you
       must not claim that you wrote the original software. If you use
-      this software in a product, an acknowledgment in the product 
+      this software in a product, an acknowledgment in the product
       documentation would be appreciated but is not required.
 
-   2. Altered source versions must be plainly marked as such, and 
+   2. Altered source versions must be plainly marked as such, and
       must not be misrepresented as being the original software.
 
-   3. This notice may not be removed or altered from any source 
+   3. This notice may not be removed or altered from any source
       distribution.
 
    The original version of this library can be located at:
@@ -52,7 +52,7 @@ extern "C"
 
 AS_API int asThreadCleanup()
 {
-	// As this function can be called globally, 
+	// As this function can be called globally,
 	// we can't assume the threadManager exists
 	if( threadManager )
 		return threadManager->CleanupLocalData();
@@ -81,7 +81,7 @@ void asCThreadManager::Release()
 {
 	if( refCount.atomicDec() == 0 )
 	{
-		// The last engine has been destroyed, so we 
+		// The last engine has been destroyed, so we
 		// need to delete the thread manager as well
 		asDELETE(this,asCThreadManager);
 		threadManager = 0;
@@ -99,7 +99,7 @@ asCThreadManager::~asCThreadManager()
 	{
 		do
 		{
-			if( tldMap.GetValue(cursor) ) 
+			if( tldMap.GetValue(cursor) )
 			{
 				asDELETE(tldMap.GetValue(cursor),asCThreadLocalData);
 			}
@@ -108,7 +108,7 @@ asCThreadManager::~asCThreadManager()
 
 	LEAVECRITICALSECTION(criticalSection);
 #else
-	if( tld ) 
+	if( tld )
 	{
 		asDELETE(tld,asCThreadLocalData);
 	}
@@ -132,7 +132,7 @@ int asCThreadManager::CleanupLocalData()
 	if( tldMap.MoveTo(&cursor, id) )
 	{
 		asCThreadLocalData *tld = tldMap.GetValue(cursor);
-		
+
 		// Can we really remove it at this time?
 		if( tld->activeContexts.GetLength() == 0 )
 		{
@@ -196,7 +196,7 @@ asCThreadLocalData *asCThreadManager::GetLocalData()
 #elif defined AS_WINDOWS_THREADS
 	asPWORD id = (asPWORD)GetCurrentThreadId();
 #endif
-		
+
 	asCThreadLocalData *tld = GetLocalData(id);
 	if( tld == 0 )
 	{

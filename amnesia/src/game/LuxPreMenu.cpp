@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -94,17 +94,17 @@ bool cLuxPreMenuSection::Load(cXmlElement* apElement, const cVector2f& avGuiSetS
 		return false;
 
 	mBackgroundColor = apElement->GetAttributeColor("Color", cColor(0,1));
-	msBackgroundFile = apElement->GetAttributeString("Image", ""); 
+	msBackgroundFile = apElement->GetAttributeString("Image", "");
 	mfTime = apElement->GetAttributeFloat("Time", 2);
 	mbShowFirstStartOnly = apElement->GetAttributeBool("ShowFirstStartOnly", false);
 	mbHasGammaSettings = apElement->GetAttributeBool("HasGammaSettings", false);
-	
+
 	msMusic = apElement->GetAttributeString("Music", "");
 	mfMusicVolume = apElement->GetAttributeFloat("MusicVolume", 0);
 	mfMusicFadeTime = apElement->GetAttributeFloat("MusicFadeTime", 0);
 
 	mbAllowSkipping = apElement->GetAttributeBool("AllowSkipping", true);
-				
+
 	//////////////////////////////
 	// Retrieve text elements
 	cXmlNodeListIterator itText = apElement->GetChildIterator();
@@ -133,7 +133,7 @@ bool cLuxPreMenuTextElement::Load(cXmlElement* apElement, const cVector2f& avGui
 	// Load text data
 	tString sCat = apElement->GetAttributeString("TextCat");
 	tString sEntry = apElement->GetAttributeString("TextEntry");
-	
+
 	msText = kTranslate(sCat, sEntry);
 	mvPos = apElement->GetAttributeVector3f("Pos") + cVector3f(0,0,1);
 	mvFrameSize = apElement->GetAttributeVector2f("FrameSize");
@@ -348,7 +348,7 @@ void cLuxPreMenu::OnLeaveContainer(const tString& asNewContainer)
 		}
 		gpBase->mpEngine->GetInput()->GetLowLevel()->RelativeMouse(true);
 	}
-	
+
 	//Turn off viewport and sets
     mpViewport->SetActive(false);
 	mpViewport->SetVisible(false);
@@ -407,7 +407,7 @@ void cLuxPreMenu::SetGammaValueToInput(float afGamma, bool abGenCallback)
 	float fRange = mfGammaMaxValue-mfGammaMinValue;
 
 	int lValue = cMath::RoundToInt((afGamma-mfGammaMinValue)*fMaxSliderValue/fRange);
-	
+
 	mpSGamma->SetValue(lValue, abGenCallback);
 }
 
@@ -472,7 +472,7 @@ kGuiCallbackDeclaredFuncEnd(cLuxPreMenu, Gamma_UIArrowPressed);
 void cLuxPreMenu::ButtonPressed()
 {
 	if(mpCurrentSection && mpCurrentSection->mbAllowSkipping==false) return;
-	
+
 	mCurrentState = eLuxPreMenuState_FastFadeOut;
 }
 
@@ -713,7 +713,7 @@ void cLuxPreMenu::UpdateState()
 		// ShowPremenuSection state, if no text, check if timer is done or some key was pressed
 	case eLuxPreMenuState_ShowPremenuSection:
 		{
-			if(mpCurrentSection->HasTextElements()==false && 
+			if(mpCurrentSection->HasTextElements()==false &&
 				mpCurrentSection->HasGammaSettings()==false &&
 				mfTimer <= 0)
 			{

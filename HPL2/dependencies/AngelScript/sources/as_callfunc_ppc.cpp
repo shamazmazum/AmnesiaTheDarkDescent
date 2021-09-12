@@ -77,7 +77,7 @@ extern "C"
 	static asBYTE ppcArgsType[2*AS_PPC_MAX_ARGS + 1 + 1 + 1];
 }
 
-// NOTE: these values are for PowerPC 32 bit. 
+// NOTE: these values are for PowerPC 32 bit.
 #define PPC_LINKAGE_SIZE  (24)                                   // how big the PPC linkage area is in a stack frame
 #define PPC_NUM_REGSTORE  (9)                                    // how many registers of the PPC we need to store/restore for ppcFunc()
 #define PPC_REGSTORE_SIZE (4*PPC_NUM_REGSTORE)                   // how many bytes are required for register store/restore
@@ -95,13 +95,13 @@ asm(" .text\n"
 	"_ppcFunc:\n"
 
 	// We're receiving the following parameters
-	
+
 	// r3 : argsPtr
 	// r4 : StackArgSize
 	// r5 : func
 
 	// The following registers are used through out the function
-	
+
 	// r31 : the address of the label address, as reference for all other labels
 	// r30 : temporary variable
 	// r29 : arg list pointer
@@ -116,20 +116,20 @@ asm(" .text\n"
 	// f0  : temporary variable
 
 	// We need to store some of the registers for restoral before returning to caller
-	
+
 	// lr - always stored in 8(r1) - this is the return address
-	// cr - not required to be stored, but if it is, its place is in 4(r1) - this is the condition register 
+	// cr - not required to be stored, but if it is, its place is in 4(r1) - this is the condition register
 	// r1 - always stored in 0(r1) - this is the stack pointer
-	// r11 
-	// r13 to r31 
+	// r11
+	// r13 to r31
 	// f14 to f31
 
 	// Store register values and setup our stack frame
 	" mflr  r0            \n"   // move the return address into r0
 	" stw   r0, 8(r1)     \n"   // Store the return address on the stack
 	" stmw  r23, -36(r1)  \n"   // Store registers r23 to r31 on the stack
-	" stwux r1, r1, r4    \n"   // Increase the stack with the needed space and store the original value in the destination	
-	
+	" stwux r1, r1, r4    \n"   // Increase the stack with the needed space and store the original value in the destination
+
 	// Obtain an address that we'll use as our position of reference when obtaining addresses of other labels
 	" bl    address         \n"
 	"address:               \n"
@@ -142,7 +142,7 @@ asm(" .text\n"
 	" sub   r0, r0, r0    \n"   // zero out r0
 	" mr    r23, r0       \n"   // zero out r23, which holds the number of used GPR registers
 	" mr    r28, r0       \n"   // zero our r22, which holds the number of used float registers
-	
+
 	// load the global ppcArgsType which holds the types of arguments for each argument
 	" addis r25, r31, ha16(_ppcArgsType - address) \n" // load the upper 16 bits of the address to r25
 	" la    r25, lo16(_ppcArgsType - address)(r25) \n" // load the lower 16 bits of the address to r25
@@ -156,26 +156,26 @@ asm(" .text\n"
 	" mulli r24, r24, 4    \n"   // our jump table has 4 bytes per case (1 instruction)
 	" addis r30, r31, ha16(ppcTypeSwitch - address) \n"   // load the address of the jump table for the switch
 	" la    r30, lo16(ppcTypeSwitch - address)(r30) \n"
-	
+
     " add    r0, r30, r24  \n"   // offset by our argument type
 	" mtctr  r0            \n"   // load the jump address into CTR
 	" bctr                 \n"   // jump into the jump table/switch
 	" nop                  \n"
-	
+
 	// the jump table/switch based on the current argument type
 	"ppcTypeSwitch:        \n"
 	" b ppcArgsEnd         \n"
 	" b ppcArgIsInteger    \n"
 	" b ppcArgIsFloat      \n"
 	" b ppcArgIsDouble     \n"
-	
+
 	// when we get here we have finished processing all the arguments
 	// everything is ready to go to call the function
 	"ppcArgsEnd:           \n"
 	" mtctr r27            \n"   // the function pointer is stored in r27, load that into CTR
 	" bctrl                \n"   // call the function.  We have to do it this way so that the LR gets the proper
 	" nop                  \n"   // return value (the next instruction below).  So we have to branch from CTR instead of LR.
-	
+
 	// Restore registers and caller's stack frame, then return to caller
 	" lwz   r1, 0(r1)      \n"   // restore the caller's stack pointer
 	" lwz   r0, 8(r1)      \n"   // load in the caller's LR
@@ -183,7 +183,7 @@ asm(" .text\n"
 	" lmw   r23, -36(r1)   \n"   // restore registers r23 to r31 from the stack
     " blr                  \n"   // return back to the caller
 	" nop                  \n"
-	
+
 	// Integer argument (GPR register)
 	"ppcArgIsInteger:             \n"
 	" addis r30, r31, ha16(ppcLoadIntReg - address) \n" // load the address to the jump table for integer registers
@@ -272,7 +272,7 @@ asm(" .text\n"
 	" addi  r26, r26, 4          \n"     // move to the next stack slot
 	" b     ppcNextArg           \n"     // on to the next argument
 	" nop                        \n"
-	
+
 	// double Float argument
 	"ppcArgIsDouble:             \n"
 	" addis r30, r31, ha16(ppcLoadDoubleReg - address) \n" // load the base address of the jump table for double registers
@@ -447,7 +447,7 @@ static asQWORD CallThisCallFunction(const void *obj, const asDWORD* pArgs, const
 }
 
 // This function is identical to CallCDeclFunction, with the only difference that
-// the value in the last parameter is the object 
+// the value in the last parameter is the object
 // NOTE: on PPC the order for the args is reversed
 static asQWORD CallThisCallFunction_objLast(const void *obj, const asDWORD* pArgs, const asBYTE *pArgsType, int argSize, asDWORD func, void *retInMemory)
 {
@@ -502,7 +502,7 @@ int CallSystemFunction(int id, asCContext *context, void *objectPointer)
 	void    *func            = (void*)sysFunc->func;
 	int      paramSize       = sysFunc->paramSize;
 	int      popSize         = paramSize;
-	asDWORD *args            = context->regs.stackPointer;	
+	asDWORD *args            = context->regs.stackPointer;
 	void    *obj             = NULL;
 	asDWORD *vftable         = NULL;
 	void    *retObjPointer   = NULL; // for system functions that return AngelScript objects
@@ -511,7 +511,7 @@ int CallSystemFunction(int id, asCContext *context, void *objectPointer)
 
 	// convert the parameters that are < 4 bytes from little endian to big endian
 	int argDwordOffset = 0;
-	
+
 	// if this is a THISCALL function and no object pointer was given, then the
 	// first argument on the stack is the object pointer -- we MUST skip it for doing
 	// the endian flipping.
@@ -519,7 +519,7 @@ int CallSystemFunction(int id, asCContext *context, void *objectPointer)
 	{
 		++argDwordOffset;
 	}
-	
+
 	for( a = 0; a < (int)descr->parameterTypes.GetLength(); a++ )
 	{
 		int numBytes = descr->parameterTypes[a].GetSizeInMemoryBytes();
@@ -564,7 +564,7 @@ int CallSystemFunction(int id, asCContext *context, void *objectPointer)
 	{
 		// Allocate the memory for the object
 		retObjPointer = engine->CallAlloc( descr->returnType.GetObjectType() );
-		
+
 		if( sysFunc->hostReturnInMemory )
 		{
 			// The return is made in memory on the host system
@@ -678,7 +678,7 @@ int CallSystemFunction(int id, asCContext *context, void *objectPointer)
 		// Keep a free location at the beginning
 		args = &paramBuffer[1];
 	}
-	
+
 	// one last verification to make sure things are how we expect
 	asASSERT( (retInMemPointer!=NULL && sysFunc->hostReturnInMemory) || (retInMemPointer==NULL && !sysFunc->hostReturnInMemory) );
 	context->isCallingSystemFunction = true;
@@ -753,7 +753,7 @@ int CallSystemFunction(int id, asCContext *context, void *objectPointer)
 			// Since we're treating the system function as if it is returning a QWORD we are
 			// actually receiving the value in the high DWORD of retQW.
 			retQW >>= 32;
-		
+
 			// returning an object handle
 			context->regs.objectRegister = (void*)(asDWORD)retQW;
 
@@ -781,8 +781,8 @@ int CallSystemFunction(int id, asCContext *context, void *objectPointer)
 					// Since we're treating the system function as if it is returning a QWORD we are
 					// actually receiving the value in the high DWORD of retQW.
 					retQW >>= 32;
-				
-					*(asDWORD*)retObjPointer = (asDWORD)retQW;						
+
+					*(asDWORD*)retObjPointer = (asDWORD)retQW;
 				}
 				else
 				{
@@ -822,7 +822,7 @@ int CallSystemFunction(int id, asCContext *context, void *objectPointer)
 		else if( sysFunc->hostReturnSize == 1 )
 		{
 			// <= 32 bit primitives
-			
+
 			// Since we're treating the system function as if it is returning a QWORD we are
 			// actually receiving the value in the high DWORD of retQW.
 			retQW >>= 32;

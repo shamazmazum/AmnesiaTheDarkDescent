@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -31,7 +31,7 @@
 #include "system/PreprocessParser.h"
 
 namespace hpl {
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// PROGRAM VARS
 	//////////////////////////////////////////////////////////////////////////
@@ -43,7 +43,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	cPostEffectType_ImageTrail::cPostEffectType_ImageTrail(cGraphics *apGraphics, cResources *apResources) : iPostEffectType("ImageTrail",apGraphics,apResources)
 	{
 		cParserVarContainer vars;
@@ -55,7 +55,7 @@ namespace hpl {
 			mpProgram->GetVariableAsId("afAlpha",kVar_afAlpha);
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cPostEffectType_ImageTrail::~cPostEffectType_ImageTrail()
@@ -72,7 +72,7 @@ namespace hpl {
 
 		return pEffect;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -84,8 +84,8 @@ namespace hpl {
 	cPostEffect_ImageTrail::cPostEffect_ImageTrail(cGraphics *apGraphics, cResources *apResources, iPostEffectType *apType) : iPostEffect(apGraphics,apResources,apType)
 	{
 		cVector2l vSize = mpLowLevelGraphics->GetScreenSizeInt();
-		
-		mpAccumTexture = mpGraphics->CreateTexture("ImageTrailTexture", eTextureType_Rect, eTextureUsage_RenderTarget);	
+
+		mpAccumTexture = mpGraphics->CreateTexture("ImageTrailTexture", eTextureType_Rect, eTextureUsage_RenderTarget);
 		mpAccumTexture->CreateFromRawData(cVector3l(vSize.x, vSize.y,1), ePixelFormat_RGB, NULL);
 
 		mpAccumBuffer = mpGraphics->CreateFrameBuffer("ImageTrailBuffer");
@@ -118,7 +118,7 @@ namespace hpl {
 
 	void cPostEffect_ImageTrail::OnSetParams()
 	{
-		
+
 	}
 
 	//-----------------------------------------------------------------------
@@ -146,7 +146,7 @@ namespace hpl {
 		/////////////////////////
 		// Render to accumulation buffer
 		mpCurrentComposite->SetFrameBuffer(mpAccumBuffer);
-		
+
 		mpCurrentComposite->SetProgram(mpImageTrailType->mpProgram);
 		if(mbClearFrameBuffer)
 		{
@@ -161,18 +161,18 @@ namespace hpl {
 			//*30 is just so that good amount values are still between 0 - 1
 			float fFrameTime = mpCurrentComposite->GetCurrentFrameTime();
 			float fPow = (1.0f / fFrameTime) * mParams.mfAmount; //The higher this is, the more blur!
-			float fAmount = exp(-fPow * 0.015f); 
+			float fAmount = exp(-fPow * 0.015f);
 			if(mpImageTrailType->mpProgram)
 				mpImageTrailType->mpProgram->SetFloat(kVar_afAlpha, fAmount);
 		}
-		
+
 		mpCurrentComposite->SetTexture(0, apInputTexture);
-				
+
 		DrawQuad(0, 1, apInputTexture, true);
 
 		mpCurrentComposite->SetProgram(NULL);
 		mpCurrentComposite->SetBlendMode(eMaterialBlendMode_None);
-		
+
 		return mpAccumTexture;
 	}
 

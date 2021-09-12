@@ -64,7 +64,7 @@ LPALGETFILTERIV alGetFilteriv = NULL;
 LPALGETFILTERF alGetFilterf = NULL;
 LPALGETFILTERFV alGetFilterfv = NULL;
 
-cOAL_EFXManager::cOAL_EFXManager() : mlNumSlots(0), mpvSlots(NULL), mplstEffectList(NULL), mplstFilterList(NULL)  
+cOAL_EFXManager::cOAL_EFXManager() : mlNumSlots(0), mpvSlots(NULL), mplstEffectList(NULL), mplstFilterList(NULL)
 {
 }
 
@@ -76,10 +76,10 @@ bool cOAL_EFXManager::Initialize(int alNumSlotsHint, int alNumSends, bool abUseT
 {
 	DEF_FUNC_NAME(cOAL_EFXManager::Initialize);
 	FUNC_USES_AL;
-	
+
 	ALuint lTempSlot[256];
-    
-	// Set up every EFX function pointer 
+
+	// Set up every EFX function pointer
 
 	LogMsg("",eOAL_LogVerbose_Medium, eOAL_LogMsg_Info, "Initializing EFX Manager...\n" );
 	LogMsg("",eOAL_LogVerbose_Medium, eOAL_LogMsg_Info, "Initializing function pointers...\n" );
@@ -111,7 +111,7 @@ bool cOAL_EFXManager::Initialize(int alNumSlotsHint, int alNumSends, bool abUseT
 	alGetEffectiv	=	(LPALGETEFFECTIV) alGetProcAddress ("alGetEffectiv");
 	alGetEffectf	=	(LPALGETEFFECTF) alGetProcAddress ("alGetEffectf");
 	alGetEffectfv	=	(LPALGETEFFECTFV) alGetProcAddress ("alGetEffectfv");
-	
+
 	// Filter funcs
 	alGenFilters	= (LPALGENFILTERS) alGetProcAddress ("alGenFilters");
 	alDeleteFilters = (LPALDELETEFILTERS) alGetProcAddress ("alDeleteFilters");
@@ -130,7 +130,7 @@ bool cOAL_EFXManager::Initialize(int alNumSlotsHint, int alNumSends, bool abUseT
 		alGetAuxiliaryEffectSloti && alGetAuxiliaryEffectSlotiv && alGetAuxiliaryEffectSlotf && alGetAuxiliaryEffectSlotfv &&
 
 		alGenEffects && alDeleteEffects && alIsEffect &&
-		alEffecti && alEffectiv && alEffectf && alEffectfv && 
+		alEffecti && alEffectiv && alEffectf && alEffectfv &&
 		alGetEffecti && alGetEffectiv && alGetEffectf && alGetEffectfv &&
 
 		alGenFilters && alDeleteFilters && alIsFilter &&
@@ -165,7 +165,7 @@ bool cOAL_EFXManager::Initialize(int alNumSlotsHint, int alNumSends, bool abUseT
 	LogMsg("",eOAL_LogVerbose_Medium, eOAL_LogMsg_Info, "Created %d Low Level Effect Slots, %d hinted\n", mlNumSlots, alNumSlotsHint);
 
 	RUN_AL_FUNC(alDeleteAuxiliaryEffectSlots ( mlNumSlots, lTempSlot ));
-	
+
 	mpvSlots = new tSlotVector;
 	mpvSlots->reserve(mlNumSlots);
 
@@ -180,7 +180,7 @@ bool cOAL_EFXManager::Initialize(int alNumSlotsHint, int alNumSends, bool abUseT
 
 	LogMsg("",eOAL_LogVerbose_Medium, eOAL_LogMsg_Info, "Done creating Effect Slots\n" );
 
-	
+
 	LogMsg("",eOAL_LogVerbose_Medium, eOAL_LogMsg_Info, "Creating Filter and Effect containers\n" );
 	mplstEffectList = new tOALEffectList;
 	mplstFilterList = new tOALFilterList;
@@ -202,14 +202,14 @@ bool cOAL_EFXManager::Initialize(int alNumSlotsHint, int alNumSends, bool abUseT
 		LogMsg("",eOAL_LogVerbose_Medium, eOAL_LogMsg_Info, "Launching Slot updater thread...\n" );
 
 		mlThreadWaitTime = 1000/alSlotUpdateFreq;
-        
+
 #if SDL_VERSION_ATLEAST(2, 0, 0)
 		mpUpdaterThread = SDL_CreateThread ( SlotUpdaterThread, "EFX Slot Updater", NULL );
 #else
 		mpUpdaterThread = SDL_CreateThread ( SlotUpdaterThread, NULL );
 #endif
 	}
-	
+
 	LogMsg("",eOAL_LogVerbose_Medium, eOAL_LogMsg_Info, "EFX succesfully initialized.\n" );
 
 	return true;
@@ -225,7 +225,7 @@ void cOAL_EFXManager::Destroy()
 
 	LogMsg("",eOAL_LogVerbose_Medium, eOAL_LogMsg_Command, "Destroying EFX Manager...\n" );
 
-	if ( mbUsingThread )							
+	if ( mbUsingThread )
 	{
 		LogMsg("",eOAL_LogVerbose_Medium, eOAL_LogMsg_Info, "Stopping Slot updater...\n" );
 		mbUsingThread = false;
@@ -244,12 +244,12 @@ void cOAL_EFXManager::Destroy()
 		}
 		mpvSlots->clear();
 		delete mpvSlots;
-		
+
 		mpvSlots = NULL;
 	}
 
 	LogMsg("",eOAL_LogVerbose_Medium, eOAL_LogMsg_Info, "Destroying Effects...\n" );
-	
+
 	if (mplstEffectList)
 	{
 		for ( lstEffectIterator = mplstEffectList->begin(); lstEffectIterator != mplstEffectList->end(); ++lstEffectIterator )
@@ -293,7 +293,7 @@ cOAL_Filter* cOAL_EFXManager::CreateFilter()
 	{
 		delete  pFilter ;
 		pFilter = NULL;
-		
+
 		return NULL;
 	}
 }
@@ -313,10 +313,10 @@ cOAL_Effect_Reverb* cOAL_EFXManager::CreateReverbEffect()
 	{
         delete pEffect;
 		pEffect = NULL;
-		
+
 		return NULL;
 	}
-	
+
 }
 
 ////////////////////////////////////////////////////////////
@@ -385,7 +385,7 @@ inline int cOAL_EFXManager::GetThreadWaitTime()
 int SlotUpdaterThread ( void* alUnusedArg )
 {
 	cOAL_EFXManager* pEFXManager = gpDevice->GetEFXManager();
-	
+
 	int lWaitTime = pEFXManager->GetThreadWaitTime();
 
 	while(pEFXManager->IsThreadAlive())
@@ -393,7 +393,7 @@ int SlotUpdaterThread ( void* alUnusedArg )
 		//	While the thread lives, perform the update
         pEFXManager->UpdateSlots();
 		//	And rest a bit
-		SDL_Delay ( lWaitTime );			
+		SDL_Delay ( lWaitTime );
 	}
 	return 0;
 }

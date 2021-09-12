@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -74,7 +74,7 @@ namespace hpl {
 
 		mfYawLimitMin =0;
 		mfYawLimitMax =0;
-		
+
 	}
 
 	//-----------------------------------------------------------------------
@@ -88,7 +88,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// PUBLIC METHODS
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
 
 	void cCamera::SetPosition(const cVector3f &avPos)
@@ -103,9 +103,9 @@ namespace hpl {
 	//-----------------------------------------------------------------------
 
 	void cCamera::SetPitch(float afAngle)
-	{ 
+	{
 		mfPitch = afAngle;
-		
+
 		if(mfPitchLimitMin!=0 || mfPitchLimitMax!=0)
 		{
 			if(mfPitch> mfPitchLimitMax) mfPitch = mfPitchLimitMax;
@@ -116,7 +116,7 @@ namespace hpl {
 		mbFrustumUpdated = true;
 	}
 	void cCamera::SetYaw(float afAngle)
-	{ 
+	{
 		mfYaw = afAngle;
 
 		if(mfYawLimitMin!=0 || mfYawLimitMax!=0)
@@ -124,33 +124,33 @@ namespace hpl {
 			if(mfYaw> mfYawLimitMax) mfYaw = mfYawLimitMax;
 			if(mfYaw< mfYawLimitMin) mfYaw = mfYawLimitMin;
 		}
-		
+
 		mbViewUpdated = true; mbMoveUpdated = true;
 		mbFrustumUpdated = true;
 	}
 	void cCamera::SetRoll(float afAngle)
-	{ 
+	{
 		mfRoll = afAngle;
 		mbViewUpdated = true; mbMoveUpdated = true;
 		mbFrustumUpdated = true;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cCamera::AddPitch(float afAngle)
 	{
 		mfPitch += afAngle;
-		
+
 		SetPitch(mfPitch);
-}	
+}
 	void cCamera::AddYaw(float afAngle)
-	{ 
+	{
 		mfYaw += afAngle;
-		
+
 		SetYaw(mfYaw);
 	}
 	void cCamera::AddRoll(float afAngle)
-	{ 
+	{
 		mfRoll += afAngle;
 		mbViewUpdated = true; mbMoveUpdated = true;
 		mbFrustumUpdated = true;
@@ -161,7 +161,7 @@ namespace hpl {
 	void cCamera::MoveForward(float afDist)
 	{
 		UpdateMoveMatrix();
-		
+
 		mvPosition += m_mtxMove.GetForward()*-afDist;
 
 		mbViewUpdated = true;
@@ -169,7 +169,7 @@ namespace hpl {
 
 		mNode.SetPosition(mvPosition);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cCamera::MoveRight(float afDist)
@@ -177,13 +177,13 @@ namespace hpl {
 		UpdateMoveMatrix();
 
 		mvPosition += m_mtxMove.GetRight()*afDist;
-		
+
 		mbViewUpdated = true;
 		mbFrustumUpdated = true;
 
 		mNode.SetPosition(mvPosition);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cCamera::MoveUp(float afDist)
@@ -217,7 +217,7 @@ namespace hpl {
 	{
 		if(mfAspect==afAspect)
 			return;
-		
+
 		mfAspect = afAspect;
 
 		mbProjectionUpdated = true;
@@ -228,7 +228,7 @@ namespace hpl {
 	{
 		if(mfFarClipPlane==afX)
 			return;
-		
+
 		mfFarClipPlane = afX;
 
 		mbProjectionUpdated = true;
@@ -239,7 +239,7 @@ namespace hpl {
 	{
 		if(mfNearClipPlane==afX)
 			return;
-		
+
 		mfNearClipPlane = afX;
 
 		mbProjectionUpdated = true;
@@ -257,7 +257,7 @@ namespace hpl {
 		mbProjectionUpdated = true;
 		mbFrustumUpdated = true;
 	}
-	
+
 	void cCamera::SetOrthoViewSize(const cVector2f &avSize)
 	{
 		mvViewSize = avSize;
@@ -268,7 +268,7 @@ namespace hpl {
 			mbFrustumUpdated = true;
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cCamera::SetRotateMode(eCameraRotateMode aMode)
@@ -276,8 +276,8 @@ namespace hpl {
 		mRotateMode = aMode;
 		mbViewUpdated = true; mbMoveUpdated = true;
 		mbFrustumUpdated = true;
-	}	
-	
+	}
+
 	//-----------------------------------------------------------------------
 
 	void cCamera::SetMoveMode(eCameraMoveMode aMode)
@@ -332,7 +332,7 @@ namespace hpl {
 											GetFarClipPlane(),GetNearClipPlane(),
 											mvViewSize,GetPosition(),mbInfFarPlane);
 			}
-			
+
 			if(bWasInf){
 				SetInifintiveFarPlane(true);
 			}
@@ -344,7 +344,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	const cMatrixf& cCamera::GetViewMatrix()
 	{
 		if(mbViewUpdated)
@@ -367,7 +367,7 @@ namespace hpl {
 		}
 		return m_mtxView;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	const cMatrixf& cCamera::GetProjectionMatrix()
@@ -389,10 +389,10 @@ namespace hpl {
 
 			mbProjectionUpdated = false;
 		}
-		
+
 		return m_mtxProjection;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	const cMatrixf& cCamera::GetMoveMatrix()
@@ -423,12 +423,12 @@ namespace hpl {
 	{
 
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cCamera::UnProject(cVector3f *apPosition, cVector3f *apDirection, const cVector2f& avScreenPos, const cVector2f& avVirtualScreenSize)
 	{
-		UnProjectHelper(apPosition, apDirection, avScreenPos, avVirtualScreenSize, 
+		UnProjectHelper(apPosition, apDirection, avScreenPos, avVirtualScreenSize,
 						GetViewMatrix().GetRotation(),
 						GetPosition(), GetForward(), GetUp(), GetRight());
 	}
@@ -439,7 +439,7 @@ namespace hpl {
 	{
 		cVector2f vNormalizedScreen((avScreenPos.x / avVirtualScreenSize.x) - 0.5f,
 									0.5f - (avScreenPos.y / avVirtualScreenSize.y));
-		
+
 		//////////////////////////////////////////////
 		// Perspective projection
 		if(mProjectionType == eProjectionType_Perspective)
@@ -449,7 +449,7 @@ namespace hpl {
 			cVector2f avViewportToWorld;
 			avViewportToWorld.y = afNormalizedSlope * mfNearClipPlane * 2.0f;
 			avViewportToWorld.x = avViewportToWorld.y * mfAspect;
-	        
+	
 			cVector3f vDir(	vNormalizedScreen.x * avViewportToWorld.x,
 							vNormalizedScreen.y * avViewportToWorld.y,
 							-mfNearClipPlane);
@@ -470,7 +470,7 @@ namespace hpl {
 			cVector3f vForward = avCameraFwd;
 			cVector3f vUp =		avCameraUp;
 			cVector3f vRight = avCameraRgt;
-            
+
 			//Near plane position
 			vPos += vForward * mfNearClipPlane;
 
@@ -534,7 +534,7 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	
+
 	cVector3f cCamera::GetForward()
 	{
 		return GetViewMatrix().GetForward()*-1.0f;
@@ -549,7 +549,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// PRIVATE METHODS
 	//////////////////////////////////////////////////////////////////////////

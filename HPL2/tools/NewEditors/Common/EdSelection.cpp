@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -40,7 +40,7 @@ float cEdSelection::mfRotateSnap = kPi2f/6;
 
 iEdAction* iEdObject::CreateSetIntAction(const tString& asPropName, int alX)
 {
-	cEdActionSetInt* pAction = hplNew(cEdActionSetInt,(GetWorld(), tIntList(1,GetID()), 
+	cEdActionSetInt* pAction = hplNew(cEdActionSetInt,(GetWorld(), tIntList(1,GetID()),
 														asPropName, alX));
 	return SetUpAction(pAction);
 }
@@ -49,7 +49,7 @@ iEdAction* iEdObject::CreateSetIntAction(const tString& asPropName, int alX)
 
 iEdAction* iEdObject::CreateSetFloatAction(const tString& asPropName, float afX)
 {
-	cEdActionSetFloat* pAction = hplNew(cEdActionSetFloat,(GetWorld(), tIntList(1,GetID()), 
+	cEdActionSetFloat* pAction = hplNew(cEdActionSetFloat,(GetWorld(), tIntList(1,GetID()),
 															asPropName, afX));
 
 	return SetUpAction(pAction);
@@ -59,7 +59,7 @@ iEdAction* iEdObject::CreateSetFloatAction(const tString& asPropName, float afX)
 
 iEdAction* iEdObject::CreateSetBoolAction(const tString& asPropName, bool abX)
 {
-	cEdActionSetBool* pAction = hplNew(cEdActionSetBool,(GetWorld(), tIntList(1,GetID()), 
+	cEdActionSetBool* pAction = hplNew(cEdActionSetBool,(GetWorld(), tIntList(1,GetID()),
 														asPropName, abX));
 	return SetUpAction(pAction);
 }
@@ -68,7 +68,7 @@ iEdAction* iEdObject::CreateSetBoolAction(const tString& asPropName, bool abX)
 
 iEdAction* iEdObject::CreateSetStringAction(const tString& asPropName, const tString& asX)
 {
-	cEdActionSetString* pAction = hplNew(cEdActionSetString,(GetWorld(), tIntList(1,GetID()), 
+	cEdActionSetString* pAction = hplNew(cEdActionSetString,(GetWorld(), tIntList(1,GetID()),
 															asPropName, asX));
 	return SetUpAction(pAction);
 }
@@ -77,7 +77,7 @@ iEdAction* iEdObject::CreateSetStringAction(const tString& asPropName, const tSt
 
 iEdAction* iEdObject::CreateSetVector2fAction(const tString& asPropName, const cVector2f& avX)
 {
-	cEdActionSetVec2f* pAction = hplNew(cEdActionSetVec2f,(GetWorld(), tIntList(1,GetID()), 
+	cEdActionSetVec2f* pAction = hplNew(cEdActionSetVec2f,(GetWorld(), tIntList(1,GetID()),
 															asPropName, avX));
 	return SetUpAction(pAction);
 }
@@ -86,7 +86,7 @@ iEdAction* iEdObject::CreateSetVector2fAction(const tString& asPropName, const c
 
 iEdAction* iEdObject::CreateSetVector3fAction(const tString& asPropName, const cVector3f& avX)
 {
-	cEdActionSetVec3f* pAction = hplNew(cEdActionSetVec3f,(GetWorld(), tIntList(1,GetID()), 
+	cEdActionSetVec3f* pAction = hplNew(cEdActionSetVec3f,(GetWorld(), tIntList(1,GetID()),
 															asPropName, avX));
 	return SetUpAction(pAction);
 }
@@ -95,7 +95,7 @@ iEdAction* iEdObject::CreateSetVector3fAction(const tString& asPropName, const c
 
 iEdAction* iEdObject::CreateSetColorAction(const tString& asPropName, const cColor& aX)
 {
-	cEdActionSetColor* pAction = hplNew(cEdActionSetColor,(GetWorld(), tIntList(1,GetID()), 
+	cEdActionSetColor* pAction = hplNew(cEdActionSetColor,(GetWorld(), tIntList(1,GetID()),
 															asPropName, aX));
 	return SetUpAction(pAction);
 }
@@ -281,7 +281,7 @@ void cEdSelection::SetGlobalTransform(bool abX)
 	if(mbGlobalTransform==abX) return;
 
 	mbGlobalTransform = abX;
-	
+
 	SetComponentsUpdated();
 	SetUpdated();
 
@@ -350,7 +350,7 @@ void cEdSelection::SetScale(const cVector3f& avX)
 	{
 		tScnObjListIt it = mlstComponents.begin();
 		tMatrixfListIt itMat = mlstRelScaleMatrices.begin();
-	
+
 		for(;it!=mlstComponents.end() && itMat!=mlstRelScaleMatrices.end(); ++it, ++itMat)
 		{
 			iEdScnObject* pObj = *it;
@@ -500,7 +500,7 @@ iEdAction* cEdSelection::CreateCompoundObjectAction()
 			pCompoundAction->AddAction(pNewCompound->CreateAddComponentsAction(mlstComponents));
 			pCompoundAction->AddAction(CreateSelectObjectsAction(tScnObjList(1, pNewCompound)));
 		}
-		
+
 		pAction = pCompoundAction;
 	}
 
@@ -677,7 +677,7 @@ void cEdSelection::UpdateComponents()
 	}
 
 	SetTranslation((vMin+vMax)*0.5f);
-	
+
 	if(GetNumComponents()==1)
 	{
 		iEdScnObject* pObj = GetComponent(0);

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -39,7 +39,7 @@ bool IsCorrectType(const tWString & asFileName)
 	if(sExt  == _W("nodes")) return true;
 	if(sExt  == _W("msh")) return true;
 	if(sExt  == _W("anm")) return true;
-	
+
 	return false;
 }
 
@@ -57,19 +57,19 @@ tWString GetParentExt(const tWString & asFileName)
 
 void IterateFiles(const tWString & asDir)
 {
-	
+
 	////////////////////////////////
 	// Iterate files
 	tWStringList lstFiles;
 	cPlatform::FindFilesInDir(lstFiles,asDir, _W("*.*"));
 
 	for(tWStringListIt it = lstFiles.begin(); it != lstFiles.end(); ++it)
-	{	
+	{
 		const tWString &sFileName = *it;
 		if(IsCorrectType(sFileName)==false) continue;
 
 		tWString sPath = cString::SetFilePathW(sFileName, asDir);
-		
+
 		if(cPlatform::FileExists(sPath)==false)
 		{
 			Warning("%s does not exist!\n", cString::To8Char(sPath).c_str());
@@ -80,7 +80,7 @@ void IterateFiles(const tWString & asDir)
 		///////////////////////////////
 		//Check with parent map
 		if(GetParentExt(sFileName) != _W(""))
-		{	
+		{
 			tWString sParentPath = cString::SetFileExtW(sPath, GetParentExt(sFileName));
 
 			if(cPlatform::FileExists(sParentPath)==false)
@@ -89,23 +89,23 @@ void IterateFiles(const tWString & asDir)
 				glNumOfProblems++;
 				continue;
 			}
-		
+
 			if(cPlatform::FileModifiedDate(sPath) > cPlatform::FileModifiedDate(sParentPath))
 			{
 				glNumOfSkippedFiles++;
 				continue;
 			}
 		}
-        
+
 		unsigned long lFileSize = cPlatform::GetFileSize(sPath);
-		if(lFileSize <= 0) 
+		if(lFileSize <= 0)
 		{
 			Warning("%s has zero size!\n", cString::To8Char(sPath).c_str());
 			glNumOfProblems++;
 			continue;
 		}
 
-		
+
 		char *pBuffer = (char*) hplMalloc(lFileSize);
 		cPlatform::CopyFileToBuffer(sPath,pBuffer, lFileSize);
 
@@ -119,7 +119,7 @@ void IterateFiles(const tWString & asDir)
 			glNumOfFiles++;
 		}
 		else
-		{	
+		{
 			Warning("%s could not be opened!\n", cString::To8Char(sPath).c_str());
 			glNumOfProblems++;
 		}
@@ -147,15 +147,15 @@ int main(int argc, const char* argv[])
 
 	cEngineInitVars vars;
 	gpEngine = CreateHPLEngine(eHplAPI_OpenGL, 0, &vars);
-	
+
 	IterateFiles(_W("./"));
 
 	Log("Number of files fixed: %d\n", glNumOfFiles);
 	Log("Number of files skipped: %d\n", glNumOfSkippedFiles);
 	Log("Number of problems: %d\n", glNumOfProblems);
-	
+
 	DestroyHPLEngine(gpEngine);
-	
+
 	return 0;
 }
 int hplMain(const tString &asCommandline){ return -1;}

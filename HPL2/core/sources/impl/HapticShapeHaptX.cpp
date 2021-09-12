@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -37,7 +37,7 @@ namespace hpl {
 	//-----------------------------------------------------------------------
 
 	cHapticShapeHaptX::cHapticShapeHaptX(	const tString &asName, eHapticShapeType aType,
-											const cVector3f& avSize, 
+											const cVector3f& avSize,
 											cLowLevelHapticHaptX *apLowLevel)
 											: iHapticShape(asName, aType)
 	{
@@ -56,7 +56,7 @@ namespace hpl {
 		case eHapticShapeType_Box: break;
 		case eHapticShapeType_Sphere: break;
 		case eHapticShapeType_Cylinder: break;
-		case eHapticShapeType_Capsule: break;		
+		case eHapticShapeType_Capsule: break;
 		};
 	}
 
@@ -83,11 +83,11 @@ namespace hpl {
 	bool cHapticShapeHaptX::GetEnabled()
 	{
 		if(mShapeID <0) return false;
-		
+
 		bool bRet;
 		mpInterface->ShapeIsEnabled(bRet,mShapeID, mpLowLevel->GetDeviceID());
 		return bRet;
-	}	
+	}
 
 	//-----------------------------------------------------------------------
 
@@ -101,12 +101,12 @@ namespace hpl {
 	cMatrixf cHapticShapeHaptX::GetTransform()
 	{
 		if(mShapeID <0) return cMatrixf::Identity;
-		
+
 		Matrix4f mtxOut;
 		mpInterface->ShapeGetTransform(mtxOut,mShapeID);
 
 		cMatrixf mtxRet(&mtxOut.m[0][0]);
-		
+
 		return mtxRet;
 	}
 
@@ -129,7 +129,7 @@ namespace hpl {
 		if(mShapeID <0) return;
 
 		iHapticSurfaceHaptX *pHXSurface = static_cast<iHapticSurfaceHaptX*>(apSurface);
-		
+
 		mpSurface = apSurface;
 		mpInterface->ShapeSetSurface(mShapeID, pHXSurface->GetHaptXSurface()->GetSurfaceID());
 	}
@@ -163,7 +163,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	void cHapticShapeHaptX::CreateFromVertices(const unsigned int* apIndexArray, int alIndexNum,
 												const float *apPosArray, int alPosStride,
 												const float *apTexArray, int alTexStride,
@@ -182,7 +182,7 @@ namespace hpl {
 		}
 
 		iHapticShapeID hShapeID;
-		mpInterface->ShapeCreate(hShapeID, 
+		mpInterface->ShapeCreate(hShapeID,
 								&vPosVec[0], alVtxNum,
 								(int*)apIndexArray, alIndexNum,
 								mpLowLevel->GetDefaultSurface()->GetSurfaceID(),

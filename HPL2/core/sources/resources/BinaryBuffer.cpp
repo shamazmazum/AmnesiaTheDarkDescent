@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -94,7 +94,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	bool cBinaryBuffer::Load()
 	{
 		if(msFile == _W(""))
@@ -103,11 +103,11 @@ namespace hpl {
 			return false;
 		}
 
-		
+
 
 		return Load(msFile);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	bool cBinaryBuffer::Load(const tWString& asFile)
@@ -146,10 +146,10 @@ namespace hpl {
 			Error("Could not read from binary file '%s'\n", cString::To8Char(asFile).c_str());
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	bool cBinaryBuffer::Save()
@@ -173,7 +173,7 @@ namespace hpl {
 			Error("Could not open binary file '%s'\n", cString::To8Char(asFile).c_str());
 			return false;
 		}
-		
+
 		size_t lOut = fwrite(mpData, mlDataSize, 1, pFile);
 		fclose(pFile);
 
@@ -183,8 +183,8 @@ namespace hpl {
 			Error("Could not write to binary file '%s'\n", cString::To8Char(asFile).c_str());
 			return false;
 		}
-				
-		return true;	
+
+		return true;
 	}
 
 	//-----------------------------------------------------------------------
@@ -217,7 +217,7 @@ namespace hpl {
 	bool cBinaryBuffer::Reserve(size_t alSize)
 	{
 		if(alSize <= mlReservedDataSize) return false;
-		
+
 		char* pNewData = (char*)hplRealloc(mpData, alSize);
 		if(pNewData==NULL) return false;
 
@@ -232,7 +232,7 @@ namespace hpl {
 	void cBinaryBuffer::Clear()
 	{
 		hplFree(mpData);
-		
+
 		InitAndAllocData();
 	}
 
@@ -241,7 +241,7 @@ namespace hpl {
 	bool cBinaryBuffer::SetPos(size_t alPos)
 	{
 		if(alPos >= mlDataSize) return false;
-		
+
 		mlDataPos = alPos;
 		return true;
 	}
@@ -282,7 +282,7 @@ namespace hpl {
 		zipStream.zalloc = Z_NULL;
 		zipStream.zfree = Z_NULL;
 		zipStream.opaque = Z_NULL;
-		
+
 		///////////////////////////
 		// Init compression
 		int ret = deflateInit(&zipStream, alCompressionLevel<0 ? Z_DEFAULT_COMPRESSION : alCompressionLevel);
@@ -309,7 +309,7 @@ namespace hpl {
 
 			//Write the chunk to the destination buffer
 			size_t lBytesCopied = lMaxChunkSize - zipStream.avail_out;
-	
+
 			AddData(vOutData, lBytesCopied);
 		}
 		while (zipStream.avail_out == 0);
@@ -323,7 +323,7 @@ namespace hpl {
 		if(abWriteDataSize)
 		{
 			size_t lTotalDataSize = mlDataPos - lStartPos - 4;
-			
+
 			int *pSizeDataPtr = (int*)mpData[lStartPos];
 			*pSizeDataPtr = lTotalDataSize;
 		}
@@ -341,7 +341,7 @@ namespace hpl {
 		// Check the parameters
 		if(apSrcData==NULL) return false;
 
-		
+
 		///////////////////////////
 		// Set up
 		const size_t lMaxChunkSize = 65536;
@@ -353,7 +353,7 @@ namespace hpl {
 		zipStream.opaque = Z_NULL;
 		zipStream.avail_in = alSize;
 		zipStream.next_in = (Bytef *)apSrcData;
-		
+
 		///////////////////////////
 		// Init decompression
 		int ret = inflateInit(&zipStream);
@@ -408,7 +408,7 @@ namespace hpl {
 		////////////////////////////////
 		// Decompress the data to current buffer
 		bool bRet = DecompressAndAdd(apSrcBuffer->GetDataPointerAtCurrentPos(), lDataSize);
-		
+
 		////////////////////////////////
 		// Update the source buffer
 		apSrcBuffer->mlDataPos += lDataSize;
@@ -436,7 +436,7 @@ namespace hpl {
 		mlCRCStartPos = mlDataPos;
 		AddInt32(0); //Get space for the CRC
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	unsigned int cBinaryBuffer::AddCRC_End(unsigned int alKey)
@@ -455,9 +455,9 @@ namespace hpl {
 	{
 		size_t lDataPos = alDataPos<0 ? mlDataPos : (size_t)alDataPos;
 		size_t lDataSize = alCount<0 ? mlDataSize - lDataPos : (size_t)alCount;
-		
+
 		cCRC crcData(alKey);
-		
+
 		crcData.PutData(&mpData[lDataPos], lDataSize);
 
 		return crcData.Done();
@@ -527,7 +527,7 @@ namespace hpl {
         alX = SDL_SwapLE32(alX);
 		AddData(&alX, sizeof(int));
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cBinaryBuffer::AddFloat32(float afX)
@@ -551,7 +551,7 @@ namespace hpl {
 		AddData(t, sizeof(float)*2);
 #endif
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cBinaryBuffer::AddVector3f(const cVector3f& avX)
@@ -599,7 +599,7 @@ namespace hpl {
 		AddVector3f(aqX.v);
 		AddFloat32(aqX.w);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cBinaryBuffer::AddColor(const cColor& avX)
@@ -619,7 +619,7 @@ namespace hpl {
 	{
 		AddData(asStr.c_str(), sizeof(char) * (asStr.size()+1) ); //+1 for the zero!
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 /*
@@ -639,7 +639,7 @@ namespace hpl {
 	{
 		AddData(apData, sizeof(char) * alSize);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cBinaryBuffer::AddShort16Array(const short* apData, size_t alSize)
@@ -650,7 +650,7 @@ namespace hpl {
         AddData(apData, sizeof(short) * alSize);
 #endif
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cBinaryBuffer::AddInt32Array(const int* apData, size_t alSize)
@@ -661,7 +661,7 @@ namespace hpl {
         AddData(apData, sizeof(int) * alSize);
 #endif
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cBinaryBuffer::AddFloat32Array(const float* apData, size_t alSize)
@@ -699,7 +699,7 @@ namespace hpl {
 		GetData(&lX, sizeof(char));
 		return lX;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	bool cBinaryBuffer::GetBool()
@@ -708,7 +708,7 @@ namespace hpl {
 		GetData(&c, sizeof(char));
 		return c==0 ? false : true;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	short cBinaryBuffer::GetShort16()
@@ -724,7 +724,7 @@ namespace hpl {
 		GetData(&lX, sizeof(unsigned short));
         return SDL_SwapLE16(lX);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	int cBinaryBuffer::GetInt32()
@@ -733,7 +733,7 @@ namespace hpl {
 		GetData(&lX, sizeof(int));
 		return SDL_SwapLE32(lX);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	float cBinaryBuffer::GetFloat32()
@@ -748,7 +748,7 @@ namespace hpl {
         return fX;
 #endif
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cBinaryBuffer::GetVector2f(cVector2f *apX)
@@ -904,7 +904,7 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// PRIVATE METHODS
 	//////////////////////////////////////////////////////////////////////////
@@ -948,7 +948,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	void cBinaryBuffer::InitAndAllocData()
 	{
 		mlCRCStartPos =0;

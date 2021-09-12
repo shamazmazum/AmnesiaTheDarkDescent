@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -47,8 +47,8 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	iPhysicsJoint::iPhysicsJoint(const tString &asName, iPhysicsBody *apParentBody, iPhysicsBody *apChildBody, 
-		iPhysicsWorld *apWorld,const cVector3f &avPivotPoint, const cVector3f &avPinDir) 
+	iPhysicsJoint::iPhysicsJoint(const tString &asName, iPhysicsBody *apParentBody, iPhysicsBody *apChildBody,
+		iPhysicsWorld *apWorld,const cVector3f &avPivotPoint, const cVector3f &avPinDir)
 		: msName(asName), mpParentBody(apParentBody), mpChildBody(apChildBody), mpWorld(apWorld)
 	{
 		mlUniqueID = -1;
@@ -66,16 +66,16 @@ namespace hpl {
 
 		m_mtxPrevChild = cMatrixf::Identity;
 		m_mtxPrevParent = cMatrixf::Identity;
-		
+
 		apChildBody->AddJoint(this);
 		m_mtxChildBodySetup = apChildBody->GetLocalMatrix();
 
 		mvPivotPoint = avPivotPoint;
 		mvStartPivotPoint = avPivotPoint;
-		
+
 		mvPinDir = avPinDir;
 		mvStartPinDir = avPinDir;
-		
+
 		if(mpParentBody)
 		{
 			cMatrixf m_mtxInvParent = cMath::MatrixInverse(mpParentBody->GetLocalMatrix());
@@ -93,7 +93,7 @@ namespace hpl {
 		mbHasCollided = false;
 		mpSound = NULL;
 		mlSoundID = -1;
-		
+
 		mpCallback = NULL;
 
 		mbAutoDeleteCallback = false;
@@ -118,7 +118,7 @@ namespace hpl {
 
 		//Log("Created joint '%s'\n",msName.c_str());
 	}
-	
+
 	iPhysicsJoint::~iPhysicsJoint()
 	{
 		if(mbAutoDeleteCallback && mpCallback) hplDelete(mpCallback);
@@ -145,7 +145,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	/**
 	 * This should only be used by PhysicsBody.
 	 */
@@ -156,10 +156,10 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	void iPhysicsJoint::AddController(iPhysicsController *apController)
 	{
-		
+
 		//Add controller top map
 		m_mapControllers.insert(tPhysicsControllerMap::value_type(apController->GetName(), apController));
 
@@ -184,7 +184,7 @@ namespace hpl {
 	{
 		iPhysicsController *pNewCtrl = GetController(asName);
 		if(pNewCtrl==NULL) return false;
-		
+
 		tPhysicsControllerMapIt it = m_mapControllers.begin();
 		for(; it != m_mapControllers.end(); ++it)
 		{
@@ -192,7 +192,7 @@ namespace hpl {
 
 			if(pCtrl == pNewCtrl)
 			{
-				pCtrl->SetActive(true);	
+				pCtrl->SetActive(true);
 			}
 			else
 			{
@@ -211,7 +211,7 @@ namespace hpl {
 		for(; it != m_mapControllers.end(); ++it)
 		{
 			iPhysicsController *pCtrl = it->second;
-			
+
 			pCtrl->SetPaused(abX);
 		}
 	}
@@ -222,7 +222,7 @@ namespace hpl {
 	{
 		return cPhysicsControllerIterator(&m_mapControllers);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -237,7 +237,7 @@ namespace hpl {
 		{
 			mpCallback->OnMaxLimit(this);
 		}
-		
+
 		//////////////////////////////////////////////////
 		// Check if any of the controllers has a OnMax end.
 		if(mbHasCollided==false)
@@ -249,7 +249,7 @@ namespace hpl {
 				iPhysicsController *pCtrl = it->second;
 
 				//Log("Ctrl %s: %d\n",pCtrl->GetName().c_str(),(int)pCtrl->GetEndType());
-				
+
 				if(pCtrl->IsActive() && pCtrl->GetEndType() == ePhysicsControllerEnd_OnMax)
 				{
 					pCtrl->SetActive(false);
@@ -271,7 +271,7 @@ namespace hpl {
 		{
 			mpCallback->OnMinLimit(this);
 
-			
+
 		}
 		//////////////////////////////////////////////////
 		// Check if any of the controllers has a OnMin end.
@@ -296,7 +296,7 @@ namespace hpl {
 
 		LimitEffect(&mMinLimit);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void iPhysicsJoint::CalcSoundFreq(float afSpeed,float *apFreq, float *apVol)
@@ -316,7 +316,7 @@ namespace hpl {
 			else
 			{
 				//Calculate how close the speed is to max.
-				float fT = (fAbsSpeed-mfMiddleMoveSpeed) / 
+				float fT = (fAbsSpeed-mfMiddleMoveSpeed) /
 					(mfMaxMoveFreqSpeed-mfMiddleMoveSpeed);
 
 				fFreq = (1 - fT) + fT * mfMaxMoveFreq;
@@ -334,7 +334,7 @@ namespace hpl {
 			else
 			{
 				//Calculate how close the speed is to max.
-				float fT = (mfMiddleMoveSpeed - fAbsSpeed) / 
+				float fT = (mfMiddleMoveSpeed - fAbsSpeed) /
 					(mfMiddleMoveSpeed - mfMinMoveFreqSpeed);
 
 				fFreq = (1 - fT) + fT * mfMinMoveFreq;
@@ -347,15 +347,15 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	bool iPhysicsJoint::OnPhysicsUpdate()
 	{
 		bool bFrozen = true;
-        if(mpParentBody && mpParentBody->GetEnabled()) 
+        if(mpParentBody && mpParentBody->GetEnabled())
 			bFrozen = false;
-		else if(mpChildBody->GetEnabled()) 
+		else if(mpChildBody->GetEnabled())
 			bFrozen = false;
-		
+
 		if(bFrozen && mpSound==NULL) return false;
 
 		//Get the pivot point, if there is no parent, it is stuck.
@@ -364,7 +364,7 @@ namespace hpl {
 			mvPivotPoint = cMath::MatrixMul(mpParentBody->GetLocalMatrix(),mvLocalPivot);
 			mvPinDir = cMath::MatrixMul3x3(mpParentBody->GetLocalMatrix(),mvLocalPinDir);
 		}
-				
+
 		cWorld *pWorld = mpWorld->GetWorld();
 		if(pWorld == NULL) return true;
 		if(msMoveSound == "") return true;
@@ -395,7 +395,7 @@ namespace hpl {
 			}
 			else
 			{
-				vVel = mpChildBody->GetAngularVelocity();	
+				vVel = mpChildBody->GetAngularVelocity();
 			}
 		}
 
@@ -425,7 +425,7 @@ namespace hpl {
 		{
 			mpSound = NULL;
 		}
-		
+
 		//////////////////////////////////////
 		// Create and update sound if speed is high enough
 		// Joint has sound
@@ -438,7 +438,7 @@ namespace hpl {
 				mpSound->FadeOut(4.3f);
 				mpSound	= NULL;
 			}
-			else 
+			else
 			{
 				//Log("Getting entry!\n");
 				cSoundEntry *pEntry = mpSound->GetSoundEntry(eSoundEntityType_Main, true);
@@ -447,7 +447,7 @@ namespace hpl {
 					//Log("Update entry!\n");
 					float fFreq, fVolume;
 					CalcSoundFreq(fSpeed, &fFreq,&fVolume);
-					
+
 					pEntry->SetSpeedMul(fFreq);
 					pEntry->SetVolumeMul(fVolume);
 
@@ -464,7 +464,7 @@ namespace hpl {
 		}
 		//////////////////////
 		// Joint has no sound
-		else 
+		else
 		{
 			/////////////////////////////
 			// Speed is over limit
@@ -494,7 +494,7 @@ namespace hpl {
 				mlSpeedCount =0;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -508,9 +508,9 @@ namespace hpl {
 		else
 			mlSoundID = -1;
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	void iPhysicsJoint::LimitEffect(cJointLimitEffect *pEffect)
 	{
 		cWorld *pWorld = mpWorld->GetWorld();
@@ -531,7 +531,7 @@ namespace hpl {
 			if(fSpeed >= pEffect->mfMinSpeed && mbHasCollided==false && pEffect->msSound != "")
 			{
 				float fVolume = (fSpeed - pEffect->mfMinSpeed) / (pEffect->mfMaxSpeed - pEffect->mfMinSpeed);
-                
+
 				cSoundEntity *pSound = pWorld->CreateSoundEntity("LimitSound", pEffect->msSound,true);
 				if(pSound)
 				{
@@ -567,7 +567,7 @@ namespace hpl {
 		if(mbBreakable==false) return false;
 
 		float fForcesSize = GetForceSize();
-		
+
 		if(fForcesSize >= mfBreakForce || mbBroken)
 		{
 			if(msBreakSound != "")
@@ -585,10 +585,10 @@ namespace hpl {
 
 		return false;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
-	void iPhysicsJoint::CheckLimitAutoSleep(iPhysicsJoint *apJoint, 
+	void iPhysicsJoint::CheckLimitAutoSleep(iPhysicsJoint *apJoint,
 											const float afMin, const float afMax,
 											const float afDist)
 	{
@@ -597,7 +597,7 @@ namespace hpl {
 			float fMinDiff = std::abs(afMin - afDist);
 			float fMaxDiff = std::abs(afMax - afDist);
 
-			if(	fMaxDiff < apJoint->mfLimitAutoSleepDist || 
+			if(	fMaxDiff < apJoint->mfLimitAutoSleepDist ||
 				fMinDiff < apJoint->mfLimitAutoSleepDist)
 			{
 				if(apJoint->mlLimitStepCount >= apJoint->mlLimitAutoSleepNumSteps)

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -34,7 +34,7 @@ namespace hpl{
 	tString cCGShader::msForceFP = "AUTO";
 	tString cCGShader::msForceVP = "AUTO";
 
-	cCGShader::cCGShader(tString asName,CGcontext aContext,eGpuShaderType aType) 
+	cCGShader::cCGShader(tString asName,CGcontext aContext,eGpuShaderType aType)
 	: iGpuShader(asName, aType, eGpuProgramFormat_CG)
 	{
 		mContext = aContext;
@@ -99,24 +99,24 @@ namespace hpl{
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	bool cCGShader::Reload()
 	{
 		return false;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cCGShader::Unload()
 	{
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cCGShader::Destroy()
 	{
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	bool cCGShader::CreateFromFile(const tString &asFile, const tString &asEntry)
@@ -150,7 +150,7 @@ namespace hpl{
 													asEntry.c_str(),0);
 			}
 		}
-		
+
 		//Log("getting CG errors\n");
 
 		CGerror err = cgGetError();
@@ -160,7 +160,7 @@ namespace hpl{
 			const char* pString = cgGetLastListing(mContext);
 			int lIdx=0;
 			int lLastNewLine=0;
-			
+
 			Log(" -----------------------------------\n");
 			while(pString[lIdx]!=0)//true)
 			{
@@ -180,11 +180,11 @@ namespace hpl{
 				lIdx++;
 			}
 			Log(" -----------------------------------\n");
-			
+
 			Log("Error loading: '%s'!\n",asFile.c_str());
 			return false;
 		}
-		
+
 		if(mProgram==NULL){
 			Log("Error loading: '%s'!\n",asFile.c_str());
 			return false;
@@ -198,7 +198,7 @@ namespace hpl{
 		if (err != CG_NO_ERROR)
 		{
 			Log(" %s\n", cgGetErrorString(err));
-			
+
 			cgDestroyProgram(mProgram);
 			mProgram = NULL;
 
@@ -222,7 +222,7 @@ namespace hpl{
 			{
 				continue;
 			}
-			
+
 			//Get the unit number
 			int lUnit = lCount;
 			const char *pSemantic = cgGetParameterSemantic(Param);
@@ -237,7 +237,7 @@ namespace hpl{
 
 			++lCount;
 		}
-		
+
 		return true;
 	}
 
@@ -267,14 +267,14 @@ namespace hpl{
 
 		return (int)mvParameters.size()-1;
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	bool  cCGShader::SetFloat(int alVarId, float afX)
 	{
 		if(alVarId<0 || alVarId >= (int)mvParameters.size()) return false;
 		CGparameter& Param = mvParameters[alVarId];
-		
+
 		cgGLSetParameter1f(Param, afX);
 		return true;
 	}
@@ -289,7 +289,7 @@ namespace hpl{
 		cgGLSetParameter2f(Param, afX, afY);
 		return true;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	bool  cCGShader::SetVec3f(int alVarId, float afX,float afY,float afZ)
@@ -300,9 +300,9 @@ namespace hpl{
 		cgGLSetParameter3f(Param, afX, afY, afZ);
 		return true;
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	bool  cCGShader::SetVec4f(int alVarId, float afX,float afY,float afZ, float afW)
 	{
 		if(alVarId<0 || alVarId >= (int)mvParameters.size()) return false;
@@ -318,15 +318,15 @@ namespace hpl{
 	{
 		if(alVarId<0 || alVarId >= (int)mvParameters.size()) return false;
 		CGparameter& Param = mvParameters[alVarId];
-		
+
 		cgGLSetMatrixParameterfr(Param,&mMtx.m[0][0]);
 
 		return true;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
-	bool cCGShader::SetMatrixf(int alVarId, eGpuShaderMatrix mType, 
+	bool cCGShader::SetMatrixf(int alVarId, eGpuShaderMatrix mType,
 		eGpuShaderMatrixOp mOp)
 	{
 		if(alVarId<0 || alVarId >= (int)mvParameters.size()) return false;
@@ -369,7 +369,7 @@ namespace hpl{
 				case eTextureType_CubeMap:		textureType = CG_SAMPLERCUBE; break;
 				case eTextureType_Rect:			textureType = CG_SAMPLERRECT; break;
 			}
-			
+
 			cSDLTexture* pSDLTex = static_cast<cSDLTexture*>(apTexture);
 
 			cgGLSetTextureParameter(Param, pSDLTex->GetTextureHandle());
@@ -390,7 +390,7 @@ namespace hpl{
 		if(mvTexUnitParam[alUnit]==NULL || alUnit >= kMaxTextureUnits) return false;
 
 		cSDLTexture* pSDLTex = static_cast<cSDLTexture*>(apTexture);
-		
+
 		if(apTexture)
 		{
 			cgGLSetTextureParameter(mvTexUnitParam[alUnit], pSDLTex->GetTextureHandle());
@@ -404,15 +404,15 @@ namespace hpl{
 		return true;
 	}
 
-		
+
 	//-----------------------------------------------------------------------
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// PRIVATE METHODS
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	//-----------------------------------------------------------------------
 
 }

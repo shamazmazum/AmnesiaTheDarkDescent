@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -27,7 +27,7 @@
 #include "math/Math.h"
 
 namespace hpl {
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// PARTICLE RAY CALLBACK
 	//////////////////////////////////////////////////////////////////////////
@@ -112,7 +112,7 @@ namespace hpl {
 		mvPosition = avPos;
 		if(abSetPrevPos) mvPrevPosition = mvPosition;
 
-		mpContainer->SetSleeping(false);		
+		mpContainer->SetSleeping(false);
 	}
 
 	//-----------------------------------------------------------------------
@@ -135,7 +135,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	iVerletParticleContainer::iVerletParticleContainer(const tString &asName, iPhysicsWorld *apWorld)
 	{
 		msName = asName;
@@ -170,7 +170,7 @@ namespace hpl {
 	{
 
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void iVerletParticleContainer::SetDamping(float afX)
@@ -181,9 +181,9 @@ namespace hpl {
 		mfDampingMul = 1 - mfDamping;
 	}
 
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	void iVerletParticleContainer::SetParticleRadius(float afX)
 	{
 		if(mfParticleRadius == afX) return;
@@ -205,7 +205,7 @@ namespace hpl {
 
 		SetSpecificDataSleeping(abX);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void iVerletParticleContainer::PreUpdate(float afTimeStep)
@@ -229,16 +229,16 @@ namespace hpl {
 			//Update counter and see if time for check
 			mfSleepCheckCount+= afTimeStep;
 			if(mfSleepCheckCount < mfSleepCheckTime) return;
-			
+
 			//////////////////////////
 			//Iterate particles and see if all are sleeping
 			bool bAllSleeping=true;
 			for(tVerletParticleListIt it = mlstParticles.begin(); it != mlstParticles.end(); ++it)
 			{
 				cVerletParticle *pPart = *it;
-				
+
 				float fSqrSpeed = cMath::Vector3DistSqr(pPart->GetPosition(), pPart->GetPrevPosition());
-				if(fSqrSpeed > mfSleepCheckSqrLimit) 
+				if(fSqrSpeed > mfSleepCheckSqrLimit)
 				{
 					bAllSleeping= false;
 					break;
@@ -251,7 +251,7 @@ namespace hpl {
 			{
 				bAllSleeping = CheckSpecificDataSleeping();
 			}
-			
+
 			//////////////////////////
 			//Update counter and see if sleeping should start
             if(bAllSleeping)
@@ -268,7 +268,7 @@ namespace hpl {
 			}
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void iVerletParticleContainer::UpdateLengthConstraint(cVerletParticle *apP1, cVerletParticle *apP2, float afLength)
@@ -307,7 +307,7 @@ namespace hpl {
 			apPart->mvPrevPosition = apPart->mvPosition + mpRayParticleCallback->mvIntersectNormal * (fLength * mfSlideAmount);
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 }

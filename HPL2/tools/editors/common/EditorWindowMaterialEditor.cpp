@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -28,7 +28,7 @@
 
 //------------------------------------------------------------------------------------
 
-static tString gsTextureTypeStrings[] = 
+static tString gsTextureTypeStrings[] =
 {
 	"1D",
 	"2D",
@@ -52,7 +52,7 @@ static tString gsAnimModeStrings[] =
 	"Oscillate",
 };
 
-static tString gsBlendModeStrings[] = 
+static tString gsBlendModeStrings[] =
 {
 	"None",
 	"Add",
@@ -113,7 +113,7 @@ bool cEditorClassMaterial::Create(void *apData)
 	}
 
 	pRes->DestroyXmlDocument(pTempDoc);
-    
+
 	return bSuccessfullyCreated;
 }
 //-------------------------------------------------------------------
@@ -256,7 +256,7 @@ void cTextureWrapper::Reload()
 			msType = gsTextureTypeStrings[type];
 			mpTexture->SetFullPath(sFullPath);
 		}
-		
+
 		hplDelete(pBmp);
 	}
 }
@@ -277,7 +277,7 @@ void cTextureWrapper::Update()
 		Reload();
 		if(mbValid==false)
 			return;
-		
+
 		eTextureWrap wrap = pMatMgr->GetWrap(msWrap);
 		mpTexture->SetWrapR(wrap);
 		mpTexture->SetWrapS(wrap);
@@ -343,8 +343,8 @@ eTextureType cTextureWrapper::GetTextureTypeFromBitmap(cBitmap* apBmp)
 	{
 		if(vSize.y==1)
 			return eTextureType_1D;
-		
-		if(vSize.x%2!=0 || 
+
+		if(vSize.x%2!=0 ||
 			vSize.y%2!=0)
 			return eTextureType_Rect;
 
@@ -526,7 +526,7 @@ void cMaterialWrapper::Load(const tWString& asFilename)
 
 	if(pMat==NULL)
 		return;
-	
+
 	SetType(cString::To16Char(pMat->GetType()->GetName()));
 	SetDepthTest(pMat->GetDepthTest());
 	SetUseAlpha(pMat->GetUseAlphaDissolveFilter());
@@ -560,7 +560,7 @@ void cMaterialWrapper::Load(const tWString& asFilename)
 		cResourceVarsObject* pVars = pMat->GetVarsObject();
 		mpClass->LoadFromResourceVarsObject(pVars);
 	}
-	
+
 	pManager->Destroy(pMat);
 }
 
@@ -599,13 +599,13 @@ void cMaterialWrapper::Save(const tWString& asFilename)
 	if(mvUVAnimations.empty()==false)
 	{
 		cXmlElement* pXmlAnims = pDoc->CreateChildElement("UvAnimations");
-		tString sTypeStrings[] = 
+		tString sTypeStrings[] =
 		{
 			"Translate",
 			"Sin",
 			"Rotate"
 		};
-		tString sAxisStrings[] = 
+		tString sAxisStrings[] =
 		{
 			"X",
 			"Y",
@@ -678,7 +678,7 @@ void cMaterialWrapper::UpdateMaterialInMemory(const tString& asName)
 			switch(pEditingTex->GetType())
 			{
 			case eTextureType_1D:
-				pNewTex = pTexMgr->Create1D(sName, bMipMaps); 
+				pNewTex = pTexMgr->Create1D(sName, bMipMaps);
 				break;
 			case eTextureType_2D:
 				pNewTex = pTexMgr->Create2D(sName, bMipMaps);
@@ -901,7 +901,7 @@ cMaterial* cMaterialWrapper::GetPreviewMaterial()
 				pTex = pTexWrapper->GetTexture();
 			else
 				pTex = mvDefaultTextures[i];
-	
+
 			mpPreviewMat->SetTexture((eMaterialTexture)i, pTex);
 		}
 
@@ -972,13 +972,13 @@ cTextureUnitPanel::cTextureUnitPanel(cEditorWindowMaterialEditor* apWin, eMateri
 		mpInpFile->SetBrowserSubType(eEditorTextureResourceType_CubeMap);
 	mpInpFile->SetUserData(this);
 
-	vPos.y += mpInpFile->GetSize().y; 
+	vPos.y += mpInpFile->GetSize().y;
 
 	cWidgetFrame* pFThumb = pSet->CreateWidgetFrame(cVector3f(150,15,-0.01f), cVector2f(100), false, mpInputs);
 	pFThumb->SetBackgroundZ(0);
 	pFThumb->SetDrawBackground(true);
 	pFThumb->SetBackGroundColor(cColor(0,1));
-	
+
 	mpImgThumb = pSet->CreateWidgetImage("", cVector3f(0,0,0.01f), cVector2f(100), eGuiMaterial_Diffuse, false, pFThumb);
 
 	mpInpWrap = mpWindow->CreateInputEnum(vPos, _W("Wrap Mode"), "", tWStringList(), mpInputs);
@@ -1055,7 +1055,7 @@ void cTextureUnitPanel::Update()
 
 	mpInpMipMaps->SetValue(mpTextureWrapper->GetUseMipMaps(), false);
 	mpInpWrap->SetValue(mpWindow->GetEditor()->GetEngine()->GetResources()->GetMaterialManager()->GetWrap(mpTextureWrapper->GetWrap()), false);
-		
+
 
 	mpImgThumb->SetImage(pImg);
 	((iEditorInput*)mpInpAnimMode)->SetValue(cString::To16Char(mpTextureWrapper->GetAnimMode()), false);
@@ -1113,9 +1113,9 @@ bool cTextureUnitPanel::PanelSpecificInputCallback(iEditorInput* apInput)
 //------------------------------------------------------------------------------------
 
 
-cEditorWindowMaterialEditor::cEditorWindowMaterialEditor(iEditorBase* apEditor, iFrameBuffer* apFB, 
-														 const tWString& asMatFile, cEditorInputFile* apInput, 
-														 bool abStandAlone) : iEditorWindowPopUp(apEditor,"Material Editor Window", 
+cEditorWindowMaterialEditor::cEditorWindowMaterialEditor(iEditorBase* apEditor, iFrameBuffer* apFB,
+														 const tWString& asMatFile, cEditorInputFile* apInput,
+														 bool abStandAlone) : iEditorWindowPopUp(apEditor,"Material Editor Window",
 																								 abStandAlone==false, abStandAlone==false, abStandAlone==false,
 																								 cVector2f(900,725)),
 																			  iEditorViewport(apEditor, NULL, NULL, true)
@@ -1211,7 +1211,7 @@ void cEditorWindowMaterialEditor::SetUpUnits()
 		cEditorInputBool* pSwitch = mvUnitSwitches[i];
 		cTextureUnitPanel* pPanel = mvUnitPanels[i];
 		pSwitch->GetHandle()->SetEnabled(false);
-		pSwitch->GetHandle()->SetVisible(false);		
+		pSwitch->GetHandle()->SetVisible(false);
 		pPanel->GetHandle()->SetEnabled(false);
 		pPanel->GetHandle()->SetVisible(false);
 		pPanel->Update();
@@ -1219,7 +1219,7 @@ void cEditorWindowMaterialEditor::SetUpUnits()
 
 	if(mpMaterial==NULL)
 		return;
-		
+
 	iMaterialType* pType = mpMaterial->GetTypePointer();
 	if(pType==NULL)
 		return;
@@ -1229,7 +1229,7 @@ void cEditorWindowMaterialEditor::SetUpUnits()
 	{
 		eMaterialTexture index = pType->GetUsedTexture(i)->mType;
 		bool bIsEnabled = mpMaterial->GetTextureWrapper((eMaterialTexture)index)->IsEnabled();
-		
+
 		cEditorInputBool* pSwitch = mvUnitSwitches[index];
 		pSwitch->GetHandle()->SetEnabled(true);
 		pSwitch->GetHandle()->SetVisible(true);
@@ -1249,7 +1249,7 @@ void cEditorWindowMaterialEditor::SetUpPanels()
 	{
 		bool bIsTextureEnabled = mpMaterial->GetTextureWrapper((eMaterialTexture)i)->IsEnabled();
 		bool bIsShown = bIsTextureEnabled && mvUnitSwitches[i]->GetHandle()->IsVisible();
-	
+
 		cTextureUnitPanel* pPanel = mvUnitPanels[i];
 		pPanel->GetHandle()->SetEnabled(bIsShown);
 		pPanel->GetHandle()->SetVisible(bIsShown);
@@ -1272,7 +1272,7 @@ void cEditorWindowMaterialEditor::SetUpVars()
 
 	cEditorClassInstance* pInstance = mpMaterial->GetClass();
 	mpInputPanel = pInstance->CreateInputPanel(this, mpFMaterialVars, true);
-	
+
 	if(mpInputPanel)
 		mpInputPanel->Update();
 }
@@ -1608,7 +1608,7 @@ void cEditorWindowMaterialEditor::OnInitLayout()
 		vPos = cVector3f(10,10,0.1f);
 		// Material Type
 		mpInpMatType = CreateInputEnum(vPos, _W("Type:"), "", tWStringList(), pGroup);
-		
+
 		// Add type names
 		tStringVec vTypeNames = mpEditor->GetEngine()->GetGraphics()->GetMaterialTypeNames();
 		for(int i=0;i<(int)vTypeNames.size();++i)
@@ -1734,7 +1734,7 @@ void cEditorWindowMaterialEditor::OnInitLayout()
 void cEditorWindowMaterialEditor::PostInitLayout()
 {
 	mpEditor->GetEngine()->GetResources()->AddResourceDir(cString::GetFilePathW(msInitMatFile),false);
-	if(msInitMatFile==_W("") || LoadMaterial(msInitMatFile)==false) 
+	if(msInitMatFile==_W("") || LoadMaterial(msInitMatFile)==false)
 		Reset();
 }
 
@@ -1775,7 +1775,7 @@ void cEditorWindowMaterialEditor::OnUpdate(float afTimeStep)
 	SetUpUnits();
 	SetUpPanels();
 	SetUpVars();
-	
+
 	/////////////////////////////////////////////////////
 	// Update animation stuff
 	int lSelectedAnim = mpInpUVAnimation->GetValue();
@@ -1787,10 +1787,10 @@ void cEditorWindowMaterialEditor::OnUpdate(float afTimeStep)
 	}
 	if(lSelectedAnim==-1 || lSelectedAnim>=mpInpUVAnimation->GetNumValues())
 		lSelectedAnim = mpInpUVAnimation->GetNumValues()-1;
-	
+
 	mpInpUVAnimation->SetValue(lSelectedAnim,false);
 	UpdateUVAnimInputs();
-	
+
 	//////////////////////////////////////////////////////
 	// Update preview controls
 	mpInpBGColor->SetValue(mpMatWorld->GetSkyBoxColor(), false);

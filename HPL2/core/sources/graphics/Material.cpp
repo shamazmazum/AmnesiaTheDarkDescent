@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -44,7 +44,7 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	cMaterial::cMaterial(const tString& asName, const tWString& asFullPath, cGraphics *apGraphics, cResources *apResources, iMaterialType *apType) 
+	cMaterial::cMaterial(const tString& asName, const tWString& asFullPath, cGraphics *apGraphics, cResources *apResources, iMaterialType *apType)
 		: iResourceBase(asName, asFullPath, 0)
 	{
 		mpGraphics = apGraphics;
@@ -74,7 +74,7 @@ namespace hpl {
 		mbUseAlphaDissolveFilter = false;
 
 		mbAffectedByFog = true;
-		
+
 		for(int i=0; i<eMaterialRenderMode_LastEnum; ++i)
 		{
 			mbHasSpecificSettings[i] = false;
@@ -87,12 +87,12 @@ namespace hpl {
 
 		////////////////////////
 		// Set up variables
-		for(int i=0;i<eMaterialTexture_LastEnum; ++i) 
+		for(int i=0;i<eMaterialTexture_LastEnum; ++i)
 		{
 			mvTextures[i] = NULL;
 		}
 		for(int j=0; j<2; ++j)
-		for(int i=0;i<eMaterialRenderMode_LastEnum; ++i) 
+		for(int i=0;i<eMaterialRenderMode_LastEnum; ++i)
 		{
 			mvPrograms[j][i] = NULL;
 		}
@@ -101,7 +101,7 @@ namespace hpl {
 		{
 			mvTextureInUnit[i][j] = NULL;
 		}
-		
+
 
 		///////////////////////
 		//Set up depending in type
@@ -119,7 +119,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	cMaterial::~cMaterial()
 	{
 		if(mpVars) hplDelete(mpVars);
@@ -127,7 +127,7 @@ namespace hpl {
 		if(mbDestroyTypeSpecifics && mpType)
 		{
 			// Destroy all programs
-			for(int i=0;i<eMaterialRenderMode_LastEnum; ++i) 
+			for(int i=0;i<eMaterialRenderMode_LastEnum; ++i)
 			for(int j=0;j<2; ++j)
 			{
 				if(mvPrograms[j][i])
@@ -141,7 +141,7 @@ namespace hpl {
 		// Destroy all textures
 		if(mbAutoDestroyTextures)
 		{
-			for(int i=0;i<eMaterialTexture_LastEnum; ++i) 
+			for(int i=0;i<eMaterialTexture_LastEnum; ++i)
 			{
 				if(mvTextures[i]) mpResources->GetTextureManager()->Destroy(mvTextures[i]);
 			}
@@ -180,7 +180,7 @@ namespace hpl {
 
 		///////////////////
 		// Get the programs
-		for(int i=0;i<eMaterialRenderMode_LastEnum; ++i) 
+		for(int i=0;i<eMaterialRenderMode_LastEnum; ++i)
 		for(int j=0;j<2; ++j)
 		{
 			iGpuProgram *pPrevProg = mvPrograms[j][i];
@@ -192,24 +192,24 @@ namespace hpl {
 
 		///////////////////
 		// Compile texture lookup
-		for(int i=0;i<eMaterialRenderMode_LastEnum; ++i) 
+		for(int i=0;i<eMaterialRenderMode_LastEnum; ++i)
 			for(int j=0; j<kMaxTextureUnits; ++j)
 			{
 				mvTextureInUnit[i][j] = mpType->GetTextureForUnit(this, (eMaterialRenderMode)i, j);
 			}
-		
+
 		///////////////////
 		// Type specifics
 		mpType->CompileMaterialSpecifics(this);
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	void cMaterial::SetTexture(eMaterialTexture aType, iTexture *apTexture)
 	{
 		mvTextures[aType] = apTexture;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	iTexture *cMaterial::GetTexture(eMaterialTexture aType)
@@ -231,7 +231,7 @@ namespace hpl {
 
 	void cMaterial::LoadVariablesFromVarsObject(cResourceVarsObject* apVarsObject)
 	{
-		mpType->LoadVariables(this, apVarsObject);		
+		mpType->LoadVariables(this, apVarsObject);
 	}
 
 	//-----------------------------------------------------------------------
@@ -242,7 +242,7 @@ namespace hpl {
 
 		mBlendMode = aBlendMode;
 	}
-	
+
 	void cMaterial::SetAlphaMode(eMaterialAlphaMode aAlphaMode)
 	{
 		//if(mpType->IsTranslucent()) return;
@@ -304,7 +304,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	void cMaterial::UpdateAnimations(float afTimeStep)
 	{
 		m_mtxUV = cMatrixf::Identity;
@@ -327,7 +327,7 @@ namespace hpl {
 			else if(pAnim->mType == eMaterialUvAnimation_Sin)
 			{
 				cVector3f vDir = GetAxisVector(pAnim->mAxis);
-				
+
 				cMatrixf mtxAdd = cMath::MatrixTranslate(vDir * sin(mfAnimTime * pAnim->mfSpeed) * pAnim->mfAmp);
 				m_mtxUV = cMath::MatrixMul(m_mtxUV, mtxAdd);
 			}

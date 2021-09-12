@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -36,13 +36,13 @@ namespace hpl {
 
 	class cFrustum;
 	class iFontData;
-	
+
 	class cGui;
 	class cGuiSkin;
 	class iGuiMaterial;
 	class iGuiPopUp;
 	class iWidget;
-	
+
 	class cWidgetWindow;
 	class cWidgetFrame;
 	class cWidgetButton;
@@ -65,16 +65,16 @@ namespace hpl {
 
 	class cGuiPopUpMessageBox;
 	class cGuiPopUpFilePicker;
-	class cGuiPopUpColorPicker;	
+	class cGuiPopUpColorPicker;
 	class cGuiPopUpUIKeyboard;
 
 	//---------------------------------------------
-	
+
 	typedef std::list<iGuiPopUp*> tGuiPopUpList;
 	typedef tGuiPopUpList::iterator tGuiPopUpListIt;
-    
+
 	//---------------------------------------------
-	
+
 	class cGuiClipRegion;
 	class cGuiRenderObject
 	{
@@ -104,10 +104,10 @@ namespace hpl {
 	typedef tGuiRenderObjectSet::iterator tGuiRenderObjectSetIt;
 
 	//-----------------------------------------------
-		
+
 	typedef std::list<cGuiClipRegion*> tGuiClipRegionList;
 	typedef tGuiClipRegionList::iterator tGuiClipRegionListIt;
-	
+
 	class cGuiClipRegion
 	{
 	public:
@@ -119,7 +119,7 @@ namespace hpl {
 
 		//tGuiRenderObjectSet m_setObjects;
 		cRect2f mRect;
-		
+
 		tGuiClipRegionList mlstChildren;
 	};
 
@@ -156,7 +156,7 @@ namespace hpl {
 	typedef tShortcutList::iterator tShortcutListIt;
 
 	//-----------------------------------------------
-	
+
 	class cGuiSet
 	{
 	friend class iGuiPopUp;
@@ -194,19 +194,19 @@ namespace hpl {
 		void SetCurrentClipRegion(cGuiClipRegion *apRegion){ mpCurrentClipRegion = apRegion;}
 		cGuiClipRegion* GetCurrentClipRegion(){ return mpCurrentClipRegion;}
 		cGuiClipRegion* GetBaseClipRegion(){ return &mBaseClipRegion;}
-		
-		void DrawGfx(	cGuiGfxElement* apGfx, 
-						const cVector3f &avPos, 
+
+		void DrawGfx(	cGuiGfxElement* apGfx,
+						const cVector3f &avPos,
 						const cVector2f &avSize=-1,
 						const cColor& aColor=cColor(1,1),
 						eGuiMaterial aMaterial = eGuiMaterial_LastEnum,
-						float afRotationAngle=0, 
+						float afRotationAngle=0,
 						bool abUseCustomPivot=false, const cVector3f& avCustomPivot=0);
-		
-		void DrawFont (	const tWString &asText, 
+
+		void DrawFont (	const tWString &asText,
 						iFontData *apFont, const cVector3f &avPos,
 						const cVector2f &avSize, const cColor& aColor,
-						eFontAlign aAlign = eFontAlign_Left, 
+						eFontAlign aAlign = eFontAlign_Left,
 						eGuiMaterial aMaterial = eGuiMaterial_FontNormal);
 
 		void DrawFont (	iFontData *apFont, const cVector3f &avPos,
@@ -217,7 +217,7 @@ namespace hpl {
 		void DrawFont (	iFontData *apFont, const cVector3f &avPos,
 						const cVector2f &avSize, const cColor& aColor,
 						const wchar_t* fmt,...);
-		
+
 		////////////////////////////////////
 		// Widget Creation
 		cWidgetWindow* CreateWidgetWindow(	tWidgetWindowButtonFlag alFlags=eWidgetWindowButtonFlag_None,
@@ -314,7 +314,7 @@ namespace hpl {
 												const tWString &asText=_W(""),
 												iWidget *apParent=NULL,
 												const tString& asName = "");
-		
+
 		cWidgetTab* CreateWidgetTab(const cVector3f &avLocalPos=0,
 												const cVector2f &avSize=0,
 												const tWString &asText=_W(""),
@@ -352,12 +352,12 @@ namespace hpl {
 													const tWString& asButton1, const tWString& asButton2,
 													void *apCallbackObject, tGuiCallbackFunc apCallback);
 
-		cGuiPopUpFilePicker* CreatePopUpSaveFilePicker( tWString &asFileName, const tWString &asCategory, 
+		cGuiPopUpFilePicker* CreatePopUpSaveFilePicker( tWString &asFileName, const tWString &asCategory,
 															 const tWString &asFilter, const tWString &asStartPath, bool abShowHidden,
 															void *apCallbackObject, tGuiCallbackFunc apCallback, const tWString& asStartFilename=_W(""));
 
-		cGuiPopUpFilePicker* CreatePopUpLoadFilePicker( tWStringVec &avFileList, bool abAddAllFilesFilter, 
-															 const tWString &asStartPath, bool abShowHidden, 
+		cGuiPopUpFilePicker* CreatePopUpLoadFilePicker( tWStringVec &avFileList, bool abAddAllFilesFilter,
+															 const tWString &asStartPath, bool abShowHidden,
 															 void *apCallbackObject, tGuiCallbackFunc apCallback);
 
 		cGuiPopUpColorPicker* CreatePopUpColorPicker(cColor* apDestColor, const cVector3f& avPos, void *apCallbackObject, tGuiCallbackFunc apCallback);
@@ -417,7 +417,7 @@ namespace hpl {
 
 		void PushAttentionWidget();
 		void PopAttentionWidget(bool abClearFocus=true);
-		
+
 		void SetIs3D(bool abX);
 		bool Is3D(){ return mbIs3D;}
 
@@ -473,7 +473,7 @@ namespace hpl {
 
 		void SetDrawFocus(bool abX)												{ mbDrawFocus = abX; }
 		void SetFocusDrawCallback(void* apObject, tGuiCallbackFunc apCallback)	{ mpFocusDrawObject = apObject; mpFocusDrawCallback = apCallback; }
-		
+
 		bool GetDrawFocus() { return mbDrawFocus; }
 
 	private:
@@ -481,7 +481,7 @@ namespace hpl {
 									const cVector2f& avSize, const cVector3f& avPosition,
 									const cColor& aColor, eGuiMaterial aMaterial,
 									eFontAlign aAlign);
-								
+
 
 		void RenderClipRegion();
 
@@ -561,12 +561,12 @@ namespace hpl {
 		cVector3f mv3DSize;
 		cMatrixf m_mtx3DTransform;
 		int mlDrawPrio;
-		
+
 		bool mbActive;
 		bool mbDrawMouse;
 		float mfMouseZ;
 		cGuiGfxElement *mpGfxCurrentPointer;
-				
+
 		tBoolVec mvMouseDown;
 		cVector2f mvMousePos;
 		bool mbMouseMovementEnabled;

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -47,7 +47,7 @@ public:
 	//Ladder
 	static cLuxArea_Ladder *mpLadder;
 	static cVector3f mvLadderStartPos;
-	
+
 	///////////////////////
 	//Interaction
 	static tString msHandObject;
@@ -59,7 +59,7 @@ public:
 	///////////////////////
 	//General
 	static cVector3f mvInteractPos;
-	
+
 	static iPhysicsBody *mpInteractBody;
 	static iLuxProp *mpInteractProp;
 };
@@ -78,7 +78,7 @@ public:
 
 class iLuxPlayerState
 {
-public:	
+public:
 	iLuxPlayerState(cLuxPlayer *apPlayer, eLuxPlayerState aType);
 	virtual ~iLuxPlayerState();
 
@@ -93,7 +93,7 @@ public:
 	virtual void OnDraw(cGuiSet *apGuiSet ,float afFrameTime){}
 
 	virtual bool OnDoAction(eLuxPlayerAction aAction,bool abPressed)=0;
-	
+
 	virtual void OnScroll(float afAmount){}
 
 	virtual bool OnMove(eCharDir aDir, float afMul){return true;}
@@ -117,7 +117,7 @@ public:
 
 	virtual bool AllowPlayerMenus(){ return true;}
 	virtual bool AllowLantern(){ return true;}
-	
+
 	virtual void RenderSolid(cRendererCallbackFunctions* apFunctions){}
 	virtual void RenderTrans(cRendererCallbackFunctions* apFunctions){}
 
@@ -127,13 +127,13 @@ public:
 	//Save data stuff
 	virtual bool IsSaved()=0;
 	virtual iLuxPlayerState_SaveData* CreateSaveData()=0;
-	
+
 	virtual void SaveToSaveData(iLuxPlayerState_SaveData* apSaveData);
 	virtual void LoadFromSaveDataBeforeEnter(cLuxMap *apMap,iLuxPlayerState_SaveData* apSaveData);
 	virtual void LoadFromSaveDataAfterEnter(cLuxMap *apMap, iLuxPlayerState_SaveData* apSaveData);
 
 protected:
-	eLuxPlayerState mType; 
+	eLuxPlayerState mType;
 	cLuxPlayer *mpPlayer;
 
 	cGuiGfxElement* mpDefaultCrosshairGfx;

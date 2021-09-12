@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -50,7 +50,7 @@ namespace hpl {
 
 	//-------------------------------------------------------------------------------
 
-	cGuiPopUpUIKeyboard::cGuiPopUpUIKeyboard(cWidgetTextBox* apTarget, 
+	cGuiPopUpUIKeyboard::cGuiPopUpUIKeyboard(cWidgetTextBox* apTarget,
 												void *apCallbackObject, tGuiCallbackFunc apCallback) : iGuiPopUp(apTarget->GetSet(), true, 0)
 	{
 		//mvPos = avPos;
@@ -65,7 +65,7 @@ namespace hpl {
 		mbShift = false;
 
 		SetNextFocusWidget(static_cast<iWidget*>(apTarget->GetUserData()));
-		
+
 		Init();
 	}
 
@@ -123,7 +123,7 @@ namespace hpl {
 		cUIKey* pKey = static_cast<cUIKey*>(apWidget->GetUserData());
 
 		cKeyPress key(pKey->mKey, pKey->mvUnicode[mbShift], 0);
-		
+
 		return mpTargetTextBox->ProcessMessage(eGuiMessage_KeyPress, cGuiMessageData(key), true, true);
 	}
 	kGuiCallbackDeclaredFuncEnd(cGuiPopUpUIKeyboard, Key_OnPress);
@@ -142,7 +142,7 @@ namespace hpl {
 	bool cGuiPopUpUIKeyboard::Cancel_OnPress(iWidget* apWidget, const cGuiMessageData &aData)
 	{
 		mpTargetTextBox->SetText(msBackUpText);
-		
+
 		SelfDestruct();
 
 		return true;
@@ -231,7 +231,7 @@ namespace hpl {
 
 		float fKeySize = 32;
 		cWidgetButton* pKey = NULL;
-		
+
 		// Adds numeric keys
 		for(int i=eKey_0; i<=eKey_9; ++i)
 		{
@@ -263,12 +263,12 @@ namespace hpl {
 		////////////////////////////////////////
 		// Now arrange the keys in a nice grid
 		std::vector<tWidgetVec> vKeyMatrix;
-		
+
 		vKeyMatrix.push_back(tWidgetVec());
 		tWidgetVec* pWidgetRow = &vKeyMatrix.back();
 
 		cVector3f vPos = cVector3f(0,0,2);
-		
+
 		tWidgetListIt it = mlstKeyWidgets.begin();
 		for(;it!=mlstKeyWidgets.end(); ++it)
 		{
@@ -278,11 +278,11 @@ namespace hpl {
 			{
 				vKeyMatrix.push_back(tWidgetVec());
 				pWidgetRow = &vKeyMatrix.back();
-				
+
 				vPos.x = 0;
 				vPos.y += pKey->GetSize().y+1;
 			}
-			
+
 			pKey->SetPosition(vPos);
 			pWidgetRow->push_back(pKey);
 
@@ -297,14 +297,14 @@ namespace hpl {
 		cVector3f vGlobalPos = mpTargetTextBox->GetGlobalPosition();
 
 		// This 8 is a magic number since I cannot access the activesize for the window border without hacking a bit.
-		vGlobalPos.y += mpTargetTextBox->GetSize().y+8; 
+		vGlobalPos.y += mpTargetTextBox->GetSize().y+8;
 		vGlobalPos.x += mpTargetTextBox->GetSize().x*0.5f;
 		vGlobalPos.x -= vWindowSize.x*0.5f;
 		mpWindow->SetGlobalPosition(vGlobalPos);
 
 		mpSet->PositionWidgetInsideBounds(mpWindow);
 
-		
+
 
 		/////////////////////////////////////////////////////////////
 		// Set up focus navigation
@@ -355,7 +355,7 @@ namespace hpl {
 				if(lVNext<(int)vKeyMatrix.size())
 				{
 					const tWidgetVec& vNextRow = vKeyMatrix[lVNext];
-					if(j<(int)vNextRow.size()) 
+					if(j<(int)vNextRow.size())
 						pLower = vNextRow[j];
 					else
 						pLower = vNextRow.back();
@@ -363,7 +363,7 @@ namespace hpl {
 				else
 				{
 					const tWidgetVec& vNextRow = vKeyMatrix[0];
-					if(j<(int)vNextRow.size()) 
+					if(j<(int)vNextRow.size())
 						pLower = vNextRow[j];
 					else
 						pLower = vNextRow.back();
@@ -380,7 +380,7 @@ namespace hpl {
 	}
 
 	//-------------------------------------------------------------------------------
-	
+
 	void cGuiPopUpUIKeyboard::ClosePopUp()
 	{
 		SelfDestruct();

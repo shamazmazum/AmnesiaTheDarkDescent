@@ -91,7 +91,7 @@ void cOAL_Stream::Update()
 		mfProcessedBuffersTime += pBuffer->GetBufferTime();
 		if(mfProcessedBuffersTime > mfTotalTime)
 			mfProcessedBuffersTime-=mfTotalTime;
-		
+
 		if(Stream(pBuffer))
 		{
 			mpBoundSource->Queue(pBuffer);
@@ -107,7 +107,7 @@ void cOAL_Stream::Update()
 		}
 		lProcessedBuffers--;
 	}
-	
+
 	//hpl::Log("Stream update took %d ms\n", hpl::cPlatform::GetApplicationTime()-(lTimeStart+lTimeToRebuffer));
 
 }

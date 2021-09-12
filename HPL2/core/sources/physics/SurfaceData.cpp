@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -60,10 +60,10 @@ namespace hpl {
 		mfKineticFriction = 0.3f;
 
 		mlPriority = 0;
-		
+
 		mfMinScrapeSpeed = 0.6f;
 		mfMinScrapeFreq = 0.7f;
-		mfMinScrapeFreqSpeed = 1; 
+		mfMinScrapeFreqSpeed = 1;
 		mfMaxScrapeFreq = 2;
 		mfMaxScrapeFreqSpeed = 3;
 		mfMiddleScrapeSpeed = 2;
@@ -85,7 +85,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// PUBLIC METHODS
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
 
 	void cSurfaceData::OnImpact(float afSpeed,const cVector3f &avPos,int alContacts, iPhysicsBody *apBody)
@@ -117,7 +117,7 @@ namespace hpl {
 		if(pData->GetSoundName()!="")
 		{
 			mpPhysics->AddImpact();
-			
+
 			cSoundEntity *pEntity = pWorld->CreateSoundEntity("Impact",pData->GetSoundName(),true);
 			if(pEntity)
 			{
@@ -127,16 +127,16 @@ namespace hpl {
 			}
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cSurfaceData::OnSlide(float afSpeed,const cVector3f &avPos,int alContacts, iPhysicsBody *apBody,
 								iPhysicsBody *apSlideAgainstBody)
 	{
 		if(alContacts < mlMinScrapeContacts) return;
-		
+
 		//Make sure that only one body can update the scrape.
-		if(	apBody->GetScrapeBody() && apSlideAgainstBody != apBody->GetScrapeBody()) 
+		if(	apBody->GetScrapeBody() && apSlideAgainstBody != apBody->GetScrapeBody())
 		{
 			return;
 		}
@@ -202,7 +202,7 @@ namespace hpl {
 					else
 					{
 						//Calculate how close the speed is to max.
-						float fT = (fAbsSpeed-mfMiddleScrapeSpeed) / 
+						float fT = (fAbsSpeed-mfMiddleScrapeSpeed) /
 									(mfMaxScrapeFreqSpeed-mfMiddleScrapeSpeed);
 
 						fFreq = (1 - fT) + fT * mfMaxScrapeFreq;
@@ -218,7 +218,7 @@ namespace hpl {
 					else
 					{
 						//Calculate how close the speed is to max.
-						float fT = (mfMiddleScrapeSpeed - fAbsSpeed) / 
+						float fT = (mfMiddleScrapeSpeed - fAbsSpeed) /
 							(mfMiddleScrapeSpeed - mfMinScrapeFreqSpeed);
 
 						fFreq = (1 - fT) + fT * mfMinScrapeFreq;
@@ -270,7 +270,7 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	void cSurfaceData::CreateImpactEffect(	float afSpeed,const cVector3f &avPos,int alContacts, 
+	void cSurfaceData::CreateImpactEffect(	float afSpeed,const cVector3f &avPos,int alContacts,
 											cSurfaceData *apSecondSurface, iPhysicsWorld *apPhysicsWorld)
 	{
 		if(afSpeed == 0) return;
@@ -285,7 +285,7 @@ namespace hpl {
 
 		cSoundHandler *pSoundHandler = pWorld->GetSound()->GetSoundHandler();
 		if(pSoundHandler->GetSilent()) return;
-		
+
 		/////////////////////////////
         //Get first surface
 		for(size_t i=0; i< mvImpactData.size(); i++)
@@ -310,7 +310,7 @@ namespace hpl {
 				}
 			}
 		}
-		
+
 		tString sPS = "";
 
 		if(pDataA && !pDataB)
@@ -358,19 +358,19 @@ namespace hpl {
 												apBody->GetAngularVelocity());
 		float fRollingSpeed = 0;
 		//X
-		if(mRollAxisFlags & eRollAxisFlag_X) 
+		if(mRollAxisFlags & eRollAxisFlag_X)
 			fRollingSpeed = std::abs(vAngularSpeed.x);
 		//Y
-		if(mRollAxisFlags & eRollAxisFlag_Y) 
+		if(mRollAxisFlags & eRollAxisFlag_Y)
 			if(fRollingSpeed < std::abs(vAngularSpeed.y)) fRollingSpeed = std::abs(vAngularSpeed.y);
 		//Z
-		if(mRollAxisFlags & eRollAxisFlag_Z) 
+		if(mRollAxisFlags & eRollAxisFlag_Z)
 			if(fRollingSpeed < std::abs(vAngularSpeed.z)) fRollingSpeed = std::abs(vAngularSpeed.z);
 
 		//Log("Rollspeed: %f\n",fRollingSpeed);
-		
+
 		if(fRollingSpeed==0 && apBody->GetRollSoundEntity()==NULL) return;
-	
+
 		/////////////////////////////////
 		//Update roll sound
 		cWorld *pWorld = apBody->GetWorld()->GetWorld();
@@ -378,7 +378,7 @@ namespace hpl {
 
 		cSoundHandler *pSoundHandler = pWorld->GetSound()->GetSoundHandler();
 		if(pSoundHandler->GetSilent()) return;
-		
+
 		//Check if sound exist in world.
 		if(pWorld->SoundEntityExists(apBody->GetRollSoundEntity(), apBody->GetRollSoundEntityID())==false)
 		{
@@ -394,7 +394,7 @@ namespace hpl {
 			{
 				apBody->GetRollSoundEntity()->FadeOut(4.3f);
 				apBody->SetRollSoundEntity(NULL);
-				//Log("Stopped Roll '%s' on body '%s'\n",msRollSoundName.c_str(), 
+				//Log("Stopped Roll '%s' on body '%s'\n",msRollSoundName.c_str(),
 				//														apBody->GetName().c_str());
 			}
 			else
@@ -403,7 +403,7 @@ namespace hpl {
 				float fAbsSpeed = fRollingSpeed;
 				float fFreq = 1;
 				float fVolume =1;
-				
+
 				//Higher than middle
 				if(fAbsSpeed >= mfMiddleRollSpeed)
 				{
@@ -415,7 +415,7 @@ namespace hpl {
 					else
 					{
 						//Calculate how close the speed is to max.
-						float fT = (fAbsSpeed-mfMiddleRollSpeed) / 
+						float fT = (fAbsSpeed-mfMiddleRollSpeed) /
 							(mfMaxRollFreqSpeed-mfMiddleRollSpeed);
 
 						fFreq = (1 - fT) + fT * mfMaxRollFreq;
@@ -433,7 +433,7 @@ namespace hpl {
 					else
 					{
 						//Calculate how close the speed is to max.
-						float fT = (mfMiddleRollSpeed - fAbsSpeed) / 
+						float fT = (mfMiddleRollSpeed - fAbsSpeed) /
 							(mfMiddleRollSpeed - mfMinRollFreqSpeed);
 
 						fFreq = (1 - fT) + fT * mfMinRollFreq;
@@ -448,7 +448,7 @@ namespace hpl {
 				{
 					pEntry->SetSpeedMul(fFreq);
 					pEntry->FadeVolumeMulTo(cMath::Min(fVolume * pSound->GetVolume(),1.0f), 4.0f);
-					
+
 					apBody->GetRollSoundEntity()->SetPosition(apBody->GetWorldPosition());
 
 					//Log("Updated Roll on body '%s' w speed %f to f: %f v: %f\n",apBody->GetName().c_str(),
@@ -472,13 +472,13 @@ namespace hpl {
 					pEntity->SetIsSaved(false);
 
 					apBody->SetRollSoundEntity(pEntity);
-					
-					//Log("Starting Roll '%s' on body '%s'\n",msRollSoundName.c_str(), 
+
+					//Log("Starting Roll '%s' on body '%s'\n",msRollSoundName.c_str(),
 					//											apBody->GetName().c_str());
 				}
 			}
 		}
-		
+
 	}
 
 	//-----------------------------------------------------------------------
@@ -561,10 +561,10 @@ namespace hpl {
 	{
 		if(msRollSoundName!="")mpResources->GetSoundEntityManager()->Preload(msRollSoundName);
 		if(msScrapeSoundName!="")mpResources->GetSoundEntityManager()->Preload(msScrapeSoundName);
-		
+
 		for(size_t i=0; i< mvImpactData.size(); ++i)
 		{
-			if(mvImpactData[i]->msSoundName!="") 
+			if(mvImpactData[i]->msSoundName!="")
 			{
 				mpResources->GetSoundEntityManager()->Preload(mvImpactData[i]->msSoundName);
 			}
@@ -575,13 +575,13 @@ namespace hpl {
 		}
 		for(size_t i=0; i< mvHitData.size(); ++i)
 		{
-			if(mvHitData[i]->msSoundName!="") 
+			if(mvHitData[i]->msSoundName!="")
 				mpResources->GetSoundEntityManager()->Preload(mvHitData[i]->msSoundName);
 			if(mvHitData[i]->msPSName!="")
 				mpResources->GetParticleManager()->Preload(mvHitData[i]->msPSName);
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	iPhysicsMaterial* cSurfaceData::ToMaterial(iPhysicsWorld *apWorld)
@@ -589,12 +589,12 @@ namespace hpl {
 		iPhysicsMaterial *pMat=NULL;
 
 		pMat = apWorld->GetMaterialFromName(msName);
-		
+
 		if(pMat==NULL)
 		{
 			pMat = apWorld->CreateMaterial(msName);
 		}
-		
+
 		pMat->SetElasticity(mfElasticity);
 		pMat->SetKineticFriction(mfKineticFriction);
 		pMat->SetStaticFriction(mfStaticFriction);
@@ -630,7 +630,7 @@ namespace hpl {
 	}
 
 	cSurfaceImpactData* cSurfaceData::GetImpactDataFromSpeed(float afSpeed)
-	{	
+	{
 		for(size_t i=0; i< mvImpactData.size(); ++i)
 		{
 			if(afSpeed >= mvImpactData[i]->GetMinSpeed())
@@ -664,7 +664,7 @@ namespace hpl {
 	}
 
 	cSurfaceImpactData* cSurfaceData::GetHitDataFromSpeed(float afSpeed)
-	{	
+	{
 		for(size_t i=0; i< mvHitData.size(); ++i)
 		{
 			if(afSpeed >= mvHitData[i]->GetMinSpeed())

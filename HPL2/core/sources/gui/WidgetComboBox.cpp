@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -84,10 +84,10 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	void cWidgetComboBox::SetSelectedItem(int alX, bool abMoveList, bool abGenCallback)
 	{
-		if(alX >= GetItemNum() || 
+		if(alX >= GetItemNum() ||
 			mlSelectedItem == alX) return;
 
 		mlSelectedItem = alX;
@@ -108,7 +108,7 @@ namespace hpl {
 			}
 			mpSlider->SetValue(mlSelectedItem);
 		}
-		
+
 		if(mlSelectedItem >=0 && mlSelectedItem < GetItemNum())
 			SetText(mvItems[mlSelectedItem]->GetText());
 		else
@@ -152,7 +152,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// PROTECTED METHODS
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
 
 	void cWidgetComboBox::UpdateProperties()
@@ -166,10 +166,10 @@ namespace hpl {
 
 		if(mlSelectedItem>=(int)mvItems.size())
 			SetSelectedItem((int)mvItems.size()-1);
-		
+
 		OnChangeSize();
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cWidgetComboBox::OpenMenu()
@@ -177,7 +177,7 @@ namespace hpl {
 		if(mvItems.empty()) return;
 
 		if(mbMenuOpen) return;
-		
+
 		mpSet->PushAttentionWidget();
 		mpSet->PushFocusedWidget();
 		mpSet->PushDefaultFocusNavWidget();
@@ -187,7 +187,7 @@ namespace hpl {
 
 		mlMouseOverSelection = mlSelectedItem;
 
-		mvMenuPos = cVector3f(0, 
+		mvMenuPos = cVector3f(0,
 							  mvSize.y+mvGfxBorders[1]->GetActiveSize().y,
 							  mpSet->GetPopUpZ()+1);
 
@@ -196,7 +196,7 @@ namespace hpl {
 			float fDiff = GetGlobalPosition().y+mvMenuPos.y+mfMenuHeight-mpSet->GetVirtualSize().y;
 			mvMenuPos.y-=fDiff;
 		}
-		
+
 		if((int)mvItems.size() > mlMaxItems)
 		{
 			mpSlider->SetEnabled(true);
@@ -237,7 +237,7 @@ namespace hpl {
 
 		mbClipsGraphics = false;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	bool cWidgetComboBox::ButtonPress(iWidget* apWidget, const cGuiMessageData& aData)
@@ -294,7 +294,7 @@ namespace hpl {
 		mpText = mpSet->CreateWidgetTextBox(0,mvSize,_W(""),this);
 		mpText->SetText(msText);
 		mpText->SetCanEdit(false);
-		
+
 		mpButton = mpSet->CreateWidgetButton(0,0,_W(""),this);
 		mpButton->SetImage(mpSkin->GetGfx(eGuiSkinGfx_ComboBoxButtonIcon), false);
 		mpButton->AddCallback(eGuiMessage_MouseDown, this, kGuiCallback(ButtonPress));
@@ -311,7 +311,7 @@ namespace hpl {
 
 
 		AddCallback(eGuiMessage_OnDraw,this, kGuiCallback(DrawText));
-	
+
 		OnChangeSize();
 	}
 
@@ -322,10 +322,10 @@ namespace hpl {
 		if(mpText && mpButton && mpSlider)
 		{
 			mpText->SetSize(mvSize);
-			mvSize = mpText->GetSize();	
+			mvSize = mpText->GetSize();
 
 			cVector2f vBackSize = mpText->GetBackgroundSize();
-			
+
 			mpButton->SetSize(cVector2f(mfButtonWidth,vBackSize.y));
 			mpButton->SetPosition(cVector3f( mvSize.x - (mvSize.x - vBackSize.x)/2 - mfButtonWidth,
 											(mvSize.y - vBackSize.y)/2, 0.3f));
@@ -379,7 +379,7 @@ namespace hpl {
 
 			////////////////////////////////
 			// Draw borders
-			DrawBordersAndCorners(	NULL, mvGfxBorders, mvGfxCorners, 
+			DrawBordersAndCorners(	NULL, mvGfxBorders, mvGfxCorners,
 									GetGlobalPosition() + mvMenuPos + cVector3f(0,0,0.2f),
 									cVector2f(mvSize.x, mfMenuHeight));
 
@@ -402,9 +402,9 @@ namespace hpl {
 
 		///////////////////////////////
 		// Draw text entries
-		cVector3f vPos = GetGlobalPosition() + 
+		cVector3f vPos = GetGlobalPosition() +
 			mvMenuPos + cVector3f(3,2,0.2f);
-		
+
 		for(int i=mlFirstItem; i<(int)mvItems.size(); ++i)
 		{
 			if(i-mlFirstItem >= mlMaxItems) break;
@@ -428,9 +428,9 @@ namespace hpl {
 		return true;
 	}
 	kGuiCallbackDeclaredFuncEnd(cWidgetComboBox,DrawText)
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	bool cWidgetComboBox::OnMouseMove(const cGuiMessageData& aData)
 	{
 		if(mbMenuOpen==false) return false;
@@ -473,13 +473,13 @@ namespace hpl {
 		else
 		{
 			cVector3f vLocal = WorldToLocalPosition(aData.mvPos);
-	        
+	
 			if(vLocal.y < mvMenuPos.y || vLocal.y > mvMenuPos.y + mfMenuHeight)
 			{
 				CloseMenu();
 			}
 		}
-	
+
 		return true;
 	}
 
@@ -508,9 +508,9 @@ namespace hpl {
 	{
 		return false;
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	bool cWidgetComboBox::OnMouseLeave(const cGuiMessageData& aData)
 	{
 		return false;
@@ -530,12 +530,12 @@ namespace hpl {
 			{
 				if(mlMouseOverSelection-1 >= 0)	mlMouseOverSelection--;
 			}
-		
+
 			int lVal = mpSlider->GetValue() / mpSlider->GetButtonValueAdd();
 
 			if(mlMouseOverSelection < lVal)
 				mpSlider->SetValue(int((mlMouseOverSelection) * mpSlider->GetButtonValueAdd()));
-			
+
 			if(mlMouseOverSelection > lVal + 11)
 				mpSlider->SetValue(int((mlMouseOverSelection - 11) * mpSlider->GetButtonValueAdd()));
 			return true;
@@ -554,7 +554,7 @@ namespace hpl {
 				{
 					mbOpenByUIButton = false;
 					CloseMenu();
-					
+
 					return true;
 				}
 				else
@@ -587,7 +587,7 @@ namespace hpl {
 					mbOpenByUIButton = false;
 				}
 			}
-		
+
 			return aData.mlVal==eUIButton_Primary;
 		}
 
@@ -605,7 +605,7 @@ namespace hpl {
 	//-----------------------------------------------------------------------
 
 	bool cWidgetComboBox::OnLostFocus(const cGuiMessageData& aData)
-	{	
+	{
 		if(mbMenuOpen && mbOpenByUIButton==false)
 		{
 			cVector3f vLocal = WorldToLocalPosition(aData.mvPos);
@@ -613,7 +613,7 @@ namespace hpl {
 				|| vLocal.y < mvMenuPos.y || vLocal.y > mvMenuPos.y + mfMenuHeight)
 				CloseMenu();
 		}
-	
+
 		return false;
 	}
 
@@ -628,15 +628,15 @@ namespace hpl {
 
 		cVector3f vMousePos = WorldToLocalPosition(cVector3f(avPoint));
 		bool bInside = false;
-		
-		if(	vMousePos.x < 0 || vMousePos.x > mvSize.x || 
+
+		if(	vMousePos.x < 0 || vMousePos.x > mvSize.x ||
 			vMousePos.y < 0 || vMousePos.y > mvSize.y)
 		{
 			bInside = false;
 		}
 		else
 		{
-			bInside = true;	
+			bInside = true;
 		}
 
 		if(bInside==false)

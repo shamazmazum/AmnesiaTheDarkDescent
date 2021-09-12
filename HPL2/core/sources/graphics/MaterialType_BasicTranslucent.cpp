@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -56,8 +56,8 @@ namespace hpl {
 	#define kVar_avFrenselBiasPow					7
 	#define kVar_avRimLightMulPow					8
 	#define kVar_afLightLevel						9
-	
-	
+
+
 	//------------------------------
 	//Diffuse Features and data
 	//------------------------------
@@ -69,14 +69,14 @@ namespace hpl {
 	#define eFeature_Diffuse_DiffuseMap				eFlagBit_5
 	#define eFeature_Diffuse_CubeMapAlpha			eFlagBit_6
 	#define eFeature_Diffuse_UseScreenNormal		eFlagBit_7
-	
+
 	#define kDiffuseFeatureNum 8
 
 	static cProgramComboFeature vDiffuseFeatureVec[] =
 	{
 		cProgramComboFeature("UseFog", kPC_FragmentBit | kPC_VertexBit),
-		cProgramComboFeature("UseUvAnimation", kPC_VertexBit),	
-		cProgramComboFeature("UseRefraction", kPC_FragmentBit | kPC_VertexBit),	
+		cProgramComboFeature("UseUvAnimation", kPC_VertexBit),
+		cProgramComboFeature("UseRefraction", kPC_FragmentBit | kPC_VertexBit),
 		cProgramComboFeature("UseNormalMapping", kPC_FragmentBit | kPC_VertexBit),
 		cProgramComboFeature("UseEnvMap", kPC_FragmentBit | kPC_VertexBit),
 		cProgramComboFeature("UseDiffuseMap", kPC_FragmentBit),
@@ -87,9 +87,9 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// TRANSLUCENT
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//--------------------------------------------------------------------------
-	
+
 	cMaterialType_Translucent::cMaterialType_Translucent(cGraphics *apGraphics, cResources *apResources) : iMaterialType(apGraphics, apResources)
 	{
 		mbIsTranslucent = true;
@@ -109,8 +109,8 @@ namespace hpl {
 		AddVarFloat("RimLightMul", 0.0f, "The amount of rim light based on the reflection. This gives an edge to the object. Values: 0 - inf (although 1.0f should be used for max)");
 		AddVarFloat("RimLightPow", 8.0f, "The sharpness of the rim lighting.");
 		AddVarBool("AffectedByLightLevel", false, "The the material alpha is affected by the light level.");
-		
-		for(int i=0; i<5; ++i)	
+
+		for(int i=0; i<5; ++i)
 			mpBlendProgramManager[i] = hplNew( cProgramComboManager, ("Blend"+cString::ToString(i),mpGraphics, mpResources,eMaterialRenderMode_LastEnum) );
 
 		mbHasTypeSpecifics[eMaterialRenderMode_Diffuse] = true;
@@ -121,7 +121,7 @@ namespace hpl {
 
 	cMaterialType_Translucent::~cMaterialType_Translucent()
 	{
-		for(int i=0; i<5; ++i)	
+		for(int i=0; i<5; ++i)
 			hplDelete(mpBlendProgramManager[i]);
 	}
 
@@ -152,14 +152,14 @@ namespace hpl {
 			defaultVars.Add("UseUv");
 			defaultVars.Add("UseNormals");
 			defaultVars.Add("UseColor");
-			
+
 			if(i==0) defaultVars.Add("BlendMode_Add");
 			if(i==1) defaultVars.Add("BlendMode_Mul");
 			if(i==2) defaultVars.Add("BlendMode_MulX2");
 			if(i==3) defaultVars.Add("BlendMode_Alpha");
 			if(i==4) defaultVars.Add("BlendMode_PremulAlpha");
 
-			mpBlendProgramManager[i]->SetupGenerateProgramData(	eMaterialRenderMode_Diffuse,"Diffuse","deferred_base_vtx.glsl", "deferred_transparent_frag.glsl", 
+			mpBlendProgramManager[i]->SetupGenerateProgramData(	eMaterialRenderMode_Diffuse,"Diffuse","deferred_base_vtx.glsl", "deferred_transparent_frag.glsl",
 														vDiffuseFeatureVec,kDiffuseFeatureNum, defaultVars);
 
 			////////////////////////////////
@@ -174,7 +174,7 @@ namespace hpl {
 			mpBlendProgramManager[i]->AddGenerateProgramVariableId("avFrenselBiasPow", kVar_avFrenselBiasPow, eMaterialRenderMode_Diffuse);
 			mpBlendProgramManager[i]->AddGenerateProgramVariableId("avRimLightMulPow", kVar_avRimLightMulPow, eMaterialRenderMode_Diffuse);
 			mpBlendProgramManager[i]->AddGenerateProgramVariableId("afLightLevel", kVar_afLightLevel, eMaterialRenderMode_Diffuse);
-		
+
 		}
 	}
 	void cMaterialType_Translucent::DestroyData()
@@ -227,9 +227,9 @@ namespace hpl {
 	{
 		return NULL;
 	}
-	
+
 	//--------------------------------------------------------------------------
-	
+
 	iGpuProgram* cMaterialType_Translucent::GetGpuProgram(cMaterial *apMaterial, eMaterialRenderMode aRenderMode, char alSkeleton)
 	{
 		cMaterialType_Translucent_Vars *pVars = (cMaterialType_Translucent_Vars*)apMaterial->GetVars();
@@ -241,7 +241,7 @@ namespace hpl {
 		if(aRenderMode == eMaterialRenderMode_Diffuse || aRenderMode == eMaterialRenderMode_DiffuseFog)
 		{
 			int lProgramNum = apMaterial->GetBlendMode()-1;
-			
+
 			tFlag lFlags =0;
 			if(apMaterial->GetTexture(eMaterialTexture_Diffuse))	lFlags |= eFeature_Diffuse_DiffuseMap;
 			if(aRenderMode == eMaterialRenderMode_DiffuseFog)		lFlags |= eFeature_Diffuse_Fog;
@@ -254,7 +254,7 @@ namespace hpl {
 			}
 			if(bRefractionEnabled)									lFlags |= eFeature_Diffuse_UseRefraction;
 			if(pVars->mbRefractionNormals && bRefractionEnabled)	lFlags |= eFeature_Diffuse_UseScreenNormal;
-			
+
 			return mpBlendProgramManager[lProgramNum]->GenerateProgram(eMaterialRenderMode_Diffuse, lFlags);
 		}
 		////////////////////////////
@@ -264,7 +264,7 @@ namespace hpl {
 			if(bRefractionEnabled==false && apMaterial->GetTexture(eMaterialTexture_CubeMap))
 			{
 				int lProgramNum = eMaterialBlendMode_Add - 1;
-				
+
 				tFlag lFlags =0;
 				if(aRenderMode == eMaterialRenderMode_IlluminationFog)	lFlags |= eFeature_Diffuse_Fog;
 				if(apMaterial->GetTexture(eMaterialTexture_NMap))		lFlags |= eFeature_Diffuse_NormalMap;
@@ -273,7 +273,7 @@ namespace hpl {
 					lFlags |= eFeature_Diffuse_EnvMap;
 					if(apMaterial->GetTexture(eMaterialTexture_CubeMapAlpha))	lFlags |= eFeature_Diffuse_CubeMapAlpha;
 				}
-				
+
 				return mpBlendProgramManager[lProgramNum]->GenerateProgram(eMaterialRenderMode_Diffuse, lFlags);
 			}
 		}
@@ -286,7 +286,7 @@ namespace hpl {
 	void cMaterialType_Translucent::SetupTypeSpecificData(eMaterialRenderMode aRenderMode, iGpuProgram* apProgram,iRenderer *apRenderer)
 	{
 	}
-	
+
 	//--------------------------------------------------------------------------
 
 	void cMaterialType_Translucent::SetupMaterialSpecificData(eMaterialRenderMode aRenderMode, iGpuProgram* apProgram, cMaterial *apMaterial,iRenderer *apRenderer)
@@ -305,14 +305,14 @@ namespace hpl {
 
 		////////////////////////////
 		//Reflection vars
-		if(apMaterial->GetTexture(eMaterialTexture_CubeMap) && 
+		if(apMaterial->GetTexture(eMaterialTexture_CubeMap) &&
 			(bRefractionEnabled && bIlluminationPass==false) || (bRefractionEnabled==false && bIlluminationPass) )
 		{
 			cMatrixf mtxInvView = apRenderer->GetCurrentFrustum()->GetViewMatrix().GetTranspose();
 			apProgram->SetMatrixf(kVar_a_mtxInvViewRotation, mtxInvView.GetRotation());
 
 			apProgram->SetVec2f(kVar_avFrenselBiasPow, cVector2f(pVars->mfFrenselBias, pVars->mfFrenselPow));
-			apProgram->SetVec2f(kVar_avRimLightMulPow, cVector2f(pVars->mfRimLightMul, pVars->mfRimLightPow)); 
+			apProgram->SetVec2f(kVar_avRimLightMulPow, cVector2f(pVars->mfRimLightMul, pVars->mfRimLightPow));
 		}
 
 		////////////////////////////
@@ -333,7 +333,7 @@ namespace hpl {
 			apProgram->SetFloat(kVar_afFalloffExp, pWorld->GetFogFalloffExp());
 		}
 	}
-	
+
 	//--------------------------------------------------------------------------
 
 	static inline float GetMaxColorValue(const cColor& aCol)
@@ -359,7 +359,7 @@ namespace hpl {
 			for(int i=0; i<pRenderList->GetLightNum(); ++i)
 			{
 				iLight* pLight = pRenderList->GetLight(i);
-				
+
 				//Check if there is an intersection
 				if(pLight->CheckObjectIntersection(apObject))
 				{
@@ -373,7 +373,7 @@ namespace hpl {
 
 						fLightAmount += GetMaxColorValue(pLight->GetDiffuseColor()) * cMath::Max(1.0f - (fDist / pLight->GetRadius()), 0.0f);
 					}
-					
+
 					if(fLightAmount >= 1.0f)
 					{
                         fLightAmount = 1.0f;
@@ -484,7 +484,7 @@ namespace hpl {
 				apMaterial->SetHasTranslucentIllumination(true);
 		}
 	}
-	
+
 	//--------------------------------------------------------------------------
 
 

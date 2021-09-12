@@ -110,7 +110,7 @@ int main (int argc, char *argv[])
 	}
 
 	playCustomStream(strFilename);
-	
+
     printf ("Cleaning up...\n");
 
     OAL_Close ();

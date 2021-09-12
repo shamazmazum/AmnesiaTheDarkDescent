@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -45,7 +45,7 @@ namespace hpl {
 	};
 
 	//-------------------------------------------
-	
+
 	class cRCNode_BoxTree : public iRenderableContainerNode
 	{
 	friend class cRenderableContainer_BoxTree;
@@ -56,7 +56,7 @@ namespace hpl {
 	};
 
 	//-------------------------------------------
-	
+
 	class cRenderableContainer_BoxTree : public iRenderableContainer
 	{
 	public:
@@ -71,7 +71,7 @@ namespace hpl {
 
 		iRenderableContainerNode* GetRoot();
 
-        void Compile();	
+        void Compile();
 
 		void RenderDebug(cRendererCallbackFunctions *apFunctions);
 
@@ -89,10 +89,10 @@ namespace hpl {
 
 		void SetMaxIntersectionAmount(float afX){mfMaxIntersectionAmount = afX;}
 		float GetMaxIntersectionAmount(){ return mfMaxIntersectionAmount;}
-		
+
 		void SetMinForceIntersectionRelativeSize(float afX){mfMinForceIntersectionRelativeSize = afX;}
 		float GetMinForceIntersectionRelativeSize(){ return mfMinForceIntersectionRelativeSize;}
-		
+
 
 	private:
 		void CompileTempNode(cBoxTreeTempNode *apNode, int alLevel, int alSplitAxis);
@@ -107,7 +107,7 @@ namespace hpl {
 		float CalculateBestCutPlane(tRenderableList &alstObjects, int alAxis, const cVector3f &avNodeSize);
 
 		int GetSplitGroup(iRenderable *apObject, float afCutPlane, int alAxis, const cVector3f &avNodeSize);
-		
+
 		cRCNode_BoxTree* mpRoot;
 
 		int mlMinLeafObjects;

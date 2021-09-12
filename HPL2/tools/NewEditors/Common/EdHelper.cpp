@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -60,7 +60,7 @@ void cEdHelper::CalculateRayBoundingBox(const cVector3f& avStart, const cVector3
 
 //----------------------------------------------------------------------
 
-bool cEdHelper::CheckScreenSpaceMouseMeshIntersect(cCamera* apCamera, const cVector2f& avMousePos,  
+bool cEdHelper::CheckScreenSpaceMouseMeshIntersect(cCamera* apCamera, const cVector2f& avMousePos,
 													   const cVector3f& avRayStart, const cVector3f& avRayEnd,
 													   const cVector2f& avViewportSize, cMeshEntity* apMesh,
 													   cVector3f* apIntersectionPos, tVector3fVec* apTriangle)
@@ -74,7 +74,7 @@ bool cEdHelper::CheckScreenSpaceMouseMeshIntersect(cCamera* apCamera, const cVec
 	// Get Matrices
 	cMatrixf mtxCameraViewMatrix = apCamera->GetViewMatrix();
 	cMatrixf mtxCameraProjMatrix = apCamera->GetProjectionMatrix();
-	
+
 	cVector3f vMeshIntersectPos;
 	cVector3f vOldMeshIntersectPos;
 	float fOldDistance = 999999999.0f;
@@ -85,9 +85,9 @@ bool cEdHelper::CheckScreenSpaceMouseMeshIntersect(cCamera* apCamera, const cVec
 		cSubMeshEntity* pSubMesh = apMesh->GetSubMeshEntity(i);
 		cMatrixf mtxSubMeshWorldMatrix = pSubMesh->GetWorldMatrix();
 
-		bIntersect = bIntersect || CheckScreenSpaceMouseSubMeshIntersect(GetInvYMousePos(avMousePos, avViewportSize), 
-																		 avRayStart, 
-																		 avRayEnd, 
+		bIntersect = bIntersect || CheckScreenSpaceMouseSubMeshIntersect(GetInvYMousePos(avMousePos, avViewportSize),
+																		 avRayStart,
+																		 avRayEnd,
 																		 avViewportSize,
 																		 pSubMesh,
 																		 mtxCameraViewMatrix,
@@ -105,7 +105,7 @@ bool cEdHelper::CheckScreenSpaceMouseMeshIntersect(cCamera* apCamera, const cVec
 			}
 		}
 	}
-	
+
 	if(bIntersect && apIntersectionPos)
 		*apIntersectionPos = vMeshIntersectPos;
 
@@ -117,7 +117,7 @@ bool cEdHelper::CheckScreenSpaceMouseMeshIntersect(cCamera* apCamera, const cVec
 bool cEdHelper::CheckScreenSpaceMouseSubMeshIntersect(const cVector2f& avInvYMousePos,
 														  const cVector3f& avRayStart, const cVector3f& avRayEnd,
                                                           const cVector2f& avViewportSize, cSubMeshEntity* apSubMesh,
-														  const cMatrixf& amtxCameraViewMatrix, 
+														  const cMatrixf& amtxCameraViewMatrix,
 														  const cMatrixf& amtxCameraProjMatrix,
 														  const cMatrixf& amtxSubMeshWorldMatrix,
 														  cVector3f* apIntersectionPos,
@@ -132,8 +132,8 @@ bool cEdHelper::CheckScreenSpaceMouseSubMeshIntersect(const cVector2f& avInvYMou
 	//Get Vertex Buffer
 	iVertexBuffer* pVtxBuffer = apSubMesh->GetVertexBuffer();
 
-	bIntersect = CheckScreenSpaceMouseVertexBufferIntersect(avInvYMousePos, 
-															avRayStart, avRayEnd, 
+	bIntersect = CheckScreenSpaceMouseVertexBufferIntersect(avInvYMousePos,
+															avRayStart, avRayEnd,
 															avViewportSize, pVtxBuffer,
 															amtxCameraViewMatrix,
 															amtxCameraProjMatrix,
@@ -233,7 +233,7 @@ bool cEdHelper::CheckRayMeshEntityIntersect(const cVector3f& avRayStart, const c
 			cSubMeshEntity* pSubMesh = apObject->GetSubMeshEntity(lHitSubMeshIndex);
 			float* pVertices = pSubMesh->GetSubMesh()->GetVertexBuffer()->GetFloatArray(eVertexBufferElement_Position);
 			int lStride = pSubMesh->GetSubMesh()->GetVertexBuffer()->GetElementNum(eVertexBufferElement_Position);
-			unsigned int* pIndices = pSubMesh->GetSubMesh()->GetVertexBuffer()->GetIndices();		
+			unsigned int* pIndices = pSubMesh->GetSubMesh()->GetVertexBuffer()->GetIndices();
 			for(int i=0;i<3;++i)
 			{
 				int lBaseIndex = pIndices[lHitTriIndex+i]*lStride;
@@ -264,7 +264,7 @@ bool cEdHelper::CheckRaySubMeshEntityIntersect(const cVector3f& avRayStart, cons
 			apTriangle->clear();
 			float* pVertices = apObject->GetSubMesh()->GetVertexBuffer()->GetFloatArray(eVertexBufferElement_Position);
 			int lStride = apObject->GetSubMesh()->GetVertexBuffer()->GetElementNum(eVertexBufferElement_Position);
-			unsigned int* pIndices = apObject->GetSubMesh()->GetVertexBuffer()->GetIndices();		
+			unsigned int* pIndices = apObject->GetSubMesh()->GetVertexBuffer()->GetIndices();
 			for(int i=0;i<3;++i)
 			{
 				int lBaseIndex = pIndices[lTriIndex+i]*lStride;
@@ -286,7 +286,7 @@ void cEdHelper::GetIDsFromEntityList(const tEntityWrapperList &alstEntities, tIn
 {
 	if(abClearList)
 		alstEntityIDs.clear();
-	
+
 	tEntityWrapperList::const_iterator it = alstEntities.begin();
 	for(;it!=alstEntities.end();++it)
 	{
@@ -307,7 +307,7 @@ void cEdHelper::DrawPyramid(cRendererCallbackFunctions* apFunctions, const cVect
 	cVector3f vForward = cMath::Vector3Cross(vNormal, vRight);
 	vForward.Normalize();
 
-	cVector3f vVertices[4] = 
+	cVector3f vVertices[4] =
 	{
 		avBaseCenter + (vRight+vForward)*afHalfWidth,
 		avBaseCenter + (vRight-vForward)*afHalfWidth,
@@ -355,7 +355,7 @@ iVertexBuffer* cEdHelper::CreatePyramidVtxBuffer(cGraphics* apGfx, const cVector
 	cVector3f vForward = cMath::Vector3Cross(vNormal, vRight);
 	vForward.Normalize();
 
-	cVector3f vVertices[5] = 
+	cVector3f vVertices[5] =
 	{
 		avTip,
 		avBaseCenter + (vRight+vForward)*afHalfWidth,
@@ -364,7 +364,7 @@ iVertexBuffer* cEdHelper::CreatePyramidVtxBuffer(cGraphics* apGfx, const cVector
 		avBaseCenter + (vRight*(-1)+vForward)*afHalfWidth,
 	};
 
-	unsigned int vIndices[12] = 
+	unsigned int vIndices[12] =
 	{
 		0, 1, 2,
 		0, 2, 3,
@@ -389,14 +389,14 @@ iVertexBuffer* cEdHelper::CreatePyramidVtxBuffer(cGraphics* apGfx, const cVector
 		pVB->AddVertexVec3f(eVertexBufferElement_Normal, vFaceNormal);
 		pVB->AddVertexVec3f(eVertexBufferElement_Normal, vFaceNormal);
 		pVB->AddVertexVec3f(eVertexBufferElement_Normal, vFaceNormal);
-		
+
 		pVB->AddIndex(vIndices[i*3]);
 		pVB->AddIndex(vIndices[i*3+1]);
 		pVB->AddIndex(vIndices[i*3+2]);
 	}
 
 	pVB->Compile(0);
-	
+
 
 	return pVB;
 }

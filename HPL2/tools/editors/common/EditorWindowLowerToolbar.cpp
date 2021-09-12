@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -40,14 +40,14 @@
 //---------------------------------------------------------------
 
 iEditorWindowLowerToolbar::iEditorWindowLowerToolbar(iEditorBase* apEditor) : iEditorWindow(apEditor, "Lower Toolbar" )
-{	
+{
 	mpGridControlsGroup = NULL;
 	mpBPlaneSwitch = NULL;
 	mpBSnap = NULL;
 	mpGridControlsGroup = NULL;
 	mpInpPlaneHeight = NULL;
 	mpInpSnapSep = NULL;
-	
+
 	mpHandleViewportControls = NULL;
 	mpBEnlargeViewport = NULL;
 
@@ -121,7 +121,7 @@ iWidget* iEditorWindowLowerToolbar::AddGridControls()
 
 	// Height and sep.
 	mpInpPlaneHeight = CreateInputNumber(cVector3f(65,5,0.1f), _W("Height"), "", mpGridControlsGroup, 50, 0.25f);
-	mpInpSnapSep = CreateInputNumber(cVector3f(120,5,0.1f), _W("Snap sep."), "", mpGridControlsGroup, 50, 0.25f); 
+	mpInpSnapSep = CreateInputNumber(cVector3f(120,5,0.1f), _W("Snap sep."), "", mpGridControlsGroup, 50, 0.25f);
 
 	return mpGridControlsGroup;
 }
@@ -158,7 +158,7 @@ iWidget* iEditorWindowLowerToolbar::AddViewportControls()
 	mpBEnlargeViewport->SetToolTipEnabled(true);
 
 	mpSet->AddGlobalShortcut(0, eKey_Space, mpBEnlargeViewport, eGuiMessage_ButtonPressed);
-	
+
 	return mpHandleViewportControls;
 }
 
@@ -245,7 +245,7 @@ void iEditorWindowLowerToolbar::OnUpdate(float afTimeStep)
 	cEditorGrid* pGrid = pViewport->GetGrid();
 
 	bool bCameraIsOrtho = pViewport->GetVCamera()->IsOrtho();
-    
+
 	float fHeight = pGrid->GetHeight();
 	float fSnapSeparation = pGrid->GetSnapSeparation();
 
@@ -342,7 +342,7 @@ bool iEditorWindowLowerToolbar::WindowSpecificInputCallback(iEditorInput* apInpu
 		{
 			cVector3f vHeight = pClipPlane->GetHeights();
 			vHeight.v[pClipPlane->GetPlaneNormal()] = mpInpClipPlaneHeight->GetValue();
-			
+
 			pAction = hplNew(cEditorActionClipPlaneSetHeight,(pWorld, lClipPlaneIdx, vHeight));
 		}
 	}
@@ -447,7 +447,7 @@ bool iEditorWindowLowerToolbar::InputCallback(iWidget* apWidget, const cGuiMessa
 			pAction = hplNew(cEditorActionClipPlaneSetCullingOnPositiveSide,(pWorld, lClipPlaneIdx, !pClipPlane->GetCullingOnPositiveSide()));
 		}
 	}
-	
+
 	mpEditor->AddAction(pAction);
 
 	return true;
@@ -462,7 +462,7 @@ void iEditorWindowLowerToolbar::UpdateClipPlaneControls()
 	{
 		int lPlaneIdx = mpInpClipPlanes->GetValue();
 		iEditorWorld* pWorld = mpEditor->GetEditorWorld();
-	
+
 		cEditorClipPlane* pPlane = pWorld->GetClipPlane(lPlaneIdx);
 		bool bEnabled = (pPlane!=NULL);
 

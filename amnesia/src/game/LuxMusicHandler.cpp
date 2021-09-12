@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -76,7 +76,7 @@ cLuxMusicHandler::~cLuxMusicHandler()
 
 void cLuxMusicHandler::OnStart()
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -117,13 +117,13 @@ void cLuxMusicHandler::Update(float afTimeStep)
 
 	///////////////////////////////////
 	//Check if close by music should be played.
-	UpdateDangerMusic(afTimeStep);	
+	UpdateDangerMusic(afTimeStep);
 
 	///////////////////////////////////
 	//Check if attack music should be played.
 	UpdateEnemyMusic(afTimeStep, eLuxEnemyMusic_Search);
 	UpdateEnemyMusic(afTimeStep, eLuxEnemyMusic_Attack);
-	
+
 	///////////////////////////////////
 	//Check if current song is over
 	if(mlCurrentMaxPrio >=0)
@@ -253,10 +253,10 @@ void cLuxMusicHandler::UpdateDangerMusic(float afTimeStep)
 	{
 		if(mbEnemyPlaying[i]) return;
 	}
-	
+
 	cLuxMap *pMap = gpBase->mpMapHandler->GetCurrentMap();
 	if(pMap==NULL) return;
-	
+
 	////////////////////////////
 	//Music not playing
 	if(mbEnemyClosePlaying==false)

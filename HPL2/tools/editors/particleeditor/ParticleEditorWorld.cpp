@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -39,7 +39,7 @@ cParticleEditorWorld::cParticleEditorWorld(iEditorBase* apEditor) : iEditorWorld
 	cPhysics* pPhysics = mpEditor->GetEngine()->GetPhysics();
 	cMeshManager* pManager = mpEditor->GetEngine()->GetResources()->GetMeshManager();
 	pPhysics->LoadSurfaceData("materials.cfg");
-    
+
 	mpPhysicsWorld = pPhysics->CreateWorld(true);
 	mpPhysicsWorld->SetAccuracyLevel(ePhysicsAccuracy_Medium);
 	mpPhysicsWorld->SetWorldSize(-300,300);
@@ -51,11 +51,11 @@ cParticleEditorWorld::cParticleEditorWorld(iEditorBase* apEditor) : iEditorWorld
 	// Create meshes
 	cMesh *pMesh =NULL;
 	cMeshEntity *pBox = NULL;
-			
+
 	/////////////////
 	//Floor
 	mvWalls.resize(4);
-	
+
 	pMesh = pManager->CreateMesh("editor_rect.dae");
 	mvWalls[0] = mpWorld->CreateMeshEntity("Floor",pMesh,true);
 	mvWalls[0]->SetMatrix(cMath::MatrixScale(6));
@@ -70,11 +70,11 @@ cParticleEditorWorld::cParticleEditorWorld(iEditorBase* apEditor) : iEditorWorld
 	{
 		pMesh = pManager->CreateMesh("editor_rect.dae");
 		cMeshEntity *pWall = mpWorld->CreateMeshEntity("Wall",pMesh,true);
-		
+
 		cVector3f vPos(0,6.0f-0.2f,0);
 		cMatrixf mtxTrans = cMath::MatrixScale(6);
 		mtxTrans = cMath::MatrixMul(cMath::MatrixRotateX(kPi2f),mtxTrans);
-		
+
 		if(i==0)
 		{
 			vPos.x -= 6;
@@ -89,8 +89,8 @@ cParticleEditorWorld::cParticleEditorWorld(iEditorBase* apEditor) : iEditorWorld
 		{
 			vPos.z -= 6;
 		}
-		
-        
+
+
 		mtxTrans.SetTranslation(vPos);
 		pWall->SetMatrix(mtxTrans);
 		pWall->SetVisible(mbShowWalls);
@@ -101,7 +101,7 @@ cParticleEditorWorld::cParticleEditorWorld(iEditorBase* apEditor) : iEditorWorld
 
 		pBody->SetMatrix(mtxTrans);
 	}
-	
+
 	/////////////////////////////////
 	// Compile world
 	mpWorld->Compile(false);
@@ -146,7 +146,7 @@ bool cParticleEditorWorld::Load(iXmlDocument* apDoc)
 
 		//hplDelete(pData);
 	}
-	
+
 	mbEmittersUpdated=true;
 
 	UpdateParticleSystem();
@@ -181,7 +181,7 @@ void cParticleEditorWorld::LoadWorldObjects(cXmlElement* apWorldObjectsElement)
 
 		//hplDelete(pData);
 	}
-	
+
 	mbEmittersUpdated=true;
 
 	UpdateParticleSystem();

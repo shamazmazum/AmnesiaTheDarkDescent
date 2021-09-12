@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -95,7 +95,7 @@ iEditor::~iEditor()
 cEngine* iEditor::Init(cEngine* apEngine, bool abDestroyEngineOnExit)
 {
 	// If engine was supplied as argument or not.
-	bool bEngineWasCreated = apEngine!=NULL; 
+	bool bEngineWasCreated = apEngine!=NULL;
 
 	mbDestroyEngineOnExit = abDestroyEngineOnExit;
 
@@ -141,7 +141,7 @@ cEngine* iEditor::Init(cEngine* apEngine, bool abDestroyEngineOnExit)
 
 		mpEngine = CreateHPLEngine(eHplAPI_OpenGL, eHplSetup_All, &vars);
 		mpEngine->GetUpdater()->AddUpdate("Default", this);
-		
+
 		cResources* pRes = mpEngine->GetResources();
 		pRes->LoadResourceDirsFile("resources.cfg");
 
@@ -521,7 +521,7 @@ void iEditor::SetUpRenderTarget(const cVector2f& avSize)
 	int lTexW, lTexH;
 	lTexW = (int) avSize.x;
 	lTexH = (int) avSize.y;
-	
+
 	iTexture* pRenderTexture = pGfx->CreateTexture("RenderTexture",eTextureType_Rect, eTextureUsage_RenderTarget);
 	pRenderTexture->SetWrapR(eTextureWrap_ClampToEdge);
 	pRenderTexture->SetWrapS(eTextureWrap_ClampToEdge);
@@ -543,7 +543,7 @@ void iEditor::CreateLayout()
 	mpWindowHandler->AddLayoutBlock(eLayoutBlock_BG, false, false, cVector3f(0,0,-1), true, true, 1, NULL);
 
 	CreateAppSpecificLayout();
-	
+
 	mpMenu = CreateMenu();
 
 	//////////////////////////
@@ -564,8 +564,8 @@ void iEditor::CreateLayout()
 
 //------------------------------------------------------------------------------
 
-void iEditor::AddViewport(iEdViewport* apViewport, 
-						  const cVector3f& avNormalPos, const cVector2f& avNormalSize, 
+void iEditor::AddViewport(iEdViewport* apViewport,
+						  const cVector3f& avNormalPos, const cVector2f& avNormalSize,
 						  const cVector2f& avFBPos, const cVector2f& avFBSize,
 						  int alStartMode)
 {
@@ -615,7 +615,7 @@ void iEditor::InitViewports()
 
 		pViewport->SetEnlargedPosition(mvViewportEnlargedPos);
 		pViewport->SetEnlargedSize(mvViewportEnlargedSize);
-		
+
 		pViewport->SetViewportActive(true);
 		pViewport->SetEnlarged(false);
 

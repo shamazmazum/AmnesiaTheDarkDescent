@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -53,7 +53,7 @@ cLuxEnemyMover::cLuxEnemyMover(iLuxEnemy *apEnemy, iCharacterBody *apCharBody)
 
 cLuxEnemyMover::~cLuxEnemyMover()
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -72,7 +72,7 @@ void cLuxEnemyMover::SetupAfterLoad(cWorld *apWorld)
 void cLuxEnemyMover::OnUpdate(float afTimeStep)
 {
 	UpdateStuckCounter(afTimeStep);
-	UpdateTurning(afTimeStep);	
+	UpdateTurning(afTimeStep);
 	UpdateMoveAnimation(afTimeStep);
 	UpdateStepEffects(afTimeStep);
 }
@@ -89,9 +89,9 @@ void cLuxEnemyMover::MoveToPos(const cVector3f& avFeetPos)
 
 void cLuxEnemyMover::TurnToPos(const cVector3f& avFeetPos)
 {
-	cVector3f vStartPos = mpCharBody->GetPosition(); 
+	cVector3f vStartPos = mpCharBody->GetPosition();
 
-	float fGoalAngle = -cMath::GetAngleFromPoints2D(cVector2f(vStartPos.x, vStartPos.z), 
+	float fGoalAngle = -cMath::GetAngleFromPoints2D(cVector2f(vStartPos.x, vStartPos.z),
 													cVector2f(avFeetPos.x, avFeetPos.z));
 	TurnToAngle(fGoalAngle);
 }
@@ -108,7 +108,7 @@ void cLuxEnemyMover::TurnToAngle(float afAngle)
 void cLuxEnemyMover::UseMoveStateAnimations()
 {
 	if(mbOverideMoveState==false) return;
-	
+
 	mbOverideMoveState = false;
 	mMoveState = eLuxEnemyMoveState_LastEnum;
 }
@@ -151,7 +151,7 @@ float cLuxEnemyMover::GetWantedSpeedAmount()
 {
 	float fWantedSpeed = mpCharBody->GetMoveSpeed(eCharDir_Forward);
 	float fRealSpeed = GetMoveSpeed();
-	
+
 	if(fabs(fWantedSpeed) < 0.001f) return 1;
 
 	return fRealSpeed / fWantedSpeed;
@@ -182,7 +182,7 @@ void cLuxEnemyMover::UpdateStuckCounter(float afTimeStep)
 	float fCos = cMath::Vector3Dot(vWantedDir,vRealDir);
 
 	///////////////////////
-	// Calculate 
+	// Calculate
 	if( fRealSpeed/fWantedSpeed < mfStuckLimit || (std::fabs(fCos) < 0.3f && fWantedSpeed > 0.001f) )
 	{
 		mfStuckCounter += afTimeStep ;
@@ -232,9 +232,9 @@ void cLuxEnemyMover::UpdateMoveAnimation(float afTimeStep)
 	if(mpCharBody->GetMoveSpeed(eCharDir_Forward) <0) fSpeed = -fSpeed;
 
 	//Log("Update move anim. Speed: %f Current: %d\n", fSpeed, mMoveState);
-	
+
 	eLuxEnemyPoseType pose = mpEnemy->mCurrentPose;
-	
+
 	////////////////////////////////
 	// Move state animation
 	eLuxEnemyMoveState prevMoveState = mMoveState;
@@ -287,7 +287,7 @@ void cLuxEnemyMover::UpdateMoveAnimation(float afTimeStep)
 		mMoveState = eLuxEnemyMoveState_Stopped;
 		break;
 	}
-	
+
 	//////////////////////////////////////////////
 	//If move state has changed, change animation
 	if(prevMoveState != mMoveState)
@@ -317,7 +317,7 @@ void cLuxEnemyMover::UpdateMoveAnimation(float afTimeStep)
 		{
 			bool bSync = prevMoveState == eLuxEnemyMoveState_Walking ? true : false;
 			//Log(" To Run. Synch: %d\n", bSync);
-			
+
           mpEnemy->PlayAnim(mpEnemy->GetRunAnimationName(),true, 0.5f, true, mpEnemy->mfMoveSpeedAnimMul, bSync, false);
 		}
 	}
@@ -364,11 +364,11 @@ void cLuxEnemyMover::UpdateStepEffects(float afTimeStep)
 		}
 	}
 	if(bStep==false) return;
-	
+
 	///////////////////////////////////////
 	// Do the liquid effect
 	cSurfaceData *pSurface = mpEnemy->GetWaterSurfaceData();
-	
+
 	//Get the speed
 	float fSpeed = mpEnemy->mfWaterStepSpeedMisc;
 	if(mMoveState == eLuxEnemyMoveState_Walking || mMoveState == eLuxEnemyMoveState_Backward)
@@ -385,7 +385,7 @@ void cLuxEnemyMover::UpdateStepEffects(float afTimeStep)
 	cVector3f vEffectPos = mpCharBody->GetPosition();
 	vEffectPos.y =mpEnemy->GetWaterSurfaceY()+0.01f;
 
-	//Create sounda and ps for effect	
+	//Create sounda and ps for effect
 	cWorld *pWorld = mpEnemy->GetMap()->GetWorld();
 
 	if(pImpact->GetPSName() != "")
@@ -426,7 +426,7 @@ kEndSerialize()
 //-----------------------------------------------------------------------
 
 void cLuxEnemyMover_SaveData::FromMover(cLuxEnemyMover *apMover)
-{	
+{
 	mbTurning = apMover->mbTurning;
 	mfTurnGoalAngle = apMover->mfTurnGoalAngle;
 	mfTurnSpeed = apMover->mfTurnSpeed;

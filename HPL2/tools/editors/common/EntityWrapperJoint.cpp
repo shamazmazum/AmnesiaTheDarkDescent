@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -53,10 +53,10 @@ iEntityWrapperTypeJoint::iEntityWrapperTypeJoint(eEditorEntityJointType aSubType
 	AddFloat(eJointFloat_MaxMoveFreq, "MaxMoveFreq", 1.1f);
 	AddFloat(eJointFloat_MaxMoveFreqSpeed, "MaxMoveFreqSpeed", 0.7f);
 	AddFloat(eJointFloat_MaxMoveVolume, "MaxMoveVolume", 0.8f);
-	
+
 	AddFloat(eJointFloat_MiddleMoveSpeed, "MiddleMoveSpeed", 0.5f);
 	AddFloat(eJointFloat_MiddleMoveVolume, "MiddleMoveVolume", 0.5f);
-	
+
 	AddString(eJointStr_MinLimitSound, "MinLimitSound");
 	AddFloat(eJointFloat_MinLimitMinSpeed, "MinLimitMinSpeed");
 	AddFloat(eJointFloat_MinLimitMaxSpeed, "MinLimitMaxSpeed");
@@ -99,12 +99,12 @@ iEntityWrapperDataJoint::iEntityWrapperDataJoint(iEntityWrapperType* apType) : i
 	mfMinMoveFreq = 0.95f;
 	mfMinMoveVolume = 0.01f;
 	mfMinMoveFreqSpeed = 0.2f;
-	
+
 	mfMaxMoveSpeed = 2;
 	mfMaxMoveFreq = 1.1f;
 	mfMaxMoveVolume = 0.8f;
 	mfMaxMoveFreqSpeed = 0.7f;
-	
+
 	mfMiddleMoveSpeed = 0.5f;
 	mfMiddleMoveVolume = 0.5f;
 
@@ -165,12 +165,12 @@ iEntityWrapperJoint::iEntityWrapperJoint(iEntityWrapperData* apData) : iEntityWr
 	mfMinMoveFreq = 0.95f;
 	mfMinMoveVolume = 0.01f;
 	mfMinMoveFreqSpeed = 0.2f;
-	
+
 	mfMaxMoveSpeed = 2;
 	mfMaxMoveFreq = 1.1f;
 	mfMaxMoveVolume = 0.8f;
 	mfMaxMoveFreqSpeed = 0.7f;
-	
+
 	mfMiddleMoveSpeed = 0.5f;
 	mfMiddleMoveVolume = 0.5f;
 
@@ -269,7 +269,7 @@ bool iEntityWrapperJoint::GetProperty(int alPropID, float& afX)
 	default:
 		return iEntityWrapper::GetProperty(alPropID, afX);
 	}
-	
+
 	return true;
 }
 
@@ -309,7 +309,7 @@ bool iEntityWrapperJoint::GetProperty(int alPropID, tString& asX)
 	default:
 		return iEntityWrapper::GetProperty(alPropID, asX);
 	}
-	
+
 	return true;
 }
 
@@ -374,7 +374,7 @@ bool iEntityWrapperJoint::SetProperty(int alPropID, const float& afX)
 	default:
 		return iEntityWrapper::SetProperty(alPropID, afX);
 	}
-	
+
 	return true;
 }
 
@@ -414,7 +414,7 @@ bool iEntityWrapperJoint::SetProperty(int alPropID, const tString& asX)
 	default:
 		return iEntityWrapper::SetProperty(alPropID, asX);
 	}
-	
+
 	return true;
 }
 
@@ -468,7 +468,7 @@ int iEntityWrapperJoint::GetParentBodyID()
 {
 	int lID = -1;
 	if(mpParentBody) lID = mpParentBody->GetID();
-	
+
 	return lID;
 }
 
@@ -476,7 +476,7 @@ int iEntityWrapperJoint::GetChildBodyID()
 {
 	int lID = -1;
 	if(mpChildBody) lID = mpChildBody->GetID();
-	
+
 	return lID;
 }
 
@@ -507,7 +507,7 @@ void iEntityWrapperJoint::Draw(cEditorWindowViewport* apViewport, cRendererCallb
 	apFunctions->SetDepthTest(false);
 	apFunctions->GetLowLevelGfx()->DrawSphere(mvPosition, 0.01f, cColor(1,1,0,1));
 	apFunctions->SetDepthTest(true);
-	
+
 	if(mpParentBody)
 		apFunctions->GetLowLevelGfx()->DrawLine(mvPosition, mpParentBody->GetPosition(), cColor(0,1,0,1));
 	if(mpChildBody)

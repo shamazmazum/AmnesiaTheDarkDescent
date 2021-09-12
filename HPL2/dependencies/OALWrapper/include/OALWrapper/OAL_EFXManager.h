@@ -18,7 +18,7 @@ typedef enum
 	OAL_Effect_Type_Default
 } OAL_Effect_Type;
 
-typedef enum 
+typedef enum
 {
 	OAL_Filter_Type_LowPass,
 	OAL_Filter_Type_HighPass,
@@ -33,11 +33,11 @@ public:
 	cOAL_EFXManager();
 	~cOAL_EFXManager();
 
-	cOAL_EffectSlot* GetEffectSlot ( int alSlotHandle ) 
-	{ 
+	cOAL_EffectSlot* GetEffectSlot ( int alSlotHandle )
+	{
 		if ((alSlotHandle >= 0) && ((unsigned int) alSlotHandle < mpvSlots->size()) )
-			return (*mpvSlots)[alSlotHandle]; 
-		else 
+			return (*mpvSlots)[alSlotHandle];
+		else
 			return NULL;
 	}
 
@@ -45,7 +45,7 @@ public:
 	void Destroy();
 
 	cOAL_Effect_Reverb* CreateReverbEffect ();
-	
+
 	cOAL_Filter*			CreateFilter();
 	/*
 	cOAL_Filter_LowPass*	CreateLowPassFilter ();
@@ -74,7 +74,7 @@ private:
 
 	int mlNumSlots;
 	int mlNumSends;
-	
+
 	tSlotVector*	mpvSlots;
 	tOALEffectList*	mplstEffectList;
 	tOALFilterList* mplstFilterList;

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -39,7 +39,7 @@ cTranslateAxis::cTranslateAxis(iScnObjManipulator* apManipulator, const cMatrixf
 	cMeshManager* pMgr = iEditor::GetInstance()->GetEngine()->GetResources()->GetMeshManager();
 
 	cMesh* pMesh = pMgr->CreateMesh("translate_axis.dae");
-	
+
 	mpVB = pMesh->GetSubMesh(0)->GetVertexBuffer();
 
 	mBV.SetLocalMinMax(cVector3f(-0.1f, 0, -0.1f), cVector3f(0.1f, 1, 0.1f));
@@ -55,7 +55,7 @@ cTranslateAxis::cTranslateAxis(iScnObjManipulator* apManipulator, const cMatrixf
 void cTranslateAxis::OnDraw(const cModuleDrawData& aData)
 {
 	cTranslateManipulator* pParent = static_cast<cTranslateManipulator*>(mpParent);
-	cMatrixf mtxDrawMatrix = cMath::MatrixMul(pParent->mpTargetObject->GetTranslationMatrix(), 
+	cMatrixf mtxDrawMatrix = cMath::MatrixMul(pParent->mpTargetObject->GetTranslationMatrix(),
 												cMath::MatrixMul(mmtxOffset, pParent->mmtxDrawSize));
 
 	bool bHighlight = (mpParent->mpActiveComponent==this);
@@ -140,7 +140,7 @@ cVector3f cTranslateAxis::GetRestrainedPos(const cVector3f& avPos)
 
 //------------------------------------------------------------------------
 
-cTranslatePlane::cTranslatePlane(iScnObjManipulator* apParent, 
+cTranslatePlane::cTranslatePlane(iScnObjManipulator* apParent,
 								 cTranslateAxis* apAxis1, cTranslateAxis* apAxis2) : iTranslateComponent(apParent)
 {
 	mpAxis1 = apAxis1;
@@ -344,9 +344,9 @@ void cTranslateManipulator::UpdateTransform()
 	iTranslateComponent* pComponent = static_cast<iTranslateComponent*>(mpActiveComponent);
 	cVector3f vAxis = pComponent->GetAxis();
 	mvDragEndPos = mvDragEndPos*vAxis;
-	
+
 	cVector3f vNewTranslate = pViewport->GetGrid()->GetSnappedPosInSpace(mvDragEndPos+mvDragStartOffset, vAxis.x>kEpsilonf, vAxis.y>kEpsilonf, vAxis.z>kEpsilonf);
-	
+
 	mpTargetObject->SetTranslation(vNewTranslate);
 }
 

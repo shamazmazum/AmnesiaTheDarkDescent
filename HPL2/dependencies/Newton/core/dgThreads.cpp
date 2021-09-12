@@ -1,21 +1,21 @@
 /* Copyright (c) <2003-2011> <Julio Jerez, Newton Game Dynamics>
-* 
+*
 * This software is provided 'as-is', without any express or implied
 * warranty. In no event will the authors be held liable for any damages
 * arising from the use of this software.
-* 
+*
 * Permission is granted to anyone to use this software for any purpose,
 * including commercial applications, and to alter it and redistribute it
 * freely, subject to the following restrictions:
-* 
+*
 * 1. The origin of this software must not be misrepresented; you must not
 * claim that you wrote the original software. If you use this software
 * in a product, an acknowledgment in the product documentation would be
 * appreciated but is not required.
-* 
+*
 * 2. Altered source versions must be plainly marked as such, and must not be
 * misrepresented as being the original software.
-* 
+*
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
@@ -113,14 +113,14 @@ dgThreads::dgThreads()
 		m_exit = NULL;
 		m_workToDo = NULL;
 		m_emptySlot = NULL;
-		
+
 		m_topIndex = 0;
 		m_bottomIndex = 0;
 		m_workInProgress = 0;
 		m_globalSpinLock = 0;
 
 		memset (m_threadhandles, 0, sizeof (m_threadhandles));
-	#endif	
+	#endif
 
 #if defined (__linux__) || defined (__FreeBSD__)
 		m_numberOfCPUCores = sysconf(_SC_NPROCESSORS_ONLN);
@@ -145,7 +145,7 @@ dgThreads::dgThreads()
 		mib[1] = HW_NCPU;
 		len = sizeof (procesorcount);
 		procesorcount = 0;
-		m_numberOfCPUCores = sysctl(mib, 2, &procesorcount, &len, NULL, 0); 
+		m_numberOfCPUCores = sysctl(mib, 2, &procesorcount, &len, NULL, 0);
 		m_numberOfCPUCores =  procesorcount;
 
 		m_numOfThreads = 0;
@@ -218,7 +218,7 @@ void dgThreads::CreateThreaded (dgInt32 threads)
 			m_workToDo = CreateSemaphoreA(NULL,0, DG_MAXQUEUE, NULL);
 			m_exit = CreateEventA(NULL, TRUE, FALSE, NULL);
 
-			InitializeCriticalSection(&m_criticalSection); 
+			InitializeCriticalSection(&m_criticalSection);
 
 			m_topIndex = 0;
 			m_bottomIndex = 0;
@@ -254,7 +254,7 @@ void dgThreads::CreateThreaded (dgInt32 threads)
 				}
 			#endif
 		}
-	#endif	
+	#endif
 }
 
 
@@ -281,7 +281,7 @@ void dgThreads::DestroydgThreads()
 		m_exit = NULL;
 		m_emptySlot = NULL;
 		m_workToDo = NULL;
-		memset (&m_criticalSection, 0, sizeof (CRITICAL_SECTION)); 
+		memset (&m_criticalSection, 0, sizeof (CRITICAL_SECTION));
 		for(dgInt32 i=0; i < m_numOfThreads; i++) {
 			m_threadhandles[i] = NULL;
 		}
@@ -336,7 +336,7 @@ dgInt32 dgThreads::SubmitJob(dgWorkerThread* const job)
 				return(0);
 			}
 
-			EnterCriticalSection(&m_criticalSection); 
+			EnterCriticalSection(&m_criticalSection);
 			m_queue[m_topIndex] = job;
 			m_topIndex = (m_topIndex + 1) % DG_MAXQUEUE;
 			ReleaseSemaphore(m_workToDo,1,NULL);
@@ -386,7 +386,7 @@ dgInt32  dgThreads::GetWork(dgWorkerThread** job)
 			return 0;
 		}
 
-		EnterCriticalSection(&m_criticalSection); 
+		EnterCriticalSection(&m_criticalSection);
 		*job = m_queue[m_bottomIndex];
 		m_bottomIndex = (m_bottomIndex + 1) % DG_MAXQUEUE;
 		ReleaseSemaphore(m_emptySlot,1,NULL);
@@ -394,7 +394,7 @@ dgInt32  dgThreads::GetWork(dgWorkerThread** job)
 	#endif
 
 #if defined (__linux__) || defined (_MAC_VER) || defined (__FreeBSD__)
-		for (;;) { 
+		for (;;) {
 			while ( m_workToDo == 0 ) {
 				dgThreadYield();
 			}
@@ -419,7 +419,7 @@ dgInt32  dgThreads::GetWork(dgWorkerThread** job)
 		dgSpinUnlock( &m_criticalSection );
 	#endif
 
-	return 1;	
+	return 1;
 }
 
 
@@ -447,7 +447,7 @@ void dgThreads::DoWork(dgInt32 mythreadIndex)
 
 			job->ThreadExecute();
 			dgInterlockedDecrement(&m_workInProgress);
-			
+
 			m_localData[mythreadIndex].m_ticks += (m_getPerformanceCount() - ticks);
 		}
 	}
@@ -483,7 +483,7 @@ void dgThreads::CalculateChunkSizes (dgInt32 elements, dgInt32* const chunkSizes
 		}
 	} else {
 		chunkSizes[0] = elements;
-	} 
+	}
 }
 
 

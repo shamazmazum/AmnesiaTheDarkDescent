@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -52,14 +52,14 @@ namespace hpl {
 	{
 		mpMaterialManager = apResources->GetMaterialManager();
 		mpLowLevelGraphics = apGraphics->GetLowLevel();
-		
+
 		mvSize = avSize;
 		mvAxis = cVector3f(0,1,0);
 
 		mColor = cColor(1,1,1,1);
 		mfForwardOffset =0;
 		mfHaloAlpha = 1.0f;
-	
+
 		mType = aType;
 
 		mpMaterial = NULL;
@@ -67,7 +67,7 @@ namespace hpl {
 		mlLastRenderCount = -1;
 
 		mpVtxBuffer = mpLowLevelGraphics->CreateVertexBuffer(eVertexBufferType_Hardware,eVertexBufferDrawType_Tri, eVertexBufferUsageType_Dynamic,4,6);
-		
+
 		mpVtxBuffer->CreateElementArray(eVertexBufferElement_Position,eVertexBufferElementFormat_Float,4);
 		mpVtxBuffer->CreateElementArray(eVertexBufferElement_Normal,eVertexBufferElementFormat_Float,3);
 		mpVtxBuffer->CreateElementArray(eVertexBufferElement_Color0,eVertexBufferElementFormat_Float,4);
@@ -135,7 +135,7 @@ namespace hpl {
 		mBoundingVolume.SetSize(cVector3f(mvSize.x, mvSize.y, mvSize.x));
 
 		float *pPos = mpVtxBuffer->GetFloatArray(eVertexBufferElement_Position);
-		
+
 		cVector3f vCoords[4] = {cVector3f((mvSize.x/2),-(mvSize.y/2),0),
 								cVector3f(-(mvSize.x/2),-(mvSize.y/2),0),
 								cVector3f(-(mvSize.x/2),(mvSize.y/2),0),
@@ -162,13 +162,13 @@ namespace hpl {
 	{
 		mvAxis = avAxis;
 		mvAxis.Normalize();
-		
+
 		//This is a quick fix so the bounding box is correct for non up-pointing axises
 		if(mType == eBillboardType_Axis && mvAxis != cVector3f(0,1,0))
 		{
 			float fMax = mvSize.x;
 			if(fMax < mvSize.y) fMax = mvSize.y;
-			
+
 			fMax *= kSqrt2f;
 
 			mBoundingVolume.SetSize(fMax);
@@ -273,7 +273,7 @@ namespace hpl {
 		{
 			vUp = cMath::MatrixMul(GetWorldMatrix().GetRotation(),mvAxis);
 			vUp.Normalize();
-			
+
 			if(vUp == vCameraForward)
 			{
 				vRight = cMath::Vector3Cross(vUp, vCameraForward);
@@ -386,7 +386,7 @@ namespace hpl {
 		apRenderer->AssignOcclusionObject(this,0, pShapeVtx, &m_mtxHaloOcclusionMatrix, true);
 		apRenderer->AssignOcclusionObject(this,1, pShapeVtx, &m_mtxHaloOcclusionMatrix, false);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	bool cBillboard::RetrieveOcculsionQuery(iRenderer *apRenderer)
@@ -403,13 +403,13 @@ namespace hpl {
 			///////////////////////
 			//Calculate the alpha
 			float fAlpha = (float)lSamples / (float)lMaxSamples;
-			
+
 			///////////////////////
 			//Check if inside screen
 			cFrustum *pFrustum = apRenderer->GetCurrentFrustum();
-			
+
 			//Update bv size
-			if(mbHaloSizeUpdated) 
+			if(mbHaloSizeUpdated)
 			{
 				mpHaloSourceBV->SetSize(mvHaloSourceSize);
 				mbHaloSizeUpdated = false;
@@ -449,7 +449,7 @@ namespace hpl {
 			{
 				SetHaloAlpha(0);
 			}
-			
+
 			return true;
 		}
 		////////////////////////////
@@ -468,10 +468,10 @@ namespace hpl {
 	// PRIVATE METHODS
 	//////////////////////////////////////////////////////////////////////////
 
-	
+
 	//-----------------------------------------------------------------------
 
-	
+
 
 	//-----------------------------------------------------------------------
 

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -42,7 +42,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	cAINodeGeneratorParams::cAINodeGeneratorParams()
 	{
 		msNodeType = "node";
@@ -57,7 +57,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	//-----------------------------------------------------------------------
 
 	class cCollideRayCallback : public iPhysicsRayCallback
@@ -86,17 +86,17 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	cAINodeGenerator::cAINodeGenerator()
 	{
 
 	}
-	
+
 	cAINodeGenerator::~cAINodeGenerator()
 	{
 
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -104,7 +104,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	static cCollideRayCallback gCollideRayCallback;
 
 	//-----------------------------------------------------------------------
@@ -119,7 +119,7 @@ namespace hpl {
 		iPhysicsWorld *pPhysicsWorld = apWorld->GetPhysicsWorld();
 
 		bool mbLoadFromFile=false;
-		
+
 		cSystem *pSystem = apWorld->GetSystem();
 		cResources *pResources = apWorld->GetResources();
 		cFileSearcher *pFileSearcher = pResources->GetFileSearcher();
@@ -144,8 +144,8 @@ namespace hpl {
 				}
 			}
 		}
-        		
-		
+
+
 		/////////////////////////////////
 		// Get the size of the world
 		cPhysicsBodyIterator it = pPhysicsWorld->GetBodyIterator();
@@ -158,7 +158,7 @@ namespace hpl {
 
 			cVector3f vMin = pBody->GetBoundingVolume()->GetMin();
 			cVector3f vMax = pBody->GetBoundingVolume()->GetMax();
-			
+
 			//X
 			if(vWorldMin.x > vMin.x) vWorldMin.x = vMin.x;
 			if(vWorldMax.x < vMax.x) vWorldMax.x = vMax.x;
@@ -171,13 +171,13 @@ namespace hpl {
 			if(vWorldMin.z > vMin.z) vWorldMin.z = vMin.z;
 			if(vWorldMax.z < vMax.z) vWorldMax.z = vMax.z;
 		}
-		
+
 		//Make the world small according to grid size.
 		vWorldMin.x += mpParams->mfGridSize;
 		vWorldMin.z += mpParams->mfGridSize;
 		vWorldMax.x -= mpParams->mfGridSize;
 		vWorldMax.z -= mpParams->mfGridSize;
-		
+
 		/////////////////////////////////////////
 		//Check against the user set min and max
 		if(vWorldMin.x < mpParams->mvMinPos.x) vWorldMin.x = mpParams->mvMinPos.x;
@@ -188,7 +188,7 @@ namespace hpl {
 
 		if(vWorldMin.z < mpParams->mvMinPos.z) vWorldMin.z = mpParams->mvMinPos.z;
 		if(vWorldMax.z > mpParams->mvMaxPos.z) vWorldMax.z = mpParams->mvMaxPos.z;
-				
+
 
 		/////////////////////////////////////////
 		//Place the nodes in the world
@@ -198,7 +198,7 @@ namespace hpl {
 		{
 			cVector3f vStart(vPos.x, vWorldMax.y, vPos.z);
 			cVector3f vEnd(vPos.x, vWorldMin.y, vPos.z);
-			
+
 			pPhysicsWorld->CastRay(this,vStart,vEnd,false,false,true);
 
 			//Log("Pos: %s Min: %s Max: %s\n",vPos.ToString().c_str(),
@@ -231,16 +231,16 @@ namespace hpl {
 		for(; nodeIt != mpNodeList->end(); ++nodeIt)
 		{
 			cTempAiNode &Node = *nodeIt;
-		
+
 			//Check if there are any walls close by.
 			for(int i=0; i<4; ++i)
 			{
 				gCollideRayCallback.mbIntersected = false;
 				pPhysicsWorld->CastRay(&gCollideRayCallback,Node.mvPos,Node.mvPos + vEnds[i],true,false,true);
-				
+
 				if(gCollideRayCallback.mbIntersected)
 				{
-					//Log("Walldistance %f : Add: (%s) Push (%s) Min: %f\n",gCollideRayCallback.mfDist, 
+					//Log("Walldistance %f : Add: (%s) Push (%s) Min: %f\n",gCollideRayCallback.mfDist,
 					//											vEnds[i].ToString().c_str(),
 					//											vPushBackDirs[i].ToString().c_str(),
 					//											mpParams->mfMinWallDist);
@@ -257,13 +257,13 @@ namespace hpl {
 
 		SaveToFile();
 	}
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// PRIVATE
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	bool cAINodeGenerator::OnIntersect(iPhysicsBody *pBody,cPhysicsRayParams *apParams)
 	{
 		if(pBody->GetMass() != 0) return true;
@@ -271,7 +271,7 @@ namespace hpl {
 		iPhysicsWorld *pPhysicsWorld = mpWorld->GetPhysicsWorld();
 
 		cVector3f vPosition = apParams->mvPoint + cVector3f(0,mpParams->mfHeightFromGround,0);
-		
+
 		mpNodeList->push_back(cTempAiNode(vPosition,"",mlIDCount));
 		mlIDCount++;
 
@@ -290,25 +290,25 @@ namespace hpl {
 
 		tWString sMapPath = mpWorld->GetFilePath();
 		tWString sSaveFile = cString::SetFileExtW(sMapPath,_W("ainodes"));
-		
+
 		TiXmlDocument* pXmlDoc = hplNew( TiXmlDocument, () );
 
 		TiXmlElement *pRootElem = static_cast<TiXmlElement*>(pXmlDoc->InsertEndChild(TiXmlElement("AiNodes")));
-		
+
 		tTempAiNodeListIt nodeIt = mpNodeList->begin();
 		for(; nodeIt != mpNodeList->end(); ++nodeIt)
 		{
 			cTempAiNode &Node = *nodeIt;
 			TiXmlElement *pNodeElem = static_cast<TiXmlElement*>(pRootElem->InsertEndChild(TiXmlElement("Node")));
-			
-			tString sPos =	cString::ToString(Node.mvPos.x)+" " + 
+
+			tString sPos =	cString::ToString(Node.mvPos.x)+" " +
 							cString::ToString(Node.mvPos.y)+" " +
 							cString::ToString(Node.mvPos.z);
 			pNodeElem->SetAttribute("Pos",sPos.c_str());
 			pNodeElem->SetAttribute("Name", Node.msName.c_str());
 			pNodeElem->SetAttribute("Name", cString::ToString(Node.mlID).c_str());
 		}
-		
+
 		FILE *pFile = cPlatform::OpenFile(sSaveFile,_W("w+"));
 		if(pFile==NULL || pXmlDoc->SaveFile(pFile)==false)
 		{
@@ -362,6 +362,6 @@ namespace hpl {
 
 		hplDelete(pXmlDoc);
 	}
-	
+
 	//-----------------------------------------------------------------------
 }

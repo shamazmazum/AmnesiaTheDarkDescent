@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -69,7 +69,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	void cWidgetButton::SetImage(cGuiGfxElement *apImage, bool abDestroyImage)
 	{
 		mpImage = apImage;
@@ -146,7 +146,7 @@ namespace hpl {
 		{
 			cColor color = IsEnabled()?cColor(1):cColor(1,0.2f);
 			mpSet->DrawGfx( mpImage,GetGlobalPosition()+
-							cVector3f(	mvSize.x/2 - mpImage->GetImageSize().x/2, 
+							cVector3f(	mvSize.x/2 - mpImage->GetImageSize().x/2,
 										mvSize.y/2 - mpImage->GetImageSize().y/2,0.2f) + vOffset,
 							-1,
 							color
@@ -172,18 +172,18 @@ namespace hpl {
 						cVector3f(mvSize.x/2, mvSize.y/2 - mvDefaultFontSize.y/2,0.5f)+vOffset,
 						eFontAlign_Center);*/
 		}
-		
+
 
 		////////////////////////////////
 		// Borders and background
 		if(mbPressed)
 		{
-			DrawBordersAndCorners(	mpGfxBackgroundDown, mvGfxBordersDown, mvGfxCornersDown, 
+			DrawBordersAndCorners(	mpGfxBackgroundDown, mvGfxBordersDown, mvGfxCornersDown,
 									GetGlobalPosition(), mvSize);
 		}
 		else
 		{
-			DrawBordersAndCorners(	mpGfxBackgroundUp, mvGfxBordersUp, mvGfxCornersUp, 
+			DrawBordersAndCorners(	mpGfxBackgroundUp, mvGfxBordersUp, mvGfxCornersUp,
 									GetGlobalPosition(), mvSize);
 		}
 	}
@@ -208,7 +208,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	bool cWidgetButton::OnMouseMove(const cGuiMessageData& aData)
 	{
 		return true;
@@ -262,9 +262,9 @@ namespace hpl {
 	{
 		return false;
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	bool cWidgetButton::OnMouseLeave(const cGuiMessageData& aData)
 	{
 		if(mbToggleable==false)
@@ -292,7 +292,7 @@ namespace hpl {
 			if(aData.mlVal==eUIButton_Primary)
 				return OnMouseDown(cGuiMessageData(eGuiMouseButton_Left));
 		}
-		
+
 		return false;
 	}
 

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -45,7 +45,7 @@ private:
 
 enum eLuxFootSound
 {
-	eLuxFootSound_Step,	
+	eLuxFootSound_Step,
 	eLuxFootSound_Landing,
 };
 
@@ -55,10 +55,10 @@ class cLuxMoveState_Normal : public iLuxMoveState
 {
 friend class cLuxMoveState_Normal_Callback;
 friend class cLuxPlayer_SaveData;
-public:	
+public:
 	cLuxMoveState_Normal(cLuxPlayer *apPlayer);
 	~cLuxMoveState_Normal();
-	
+
 	void OnMapEnter();
 
 	void OnEnterState(eLuxMoveState aPrevState);
@@ -75,7 +75,7 @@ public:
 	void OnRun(bool abActive);
 	void OnCrouch(bool abActive);
 	void OnJump(bool abActive);
-	
+
 	void Jump();
 
 	void OnDraw(float afFrameTime);
@@ -90,7 +90,7 @@ public:
 
 	float GetMoveSpeedMul();
 	float GetRunSpeedMul();
-	
+
 private:
 	bool UpdateLedgeCheck(float afTimeStep);
 	void UpdateMovement(float afTimeStep);
@@ -107,7 +107,7 @@ private:
 	tString msJumpSound;
 	tString msCrouchSound;
 	tString msStandSound;
-    
+
 	bool mbWasMoving;
 
 	float mfRunForwardMul;
@@ -122,7 +122,7 @@ private:
 	float mfInAirBackwardMul;
 	float mfInAirSidewayMul;
 
-	float mfDefaultForwardMul; 
+	float mfDefaultForwardMul;
 
 	float mfMinHitGroundBounceSpeed;
 
@@ -144,17 +144,17 @@ private:
 
 	bool mbHeadGroundBounceActive;
 	float mfHeadGroundBounce;
-	
+
 	cVector2f mvWalkBobMax;
 	cVector2f mvRunBobMax;
 	cVector2f mvCrouchBobMax;
-	
+
 	float mfWalkMinBobSpeed;
 	float mfWalkMaxBobSpeed;
-	
+
 	float mfRunMinBobSpeed;
 	float mfRunMaxBobSpeed;
-	
+
 	float mfCrouchMinBobSpeed;
 	float mfCrouchMaxBobSpeed;
 
@@ -163,7 +163,7 @@ private:
 
 	float mfGroundBounceSize;
 	float mfGroundBounceSpeed;
-	
+
 	float mfBounceSizeMul;
 	float mfBounceSpeedMul;
 

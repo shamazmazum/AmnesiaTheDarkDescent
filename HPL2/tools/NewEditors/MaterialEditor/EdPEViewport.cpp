@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -33,13 +33,13 @@
 
 //----------------------------------------------------------------
 
-cEdPEViewport::cEdPEViewport(iEditor* apEditor, iFrameBuffer* apFB): iEdViewport(apEditor, _W("Edition"), 
+cEdPEViewport::cEdPEViewport(iEditor* apEditor, iFrameBuffer* apFB): iEdViewport(apEditor, _W("Edition"),
 																				apEditor->GetWorld()->GetEngWorld(),
 																				apFB)
 {
 	mbDrawGrid = false;
 	mbDrawDebug = false;
-	mbDrawAxes = false; 
+	mbDrawAxes = false;
 
 	mpCamera->AddCamMode(hplNew(cCamModePerspective, (mpCamera, eEdCameraType_Perspective)));
 	mpGrid->SetPlaneNormal(ePlaneNormal_Y);
@@ -152,7 +152,7 @@ bool cEdPEViewport::OnViewportDraw(const cGuiMessageData& aData)
 	mpSet->DrawGfx(mpGfxRedFrame, vPos + cVector3f(0,vSize.y-2,0), cVector2f(vSize.x,2), color);
 	mpSet->DrawGfx(mpGfxRedFrame, vPos, cVector2f(2,vSize.y), color);
 	mpSet->DrawGfx(mpGfxRedFrame, vPos + cVector3f(vSize.x-2,0,0), cVector2f(2,vSize.y), color);
-	
+
 	return true;
 }
 
@@ -237,11 +237,11 @@ void cEdPEViewport::OnCreateLayout()
 	/////////////////////////////////////////////
 	// Gfx Init
 	mpGfxRedFrame = mpSet->GetGui()->CreateGfxFilledRect(cColor(1,1,1,1), eGuiMaterial_Diffuse);
-	
+
 	mpGfxPointerTumble = mpSet->GetGui()->CreateGfxImage("gui_def_pointer_tumble.tga",eGuiMaterial_Alpha);
 	mpGfxPointerTrack = mpSet->GetGui()->CreateGfxImage("gui_def_pointer_track.tga",eGuiMaterial_Alpha);
 	mpGfxPointerZoom = mpSet->GetGui()->CreateGfxImage("gui_def_pointer_zoom.tga",eGuiMaterial_Alpha);
-	
+
 	/////////////////////////////////////////////
 	// Layout init
 	cWidgetFrame* pFrame = static_cast<cWidgetFrame*>(GetBG());
@@ -249,7 +249,7 @@ void cEdPEViewport::OnCreateLayout()
 
 	mpPresetLabel = mpSet->CreateWidgetLabel(cVector3f(5,5,1),0,_W(""), GetBG());
 	mpPresetLabel->SetDefaultFontColor(cColor(1,1));
-	
+
 	// Render view init
 	CreateGuiViewport(GetBG());
 	SetGuiViewportPos(cVector3f(0,0,0.05f));

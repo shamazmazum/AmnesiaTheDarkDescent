@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -26,7 +26,7 @@
 
 //------------------------------------------------------------------------------------
 
-tString cHPLMaterial::gsTextureTypeStrings[] = 
+tString cHPLMaterial::gsTextureTypeStrings[] =
 {
 	"1D",
 	"2D",
@@ -56,7 +56,7 @@ tString cHPLMaterial::gsAnimModeStrings[] =
 	""
 };
 
-tString cHPLMaterial::gsBlendModeStrings[] = 
+tString cHPLMaterial::gsBlendModeStrings[] =
 {
 	"None",
 	"Add",
@@ -148,7 +148,7 @@ bool cEdMaterialClass::Create()
 	}
 
 	pRes->DestroyXmlDocument(pTempDoc);
-    
+
 	return bSuccessfullyCreated;
 }
 
@@ -300,7 +300,7 @@ void cHplTexture::Reload()
 			msType = cHPLMaterial::gsTextureTypeStrings[type];
 			mpEngTexture->SetFullPath(sFullPath);
 		}
-		
+
 		hplDelete(pBmp);
 	}
 }
@@ -321,7 +321,7 @@ void cHplTexture::Update()
 		Reload();
 		if(mbValid==false)
 			return;
-		
+
 		eTextureWrap wrap = pMatMgr->GetWrap(msWrap);
 		mpEngTexture->SetWrapR(wrap);
 		mpEngTexture->SetWrapS(wrap);
@@ -387,8 +387,8 @@ eTextureType cHplTexture::GetTextureTypeFromBitmap(cBitmap* apBmp)
 	{
 		if(vSize.y==1)
 			return eTextureType_1D;
-		
-		if(vSize.x%2!=0 || 
+
+		if(vSize.x%2!=0 ||
 			vSize.y%2!=0)
 			return eTextureType_Rect;
 
@@ -555,7 +555,7 @@ bool cHPLMaterial::LoadFromFile(const tWString& asFilename)
 		return false;
 	}
 	msFilename = asFilename;
-	
+
 	SetType(cString::To16Char(pMat->GetType()->GetName()));
 	SetDepthTest(pMat->GetDepthTest());
 	SetUseAlpha(pMat->GetUseAlphaDissolveFilter());
@@ -600,7 +600,7 @@ bool cHPLMaterial::LoadFromFile(const tWString& asFilename)
 		OnWorldLoad();
 
 	SetUpdated();
-	
+
 	pManager->Destroy(pMat);
 
 
@@ -643,13 +643,13 @@ bool cHPLMaterial::SaveToFile(const tWString& asFilename)
 	if(mvUVAnimations.empty()==false)
 	{
 		cXmlElement* pXmlAnims = pDoc->CreateChildElement("UvAnimations");
-		tString sTypeStrings[] = 
+		tString sTypeStrings[] =
 		{
 			"Translate",
 			"Sin",
 			"Rotate"
 		};
-		tString sAxisStrings[] = 
+		tString sAxisStrings[] =
 		{
 			"X",
 			"Y",
@@ -737,7 +737,7 @@ void cHPLMaterial::UpdateMaterialInMemory(const tString& asName)
 			switch(pEditingTex->GetType())
 			{
 			case eTextureType_1D:
-				pNewTex = pTexMgr->Create1D(sName, bMipMaps); 
+				pNewTex = pTexMgr->Create1D(sName, bMipMaps);
 				break;
 			case eTextureType_2D:
 				pNewTex = pTexMgr->Create2D(sName, bMipMaps);
@@ -953,7 +953,7 @@ cMaterial* cHPLMaterial::GetPreviewMaterial()
 				pTex = pTexWrapper->GetEngTexture();
 			else
 				pTex = mvDefaultTextures[i];
-	
+
 			mpEngMaterial->SetTexture((eMaterialTexture)i, pTex);
 		}
 

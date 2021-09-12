@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -129,7 +129,7 @@ iEdScnObject* cEdObjectPicker::GetClosestPick()
 
 void cEdObjectPicker::Update()
 {
-	//if(mpPickFilter==NULL || 
+	//if(mpPickFilter==NULL ||
 	//	mpPickMethod==NULL)
 	//	return;
 	if(mbNeedsUpdate==false)
@@ -139,11 +139,11 @@ void cEdObjectPicker::Update()
 
 	mvPicks.clear();
 
-	if(mpPickMethod) 
+	if(mpPickMethod)
 		mpPickMethod->PreIterateSetUp();
 
 	Iterate();
-	
+
 	// Sort picks by distance to view position
 	if(mvPicks.empty()==false) sort(mvPicks.begin(), mvPicks.end(), SortHitsByDistance);
 }
@@ -157,13 +157,13 @@ void cEdObjectPicker::Iterate()
 
 	iEdViewport* pViewport = mpWorld->GetEditor()->GetFocusedViewport();
 	cBoundingVolume frustumBV = pViewport->GetEngCamera()->GetFrustum()->GetBoundingVolume();
-    
+
 	tScnObjList lstObjects;
 	/////////////////////////////
 	// Get Container
     cWorld *pWorld = mpWorld->GetEngWorld();
 	iRenderableContainer* pContainer = pWorld->GetRenderableContainer(eWorldContainerType_Dynamic);
-	
+
 	/////////////////////////////
 	// Search nodes in container
 	pContainer->UpdateBeforeRendering();
@@ -178,7 +178,7 @@ void cEdObjectPicker::IterateRenderableNode(iRenderableContainerNode *apNode, cB
 
 	if(apNode->GetParent()!=NULL)
 	{
-		if(cMath::CheckAABBIntersection(apNode->GetMin(), apNode->GetMax(), apBV->GetMin(), apBV->GetMax())==false) 
+		if(cMath::CheckAABBIntersection(apNode->GetMin(), apNode->GetMax(), apBV->GetMin(), apBV->GetMax())==false)
 			return;
 	}
 
@@ -191,9 +191,9 @@ void cEdObjectPicker::IterateRenderableNode(iRenderableContainerNode *apNode, cB
 		{
 			iRenderable *pRenderable = *it;
 			iEdScnObject* pObj = static_cast<iEdScnObject*>(pRenderable->GetRenderableUserData());
-            
-			if(pObj==NULL || 
-				pObj->IsVisible()==false || 
+
+			if(pObj==NULL ||
+				pObj->IsVisible()==false ||
 				pRenderable->CollidesWithBV(apBV)==false)
 				continue;
 
@@ -205,7 +205,7 @@ void cEdObjectPicker::IterateRenderableNode(iRenderableContainerNode *apNode, cB
 
 				mvPicks.push_back(pick);
 			}
-			
+
 			mpPickMethod->PostPickCleanUp();
 		}
 	}

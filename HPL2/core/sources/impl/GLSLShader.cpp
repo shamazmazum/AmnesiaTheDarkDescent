@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -37,13 +37,13 @@ namespace hpl{
 
 	//-----------------------------------------------------------------------
 
-	cGLSLShader::cGLSLShader(const tString& asName,eGpuShaderType aType, iLowLevelGraphics *apLowLevelGraphics) 
+	cGLSLShader::cGLSLShader(const tString& asName,eGpuShaderType aType, iLowLevelGraphics *apLowLevelGraphics)
 				: iGpuShader(asName, _W(""), aType, eGpuProgramFormat_GLSL)
 	{
 		;
 
 		mpLowLevelGraphics = apLowLevelGraphics;
-		
+
 		mlHandle = glCreateShader(GetGLShaderType(aType));
 	}
 
@@ -61,11 +61,11 @@ namespace hpl{
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	bool cGLSLShader::Reload(){return false;}
 	void cGLSLShader::Unload(){}
 	void cGLSLShader::Destroy(){}
-	
+
 	//-----------------------------------------------------------------------
 
 	bool cGLSLShader::CreateFromFile(const tWString &asFile, const tString &asEntry, bool abPrintInfoIfFail)
@@ -79,7 +79,7 @@ namespace hpl{
 			return false;
 		}
 		SetFullPath(asFile);
-		
+
 		fseek(pFile,0,SEEK_END);
 		int lFileSize = ftell(pFile);
 		rewind(pFile);
@@ -88,13 +88,13 @@ namespace hpl{
 
 		fread(pBuffer, sizeof(GLchar), lFileSize, pFile);
 		pBuffer[lFileSize] =0; //Zero at end so it is a proper string.
-		
+
 		fclose(pFile);
 
         bool bRet = CreateFromString(pBuffer, asEntry, abPrintInfoIfFail);
 
 		hplFree(pBuffer);
-		
+
 		return bRet;
 	}
 
@@ -124,17 +124,17 @@ namespace hpl{
 			{
 				Error("Failed to compile GLSL shader '%s'!\n",cString::To8Char(GetFullPath()).c_str());
 				Log("Shader code:\n-------------------\n");
-				
+
 				LogShaderCode(apStringData);
-	            
-				
+	
+
 				Log("---------------------\n");
 				Log("Compile log:\n");
 				LogShaderInfoLog();
 			}
 			return false;
 		}
-		
+
 		/////////////////////////////
 		//If debug is on, then show code + compile log
 		if(mbDebugInfo)
@@ -217,7 +217,7 @@ namespace hpl{
 
 		return GL_VERTEX_SHADER;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 }

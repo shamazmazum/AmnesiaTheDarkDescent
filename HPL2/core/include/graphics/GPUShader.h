@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -31,21 +31,21 @@ namespace hpl {
 	class iTexture;
 
 	//---------------------------------------------------
-	
+
 	class cGpuShader_SamplerUnit
 	{
 	public:
 		tString msName;
 		int mlUnit;
 	};
-	
+
 	//---------------------------------------------------
 
 	class iGpuShader : public iResourceBase
 	{
 	public:
 		iGpuShader(const tString& asName, const tWString& asFullPath, eGpuShaderType aType,eGpuProgramFormat aProgramFormat) : iResourceBase(asName, asFullPath,0){
-			mProgramFormat = aProgramFormat; 
+			mProgramFormat = aProgramFormat;
 			mShaderType = aType;
 		}
 		virtual ~iGpuShader(){}
@@ -56,13 +56,13 @@ namespace hpl {
 
 		/**
 		* Create a from a file. Used internally
-		* \param asFile 
-		* \param asEntry 
-		* \return 
+		* \param asFile
+		* \param asEntry
+		* \return
 		*/
 		virtual bool CreateFromFile(const tWString& asFile, const tString& asEntry="main", bool abPrintInfoIfFail=true)=0;
 		virtual bool CreateFromString(const char *apStringData, const tString& asEntry="main", bool abPrintInfoIfFail=true)=0;
-		
+
 		eGpuProgramFormat GetFormat(){ return mProgramFormat;}
 		eGpuShaderType GetType() { return mShaderType;}
 

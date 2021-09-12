@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -90,14 +90,14 @@ public:
 			float fStart = fSize *0.5f * (float)lNum + fSize;
 			float fEnd = fSize *0.5f* (float)-lNum - fSize;
 			float fY = -0.1;//gpFloor->GetWorldPosition().y + 0.05f;
-			
+
 			for(int i=-lNum/2; i<lNum/2+1;++i)
 			{
 				float fPos = fSize * (float)i;
 				apFunctions->GetLowLevelGfx()->DrawLine(cVector3f(fPos,fY,fStart),cVector3f(fPos,fY,fEnd),cColor(0.5f,1));
 				apFunctions->GetLowLevelGfx()->DrawLine(cVector3f(fStart,fY,fPos),cVector3f(fEnd,fY,fPos),cColor(0.5f,1));
 			}
-			
+
 		}
 
 		if(gbDrawAxes)
@@ -110,12 +110,12 @@ public:
 			apFunctions->SetDepthTest(true);
 		}
    	}
-	
+
 	void OnPostTranslucentDraw(cRendererCallbackFunctions *apFunctions)
 	{
 
 	}
-	
+
 	cWorld *mpWorld;
 	iPhysicsWorld *mpPhysicsWorld;
 	cVector3f mvDragPos;
@@ -140,7 +140,7 @@ public:
 	cSimpleUpdate() : iUpdateable("Simple3D")
 	{
 		mpLowLevelGraphics = gpEngine->GetGraphics()->GetLowLevel();
-		
+
 		////////////////////////////////
 		// Rendering setup
 		gpEngine->GetResources()->GetMaterialManager()->SetTextureFilter(eTextureFilter_Trilinear);
@@ -149,7 +149,7 @@ public:
 		////////////////////////////////
 		// Create world
 		mpWorld = gpEngine->GetScene()->CreateWorld("Test");
-		
+
 		////////////////////////////////
 		// Create physics world
 		gpEngine->GetPhysics()->LoadSurfaceData("materials.cfg");
@@ -161,26 +161,26 @@ public:
 
 		mpWorld->SetPhysicsWorld(mpPhysicsWorld);
 
-		
+
 		////////////////////////////////
 		// Setup sky box
 		mpWorld->SetSkyBoxColor(cColor(0.0f, 1.0f));
 		mpWorld->SetSkyBoxActive(true);
-		
+
 		////////////////////////////////
 		// Render callback
 		renderCallback.mpWorld = mpWorld;
 		renderCallback.mpPhysicsWorld = mpPhysicsWorld;
-		
+
 		////////////////////////////////
 		// Create meshes
 		cMesh *pMesh =NULL;
 		cMeshEntity *pBox = NULL;
-				
+
 		/////////////////
 		//Floor
 		gvFloors.resize(4);
-		
+
 		pMesh = gpEngine->GetResources()->GetMeshManager()->CreateMesh("modelview_rect.dae");
 		gvFloors[0] = mpWorld->CreateMeshEntity("Floor",pMesh,true);
 		gvFloors[0]->SetMatrix(cMath::MatrixScale(6));
@@ -191,11 +191,11 @@ public:
 		{
 			pMesh = gpEngine->GetResources()->GetMeshManager()->CreateMesh("modelview_rect.dae");
 			cMeshEntity *pFloor = mpWorld->CreateMeshEntity("Floor",pMesh,true);;
-			
+
 			cVector3f vPos(0,6.0f-0.2f,0);
 			cMatrixf mtxTrans = cMath::MatrixScale(6);
 			mtxTrans = cMath::MatrixMul(cMath::MatrixRotateX(kPi2f),mtxTrans);
-			
+
 			if(i==0)
 			{
 				vPos.x -= 6;
@@ -210,8 +210,8 @@ public:
 			{
 				vPos.z -= 6;
 			}
-			
-            
+
+
 			mtxTrans.SetTranslation(vPos);
 			pFloor->SetMatrix(mtxTrans);
 			gvFloors[i+1] = pFloor;
@@ -222,12 +222,12 @@ public:
 
 			pBody->SetMatrix(mtxTrans);
 		}
-		
-		
+
+
 		/////////////////
 		//Particle System
 		gpParticleSystem = NULL;
-		if(gsParticleFile != "") 
+		if(gsParticleFile != "")
 			LoadParticle(gsParticleFile);
 		else
 			mpLowLevelGraphics->SetWindowCaption("ParticleView - No model loaded!");
@@ -244,7 +244,7 @@ public:
 
 			pLightSpot = mpWorld->CreateLightSpot("SpotLight","");
 			pLightSpot->SetDiffuseColor(cColor(1,1,1,1.0f));
-			
+
 			//Key
 			if(i==0)
 			{
@@ -267,7 +267,7 @@ public:
 				pLightSpot->SetVisible(false);
 				vPos = cVector3f(-1,4,-6);
 			}
-			
+
 			//Rest
 			pLightSpot->SetFOV(cMath::ToRad(110.0f));
 			pLightSpot->SetAspect(1.0f);
@@ -287,7 +287,7 @@ public:
 		gpLightBox->SetSize(cVector3f(20.0f));
 		gpLightBox->SetDiffuseColor(cColor(0.2f,1.0f));
 
-			
+
 		/////////////////////////////////
 		// Compile world
 		mpWorld->Compile(false);
@@ -296,7 +296,7 @@ public:
 		// Init variables
 		msCurrentFilePath = _W("");
 	}
-	
+
 	//--------------------------------------------------------------
 
 	void SetupView()
@@ -305,7 +305,7 @@ public:
 
 		cRenderSettings *pSettings = gpSimpleCamera->GetViewport()->GetRenderSettings();
 		gpSimpleCamera->GetViewport()->AddRendererCallback(&renderCallback);
-		
+
 		gpSimpleCamera->SetMouseMode(true);
 
 		//////////////////////////
@@ -338,23 +338,23 @@ public:
 		}
 		gpParticleSystem = mpWorld->CreateParticleSystem("temp",asFileName,1);
 		gpParticleSystem->SetPosition(cVector3f(0,3,0));
-		
+
 
 		Log("--------- PARTICLE SYSTEM INFO --------\n");
 
-		
+
 
 		Log("---------------------------------------\n");
 
 	}
-	
+
 	//--------------------------------------------------------------
 
 	void InitGuiAfterLoad()
-	{	
-		
+	{
+
 	}
-	
+
 	//--------------------------------------------------------------
 
 	void CreateGuiWindow()
@@ -380,7 +380,7 @@ public:
 		vGroupSize.x = vSize.x - 20;
 		cVector3f vPos = cVector3f(pSet->GetVirtualSize().x - vSize.x - 3, 3, 0);
 		mpOptionWindow = pSet->CreateWidgetWindow(0,vPos,vSize,_W("ParticleView Toolbar") );
-		
+
 		vSize = cVector2f(vSize.x-30, 18);
 		vPos = cVector3f(10, 30, 0.1f);
 
@@ -433,7 +433,7 @@ public:
 			pCheckBox = pSet->CreateWidgetCheckBox(vGroupPos,vCheckSize,_W("Draw grid"),pGroup);
 			pCheckBox->SetChecked(gbDrawGrid);
 			pCheckBox->AddCallback(eGuiMessage_CheckChange,this, kGuiCallback(ChangeDrawGrid));
-			
+
 			vAddPos = cVector3f(vCheckSize.x, 0,0);
 			pCheckBox = pSet->CreateWidgetCheckBox(vGroupPos + vAddPos,vCheckSize,_W("Draw axes"),pGroup);
 			pCheckBox->SetChecked(gbDrawAxes);
@@ -452,7 +452,7 @@ public:
 			pComboBox->SetSelectedItem(0);
 			pComboBox->AddCallback(eGuiMessage_SelectionChange,this, kGuiCallback(ChangeBackgroundColor));
 			vGroupPos.y += 22;
-			
+
 			//Group end
 			vGroupSize.y = vGroupPos.y + 5;
 			pGroup->SetSize(vGroupSize);
@@ -487,7 +487,7 @@ public:
 			pSlider->SetValue( (int)(gpLightBox->GetDiffuseColor().r * 255.0 + 0.5f));
 			pLabel = pSet->CreateWidgetLabel(vGroupPos, vSize, _W("Ambient:"), pGroup);
 			vGroupPos.y += 22;
-			
+
 			vGroupPos.y += 5;
 
 			//Group end
@@ -495,23 +495,23 @@ public:
 			pGroup->SetSize(vGroupSize);
 			vPos.y += vGroupSize.y + 15;
 		}
-				
-		
+
+
 		InitGuiAfterLoad();
 	}
-	
+
 	//--------------------------------------------------------------
-	
+
 	bool PressLoadParticle(iWidget* apWidget,cGuiMessageData& aData)
 	{
 		mvPickedFiles.clear();
 		cGuiSet *pSet = gpSimpleCamera->GetSet();
 		cGuiPopUpFilePicker* pPicker = pSet->CreatePopUpLoadFilePicker(mvPickedFiles,false,msCurrentFilePath,false, this, kGuiCallback(LoadModelFromFilePicker));
 		int lCat = pPicker->AddCategory(_W("Particles"),_W("*.ps"));
-		
+
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,PressLoadParticle)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,PressLoadParticle)
 
 	bool PressReload(iWidget* apWidget,cGuiMessageData& aData)
 	{
@@ -520,9 +520,9 @@ public:
 
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,PressReload)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,PressReload)
 
-	
+
 	bool LoadModelFromFilePicker(iWidget* apWidget,cGuiMessageData& aData)
 	{
 		if(mvPickedFiles.empty()) return true;
@@ -531,14 +531,14 @@ public:
 
 		msCurrentFilePath = cString::GetFilePathW(sFilePath);
 		gpEngine->GetResources()->AddResourceDir(msCurrentFilePath,false);
-		
+
 		gsParticleFile = cString::To8Char(sFilePath);
-		LoadParticle(gsParticleFile);  
+		LoadParticle(gsParticleFile);
 		InitGuiAfterLoad();
 
-		return true;		
+		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,LoadModelFromFilePicker)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,LoadModelFromFilePicker)
 
 
 	//--------------------------------------------------------------
@@ -546,7 +546,7 @@ public:
 	bool ChangeDrawFloor(iWidget* apWidget,cGuiMessageData& aData)
 	{
 		if(gvFloors.size() < 1) return true;
-		
+
 		gvFloors[0]->SetVisible(aData.mlVal == 1);
 		return true;
 	}
@@ -563,21 +563,21 @@ public:
 	}
 	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeDrawWalls)
 
-	
+
 	bool ChangeDrawGrid(iWidget* apWidget,cGuiMessageData& aData)
 	{
 		gbDrawGrid = aData.mlVal == 1;
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeDrawGrid)  
-	
+	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeDrawGrid)
+
 	bool ChangeDrawAxes(iWidget* apWidget,cGuiMessageData& aData)
 	{
 		gbDrawAxes = aData.mlVal == 1;
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeDrawAxes)  
-	
+	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeDrawAxes)
+
 	bool ChangeBackgroundColor(iWidget* apWidget,cGuiMessageData& aData)
 	{
 		cColor gvBGColors[] = {cColor(0,1),cColor(0.5f,1),cColor(1,1) };
@@ -592,7 +592,7 @@ public:
 		gpLightBox->SetDiffuseColor(cColor( ((float)aData.mlVal) / 255.0f, 1.0f ));
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeAmbientColor)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeAmbientColor)
 
 	bool ChangeSSAOActive(iWidget* apWidget,cGuiMessageData& aData)
 	{
@@ -604,7 +604,7 @@ public:
 	}
 	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeSSAOActive)
 
-		
+
 	bool ChangeBloomActive(iWidget* apWidget,cGuiMessageData& aData)
 	{
 		gpPostEffectComp->GetPostEffect(0)->SetActive(aData.mlVal == 1);
@@ -620,7 +620,7 @@ public:
 
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeShowAABB) 	
+	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeShowAABB)
 
 	//--------------------------------------------------------------
 
@@ -639,11 +639,11 @@ public:
 			pSet->DrawFont(pFont,cVector3f(5,fY,0),14,cColor(1,1),	_W("Texture memory usage: %d kb / %.1f Mb"),
 							lTexMem, ((float)lTexMem) / 1024.0);
 			fY += 16;
-			
+
 			//pSet->DrawFont(pFont,cVector3f(5,50,0),14,cColor(1,1),
 			//	_W("Angle: %f"),gvJoints[0]->GetAngle());
 
-			
+
 		}
 	}
 
@@ -654,7 +654,7 @@ public:
 		//Debug when doing update debugg
 		//Log("-----\n");
 		//////////////////////////////////////////
-		
+
 	}
 
 
@@ -663,16 +663,16 @@ public:
 
 	~cSimpleUpdate()
 	{
-	
+
 	}
 
 public:
 	iLowLevelGraphics* mpLowLevelGraphics;
 	cWorld* mpWorld;
 	iPhysicsWorld *mpPhysicsWorld;
-	
+
 	cSimpleRenderCallback renderCallback;
-		
+
 	cWidgetWindow *mpOptionWindow;
 
 	tWStringVec mvPickedFiles;
@@ -697,13 +697,13 @@ int hplMain(const tString &asCommandline)
 #endif
 
 	//iResourceBase::SetLogCreateAndDelete(true);
-	//iGpuProgram::SetLogDebugInformation(true); 
+	//iGpuProgram::SetLogDebugInformation(true);
 	cRendererDeferred::SetGBufferType(eDeferredGBuffer_32Bit);
 	cRendererDeferred::SetNumOfGBufferTextures(3);
 	cRendererDeferred::SetSSAOLoaded(true);
 
 	SetLogFile(_W("particleview.log"));
-	
+
 	//Init the game engine
 	cEngineInitVars vars;
 	vars.mGraphics.mvScreenSize.x = 1024;
@@ -714,7 +714,7 @@ int hplMain(const tString &asCommandline)
 	gpEngine->SetLimitFPS(false);
 	gpEngine->GetGraphics()->GetLowLevel()->SetVsyncActive(false);
 	gpEngine->SetWaitIfAppOutOfFocus(true);
-	
+
 
 
 	if(asCommandline != "")
@@ -728,16 +728,16 @@ int hplMain(const tString &asCommandline)
 		if(sDir != _W(""))
 			gpEngine->GetResources()->AddResourceDir(sDir,false);
 	}
-	
+
 	//Add resources
 	gpEngine->GetResources()->LoadResourceDirsFile("resources.cfg");
-	
+
 	//Add updates
 	cSimpleUpdate Update;
 	gpEngine->GetUpdater()->AddUpdate("Default", &Update);
-	
+
 	gpSimpleCamera = hplNew(cSimpleCamera, (Update.GetName(),gpEngine, Update.mpWorld, 10, cVector3f(0,0,9), true) );
-	
+
 	gpEngine->GetUpdater()->AddUpdate("Default", gpSimpleCamera);
 
 	Update.SetupView();
@@ -745,7 +745,7 @@ int hplMain(const tString &asCommandline)
 	//Run the engine
 	gpEngine->Run();
 
-	
+
 	hplDelete (gpSimpleCamera);
 
 	//Delete the engine

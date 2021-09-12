@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -42,8 +42,8 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// PUBLIC METHODS
 	//////////////////////////////////////////////////////////////////////////
-	
-	
+
+
 	//-----------------------------------------------------------------------
 
 	tWString cString::To16Char(const tString &asString)
@@ -60,11 +60,11 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	tString cString::To8Char(const tWString &awsString)
 	{
         tString sTemp;
-		
+
 		#ifdef WIN32
 			sTemp.resize(awsString.size());
 			for(size_t i=0; i<awsString.length(); ++i)
@@ -83,7 +83,7 @@ namespace hpl {
 
 		return sTemp;
 	}
-    
+
     tWString cString::UTF8ToWChar(const tString& asString)
     {
         tWString sTemp;
@@ -98,38 +98,38 @@ namespace hpl {
                 pCur+=1;
             }
             else if ( (*pCur & 0xe0) == 0xc0 ) {
-                uTemp = (pCur[0] & 0x1f) << 6 | 
+                uTemp = (pCur[0] & 0x1f) << 6 |
                         (pCur[1] & 0x3f);
                 pCur+=2;
             }
             else if ( (*pCur & 0xf0) == 0xe0 ) {
-                uTemp = (pCur[0] & 0x0f) << 12 | 
-                        (pCur[1] & 0x3f) << 6 | 
+                uTemp = (pCur[0] & 0x0f) << 12 |
+                        (pCur[1] & 0x3f) << 6 |
                         (pCur[2] & 0x3f);
                 pCur+=3;
             }
 #if SIZEOF_WCHAR == 4
             else if ( (*pCur & 0xf8) == 0xf0 ) {
-                uTemp = (pCur[0] & 0x07) << 18 | 
-                        (pCur[1] & 0x3f) << 12 | 
-                        (pCur[2] & 0x3f) << 6 | 
+                uTemp = (pCur[0] & 0x07) << 18 |
+                        (pCur[1] & 0x3f) << 12 |
+                        (pCur[2] & 0x3f) << 6 |
                         (pCur[3] & 0x3f);
                 pCur+=4;
             }
             else if ( (*pCur & 0xfc) == 0xf8 ) {
-                uTemp = (pCur[0] & 0x03) << 24 | 
-                        (pCur[1] & 0x3f) << 18 | 
-                        (pCur[2] & 0x3f) << 12 | 
-                        (pCur[3] & 0x3f) << 6 | 
+                uTemp = (pCur[0] & 0x03) << 24 |
+                        (pCur[1] & 0x3f) << 18 |
+                        (pCur[2] & 0x3f) << 12 |
+                        (pCur[3] & 0x3f) << 6 |
                         (pCur[4] & 0x3f);
                 pCur+=5;
             }
             else if ( (*pCur & 0xfe) == 0xfc ) {
-                uTemp = (pCur[0] & 0x01) << 30 | 
-                        (pCur[1] & 0x3f) << 24 | 
-                        (pCur[2] & 0x3f) << 18 | 
-                        (pCur[3] & 0x3f) << 12 | 
-                        (pCur[4] & 0x3f) << 6 | 
+                uTemp = (pCur[0] & 0x01) << 30 |
+                        (pCur[1] & 0x3f) << 24 |
+                        (pCur[2] & 0x3f) << 18 |
+                        (pCur[3] & 0x3f) << 12 |
+                        (pCur[4] & 0x3f) << 6 |
                         (pCur[5] & 0x3f);
                 pCur+=6;
             }
@@ -214,7 +214,7 @@ namespace hpl {
 
 		return wsString;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	tString cString::Sub(const tString& asString,int alStart,int alCount)
@@ -238,13 +238,13 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	//Get the file extension of a string
 	tString cString::GetFileExt(const tString& aString)
 	{
 		tString sFileName = GetFileName(aString);
 		int pos = GetLastStringPos(sFileName,".");
-		
+
 		if(pos<0)
 			return "";
 		else
@@ -255,7 +255,7 @@ namespace hpl {
 	{
 		tWString sFileName = GetFileNameW(aString);
 		int pos = GetLastStringPosW(sFileName,_W("."));
-		
+
 		if(pos<0)
 			return _W("");
 		else
@@ -286,7 +286,7 @@ namespace hpl {
 		}
 		return sTemp;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	tString cString::ToUpperCase(const tString& aString)
@@ -357,7 +357,7 @@ namespace hpl {
 
 		return aPath +sSepp+ GetFileName(aString);
 	}
-	
+
 	tWString cString::SetFilePathW(const tWString& aString,const tWString& aPath)
 	{
 		tWString sSepp=_W("");
@@ -488,7 +488,7 @@ namespace hpl {
 
 		return sRelativePath;
 	}
-		
+
 	//-----------------------------------------------------------------------
 
 	tString cString::AddSlashAtEnd(const tString& asPath,char alSlash)
@@ -599,7 +599,7 @@ namespace hpl {
 		if(asNewChar !="")
 		{
 			tString sNewString = aString;
-			
+
 			for(int i=0;i<(int)aString.size();i++)
 			{
 				if(aString[i] == asOldChar[0]) sNewString[i] = asNewChar[0];
@@ -648,7 +648,7 @@ namespace hpl {
 	tString cString::ReplaceStringTo(const tString& asString, const tString& asOldString,const tString& asNewString)
 	{
 		tString sNewString = "";
-		
+
 		for(size_t i=0;i<asString.size();i++)
 		{
 			bool bFound = true;
@@ -667,7 +667,7 @@ namespace hpl {
 			{
 				bFound = false;
 			}
-			
+
             //Insert new string
 			if(bFound)
 			{
@@ -688,13 +688,13 @@ namespace hpl {
 	tString cString::GetLastChar(const tString& aString)
 	{
 		if(aString.size()==0) return "";
-		return aString.substr(aString.size()-1); 
+		return aString.substr(aString.size()-1);
 	}
 
 	tWString cString::GetLastCharW(const tWString& aString)
 	{
 		if(aString.size()==0) return _W("");
-		return aString.substr(aString.size()-1); 
+		return aString.substr(aString.size()-1);
 	}
 
 	//-----------------------------------------------------------------------
@@ -705,7 +705,7 @@ namespace hpl {
 
 		return asString;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	int cString::ToInt(const char* asString,int alDefault)
@@ -743,12 +743,12 @@ namespace hpl {
 		tFloatVec vValues;
 
 		GetFloatVec(asString,vValues,NULL);
-        
+
 		if(vValues.size() != 4) return aDefault;
 
 		return cColor(vValues[0],vValues[1],vValues[2],vValues[3]);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cVector2f cString::ToVector2f(const char* asString, const cVector2f& avDefault)
@@ -784,7 +784,7 @@ namespace hpl {
 	cVector2l cString::ToVector2l(const char* asString, const cVector2l& avDefault)
 	{
 		if(asString==NULL) return avDefault;
-		
+
 		tIntVec vValues;
 
 		GetIntVec(asString,vValues,NULL);
@@ -793,13 +793,13 @@ namespace hpl {
 
 		return cVector2l(vValues[0],vValues[1]);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cVector3l cString::ToVector3l(const char* asString, const cVector3l& avDefault)
 	{
 		if(asString==NULL) return avDefault;
-		
+
 		tIntVec vValues;
 
 		GetIntVec(asString,vValues,NULL);
@@ -872,13 +872,13 @@ namespace hpl {
 
 		return avVec;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	tString cString::ToString(int alX, int alPaddingZeros)
 	{
 		char buff[256];
-		
+
         sprintf(buff, "%0*d" , alPaddingZeros, alX);
 
 		return buff;
@@ -910,26 +910,26 @@ namespace hpl {
 		////////////////////////////////////////////////////////////
 		// Print the float into a string, using a given precision
 		sprintf(buff, "%.*f", alNumDecimals, afX);
-		
+
 		//////////////////////////////////////////
 		// Clean up decimal part
 		//  Search for '.' char
 		char *p = strchr (buff,'.');
-		if(p != NULL) 
+		if(p != NULL)
 		{
 			// Check if there are less decimals than what precision states
-			while(alNumDecimals >= 0) 
+			while(alNumDecimals >= 0)
 			{
 				alNumDecimals--;
-				if(*p == '\0')    
+				if(*p == '\0')
 					break;
 				p++;
 			}
-			
+
 			///////////////////////
 			// Truncate string
 			*p-- = '\0';
-		
+
 			///////////////////////////////////////
 			// Remove trailing zeros on demand
 			if(abRemoveTrailingZeros)
@@ -937,16 +937,16 @@ namespace hpl {
 				// Overwrite any '0' chars with the null character
 				while(*p == '0')
 					*p-- = '\0';
-				
+
 				// If all decimals were zero, remove "."
 				if(*p == '.')
 					*p = '\0';
 			}
 		}
-		
+
 		return buff;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	tWString cString::ToStringW(int alX, int alPaddingZeros)
@@ -997,21 +997,21 @@ namespace hpl {
 		// Clean up decimal part
 		//  Search for '.' char
 		wchar_t *p = wcschr (buff, _W('.'));
-		if(p != NULL) 
+		if(p != NULL)
 		{
 			// Check if there are less decimals than what precision states
-			while(alNumDecimals >= 0) 
+			while(alNumDecimals >= 0)
 			{
 				alNumDecimals--;
 				if(*p == _W('\0'))
 					break;
 				p++;
 			}
-			
+
 			///////////////////////
 			// Truncate string
 			*p-- = _W('\0');
-		
+
 			///////////////////////////////////////
 			// Remove trailing zeros on demand
 			if(abRemoveTrailingZeros)
@@ -1019,7 +1019,7 @@ namespace hpl {
 				// Overwrite any '0' chars with the null character
 				while(*p == _W('0'))
 					*p-- = _W('\0');
-				
+
 				// If all decimals were zero, remove "."
 				if(*p == _W('.'))
 					*p = _W('\0');
@@ -1041,7 +1041,7 @@ namespace hpl {
 		{
 			c = asData.substr(i,1);
 			bool bNewWord = false;
-			
+
 			//Check if the current char is a separator
 			if(apSeparators)
 			{
@@ -1058,10 +1058,10 @@ namespace hpl {
 			{
 				if(c[0]==' ' || c[0]=='\n' || c[0]=='\r' || c[0]=='\t' || c[0]==',')
 				{
-					bNewWord = true;	
+					bNewWord = true;
 				}
 			}
-			
+
 			if(bNewWord)
 			{
 				if(start)
@@ -1077,8 +1077,8 @@ namespace hpl {
 				str +=c;
 				if(i==asData.length()-1)avVec.push_back(str);
 			}
-		}	
-	
+		}
+
 		return avVec;
 	}
 
@@ -1111,7 +1111,7 @@ namespace hpl {
 			{
 				if(c==' ' || c=='\n' || c=='\r' || c=='\t' || c==',')
 				{
-					bNewWord = true;	
+					bNewWord = true;
 				}
 			}
 
@@ -1130,7 +1130,7 @@ namespace hpl {
 				str +=c;
 				if(i==asData.length()-1)avVec.push_back(str);
 			}
-		}	
+		}
 
 		return avVec;
 	}
@@ -1147,7 +1147,7 @@ namespace hpl {
 		{
 			c = asData.substr(i,1);
 			bool bNewWord = false;
-			
+
 			//Check if the current char is a separator
 			if(apSeparators)
 			{
@@ -1164,10 +1164,10 @@ namespace hpl {
 			{
 				if(c[0]==_W(' ') || c[0]==_W('\n') || c[0]==_W('\t') || c[0]==_W(','))
 				{
-					bNewWord = true;	
+					bNewWord = true;
 				}
 			}
-			
+
 			if(bNewWord)
 			{
 				if(start)
@@ -1183,8 +1183,8 @@ namespace hpl {
 				str +=c;
 				if(i==asData.length()-1)avVec.push_back(str);
 			}
-		}	
-	
+		}
+
 		return avVec;
 	}
 
@@ -1193,7 +1193,7 @@ namespace hpl {
 	///Helper
 	//returns first char in a string
 	int cString::GetFirstStringPos(const tString& aString, const tString&  aChar)
-	{	
+	{
 		int pos=-1;
 		for(int i=0;i<(int)aString.size();i++)
 		{
@@ -1209,7 +1209,7 @@ namespace hpl {
 	///Helper
 	//returns first char in a string
 	int cString::GetFirstStringPosW(const tWString& aString, const tWString&  aChar)
-	{	
+	{
 		int pos=-1;
 		for(int i=0;i<(int)aString.size();i++)
 		{
@@ -1226,7 +1226,7 @@ namespace hpl {
 	///Helper
 	//returns last char in a string
 	int cString::GetLastStringPos(const tString& aString, const tString&  aChar)
-	{	
+	{
 		int pos=-1;
 		for(int i=0;i<(int)aString.size();i++)
 		{
@@ -1239,7 +1239,7 @@ namespace hpl {
 	///Helper
 	//returns last char in a string
 	int cString::GetLastStringPosW(const tWString& aString, const tWString&  aChar)
-	{	
+	{
 		int pos=-1;
 		for(int i=0;i<(int)aString.size();i++)
 		{
@@ -1270,7 +1270,7 @@ namespace hpl {
 				{
 					vTempChar[lTempCharCount] =0;
 					apArray[lArrayCount] = (unsigned int) atoi(vTempChar);
-					
+
 					lTempCharCount=0;
 					lArrayCount++;
 				}
@@ -1321,7 +1321,7 @@ namespace hpl {
 			lStringCount++;
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	int cString::CountCharsInString(const tString& aString, const tString& aChar)
@@ -1342,7 +1342,7 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	
+
 	int cString::CountCharsInStringW(const tWString& aString, const tWString& aChar)
 	{
 		int lCount = 0;
@@ -1363,7 +1363,7 @@ namespace hpl {
 
 	//ALGO FROM: http://www.azillionmonkeys.com/qed/lHash.html
 	// by Paul Hsieh
-	
+
 	#define Get16Bits(data) (*((const wchar_t *) (data)))
 
 	unsigned int cString::GetHash(const tString& asStr)
@@ -1391,20 +1391,20 @@ namespace hpl {
 
 		//////////////////////////////////
 		// Handle end cases
-		switch (lRem) 
+		switch (lRem)
 		{
-		case 3: 
+		case 3:
 			lHash += Get16Bits(pData);
 			lHash ^= lHash << 16;
 			lHash ^= pData[sizeof (wchar_t)] << 18;
 			lHash += lHash >> 11;
 			break;
-		case 2: 
+		case 2:
 			lHash += Get16Bits(pData);
 			lHash ^= lHash << 11;
 			lHash += lHash >> 17;
 			break;
-		case 1: 
+		case 1:
 			lHash += *pData;
 			lHash ^= lHash << 10;
 			lHash += lHash >> 1;
@@ -1421,9 +1421,9 @@ namespace hpl {
 
 		return lHash;
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	unsigned int cString::GetHashW(const tWString& asStr)
 	{
 		unsigned int lLen = (unsigned int)asStr.size();
@@ -1449,7 +1449,7 @@ namespace hpl {
 
 		//////////////////////////////////
 		// Handle end cases
-		if(lRem) 
+		if(lRem)
 		{
 			lHash += *pData;
 			lHash ^= lHash << 10;
@@ -1519,7 +1519,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	static tString EncodeTextStringDataChunk(int alChunk)
 	{
 		char vChars[7];
@@ -1543,8 +1543,8 @@ namespace hpl {
 		vChars[5] = (vChars[3]>>2) & 0x30;
 
 		//Save the padding for lower bytes
-		vChars[4] |=  (vChars[0] >> 4) & 0x0C; 
-		vChars[5] |=  (vChars[1] >> 4) & 0x0C; 
+		vChars[4] |=  (vChars[0] >> 4) & 0x0C;
+		vChars[5] |=  (vChars[1] >> 4) & 0x0C;
 
 		//Convert to printable characters
 		for(int i=0;i<6; ++i)
@@ -1574,9 +1574,9 @@ namespace hpl {
 			lCount -= 4;
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	//Chars must contain 6 characters!
 	static int DecodeTextStringDataChunk(const char* apCharChunk)
 	{
@@ -1584,7 +1584,7 @@ namespace hpl {
 		int lBack = *((short*)&apCharChunk[4]);
 
 		//Clear spaces
-		lFront &= 0x3F3F3F3F; 
+		lFront &= 0x3F3F3F3F;
 
 		//Set ones in spaces
 		lFront |= ((lBack << 18) | (lBack << 4)) & 0xC0C0C0C0;

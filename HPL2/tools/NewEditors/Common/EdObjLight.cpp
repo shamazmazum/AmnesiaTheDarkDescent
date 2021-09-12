@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -65,7 +65,7 @@ void iIconObjectLight::Update()
 	iEdWorld* pWorld = mpParent->GetWorld();
 	iLight* pLight = static_cast<iLight*>(mpObject);
 	pLight->SetVisible(mpParent->IsVisible() && mpParent->IsEnabled());// && mpParent->GetType()->I());
-	
+
 	iEdObjLight* pParent = static_cast<iEdObjLight*>(mpParent);
 	pParent->UpdateFlickerParams();
 
@@ -135,7 +135,7 @@ bool cTypeLight::Init()
 
 //---------------------------------------------------------------------------
 
-iLightSubType::iLightSubType(const tWString& asName, const tString& asXmlElementName, 
+iLightSubType::iLightSubType(const tWString& asName, const tString& asXmlElementName,
 							 iShapeCreator* apShapeCreator) : iEdScnObjType(asName, asXmlElementName)
 {
 	mpShapeCreator = apShapeCreator;
@@ -703,7 +703,7 @@ void iEdObjLight::UpdateFlickerParams()
 	pLight->SetFlicker(mcolFlickerOffColor, mfFlickerOffRadius,
 							mfFlickerOnMinLength, mfFlickerOnMaxLength, msFlickerOnSound, msFlickerOnPS,
 							mfFlickerOffMinLength, mfFlickerOffMaxLength, msFlickerOffSound, msFlickerOffPS,
-							mbFlickerFade, 
+							mbFlickerFade,
 							mfFlickerOnFadeMinLength, mfFlickerOnFadeMaxLength, mfFlickerOffFadeMinLength, mfFlickerOffFadeMaxLength);
 }
 
@@ -723,7 +723,7 @@ void iEdObjLight::AddConnectedBillboard(cEdObjBillboard* apBB)
 void iEdObjLight::RemoveConnectedBillboard(cEdObjBillboard* apBB)
 {
 	if(apBB==NULL)return;
-	
+
 	mlstConnectedBBs.remove(apBB);
 	iLight* pLight = static_cast<iLight*>(mpEngObject->GetObject());
 	cBillboard* pBB = static_cast<cBillboard*>(apBB->GetEngObject()->GetObject());
@@ -760,7 +760,7 @@ void iEdObjLight::SetGobo(const tString& asGoboFilename)
 	else
 		msGoboFilename.clear();
 
-	static_cast<iLight*>(mpEngObject->GetObject())->SetGoboTexture(pTex);	
+	static_cast<iLight*>(mpEngObject->GetObject())->SetGoboTexture(pTex);
 }
 
 //------------------------------------------------------------------------------

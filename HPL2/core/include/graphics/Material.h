@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -37,7 +37,7 @@ namespace hpl {
 	class cResourceVarsObject;
 
 	//---------------------------------------------------
-	
+
 	class iMaterialVars
 	{
 	public:
@@ -45,7 +45,7 @@ namespace hpl {
 	};
 
 	//---------------------------------------------------
-	
+
 	class cMaterialUvAnimation
 	{
 	public:
@@ -53,7 +53,7 @@ namespace hpl {
 							  mType(aType), mfSpeed(afSpeed), mfAmp(afAmp), mAxis(aAxis) {}
 
 	    eMaterialUvAnimation mType;
-		
+
 		float mfSpeed;
 		float mfAmp;
 
@@ -61,8 +61,8 @@ namespace hpl {
 	};
 
 	//---------------------------------------------------
-	
-	class cMaterial : public iResourceBase 
+
+	class cMaterial : public iResourceBase
 	{
 	friend class iMaterialType;
 	public:
@@ -92,7 +92,7 @@ namespace hpl {
 		bool UseRefractionEdgeCheck(){ return mbUseRefractionEdgeCheck;}
 		void SetHasRefraction(bool abX){ mbHasRefraction = abX; }
 		void SetUseRefractionEdgeCheck(bool abX){ mbUseRefractionEdgeCheck = abX;}
-		
+
 		bool HasWorldReflection(){ return mbHasWorldReflection; }
 		void SetHasWorldReflection(bool abX){ mbHasWorldReflection = abX; }
 		void  SetWorldReflectionOcclusionTest(bool abX){ mbWorldReflectionOcclusionTest=abX;}
@@ -111,7 +111,7 @@ namespace hpl {
 
 		void SetAffectedByFog(bool abX){ mbAffectedByFog = abX;}
 		bool GetAffectedByFog(){ return mbAffectedByFog;}
-		
+
 		inline iTexture* GetTextureInUnit(eMaterialRenderMode aRenderMode, int alUnit) const { return mvTextureInUnit[aRenderMode][alUnit];}
 		inline iGpuProgram* GetProgram(char alSkeleton,eMaterialRenderMode aRenderMode) const { return mvPrograms[alSkeleton][aRenderMode];}
 		inline eMaterialBlendMode GetBlendMode() const { return mBlendMode; }
@@ -151,7 +151,7 @@ namespace hpl {
 		bool Reload(){ return false;}
 		void Unload(){}
 		void Destroy(){}
-		
+
 	private:
 		void UpdateAnimations(float afTimeStep);
 
@@ -196,9 +196,9 @@ namespace hpl {
 		bool mbHasUvAnimation;
 		cMatrixf m_mtxUV;
 		float mfAnimTime;
-		
+
 		int mlRenderFrameCount;
-	
+
 		tString msPhysicsMaterial;
 
 		static bool mbDestroyTypeSpecifics;

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -75,7 +75,7 @@ enum eLightFloat
 {
 	eLightFloat_Radius = LightPropIdStart,
 
-	eLightFloat_GoboAnimFrameTime, 
+	eLightFloat_GoboAnimFrameTime,
 	eLightFloat_FlickerOnMinLength,
 	eLightFloat_FlickerOnMaxLength,
 	eLightFloat_FlickerOffMinLength,
@@ -85,8 +85,8 @@ enum eLightFloat
 	eLightFloat_FlickerOnFadeMaxLength,
 	eLightFloat_FlickerOffFadeMinLength,
 	eLightFloat_FlickerOffFadeMaxLength,
-	
-	eLightFloat_LastEnum,	
+
+	eLightFloat_LastEnum,
 };
 
 enum eLightStr
@@ -165,7 +165,7 @@ public:
 
 	bool IsActive() { return mbLightsActive; }
 	void SetActive(bool abX);
-	
+
 
 protected:
 
@@ -225,7 +225,7 @@ public:
 
 	void SetFalloffMap(const tString& asFalloffMap);
 	const tString& GetFalloffMap() { return msFalloffMap; }
-	
+
 	void SetDiffuseColor(const cColor& aDiffuseColor);
 	cColor GetDiffuseColor() { return mcolDiffuseColor; }
 
@@ -238,14 +238,14 @@ public:
 	float GetFlickerOnMaxLength() { return mfFlickerOnMaxLength; }
 	const tString& GetFlickerOnSound() { return msFlickerOnSound; }
 	const tString& GetFlickerOnPS() { return msFlickerOnPS; }
-	
+
 	float GetFlickerOffMinLength() { return mfFlickerOffMinLength; }
 	float GetFlickerOffMaxLength() { return mfFlickerOffMaxLength; }
 	float GetFlickerOffRadius() { return mfFlickerOffRadius; }
 	cColor GetFlickerOffColor() { return mcolFlickerOffColor; }
 	const tString& GetFlickerOffSound() { return msFlickerOffSound; }
 	const tString& GetFlickerOffPS() { return msFlickerOffPS; }
-	
+
 	bool GetFlickerFade() { return mbFlickerFade; }
 
 	float GetFlickerOnFadeMinLength() { return mfFlickerOnFadeMinLength; }
@@ -270,7 +270,7 @@ public:
 	void SetFlickerOffColor(const cColor& aCol);
 
 	void SetFlickerFade(bool abX);
-	
+
 	void SetFlickerOnFadeMinLength(float afX);
 	void SetFlickerOnFadeMaxLength(float afX);
 	void SetFlickerOffFadeMinLength(float afX);
@@ -283,7 +283,7 @@ public:
 	void AddConnectedBillboard(cEntityWrapperBillboard* apBB);
 	void RemoveConnectedBillboard(cEntityWrapperBillboard* apBB);
 	std::list<cEntityWrapperBillboard*>& GetConnectedBillboards() { return mlstConnectedBBs; }
-	
+
 
 	void Draw(cEditorWindowViewport* apViewport, cRendererCallbackFunctions* apFunctions, iEditorEditMode* apEditMode, bool abIsSelected, const cColor& aHighlightCol, const cColor& aDisabledCol);
 
@@ -298,7 +298,7 @@ protected:
 	///////////////////////////
 	// To be implemented
 	virtual void DrawLightTypeSpecific(cEditorWindowViewport* apViewport, cRendererCallbackFunctions* apFunctions, iEditorEditMode* apEditMode, bool abIsSelectedc)=0;
-	
+
 
 	//////////////////////
 	// Data
@@ -336,7 +336,7 @@ protected:
 	cColor mcolFlickerOffColor;
 
 	bool mbFlickerFade;
-	
+
 	float mfFlickerOnFadeMinLength;
 	float mfFlickerOnFadeMaxLength;
 	float mfFlickerOffFadeMinLength;

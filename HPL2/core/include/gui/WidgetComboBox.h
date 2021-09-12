@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -28,7 +28,7 @@
 namespace hpl {
 
 	class cGuiSkinFont;
-	
+
 	class cWidgetTextBox;
 	class cWidgetButton;
 	class cWidgetSlider;
@@ -49,7 +49,7 @@ namespace hpl {
 		int GetMaxShownItems(){ return mlMaxItems;}
 
 		void SetDefaultFontSize(const cVector2f& avSize);
-		
+
 	protected:
 		/////////////////////////
 		// Own functions
@@ -62,7 +62,7 @@ namespace hpl {
 		kGuiCallbackDeclarationEnd(ButtonPress);
 
 		bool DrawText(iWidget* apWidget, const cGuiMessageData& aData);
-		kGuiCallbackDeclarationEnd(DrawText);	
+		kGuiCallbackDeclarationEnd(DrawText);
 
 		bool SliderMove(iWidget* apWidget, const cGuiMessageData& aData);
 		kGuiCallbackDeclarationEnd(SliderMove);
@@ -76,7 +76,7 @@ namespace hpl {
 		void OnChangeSize();
 		void OnChangeText();
 		void OnInit();
-		
+
 		void OnDraw(float afTimeStep, cGuiClipRegion *apClipRegion);
 
 		bool OnMouseMove(const cGuiMessageData& aData);
@@ -89,7 +89,7 @@ namespace hpl {
 
 		bool OnUIButtonPress(const cGuiMessageData& aData);
 		bool OnUIButtonRelease(const cGuiMessageData& aData);
-		
+
 		bool OnLostFocus(const cGuiMessageData& aData);
 
 		bool PointIsInside(const cVector2f& avPoint, bool abOnlyClipped);
@@ -105,7 +105,7 @@ namespace hpl {
 
 		/////////////////////////
 		// Data
-		
+
 		cWidgetTextBox *mpText;
 		cWidgetButton *mpButton;
 		cWidgetSlider *mpSlider;
@@ -127,10 +127,10 @@ namespace hpl {
 		cGuiGfxElement *mpGfxBackground;
 
 		cGuiGfxElement *mpGfxSelection;
-		
+
 		cGuiGfxElement *mvGfxBorders[4];
 		cGuiGfxElement *mvGfxCorners[4];
-		
+
 		bool mbOpenByUIButton;
 	};
 

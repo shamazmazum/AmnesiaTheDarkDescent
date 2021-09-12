@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -84,7 +84,7 @@ namespace hpl {
 
 	iParticleEmitter::iParticleEmitter(tString asName,tMaterialVec *avMaterials,
 										unsigned int alMaxParticles, cVector3f avSize,
-										cGraphics *apGraphics,cResources *apResources) 
+										cGraphics *apGraphics,cResources *apResources)
 		:iRenderable(asName)
 	{
 
@@ -111,7 +111,7 @@ namespace hpl {
 		mpVtxBuffer->CreateElementArray(eVertexBufferElement_Position,eVertexBufferElementFormat_Float,4);
 		mpVtxBuffer->CreateElementArray(eVertexBufferElement_Color0,eVertexBufferElementFormat_Float,4);
 		mpVtxBuffer->CreateElementArray(eVertexBufferElement_Texture0,eVertexBufferElementFormat_Float,3);
-		
+
 		//////////////////////////////////
 		//Fill the indices with quads
 		for(int i=0;i<(int)alMaxParticles;i++)
@@ -137,12 +137,12 @@ namespace hpl {
 			mpVtxBuffer->AddVertexVec3f(eVertexBufferElement_Position, 0);
 			mpVtxBuffer->AddVertexColor(eVertexBufferElement_Color0, cColor(1,1));
 		}
-		
+
 		////////////////////////////////////
 		// Compile vertex buffer
 		mpVtxBuffer->Compile(0);
 
-		
+
 		////////////////////////////////////
 		//Setup vars
 		mlSleepCount = 60*5; //Start with high sleep count to make sure a looping particle system reaches equilibrium. 5 secs should eb enough!
@@ -160,16 +160,16 @@ namespace hpl {
 
 		mlAxisDrawUpdateCount = -1;
 
-		mbApplyTransformToBV = false; 
+		mbApplyTransformToBV = false;
 
 		mBoundingVolume.SetSize(0);
 		mBoundingVolume.SetPosition(0);
 
 		mDrawType = eParticleEmitterType_FixedPoint;
 		mCoordSystem = eParticleEmitterCoordSystem_World;
-		
+
 		mbUsesDirection = false;	//If Direction should be udpdated
-		
+
 	}
 
 	//-----------------------------------------------------------------------
@@ -318,7 +318,7 @@ namespace hpl {
 		//////////////////////////
 		// Set up color mul
         cColor colorMul = mpParentSystem->mColor;
-		
+
 		//Set alpha based on fade distance.
 		if(mpParentSystem->mbFadeAtDistance)
 		{
@@ -372,7 +372,7 @@ namespace hpl {
 			mpVtxBuffer->SetElementNum(0);
 			return false;
 		}
-		
+
 		//////////////////////////////
 		// RENDERING
 
@@ -395,7 +395,7 @@ namespace hpl {
 			// SUB DIVISION SET UP
 			if(mvSubDivUV.size() > 1)
 			{
-				float *pTexArray = mpVtxBuffer->GetFloatArray(eVertexBufferElement_Texture0);	
+				float *pTexArray = mpVtxBuffer->GetFloatArray(eVertexBufferElement_Texture0);
 
 				for(int i=0;i<(int)mlNumOfParticles;i++)
 				{
@@ -425,7 +425,7 @@ namespace hpl {
 						cVector3f(-mvDrawSize.x, mvDrawSize.y,0),
 						cVector3f( mvDrawSize.x, mvDrawSize.y,0)
 				};
-				
+
 				//If this is a reflection, need to invert the ordering.
 				if(apFrustum->GetInvertsCullMode())
 				{
@@ -445,7 +445,7 @@ namespace hpl {
 					cParticle *pParticle = mvParticles[i];
 
 					//This is not the fastest thing possible...
-					cVector3f vParticlePos = pParticle->mvPos;	
+					cVector3f vParticlePos = pParticle->mvPos;
 
 					if(mCoordSystem == eParticleEmitterCoordSystem_Local){
 						vParticlePos = cMath::MatrixMul(mpParentSystem->GetWorldMatrix(), vParticlePos);
@@ -483,7 +483,7 @@ namespace hpl {
 				{
 					for(int i=0; i<4; ++i)	vAdd[i].y = -vAdd[i].y;
 				}
-				
+
 				int lVtxStride = mpVtxBuffer->GetElementNum(eVertexBufferElement_Position);
 				int lVtxQuadSize = lVtxStride*4;
 
@@ -549,7 +549,7 @@ namespace hpl {
 			else if(mDrawType == eParticleEmitterType_Line)
 			{
 				int lVtxStride = mpVtxBuffer->GetElementNum(eVertexBufferElement_Position);
-				int lVtxQuadSize = lVtxStride*4;	
+				int lVtxQuadSize = lVtxStride*4;
 
 				for(int i=0;i<(int)mlNumOfParticles;i++)
 				{
@@ -590,7 +590,7 @@ namespace hpl {
 					if(apFrustum->GetInvertsCullMode()) vDirY = vDirY*-1;
 
 					cColor finalColor = pParticle->mColor * colorMul;
-					
+
 					SetPos(&pPosArray[i*lVtxQuadSize + 0*lVtxStride], vPos2 + vDirY*-1 + vDirX);
 					SetCol(&pColArray[i*16 + 0*4], finalColor);
 
@@ -617,7 +617,7 @@ namespace hpl {
 				}
 
 				cVector3f vAdd[4];
-				/*= 
+				/*=
 				{
 				mvRight		 +	mvForward * 1,
 				mvRight * -1 +	mvForward * 1,
@@ -674,7 +674,7 @@ namespace hpl {
 				mpVtxBuffer->UpdateData(eVertexElementFlag_Position | eVertexElementFlag_Color0, false);
 
 		}
-		
+
 		return true;
 	}
 
@@ -688,9 +688,9 @@ namespace hpl {
 	//-----------------------------------------------------------------------
 
 	bool iParticleEmitter::IsVisible()
-	{ 
+	{
 		if(IsActive()==false) return false;
-		return mbIsVisible; 
+		return mbIsVisible;
 	}
 
 	//-----------------------------------------------------------------------
@@ -742,7 +742,7 @@ namespace hpl {
 					mvRight = mtxInv.GetRight();
 					mvForward = mtxInv.GetForward();
 				}
-				
+
 				cVector3f vAdd = mvRight*mvMaxDrawSize.x + mvForward*mvMaxDrawSize.y;
 
 				vMax += vAdd;
@@ -755,7 +755,7 @@ namespace hpl {
 				vMax += cVector3f(mvMaxDrawSize.x,mvMaxDrawSize.y, mvMaxDrawSize.x);
 				vMin -= cVector3f(mvMaxDrawSize.x,mvMaxDrawSize.y, mvMaxDrawSize.x);
 			}
-			
+
 			mBoundingVolume.SetLocalMinMax(vMin, vMax);
 
 			//Log("Min: (%f, %f, %f) Max: (%f, %f, %f)\n", vMin.x, vMin.y, vMin.z, vMax.x,vMax.y,vMax.z);
@@ -789,7 +789,7 @@ namespace hpl {
 			else
 			{
 				m_mtxTemp = cMath::MatrixInverse(apFrustum->GetViewMatrix());
-				//m_mtxTemp = cMath::MatrixMul(cMath::MatrixInverse(apCamera->GetViewMatrix()), 
+				//m_mtxTemp = cMath::MatrixMul(cMath::MatrixInverse(apCamera->GetViewMatrix()),
 				//								GetWorldMatrix());
 			}
 

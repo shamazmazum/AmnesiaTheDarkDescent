@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -72,11 +72,11 @@ namespace hpl
 	// PROTECTED METHODS
 	//////////////////////////////////////////////////////////////////
 
-	
+
 	bool cWidgetTabLabel::OnMouseDown(const cGuiMessageData& aData)
 	{
 		cWidgetTabFrame* pFrame = mpParentTab->mpParentTabFrame;
-		
+
 		while (mvPosition.x + mvSize.x > pFrame->mvSize.x)
 		{
 			pFrame->ArrowButton_Pressed(pFrame->mvArrowButtons[1], cGuiMessageData());
@@ -92,11 +92,11 @@ namespace hpl
 	void cWidgetTabLabel::OnChangeText()
 	{
 		cWidgetTabFrame* pTabFrame = mpParentTab->mpParentTabFrame;
-		float fBordersWidth = pTabFrame->mvGfxTabLabelBorders[0]->GetImageSize().x + 
+		float fBordersWidth = pTabFrame->mvGfxTabLabelBorders[0]->GetImageSize().x +
 								pTabFrame->mvGfxTabLabelBorders[1]->GetImageSize().x;
-		float fNewWidth = mpDefaultFontType->GetLength(mpDefaultFont->mvSize, msText.c_str()) + 
-								pTabFrame->mfTextLeftPadding + 
-								pTabFrame->mfTextRightPadding + 
+		float fNewWidth = mpDefaultFontType->GetLength(mpDefaultFont->mvSize, msText.c_str()) +
+								pTabFrame->mfTextLeftPadding +
+								pTabFrame->mfTextRightPadding +
 								fBordersWidth;
 
 		if(mpGfxIcon!=NULL)
@@ -122,7 +122,7 @@ namespace hpl
 	{
 		cWidgetTabFrame* pTabFrame = mpParentTab->mpParentTabFrame;
 		cVector3f vTextPos = GetGlobalPosition() + cVector3f(pTabFrame->mfTextLeftPadding,2,0.1f);
-		
+
 		cGuiGfxElement* pBG;
 
 		if(mpParentTab->IsOnTop())
@@ -134,15 +134,15 @@ namespace hpl
 			pBG = pTabFrame->mpGfxTabLabelBG;
 		}
 
-		
+
 		if(mpGfxIcon!=NULL)
 		{
 			vTextPos.x += 2*pTabFrame->mfIconPadding + mpGfxIcon->GetImageSize().x;
 		}
 
 		DrawDefaultText(msText, vTextPos, eFontAlign_Left);
-		DrawBordersAndCorners(pBG, 
-								pTabFrame->mvGfxTabLabelBorders, 
+		DrawBordersAndCorners(pBG,
+								pTabFrame->mvGfxTabLabelBorders,
 								pTabFrame->mvGfxTabLabelCorners, GetGlobalPosition(), mvSize);
 	}
 
@@ -151,7 +151,7 @@ namespace hpl
 	void cWidgetTabLabel::OnLoadGraphics()
 	{
 		// TODO : Add nice gfx here
-		
+
 		// Debug
 		//mpGfxIcon = mvGfxCorners[0];
 	}
@@ -159,7 +159,7 @@ namespace hpl
 	//-------------------------------------------------------------------
 	//-------------------------------------------------------------------
 	//-------------------------------------------------------------------
-	
+
 	//////////////////////////////////////////////////////////////////
 	// Tab
 	//////////////////////////////////////////////////////////////////
@@ -248,7 +248,7 @@ namespace hpl
 		float fOffset = abX ? mpParentTabFrame->mfTabActiveOffset : mpParentTabFrame->mfTabInactiveOffset;
 		cVector3f vPos = mpTabLabel->GetLocalPosition();
 		vPos.y = -fOffset;
-		
+
 		mpTabLabel->SetPosition(vPos);
 		mpFrame->SetEnabled(abX);
 		mpFrame->SetVisible(abX);
@@ -270,19 +270,19 @@ namespace hpl
 		cVector3f vFrameGlobalPos = mpFrame->GetGlobalPosition();
 		cVector2f vFrameSize = mpFrame->GetSize();
 
-		if( avPoint.x < vFrameGlobalPos.x || avPoint.x > vFrameGlobalPos.x + vFrameSize.x || 
+		if( avPoint.x < vFrameGlobalPos.x || avPoint.x > vFrameGlobalPos.x + vFrameSize.x ||
 			avPoint.y < vFrameGlobalPos.y || avPoint.y > vFrameGlobalPos.y + vFrameSize.y)
 		{
-			if( bLabelVisible==false || 
-				avPoint.x < vLabelGlobalPos.x || avPoint.x > vLabelGlobalPos.x + vLabelSize.x || 
-				avPoint.y < vLabelGlobalPos.y || avPoint.y > vLabelGlobalPos.y + vLabelSize.y) 
+			if( bLabelVisible==false ||
+				avPoint.x < vLabelGlobalPos.x || avPoint.x > vLabelGlobalPos.x + vLabelSize.x ||
+				avPoint.y < vLabelGlobalPos.y || avPoint.y > vLabelGlobalPos.y + vLabelSize.y)
 				return false;
 			else
 				return true;
 		}
 		else
 		{
-			return true;	
+			return true;
 		}
 	}
 
@@ -308,7 +308,7 @@ namespace hpl
 		float fTextHeight = mpDefaultFont->mvSize.y + 8;
 
 		mpTabLabel->SetPosition(cVector3f(0,mpParentTabFrame->mfTabActiveOffset, 0.1f));
-		
+
 		mpFrame->SetPosition(cVector3f(0,fTextHeight-4 + mpParentTabFrame->mfTabActiveOffset, 0.1f));
 		mpFrame->SetSize(mvSize - cVector2f(0, fTextHeight + mpParentTabFrame->mfTabActiveOffset));
 	}
@@ -326,13 +326,13 @@ namespace hpl
 
 		//float fFrameOffset = cMath::Max(mpParentTabFrame->mfTabActiveOffset, mpParentTabFrame->mfTabInactiveOffset);
 		float fFrameOffset = mpParentTabFrame->mfTabActiveOffset;
-		cVector2f vCornerSize = cVector2f(mpParentTabFrame->mvGfxTabCorners[0]->GetActiveSize().x + 
-										  mpParentTabFrame->mvGfxTabCorners[1]->GetActiveSize().x, 
+		cVector2f vCornerSize = cVector2f(mpParentTabFrame->mvGfxTabCorners[0]->GetActiveSize().x +
+										  mpParentTabFrame->mvGfxTabCorners[1]->GetActiveSize().x,
 										  mpParentTabFrame->mvGfxTabCorners[0]->GetActiveSize().y +
 										  mpParentTabFrame->mvGfxTabCorners[2]->GetActiveSize().y);
-								
-								
-								
+
+
+
 
 		mpFrame = mpSet->CreateWidgetFrame(0,
 											mvSize-cVector2f(vCornerSize.x,fLabelHeight+fFrameOffset+vCornerSize.y),
@@ -355,9 +355,9 @@ namespace hpl
 
 	void cWidgetTab::OnDraw(float afTimeStep, cGuiClipRegion* apClipRegion)
 	{
-		DrawBordersAndCorners(mpParentTabFrame->mpGfxTabBG, 
-								mpParentTabFrame->mvGfxTabBorders, 
-								mpParentTabFrame->mvGfxTabCorners, 
+		DrawBordersAndCorners(mpParentTabFrame->mpGfxTabBG,
+								mpParentTabFrame->mvGfxTabBorders,
+								mpParentTabFrame->mvGfxTabCorners,
 								mpFrame->GetGlobalPosition(), mpFrame->GetSize(), true);
 	}
 
@@ -437,10 +437,10 @@ namespace hpl
 
 		pTab->SetText(asTabCaption);
 		pTab->SetPosition(cVector3f(0,0,mfBackgroundZ));
-				
+
 		if(mvTabs.empty())
 			SetTabOnTop(pTab);
-		
+
 		mvTabs.push_back(pTab);
 
 		UpdateTabVisibility();
@@ -510,7 +510,7 @@ namespace hpl
 	void cWidgetTabFrame::SetTabOnTop(cWidgetTab* apTab)
 	{
 		/////////////////////////////////////////////
-		// Move current top tab to the background, 
+		// Move current top tab to the background,
 		// and then move apTab to top
 		if(apTab == mpTopTab) return;
 
@@ -605,7 +605,7 @@ namespace hpl
 			if(mlLastVisibleTab < (int) mvTabs.size()-1)
 				mlFirstVisibleTab++;
 		}
-		
+
 		UpdateTabVisibility();
 		return true;
 	}
@@ -616,7 +616,7 @@ namespace hpl
 	void cWidgetTabFrame::UpdateTabVisibility()
 	{
 		float fPosX = mfFirstTabOffset;
-		
+
 		///////////////////////////////
 		// Hide tabs at the left of the first visible
 		for(int i=0; i<mlFirstVisibleTab; ++i)
@@ -636,7 +636,7 @@ namespace hpl
 			pTab->mpTabLabel->SetVisible(true);
 			pTab->mpTabLabel->SetEnabled(true);
 			pTab->SetLabelPosX(fPosX);
-				
+
 
 			if(fPosX+pTab->mpTabLabel->GetSize().x < mvSize.x-(mfButtonSize*2+2))
                 mlLastVisibleTab = i;
@@ -667,7 +667,7 @@ namespace hpl
 		}
 
 	}
-    
+
 	//-------------------------------------------------------------------
 
 	void cWidgetTabFrame::OnInit()
@@ -680,7 +680,7 @@ namespace hpl
 			mvArrowButtons[i] = mpSet->CreateWidgetButton(0,0,_W(""),this);
 			mvArrowButtons[i]->SetImage(mvGfxArrows[i],false);
 			mvArrowButtons[i]->SetSize(mfButtonSize);
-			mvArrowButtons[i]->AddCallback(eGuiMessage_ButtonPressed,this,kGuiCallback(ArrowButton_Pressed));	
+			mvArrowButtons[i]->AddCallback(eGuiMessage_ButtonPressed,this,kGuiCallback(ArrowButton_Pressed));
 		}
 
 		OnChangeSize();
@@ -733,10 +733,10 @@ namespace hpl
 		mvGfxTabLabelCorners[1] = mpSkin->GetGfx(eGuiSkinGfx_TabLabelCornerRU);
 		mvGfxTabLabelCorners[2] = mpSkin->GetGfx(eGuiSkinGfx_TabLabelCornerRD);
 		mvGfxTabLabelCorners[3] = mpSkin->GetGfx(eGuiSkinGfx_TabLabelCornerLD);
-		
+
 		mpGfxTabLabelBG = mpSkin->GetGfx(eGuiSkinGfx_TabLabelBackground);
 		mpGfxTabLabelBGActive = mpSkin->GetGfx(eGuiSkinGfx_TabLabelBackgroundActive);
-		
+
 		//////////////////////////////////////////////
 		// Tab Frame gfx
 		mvGfxTabBorders[0] = mpSkin->GetGfx(eGuiSkinGfx_TabBorderRight);
@@ -748,7 +748,7 @@ namespace hpl
 		mvGfxTabCorners[1] = mpSkin->GetGfx(eGuiSkinGfx_TabCornerRU);
 		mvGfxTabCorners[2] = mpSkin->GetGfx(eGuiSkinGfx_TabCornerRD);
 		mvGfxTabCorners[3] = mpSkin->GetGfx(eGuiSkinGfx_TabCornerLD);
-		
+
 		mpGfxTabBG = mpSkin->GetGfx(eGuiSkinGfx_TabBackground);
 	}
 

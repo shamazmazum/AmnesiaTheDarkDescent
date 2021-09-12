@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -34,7 +34,7 @@ iLuxMoveState::iLuxMoveState(cLuxPlayer *apPlayer)
 	mfMaxForwardSpeed = 0.0f;
 	mfMaxBackwardSpeed = 0.0f;
 	mfMaxSidwaySpeed = 0.0f;
-	
+
 	mfForwardAcc = gpBase->mpGameCfg->GetFloat("Player_Movement_Default","ForwardAcc",0);
 	mfSidewayAcc = gpBase->mpGameCfg->GetFloat("Player_Movement_Default","SidewayAcc",0);
 	mfForwardDeacc = gpBase->mpGameCfg->GetFloat("Player_Movement_Default","ForwardDeacc",0);
@@ -70,7 +70,7 @@ void iLuxMoveState::Update(float afTimeStep)
 
 	//////////////////////////////
 	// Set move state variables
-	iCharacterBody *pCharBody = gpBase->mpPlayer->GetCharacterBody();	
+	iCharacterBody *pCharBody = gpBase->mpPlayer->GetCharacterBody();
 
 	pCharBody->SetMaxPositiveMoveSpeed(eCharDir_Forward,mfMaxForwardSpeed * mfMaxForwardSpeedMul);
 	pCharBody->SetMaxNegativeMoveSpeed(eCharDir_Forward,-mfMaxBackwardSpeed * mfMaxBackwardSpeedMul);

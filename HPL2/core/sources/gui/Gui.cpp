@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -65,12 +65,12 @@ namespace hpl {
 	{
 		Log("Exiting Gui Module\n");
 		Log("--------------------------------------------------------\n");
-		
+
 		Log(" Deleting all sets\n");
 		STLMapDeleteAll(m_mapSets);
 		Log(" Deleting all skins\n");
 		STLMapDeleteAll(m_mapSkins);
-		
+
 		Log(" Deleting all gfx elements\n");
 		//STLDeleteAll(mlstGfxElements);
 		for(tGuiGfxElementListIt it = mlstGfxElements.begin(); it != mlstGfxElements.end(); ++it)
@@ -82,11 +82,11 @@ namespace hpl {
 		STLDeleteAll(mlstToBeDestroyedGfxElements);
 
 		Log(" Deleting all materials\n");
-		for(int i=0; i< eGuiMaterial_LastEnum; ++i) 
+		for(int i=0; i< eGuiMaterial_LastEnum; ++i)
 		{
 			if(mvMaterials[i]) hplDelete(mvMaterials[i]);
 		}
-		
+
 		Log("--------------------------------------------------------\n\n");
 	}
 
@@ -183,7 +183,7 @@ namespace hpl {
 		//Delete all gfx elements to be deleted (this way, all pointers in set stay valid!)
 		STLDeleteAll(mlstToBeDestroyedGfxElements);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	iGuiMaterial* cGui::GetMaterial(eGuiMaterial aType)
@@ -196,14 +196,14 @@ namespace hpl {
 	cGuiSkin* cGui::CreateSkin(const tString& asFile)
 	{
 		tString sName = cString::SetFileExt(cString::GetFileName(asFile),"");
-		
+
 		//See if skin exists
 		tGuiSkinMapIt it = m_mapSkins.find(sName);
 		if(it != m_mapSkins.end())
 		{
 			return it->second;
 		}
-		
+
 		//Create new skin.
 		cGuiSkin *pSkin = hplNew( cGuiSkin, (sName, this) );
 		tWString sPath = mpResources->GetFileSearcher()->GetFilePath(asFile);
@@ -268,7 +268,7 @@ namespace hpl {
 
 		return "Unknown";
 	}
-	
+
 	tString cGui::GetSkinFontString(eGuiSkinFont aType)
 	{
 		tGuiSkinFontMapIt it = m_mapSkinFontStrings.begin();
@@ -279,7 +279,7 @@ namespace hpl {
 
 		return "Unknown";
 	}
-	
+
 	tString cGui::GetSkinAttributeString(eGuiSkinAttribute aType)
 	{
 		tGuiSkinAttributeMapIt it = m_mapSkinAttributeStrings.begin();
@@ -298,10 +298,10 @@ namespace hpl {
 		cGuiSet *pSet = hplNew( cGuiSet, (asName,this,apSkin,mpResources, mpGraphics, mpSound,mpScene) );
 
 		m_mapSets.insert(tGuiSetMap::value_type(asName, pSet));
-        
+
 		return pSet;
 	}
-	
+
 	cGuiSet* cGui::GetSetFromName(const tString& asName)
 	{
 		tGuiSetMapIt it = m_mapSets.find(asName);
@@ -309,7 +309,7 @@ namespace hpl {
 
 		return it->second;
 	}
-	
+
 	void cGui::SetFocus(cGuiSet* apSet)
 	{
 		if(mpSetInFocus == apSet) return;
@@ -318,13 +318,13 @@ namespace hpl {
 
 		mpSetInFocus = apSet;
 	}
-	
+
 	void cGui::SetFocusByName(const tString& asSetName)
 	{
 		cGuiSet *pSet = GetSetFromName(asSetName);
 		if(pSet) SetFocus(pSet);
 	}
-	
+
 	void cGui::DestroySet(cGuiSet *apSet)
 	{
 		if(apSet==NULL) return;
@@ -388,7 +388,7 @@ namespace hpl {
 	cGuiGfxElement* cGui::CreateGfxTexture(	const tString &asFile,
 											eGuiMaterial aMaterial,
 											eTextureType aTextureType,
-											const cColor& aColor, bool abMipMaps, 
+											const cColor& aColor, bool abMipMaps,
 											bool abAddToList)
 	{
 		///////////////////
@@ -407,7 +407,7 @@ namespace hpl {
 			Error("Could not load texture '%s'!\n",asFile.c_str());
 			return NULL;
 		}
-		
+
 		/////////////////////////////
 		// Create element
 		cGuiGfxElement *pGfxElem = CreateGfxTexture(pTexture,true,aMaterial,aColor,abAddToList);
@@ -417,7 +417,7 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	cGuiGfxElement* cGui::CreateGfxTexture(iTexture *apTexture, bool abAutoDestroyTexture, 
+	cGuiGfxElement* cGui::CreateGfxTexture(iTexture *apTexture, bool abAutoDestroyTexture,
 											eGuiMaterial aMaterial,
 											const cColor& aColor,
 											bool abAddToList,
@@ -521,22 +521,22 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	
+
 	bool cGui::SendMousePos(const cVector2l &avPos, const cVector2l &avRel)
 	{
 		if(mpSetInFocus==NULL) return false;
 
 		cVector2f vVirtualPos = cVector2f( (float)avPos.x, (float)avPos.y) / mpGraphics->GetLowLevel()->GetScreenSizeFloat();
 		cVector2f vVirtualRel = cVector2f( (float)avRel.x, (float)avRel.y) / mpGraphics->GetLowLevel()->GetScreenSizeFloat();
-		
+
         vVirtualPos *= mpSetInFocus->GetVirtualSize();
 		vVirtualPos -= mpSetInFocus->GetVirtualSizeOffset();
-		
+
 		vVirtualRel *= mpSetInFocus->GetVirtualSize();
 
 		return mpSetInFocus->SendMessage(eGuiMessage_MouseMove, cGuiMessageData(vVirtualPos, vVirtualRel));
 	}
-	
+
 	bool cGui::SendMouseClickDown(eGuiMouseButton aButton, int alKeyModifiers)
 	{
 		if(mpSetInFocus==NULL)return false;
@@ -547,7 +547,7 @@ namespace hpl {
 
 		return mpSetInFocus->SendMessage(eGuiMessage_MouseDown,data);
 	}
-	
+
 	bool cGui::SendMouseClickUp(eGuiMouseButton aButton, int alKeyModifiers)
 	{
 		if(mpSetInFocus==NULL)return false;
@@ -615,7 +615,7 @@ namespace hpl {
 
 		return mpSetInFocus->SendMessage(eGuiMessage_UIButtonPress, cGuiMessageData(aX));
 	}
-	
+
 	bool cGui::SendUIButtonRelease(eUIButton aX)
 	{
 		if(mpSetInFocus==NULL) return false;
@@ -629,9 +629,9 @@ namespace hpl {
 
 		return mpSetInFocus->SendMessage(eGuiMessage_UIButtonDoublePress, cGuiMessageData(aX));
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	eMouseButton cGui::TranslateGuiMouseToMouse(eGuiMouseButton aButton)
 	{
 		switch(aButton)
@@ -728,7 +728,7 @@ namespace hpl {
 		AddAttribute(ContextMenuItemTextLeftPadding);
 		AddAttribute(ContextMenuItemTextRightPadding);
 		AddAttribute(ContextMenuSeparatorPadding);
-		
+
 		AddAttribute(MainMenuItemTextPadding);
 		AddAttribute(MainMenuItemVPadding);
 		AddAttribute(MainMenuItemSeparation);
@@ -756,7 +756,7 @@ namespace hpl {
 		// Pointer Graphics
 		AddGfx(PointerNormal);
 		AddGfx(PointerText);
-		
+
 		///////////////////////
 		// Window Graphics
 		AddGfx(WindowBorderRight);
@@ -801,7 +801,7 @@ namespace hpl {
 		AddGfx(TextBoxBackground);
 		AddGfx(TextBoxSelectedTextBack);
 		AddGfx(TextBoxMarker);
-		
+
 		///////////////////////////////////
 		// List box Graphics
 		AddGfx(ListBoxBackground);
@@ -930,7 +930,7 @@ namespace hpl {
 		AddGfx(FilePickerIconSounds);
 		AddGfx(FilePickerIconText);
 		AddGfx(FilePickerIconOther);
-		AddGfx(FilePickerIconFolder);		
+		AddGfx(FilePickerIconFolder);
 	}
 	//-----------------------------------------------------------------------
 

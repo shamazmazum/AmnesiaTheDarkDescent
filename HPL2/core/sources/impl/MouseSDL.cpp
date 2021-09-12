@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -61,7 +61,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// PUBLIC METHODS
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
 
 	void cMouseSDL::Update()
@@ -79,7 +79,7 @@ namespace hpl {
 			}
 			mbFirstTime = false;
 		}
-		
+
 		iLowLevelGraphics *pLowLevelGfx = mpLowLevelInputSDL->GetLowLevelGraphics();
 		//mvMouseRelPos = cVector2f(0,0);
 		mbWheelUpMoved = false;
@@ -90,7 +90,7 @@ namespace hpl {
 		{
 			SDL_Event *pEvent = &(*it);
 
-			if(	pEvent->type != SDL_MOUSEMOTION && 
+			if(	pEvent->type != SDL_MOUSEMOTION &&
 				pEvent->type != SDL_MOUSEBUTTONDOWN &&
 #if SDL_VERSION_ATLEAST(2, 0, 0)
                 pEvent->type != SDL_MOUSEWHEEL &&
@@ -113,7 +113,7 @@ namespace hpl {
 #else
 				mvMouseAbsPos = cVector2l(pEvent->motion.x,pEvent->motion.y);
 #endif
-				
+
 				Uint8 buttonState = pEvent->motion.state;
 
 				//Set button here as well just to be sure
@@ -148,11 +148,11 @@ namespace hpl {
 					case SDL_BUTTON_X1: mvMButtonArray[eMouseButton_Button6] = bButtonIsDown;break;
 					case SDL_BUTTON_X2: mvMButtonArray[eMouseButton_Button7] = bButtonIsDown;break;
 #if !SDL_VERSION_ATLEAST(2, 0, 0)
-					case SDL_BUTTON_WHEELUP: 
+					case SDL_BUTTON_WHEELUP:
 						mvMButtonArray[eMouseButton_WheelUp] = bButtonIsDown;
 						if(bButtonIsDown) mbWheelUpMoved = true;
 						break;
-					case SDL_BUTTON_WHEELDOWN: 
+					case SDL_BUTTON_WHEELDOWN:
 						mvMButtonArray[eMouseButton_WheelDown] = bButtonIsDown;
 						if(bButtonIsDown) mbWheelDownMoved = true;
 						break;
@@ -165,16 +165,16 @@ namespace hpl {
 		else					mvMButtonArray[eMouseButton_WheelDown] = false;
 		if(mbWheelUpMoved)		mvMButtonArray[eMouseButton_WheelUp] = true;
 		else					mvMButtonArray[eMouseButton_WheelUp] = false;
-		
-		int lX,lY; 
+
+		int lX,lY;
 		SDL_GetRelativeMouseState(&lX, &lY);
 		mvMouseRelPos = cVector2l(lX,lY);
 
-		
+
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	bool cMouseSDL::ButtonIsDown(eMouseButton mButton)
 	{
 		return mvMButtonArray[mButton];
@@ -186,25 +186,25 @@ namespace hpl {
 	{
 		return mvMouseAbsPos;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cVector2l cMouseSDL::GetRelPosition()
 	{
 		cVector2l vPos = mvMouseRelPos;
 		mvMouseRelPos = cVector2l(0,0);
-		
+
 		return vPos;
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	/////////////////////////////////////////////////////////////////////////
 	// PRIVATE METHODS
 	/////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	//-----------------------------------------------------------------------
 
 }

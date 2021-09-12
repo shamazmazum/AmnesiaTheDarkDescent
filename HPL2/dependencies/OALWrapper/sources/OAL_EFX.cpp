@@ -56,7 +56,7 @@ void OAL_Effect_Reverb_SetDiffusion ( cOAL_Effect_Reverb* apEffect, float afDiff
 	if ((gpDevice == NULL) || !gpDevice->IsEFXActive() || (apEffect==NULL))
 		return;
 
-	
+
 	apEffect->SetDiffusion ( afDiffusion );
 }
 
@@ -66,7 +66,7 @@ void OAL_Effect_Reverb_SetGain ( cOAL_Effect_Reverb* apEffect, float afGain)
 	if ((gpDevice == NULL) || !gpDevice->IsEFXActive() || (apEffect==NULL))
 		return;
 
-	
+
 	apEffect->SetGain ( afGain );
 }
 
@@ -75,7 +75,7 @@ void OAL_Effect_Reverb_SetGainHF ( cOAL_Effect_Reverb* apEffect, float afGainHF)
 	if ((gpDevice == NULL) || !gpDevice->IsEFXActive() || (apEffect==NULL))
 		return;
 
-	
+
 	apEffect->SetGainHF ( afGainHF );
 }
 void OAL_Effect_Reverb_SetGainLF ( cOAL_Effect_Reverb* apEffect, float afGainLF)
@@ -83,7 +83,7 @@ void OAL_Effect_Reverb_SetGainLF ( cOAL_Effect_Reverb* apEffect, float afGainLF)
 	if ((gpDevice == NULL) || !gpDevice->IsEFXActive() || (apEffect==NULL))
 		return;
 
-	
+
 	apEffect->SetGainLF ( afGainLF );
 
 }
@@ -92,7 +92,7 @@ void OAL_Effect_Reverb_SetDecayTime ( cOAL_Effect_Reverb* apEffect, float afDeca
 	if ((gpDevice == NULL) || !gpDevice->IsEFXActive() || (apEffect==NULL))
 		return;
 
-	
+
 	apEffect->SetDecayTime ( afDecayTime );
 }
 
@@ -100,14 +100,14 @@ void OAL_Effect_Reverb_SetDecayHFRatio ( cOAL_Effect_Reverb* apEffect, float afD
 {
 	if ((gpDevice == NULL) || !gpDevice->IsEFXActive() || (apEffect==NULL))
 		return;
-	
-	apEffect->SetDecayHFRatio ( afDecayHFRatio );	
+
+	apEffect->SetDecayHFRatio ( afDecayHFRatio );
 }
 void OAL_Effect_Reverb_SetDecayLFRatio ( cOAL_Effect_Reverb* apEffect, float afDecayLFRatio )
 {
 	if ((gpDevice == NULL) || !gpDevice->IsEFXActive() || (apEffect==NULL))
 		return;
-	
+
 	apEffect->SetDecayLFRatio ( afDecayLFRatio );
 }
 
@@ -115,14 +115,14 @@ void OAL_Effect_Reverb_SetReflectionsGain ( cOAL_Effect_Reverb* apEffect, float 
 {
 	if ((gpDevice == NULL) || !gpDevice->IsEFXActive() || (apEffect==NULL))
 		return;
-	
-	apEffect->SetReflectionsGain ( afReflectionsGain );	
+
+	apEffect->SetReflectionsGain ( afReflectionsGain );
 }
 void OAL_Effect_Reverb_SetReflectionsDelay( cOAL_Effect_Reverb* apEffect, float afReflectionsDelay )
 {
 	if ((gpDevice == NULL) || !gpDevice->IsEFXActive() || (apEffect==NULL))
 		return;
-	
+
 	apEffect->SetReflectionsDelay ( afReflectionsDelay );
 }
 
@@ -130,15 +130,15 @@ void OAL_Effect_Reverb_SetReflectionsPan( cOAL_Effect_Reverb* apEffect, float af
 {
     if ((gpDevice == NULL) || !gpDevice->IsEFXActive() || (apEffect==NULL))
 		return;
-	
-	apEffect->SetReflectionsPan ( afReflectionsPan );	
+
+	apEffect->SetReflectionsPan ( afReflectionsPan );
 }
 
 void OAL_Effect_Reverb_SetLateReverbGain( cOAL_Effect_Reverb* apEffect, float afLateReverbGain)
 {
 	if ((gpDevice == NULL) || !gpDevice->IsEFXActive() || (apEffect==NULL))
 		return;
-	
+
 	apEffect->SetLateReverbGain ( afLateReverbGain );
 }
 
@@ -146,21 +146,21 @@ void OAL_Effect_Reverb_SetLateReverbDelay ( cOAL_Effect_Reverb* apEffect, float 
 {
 	if ((gpDevice == NULL) || !gpDevice->IsEFXActive() || (apEffect==NULL))
 		return;
-	
+
 	apEffect->SetLateReverbDelay ( afLateReverbDelay );
 }
 void OAL_Effect_Reverb_SetLateReverbPan (cOAL_Effect_Reverb* apEffect, float afLateReverbPan[3])
 {
 	if ((gpDevice == NULL) || !gpDevice->IsEFXActive() || (apEffect==NULL))
 		return;
-	
+
 	apEffect->SetLateReverbPan ( afLateReverbPan );
 }
 void OAL_Effect_Reverb_SetEchoTime (cOAL_Effect_Reverb* apEffect, float afEchoTime)
 {
 	if ((gpDevice == NULL) || !gpDevice->IsEFXActive() || (apEffect==NULL))
 		return;
-	
+
 	apEffect->SetEchoTime ( afEchoTime );
 }
 void OAL_Effect_Reverb_SetEchoDepth (cOAL_Effect_Reverb* apEffect, float afEchoDepth)
@@ -174,28 +174,28 @@ void OAL_Effect_Reverb_SetModulationTime (cOAL_Effect_Reverb* apEffect, float af
 {
 	if ((gpDevice == NULL) || !gpDevice->IsEFXActive() || (apEffect==NULL))
 		return;
-	
+
 	apEffect->SetModulationTime ( afModulationTime );
 }
 void OAL_Effect_Reverb_SetModulationDepth (cOAL_Effect_Reverb* apEffect, float afModulationDepth)
 {
 	if ((gpDevice == NULL) || !gpDevice->IsEFXActive() || (apEffect==NULL))
 		return;
-	
+
 	apEffect->SetModulationDepth ( afModulationDepth );
 }
 void OAL_Effect_Reverb_SetAirAbsorptionGainHF (cOAL_Effect_Reverb* apEffect, float afAirAbsorptionGainHF)
 {
 	if ((gpDevice == NULL) || !gpDevice->IsEFXActive() || (apEffect==NULL))
 		return;
-	
+
 	apEffect->SetAirAbsorptionGainHF ( afAirAbsorptionGainHF );
 }
 void OAL_Effect_Reverb_SetHFReference (cOAL_Effect_Reverb* apEffect, float afHFReference)
 {
 	if ((gpDevice == NULL) || !gpDevice->IsEFXActive() || (apEffect==NULL))
 		return;
-	
+
 	apEffect->SetHFReference( afHFReference );
 }
 
@@ -203,21 +203,21 @@ void OAL_Effect_Reverb_SetLFReference (cOAL_Effect_Reverb* apEffect, float afLFR
 {
 	if ((gpDevice == NULL) || !gpDevice->IsEFXActive() || (apEffect==NULL))
 		return;
-	
+
 	apEffect->SetLFReference ( afLFReference );
 }
 void OAL_Effect_Reverb_SetRoomRolloffFactor (cOAL_Effect_Reverb* apEffect, float afRoomRolloffFactor)
 {
 	if ((gpDevice == NULL) || !gpDevice->IsEFXActive() || (apEffect==NULL))
 		return;
-	
+
 	apEffect->SetRoomRolloffFactor ( afRoomRolloffFactor );
 }
 void OAL_Effect_Reverb_SetDecayHFLimit (cOAL_Effect_Reverb* apEffect, ALboolean abDecayHFLimit)
 {
 	if ((gpDevice == NULL) || !gpDevice->IsEFXActive() || (apEffect==NULL))
 		return;
-	
+
 	apEffect->SetDecayHFLimit ( abDecayHFLimit );
 }
 
@@ -376,7 +376,7 @@ cOAL_Filter_LowPass* OAL_Filter_LowPass_Create ()
 {
 	if ((gpDevice == NULL) || !gpDevice->IsEFXActive())
 		return NULL;
-	
+
 	return gpDevice->GetEFXManager()->CreateLowPassFilter();
 }
 */
@@ -386,7 +386,7 @@ cOAL_Filter* OAL_Filter_Create ()
 {
 	if ((gpDevice == NULL) || !gpDevice->IsEFXActive())
 		return NULL;
-	
+
 	return gpDevice->GetEFXManager()->CreateFilter();
 }
 
@@ -413,7 +413,7 @@ bool OAL_EffectSlot_AttachEffect ( int alSlotId, cOAL_Effect* apEffect )
 	if (pEFXManager)
 	{
 		pSlot = pEFXManager->GetEffectSlot(alSlotId);
-		if (pSlot) 
+		if (pSlot)
 			return pSlot->AttachEffect(apEffect);
 		else
 			return false;

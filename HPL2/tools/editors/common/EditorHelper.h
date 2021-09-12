@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -44,12 +44,12 @@ public:
 
 	static void CalculateRayBoundingBox(const cVector3f& avStart, const cVector3f& avEnd, cVector3f &avMin, cVector3f &avMax);
 	static bool CheckEntityAgainstRay(iEntityWrapper* apEntity, iEntityWrapper* apCurrentPickedEntity,
-							   const cVector3f& avRayBVMin, const cVector3f& avRayBVMax, 
-							   const cVector3f& avRayStart, const cVector3f& avRayEnd, 
+							   const cVector3f& avRayBVMin, const cVector3f& avRayBVMax,
+							   const cVector3f& avRayStart, const cVector3f& avRayEnd,
 							   float* apfMinDistance, cVector3f* apIntersectionPos=NULL, tVector3fVec* apTriangle=NULL);
 	static bool CheckEntityAgainstBox(iEntityWrapper* apEntity, const cRect2l& aMouseRect, const cVector2l& avViewportSize, cFrustum* apFrustum);
 
-	static bool CheckScreenSpaceMouseMeshIntersect(cCamera* apCamera, const cVector2f& avMousePos,  
+	static bool CheckScreenSpaceMouseMeshIntersect(cCamera* apCamera, const cVector2f& avMousePos,
 												   const cVector3f& avRayStart, const cVector3f& avRayEnd,
 												   const cVector2f& avViewportSize, cMeshEntity* apMesh,
 												   cVector3f* apIntersectionPos, tVector3fVec* apTriangle=NULL);
@@ -57,7 +57,7 @@ public:
 	static bool CheckScreenSpaceMouseSubMeshIntersect(const cVector2f& avInvYMousePos,
 													  const cVector3f& avRayStart, const cVector3f& avRayEnd,
 													  const cVector2f& avViewportSize, cSubMeshEntity* apSubMesh,
-													  const cMatrixf& amtxCameraViewMatrix, 
+													  const cMatrixf& amtxCameraViewMatrix,
 													  const cMatrixf& amtxCameraProjMatrix,
 													  const cMatrixf& amtxSubMeshWorldMatrix,
 													  cVector3f* apIntersectionPos, tVector3fVec* apTriangle=NULL);
@@ -95,7 +95,7 @@ public:
 	static bool LoadResourceFile(eEditorResourceType aResType, const tString& asFile, void** apEditorResource=NULL, int alID=-1);
 
 
-	static void DrawBillboard(iTexture *apGfx, const cVector3f& avWorldPosition,const cVector2f& avSize,const cColor& aColor,  
+	static void DrawBillboard(iTexture *apGfx, const cVector3f& avWorldPosition,const cVector2f& avSize,const cColor& aColor,
 						cEditorWindowViewport* apViewport, cRendererCallbackFunctions* apFunctions);
 
 	static void DrawPyramid(cRendererCallbackFunctions* apFunctions, const cVector3f& avBaseCenter, const cVector3f& avTop, float afHalfWidth, const cColor& aColor);

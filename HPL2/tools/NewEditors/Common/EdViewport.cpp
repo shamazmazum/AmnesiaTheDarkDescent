@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -30,22 +30,22 @@
 /*
 float iViewportCameraZoomFunc::GetOrthoViewSizeFromZoom(float afX)
 {
-	return mfMaxDistance*exp(-afX); 
+	return mfMaxDistance*exp(-afX);
 }
 
-float iViewportCameraZoomFunc::GetDistToTargetFromZoom(float afX) 
+float iViewportCameraZoomFunc::GetDistToTargetFromZoom(float afX)
 {
 	return mfMaxDistance*exp(-afX);
 }
 
-float iViewportCameraZoomFunc::GetZoomFromDistToTarget(float afX) 
-{ 
-	return log(mfMaxDistance/afX); 
+float iViewportCameraZoomFunc::GetZoomFromDistToTarget(float afX)
+{
+	return log(mfMaxDistance/afX);
 }
 
-float iViewportCameraZoomFunc::GetZoomFromOrthoViewSize(float afX) 
-{ 
-	return log(mfMaxDistance/afX); 
+float iViewportCameraZoomFunc::GetZoomFromOrthoViewSize(float afX)
+{
+	return log(mfMaxDistance/afX);
 }
 */
 
@@ -101,7 +101,7 @@ void cViewportCallback::OnPostSolidDraw(cRendererCallbackFunctions* apFunctions)
 	apFunctions->SetMatrix(NULL);
 	apFunctions->SetTextureRange(NULL,0);
 	apFunctions->SetProgram(NULL);
-	
+
 	apFunctions->SetDepthTest(true);
 	apFunctions->SetDepthWrite(false);
 
@@ -140,7 +140,7 @@ void cViewportCallback::OnPostSolidDraw(cRendererCallbackFunctions* apFunctions)
 	apFunctions->SetBlendMode(eMaterialBlendMode_None);
 	apFunctions->SetTextureRange(NULL,0);
 	apFunctions->SetProgram(NULL);
-	
+
 	apFunctions->SetDepthTest(false);
 	apFunctions->SetDepthWrite(false);
 
@@ -149,9 +149,9 @@ void cViewportCallback::OnPostSolidDraw(cRendererCallbackFunctions* apFunctions)
 //	const cVector3f& vMouseNewPos = mpViewport->GetVCamera()->GetTrackNewMousePos();
 //	cVector3f vMousePos = mpViewport->GetMouseWorldPosition();
 	//mpViewport->GetVCamera()->ClampDistanceFromRefTarget(vMousePos, 40);
-	
+
 	//apFunctions->GetLowLevelGfx()->DrawSphere(vMousePos, 0.1f, cColor(0,1,0,1));
-	
+
 	//apFunctions->GetLowLevelGfx()->DrawLine(vRefMousePos, vMouseNewPos, cColor(1,0,0,1));
 	//apFunctions->GetLowLevelGfx()->DrawLine(vRefMousePos, 0, cColor(0,0,1,1));
 	//apFunctions->GetLowLevelGfx()->DrawLine(mpViewport->GetVCamera()->GetTrackRefMousePos(), mpViewport->GetVCamera()->GetTrackRefTargetPos()-mpViewport->GetVCamera()->GetTrackRefMousePos(), cColor(1,0,0,1));
@@ -173,7 +173,7 @@ void cViewportCallback::OnPostSolidDraw(cRendererCallbackFunctions* apFunctions)
 		apFunctions->GetLowLevelGfx()->DrawSphere(vPos2, 0.2f, cColor(0,1,0,1));
 		apFunctions->GetLowLevelGfx()->DrawSphere(vGridPos, 0.3f, cColor(1,0,0,1));
 		apFunctions->GetLowLevelGfx()->DrawSphere(vSnapPos, 0.3f, cColor(1,1,0,1));
-		
+
 		//apFunctions->GetLowLevelGfx()->DrawSphere(m->GetTarget(),0.1f, cColor(0,1,1,1));
 	}
 	*/
@@ -187,7 +187,7 @@ void cViewportCallback::OnPostTranslucentDraw(cRendererCallbackFunctions* apFunc
 	apFunctions->SetMatrix(NULL);
 	apFunctions->SetTextureRange(NULL,0);
 	apFunctions->SetProgram(NULL);
-	
+
 	apFunctions->SetDepthTest(true);
 	apFunctions->SetDepthWrite(false);
 
@@ -208,7 +208,7 @@ cVector2f		iEdViewport::mvCamPlanes = cVector2f(0.05f, 1000.0f);
 iVertexBuffer*	iEdViewport::mpVBBillboard = NULL;
 iGpuProgram*	iEdViewport::mpProgDrawSolid = NULL;
 
-tVertexVec iEdViewport::mvArrowQuads[4] = 
+tVertexVec iEdViewport::mvArrowQuads[4] =
 {
 	tVertexVec(4),
 	tVertexVec(4),
@@ -218,7 +218,7 @@ tVertexVec iEdViewport::mvArrowQuads[4] =
 
 //---------------------------------------------------------------------------------
 
-iEdViewport::iEdViewport(iEditor* apEditor, const tWString& asName, 
+iEdViewport::iEdViewport(iEditor* apEditor, const tWString& asName,
 						 cWorld* apWorld, iFrameBuffer* apFB, bool abDestroyFBOnExit) : iEdPane(apEditor, _W("Viewport: ") + asName)
 {
 	++mlViewportCount;
@@ -243,7 +243,7 @@ iEdViewport::iEdViewport(iEditor* apEditor, const tWString& asName,
 	mvUVSize = -1;
 
 	mfRayEndDistance = 200;
-	
+
 	mbMousePositionUpdated = true;
 	mbUnprojectionUpdated = true;
 
@@ -262,7 +262,7 @@ iEdViewport::iEdViewport(iEditor* apEditor, const tWString& asName,
 	{
 		//////////////////////////////////
 		//Create quad vertex buffer
-		mpVBBillboard = mpGfx->GetLowLevel()->CreateVertexBuffer(eVertexBufferType_Hardware, eVertexBufferDrawType_Quad, 
+		mpVBBillboard = mpGfx->GetLowLevel()->CreateVertexBuffer(eVertexBufferType_Hardware, eVertexBufferDrawType_Quad,
 																	eVertexBufferUsageType_Dynamic);
 
 		mpVBBillboard->CreateElementArray(eVertexBufferElement_Position, eVertexBufferElementFormat_Float,4);
@@ -384,7 +384,7 @@ void iEdViewport::CreateGuiViewport(iWidget* apParentWidget)
 void iEdViewport::SetRenderMode(eRenderer aMode)
 {
 	mRenderMode = aMode;
-	
+
 	iRenderer* pRenderer = mpGfx->GetRenderer(mRenderMode);
 	mpEngineViewport->SetRenderer(pRenderer);
 	SetClearColor(mpEditor->GetWorld()->GetBGColor());
@@ -395,11 +395,11 @@ void iEdViewport::SetRenderMode(eRenderer aMode)
 void iEdViewport::SetFrameBuffer(iFrameBuffer* apFB)
 {
 	if(apFB==NULL || mpFB==apFB) return;
-	
+
 	mpFB = apFB;
 	iFrameBufferAttachment* pColorBuffer = mpFB->GetColorBuffer(0);
 	if(pColorBuffer) mpRenderTarget = pColorBuffer->ToTexture();
-	
+
 	mpEngineViewport->SetFrameBuffer(mpFB);
 	mbViewportNeedsUpdate = true;
 }
@@ -419,10 +419,10 @@ void iEdViewport::UpdateViewport()
 	if(pImg) pGui->DestroyGfx(pImg);
 
 	////////////////////////////////////////////
-	// Set updated one	
+	// Set updated one
 	pImg = pGui->CreateGfxTexture(mpRenderTarget, false, eGuiMaterial_Diffuse, cColor(1,1), true, mvUVStart, mvUVEnd);
 	mpImgViewport->SetImage(pImg);
-	
+
 	mbViewportNeedsUpdate = false;
 }
 
@@ -454,7 +454,7 @@ void iEdViewport::SetGuiViewportSize(const cVector2f& avSize)
 
 void iEdViewport::SetEngineViewportPositionAndSize(const cVector2l& avPos, const cVector2l& avSize)
 {
-	if(mvEngineViewportPos==avPos && 
+	if(mvEngineViewportPos==avPos &&
 		mvEngineViewportSize==avSize) return;
 
 	mvEngineViewportPos = avPos;
@@ -469,7 +469,7 @@ void iEdViewport::SetEngineViewportPositionAndSize(const cVector2l& avPos, const
 	cVector2f vPosFloat = cVector2f((float)mvEngineViewportPos.x, (float)mvEngineViewportPos.y);
 	cVector2f vSizeFloat = cVector2f((float)mvEngineViewportSize.x, (float)mvEngineViewportSize.y);
 
-	mvUVStart = (vPosFloat+cVector2f(0,vSizeFloat.y)) / 
+	mvUVStart = (vPosFloat+cVector2f(0,vSizeFloat.y)) /
 				vFBSizeFloat;
 
 	mvUVSize =  vSizeFloat/vFBSizeFloat;
@@ -537,7 +537,7 @@ cVector2l iEdViewport::GetMouseViewportPositionInt()
 const cVector3f& iEdViewport::GetUnprojectedStart()
 {
 	UpdateUnprojection();
-	
+
 	return mvUnprojectedStart;
 }
 
@@ -546,7 +546,7 @@ const cVector3f& iEdViewport::GetUnprojectedStart()
 const cVector3f& iEdViewport::GetUnprojectedDir()
 {
 	UpdateUnprojection();
-	
+
 	return mvUnprojectedDir;
 }
 
@@ -568,7 +568,7 @@ cBoundingVolume* iEdViewport::GetRayBV()
 
 //-------------------------------------------------------------
 
-void iEdViewport::GetViewSpacePositionAndSize(const cVector3f& avWorldPosition, const cVector3f& avWorldSize, 
+void iEdViewport::GetViewSpacePositionAndSize(const cVector3f& avWorldPosition, const cVector3f& avWorldSize,
 												   cVector3f& avViewSpacePos, cVector3f& avViewSpaceSize)
 {
 	mpCamera->GetCurrentCamMode()->GetViewSpacePositionAndSize(avWorldPosition, avWorldSize, avViewSpacePos, avViewSpaceSize);
@@ -595,7 +595,7 @@ const cVector3f& iEdViewport::GetMouseWorldPosition(bool abForceUpdate, bool abC
 
 	//	if(abCustomRayDist)
 	//		vEnd = vStart + GetUnprojectedDir()*afCustomRayDist;
-		
+
 	//	if(cMath::CheckPlaneLineIntersection(mpGrid->GetPlane(), vStart, vEnd, &mvMouseWorldPos,NULL)==false)
 	//	{
 	//		const cVector3f& vDir = GetUnprojectedDir();
@@ -624,7 +624,7 @@ const cVector3f& iEdViewport::GetGridCenter()
 
 //-------------------------------------------------------------
 
-void iEdViewport::DrawBillboard(iTexture *apGfx, const cVector3f& avWorldPosition, const cVector2f& avSize, const cColor& aColor, 
+void iEdViewport::DrawBillboard(iTexture *apGfx, const cVector3f& avWorldPosition, const cVector2f& avSize, const cColor& aColor,
 									cRendererCallbackFunctions* apFunctions)
 {
 	apFunctions->SetModelViewMatrix(cMatrixf::Identity);
@@ -632,19 +632,19 @@ void iEdViewport::DrawBillboard(iTexture *apGfx, const cVector3f& avWorldPositio
 	/////////////////////////////////////////////////////////////////
 	// Set up position and size on screen
 	cVector3f vViewSpacePos;
-	cVector3f vViewSpaceSize; 
-	
+	cVector3f vViewSpaceSize;
+
 	GetViewSpacePositionAndSize(avWorldPosition, avSize, vViewSpacePos, vViewSpaceSize);
 	cVector2f vBBHalfSize = cVector2f(vViewSpaceSize.x, vViewSpaceSize.y)*0.5f;
-	
+
 	//////////////////////////
 	// Update data in Vertex buffer
 	int lVtxStride = mpVBBillboard->GetElementNum(eVertexBufferElement_Position);
-	
+
 	float *pPosArray = mpVBBillboard->GetFloatArray(eVertexBufferElement_Position);
 	float *pColArray = mpVBBillboard->GetFloatArray(eVertexBufferElement_Color0);
 
-	cVector3f vAdd[4] = 
+	cVector3f vAdd[4] =
 	{
 		cVector3f( vBBHalfSize.x,-vBBHalfSize.y,0),
 		cVector3f(-vBBHalfSize.x,-vBBHalfSize.y,0),
@@ -738,13 +738,13 @@ void iEdViewport::DrawSolidColorVertexBuffer(iVertexBuffer* apVB, cMatrixf* apTr
 	}
 }
 
-void iEdViewport::DrawArrow(cRendererCallbackFunctions* apFunctions, 
-							const cMatrixf& amtxTransform, 
-							float afLength, 
-							bool abKeepConstantSize, 
-							const cVector2f& avHeadSizeRatio, 
+void iEdViewport::DrawArrow(cRendererCallbackFunctions* apFunctions,
+							const cMatrixf& amtxTransform,
+							float afLength,
+							bool abKeepConstantSize,
+							const cVector2f& avHeadSizeRatio,
 							const cColor& aCol,
-							float afOrthoConstant, 
+							float afOrthoConstant,
 							float afPerspConstant)
 {
 	if(abKeepConstantSize)
@@ -783,7 +783,7 @@ void iEdViewport::DrawArrow(cRendererCallbackFunctions* apFunctions,
 	mvArrowQuads[2][2].pos = cVector3f(0,0,0);
 	mvArrowQuads[2][3].pos = cVector3f(0,0,0);
 	mvArrowQuads[2][1].pos = cVector3f(fXZ,-fY,fXZ);
-	
+
 	mvArrowQuads[3][0].pos = cVector3f(-fXZ,-fY,-fXZ);
 	mvArrowQuads[3][1].pos = cVector3f(0,0,0);
 	mvArrowQuads[3][2].pos = cVector3f(0,0,0);
@@ -791,7 +791,7 @@ void iEdViewport::DrawArrow(cRendererCallbackFunctions* apFunctions,
 
 	cMatrixf mtxWorld = cMath::MatrixMul(amtxTransform, cMath::MatrixTranslate(cVector3f(0,afLength,0)));
 	apFunctions->SetMatrix(&mtxWorld);
-	
+
 	apFunctions->GetLowLevelGfx()->DrawLine(cVector3f(0,-afLength,0), 0, aCol);
 	for(int i=0; i<4;++i)
 		apFunctions->GetLowLevelGfx()->DrawQuad(mvArrowQuads[i],aCol);
@@ -834,7 +834,7 @@ void iEdViewport::SetClearColor(const cColor& aX)
 	cColor clearCol = aX;
 	if(mRenderMode==eRenderer_Main)
 		clearCol = cColor(0,1);
-	
+
 	mpEngineViewport->GetRenderSettings()->mClearColor = clearCol;
 }
 
@@ -873,7 +873,7 @@ void iEdViewport::SetEnlarged(bool abX)
 		vPos = mvEnlargedPosition;
 		vSize = mvEnlargedSize;
 		vFBPos = cVector2l(0);
-		vFBSize = mpFB->GetSize();		
+		vFBSize = mpFB->GetSize();
 	}
 	else
 	{
@@ -1022,7 +1022,7 @@ void iEdViewport::UpdateUnprojection()
 
 	const cVector2f& vMouseViewportPos = GetMouseViewportPosition();
 	const cVector2f& vViewportSize = GetGuiViewportSize();
-	
+
 	if(cMath::CheckPointInRectIntersection(vMouseViewportPos, cRect2f(0,0,vViewportSize.x, vViewportSize.y)))
 	{
 		cCamera* pCam = mpCamera->GetEngineCamera();

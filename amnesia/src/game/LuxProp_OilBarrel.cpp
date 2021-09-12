@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -118,13 +118,13 @@ bool cLuxProp_OilBarrel::OnInteract(iPhysicsBody *apBody, const cVector3f &avPos
 		gpBase->mpMessageHandler->SetMessage(kTranslate("Game", "OilBarrel_LanternFull"), 0);
 		return false;
 	}
-	
+
 	///////////////////////////////////
 	// Increase oil amount
 	fOil += mfOilAmount;
 	float fFillAmount = mfOilAmount;
 	if(fOil > 100)
-	{	
+	{
 		fFillAmount = mfOilAmount - (fOil - 100.0f);
         mfOilAmount = fOil - 100.0f;
 		if(mfOilAmount < 1.0f) mfOilAmount =0; //If very little oil left, just let it be empty.
@@ -153,11 +153,11 @@ bool cLuxProp_OilBarrel::OnInteract(iPhysicsBody *apBody, const cVector3f &avPos
 			gpBase->mpMessageHandler->SetMessage(kTranslate("Game", "OilBarrel_Refill_Amount_050"),0);
 		else if(fFillAmount < 75)
 			gpBase->mpMessageHandler->SetMessage(kTranslate("Game", "OilBarrel_Refill_Amount_075"),0);
-		else 
+		else
 			gpBase->mpMessageHandler->SetMessage(kTranslate("Game", "OilBarrel_Refill_Amount_100"),0);
 	}
 
-	
+
 	return true;
 }
 
@@ -165,7 +165,7 @@ bool cLuxProp_OilBarrel::OnInteract(iPhysicsBody *apBody, const cVector3f &avPos
 
 void cLuxProp_OilBarrel::OnSetupAfterLoad(cWorld *apWorld)
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -179,7 +179,7 @@ void cLuxProp_OilBarrel::OnResetProperties()
 
 void cLuxProp_OilBarrel::UpdatePropSpecific(float afTimeStep)
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -215,10 +215,10 @@ tWString cLuxProp_OilBarrel::GetFocusText()
 			sText = kTranslate("Game", "OilBarrel_FocusText_050");
 		else if(mfOilAmount < 75)
 			sText = kTranslate("Game", "OilBarrel_FocusText_075");
-		else 
+		else
 			sText = kTranslate("Game", "OilBarrel_FocusText_100");
 	}
-		
+
 	return sText;
 }
 
@@ -226,7 +226,7 @@ tWString cLuxProp_OilBarrel::GetFocusText()
 
 void cLuxProp_OilBarrel::OnConnectionStateChange(iLuxEntity *apEntity, int alState)
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -241,10 +241,10 @@ void cLuxProp_OilBarrel::OnConnectionStateChange(iLuxEntity *apEntity, int alSta
 void cLuxProp_OilBarrel::CalculateOilAmount()
 {
 	if(mbAmountCalculated) return;
-	
+
 	//////////////////////
 	// HARDMODE
-	if (gpBase->mbHardMode) 
+	if (gpBase->mbHardMode)
 	{
 		mfOilAmount = 10.0f;
 		mbAmountCalculated = true;
@@ -254,7 +254,7 @@ void cLuxProp_OilBarrel::CalculateOilAmount()
 	mfOilAmount = 10.0f; //Base amount
 
 	float fTotalOil = gpBase->mpPlayer->GetLampOil();
-	
+
 	//Iterate items and add amount and count to total
 	for(int i=0; i<gpBase->mpInventory->GetItemNum(); ++i)
 	{
@@ -263,14 +263,14 @@ void cLuxProp_OilBarrel::CalculateOilAmount()
 
 		fTotalOil += pItem->GetAmount() * (float)pItem->GetCount();
 	}
-	
+
     float fAdd = 100 - fTotalOil;
 	if(fAdd < 0) fAdd = 0;
 	if(fAdd > 90) fAdd = 90;
 
 	mfOilAmount += fAdd;
 
-    mbAmountCalculated = true;    
+    mbAmountCalculated = true;
 }
 
 //-----------------------------------------------------------------------
@@ -308,7 +308,7 @@ void cLuxProp_OilBarrel::SaveToSaveData(iLuxEntity_SaveData* apSaveData)
 	//Set variables
 	kCopyToVar(pData, mbAmountCalculated);
 	kCopyToVar(pData, mfOilAmount);
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -319,7 +319,7 @@ void cLuxProp_OilBarrel::LoadFromSaveData(iLuxEntity_SaveData* apSaveData)
 	//Init
 	super_class::LoadFromSaveData(apSaveData);
 	cLuxProp_OilBarrel_SaveData *pData = static_cast<cLuxProp_OilBarrel_SaveData*>(apSaveData);
-	
+
 	//////////////////
 	//Set variables
 	kCopyFromVar(pData, mbAmountCalculated);

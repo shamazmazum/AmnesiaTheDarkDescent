@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -46,7 +46,7 @@ enum eJointInt
 
 enum eJointFloat
 {
-	eJointFloat_Stiffness = eObjFloat_LastEnum, 
+	eJointFloat_Stiffness = eObjFloat_LastEnum,
 	eJointFloat_MinMoveSpeed,
 	eJointFloat_MinMoveFreq,
 	eJointFloat_MinMoveFreqSpeed,
@@ -163,16 +163,16 @@ public:
 	float GetMinMoveFreq() { return mfMinMoveFreq; }
 	float GetMinMoveFreqSpeed() { return mfMinMoveFreqSpeed; }
 	float GetMinMoveVolume() { return mfMinMoveVolume; }
-	
+
 	float GetMaxMoveSpeed() { return mfMaxMoveSpeed; }
 	float GetMaxMoveFreq() { return mfMaxMoveFreq; }
 	float GetMaxMoveFreqSpeed() { return mfMaxMoveFreqSpeed; }
 	float GetMaxMoveVolume() { return mfMaxMoveVolume; }
-	
+
 	float GetMiddleMoveSpeed() { return mfMiddleMoveSpeed; }
 	float GetMiddleMoveVolume() { return mfMiddleMoveVolume; }
 
-	
+
 	void SetMoveSound(const tString& asX) { msMoveSound = asX; }
 	void SetMoveType(const tString& asX) { msMoveType = asX; }
 
@@ -188,12 +188,12 @@ public:
 	void SetMinMoveFreq(float afX) { mfMinMoveFreq = afX; }
 	void SetMinMoveFreqSpeed(float afX) { mfMinMoveFreqSpeed = afX; }
 	void SetMinMoveVolume(float afX) { mfMinMoveVolume = afX; }
-	
+
 	void SetMaxMoveSpeed(float afX) { mfMaxMoveSpeed = afX; }
 	void SetMaxMoveFreq(float afX) { mfMaxMoveFreq = afX; }
 	void SetMaxMoveFreqSpeed(float afX) { mfMaxMoveFreqSpeed = afX; }
 	void SetMaxMoveVolume(float afX) { mfMaxMoveVolume = afX; }
-	
+
 	void SetMiddleMoveSpeed(float afX) { mfMiddleMoveSpeed = afX; }
 	void SetMiddleMoveVolume(float afX) { mfMiddleMoveVolume = afX; }
 
@@ -222,7 +222,7 @@ public:
 	cEditorWindowEntityEditBox* CreateEditBox(cEditorEditModeSelect* apEditMode);
 
 	//void SaveToElement(cXmlElement* apElement);
-	
+
 	void Draw(cEditorWindowViewport* apViewport, cRendererCallbackFunctions* apFunctions, iEditorEditMode* apEditMode, bool abIsSelected, const cColor& aHighlightCol, const cColor& aDisabledCol);
 protected:
 	cEntityIcon* CreateIcon();

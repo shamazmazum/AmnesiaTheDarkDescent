@@ -2,23 +2,23 @@
    AngelCode Scripting Library
    Copyright (c) 2003-2010 Andreas Jonsson
 
-   This software is provided 'as-is', without any express or implied 
-   warranty. In no event will the authors be held liable for any 
+   This software is provided 'as-is', without any express or implied
+   warranty. In no event will the authors be held liable for any
    damages arising from the use of this software.
 
-   Permission is granted to anyone to use this software for any 
-   purpose, including commercial applications, and to alter it and 
+   Permission is granted to anyone to use this software for any
+   purpose, including commercial applications, and to alter it and
    redistribute it freely, subject to the following restrictions:
 
-   1. The origin of this software must not be misrepresented; you 
+   1. The origin of this software must not be misrepresented; you
       must not claim that you wrote the original software. If you use
-      this software in a product, an acknowledgment in the product 
+      this software in a product, an acknowledgment in the product
       documentation would be appreciated but is not required.
 
-   2. Altered source versions must be plainly marked as such, and 
+   2. Altered source versions must be plainly marked as such, and
       must not be misrepresented as being the original software.
 
-   3. This notice may not be removed or altered from any source 
+   3. This notice may not be removed or altered from any source
       distribution.
 
    The original version of this library can be located at:
@@ -122,18 +122,18 @@ void RegisterObjectTypeGCBehaviours(asCScriptEngine *engine)
 
 asCObjectType::asCObjectType()
 {
-	engine      = 0; 
-	refCount.set(0); 
+	engine      = 0;
+	refCount.set(0);
 	derivedFrom = 0;
 
 	acceptValueSubType = true;
 	acceptRefSubType = true;
 }
 
-asCObjectType::asCObjectType(asCScriptEngine *engine) 
+asCObjectType::asCObjectType(asCScriptEngine *engine)
 {
-	this->engine = engine; 
-	refCount.set(0); 
+	this->engine = engine;
+	refCount.set(0);
 	derivedFrom  = 0;
 
 	acceptValueSubType = true;
@@ -178,7 +178,7 @@ asCObjectType::~asCObjectType()
 
 	asUINT n;
 	for( n = 0; n < properties.GetLength(); n++ )
-		if( properties[n] ) 
+		if( properties[n] )
 		{
 			if( flags & asOBJ_SCRIPT_OBJECT )
 			{
@@ -372,7 +372,7 @@ int asCObjectType::GetMethodIdByDecl(const char *decl) const
 
 asIScriptFunction *asCObjectType::GetMethodDescriptorByIndex(int index) const
 {
-	if( index < 0 || (unsigned)index >= methods.GetLength() ) 
+	if( index < 0 || (unsigned)index >= methods.GetLength() )
 		return 0;
 
 	return engine->scriptFunctions[methods[index]];
@@ -401,7 +401,7 @@ const char *asCObjectType::GetPropertyName(asUINT prop) const
 
 asIObjectType *asCObjectType::GetBaseType() const
 {
-	return derivedFrom; 
+	return derivedFrom;
 }
 
 int asCObjectType::GetPropertyOffset(asUINT prop) const
@@ -416,7 +416,7 @@ int asCObjectType::GetBehaviourCount() const
 {
 	// Count the number of behaviours (except factory functions)
 	int count = 0;
-	
+
 	if( beh.destruct )               count++;
 	if( beh.addref )                 count++;
 	if( beh.release )                count++;
@@ -424,7 +424,7 @@ int asCObjectType::GetBehaviourCount() const
 	if( beh.gcSetFlag )              count++;
 	if( beh.gcGetFlag )              count++;
 	if( beh.gcEnumReferences )       count++;
-	if( beh.gcReleaseAllReferences ) count++; 
+	if( beh.gcReleaseAllReferences ) count++;
 	if( beh.templateCallback )       count++;
 	if( beh.listFactory )            count++;
 
@@ -442,7 +442,7 @@ int asCObjectType::GetBehaviourByIndex(asUINT index, asEBehaviours *outBehaviour
 	int count = 0;
 
 	if( beh.destruct && count++ == (int)index ) // only increase count if the behaviour is registered
-	{ 
+	{
 		if( outBehaviour ) *outBehaviour = asBEHAVE_DESTRUCT;
 		return beh.destruct;
 	}
@@ -508,7 +508,7 @@ int asCObjectType::GetBehaviourByIndex(asUINT index, asEBehaviours *outBehaviour
 		if( outBehaviour ) *outBehaviour = asBEHAVE_CONSTRUCT;
 		return beh.constructors[index - count];
 	}
-	else 
+	else
 		count += (int)beh.constructors.GetLength();
 
 	if( index - count < beh.operators.GetLength() / 2 )
@@ -583,7 +583,7 @@ void asCObjectType::ReleaseAllFunctions()
 	beh.copyfactory = 0;
 	for( asUINT a = 0; a < beh.factories.GetLength(); a++ )
 	{
-		if( engine->scriptFunctions[beh.factories[a]] ) 
+		if( engine->scriptFunctions[beh.factories[a]] )
 			engine->scriptFunctions[beh.factories[a]]->Release();
 	}
 	beh.factories.SetLength(0);
@@ -592,7 +592,7 @@ void asCObjectType::ReleaseAllFunctions()
 	beh.copyconstruct = 0;
 	for( asUINT b = 0; b < beh.constructors.GetLength(); b++ )
 	{
-		if( engine->scriptFunctions[beh.constructors[b]] ) 
+		if( engine->scriptFunctions[beh.constructors[b]] )
 			engine->scriptFunctions[beh.constructors[b]]->Release();
 	}
 	beh.constructors.SetLength(0);
@@ -650,7 +650,7 @@ void asCObjectType::ReleaseAllFunctions()
 
 	for( asUINT c = 0; c < methods.GetLength(); c++ )
 	{
-		if( engine->scriptFunctions[methods[c]] ) 
+		if( engine->scriptFunctions[methods[c]] )
 			engine->scriptFunctions[methods[c]]->Release();
 	}
 	methods.SetLength(0);
@@ -667,11 +667,11 @@ void asCObjectType::ReleaseAllFunctions()
 void asCObjectType::EnumReferences(asIScriptEngine *)
 {
 	for( asUINT a = 0; a < beh.factories.GetLength(); a++ )
-		if( engine->scriptFunctions[beh.factories[a]] ) 
+		if( engine->scriptFunctions[beh.factories[a]] )
 			engine->GCEnumCallback(engine->scriptFunctions[beh.factories[a]]);
 
 	for( asUINT b = 0; b < beh.constructors.GetLength(); b++ )
-		if( engine->scriptFunctions[beh.constructors[b]] ) 
+		if( engine->scriptFunctions[beh.constructors[b]] )
 			engine->GCEnumCallback(engine->scriptFunctions[beh.constructors[b]]);
 
 	if( beh.templateCallback )
@@ -679,7 +679,7 @@ void asCObjectType::EnumReferences(asIScriptEngine *)
 
 	if( beh.listFactory )
 		engine->GCEnumCallback(engine->scriptFunctions[beh.listFactory]);
-		
+
 	if( beh.destruct )
 		engine->GCEnumCallback(engine->scriptFunctions[beh.destruct]);
 
@@ -712,7 +712,7 @@ void asCObjectType::EnumReferences(asIScriptEngine *)
 			engine->GCEnumCallback(engine->scriptFunctions[beh.operators[e]]);
 
 	for( asUINT c = 0; c < methods.GetLength(); c++ )
-		if( engine->scriptFunctions[methods[c]] ) 
+		if( engine->scriptFunctions[methods[c]] )
 			engine->GCEnumCallback(engine->scriptFunctions[methods[c]]);
 
 	for( asUINT d = 0; d < virtualFunctionTable.GetLength(); d++ )

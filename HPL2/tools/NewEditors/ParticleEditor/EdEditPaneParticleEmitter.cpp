@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -43,7 +43,7 @@ cEdEditPaneParticleEmitter::cEdEditPaneParticleEmitter(iEdObject* apObj) : iEdEd
 
 cEdEditPaneParticleEmitter::~cEdEditPaneParticleEmitter()
 {
-	//if(mpTFCategories) 
+	//if(mpTFCategories)
 	//	mlLastEditedTab = mpTFCategories->GetTabOnTopIndex();
 }
 
@@ -127,7 +127,7 @@ void cEdEditPaneParticleEmitter::OnCreateLayout()
 		mpInpLength = CreateInputVec2(vPos, _W("Length(s)"), pGroup, 50, lstLabelMinMax);
 		vPos.y += mpInpLength->GetSize().y;
 		mpInpInterval = CreateInputVec2(vPos, _W("Interval(s)"), pGroup, 50, lstLabelMinMax);
-		
+
 		pGroup = mpSet->CreateWidgetGroup(cVector3f(220,240,0.1f), cVector2f(200,175), _W("Offset"), pTab);
 
 		vPos = cVector3f(10,10,0.1f);
@@ -164,7 +164,7 @@ void cEdEditPaneParticleEmitter::OnCreateLayout()
 		vPos.x += mpInpSphStartMaxAng->GetSize().x + 20;
 		mpInpSphStartRadius = CreateInputVec2(vPos, _W("Radius(m)"), pGroup, 50, lstLabelMinMax);
 	}
-    
+
 	//////////////////////////////////////////////////////
 	// Tab Movement
 	pTab = mpTFCategories->AddTab(_W("Movement"));
@@ -172,11 +172,11 @@ void cEdEditPaneParticleEmitter::OnCreateLayout()
 		pGroup = mpSet->CreateWidgetGroup(cVector3f(10,35,0.1f), cVector2f(225,100), _W("General"), pTab);
 
 		vPos = cVector3f(10,10,0.1f);
-		
+
 		mpInpVelType = CreateInputEnum(vPos, _W("Velocity Type"), pGroup);
 		mpInpVelType->AddValue(_W("Box"));
 		mpInpVelType->AddValue(_W("Sphere"));
-		
+
 		mpInpCoordSys = CreateInputEnum(vPos + cVector3f(mpInpVelType->GetSize().x, 0, 0), _W("Coord System"), pGroup);
 		mpInpCoordSys->AddValue(_W("World"));
 		mpInpCoordSys->AddValue(_W("Local"));
@@ -210,7 +210,7 @@ void cEdEditPaneParticleEmitter::OnCreateLayout()
 		mpInpSphVelMaxAng = CreateInputVec2(vPos, _W("Max Angles(deg)"), pGroup, 50,lstLabelXYZ);
 		vPos.x += mpInpSphVelMaxAng->GetSize().x + 20;
 		mpInpSphVelSpeed = CreateInputVec2(vPos, _W("Speed(m/s)"), pGroup, 50,lstLabelMinMax);
-		
+
 		pGroup = mpSet->CreateWidgetGroup(cVector3f(10,360,0.1f), cVector2f(480,150), _W("Acceleration"), pTab);
 
 		vPos = cVector3f(10,10,0.1f);
@@ -229,7 +229,7 @@ void cEdEditPaneParticleEmitter::OnCreateLayout()
 		pGroup = mpSet->CreateWidgetGroup(cVector3f(10,35,0.1f), cVector2f(400,100), _W("General"), pTab);
 
 		vPos = cVector3f(10,10,0.1f);
-		
+
 		mpInpDrawType = CreateInputEnum(vPos, _W("Draw Type"), pGroup);
 		mpInpDrawType->AddValue(_W("Point"));
 		mpInpDrawType->AddValue(_W("Line"));
@@ -333,7 +333,7 @@ void cEdEditPaneParticleEmitter::OnCreateLayout()
 		vPos = cVector3f(10,10,0.1f);
 		mpInpSubDAmount = CreateInputVec2(vPos, _W("Amount"), pGroup, 50,lstLabelXYZ);
 		vPos.y += mpInpSubDAmount->GetSize().y;
-		
+
 		mpInpSubDType = CreateInputEnum(vPos, _W("Type"), pGroup);
 		mpInpSubDType->AddValue(_W("Random"));
 		mpInpSubDType->AddValue(_W("Animation"));
@@ -350,7 +350,7 @@ void cEdEditPaneParticleEmitter::OnCreateLayout()
 		mpInpUsePartSpin = CreateInputBool(vPos, _W("Use Particle Spinning"), pGroup);
 		pInp = mpInpUsePartSpin;
 		vPos.y+=pInp->GetSize().y;
-		
+
 		mpInpSpinType = CreateInputEnum(vPos, _W("Spin Type"), pGroup);
 		mpInpSpinType->AddValue(_W("Constant"));
 		mpInpSpinType->AddValue(_W("Movement"));
@@ -366,7 +366,7 @@ void cEdEditPaneParticleEmitter::OnCreateLayout()
 		vPos.y += pInp->GetSize().y;
 		mpInpMaxRevVel = CreateInputVec3(vPos,_W("Max"), pGroup, 50,lstLabelXYZ);
 	}
-	
+
 	//////////////////////////////////////////////////////
 	// Tab Collision
 	pTab = mpTFCategories->AddTab(_W("Collision"));
@@ -380,7 +380,7 @@ void cEdEditPaneParticleEmitter::OnCreateLayout()
         mpInpMaxCollisions = CreateInputVec2(vPos, _W("Max Collisions"), pGroup, 50,lstLabelMinMax);
 		pInp = mpInpMaxCollisions;
 		vPos.x += pInp->GetSize().x;
-		mpInpBounceAmount = CreateInputVec2(vPos, _W("Bounce Amount"), pGroup, 50, lstLabelMinMax);	
+		mpInpBounceAmount = CreateInputVec2(vPos, _W("Bounce Amount"), pGroup, 50, lstLabelMinMax);
 	}
 
 	//////////////////////////////////////////////////////
@@ -415,7 +415,7 @@ void cEdEditPaneParticleEmitter::OnUpdate()
 	mpInpWarmUpStepsPerSec->SetValue((float)pEmitter->GetWarmUpStepsPerSec(), false);
 
 	///////////////////////////////////////////////////////////////////////
-	// Tab General - Group Pause	
+	// Tab General - Group Pause
 	mpInpLength->SetValue(cVector2f(pEmitter->GetMinPauseLength(), pEmitter->GetMaxPauseLength()), false);
 	mpInpInterval->SetValue(cVector2f(pEmitter->GetMinPauseInterval(), pEmitter->GetMaxPauseInterval()), false);
 
@@ -432,7 +432,7 @@ void cEdEditPaneParticleEmitter::OnUpdate()
 	// Tab Start - Group Box Start
 	mpInpBoxStartMinPos->SetValue(pEmitter->GetMinStartPos(), false);
 	mpInpBoxStartMaxPos->SetValue(pEmitter->GetMaxStartPos(), false);
-	
+
 	///////////////////////////////////////////////////////////////////////
 	// Tab Start - Group Sphere Start
 	mpInpSphStartMinAng->SetValue(pEmitter->GetMinStartAngles(), false);
@@ -449,18 +449,18 @@ void cEdEditPaneParticleEmitter::OnUpdate()
 	// Tab Movement - Group Gravity
 	mpInpGravType->SetValue(pEmitter->GetGravityType(), false);
 	mpInpGravAcc->SetValue(pEmitter->GetGravityAcc(), false);
-	
+
 	///////////////////////////////////////////////////////////////////////
 	// Tab Movement - Group Box Vel
 	mpInpMinVel->SetValue(pEmitter->GetMinStartVel(), false);
 	mpInpMaxVel->SetValue(pEmitter->GetMaxStartVel(), false);
-	
+
 	///////////////////////////////////////////////////////////////////////
 	// Tab Movement - Group Sphere Vel
 	mpInpSphVelMinAng->SetValue(pEmitter->GetMinStartVelAngles(), false);
 	mpInpSphVelMaxAng->SetValue(pEmitter->GetMaxStartVelAngles(), false);
 	mpInpSphVelSpeed->SetValue(cVector2f(pEmitter->GetMinStartVelSpeed(), pEmitter->GetMaxStartVelSpeed()), false);
-    
+
 	///////////////////////////////////////////////////////////////////////
 	// Tab Movement - Group Acceleration
 	mpInpMinAcc->SetValue(pEmitter->GetMinStartAcc(), false);
@@ -601,7 +601,7 @@ bool cEdEditPaneParticleEmitter::WindowSpecificInputCallback(iEdInput* apInput)
 
 	///////////////////////////////////////////////////////////////////////
 	// Tab Rendering
-	// General 
+	// General
 	else if(apInput==mpInpDrawType)
 		pEmitter->SetDrawType((eEditorParticleEmitterType)mpInpDrawType->GetValue());
 
@@ -674,7 +674,7 @@ bool cEdEditPaneParticleEmitter::WindowSpecificInputCallback(iEdInput* apInput)
 
 	else if(apInput==mpInpMaxRevVel)
 		pEmitter->SetMaxRevVel(mpInpMaxRevVel->GetValue());
-	
+
 
 	///////////////////////////////////////////////////////////////////////
 	// Tab Start

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -323,7 +323,7 @@ cWidgetMainMenu* cParticleEditor::CreateMainMenu()
 #elif defined(__APPLE__)
 	mpMainMenuExit->AddShortcut(eKeyModifier_Ctrl, eKey_Q);
 #endif
-    
+
 	// Edit menu
 	pItem = mpMainMenu->AddMenuItem(_W("Edit"));
 	mpMainMenuUndo =  pItem->AddMenuItem(_W("Undo"));
@@ -367,7 +367,7 @@ void cParticleEditor::CreateViewports()
 	pViewport->Init();
 
 	pViewport->SetEngineViewportPositionAndSize(0, GetLayoutVec2l(eLayoutVec2_ViewportAreaSize));
-	
+
 	pViewport->SetNormalPosition(GetLayoutVec3f(eLayoutVec3_ViewportAreaPos));
 	pViewport->SetNormalSize(GetLayoutVec2f(eLayoutVec2_ViewportAreaSize) + cVector2f(0,200));
 	pViewport->SetEngineViewportNormalPosition(cVector2l(0));
@@ -377,7 +377,7 @@ void cParticleEditor::CreateViewports()
 	pViewport->SetDrawDebug(false);
 
 	pViewport->GetVCamera()->LockToGrid(false);
-	
+
 	AddWindow(pViewport);
 
 	mvViewports.push_back(pViewport);
@@ -437,7 +437,7 @@ void cParticleEditor::OnPostUpdateLayout()
 
 		if(sRecent==_W(""))
 			break;
-		
+
 		if(cPlatform::FileExists(sRecent))
 		{
 			cWidgetMenuItem* pItem = mpMainMenuRecent->AddMenuItem(sRecent);
@@ -468,7 +468,7 @@ void cParticleEditor::OnInitInput()
 void cParticleEditor::OnLoadConfig()
 {
 	//////////////////////////////////////////////////////////////
-	// Set up loading stuff that is specific to this editor, 
+	// Set up loading stuff that is specific to this editor,
 	// and stuff like log filename (this is done pre engine creation)
 	tWString sConfigFile = GetHomeDir() + _W("ParticleEditor.cfg");
 
@@ -509,7 +509,7 @@ void cParticleEditor::OnLoadConfig()
 
 	// Window caption
 	msCaption = "HPL Particle Editor";
-	
+
 	SetLogFile(GetHomeDir() + _W("ParticleEditor.log"));
 
 	msLastLoadPath = mpLocalConfig->GetStringW("Directories", "LastUsedPath", GetMainLookUpDir(eDir_Particles));
@@ -544,7 +544,7 @@ void cParticleEditor::OnSaveConfig()
 
 		if(sRecent==_W(""))
 			break;
-		
+
 		if(cPlatform::FileExists(sRecent))
 		{
 			mpLocalConfig->SetString("RecentUsedFiles", "RecentFile" + cString::ToString(++i), cString::To8Char(sRecent));

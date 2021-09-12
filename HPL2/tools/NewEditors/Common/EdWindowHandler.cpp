@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -54,7 +54,7 @@ iEdWindow::iEdWindow(iEditor* apEditor, const tWString& asName) : iEdModule(apEd
 
 	mbDestroyOnSetInactive = false;
 
-	mbLayoutCreated = false; 
+	mbLayoutCreated = false;
 
 	//Log("Creating window %ls\n", GetName().c_str());
 }
@@ -109,7 +109,7 @@ void iEdWindow::SetLayoutBlock(const cLayoutBlock* apBlock)
 
 bool iEdWindow::IsActive()
 {
-	return mpBGWidget && 
+	return mpBGWidget &&
 		mpBGWidget->IsEnabled() && mpBGWidget->IsVisible();
 }
 
@@ -200,7 +200,7 @@ void iEdWindow::SetUpdated()
 	//if(mbUpdated) return;
 
 	//mbUpdated = true;
-	mpEditor->GetWindowHandler()->AddWindowToUpdateList(this);	
+	mpEditor->GetWindowHandler()->AddWindowToUpdateList(this);
 }
 
 //---------------------------------------------------------------------
@@ -244,7 +244,7 @@ cEdInputText* iEdWindow::CreateInputString(const cVector3f& avPos, const tWStrin
 
 //---------------------------------------------------------------------
 
-cEdInputFile* iEdWindow::CreateInputFile(const cVector3f& avPos, const tWString& asLabel, const tWString& asCategory, 
+cEdInputFile* iEdWindow::CreateInputFile(const cVector3f& avPos, const tWString& asLabel, const tWString& asCategory,
 										 iWidget* apParent, float afBoxWidth, const tWString& asStartPath)
 {
 	cEdInputFile* pInput = hplNew(cEdInputFile,(this, asLabel, afBoxWidth, asCategory, apParent));
@@ -255,7 +255,7 @@ cEdInputFile* iEdWindow::CreateInputFile(const cVector3f& avPos, const tWString&
 
 //---------------------------------------------------------------------
 
-cEdInputFile* iEdWindow::CreateInputMesh(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent, 
+cEdInputFile* iEdWindow::CreateInputMesh(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent,
 										 float afBoxWidth, const tWString& asStartPath)
 {
 	cEdInputFile* pInput = hplNew(cEdInputModel,(this, asLabel, false, afBoxWidth, apParent));
@@ -266,7 +266,7 @@ cEdInputFile* iEdWindow::CreateInputMesh(const cVector3f& avPos, const tWString&
 
 //---------------------------------------------------------------------
 
-cEdInputFile* iEdWindow::CreateInputAnim(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent, 
+cEdInputFile* iEdWindow::CreateInputAnim(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent,
 										 float afBoxWidth, const tWString& asStartPath)
 {
 	cEdInputFile* pInput = hplNew(cEdInputModel,(this, asLabel, true, afBoxWidth, apParent));
@@ -277,7 +277,7 @@ cEdInputFile* iEdWindow::CreateInputAnim(const cVector3f& avPos, const tWString&
 
 //---------------------------------------------------------------------
 
-cEdInputFile* iEdWindow::CreateInputEntFile(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent, 
+cEdInputFile* iEdWindow::CreateInputEntFile(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent,
 											float afBoxWidth, const tWString& asStartPath)
 {
 	cEdInputFile* pInput = hplNew(cEdInputEntity,(this, asLabel, afBoxWidth, apParent));
@@ -288,7 +288,7 @@ cEdInputFile* iEdWindow::CreateInputEntFile(const cVector3f& avPos, const tWStri
 
 //---------------------------------------------------------------------
 
-cEdInputFile* iEdWindow::CreateInputParticleSystem(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent, 
+cEdInputFile* iEdWindow::CreateInputParticleSystem(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent,
 												   float afBoxWidth, const tWString& asStartPath)
 {
 	cEdInputFile* pInput = hplNew(cEdInputParticleSystem,(this, asLabel, afBoxWidth, apParent));
@@ -318,19 +318,19 @@ cEdInputTexture* iEdWindow::CreateInputTexture(const cVector3f& avPos, const tWS
 	return pInput;
 }
 
-cEdInputTexture* iEdWindow::CreateInputTexture1D(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent, 
+cEdInputTexture* iEdWindow::CreateInputTexture1D(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent,
 												   float afBoxWidth, const tWString& asStartPath)
 {
 	return CreateInputTexture(avPos, asLabel, eEdTexture_1D, apParent, afBoxWidth, asStartPath);
 }
 
-cEdInputTexture* iEdWindow::CreateInputTexture2D(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent, 
+cEdInputTexture* iEdWindow::CreateInputTexture2D(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent,
 												   float afBoxWidth, const tWString& asStartPath)
 {
 	return CreateInputTexture(avPos, asLabel, eEdTexture_2D, apParent, afBoxWidth, asStartPath);
 }
 
-cEdInputTexture* iEdWindow::CreateInputCubeMap(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent, 
+cEdInputTexture* iEdWindow::CreateInputCubeMap(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent,
 												   float afBoxWidth, const tWString& asStartPath)
 {
 	return CreateInputTexture(avPos, asLabel, eEdTexture_CubeMap, apParent, afBoxWidth, asStartPath);
@@ -338,7 +338,7 @@ cEdInputTexture* iEdWindow::CreateInputCubeMap(const cVector3f& avPos, const tWS
 
 //---------------------------------------------------------------------
 
-cEdInputSound* iEdWindow::CreateInputSound(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent, 
+cEdInputSound* iEdWindow::CreateInputSound(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent,
 												   float afBoxWidth, const tWString& asStartPath)
 {
 	cEdInputSound* pInput = hplNew(cEdInputSound,(this, asLabel, afBoxWidth, apParent));
@@ -349,7 +349,7 @@ cEdInputSound* iEdWindow::CreateInputSound(const cVector3f& avPos, const tWStrin
 
 //---------------------------------------------------------------------
 
-cEdInputNumber* iEdWindow::CreateInputNumber(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent, 
+cEdInputNumber* iEdWindow::CreateInputNumber(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent,
 											 float afBoxWidth, float afNumericAdd)
 {
 	cEdInputNumber* pInput = hplNew(cEdInputNumber,(this, asLabel, afBoxWidth, apParent, afNumericAdd));
@@ -360,7 +360,7 @@ cEdInputNumber* iEdWindow::CreateInputNumber(const cVector3f& avPos, const tWStr
 
 //---------------------------------------------------------------------
 
-cEdInputVec2* iEdWindow::CreateInputVec2(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent, 
+cEdInputVec2* iEdWindow::CreateInputVec2(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent,
 										 float afBoxWidth, const tWStringList& alstLabels, eEdInpStyle aStyle, float afNumericAdd)
 {
 	cEdInputVec2* pInput = hplNew(cEdInputVec2,(this, asLabel, afBoxWidth, alstLabels, apParent, afNumericAdd));
@@ -371,7 +371,7 @@ cEdInputVec2* iEdWindow::CreateInputVec2(const cVector3f& avPos, const tWString&
 
 //---------------------------------------------------------------------
 
-cEdInputVec3* iEdWindow::CreateInputVec3(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent, 
+cEdInputVec3* iEdWindow::CreateInputVec3(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent,
 										 float afBoxWidth, const tWStringList& alstLabels, eEdInpStyle aStyle, float afNumericAdd)
 {
 	cEdInputVec3* pInput = hplNew(cEdInputVec3,(this, asLabel, afBoxWidth, alstLabels, apParent,afNumericAdd));
@@ -420,7 +420,7 @@ void iEdWindow::DispatchMessage(eEdModuleMsg aMsg, void* apData)
 
 void iEdWindow::AddShortcut(cGuiGlobalShortcut* apShortcut)
 {
-	if(apShortcut) 
+	if(apShortcut)
 	{
 		apShortcut->SetEnabled(IsActive());
 		mvShortcuts.push_back(apShortcut);
@@ -602,7 +602,7 @@ cEdWindowHandler::cEdWindowHandler(iEditor* apEditor) : iEdModule(apEditor, _W("
 cEdWindowHandler::~cEdWindowHandler()
 {
 	//////////////////////////////////////////////////////////////////////////////////////////
-	// Removing windows backwards, as background is parent and first in list, 
+	// Removing windows backwards, as background is parent and first in list,
 	// and will fuck up if destroyed first
 	while(mlstWindows.empty()==false)
 	{
@@ -688,9 +688,9 @@ iEdWindow* cEdWindowHandler::GetWindow(const tWString& asName)
 
 //---------------------------------------------------------------------
 
-const cLayoutBlock* cEdWindowHandler::AddLayoutBlock(int alID, 
-													 bool abRelX, bool abRelY, const cVector3f& avPos, 
-													 bool abRelWidth, bool abRelHeight, const cVector2f& avSize, 
+const cLayoutBlock* cEdWindowHandler::AddLayoutBlock(int alID,
+													 bool abRelX, bool abRelY, const cVector3f& avPos,
+													 bool abRelWidth, bool abRelHeight, const cVector2f& avSize,
 													 iWidget* apParent)
 {
 	if(GetLayoutBlock(alID)==NULL)
@@ -746,13 +746,13 @@ const cLayoutBlock* cEdWindowHandler::GetLayoutBlock(int alID)
 
 //---------------------------------------------------------------------
 
-cGuiPopUpFilePicker* cEdWindowHandler::CreateLoadDialog(tWStringVec& avLoadFilenames, const tWString& asStartPath, 
-										void* apCallbackObject, tGuiCallbackFunc apCallback, 
+cGuiPopUpFilePicker* cEdWindowHandler::CreateLoadDialog(tWStringVec& avLoadFilenames, const tWString& asStartPath,
+										void* apCallbackObject, tGuiCallbackFunc apCallback,
 										const tWString& asCategoryName, const tWStringList& alstCategoryStrings)
 {
-	cGuiPopUpFilePicker* pPicker = mpEditor->GetGuiSet()->CreatePopUpLoadFilePicker(avLoadFilenames, 
-																	false, 
-																	asStartPath, 
+	cGuiPopUpFilePicker* pPicker = mpEditor->GetGuiSet()->CreatePopUpLoadFilePicker(avLoadFilenames,
+																	false,
+																	asStartPath,
 																	false, apCallbackObject, apCallback);
 
 	//if(asCategoryName==_W("") || alstCategoryStrings.empty())
@@ -772,12 +772,12 @@ cGuiPopUpFilePicker* cEdWindowHandler::CreateLoadDialog(tWStringVec& avLoadFilen
 
 //---------------------------------------------------------------------
 
-cGuiPopUpFilePicker* cEdWindowHandler::CreateSaveDialog(tWString& asFilename, const tWString& asStartPath, 
+cGuiPopUpFilePicker* cEdWindowHandler::CreateSaveDialog(tWString& asFilename, const tWString& asStartPath,
 														void* apCallbackObject, tGuiCallbackFunc apCallback,
 														const tWString& asCategoryName, const tWString& asFilter)
 {
-	cGuiPopUpFilePicker* pPicker = mpEditor->GetGuiSet()->CreatePopUpSaveFilePicker(asFilename, asCategoryName, 
-																					asFilter, asStartPath, false, 
+	cGuiPopUpFilePicker* pPicker = mpEditor->GetGuiSet()->CreatePopUpSaveFilePicker(asFilename, asCategoryName,
+																					asFilter, asStartPath, false,
 																					apCallbackObject, apCallback);
 	return pPicker;
 }

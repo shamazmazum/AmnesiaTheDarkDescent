@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -161,7 +161,7 @@ void cLuxMainMenu_LoadGame::PopulateSavedGameList()
 
 	tWStringList lstSavedGameFiles;
 	cPlatform::FindFilesInDir(lstSavedGameFiles, gpBase->msProfileSavePath, _W("*.sav"));
-	
+
 	tWStringListIt it = lstSavedGameFiles.begin();
 	for(;it!=lstSavedGameFiles.end();++it)
 	{
@@ -203,7 +203,7 @@ void cLuxMainMenu_LoadGame::LoadGame(int alIdx)
 
 bool cLuxMainMenu_LoadGame::WindowOnUpdate(iWidget* apWidget, const cGuiMessageData& aData)
 {
-	return true; 
+	return true;
 }
 kGuiCallbackDeclaredFuncEnd(cLuxMainMenu_LoadGame, WindowOnUpdate);
 
@@ -214,17 +214,17 @@ bool cLuxMainMenu_LoadGame::PressOK(iWidget* apWidget, const cGuiMessageData& aD
 	/////////////////////////////////////////////////////////////
 	// Check if the list has a valid selection, and warn if not
 	if(mpLBSavedGames->GetSelectedItem()<0)
-		mpGuiSet->CreatePopUpMessageBox(kTranslate("Global", "Warning"), 
-										kTranslate("LoadGame", "NoGame"), 
-										kTranslate("Global","OK"), _W(""), 
+		mpGuiSet->CreatePopUpMessageBox(kTranslate("Global", "Warning"),
+										kTranslate("LoadGame", "NoGame"),
+										kTranslate("Global","OK"), _W(""),
 										NULL, NULL);
 	else
-		mpGuiSet->CreatePopUpMessageBox(kTranslate("Global", "Warning"), 
-										kTranslate("LoadGame", "LoadGameMessage"), 
-										kTranslate("Global","OK"), kTranslate("Global","Cancel"), 
+		mpGuiSet->CreatePopUpMessageBox(kTranslate("Global", "Warning"),
+										kTranslate("LoadGame", "LoadGameMessage"),
+										kTranslate("Global","OK"), kTranslate("Global","Cancel"),
 										this, kGuiCallback(LoadGameCallback));
 
-	return true; 
+	return true;
 }
 kGuiCallbackDeclaredFuncEnd(cLuxMainMenu_LoadGame, PressOK);
 
@@ -233,7 +233,7 @@ kGuiCallbackDeclaredFuncEnd(cLuxMainMenu_LoadGame, PressOK);
 bool cLuxMainMenu_LoadGame::PressCancel(iWidget* apWidget, const cGuiMessageData& aData)
 {
 	ExitCallback(NULL, cGuiMessageData(0));
-	return true; 
+	return true;
 }
 kGuiCallbackDeclaredFuncEnd(cLuxMainMenu_LoadGame, PressCancel);
 //-----------------------------------------------------------------------
@@ -285,7 +285,7 @@ bool cLuxMainMenu_LoadGame::LoadGameCallback(iWidget* apWidget, const cGuiMessag
 
 	LoadGame(mpLBSavedGames->GetSelectedItem());
 
-	return true; 
+	return true;
 }
 kGuiCallbackDeclaredFuncEnd(cLuxMainMenu_LoadGame, LoadGameCallback);
 
@@ -302,7 +302,7 @@ bool cLuxMainMenu_LoadGame::ExitCallback(iWidget* apWidget, const cGuiMessageDat
 	else
 		gpBase->mpMainMenu->SetWindowActive(eLuxMainMenuWindow_CustomStory);
 
-	return true; 
+	return true;
 }
 kGuiCallbackDeclaredFuncEnd(cLuxMainMenu_LoadGame, ExitCallback);
 

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -82,7 +82,7 @@ void iLuxInstanityEvent::Start()
 
 cLuxInstanityEvent_Bugs::cLuxInstanityEvent_Bugs()
 {
-	
+
 }
 
 cLuxInstanityEvent_Bugs::~cLuxInstanityEvent_Bugs()
@@ -126,7 +126,7 @@ void cLuxInstanityEvent_Bugs::OnStart()
 	cVector2f vGuiSetMax = cVector2f(800.0f+vGuiSetOffset.x, 600.0f+vGuiSetOffset.y);
 
 	//////////////////////////////////////////
-	// Create the bugs 
+	// Create the bugs
 	mvBugs.resize(mlNumOfBugs);
     for(int i=0; i<mlNumOfBugs; ++i)
 	{
@@ -146,7 +146,7 @@ void cLuxInstanityEvent_Bugs::OnStart()
 			vPos.x = cMath::RandRectf(vGuiSetMin.x, vGuiSetMax.x);
 			vPos.y = cMath::RandRectl(0,1)==0 ? vGuiSetMin.y : vGuiSetMax.y;
 		}
-		
+
 		/////////////////////
 		// Set up variables
 		pBug->mbActive = false;
@@ -183,7 +183,7 @@ void cLuxInstanityEvent_Bugs::OnExit()
 	//////////////////////////////////
 	// Destroy Bugs
 	mvBugs.clear();
-	
+
 	//////////////////////////////////
 	// Destroy Sound
 	cSoundHandler *pSoundHandler = gpBase->mpEngine->GetSound()->GetSoundHandler();
@@ -217,7 +217,7 @@ void cLuxInstanityEvent_Bugs::Update(float afTimeStep)
 	{
 		cLuxInstanityEvent_Bugs_Bug *pBug = &mvBugs[i];
 
-		/////////////////// 
+		///////////////////
 		// Alpha
 		if(bActive && pBug->mfAlpha < 1)
 		{
@@ -233,8 +233,8 @@ void cLuxInstanityEvent_Bugs::Update(float afTimeStep)
 				lDisabledCount++;
 			}
 		}
-        	
-		/////////////////// 
+
+		///////////////////
 		// Wandering
 		if(pBug->mvVel.Length() > kEpsilonf)
 		{
@@ -245,19 +245,19 @@ void cLuxInstanityEvent_Bugs::Update(float afTimeStep)
 
 			pBug->mvVel += (vDir*mfWanderCircleDist + cVector2f(vForce.x, vForce.z)) * afTimeStep;
 		}
-		
-		/////////////////// 
+
+		///////////////////
 		// Swarm around point
 		{
 			float fSwarmPointDist = cMath::Vector2Dist(vSwarmPoint, pBug->mvPos);
 
 			cVector2f vWantedVel = vSwarmPoint - pBug->mvPos;
 			vWantedVel.Normalize(); vWantedVel *= mfSwarmPointMul;
-			
+
 			cVector2f vAcc = vWantedVel * cMath::Min(fSwarmPointDist*0.025f ,1.0f);
 			pBug->mvVel += vAcc * afTimeStep;
 		}
-		
+
 		/////////////////////////7
 		// Cap speed
         float fSpeed = pBug->mvVel.Length();
@@ -265,12 +265,12 @@ void cLuxInstanityEvent_Bugs::Update(float afTimeStep)
 		{
 			pBug->mvVel = (pBug->mvVel/fSpeed)*mfMaxSpeed;
 		}
-		
-		/////////////////// 
+
+		///////////////////
 		// Update pos
 		pBug->mvPos += pBug->mvVel * afTimeStep;
-		
-		/////////////////// 
+
+		///////////////////
 		// Calculate angle
         if(pBug->mvVel.Length()>kEpsilonf)
 		{
@@ -295,7 +295,7 @@ void cLuxInstanityEvent_Bugs::OnDraw(float afFrameTime)
 	for(int i=0; i<mlNumOfBugs; ++i)
 	{
 		cLuxInstanityEvent_Bugs_Bug *pBug = &mvBugs[i];
-		
+
 		pSet->DrawGfx(mpBugImage, pBug->mvPos, mpBugImage->GetActiveSize()*pBug->mfSizeMul, cColor(1,pBug->mfAlpha),
 						eGuiMaterial_LastEnum, pBug->mfAngle);
 	}
@@ -454,12 +454,12 @@ void cLuxInstanityEvent_SoundStream::OnLoadData(cXmlElement * apVarElem)
 	mfVolume = apVarElem->GetAttributeFloat("Volume", 1);
 	mfSoundDelayTime = apVarElem->GetAttributeFloat("SoundDelayTime", 0);
 	if(mfSoundDelayTime <=0) mfSoundDelayTime = 0.001f;
-	
+
 	mbFadeScreen = apVarElem->GetAttributeBool("FadeScreen", false);
 	mFadeColor = apVarElem->GetAttributeColor("FadeColor", cColor(1));
 	mfFadeInSpeed = apVarElem->GetAttributeFloat("FadeInTime", 0);
 	mfFadeOutSpeed = apVarElem->GetAttributeFloat("FadeOutTime", 0);
-	
+
 	if(mfFadeInSpeed<=0) mfFadeInSpeed = 0.001f;
 	if(mfFadeOutSpeed<=0) mfFadeOutSpeed = 0.001f;
 	mfFadeInSpeed = 1.0f / mfFadeInSpeed;
@@ -467,7 +467,7 @@ void cLuxInstanityEvent_SoundStream::OnLoadData(cXmlElement * apVarElem)
 
 	msSubtitleCat = apVarElem->GetAttributeString("SubtitleCat", "");
 	msSubtitleEntry = apVarElem->GetAttributeString("SubtitleEntry", "");
-	
+
 	msFadeImageFile = apVarElem->GetAttributeString("FadeImageFile", "");
 	mbDisablePlayer = apVarElem->GetAttributeBool("DisablePlayer", false);
 }
@@ -489,7 +489,7 @@ void cLuxInstanityEvent_SoundStream::OnStart()
 	{
 		gpBase->mpDefaultFont->GetWordWrapRows(600,20,18, kTranslate(msSubtitleCat,msSubtitleEntry), &mvCurrentTextRows);
 	}
-	
+
 	if(msFadeImageFile != "")
 	{
 		mpFadeImage = gpBase->mpEngine->GetGui()->CreateGfxTexture(msFadeImageFile, eGuiMaterial_Alpha, eTextureType_Rect);
@@ -498,9 +498,9 @@ void cLuxInstanityEvent_SoundStream::OnStart()
 
 void cLuxInstanityEvent_SoundStream::OnExit()
 {
-	if(mpFadeImage) 
+	if(mpFadeImage)
 		gpBase->mpEngine->GetGui()->DestroyGfx(mpFadeImage);
-	
+
 	if(mbDisablePlayer)
 		gpBase->mpPlayer->SetActive(true);
 
@@ -560,7 +560,7 @@ void cLuxInstanityEvent_SoundStream::Update(float afTimeStep)
 void cLuxInstanityEvent_SoundStream::OnDraw(float afFrameTime)
 {
 	if(	gpBase->mpMessageHandler->ShowEffectSubtitles() &&
-		mvCurrentTextRows.empty()==false && 
+		mvCurrentTextRows.empty()==false &&
 		gpBase->mpEffectHandler->GetPlayVoice()->IsActive()==false)
 	{
 		cVector3f vStartPos(400-300/2, 580 - (mvCurrentTextRows.size()*(18.0f+2.0f)), 4);
@@ -606,10 +606,10 @@ void cLuxInstanityEvent_Steps::OnLoadData(cXmlElement * apVarElem)
 	msSound = apVarElem->GetAttributeString("Sound", "");
 	mfStepTime = apVarElem->GetAttributeFloat("StepTime", 1);
 	mlStepNum = apVarElem->GetAttributeInt("StepNum", 0);
-	mfDistance = apVarElem->GetAttributeFloat("Distance", 0); 
-		
-	mfTimeMulPerStep = apVarElem->GetAttributeFloat("TimeMulPerStep", 0); 
-	mfDistanceMulPerStep = apVarElem->GetAttributeFloat("DistanceMulPerStep", 0); 
+	mfDistance = apVarElem->GetAttributeFloat("Distance", 0);
+
+	mfTimeMulPerStep = apVarElem->GetAttributeFloat("TimeMulPerStep", 0);
+	mfDistanceMulPerStep = apVarElem->GetAttributeFloat("DistanceMulPerStep", 0);
 }
 
 //-----------------------------------------------------------------------
@@ -662,7 +662,7 @@ void cLuxInstanityEvent_Steps::Update(float afTimeStep)
 
 void cLuxInstanityEvent_Steps::OnDraw(float afFrameTime)
 {
-	
+
 }
 
 
@@ -707,7 +707,7 @@ cLuxInsanityHandler::~cLuxInsanityHandler()
 
 void cLuxInsanityHandler::OnStart()
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -717,7 +717,7 @@ void cLuxInsanityHandler::Reset()
 	if(mlCurrentEvent >=0)
 		mvEvents[mlCurrentEvent]->OnExit();
 	mlCurrentEvent = -1;
-	
+
 	mfNewEventCount =0;
 }
 
@@ -731,7 +731,7 @@ void cLuxInsanityHandler::Update(float afTimeStep)
 	{
 		mfNewEventCount -= afTimeStep;
 	}
-	
+
 	///////////////////////////
 	// Update current event
 	if(mlCurrentEvent>=0)
@@ -773,7 +773,7 @@ void cLuxInsanityHandler::StartEvent()
 	if(mlCurrentEvent >=0)
 		mvEvents[mlCurrentEvent]->OnExit();
 	mlCurrentEvent = -1;
-	
+
 	/////////////////////////////////
 	// Get number of events available
 	int lTotalEnabledEvents = 0;	//All whose set is not disabled
@@ -800,7 +800,7 @@ void cLuxInsanityHandler::StartEvent()
 			pEvent->SetUsed(false);
 		}
 
-		lUnusedEvents = lTotalEnabledEvents; 
+		lUnusedEvents = lTotalEnabledEvents;
 	}
 
 	/////////////////////////////////
@@ -819,7 +819,7 @@ void cLuxInsanityHandler::StartEvent()
 		}
 		lCurrentEvent++;
 	}
-	
+
 	///////////////////////////////
 	// If no events are available, return
 	if(mlCurrentEvent < 0) return;
@@ -837,7 +837,7 @@ void cLuxInsanityHandler::StartEvent(int alIdx)
 {
 	if(mlCurrentEvent >=0)
 		mvEvents[mlCurrentEvent]->OnExit();
-	
+
 	mlCurrentEvent = alIdx;
 	mvEvents[mlCurrentEvent]->Start();
 }
@@ -847,7 +847,7 @@ void cLuxInsanityHandler::StartEvent(int alIdx)
 void cLuxInsanityHandler::StartEvent(const tString &asName)
 {
 	int lEventIndex = -1;
-	
+
 	for(size_t i=0; i<mvEvents.size(); ++i)
 	{
 		if (mvEvents[i]->GetName() == asName)
@@ -861,7 +861,7 @@ void cLuxInsanityHandler::StartEvent(const tString &asName)
 
 	if(mlCurrentEvent >=0)
 		mvEvents[mlCurrentEvent]->OnExit();
-	
+
 	mlCurrentEvent = lEventIndex;
 	mvEvents[mlCurrentEvent]->Start();
 }
@@ -942,7 +942,7 @@ void cLuxInsanityHandler::LoadEvents(const tString& asFile)
 	}
 
 	///////////////////////
-	// Load document 
+	// Load document
 	cResources *pResources = gpBase->mpEngine->GetResources();
 	iXmlDocument *pXmlDoc = pResources->LoadXmlDocument(asFile);
 	if(pXmlDoc==NULL)

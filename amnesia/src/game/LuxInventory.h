@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -44,7 +44,7 @@ enum eLuxInventoryFader
 
 //----------------------------------------------
 
-class cLuxInventory_Item 
+class cLuxInventory_Item
 {
 public:
 	cLuxInventory_Item(const tString& asName, eLuxItemType aType, const tString& asSubType, cLuxInventory *apInventory);
@@ -82,7 +82,7 @@ public:
 private:
 	cLuxInventory *mpInventory;
 
-	tString msName;	
+	tString msName;
 	eLuxItemType mType;
 	tString msSubType;
 	tString msVal;
@@ -90,7 +90,7 @@ private:
 
 	cGuiGfxElement *mpImage;
 	tString msImageName;
-	
+
 	int mlCount;
 	float mfAmount;
 	tString msGameNameEntry;
@@ -144,7 +144,7 @@ private:
 
 	bool OnUIButtonDoublePress(iWidget* apWidget, const cGuiMessageData& aData);
 	kGuiCallbackDeclarationEnd(OnUIButtonDoublePress);
-	
+
 
 	bool OnUpdate(iWidget* apWidget, const cGuiMessageData& aData);
 	kGuiCallbackDeclarationEnd(OnUpdate);
@@ -173,10 +173,10 @@ class cLuxInventory : public iLuxUpdateable
 friend class cLuxInventory_SaveData;
 friend class cLuxInventory_Slot;
 friend class cLuxInventory_Item;
-public:	
+public:
 	cLuxInventory();
 	~cLuxInventory();
-	
+
 	////////////////////////
 	// General
 	void OnClearFonts();
@@ -184,7 +184,7 @@ public:
 
 	void OnStart();
 	void Reset();
-	
+
 	void OnGameStart();
 
 	void Update(float afTimeStep);
@@ -250,7 +250,7 @@ public:
 
 	cLuxInventory_Item* GetItem(int alIdx){ return mvItems[alIdx];}
 	int GetItemNum(){ return (int)mvItems.size();}
-	
+
 	void SetEquippedHandItem(cLuxInventory_Item *apItem);
 	cLuxInventory_Item* GetEquippedHandItem(){ return mpEquippedItem; }
 
@@ -364,7 +364,7 @@ private:
 	bool InventoryWidgetOnLoseUINavFocus(iWidget* apWidget, const cGuiMessageData& aData);
 	kGuiCallbackDeclarationEnd(InventoryWidgetOnLoseUINavFocus);
 
-	
+
 	bool InventoryDrawFocus(iWidget* apWidget, const cGuiMessageData& aData);
 	kGuiCallbackDeclarationEnd(InventoryDrawFocus);
 
@@ -378,15 +378,15 @@ private:
 	 * \param avOffset Vector3f holding an offset value (useful when wanting to adjust frame z-value for example)
 	 * \param avSize Vector2f that states size for the base rectangle(-1 in will use widget size)
 	 */
-	void DrawFrameAroundWidget(cGuiGfxElement** apGfxCorners, cGuiGfxElement** apGfxBorders, 
-									iWidget* apWidget, 
-									const cVector2f& avHPadding=0, const cVector2f& avVPadding=0, 
+	void DrawFrameAroundWidget(cGuiGfxElement** apGfxCorners, cGuiGfxElement** apGfxBorders,
+									iWidget* apWidget,
+									const cVector2f& avHPadding=0, const cVector2f& avVPadding=0,
 									const cVector3f& avOffset=0, const cVector2f& avSize=-1);
 
 	/**
 	 * Draws a frame around a rectangle given by a position and size
 	 */
-	void DrawFrame(cGuiGfxElement** apGfxFrameCorners, cGuiGfxElement** apGfxFrameBorders, 
+	void DrawFrame(cGuiGfxElement** apGfxFrameCorners, cGuiGfxElement** apGfxFrameBorders,
 					const cVector3f& avPosition, const cVector2f& avSize);
 
 	bool OnDrawInvWidget(iWidget* apWidget, const cGuiMessageData& aData);
@@ -396,13 +396,13 @@ private:
 	// Settings
 	float mfFadeInTime;
 	float mfFadeOutTime;
-	
+
 	///////////////////////
 	// Data
 	cGui *mpGui;
 	cScene *mpScene;
 	cGraphics *mpGraphics;
-	
+
 	cGuiSkin *mpGuiSkin;
 	cGuiSet *mpGuiSet;
 
@@ -417,9 +417,9 @@ private:
 
 	std::vector<cLuxInventory_Slot*> mvSlots;
 	std::vector<cLuxInventory_Item*> mvItems;
-	
+
 	std::vector<cWidgetImage*> mvImageWidgets;
-	
+
 	cVector2f mvScreenSize;
 	cVector2f mvGuiSetCenterSize;
 	cVector2f mvGuiSetSize;
@@ -568,7 +568,7 @@ private:
 	cLuxAlphaFader mvAlphaFader[eLuxInventoryFader_LastEnum];
 
 	tLuxCombineItemsCallbackList mlstCombineCallbacks;
-	
+
 	tWString msHeaderText;
 	tWString msNormalText;
 
@@ -580,7 +580,7 @@ private:
 	float mfMessageTextLife;
 	float mfMessageTextAlpha;
 	bool mbMessageActive;
-	
+
 	double mfPickedUpAt;
 	bool mbPickedObjectMoved;
 	cLuxInventory_Item *mpPickedItem;

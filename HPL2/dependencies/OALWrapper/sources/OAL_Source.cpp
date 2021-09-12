@@ -36,14 +36,14 @@ using namespace std;
 //--------------------------------------------------------------------------------
 
 cOAL_Source::cOAL_Source(cOAL_SourceManager *apSourceManager, int alId, int alSends): iOAL_LowLevelObject("Source"),
-																					  mlId(alId), 
-																					  mlPriority(255), 
-																					  mlRefCount(0), 
-																					  mpSourceMutex(NULL), 
-																					  mpSourceManager(NULL), 
+																					  mlId(alId),
+																					  mlPriority(255),
+																					  mlRefCount(0),
+																					  mpSourceMutex(NULL),
+																					  mpSourceManager(NULL),
 																					  mpAudioData(NULL),
-																					  mbPlaying(false), 
-																					  mbPaused(false), 
+																					  mbPlaying(false),
+																					  mbPaused(false),
 																					  mbNeedsReset(true),
 																					  mpFilter(NULL),
 																					  mpDirectFilter(NULL)
@@ -52,7 +52,7 @@ cOAL_Source::cOAL_Source(cOAL_SourceManager *apSourceManager, int alId, int alSe
 	if(apSourceManager)
 	{
 		mpSourceManager = apSourceManager;
-		
+
 		if(mpSourceManager->IsThreadAlive())
 			mpSourceMutex = SDL_CreateMutex();
 	}
@@ -97,7 +97,7 @@ cOAL_Source::~cOAL_Source()
 		delete mpFilter;
 		mpFilter = NULL;
 	}
-	
+
 	if(mvSends.empty()==false)
 	{
 		LogMsg("",eOAL_LogVerbose_High, eOAL_LogMsg_Info, "Destroying Sends...\n" );
@@ -116,7 +116,7 @@ bool cOAL_Source::CreateLowLevelID()
 	FUNC_USES_AL;
 
 	RUN_AL_FUNC(alGenSources(1, &mlObjectId));
-	
+
 	return !AL_ERROR_OCCURED;
 }
 
@@ -128,7 +128,7 @@ bool cOAL_Source::DestroyLowLevelID()
 	FUNC_USES_AL;
 
 	RUN_AL_FUNC(alDeleteSources(1, &mlObjectId));
-	
+
 	return !AL_ERROR_OCCURED;
 }
 
@@ -140,7 +140,7 @@ bool cOAL_Source::IsValidObject()
 	FUNC_USES_AL;
 
 	bool bIsValid = RUN_AL_FUNC((alIsSource(mlObjectId) == AL_TRUE));
-	
+
 	return bIsValid;
 }
 
@@ -168,7 +168,7 @@ int cOAL_Source::GetProcessedBuffers()
 	int lProcessedBuffers;
 
 	RUN_AL_FUNC(alGetSourcei( mlObjectId, AL_BUFFERS_PROCESSED, &lProcessedBuffers ));
-	
+
 	return lProcessedBuffers;
 }
 
@@ -182,7 +182,7 @@ int cOAL_Source::GetQueuedBuffers()
 	int lQueuedBuffers;
 
 	RUN_AL_FUNC(alGetSourcei( mlObjectId, AL_BUFFERS_QUEUED, &lQueuedBuffers ));
-	
+
 	return lQueuedBuffers;
 }
 
@@ -194,9 +194,9 @@ eOAL_SourceStatus cOAL_Source::GetSourceStatus ()
 	FUNC_USES_AL;
 
 	int lStatus = 0;
-	
+
 	RUN_AL_FUNC(alGetSourcei(mlObjectId, AL_SOURCE_STATE, &lStatus));
-		
+
 	if(mpAudioData == NULL)
 		return eOAL_SourceStatus_Free;
 
@@ -334,7 +334,7 @@ bool cOAL_Source::LowLevelSet(eOAL_SourceParam aParam)
 	case eOAL_SourceParam_Buffer:
 		RUN_AL_FUNC( alSourceQueueBuffers(mlObjectId, mpAudioData->GetBuffersUsed(), mpAudioData->GetOALBufferPointer()));
 		mpSourceManager->ReserveVoices(mpAudioData->GetChannels());
-		break;	
+		break;
 	default:
 		break;
 	}
@@ -387,7 +387,7 @@ double cOAL_Source::GetElapsedTime()
 	double fElapsed = mpAudioData->GetProcessedBuffersTime();
 
 	if(gpDevice->IsExtensionAvailable(OAL_AL_EXT_OFFSET))
-	{		
+	{
 		float fTime;
         RUN_AL_FUNC(alGetSourcef(mlObjectId,AL_SEC_OFFSET, &fTime));
 		fElapsed += fTime;
@@ -405,7 +405,7 @@ double cOAL_Source::GetTotalTime()
 {
 	if(mpAudioData)
 		return mpAudioData->GetTotalTime();
-	
+
 	return 0;
 }
 
@@ -415,12 +415,12 @@ int	cOAL_Source::BindData(cOAL_Sample *apSample)
 {
 	Stop();
 
-	if(apSample==NULL || 
+	if(apSample==NULL ||
 		apSample->GetStatus()==false)
 		return -1;
-	
+
 	mbNeedsReset = true;
-	
+
 	mpAudioData = apSample;
 	if(LowLevelSet(eOAL_SourceParam_Buffer) == false)
 		return -1;
@@ -439,8 +439,8 @@ int	cOAL_Source::BindData(cOAL_Stream *apStream)
 {
 	Stop();
 
-	if(apStream==NULL || 
-		apStream->GetStatus()==false || 
+	if(apStream==NULL ||
+		apStream->GetStatus()==false ||
 		apStream->IsLocked())
 		return -1;
 
@@ -467,7 +467,7 @@ void cOAL_Source::Play()
 {
 	if(mbPlaying)
 		return;
-	
+
 	mbPlaying = true;
 
 	if(mbPaused==false)
@@ -515,14 +515,14 @@ void cOAL_Source::Stop ( bool abRemove )
 	{
 		RUN_AL_FUNC(alSourcei (mlObjectId,AL_BUFFER,AL_NONE));
 	}
-	
+
 	if(mpAudioData)
 	{
 		mpSourceManager->ReleaseVoices(mpAudioData->GetChannels());
-		
+
 		// If Stop() is called from the cOAL_Sample destructor, the following will make some iterator used go mad and
-		// crash, kinda a workaround 
-		if(abRemove) 
+		// crash, kinda a workaround
+		if(abRemove)
 			mpAudioData->RemoveBoundSource(this);
 		mpAudioData = NULL;
 	}
@@ -540,7 +540,7 @@ void cOAL_Source::Update()
 			return;
 
 	// Check if the sound data is still healthy
-	if(mpAudioData==NULL || 
+	if(mpAudioData==NULL ||
 		mpAudioData->GetStatus()==false) {
 		Stop();
 		return;
@@ -680,12 +680,12 @@ void cOAL_Source::SetElapsedTime(double afTime)
 }
 
 void cOAL_Source::SetPriority(unsigned int alX)
-{ 
-	if(GetSourceType()!=eOAL_AudioDataType_Stream) 
+{
+	if(GetSourceType()!=eOAL_AudioDataType_Stream)
 	{
-		mlPriority = alX; 
-		if (mlPriority > 255) 
-			mlPriority = 255; 
+		mlPriority = alX;
+		if (mlPriority > 255)
+			mlPriority = 255;
 	}
 	else
 		mlPriority = 256;
@@ -742,7 +742,7 @@ void cOAL_Source::SetDirectFilter ( cOAL_Filter* apFilter )
 		lFilter = apFilter->GetObjectID();
 	else
 		lFilter = AL_FILTER_NULL;
-	
+
 	RUN_AL_FUNC(alSourcei(mlObjectId, AL_DIRECT_FILTER, lFilter));
 }
 
@@ -755,8 +755,8 @@ void cOAL_Source::SetAuxSend( int alSendId, cOAL_EffectSlot* apSlot, cOAL_Filter
 
 	DEF_FUNC_NAME("");
 	FUNC_USES_AL;
-	
-	if(alSendId<0 || 
+
+	if(alSendId<0 ||
 	   alSendId >= gpDevice->GetEFXSends())
 		return;
 	cOAL_SourceSend* pSend = mvSends[alSendId];
@@ -776,14 +776,14 @@ void cOAL_Source::SetAuxSendSlot( int alSendId, cOAL_EffectSlot* apSlot )
 
 	DEF_FUNC_NAME("");
 	FUNC_USES_AL;
-	
-	if(alSendId<0 || 
+
+	if(alSendId<0 ||
 	   alSendId >= gpDevice->GetEFXSends())
 		return;
 	cOAL_SourceSend* pSend = mvSends[alSendId];
 
 	pSend->SetSlot(apSlot);
-		
+
 	RUN_AL_FUNC(alSource3i(mlObjectId, AL_AUXILIARY_SEND_FILTER, pSend->GetSlot(), alSendId, pSend->GetFilter()));
 }
 
@@ -796,14 +796,14 @@ void cOAL_Source::SetAuxSendFilter( int alSendId, cOAL_Filter* apFilter )
 
 	DEF_FUNC_NAME("");
 	FUNC_USES_AL;
-	
-	if(alSendId<0 || 
+
+	if(alSendId<0 ||
 	   alSendId>= gpDevice->GetEFXSends())
 		return;
 	cOAL_SourceSend* pSend = mvSends[alSendId];
 
 	pSend->SetFilter(apFilter);
-	
+
 	RUN_AL_FUNC(alSource3i(mlObjectId, AL_AUXILIARY_SEND_FILTER, pSend->GetSlot(), alSendId, pSend->GetFilter()));
 }
 
@@ -835,7 +835,7 @@ void cOAL_Source::SetFilterType(eOALFilterType aType )
 {
 	if (!gpDevice->IsEFXActive())
 		return;
-	
+
 	mpFilter->SetType(aType);
 }
 
@@ -845,7 +845,7 @@ void cOAL_Source::SetFilterGain (float afGain)
 {
 	if (!gpDevice->IsEFXActive())
 		return;
-	
+
 	mpFilter->SetGain(afGain);
 }
 
@@ -855,7 +855,7 @@ void cOAL_Source::SetFilterGainHF(float afGainHF)
 {
 	if (!gpDevice->IsEFXActive())
 		return;
-	
+
 	mpFilter->SetGainHF(afGainHF);
 }
 
@@ -865,7 +865,7 @@ void cOAL_Source::SetFilterGainLF(float afGainLF)
 {
 	if (!gpDevice->IsEFXActive())
 		return;
-	
+
 	mpFilter->SetGainLF(afGainLF);
 }
 
@@ -922,7 +922,7 @@ void cOAL_Source::Log( eOAL_LogVerbose aVerboseLevelReq, eOAL_LogMsg aMessageTyp
 
 	sprintf(sourceId, "Source no. %d - ",mlId);
 
-	
+
 	switch(aMessageType)
 	{
 	case eOAL_LogMsg_Command:

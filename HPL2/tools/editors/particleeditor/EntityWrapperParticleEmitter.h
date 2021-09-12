@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -41,9 +41,9 @@ enum ePEInt
 
 	ePEInt_LowFreqPoints,
 	ePEInt_HighFreqPoints,
-	
+
 	ePEInt_NumFiles,
-	
+
 	ePEInt_LastEnum,
 };
 
@@ -195,7 +195,7 @@ class cEntityWrapperDataParticleEmitter : public iEntityWrapperData
 {
 public:
 	cEntityWrapperDataParticleEmitter(iEntityWrapperType*);
-    
+
 	//void CopyFromEntity(iEntityWrapper* apEntity);
 	//void CopyToEntity(iEntityWrapper* apEntity);
 	//bool Load(cXmlElement* apElement);
@@ -251,7 +251,7 @@ protected:
 
 	float mfMinVelMaximum;
 	float mfMaxVelMaximum;
-	
+
 	bool mbUsesDirection;
 	ePEGravityType mGravityType;
 
@@ -325,7 +325,7 @@ protected:
 	float mfAnimLength;
 
 	cVector2f mvSubDivAmount;
-	ePESubDivType mSubDivType; 
+	ePESubDivType mSubDivType;
 	*/
 };
 
@@ -372,7 +372,7 @@ public:
 	void SetMinPauseLength(float afX) { mfMinPauseLength = afX; }
 	void SetMaxPauseLength(float afX) { mfMaxPauseLength = afX; }
 	void SetMinPauseInterval(float afX) { mfMinPauseInterval = afX; }
-	void SetMaxPauseInterval(float afX) { mfMaxPauseInterval = afX; } 
+	void SetMaxPauseInterval(float afX) { mfMaxPauseInterval = afX; }
 
 	void SetPosOffset(const cVector3f& avX) { mvPosOffset = avX; }
 	void SetAngleOffset(const cVector3f& avX) { mvAngleOffset = avX; }
@@ -438,7 +438,7 @@ public:
 	void SetEndRelSize(float afX) { mfEndRelSize = afX; }
 	void SetMiddleRelSizeTime(float afX) { mfMiddleRelSizeTime = afX; }
 	void SetMiddleRelSizeLength(float afX) { mfMiddleRelSizeLength = afX; }
-	
+
 	void SetMinStartColor(const cColor& aX) { mMinStartColor = aX; }
 	void SetMaxStartColor(const cColor& aX) { mMaxStartColor = aX; }
 
@@ -447,7 +447,7 @@ public:
 	void SetEndRelColor(const cColor& aX) { mEndRelColor = aX; }
 	void SetMiddleRelColorTime(float afX) { mfMiddleRelColorTime = afX; }
 	void SetMiddleRelColorLength(float afX) { mfMiddleRelColorLength = afX; }
-	
+
 	void SetCollides(bool abX) { mbCollides = abX; }
 
 	void SetMinCollisionMax(float afX) { mfMinCollisionMax = afX; }
@@ -456,7 +456,7 @@ public:
 	void SetMinBounceAmount(float afX) { mfMinBounceAmount = afX; }
 	void SetMaxBounceAmount(float afX) { mfMaxBounceAmount = afX; }
 	void SetCollisionUpdateRate(int alX) { mlCollisionUpdateRate = alX; }
-	
+
 	void SetUseBeamNoise(bool abX) { mbUseBeamNoise = abX; }
 	void SetLowFreqPoints(int alX) { mlLowFreqPoints = alX; }
 	void SetMinLFNoise(const cVector3f& avX) { mvMinLFNoise = avX; }
@@ -475,7 +475,7 @@ public:
 	void SetSubDivisionType(ePESubDivType aX) { mSubDivType=aX; }
 
 
-	
+
 	bool GetRespawn() { return mbRespawn; }
 	ePEType GetPEType() { return mPEType; }
 	int GetMaxParticleNum() { return mlMaxParticleNum; }
@@ -488,7 +488,7 @@ public:
 	float GetMinPauseLength() { return mfMinPauseLength; }
 	float GetMaxPauseLength() { return mfMaxPauseLength; }
 	float GetMinPauseInterval() { return mfMinPauseInterval; }
-	float GetMaxPauseInterval() { return mfMaxPauseInterval; } 
+	float GetMaxPauseInterval() { return mfMaxPauseInterval; }
 
 	const cVector3f& GetPosOffset() { return mvPosOffset; }
 	const cVector3f& GetAngleOffset() { return mvAngleOffset; }
@@ -505,7 +505,7 @@ public:
 	const cVector3f& GetMinStartVel() { return mvMinStartVel; }
 	const cVector3f& GetMaxStartVel() { return mvMaxStartVel; }
 
-	eParticleEmitterCoordSystem GetCoordSystem() { return mCoordSystem; } 
+	eParticleEmitterCoordSystem GetCoordSystem() { return mCoordSystem; }
 
 	const cVector2f& GetMinStartVelAngles() { return mvMinStartVelAngles; }
 	const cVector2f& GetMaxStartVelAngles() { return mvMaxStartVelAngles; }
@@ -546,7 +546,7 @@ public:
 	float GetEndRelSize() { return mfEndRelSize; }
 	float GetMiddleRelSizeTime() { return mfMiddleRelSizeTime; }
 	float GetMiddleRelSizeLength() { return mfMiddleRelSizeLength; }
-	
+
 	const cColor& GetMinStartColor() { return mMinStartColor; }
 	const cColor& GetMaxStartColor() { return mMaxStartColor; }
 	const cColor& GetStartRelColor() { return mStartRelColor; }
@@ -554,14 +554,14 @@ public:
 	const cColor& GetEndRelColor() { return mEndRelColor; }
 	float GetMiddleRelColorTime() { return mfMiddleRelColorTime; }
 	float GetMiddleRelColorLength() { return mfMiddleRelColorLength; }
-	
+
 	bool GetCollides() { return mbCollides; }
 	float GetMinCollisionMax() { return mfMinCollisionMax; }
 	float GetMaxCollisionMax() { return mfMaxCollisionMax; }
 	float GetMinBounceAmount() { return mfMinBounceAmount; }
 	float GetMaxBounceAmount() { return mfMaxBounceAmount; }
 	int GetCollisionUpdateRate() { return mlCollisionUpdateRate; }
-	
+
 	bool GetUseBeamNoise() { return mbUseBeamNoise; }
 	int GetLowFreqPoints() { return mlLowFreqPoints; }
 	const cVector3f& GetMinLFNoise() { return mvMinLFNoise; }
@@ -699,7 +699,7 @@ protected:
 	float mfAnimLength;
 
 	cVector2f mvSubDivAmount;
-	ePESubDivType mSubDivType; 
+	ePESubDivType mSubDivType;
 };
 
 #endif // HPLEDITOR_ENTITY_WRAPPER_PARTICLE_EMITTER_H

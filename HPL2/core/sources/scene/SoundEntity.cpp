@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -41,7 +41,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	cSoundEntity::cSoundEntity(const tString& asName,cSoundEntityData *apData,
 								cSoundEntityManager *apSoundEntityManager,
 								cWorld *apWorld,
@@ -79,7 +79,7 @@ namespace hpl {
 		mbStarted = false; //If the sound started playing-
 
 		mbSkipStartEnd = false; //If the end and start sounds should be skipped.
-		
+
         mbPrioRemove = false; //If the sounds was removed because too many where playing
 
 		mbFadingOut = false; //If the sound is fading out.
@@ -87,7 +87,7 @@ namespace hpl {
 		mbOutOfRange = false; //If the sound is out of range.
 
 		mbLog = false;
-		
+
 		mfSleepCount = 0;
 
 		mbForcePlayAsGUISound = false;
@@ -107,7 +107,7 @@ namespace hpl {
 		//if( mpData->GetName() == "scrape_wood.snt") mbLog = true;
 		if(mbLog)Log("Created %d\n", this);
 	}
-	
+
 	cSoundEntity::~cSoundEntity()
 	{
 		if(mbLog)Log("Deleting %d\n", this);
@@ -122,7 +122,7 @@ namespace hpl {
 
 		hplDelete(mpSoundCallback);
 
-		//Do _not_ delete sound entity data files now. 
+		//Do _not_ delete sound entity data files now.
 		//Just dec user count and the manager can be cleared of unused files when you want to.
 		mpData->DecUserCount();
 	}
@@ -158,7 +158,7 @@ namespace hpl {
 		mlUniqueID = -1;
 
 		/////////////////////////////
-		// Sound ENtityh 
+		// Sound ENtityh
 		mbRemoveWhenOver = abRemoveWhenOver;
 
 		mpData = apData;
@@ -210,13 +210,13 @@ namespace hpl {
 		//if( mpData->GetName() == "scrape_wood.snt") mbLog = true;
 		if(mbLog)Log("Created %d\n", this);
 	}*/
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
 	// CALLABCK
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
 
 	void cSoundEntityChannelCallback::OnPriorityRelease()
@@ -256,7 +256,7 @@ namespace hpl {
 		mbStopped =false;
 		mbOutOfRange = false;
 		mbFadingOut = false;
-		
+
 		//Play start sound if settings allow
 		if(abPlayStart && mbSkipStartEnd==false)
 		{
@@ -266,16 +266,16 @@ namespace hpl {
 				mbStarted = false;
 			}
 		}
-		
+
 		//If start is not playing, play main sound directly.
-		if(	mvSoundEntries[eSoundEntityType_Main]==NULL && 
-			mvSoundEntries[eSoundEntityType_Start]==NULL && 
+		if(	mvSoundEntries[eSoundEntityType_Main]==NULL &&
+			mvSoundEntries[eSoundEntityType_Start]==NULL &&
 			(mpData->GetLoop()== false || mpData->GetInterval()==0))
 		{
 			PlaySound(eSoundEntityType_Main,mpData->GetLoop());
 			mbStarted = true;
 		}
-	
+
 	}
 
 	//-----------------------------------------------------------------------
@@ -286,7 +286,7 @@ namespace hpl {
 
 		mbStopped = true;
 		mbOutOfRange = false;
-		
+
 		if(mvSoundEntries[eSoundEntityType_Main]==NULL) return;
 
 		if(mbLog)Log("Stopping %d\n", this);
@@ -297,7 +297,7 @@ namespace hpl {
 			{
 				PlaySound(eSoundEntityType_Stop, false);
 			}
-			
+
 			if(mpSoundHandler->IsValid(mvSoundEntries[eSoundEntityType_Main], mvSoundEntryID[eSoundEntityType_Main]))
 			{
 				mvSoundEntries[eSoundEntityType_Main]->Stop();
@@ -313,7 +313,7 @@ namespace hpl {
 
 		mvSoundEntries[eSoundEntityType_Main] = NULL;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cSoundEntity::FadeIn(float afSpeed)
@@ -332,11 +332,11 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	
+
 	void cSoundEntity::FadeOut(float afSpeed)
 	{
 		mbFadingOut = true;
-	
+
 		if(mpSoundHandler->GetSilent())	return;
 
 		if(mbLog)Log("Fading out %d\n", this);
@@ -379,12 +379,12 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	
+
 	bool cSoundEntity::GetRemoveWhenOver()
 	{
 		return mbRemoveWhenOver;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cSoundEntity::UpdateLogic(float afTimeStep)
@@ -415,9 +415,9 @@ namespace hpl {
 			}
 		}
 
-		
+
 		/////////////////////////////////////////////////
-		//Go through all sounds and check if they are playing, 
+		//Go through all sounds and check if they are playing,
 		//if so update their positions else remove.
 		for(int i=0; i<3; i++)
 		{
@@ -426,7 +426,7 @@ namespace hpl {
 				if(mpSoundHandler->IsValid(mvSoundEntries[i], mvSoundEntryID[i])==false)
 				{
 					mvSoundEntries[i] = NULL;
-					
+
 					//if the sound has stopped due to priority try starting again
 					if(mbPrioRemove && i == (int)eSoundEntityType_Main)
 					{
@@ -437,7 +437,7 @@ namespace hpl {
 						}
 					}
 					//If the sound has already started, stop it.
-					else if((mpData->GetInterval()==0 || mpData->GetLoop()==false) && 
+					else if((mpData->GetInterval()==0 || mpData->GetLoop()==false) &&
 							mbStarted)
 					{
 						mbStopped = true;
@@ -449,7 +449,7 @@ namespace hpl {
 					{
 						//Might wanna do some ouput here since it is not good..
 					}
-					
+
 					if(mvSoundEntries[i] && !mvSoundEntries[i]->GetChannel()->GetPositionIsRelative())
 					{
 						mvSoundEntries[i]->GetChannel()->SetPosition(GetWorldPosition());
@@ -463,11 +463,11 @@ namespace hpl {
 		if(mbStopped==false)
 		{
 			/////////////////////////////////////////////////////////////////////////
-			//Sound is not playing, start it and since it has not been invoked by Play 
+			//Sound is not playing, start it and since it has not been invoked by Play
 			//no need to play start sound. Only do this if interval is 0 or non looping else it might
 			//be a deliberate pause.
-			if(	mvSoundEntries[eSoundEntityType_Main]==NULL && 
-				mvSoundEntries[eSoundEntityType_Start]==NULL && 
+			if(	mvSoundEntries[eSoundEntityType_Main]==NULL &&
+				mvSoundEntries[eSoundEntityType_Start]==NULL &&
 				(mpData->GetLoop()== false || mpData->GetInterval()==0))
 			{
 
@@ -489,24 +489,24 @@ namespace hpl {
 				{
 					mfSleepCount = 0.3f;
 				}
-				
+
 			}
 
 			///////////////////////////////////////////////////////////
 			//Check if looping and interval is not 0.
 			//then there needs to be some updating.
-			if(	mpData->GetLoop() && 
-				mpData->GetInterval()>0 && 
-				mvSoundEntries[eSoundEntityType_Start]==NULL && 
+			if(	mpData->GetLoop() &&
+				mpData->GetInterval()>0 &&
+				mvSoundEntries[eSoundEntityType_Start]==NULL &&
 				mvSoundEntries[eSoundEntityType_Main]==NULL)
 			{
 				mfIntervalCount += afTimeStep;
-				
+
 				//if the interval time has elapsed the sound might be played again.
 				if(mfIntervalCount >= mpData->GetInterval())
 				{
 					//Check random and if rand is right play the sound.
-					if(cMath::RandRectf(0,1) <= mpData->GetRandom() || 
+					if(cMath::RandRectf(0,1) <= mpData->GetRandom() ||
 						mpData->GetRandom()==0)
 					{
 						PlaySound(eSoundEntityType_Main,false);
@@ -538,7 +538,7 @@ namespace hpl {
 								if(mbLog)Log("%d Out of range stop!\n", this);
 								mvSoundEntries[eSoundEntityType_Main]->Stop();
 							}
-							
+
 							mvSoundEntries[eSoundEntityType_Main] = NULL;
 						}
 
@@ -569,14 +569,14 @@ namespace hpl {
 			}
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 
 	//////////////////////////////////////////////////////////////////////////
 	// PRIVATE METHODS
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
 
 	bool cSoundEntity::CheckIsOutOfRange()
@@ -585,7 +585,7 @@ namespace hpl {
 
 		float fRange = GetListenerSqrLength();
 		float fMaxRange = mfMaxDistance * mfMaxDistance;
-		
+
 		return fRange >= fMaxRange;
 	}
 
@@ -636,7 +636,7 @@ namespace hpl {
 			// Sound entry could not be loaded
 			if(bNotEnoughChannels==false)
 				Error("Couldn't play sound '%s' for sound entity %s\n",sSoundName.c_str(),msName.c_str());
-			
+
 			//If could not be loaded and main or not enough channels and non loop: Stop the entity!
 			if(	(aType == eSoundEntityType_Main && bNotEnoughChannels==false) ||
 				(bNotEnoughChannels && abLoop==false))
@@ -647,7 +647,7 @@ namespace hpl {
 				//if(bNotEnoughChannels==false)
 				//	mbRemoveWhenOver = true;
 			}
-		
+
 			return false;
 		}
 		/////////////////////////////////

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -108,7 +108,7 @@ namespace hpl {
 		//Create the batch arrays:
 		mlBatchStride = 13;
 		//3 Pos floats, 4 color floats, 3 Tex coord floats .
-		mpVertexArray = (float*)hplMalloc(sizeof(float) * mlBatchStride * mlBatchArraySize); 
+		mpVertexArray = (float*)hplMalloc(sizeof(float) * mlBatchStride * mlBatchArraySize);
 		mpIndexArray = (unsigned int*)hplMalloc(sizeof(unsigned int) * mlBatchArraySize); //Index is one int.
 
 		for(int i=0;i<kMaxTextureUnits;i++)
@@ -175,7 +175,7 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	bool cLowLevelGraphicsSDL::Init(int alWidth, int alHeight, int alDisplay, int alBpp, int abFullscreen, 
+	bool cLowLevelGraphicsSDL::Init(int alWidth, int alHeight, int alDisplay, int alBpp, int abFullscreen,
 		int alMultisampling, eGpuProgramFormat aGpuProgramFormat,const tString& asWindowCaption,
 		const cVector2l &avWindowPos)
 	{
@@ -186,7 +186,7 @@ namespace hpl {
 		mbFullscreen = abFullscreen;
 
 		mlMultisampling = alMultisampling;
-		
+
 		mGpuProgramFormat = aGpuProgramFormat;
 		if(mGpuProgramFormat == eGpuProgramFormat_LastEnum) mGpuProgramFormat = eGpuProgramFormat_GLSL;
 
@@ -301,7 +301,7 @@ namespace hpl {
 
 			RECT r;
 			GetWindowRect(pInfo.window, &r);
-			
+
 			if(avWindowPos.x >=0 && avWindowPos.y >=0)
 			{
 				SetWindowPos(pInfo.window, HWND_TOP, avWindowPos.x, avWindowPos.y, 0, 0,  SWP_NOSIZE);
@@ -374,7 +374,7 @@ namespace hpl {
 			glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB);
 		}
 		else
-		{	
+		{
 			Warning("OGL debug output not supported!\n");
 		}*/
 
@@ -533,9 +533,9 @@ namespace hpl {
 		switch(aType)
 		{
 		case eGraphicCaps_TextureTargetRectangle:	return 1;//GLEW_ARB_texture_rectangle?1:0;
-		
+
 		case eGraphicCaps_VertexBufferObject:		return GLEW_ARB_vertex_buffer_object?1:0;
-		case eGraphicCaps_TwoSideStencil:			
+		case eGraphicCaps_TwoSideStencil:
 			{
 				if(GLEW_EXT_stencil_two_side) return 1;
 				else if(GLEW_ATI_separate_stencil) return 1;
@@ -559,11 +559,11 @@ namespace hpl {
 			{
 				int lClipPlanes;
 				glGetIntegerv( GL_MAX_CLIP_PLANES,(GLint *)&lClipPlanes);
-				return lClipPlanes;	
+				return lClipPlanes;
 			}
 
 		case eGraphicCaps_AnisotropicFiltering:		return GLEW_EXT_texture_filter_anisotropic ? 1 : 0;
-		
+
 		case eGraphicCaps_MaxAnisotropicFiltering:
 			{
 				if(!GLEW_EXT_texture_filter_anisotropic) return 0;
@@ -574,21 +574,21 @@ namespace hpl {
 			}
 
 		case eGraphicCaps_Multisampling: return GLEW_ARB_multisample ? 1: 0;
-		
+
 		case eGraphicCaps_TextureCompression:		return GLEW_ARB_texture_compression  ? 1 : 0;
 		case eGraphicCaps_TextureCompression_DXTC:	return GLEW_EXT_texture_compression_s3tc ? 1 : 0;
-		
+
 		case eGraphicCaps_AutoGenerateMipMaps:		return GLEW_SGIS_generate_mipmap ? 1 : 0;
-	
+
 		case eGraphicCaps_RenderToTexture:			return GLEW_EXT_framebuffer_object ? 1: 0;
-		
+
 		case eGraphicCaps_MaxDrawBuffers:
 			{
 				GLint lMaxbuffers;
 				glGetIntegerv(GL_MAX_DRAW_BUFFERS, &lMaxbuffers);
 				return lMaxbuffers;
 			}
-		case eGraphicCaps_PackedDepthStencil:	return GLEW_EXT_packed_depth_stencil ? 1: 0;		
+		case eGraphicCaps_PackedDepthStencil:	return GLEW_EXT_packed_depth_stencil ? 1: 0;
 		case eGraphicCaps_TextureFloat:			return GLEW_ARB_texture_float ? 1: 0;
 
 		case eGraphicCaps_PolygonOffset:		return 1;	//OpenGL always support it!
@@ -613,7 +613,7 @@ namespace hpl {
 					return  GLEW_EXT_gpu_shader4 ? 1 : 0;
 			}
 #endif
-		
+
 		case eGraphicCaps_OGL_ATIFragmentShader: return  GLEW_ATI_fragment_shader ? 1 : 0;
 
 		case eGraphicCaps_MaxColorRenderTargets:
@@ -637,7 +637,7 @@ namespace hpl {
 		else
 			SDL_ShowCursor(SDL_DISABLE);
 	}
-    
+
 	//-----------------------------------------------------------------------
 
     void cLowLevelGraphicsSDL::SetWindowGrab(bool abX)
@@ -728,7 +728,7 @@ namespace hpl {
 	//-----------------------------------------------------------------------
 
 	void cLowLevelGraphicsSDL::SetMultisamplingActive(bool abX)
-	{	
+	{
 		;
 
 		if(!GLEW_ARB_multisample || mlMultisampling<=0) return;
@@ -798,7 +798,7 @@ namespace hpl {
 		;
 
 		return hplNew( cGLSLProgram, (asName) );
-		//return hplNew( cCGProgram, () ); 
+		//return hplNew( cCGProgram, () );
 	}
 
 	iGpuShader* cLowLevelGraphicsSDL::CreateGpuShader(const tString& asName, eGpuShaderType aType)
@@ -824,7 +824,7 @@ namespace hpl {
 
 	iVertexBuffer* cLowLevelGraphicsSDL::CreateVertexBuffer(eVertexBufferType aType,
 															eVertexBufferDrawType aDrawType,
-															eVertexBufferUsageType aUsageType, 
+															eVertexBufferUsageType aUsageType,
 															int alReserveVtxSize,int alReserveIdxSize)
 	{
 		;
@@ -915,7 +915,7 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	void cLowLevelGraphicsSDL::CopyFrameBufferToTexure(iTexture* apTex, const cVector2l &avPos, 
+	void cLowLevelGraphicsSDL::CopyFrameBufferToTexure(iTexture* apTex, const cVector2l &avPos,
 		const cVector2l &avSize, const cVector2l &avTexOffset)
 	{
 		;
@@ -988,7 +988,7 @@ namespace hpl {
 		;
 
 		///////////////////////////////////////////////////////
-		//Set frame buffer 
+		//Set frame buffer
 		if(true)//mpFrameBuffer != apFrameBuffer)
 		{
 			iFrameBuffer *pPrevFameBuffer = mpFrameBuffer;
@@ -1016,7 +1016,7 @@ namespace hpl {
 		//Get framebuffer size
 		if(mpFrameBuffer)	mvFrameBufferTotalSize = mpFrameBuffer->GetSize();
 		else				mvFrameBufferTotalSize = mvScreenSize;
-		
+
 		cVector2l vFrameBufferSize = avSize;
 		if(vFrameBufferSize.x <0 || vFrameBufferSize.y<0)
 		{
@@ -1266,17 +1266,17 @@ namespace hpl {
 		else if(GLEW_ATI_separate_stencil)
 		{
 			//Front
-			glStencilOpSeparateATI( GL_FRONT, GetGLStencilOpEnum(aFrontFailOp), 
-				GetGLStencilOpEnum(aFrontZFailOp), 
+			glStencilOpSeparateATI( GL_FRONT, GetGLStencilOpEnum(aFrontFailOp),
+				GetGLStencilOpEnum(aFrontZFailOp),
 				GetGLStencilOpEnum(aFrontZPassOp));
 			//Back
-			glStencilOpSeparateATI( GL_BACK, GetGLStencilOpEnum(aBackFailOp), 
-				GetGLStencilOpEnum(aBackZFailOp), 
+			glStencilOpSeparateATI( GL_BACK, GetGLStencilOpEnum(aBackFailOp),
+				GetGLStencilOpEnum(aBackZFailOp),
 				GetGLStencilOpEnum(aBackZPassOp));
 
 			//Front and Back function
 			glStencilFuncSeparateATI(GetGLStencilFuncEnum(aFrontFunc),
-				GetGLStencilFuncEnum(aBackFunc), 
+				GetGLStencilFuncEnum(aBackFunc),
 				alRef, aMask);
 		}
 		else
@@ -1515,20 +1515,20 @@ namespace hpl {
 
 		GLenum NewTarget=0;
 		if(apTex)	NewTarget = GetGLTextureTargetEnum(apTex->GetType());
-		
+
 		GLenum LastTarget = mvCurrentTextureTarget[alUnit];
-		
+
 		//Check if multi texturing is supported.
 		if(GLEW_ARB_multitexture){
 			glActiveTextureARB(GL_TEXTURE0_ARB + alUnit);
 		}
-		
+
 		//Disable this unit if NULL
 		if(apTex == NULL)
 		{
 			if(LastTarget!=0)
 				glDisable(LastTarget);
-			
+
 			//glBindTexture(LastTarget,0);
 		}
 		//Enable the unit, set the texture handle and bind the pbuffer
@@ -1642,19 +1642,19 @@ namespace hpl {
 
 		glBegin(GL_QUADS);
 		{
-			glTexCoord2f(0.0, 0.0); 
+			glTexCoord2f(0.0, 0.0);
 			glColor4f(aColor.r,aColor.g,aColor.b,aColor.a);
 			glVertex3f(avPos.x, avPos.y,avPos.z);
 
-			glTexCoord2f(1.0, 0.0); 
+			glTexCoord2f(1.0, 0.0);
 			glColor4f(aColor.r,aColor.g,aColor.b,aColor.a);
 			glVertex3f(avPos.x+avSize.x, avPos.y,avPos.z);
 
-			glTexCoord2f(1.0, 1.0); 
+			glTexCoord2f(1.0, 1.0);
 			glColor4f(aColor.r,aColor.g,aColor.b,aColor.a);
 			glVertex3f(avPos.x+avSize.x, avPos.y+avSize.y,avPos.z);
 
-			glTexCoord2f(0.0, 1.0); 
+			glTexCoord2f(0.0, 1.0);
 			glColor4f(aColor.r,aColor.g,aColor.b,aColor.a);
 			glVertex3f(avPos.x, avPos.y+avSize.y,avPos.z);
 
@@ -1670,19 +1670,19 @@ namespace hpl {
 
 		glBegin(GL_QUADS);
 		{
-			glTexCoord2f(avMinTexCoord.x, avMinTexCoord.y); 
+			glTexCoord2f(avMinTexCoord.x, avMinTexCoord.y);
 			glColor4f(aColor.r,aColor.g,aColor.b,aColor.a);
 			glVertex3f(avPos.x, avPos.y,avPos.z);
 
-			glTexCoord2f(avMaxTexCoord.x, avMinTexCoord.y); 
+			glTexCoord2f(avMaxTexCoord.x, avMinTexCoord.y);
 			glColor4f(aColor.r,aColor.g,aColor.b,aColor.a);
 			glVertex3f(avPos.x+avSize.x, avPos.y,avPos.z);
 
-			glTexCoord2f(avMaxTexCoord.x, avMaxTexCoord.y); 
+			glTexCoord2f(avMaxTexCoord.x, avMaxTexCoord.y);
 			glColor4f(aColor.r,aColor.g,aColor.b,aColor.a);
 			glVertex3f(avPos.x+avSize.x, avPos.y+avSize.y,avPos.z);
 
-			glTexCoord2f(avMinTexCoord.x, avMaxTexCoord.y); 
+			glTexCoord2f(avMinTexCoord.x, avMaxTexCoord.y);
 			glColor4f(aColor.r,aColor.g,aColor.b,aColor.a);
 			glVertex3f(avPos.x, avPos.y+avSize.y,avPos.z);
 		}
@@ -1698,23 +1698,23 @@ namespace hpl {
 
 		glBegin(GL_QUADS);
 		{
-			glMultiTexCoord2fARB(GL_TEXTURE0_ARB,avMinTexCoord0.x, avMinTexCoord0.y); 
-			glMultiTexCoord2fARB(GL_TEXTURE1_ARB,avMinTexCoord1.x, avMinTexCoord1.y); 
+			glMultiTexCoord2fARB(GL_TEXTURE0_ARB,avMinTexCoord0.x, avMinTexCoord0.y);
+			glMultiTexCoord2fARB(GL_TEXTURE1_ARB,avMinTexCoord1.x, avMinTexCoord1.y);
 			glColor4f(aColor.r,aColor.g,aColor.b,aColor.a);
 			glVertex3f(avPos.x, avPos.y,avPos.z);
 
-			glMultiTexCoord2fARB(GL_TEXTURE0_ARB,avMaxTexCoord0.x, avMinTexCoord0.y); 
-			glMultiTexCoord2fARB(GL_TEXTURE1_ARB,avMaxTexCoord1.x, avMinTexCoord1.y); 
+			glMultiTexCoord2fARB(GL_TEXTURE0_ARB,avMaxTexCoord0.x, avMinTexCoord0.y);
+			glMultiTexCoord2fARB(GL_TEXTURE1_ARB,avMaxTexCoord1.x, avMinTexCoord1.y);
 			glColor4f(aColor.r,aColor.g,aColor.b,aColor.a);
 			glVertex3f(avPos.x+avSize.x, avPos.y,avPos.z);
 
-			glMultiTexCoord2fARB(GL_TEXTURE0_ARB,avMaxTexCoord0.x, avMaxTexCoord0.y); 
-			glMultiTexCoord2fARB(GL_TEXTURE1_ARB,avMaxTexCoord1.x, avMaxTexCoord1.y); 
+			glMultiTexCoord2fARB(GL_TEXTURE0_ARB,avMaxTexCoord0.x, avMaxTexCoord0.y);
+			glMultiTexCoord2fARB(GL_TEXTURE1_ARB,avMaxTexCoord1.x, avMaxTexCoord1.y);
 			glColor4f(aColor.r,aColor.g,aColor.b,aColor.a);
 			glVertex3f(avPos.x+avSize.x, avPos.y+avSize.y,avPos.z);
 
-			glMultiTexCoord2fARB(GL_TEXTURE0_ARB,avMinTexCoord0.x, avMaxTexCoord0.y); 
-			glMultiTexCoord2fARB(GL_TEXTURE1_ARB,avMinTexCoord1.x, avMaxTexCoord1.y); 
+			glMultiTexCoord2fARB(GL_TEXTURE0_ARB,avMinTexCoord0.x, avMaxTexCoord0.y);
+			glMultiTexCoord2fARB(GL_TEXTURE1_ARB,avMinTexCoord1.x, avMaxTexCoord1.y);
 			glColor4f(aColor.r,aColor.g,aColor.b,aColor.a);
 			glVertex3f(avPos.x, avPos.y+avSize.y,avPos.z);
 		}
@@ -1921,20 +1921,20 @@ namespace hpl {
 			//X Circle:
 			for(float a=0; a< k2Pif; a+= afAngleStep)
 			{
-				glVertex3f(avPos.x, avPos.y + sin(a)*afRadius, 
+				glVertex3f(avPos.x, avPos.y + sin(a)*afRadius,
 					avPos.z + cos(a)*afRadius);
 
-				glVertex3f(avPos.x, avPos.y + sin(a+afAngleStep)*afRadius, 
+				glVertex3f(avPos.x, avPos.y + sin(a+afAngleStep)*afRadius,
 					avPos.z + cos(a+afAngleStep)*afRadius);
 			}
 
 			//Y Circle:
 			for(float a=0; a< k2Pif; a+= afAngleStep)
 			{
-				glVertex3f(avPos.x + cos(a)*afRadius, avPos.y, 
+				glVertex3f(avPos.x + cos(a)*afRadius, avPos.y,
 					avPos.z + sin(a)*afRadius);
 
-				glVertex3f(avPos.x + cos(a+afAngleStep)*afRadius, avPos.y , 
+				glVertex3f(avPos.x + cos(a+afAngleStep)*afRadius, avPos.y ,
 					avPos.z+ sin(a+afAngleStep)*afRadius);
 			}
 
@@ -1943,8 +1943,8 @@ namespace hpl {
 			{
 				glVertex3f(avPos.x + cos(a)*afRadius, avPos.y + sin(a)*afRadius, avPos.z);
 
-				glVertex3f(avPos.x + cos(a+afAngleStep)*afRadius, 
-					avPos.y + sin(a+afAngleStep)*afRadius, 
+				glVertex3f(avPos.x + cos(a+afAngleStep)*afRadius,
+					avPos.y + sin(a+afAngleStep)*afRadius,
 					avPos.z);
 			}
 
@@ -1953,7 +1953,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	void cLowLevelGraphicsSDL::DrawSphere(const cVector3f& avPos, float afRadius, cColor aColX, cColor aColY, cColor aColZ)
 	{
 		;
@@ -1969,10 +1969,10 @@ namespace hpl {
 			glColor4f(aColX.r,aColX.g,aColX.b,aColX.a);
 			for(float a=0; a< k2Pif; a+= afAngleStep)
 			{
-				glVertex3f(avPos.x, avPos.y + sin(a)*afRadius, 
+				glVertex3f(avPos.x, avPos.y + sin(a)*afRadius,
 					avPos.z + cos(a)*afRadius);
 
-				glVertex3f(avPos.x, avPos.y + sin(a+afAngleStep)*afRadius, 
+				glVertex3f(avPos.x, avPos.y + sin(a+afAngleStep)*afRadius,
 					avPos.z + cos(a+afAngleStep)*afRadius);
 			}
 
@@ -1980,10 +1980,10 @@ namespace hpl {
 			glColor4f(aColY.r,aColY.g,aColY.b,aColY.a);
 			for(float a=0; a< k2Pif; a+= afAngleStep)
 			{
-				glVertex3f(avPos.x + cos(a)*afRadius, avPos.y, 
+				glVertex3f(avPos.x + cos(a)*afRadius, avPos.y,
 					avPos.z + sin(a)*afRadius);
 
-				glVertex3f(avPos.x + cos(a+afAngleStep)*afRadius, avPos.y , 
+				glVertex3f(avPos.x + cos(a+afAngleStep)*afRadius, avPos.y ,
 					avPos.z+ sin(a+afAngleStep)*afRadius);
 			}
 
@@ -1993,8 +1993,8 @@ namespace hpl {
 			{
 				glVertex3f(avPos.x + cos(a)*afRadius, avPos.y + sin(a)*afRadius, avPos.z);
 
-				glVertex3f(avPos.x + cos(a+afAngleStep)*afRadius, 
-					avPos.y + sin(a+afAngleStep)*afRadius, 
+				glVertex3f(avPos.x + cos(a+afAngleStep)*afRadius,
+					avPos.y + sin(a+afAngleStep)*afRadius,
 					avPos.z);
 			}
 
@@ -2327,7 +2327,7 @@ namespace hpl {
 		else glDisableClientState(GL_NORMAL_ARRAY );
 
 
-		if(aFlags & eVtxBatchFlag_Texture0){ 
+		if(aFlags & eVtxBatchFlag_Texture0){
 			glClientActiveTextureARB(GL_TEXTURE0_ARB);
 			glEnableClientState(GL_TEXTURE_COORD_ARRAY );
 		}
@@ -2336,7 +2336,7 @@ namespace hpl {
 			glDisableClientState(GL_TEXTURE_COORD_ARRAY );
 		}
 
-		if(aFlags & eVtxBatchFlag_Texture1){ 
+		if(aFlags & eVtxBatchFlag_Texture1){
 			glClientActiveTextureARB(GL_TEXTURE1_ARB);
 			glEnableClientState(GL_TEXTURE_COORD_ARRAY );
 		}
@@ -2345,7 +2345,7 @@ namespace hpl {
 			glDisableClientState(GL_TEXTURE_COORD_ARRAY );
 		}
 
-		if(aFlags & eVtxBatchFlag_Texture2){ 
+		if(aFlags & eVtxBatchFlag_Texture2){
 			glClientActiveTextureARB(GL_TEXTURE2_ARB);
 			glEnableClientState(GL_TEXTURE_COORD_ARRAY );
 		}
@@ -2495,7 +2495,7 @@ namespace hpl {
 	{
 		switch(aType)
 		{
-		case eTextureType_1D:		return GL_TEXTURE_1D;	
+		case eTextureType_1D:		return GL_TEXTURE_1D;
 		case eTextureType_2D:		return GL_TEXTURE_2D;
 		case eTextureType_Rect:		return GL_TEXTURE_RECTANGLE_NV;
 		case eTextureType_CubeMap:	return GL_TEXTURE_CUBE_MAP_ARB;
@@ -2550,7 +2550,7 @@ namespace hpl {
 		case eTextureParam_AlphaOp1:		return GL_OPERAND1_ALPHA_ARB;
 		case eTextureParam_AlphaOp2:		return GL_OPERAND2_ALPHA_ARB;
 		case eTextureParam_ColorScale:		return GL_RGB_SCALE_ARB;
-		case eTextureParam_AlphaScale:		return GL_ALPHA_SCALE;	
+		case eTextureParam_AlphaScale:		return GL_ALPHA_SCALE;
 		}
 		return 0;
 	}
@@ -2594,7 +2594,7 @@ namespace hpl {
 
 		switch(aType)
 		{
-		case eTextureType_1D:		return GL_TEXTURE_1D;	
+		case eTextureType_1D:		return GL_TEXTURE_1D;
 		case eTextureType_2D:		return GL_TEXTURE_2D;
 		case eTextureType_Rect:
 			{
@@ -2619,7 +2619,7 @@ namespace hpl {
 		}
 		return 0;
 	}
-	
+
 	GLenum GetGLTextureCompareFunc(eTextureCompareFunc aFunc)
 	{
 		switch(aFunc)
@@ -2660,11 +2660,11 @@ namespace hpl {
 		case eDepthTestFunc_Never:			return GL_NEVER;
 		case eDepthTestFunc_Less:				return GL_LESS;
 		case eDepthTestFunc_LessOrEqual:		return GL_LEQUAL;
-		case eDepthTestFunc_Greater:			return GL_GREATER; 
+		case eDepthTestFunc_Greater:			return GL_GREATER;
 		case eDepthTestFunc_GreaterOrEqual:	return GL_GEQUAL;
 		case eDepthTestFunc_Equal:			return GL_EQUAL;
 		case eDepthTestFunc_NotEqual:			return GL_NOTEQUAL;
-		case eDepthTestFunc_Always:			return GL_ALWAYS; 
+		case eDepthTestFunc_Always:			return GL_ALWAYS;
 		}
 		return 0;
 	}
@@ -2680,11 +2680,11 @@ namespace hpl {
 		case eAlphaTestFunc_Never:			return GL_NEVER;
 		case eAlphaTestFunc_Less:				return GL_LESS;
 		case eAlphaTestFunc_LessOrEqual:		return GL_LEQUAL;
-		case eAlphaTestFunc_Greater:			return GL_GREATER; 
+		case eAlphaTestFunc_Greater:			return GL_GREATER;
 		case eAlphaTestFunc_GreaterOrEqual:	return GL_GEQUAL;
 		case eAlphaTestFunc_Equal:			return GL_EQUAL;
 		case eAlphaTestFunc_NotEqual:			return GL_NOTEQUAL;
-		case eAlphaTestFunc_Always:			return GL_ALWAYS; 
+		case eAlphaTestFunc_Always:			return GL_ALWAYS;
 		}
 		return 0;
 	}
@@ -2700,11 +2700,11 @@ namespace hpl {
 		case eStencilFunc_Never:			return GL_NEVER;
 		case eStencilFunc_Less:				return GL_LESS;
 		case eStencilFunc_LessOrEqual:		return GL_LEQUAL;
-		case eStencilFunc_Greater:			return GL_GREATER; 
+		case eStencilFunc_Greater:			return GL_GREATER;
 		case eStencilFunc_GreaterOrEqual:	return GL_GEQUAL;
 		case eStencilFunc_Equal:			return GL_EQUAL;
 		case eStencilFunc_NotEqual:			return GL_NOTEQUAL;
-		case eStencilFunc_Always:			return GL_ALWAYS; 
+		case eStencilFunc_Always:			return GL_ALWAYS;
 		}
 		return 0;
 	}
@@ -2717,10 +2717,10 @@ namespace hpl {
 
 		switch(aType)
 		{
-		case eStencilOp_Keep:			return GL_KEEP; 
-		case eStencilOp_Zero:			return GL_ZERO; 
-		case eStencilOp_Replace:		return GL_REPLACE; 
-		case eStencilOp_Increment:		return GL_INCR; 
+		case eStencilOp_Keep:			return GL_KEEP;
+		case eStencilOp_Zero:			return GL_ZERO;
+		case eStencilOp_Replace:		return GL_REPLACE;
+		case eStencilOp_Increment:		return GL_INCR;
 		case eStencilOp_Decrement:		return GL_DECR;
 		case eStencilOp_Invert:			return GL_INVERT;
 		case eStencilOp_IncrementWrap:	return GL_INCR_WRAP_EXT;

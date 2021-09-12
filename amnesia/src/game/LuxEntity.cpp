@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -89,7 +89,7 @@ iLuxEntity::~iLuxEntity()
 //-----------------------------------------------------------------------
 
 void iLuxEntity::UpdateLogic(float afTimeStep)
-{	
+{
 	//////////////////////
 	// Normal update
 	UpdateCheckCollideCallback(afTimeStep);
@@ -97,7 +97,7 @@ void iLuxEntity::UpdateLogic(float afTimeStep)
 
 
 	///////////////////////
-	// Update implemented 
+	// Update implemented
 	OnUpdate(afTimeStep);
 }
 
@@ -132,9 +132,9 @@ void iLuxEntity::RunCallbackFunc(const tString& asType)
 void iLuxEntity::RunInteractCallbackFunc()
 {
 	if(msInteractCallback=="")return;
-	
+
 	mpMap->RunScript(msInteractCallback + "(\""+msName+"\")");
-	
+
 	if(mbInteractCallbackRemove) msInteractCallback = "";
 }
 
@@ -230,15 +230,15 @@ void iLuxEntity::UpdatePlayerLookAt(float afTimeStep)
 		{
 			continue;
 		}
-		
+
 		/////////////////////////
 		// Set up line of sight check
 		cVector3f vStart = pCamera->GetPosition();
 		cVector3f vEnd = pBV->GetWorldCenter();
-		
+
 		cVector3f vDir = vEnd - vStart;
 		float fSqrDist = vDir.SqrLength();
-		
+
 		if(fSqrDist > 50*50) continue;
 
 		/////////////////////////
@@ -249,7 +249,7 @@ void iLuxEntity::UpdatePlayerLookAt(float afTimeStep)
 		{
 			continue;
 		}
-		
+
 		/////////////////////////
 		// If close enough then it is visible
 		float fSqrRadius = pBV->GetRadius()*pBV->GetRadius()+0.05f;
@@ -270,7 +270,7 @@ void iLuxEntity::UpdatePlayerLookAt(float afTimeStep)
 		vLineOfSightTestPos[2] = vLineOfSightTestPos[0] - pCamera->GetUp() * fHalfRadius;
 		vLineOfSightTestPos[3] = vLineOfSightTestPos[0] + pCamera->GetRight() * fHalfRadius;
 		vLineOfSightTestPos[4] = vLineOfSightTestPos[0] - pCamera->GetRight() * fHalfRadius;
-				
+
 		for(int i=0; i<5; ++i)
 		{
 			if(gpBase->mpMapHelper->CheckLineOfSight(vStart, vLineOfSightTestPos[i], false))
@@ -293,7 +293,7 @@ void iLuxEntity::UpdatePlayerLookAt(float afTimeStep)
 	}
 	else if(bLookingAt==false && mbIsLookedAt)
 	{
-		mpMap->RunScript(msLookAtCallback + "(\""+msName+"\", -1)" );	
+		mpMap->RunScript(msLookAtCallback + "(\""+msName+"\", -1)" );
 	}
 
 	mbIsLookedAt = bLookingAt;
@@ -307,7 +307,7 @@ void iLuxEntity::ConnectionStateChange(int alState)
 	// Callback
 	if(msConnectionStateChangeCallback != "")
 	{
-		mpMap->RunScript(	msConnectionStateChangeCallback + 
+		mpMap->RunScript(	msConnectionStateChangeCallback +
 							"(\""+msName+"\", "+ cString::ToString(alState) + ")");
 	}
 
@@ -316,7 +316,7 @@ void iLuxEntity::ConnectionStateChange(int alState)
 	for(size_t i=0; i< mvConnections.size(); ++i)
 	{
 		cLuxEntityConnection *pConn = mvConnections[i];
-		
+
 		//See if this state will send a message.
 		if(pConn->GetStateUsed()!=0)
 		{
@@ -337,7 +337,7 @@ void iLuxEntity::ConnectionStateChange(int alState)
 															"\"" + msName +  + "\"," +
 															"\"" + pConn->GetEntity()->GetName() + "\"," +
 															cString::ToString(lState) + ")";
-			mpMap->RunScript(sCommand);		
+			mpMap->RunScript(sCommand);
 		}
 	}
 }
@@ -349,7 +349,7 @@ void iLuxEntity::PreloadEntityModel(const tString &asFile)
 	cResources *pResources = gpBase->mpEngine->GetResources();
 
 	tString sFileName = cString::SetFileExt(asFile,"ent");
-	
+
 	//////////////////////
 	// Load XML document
 	iXmlDocument *pEntityDoc = pResources->LoadXmlDocument(sFileName);
@@ -357,7 +357,7 @@ void iLuxEntity::PreloadEntityModel(const tString &asFile)
 		Error("Could not load xml file '%s'\n", sFileName.c_str());
 		return;
 	}
-	
+
 	//////////////////////
 	// Get Model File name
 	cXmlElement *pModelDataElem = pEntityDoc->GetFirstElement("ModelData");
@@ -394,7 +394,7 @@ bool iLuxEntity::CollidesWithPlayer()
 		{
 			continue;
 		}
-		
+
 		if(pPhysicsWorld->CheckShapeCollision(pBody->GetShape(), pBody->GetLocalMatrix(), pPlayerBody->GetShape(), pPlayerBody->GetLocalMatrix(), collideData,1, false))
 		{
 			return true;
@@ -423,7 +423,7 @@ kEndSerialize()
 void cLuxEntityConnection_SaveData::FromConnection(cLuxEntityConnection *apConnection)
 {
 	mlEntityId = apConnection->mpEntity->GetID();
-	
+
 	kCopyFromVar(apConnection, msName);
 	kCopyFromVar(apConnection, mbInvertStateSent);
 	kCopyFromVar(apConnection, mlStatesUsed);
@@ -551,7 +551,7 @@ void iLuxEntity::SetupSaveData(iLuxEntity_SaveData *apSaveData)
 	{
 		cLuxCollideCallback_SaveData& saveCallback = it.Next();
 		cLuxCollideCallback *pCallback = hplNew(cLuxCollideCallback, ());
-		
+
 		saveCallback.ToCallback(mpMap, this, pCallback);
 		mlstCollideCallbacks.push_back(pCallback);
 	}

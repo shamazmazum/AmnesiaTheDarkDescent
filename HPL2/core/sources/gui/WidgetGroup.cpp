@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -33,7 +33,7 @@
 
 
 namespace hpl {
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// CONSTRUCTORS
 	//////////////////////////////////////////////////////////////////////////
@@ -48,7 +48,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	cWidgetGroup::~cWidgetGroup()
 	{
 		if(mpSet->IsDestroyingSet()==false)
@@ -114,7 +114,7 @@ namespace hpl {
 
 	void cWidgetGroup::OnChangeText()
 	{
-		if(mpHeader) 
+		if(mpHeader)
 			mpHeader->SetText(msText);
 	}
 
@@ -146,7 +146,7 @@ namespace hpl {
 				vOffset.y = mvGfxCorners[0]->GetActiveSize().y;
 
 				vSize = mvSize - mvGfxCorners[2]->GetActiveSize()-mvGfxCorners[0]->GetActiveSize();
-				
+
 				mpSet->DrawGfx(mpGfxBackground,vOffset,
 								vSize,
 								cColor(1,1));
@@ -159,30 +159,30 @@ namespace hpl {
 				mpSet->DrawGfx(	mvGfxBorders[0],
 					cVector3f(	mvSize.x - mvGfxBorders[0]->GetActiveSize().x,
 					mvGfxCorners[1]->GetActiveSize().y,0),
-					cVector2f(	mvGfxBorders[0]->GetImageSize().x, 
+					cVector2f(	mvGfxBorders[0]->GetImageSize().x,
 					mvSize.y - (mvGfxCorners[2]->GetActiveSize().y +
 					mvGfxCorners[1]->GetActiveSize().y)));
 				//Left
 				mpSet->DrawGfx(	mvGfxBorders[1],
 					cVector3f(	0,mvGfxCorners[0]->GetActiveSize().y,0),
-					cVector2f(	mvGfxBorders[1]->GetImageSize().x, 
-					mvSize.y - (mvGfxCorners[3]->GetActiveSize().y + 
+					cVector2f(	mvGfxBorders[1]->GetImageSize().x,
+					mvSize.y - (mvGfxCorners[3]->GetActiveSize().y +
 					mvGfxCorners[0]->GetActiveSize().y)));
 
 				//Up
-				mpSet->DrawGfx(mvGfxBorders[2], 
-								cVector3f(mvGfxCorners[0]->GetActiveSize().x,0,0), 
+				mpSet->DrawGfx(mvGfxBorders[2],
+								cVector3f(mvGfxCorners[0]->GetActiveSize().x,0,0),
 								cVector2f(fPreHeaderWidth-4, mvGfxBorders[2]->GetActiveSize().y));
-				mpSet->DrawGfx(mvGfxBorders[2], 
-								vPostHeaderPos+cVector3f(4,0,0) , 
+				mpSet->DrawGfx(mvGfxBorders[2],
+								vPostHeaderPos+cVector3f(4,0,0) ,
 								cVector2f(fPostHeaderWidth-mvGfxCorners[1]->GetActiveSize().x-4, mvGfxBorders[2]->GetActiveSize().y));
 
 				//Down
 				mpSet->DrawGfx(	mvGfxBorders[3],
-					cVector3f(	mvGfxCorners[3]->GetActiveSize().x, 
+					cVector3f(	mvGfxCorners[3]->GetActiveSize().x,
 					mvSize.y - mvGfxCorners[3]->GetActiveSize().y,0),
 					cVector2f(	mvSize.x - (mvGfxCorners[2]->GetActiveSize().x+
-					mvGfxCorners[3]->GetActiveSize().x), 
+					mvGfxCorners[3]->GetActiveSize().x),
 					mvGfxBorders[3]->GetImageSize().y));
 
 

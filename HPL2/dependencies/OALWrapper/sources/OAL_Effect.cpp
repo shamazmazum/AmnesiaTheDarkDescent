@@ -11,7 +11,7 @@
 #include <SDL2/SDL_mutex.h>
 
 cOAL_Effect::cOAL_Effect() : iOAL_LowLevelObject("Effect"),
-							 mbNeedsUpdate(true), 
+							 mbNeedsUpdate(true),
 							 mpMutex(NULL)
 {
 	mbStatus = CreateLowLevelID();
@@ -27,9 +27,9 @@ bool cOAL_Effect::CreateLowLevelID()
 	DEF_FUNC_NAME("cOAL_Effect::CreateLowLevelID()");
 	FUNC_USES_AL;
 
-	
+
 	RUN_AL_FUNC(alGenEffects ( 1, &mlEffectId );)
-	
+
 	return (!AL_ERROR_OCCURED && (IsValidObject()));
 }
 
@@ -43,7 +43,7 @@ bool cOAL_Effect::DestroyLowLevelID()
 	if ( IsValidObject() )
 	{
 		RUN_AL_FUNC(alDeleteEffects( 1, &mlEffectId ));
-		
+
 		bSuccess = bSuccess && !AL_ERROR_OCCURED;
 	}
 	return bSuccess;

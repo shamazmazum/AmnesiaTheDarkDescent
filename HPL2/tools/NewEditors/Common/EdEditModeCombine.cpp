@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -112,7 +112,7 @@ void cEdEditModeCombine::OnViewportMouseUp(const cViewportClick& aData)
 
 	// Set up picker
 	//mpFilter->SetViewport(aData.mpViewport);
-		
+
 	if(IsRayPickingActive())
 		DoRayPicking(pCombo, aData.mpViewport, mpPicker);
 	else
@@ -221,7 +221,7 @@ void cEdEditModeCombine::OnDraw(const cModuleDrawData& aData)
 		aData.mpFunctions->GetLowLevelGfx()->DrawLineQuad(cRect2f((float)mMouseRect.x,(float)mMouseRect.y,
 															(float)mMouseRect.w,(float)mMouseRect.h),
 															0,
-															cColor(1,1)); 
+															cColor(1,1));
 		aData.mpFunctions->SetNormalFrustumProjection();
 	}
 }
@@ -297,8 +297,8 @@ void cEdEditModeCombine::OnViewportMouseMove()
 
 //-------------------------------------------------------------
 
-void cEdEditModeCombine::DoRayPicking(cLevelEditorStaticObjectCombo* apCombo, 
-										  iEdViewport* apViewport, 
+void cEdEditModeCombine::DoRayPicking(cLevelEditorStaticObjectCombo* apCombo,
+										  iEdViewport* apViewport,
 										  cEdObjectPicker* apPicker)
 {
 	mpRay->SetViewport(apViewport);
@@ -308,7 +308,7 @@ void cEdEditModeCombine::DoRayPicking(cLevelEditorStaticObjectCombo* apCombo,
 
 	eCombinePickMode pickMode = ((cEdWindowCombine*)mpWindow)->GetPickMode();
 	iEdScnObject* pObj = apPicker->GetClosestPick();
-	
+
 	iEdAction* pAction = CreateProperAction(apCombo, pObj, pickMode);
 
 	mpEditor->AddAction(pAction);
@@ -316,8 +316,8 @@ void cEdEditModeCombine::DoRayPicking(cLevelEditorStaticObjectCombo* apCombo,
 
 //-------------------------------------------------------------
 
-void cEdEditModeCombine::DoBoxPicking(cLevelEditorStaticObjectCombo* apCombo, 
-										  iEdViewport* apViewport, 
+void cEdEditModeCombine::DoBoxPicking(cLevelEditorStaticObjectCombo* apCombo,
+										  iEdViewport* apViewport,
 										  cEdObjectPicker* apPicker)
 {
 	mpBox->SetViewport(apViewport);
@@ -336,7 +336,7 @@ void cEdEditModeCombine::DoBoxPicking(cLevelEditorStaticObjectCombo* apCombo,
 	{
 		cPickData* pPick = apPicker->GetPick(i);
 		iEdScnObject* pObj = pPick->mpObject;
-	
+
 		iEdAction* pSubAction = CreateProperAction(apCombo, pObj, pickMode);
 
 		pAction->AddAction(pSubAction);
@@ -348,8 +348,8 @@ void cEdEditModeCombine::DoBoxPicking(cLevelEditorStaticObjectCombo* apCombo,
 
 //-------------------------------------------------------------
 
-iEdAction* cEdEditModeCombine::CreateProperAction(cLevelEditorStaticObjectCombo* apCombo, 
-														  iEdScnObject* apObj,  
+iEdAction* cEdEditModeCombine::CreateProperAction(cLevelEditorStaticObjectCombo* apCombo,
+														  iEdScnObject* apObj,
 														  eCombinePickMode aMode)
 {
 	iEdAction* pAction = NULL;

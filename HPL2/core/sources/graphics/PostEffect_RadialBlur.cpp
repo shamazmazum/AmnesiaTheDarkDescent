@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -31,7 +31,7 @@
 #include "system/PreprocessParser.h"
 
 namespace hpl {
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// PROGRAM VARS
 	//////////////////////////////////////////////////////////////////////////
@@ -45,7 +45,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	cPostEffectType_RadialBlur::cPostEffectType_RadialBlur(cGraphics *apGraphics, cResources *apResources) : iPostEffectType("RadialBlur",apGraphics,apResources)
 	{
 		cParserVarContainer vars;
@@ -57,7 +57,7 @@ namespace hpl {
 			mpProgram->GetVariableAsId("afBlurStartDist", kVar_afBlurStartDist);
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cPostEffectType_RadialBlur::~cPostEffectType_RadialBlur()
@@ -74,7 +74,7 @@ namespace hpl {
 
 		return pEffect;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -86,7 +86,7 @@ namespace hpl {
 	cPostEffect_RadialBlur::cPostEffect_RadialBlur(cGraphics *apGraphics, cResources *apResources, iPostEffectType *apType) : iPostEffect(apGraphics,apResources,apType)
 	{
 		cVector2l vSize = mpLowLevelGraphics->GetScreenSizeInt();
-		
+
 		mpRadialBlurType = static_cast<cPostEffectType_RadialBlur*>(mpType);
 	}
 
@@ -106,10 +106,10 @@ namespace hpl {
 	//-----------------------------------------------------------------------
 
 	void cPostEffect_RadialBlur::OnSetParams()
-	{	
+	{
 	}
-	
-	
+
+
 	//-----------------------------------------------------------------------
 
 
@@ -131,22 +131,22 @@ namespace hpl {
 		SetFinalFrameBuffer(apFinalTempBuffer);
 
 		mpCurrentComposite->SetProgram(mpRadialBlurType->mpProgram);
-		
+
 		if(mpRadialBlurType->mpProgram)
 		{
 			mpRadialBlurType->mpProgram->SetFloat(kVar_afSize, mParams.mfSize*vRenderTargetSizeFloat.x);
 			mpRadialBlurType->mpProgram->SetFloat(kVar_afBlurStartDist, mParams.mfBlurStartDist);
 			mpRadialBlurType->mpProgram->SetVec2f(kVar_avHalfScreenSize,  vRenderTargetSizeFloat*0.5f);
 		}
-				
+
 		mpCurrentComposite->SetTexture(0, apInputTexture);
-					
-				
+
+
 		DrawQuad(0, 1, apInputTexture, true);
 
 		mpCurrentComposite->SetProgram(NULL);
 		mpCurrentComposite->SetBlendMode(eMaterialBlendMode_None);
-		
+
 		return apFinalTempBuffer->GetColorBuffer(0)->ToTexture();
 	}
 

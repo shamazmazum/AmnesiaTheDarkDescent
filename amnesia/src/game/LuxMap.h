@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -69,7 +69,7 @@ class cLuxMap
 friend class cLuxDissolveEntity;
 friend class cLuxSavedMap;
 friend class cLuxSavedGameMap;
-public:	
+public:
 	cLuxMap(const tString& asName);
 	~cLuxMap();
 
@@ -80,19 +80,19 @@ public:
 	const tString& GetDisplayNameEntry(){ return msDisplayNameEntry;}
 
 	bool LoadFromFile(const tString & asFile, bool abLoadEntities);
-	
+
 	void AfterWorldLoadEntitySetup();
-	
+
 	void OnEnter(bool abRunScript, bool abFirstTime);
 	void OnLeave(bool abRunScript);
-	
+
 	void Update(float afTimeStep);
 
 	void RunScript(const tString& asCommand);
 	bool RecompileScript(tString *apOutput);
 
 	void OnRenderSolid(cRendererCallbackFunctions* apFunctions);
-	
+
 	cWorld* GetWorld(){ return mpWorld; }
 	iPhysicsWorld* GetPhysicsWorld(){ return mpPhysicsWorld; }
 
@@ -155,7 +155,7 @@ public:
 
 	void SetCheckPoint(const tString& asName, const tString& asStartPos, const tString& asCallback);
 	void LoadCheckPoint();
-    
+
 	void AddUseItemCallback(	const tString& asName, const tString& asItem, const tString& asEntity,
 								const tString& asFunction, bool abAutoCallback);
 	void RemoveUseItemCallback( const tString& asName);
@@ -169,7 +169,7 @@ public:
 	void AddTimer(const tString& asName, float afTime, const tString& asFunction);
 	void RemoveTimer(const tString& asName);
 	cLuxEventTimer* GetTimer(const tString& asName);
-	
+
 	void AddDissolveEntity(cMeshEntity *apMeshEntity, float afTime);
 
 	cLuxLampLightConnection* AddLampLightConnection(cLuxProp_Lamp *apLamp, iLight *apLight, float afAmount, bool abUseOnColor, bool abUseSpec);
@@ -180,15 +180,15 @@ public:
 	bool IsDeletingAllWorldEntities(){ return mbDeletingAllWorldEntities;}
 
 	//////////////////////////
-	// Properties	
+	// Properties
 	void SetNumberOfQuests(int alX){mlNumberOfQuests = alX;}
 	int GetNumberOfQuests(){ return mlNumberOfQuests;}
 	void AddCompletionAmount(int alAmount, float afDelay=0.0f);
 
 	void SetLanternLitCallback(const tString& asCallback){ msLanternLitCallback = asCallback;}
 	const tString& GetLanternLitCallback(){ return msLanternLitCallback;}
-	
-	
+
+
 private:
 	void CalculateTotalCompletionAmount();
 
@@ -208,7 +208,7 @@ private:
 	bool mbUpdatingTimers;
 
 	bool mbDeletingAllWorldEntities;
-	
+
 	cEngine *mpEngine;
 	cWorld *mpWorld;
 	iPhysicsWorld *mpPhysicsWorld;
@@ -235,7 +235,7 @@ private:
 	tLuxEventTimerList mlstTimers;
 
 	tLuxScriptVarMap m_mapVars;
-	
+
 	tLuxEntityNameMap m_mapEntitiesByName;
 	tLuxEntityIDMap m_mapEntitiesByID;
 	tLuxEntityList mlstEntities;

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -11484,7 +11484,7 @@ void cUserInterface::cb_CBQPreset_i(Fl_Choice*, void*) {
 cConfigFile* pPreset = mvPresets[lSelectedItem];
 
 if(pPreset==NULL) return;
-	
+
 cLauncherHelper::UpdateConfigFileWithPreset(mpConfigFile, pPreset);
 cLauncherHelper::SetInitialValues(mpConfigFile, this);
 }
@@ -11729,7 +11729,7 @@ else
 	iSoundDeviceIdentifier* pDev = mvSoundDevices[lIndex];
 	lDevID = pDev->GetID();
 }
-	
+
 
 cLauncherHelper::UpdateConfigFile(this, mpConfigFile, "Sound", "Device", lDevID);
 }
@@ -11945,55 +11945,55 @@ Fl_Window* cUserInterface::CreateWindow() {
     LauncherWindow->end();
   } // Fl_Window* LauncherWindow
   BShowAdvanced->value(0);
-  
+
   cLauncherHelper::PopulateLanguages(mvLanguageFiles, gsDefaultGameLanguage, mpConfigFile, CBLanguage);
   cLauncherHelper::PopulateResolutions(mvVModes, mpConfigFile, CBResolution, this);
-  
+
   mpCurSndDev = mpEngine->GetSound()->GetLowLevel()->GetCurrentSoundDevice();
   cLauncherHelper::PopulateSoundDevices(mvSoundDevices, mpCurSndDev, mpConfigFile, CBSoundDevices);
   cb_CBSoundDevices_i(NULL,NULL);
-  
+
   cLauncherHelper::SetUpWidgetLabels(this, mlstLabels);
   cLauncherHelper::SetInitialValues(mpConfigFile,this);
-  
+
   CheckEqualsPreset();
   return LauncherWindow;
 }
 
 cUserInterface::cUserInterface(int& alExitFlag, cConfigFile *apConfigFile, bool abConfigFileExists, bool abLastInitCrashed, const tString& asCardString, cQualityChooser* apChooser, const std::vector<cConfigFile*>& avPresets, cEngine* apEng) : mlExitFlag(alExitFlag) {
   Fl::scheme("plastic");
-  
+
   if(abLastInitCrashed)
   	fl_message("Last settings crashed the game, falling back to defaults");
-  
+
   mpConfigFile = apConfigFile;
-  
+
   msCardString = asCardString;
   mpQualityChooser = apChooser;
   mvPresets = avPresets;
-  
+
   mpEngine = apEng;
-  
+
   mbSettingPreset = false;
-  
-  
+
+
   ////////////////////////////////////
   // Retrieve available languages
   mvLanguageFiles = cLauncherHelper::GetAvailableLanguages(gsGameLanguageFolder);
-  
+
   ////////////////////////////////////
   // Retrieve video modes
   mvVModes = cLauncherHelper::GetAvailableVideoModes(mpConfigFile);
-  
+
   ////////////////////////////////////
   // Retrieve sound devices
   mvSoundDevices = cLauncherHelper::GetAvailableSoundDevices();
-  
+
   /////////////////////////////////////////////
   // If no config file was present, set 'medium' settings
   if(abConfigFileExists==false)
   	cLauncherHelper::UpdateConfigFileWithPreset(mpConfigFile, mvPresets[1]);
-  
+
   Fl_Window* pWin = CreateWindow();
   char *argv[] = { " " };
   pWin->show(0,argv);
@@ -12021,6 +12021,6 @@ void cUserInterface::CheckEqualsPreset() {
   int lValue = cLauncherHelper::GetEqualPresetIndex(mpConfigFile, mvPresets);
   if(lValue==-1)
   	lValue = 3;
-  	
+
   CBQPreset->value(lValue);
 }

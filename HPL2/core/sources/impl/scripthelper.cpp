@@ -13,10 +13,10 @@ int ExecuteString(asIScriptEngine *engine, const char *code, asIScriptModule *mo
 	string funcCode = "void ExecuteString() {\n";
 	funcCode += code;
 	funcCode += "\n;}";
-	
+
 	// If no module was provided, get a dummy from the engine
 	asIScriptModule *execMod = mod ? mod : engine->GetModule("ExecuteString", asGM_ALWAYS_CREATE);
-	
+
 	// Compile the function that can be executed
 	asIScriptFunction *func = 0;
 	int r = execMod->CompileFunction("ExecuteString", funcCode.c_str(), -1, 0, &func);
@@ -35,7 +35,7 @@ int ExecuteString(asIScriptEngine *engine, const char *code, asIScriptModule *mo
 
 	// Execute the function
 	r = execCtx->Execute();
-	
+
 	// Clean up
 	func->Release();
 	if( !ctx ) execCtx->Release();

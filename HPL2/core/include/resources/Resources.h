@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -76,9 +76,9 @@ namespace hpl {
 
 	typedef std::map<tString, tString> tResourceVarMap;
 	typedef tResourceVarMap::iterator tResourceVarMapIt;
-	
+
 	//-------------------------------------------------------
-	
+
 	class cResourceVarsObject
 	{
 	public:
@@ -116,13 +116,13 @@ namespace hpl {
 
 		const tString& GetName(){ return msName;}
 
-		
+
 	protected:
 		tString msName;
 	};
-	
+
 	//-------------------------------------------------------
-	
+
 	class iEntityLoader : public iMapDataLoader
 	{
 	public:
@@ -130,9 +130,9 @@ namespace hpl {
 		virtual ~iEntityLoader(){}
 
 		bool GetCreatesStaticEntity(){ return mbCreatesStaticEntity; }
-		
-		virtual iEntity3D* Load(const tString &asName, int alID, bool abActive, cXmlElement* apRootElem, 
-								const cMatrixf &a_mtxTransform, const cVector3f &avScale, 
+
+		virtual iEntity3D* Load(const tString &asName, int alID, bool abActive, cXmlElement* apRootElem,
+								const cMatrixf &a_mtxTransform, const cVector3f &avScale,
 								cWorld *apWorld, const tString &asFileName, const tWString &asFullPath, cResourceVarsObject *apInstanceVars)=0;
 
 	protected:
@@ -164,7 +164,7 @@ namespace hpl {
 
 	//-------------------------------------------------------
 
-	// Should this be made a map so you can do 
+	// Should this be made a map so you can do
 	// GetManager(tString) when getting a manager?
 	// This way you would be able to add your own resource types
 	// easily.
@@ -173,7 +173,7 @@ namespace hpl {
 
 	//-------------------------------------------------------
 
-	
+
 	class cResources : public iUpdateable
 	{
 	public:
@@ -234,7 +234,7 @@ namespace hpl {
 
 		static void SetCreateAndLoadCompressedMaps(bool abX){ mbCreateAndLoadCompressedMaps = abX;}
 		static bool GetCreateAndLoadCompressedMaps(){ return mbCreateAndLoadCompressedMaps ;}
-		
+
 	private:
 		iLowLevelResources *mpLowLevelResources;
 		iLowLevelGraphics *mpLowLevelGraphics;
@@ -258,12 +258,12 @@ namespace hpl {
 		cLanguageFile *mpLanguageFile;
 
 		cMeshManager* mpMeshManager;
-		
+
 		cMeshLoaderHandler* mpMeshLoaderHandler;
 		cBitmapLoaderHandler* mpBitmapLoaderHandler;
 		cWorldLoaderHandler *mpWorldLoaderHandler;
 		cVideoLoaderHandler *mpVideoLoaderHandler;
-				
+
 		tEntityLoaderMap m_mEntityLoaders;
 		iEntityLoader* mpDefaultEntityLoader;
 

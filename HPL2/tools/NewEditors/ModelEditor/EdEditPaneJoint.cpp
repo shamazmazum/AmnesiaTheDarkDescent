@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -51,7 +51,7 @@ cEdEditPaneJoint::cEdEditPaneJoint(iEdObject* apObject) : iEdScnObjEditPane(apOb
 
 cEdEditPaneJoint::~cEdEditPaneJoint()
 {
-	
+
 }
 
 //----------------------------------------------------------------------------
@@ -66,7 +66,7 @@ void cEdEditPaneJoint::Create()
 {
 	mpTabGeneral = mpTabs->AddTab(_W("General"));
 	mpTabJointBase = mpTabs->AddTab(_W("Joint - Base"));
-	
+
 	////////////////////////////////////////
 	// Properties in Tab 'General'
 	AddPropertyName(mpTabGeneral);
@@ -135,12 +135,12 @@ void cEdEditPaneJoint::OnUpdate()
 	mpInpMinMoveFreq->SetValue(pJoint->GetMinMoveFreq(), false);
 	mpInpMinMoveFreqSpeed->SetValue(pJoint->GetMinMoveFreqSpeed(), false);
 	mpInpMinMoveVolume->SetValue(pJoint->GetMinMoveVolume(), false);
-	
+
 	mpInpMaxMoveSpeed->SetValue(pJoint->GetMaxMoveSpeed(), false);
 	mpInpMaxMoveFreq->SetValue(pJoint->GetMaxMoveFreq(), false);
 	mpInpMaxMoveFreqSpeed->SetValue(pJoint->GetMaxMoveFreqSpeed(), false);
 	mpInpMaxMoveVolume->SetValue(pJoint->GetMaxMoveVolume(), false);
-	
+
 	mpInpMiddleMoveSpeed->SetValue(pJoint->GetMiddleMoveSpeed(), false);
 	mpInpMiddleMoveVolume->SetValue(pJoint->GetMiddleMoveVolume(), false);
 
@@ -159,7 +159,7 @@ void cEdEditPaneJoint::OnUpdate()
 	mpInpBreakSound->SetValue(cString::To16Char(pJoint->GetBreakSound()), false);
 
 	mpInpCollideBodies->SetValue(pJoint->GetCollideBodies(), false);
-	
+
 	////////////////////////////////////////////
 	// Specific inputs
 	const tWString& sType = pJoint->GetTypeName();
@@ -250,7 +250,7 @@ void cEdEditPaneJoint::AddPropertySetJointSounds(cWidgetTab* apParentTab)
 
 	// Min
 	cWidgetLabel* pLabel = mpSet->CreateWidgetLabel(vPos, 0, _W("Min"), apParentTab);
-    
+
 	vPos.y += 18;
 
 	mpInpMinMoveSpeed = CreateInputNumber(vPos, _W("Speed"), apParentTab);
@@ -282,9 +282,9 @@ void cEdEditPaneJoint::AddPropertySetJointSounds(cWidgetTab* apParentTab)
 	pLabel = mpSet->CreateWidgetLabel(vPos, 0, _W("Middle"), apParentTab);
 
 	vPos.y += 18;
-	
+
 	mpInpMiddleMoveSpeed = CreateInputNumber(vPos, _W("Speed"), apParentTab, 50, 0.5f);
-	mpInpMiddleMoveVolume = CreateInputNumber(vPos + cVector3f(mpInpMiddleMoveSpeed->GetSize().x+5,0,0), _W("Volume"), apParentTab, 50, 0.5f); 
+	mpInpMiddleMoveVolume = CreateInputNumber(vPos + cVector3f(mpInpMiddleMoveSpeed->GetSize().x+5,0,0), _W("Volume"), apParentTab, 50, 0.5f);
 
 	vPos.y += mpInpMiddleMoveSpeed->GetSize().y + fSmallSep;
 
@@ -433,7 +433,7 @@ void cEdEditPaneJoint::AttachBodyToJoint(int alBodyType)
 			pOtherBody = pJoint->GetParentBody();
 			break;
 		}
-		
+
 		cEdObjBody* pNewBody = static_cast<cEdObjBody*>(mpCurrentBodyHighlighter->GetPickedEntity());
 
 		///////////////////////////////////////////////////////////
@@ -451,7 +451,7 @@ void cEdEditPaneJoint::AttachBodyToJoint(int alBodyType)
 			{
 				int lBodyID = -1;
 				if(pNewBody) lBodyID = pNewBody->GetID();
-				
+
 				iEdAction* pAction = mpObject->CreateSetIntAction(alBodyType, lBodyID);
 				mpEditor->AddAction(pAction);
 			}
@@ -631,7 +631,7 @@ bool cEdEditPaneJoint::WindowSpecificInputCallback(iEdInput* apInput)
 	else if(apInput == mpInpMaxTwistAngle)
 	{
 		pAction = mpObject->CreateSetFloatAction(eJointBallFloat_MaxTwistAngle, mpInpMaxTwistAngle->GetValue());
-	}	
+	}
 	//////////////////////////////////
 	// Hinge : Min Angle
 	else if(apInput == mpInpMinAngle)
@@ -649,12 +649,12 @@ bool cEdEditPaneJoint::WindowSpecificInputCallback(iEdInput* apInput)
 	else if(apInput == mpInpMinDistance)
 	{
 		int prop = -1;
-		
+
 		if(mpObject->GetTypeName()==_W("Screw"))
 			prop = eJointScrewFloat_MinDistance;
 		else
 			prop = eJointSliderFloat_MinDistance;
-			
+
 		pAction = mpObject->CreateSetFloatAction(prop, mpInpMinDistance->GetValue());
 	}
 	//////////////////////////////////
@@ -662,7 +662,7 @@ bool cEdEditPaneJoint::WindowSpecificInputCallback(iEdInput* apInput)
 	else if(apInput == mpInpMaxDistance)
 	{
 		int prop = -1;
-		
+
 		if(mpObject->GetTypeName()==_W("Screw"))
 			prop = eJointScrewFloat_MaxDistance;
 		else

@@ -45,7 +45,7 @@ bool	OAL_Init ( cOAL_Init_Params &acParams )
 		atexit(OAL_Close);
 		return true;
 	}
-	
+
 	OAL_Close();
 	return false;
 }
@@ -242,7 +242,7 @@ void OAL_Log ( eOAL_LogVerbose aeVerboseLevelReq, eOAL_LogMsg aeMessageType,  co
 	vsprintf(text, asMessage, ap);
 	va_end(ap);
 
-	
+
 	switch ( aeMessageType )
 	{
 	case eOAL_LogMsg_Command:
@@ -271,7 +271,7 @@ const char* OAL_Info_GetDeviceName()
 }
 
 const char* OAL_Info_GetVendorName()
-{	
+{
 	if (gpDevice)
 		return gpDevice->GetVendorName().c_str();
 	else

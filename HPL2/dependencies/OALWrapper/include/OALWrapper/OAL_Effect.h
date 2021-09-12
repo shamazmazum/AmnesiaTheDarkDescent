@@ -34,7 +34,7 @@ public:
 
 	void Lock();
 	void Unlock();
-    
+
 protected:
 	ALuint	mlEffectId;
 	bool	mbNeedsUpdate;

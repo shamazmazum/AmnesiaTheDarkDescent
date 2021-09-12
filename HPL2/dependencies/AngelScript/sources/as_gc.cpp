@@ -253,7 +253,7 @@ int asCGarbageCollector::DestroyGarbage()
 				// Restart the cycle
 				destroyState = destroyGarbage_init;
 
-				// Return 0 to tell the application that there 
+				// Return 0 to tell the application that there
 				// is no more garbage to destroy at the moment
 				return 0;
 			}

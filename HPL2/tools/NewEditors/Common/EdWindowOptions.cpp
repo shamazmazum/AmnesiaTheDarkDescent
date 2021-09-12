@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -107,7 +107,7 @@ void iEdWindowOptions::OnCreateLayout()
 	lstPlaneLabels.push_back(_W("Near"));
 	lstPlaneLabels.push_back(_W("Far"));
 	mpInpCamPlanes = CreateInputVec2(vPos, _W("Camera Clip Planes:"),  pTab, 50, lstPlaneLabels, eEdInpStyle_RowLabelOnLeft, 1);
-	
+
 	vPos.y += mpInpCamPlanes->GetSize().y + 15;
 	mpInpShowSkybox = CreateInputBool(vPos, _W("Show Skybox"),  pTab);
 	vPos.y += mpInpShowSkybox->GetSize().y + 10;
@@ -226,7 +226,7 @@ bool iEdWindowOptions::WindowSpecificInputCallback(iEdInput* apInput)
 	{
 		//iEngineObjectMesh::SetDisabledCoverage(mpInpDisabledCoverage->GetValue());
 		//pWorld->SetVisibilityUpdated();
-		//pWorld->UpdateVisibility();		
+		//pWorld->UpdateVisibility();
 	}
 
 	else if(apInput==mpInpUndoStackSize)
@@ -277,7 +277,7 @@ bool iEdWindowOptions::WindowSpecificInputCallback(iEdInput* apInput)
 	else if(apInput==mpInpScaleSnap)
 		cEdSelection::SetScaleSnap(mpInpScaleSnap->GetValue());
 	*/
-	
+
 
 	//tViewportVec& vViewports = mpEditor->GetViewports();
 	//for(int i=0;i<(int)vViewports.size();++i)
@@ -288,7 +288,7 @@ bool iEdWindowOptions::WindowSpecificInputCallback(iEdInput* apInput)
 
 	//mpEditor->SetLayoutNeedsUpdate(true);
 
-	return true;		
+	return true;
 }
 
 //-----------------------------------------------------------------

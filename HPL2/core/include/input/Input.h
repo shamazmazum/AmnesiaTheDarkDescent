@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -54,15 +54,15 @@ namespace hpl {
 
 	class cInput : public iUpdateable
 	{
-	public: 
+	public:
 		cInput(iLowLevelInput *apLowLevelInput);
         ~cInput();
-		
+
 		/**
 		 * Updates the input, called by cEngine
 		 */
 		void Update(float afTimeStep);
-		
+
 		/**
 		 * Create and add a new action. The Name must be unique, and the Id is optional
 		 */
@@ -70,15 +70,15 @@ namespace hpl {
 
 		/**
 		 * Check if an action is triggered.
-		 * \param asName 
-		 * \return 
+		 * \param asName
+		 * \return
 		 */
 		bool IsTriggerd(const tString& asName);
 		bool IsTriggerd(int alId);
 		/**
 		 *
 		 * \param asName name of the action.
-		 * \return 
+		 * \return
 		 */
 		bool WasTriggerd(const tString& asName);
 		bool WasTriggerd(int alId);
@@ -86,7 +86,7 @@ namespace hpl {
 		/**
 		 *
 		 * \param asName name of the action.
-		 * \return 
+		 * \return
 		 */
 		bool BecameTriggerd(const tString& asName);
 		bool BecameTriggerd(int alId);
@@ -94,11 +94,11 @@ namespace hpl {
 		/**
 		*
 		* \param asName name of the action.
-		* \return 
+		* \return
 		*/
 		bool DoubleTriggerd(const tString& asName, float afLimit);
 		bool DoubleTriggerd(int alId, float afLimit);
-        
+
 		/**
 		 *
 		 * \return currently used keyboard
@@ -128,7 +128,7 @@ namespace hpl {
 		* \return gamepad in list
 		*/
 		iGamepad* GetGamepad(int i);
-		
+
 		/**
 		* Get action from map.
 		* \param asName name of action.
@@ -150,7 +150,7 @@ namespace hpl {
 
 
 		/**
-		 * This resets all actions to the current way that 
+		 * This resets all actions to the current way that
 		 */
 		void ResetActionsToCurrentState();
 
@@ -169,13 +169,13 @@ namespace hpl {
 		void AppDeviceWasPlugged();
 		void AppDeviceWasRemoved();
 	private:
-		
+
 		tActionMap m_mapActions;
 		tActionIdMap m_mapActionIds;
 		tInputDeviceList mlstInputDevices;
 
 		iLowLevelInput *mpLowLevelInput;
-		
+
 		iMouse* mpMouse;
 		iKeyboard* mpKeyboard;
 		tGamepadList mlstGamepads;

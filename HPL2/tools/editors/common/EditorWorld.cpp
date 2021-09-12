@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -131,7 +131,7 @@ void iEditorWorld::Reset()
 	// Global Lighting
 	SetGlobalAmbientLightEnabled(true);
 	SetGlobalPointLightEnabled(true);
-	
+
 	for(int i=0;i<GetEntityTypeNum();++i)
 	{
 		iEntityWrapperType* pType = GetEntityType(i);
@@ -285,7 +285,7 @@ bool iEditorWorld::GetGlobalAmbientLightEnabled()
 {
 	if(mpGlobalAmbientLight)
 		return mpGlobalAmbientLight->IsVisible();
-	
+
 	return false;
 }
 
@@ -295,7 +295,7 @@ bool iEditorWorld::GetGlobalPointLightEnabled()
 {
 	if(mpGlobalPointLight)
 		return mpGlobalPointLight->IsVisible();
-	
+
 	return false;
 }
 
@@ -343,14 +343,14 @@ void iEditorWorld::LoadWorldObjects(cXmlElement* apWorldObjectsElement)
 
 	mbShowLoadErrorPopUp = false;
 	msLoadErrorMsg = _W("");
-		
+
 	for(int i=0; i<(int)mvEntityCategories.size(); ++i)
 	{
 		//////////////////////////////////////////////////////////////////
 		// Iterate through category strings and all entities in each
 		cXmlElement* pCurrentXmlCategory = apWorldObjectsElement->GetFirstElement(mvEntityCategories[i]);
 
-		if(pCurrentXmlCategory==NULL || 
+		if(pCurrentXmlCategory==NULL ||
 			CustomCategoryLoader(apWorldObjectsElement, pCurrentXmlCategory)==true)
 			continue;
 
@@ -379,7 +379,7 @@ void iEditorWorld::LoadWorldObjects(cXmlElement* apWorldObjectsElement)
 
 	if(mbShowLoadErrorPopUp)
 	{
-		mpEditor->ShowMessageBox(_W("Warning!"), _W("Found some errors while loading file. Check log for details. ") + msLoadErrorMsg , 
+		mpEditor->ShowMessageBox(_W("Warning!"), _W("Found some errors while loading file. Check log for details. ") + msLoadErrorMsg ,
 									_W("OK"), _W(""), NULL, NULL);
 
 		mbShowLoadErrorPopUp = false;
@@ -418,7 +418,7 @@ bool iEditorWorld::Save(iXmlDocument* apDoc)
 
 void iEditorWorld::SaveWorldData(cXmlElement* apWorldDataElement)
 {
-	apWorldDataElement->SetAttributeString("Name", msName);	
+	apWorldDataElement->SetAttributeString("Name", msName);
 }
 
 void iEditorWorld::SaveWorldObjects(cXmlElement* apWorldObjectsElement, tEntityWrapperList& alstEnts)
@@ -434,7 +434,7 @@ void iEditorWorld::SaveWorldObjects(cXmlElement* apWorldObjectsElement, tEntityW
 	mlstOutliers.clear();
 
 	CustomCategorySaver(apWorldObjectsElement);
-	
+
 	tEntityWrapperListIt it = alstEnts.begin();
 	for(;it!=alstEnts.end();++it)
 	{
@@ -446,7 +446,7 @@ void iEditorWorld::SaveWorldObjects(cXmlElement* apWorldObjectsElement, tEntityW
 	// Show warning if outliers found!
 	if(mlstOutliers.empty()==false)
 	{
-		mpEditor->ShowMessageBox(_W("Warning!"), _W("Found some outlier entities while saving. Check log for details"), 
+		mpEditor->ShowMessageBox(_W("Warning!"), _W("Found some outlier entities while saving. Check log for details"),
 									_W("OK"), _W(""), NULL, NULL);
 
 
@@ -479,7 +479,7 @@ void iEditorWorld::ImportObjects(const tString& asX, tIntList& alstImportedIDs)
 	cXmlElement* pWorldData = pDoc->GetFirstElement("MapData");
 
 	cXmlElement* pXmlObjectsData = pWorldData->GetFirstElement("MapContents");
-	
+
 	tStringVec vIndexStrings;
 	vIndexStrings.push_back("StaticObjects");
 	vIndexStrings.push_back("Entities");
@@ -513,7 +513,7 @@ void iEditorWorld::ImportObjects(const tString& asX, tIntList& alstImportedIDs)
 			}
 		}
 	}
-	
+
 	for(int i=0; i<(int)mvEntityCategories.size(); ++i)
 	{
 		//////////////////////////////////////////////////////////////////
@@ -651,7 +651,7 @@ iEntityWrapperType* iEditorWorld::GetEntityTypeByName(const tString& asX)
 		if(pType->GetName()==sName)
 			return pType;
 	}
-	
+
 	Log("Type %s not created.\n", asX.c_str());
 
 	return NULL;
@@ -838,7 +838,7 @@ void iEditorWorld::SetClipPlanes(const tEditorClipPlaneVec& avX)
 {
 	if(mvClipPlanes==avX)
 		return;
-	
+
 	mvClipPlanes = avX;
 
 	SetClipPlanesUpdated();
@@ -861,7 +861,7 @@ int iEditorWorld::AddEntityCategory(const tString& asX, int alType)
 		}
 		else
 		{
-			if(mlDefaultCategory==-1) 
+			if(mlDefaultCategory==-1)
 				mlDefaultCategory = lIndex;
 		}
 
@@ -1097,7 +1097,7 @@ void iEditorWorld::SanitizeFileIndex(tStringVec& avFileIndices, int alTypeID)
 	avFileIndices.resize(lNewSize);
 
 	// DEBUG
-	
+
 	Log("File index after removing empty entries:\n");
 	for(int i=0;i<(int)avFileIndices.size();++i)
 		Log(" %s - used %d times\n", avFileIndices[i].c_str(), vFileUsage[i]);
@@ -1141,7 +1141,7 @@ void iEditorWorld::SetShowSkybox(bool abX)
 void iEditorWorld::SetSkyboxActive(bool abX)
 {
 	mbSkyboxActive = abX;
-	
+
 	UpdateSkybox();
 }
 
@@ -1175,7 +1175,7 @@ void iEditorWorld::UpdateSkybox()
 		iTexture* pTex = NULL;
 		cEditorHelper::LoadTextureResource(eEditorTextureResourceType_CubeMap, msSkyboxTexture, &pTex);
 		mpWorld->SetSkyBox(pTex, true);
-		mpWorld->SetSkyBoxColor(mSkyboxColor);	
+		mpWorld->SetSkyBoxColor(mSkyboxColor);
 	}
 	else
 	{
@@ -1294,7 +1294,7 @@ tString iEditorWorld::GenerateName(const tString& asName)
 			lIndex = 0;
 			lNum = 0;
 		}
-		
+
 		sBaseName = cString::Sub(asName, 0, lIndex-1);
 	}
 
@@ -1303,7 +1303,7 @@ tString iEditorWorld::GenerateName(const tString& asName)
 		sGeneratedName = sBaseName + "_" + cString::ToString(++lNum);
 	}
 	while(IsNameAvailable(sGeneratedName)==false);
-	
+
 	return sGeneratedName;
 }
 
@@ -1353,8 +1353,8 @@ iEntityWrapper* iEditorWorld::CreateEntityWrapperFromXMLElement(cXmlElement* apE
 	}
 
 	if(pEnt==NULL)
-		Log("Failed loading entity of type %s named %s with ID %d\n", apElement->GetValue().c_str(), 
-																	  apElement->GetAttributeString("Name").c_str(), 
+		Log("Failed loading entity of type %s named %s with ID %d\n", apElement->GetValue().c_str(),
+																	  apElement->GetAttributeString("Name").c_str(),
 																	  apElement->GetAttributeInt("ID"));
 
 	return pEnt;
@@ -1386,7 +1386,7 @@ void iEditorWorld::DestroyEntityWrapper(iEntityWrapper* apEntity, bool abRemoveF
 
 	if(abRemoveFromWorld) RemoveObject(apEntity);
 
-    apEntity->OnDestroy();	
+    apEntity->OnDestroy();
 	hplDelete(apEntity);
 }
 

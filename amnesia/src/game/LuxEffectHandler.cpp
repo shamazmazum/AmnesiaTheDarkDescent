@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -116,7 +116,7 @@ void cLuxEffect_PlayCommentary::Start(const tString &asTalker,const tString &asT
 			}
 		}
 	}
-	
+
 	msTalker = asTalker;
 	msTopic  = asTopic;
 	mlIconID = alIconId;
@@ -126,12 +126,12 @@ void cLuxEffect_PlayCommentary::Start(const tString &asTalker,const tString &asT
 	{
 		mlSoundEntryID = mpSoundEntry->GetId();
 		SetActive(true);
-		
+
 		mpSoundHandler->FadeGlobalVolume(0.15f,0.5f,  eSoundEntryType_World, eLuxGlobalVolumeType_Commentary, false);
 		mpMusicHandler->FadeVolumeMul(0.15f, 0.5f);
 		gpBase->mpEffectHandler->GetPlayVoice()->SetVolumeMul(0.1f);
 	}
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -173,7 +173,7 @@ void cLuxEffect_PlayCommentary::Update(float afTimeStep)
 	mpSoundHandler->FadeGlobalVolume(1.0f,0.5f,  eSoundEntryType_World, eLuxGlobalVolumeType_Commentary, false);
 	mpMusicHandler->FadeVolumeMul(1.0f, 0.5f);
 	gpBase->mpEffectHandler->GetPlayVoice()->SetVolumeMul(1.0f);
-	
+
 	mbActive = false;
 }
 
@@ -191,7 +191,7 @@ void cLuxEffect_PlayCommentary::Reset()
 
 	mpSoundHandler->SetGlobalVolume(1.0f,eSoundEntryType_World, eLuxGlobalVolumeType_Commentary);
 	mpMusicHandler->SetVolumeMul(1.0f);
-	
+
 	mlIconID = -1;
 	msTalker = "";
 	msTopic = "";
@@ -296,7 +296,7 @@ void cLuxEffect_EmotionFlash::Update(float afTimeStep)
 			gpBase->mpEffectHandler->SetPlayerIsPaused(false);
 
 			gpBase->mpEffectHandler->GetRadialBlur()->FadeTo(0, 1);
-			
+
 			mlStep = 2;
 		}
 	}
@@ -479,7 +479,7 @@ void cLuxEffect_SepiaColor::Update(float afTimeStep)
 	cPostEffectParams_ColorConvTex sepiaParams;
 	sepiaParams.mfFadeAlpha = mfAmount;
 	gpBase->mpMapHandler->GetPostEffect_Sepia()->SetParams(&sepiaParams);
-	
+
 	if(mfAmount <=0)
 	{
 		gpBase->mpMapHandler->GetPostEffect_Sepia()->SetActive(false);
@@ -638,11 +638,11 @@ void cLuxEffect_ImageTrail::Update(float afTimeStep)
 			SetActive(false);
 		}
 	}
-	
+
 	cPostEffectParams_ImageTrail imageTrailParams;
 	imageTrailParams.mfAmount = mfAmount;
 	gpBase->mpMapHandler->GetPostEffect_ImageTrail()->SetParams(&imageTrailParams);
-	
+
 	if(mfAmount <=0)
 	{
 		gpBase->mpMapHandler->GetPostEffect_ImageTrail()->SetActive(false);
@@ -796,7 +796,7 @@ void cLuxEffect_SanityGainFlash::Start()
 {
 	if(msSound != "")
 		gpBase->mpHelpFuncs->PlayGuiSoundData(msSound, eSoundEntryType_Gui);
-	
+
 	mbActive = true;
 
 	mlStep = 0;
@@ -846,7 +846,7 @@ void cLuxEffect_SanityGainFlash::Update(float afTimeStep)
 void cLuxEffect_SanityGainFlash::OnDraw(float afFrameTime)
 {
 	DrawFlash(gpBase->mpGameHudSet, afFrameTime);
-}	
+}
 
 //-----------------------------------------------------------------------
 
@@ -870,7 +870,7 @@ cLuxEffect_Flash::cLuxEffect_Flash()
 }
 cLuxEffect_Flash::~cLuxEffect_Flash()
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -940,7 +940,7 @@ void cLuxEffect_Flash::Update(float afTimeStep)
 void cLuxEffect_Flash::OnDraw(float afFrameTime)
 {
 	gpBase->mpGameHudSet->DrawGfx(mpWhiteGfx,gpBase->mvHudVirtualStartPos+cVector3f(0,0,3.2f),gpBase->mvHudVirtualSize,cColor(mfAlpha, 1));
-}	
+}
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -978,7 +978,7 @@ void cLuxEffect_PlayVoice::StopVoices(float afFadeOutSpeed)
 
 	if(mpSoundHandler->IsValid(mpEffectEntry,mlEffectEntryID)) mpEffectEntry->FadeOut(afFadeOutSpeed);
 	mpEffectEntry = NULL;
-	
+
 	mlstVoices.clear();
 
 	mbActive = false;
@@ -986,13 +986,13 @@ void cLuxEffect_PlayVoice::StopVoices(float afFadeOutSpeed)
 //-----------------------------------------------------------------------
 
 void cLuxEffect_PlayVoice::AddVoice(const tString& asVoiceFile, const tString& asEffectFile,
-									const tString& asTextCat, const tString& asTextEntry, bool abUsePostion, 
+									const tString& asTextCat, const tString& asTextEntry, bool abUsePostion,
 									const cVector3f& avPosition, float afMinDistance, float afMaxDistance)
 {
 	cLuxVoiceData voiceData;
 
 	//Log("Adding sounds: '%s' and '%s'\n", asVoiceFile.c_str(), asEffectFile.c_str());
-	
+
     voiceData.msVoiceFile = asVoiceFile;
 	voiceData.msEffectFile = asEffectFile;
 	if(asTextCat != "" && asTextEntry != "")
@@ -1016,7 +1016,7 @@ void cLuxEffect_PlayVoice::PauseCurrentVoices()
 	if(mbActive==false || mbPaused) return;
 
 	mbPaused = true;
-	
+
 	//Voice
 	if(mpVoiceEntry && mpSoundHandler->IsValid(mpVoiceEntry, mlVoiceEntryID))
 	{
@@ -1035,7 +1035,7 @@ void cLuxEffect_PlayVoice::PauseCurrentVoices()
 void cLuxEffect_PlayVoice::UnpauseCurrentVoices()
 {
 	if(mbActive==false || mbPaused==false) return;
-	
+
 	mbPaused = false;
 
 	//Voice
@@ -1057,7 +1057,7 @@ void cLuxEffect_PlayVoice::UnpauseCurrentVoices()
 void cLuxEffect_PlayVoice::Update(float afTimeStep)
 {
 	//do not want to have like this, because then loading save when playing last voice + callback will not work and callback will not be called.
-	//if(mpVoiceEntry==NULL && mpEffectEntry==NULL && mlstVoices.empty()) return; 
+	//if(mpVoiceEntry==NULL && mpEffectEntry==NULL && mlstVoices.empty()) return;
 
 	if(mfVolumeMul <1.0f)
 	{
@@ -1067,14 +1067,14 @@ void cLuxEffect_PlayVoice::Update(float afTimeStep)
 		if(mpEffectEntry && mpSoundHandler->IsValid(mpEffectEntry, mlEffectEntryID))
 			mpEffectEntry->SetVolumeMul(mfVolumeMul);
 	}
-	
+
 	if(mpSoundHandler->IsValid(mpVoiceEntry, mlVoiceEntryID)) return;
 	if(mpVoiceEntry==NULL && mpSoundHandler->IsValid(mpEffectEntry, mlEffectEntryID)) return;
 
 	if(mlstVoices.empty())
 	{
 		//Need to save as it will be reseted otherwise!
-		tString sCallback = msOverCallback; 
+		tString sCallback = msOverCallback;
 
 		//Reset before calling so it is possible to start voices from callback!
 		float fPreVolMul = mfVolumeMul;
@@ -1084,19 +1084,19 @@ void cLuxEffect_PlayVoice::Update(float afTimeStep)
 
 		if(sCallback!="")
 			gpBase->mpMapHandler->GetCurrentMap()->RunScript(sCallback+"()");
-		
+
 		return;
 	}
 
     cLuxVoiceData& voiceData = mlstVoices.front();
-	
+
 	//////////////////////
 	//GUI sound
 	if(voiceData.mbUsePosition==false)
 	{
 		mpVoiceEntry = mpSoundHandler->PlayGuiStream(voiceData.msVoiceFile,false, 1.0f);
 		if(mpVoiceEntry) mlVoiceEntryID = mpVoiceEntry->GetId();
-		
+
 		if(voiceData.msEffectFile!="")
 		{
 			mpEffectEntry = mpSoundHandler->PlayGuiStream(voiceData.msEffectFile,false, 1.0f);
@@ -1110,7 +1110,7 @@ void cLuxEffect_PlayVoice::Update(float afTimeStep)
 		mpVoiceEntry = mpSoundHandler->Play(voiceData.msVoiceFile,false, 1.0f, voiceData.mvPosition,voiceData.mfMinDistance, voiceData.mfMaxDistance,
 											eSoundEntryType_Gui,false,true,0, true);
 		if(mpVoiceEntry) mlVoiceEntryID = mpVoiceEntry->GetId();
-		
+
 		if(voiceData.msEffectFile!="")
 		{
 			mpEffectEntry = mpSoundHandler->Play(	voiceData.msEffectFile,false, 1.0f, voiceData.mvPosition,voiceData.mfMinDistance, voiceData.mfMaxDistance,
@@ -1136,7 +1136,7 @@ void cLuxEffect_PlayVoice::Update(float afTimeStep)
 		//Reset before calling so it is possible to start voices from callback!
 		Reset();
 		SetActive(false);
-		
+
 		if(msOverCallback!="")
 			gpBase->mpMapHandler->GetCurrentMap()->RunScript(msOverCallback+"()");
 	}
@@ -1148,9 +1148,9 @@ void cLuxEffect_PlayVoice::OnDraw(float afFrameTime)
 {
 	if(gpBase->mpMessageHandler->ShowSubtitles()==false) return;
 	if(mvCurrentTextRows.empty()) return;
-    
+
 	cVector3f vStartPos(400-mfRowWidth/2, 580 - (mvCurrentTextRows.size()*(mvFontSize.y+2)), 4);
-	
+
     for(size_t i=0; i<mvCurrentTextRows.size(); ++i)
 	{
 		gpBase->mpGameHudSet->DrawFont(mvCurrentTextRows[i],gpBase->mpDefaultFont, vStartPos, mvFontSize,cColor(1,1));
@@ -1166,11 +1166,11 @@ void cLuxEffect_PlayVoice::Reset()
 
 	if(mpEffectEntry != NULL && mpSoundHandler->IsValid(mpEffectEntry,mlEffectEntryID)) mpEffectEntry->Stop();
 	mpEffectEntry = NULL;
-	
+
 	mvCurrentTextRows.clear();
 
 	mlstVoices.clear();
-	
+
 	msOverCallback = "";
 
 	mbPaused = false;
@@ -1186,7 +1186,7 @@ void cLuxEffect_PlayVoice::SetVolumeMul(float afMul)
 		mpVoiceEntry->SetVolumeMul(mfVolumeMul);
 
 	if(mpEffectEntry && mpSoundHandler->IsValid(mpEffectEntry, mlEffectEntryID))
-		mpEffectEntry->SetVolumeMul(mfVolumeMul);    
+		mpEffectEntry->SetVolumeMul(mfVolumeMul);
 }
 
 //-----------------------------------------------------------------------
@@ -1264,7 +1264,7 @@ void cLuxEffectHandler::Update(float afTimeStep)
 
 void cLuxEffectHandler::OnMapEnter(cLuxMap *apMap)
 {
-	
+
 }
 
 //-----------------------------------------------------------------------

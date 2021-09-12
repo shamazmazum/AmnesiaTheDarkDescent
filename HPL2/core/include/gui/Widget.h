@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -57,14 +57,14 @@ namespace hpl {
 	typedef tWidgetCallbackList::iterator tWidgetCallbackListIt;
 
 	//--------------------------------
-	
+
 	class iWidget
 	{
 	friend class cGuiSet;
 	public:
 		iWidget(eWidgetType aType,cGuiSet *apSet, cGuiSkin *apSkin);
 		virtual ~iWidget();
-	
+
 		/////////////////////////
 		//General
 		void Update(float afTimeStep);
@@ -76,7 +76,7 @@ namespace hpl {
 		void AddCallback(eGuiMessage aMessage,void *apObject,tGuiCallbackFunc apFunc);
 
 		eWidgetType GetType(){ return mType;}
-		
+
 		void Init();
 
 		virtual cGuiGlobalShortcut* AddShortcut(int alKeyModifiers, eKey aKey, eGuiMessage aMsg=eGuiMessage_ButtonPressed, bool abBypassVisibility=true, bool abBypassEnabled=true);
@@ -91,7 +91,7 @@ namespace hpl {
         /////////////////////////
 		// Public Helper functions
 		virtual bool PointIsInside(const cVector2f& avPoint, bool abOnlyClipped);
-		
+
 		/////////////////////////
 		//Hierarchy
 		virtual void AttachChild(iWidget *apChild);
@@ -125,13 +125,13 @@ namespace hpl {
 
 		const cColor& GetDefaultFontColor(){ return mDefaultFontColor;}
 		virtual void SetDefaultFontColor(const cColor& aColor){ mDefaultFontColor = aColor;}
-		
+
 		const cVector2f& GetDefaultFontSize(){ return mvDefaultFontSize;}
 		virtual void SetDefaultFontSize(const cVector2f& avSize){ mvDefaultFontSize = avSize;}
 
 		void SetClipActive(bool abX){ mbClipsGraphics = abX;}
 		bool GetClipActive(){ return mbClipsGraphics;}
-		
+
 		void SetPosition(const cVector3f &avPos);
 		void SetGlobalPosition(const cVector3f &avPos);
 		const cVector3f& GetLocalPosition();
@@ -148,7 +148,7 @@ namespace hpl {
 
 		void SetSize(const cVector2f &avSize);
 		cVector2f GetSize(){ return mvSize;}
-		
+
 		void SetColorMul(const cColor &aColor){ mColorMul = aColor;}
 		const cColor& GetColorMul(){ return mColorMul;}
 
@@ -186,13 +186,13 @@ namespace hpl {
 		/////////////////////////
 		// Upper Widget functions
 		virtual void OnLoadGraphics(){}
-		
+
 		virtual void OnChangeSize(){}
 		virtual void OnChangePosition(){}
 		virtual void OnChangeText(){}
 
 		virtual void OnChildUpdate(iWidget* apChild){}
-		
+
 		virtual void OnInit(){}
 
 		virtual void OnDraw(float afTimeStep, cGuiClipRegion *apClipRegion){}
@@ -229,11 +229,11 @@ namespace hpl {
 		virtual bool OnUIButtonPress(const cGuiMessageData& aData){return false;}
 		virtual bool OnUIButtonRelease(const cGuiMessageData& aData){return false;}
 		virtual bool OnUIButtonDoublePress(const cGuiMessageData& aData){return false;}
-		
+
 		virtual bool OnGetUINavFocus(const cGuiMessageData& aData){return false;}
 		virtual bool OnLoseUINavFocus(const cGuiMessageData& aData){return false;}
-	
-		
+
+
 		/////////////////////////
 		// Private Helper functions
 		bool CheckPointInsideClippingParent(const cVector2f& avPoint);
@@ -258,7 +258,7 @@ namespace hpl {
 
 		void DrawDefaultTextHighlight(	const tWString& asText,
 										const cVector3f& avPosition, eFontAlign aAlign); //, int alFirstVisibleChar, int alHighlightStart, int alHighlightSize);
-		
+
 		void SetPositionUpdated();
 
 		void LoadGraphics();
@@ -292,7 +292,7 @@ namespace hpl {
 		iWidget *mpParent;
 
 		tWidgetList mlstChildren;
-		
+
 		bool mbEnabled;
 		bool mbVisible;
 
@@ -318,7 +318,7 @@ namespace hpl {
 
 		bool mbCallbacksDisabled;
 	private:
-		void SetMouseIsOver(bool abX){ mbMouseIsOver = abX;}        
+		void SetMouseIsOver(bool abX){ mbMouseIsOver = abX;}
 		bool ProcessCallbacks(eGuiMessage aMessage, const cGuiMessageData& aData);
 
 		int UIArrowToArrayPos(eUIArrow aDir);

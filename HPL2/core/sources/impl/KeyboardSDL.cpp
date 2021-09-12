@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -33,13 +33,13 @@
 #endif
 
 namespace hpl {
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// CONSTRUCTORS
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	cKeyboardSDL::cKeyboardSDL(cLowLevelInputSDL *apLowLevelInputSDL) : iKeyboard("SDL Portable Keyboard")
 	{
 		mpLowLevelInputSDL = apLowLevelInputSDL;
@@ -60,7 +60,7 @@ namespace hpl {
 		SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 #endif
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -180,15 +180,15 @@ namespace hpl {
 	{
 		return mlstKeysReleased.empty()==false;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	/////////////////////////////////////////////////////////////////////////
 	// PRIVATE METHODS
 	/////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	eKey cKeyboardSDL::SDLToKey(int alKey)
 	{
 		switch(alKey)
@@ -449,7 +449,7 @@ namespace hpl {
 
 		return eKey_None;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cKeyboardSDL::ClearKeyList()
@@ -466,9 +466,9 @@ namespace hpl {
 		if(alSDLMod & KMOD_CTRL)		mod |= eKeyModifier_Ctrl;
 		if(alSDLMod & KMOD_SHIFT)		mod |= eKeyModifier_Shift;
 		if(alSDLMod & KMOD_ALT)			mod |= eKeyModifier_Alt;
-		
+
 		alstKeys.push_back(cKeyPress(aKey,alUnicode,mod));
-		
+
 		//if(mlstKeysPressed.size()>MAX_KEY_PRESSES) mlstKeysPressed.pop_front();
 	}
 

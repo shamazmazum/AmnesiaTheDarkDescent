@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -99,49 +99,49 @@ public:
 
 	// File inputs
 	//------------------------------------------------------------------------------------
-	cEdInputFile*		CreateInputFile(const cVector3f& avPos, const tWString& asLabel, const tWString& asCategory, 
+	cEdInputFile*		CreateInputFile(const cVector3f& avPos, const tWString& asLabel, const tWString& asCategory,
 										iWidget* apParent=NULL, float afBoxWidth=100, const tWString& asInitPath=_W(""));
 
-	cEdInputFile*		CreateInputMesh(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent=NULL, 
+	cEdInputFile*		CreateInputMesh(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent=NULL,
 										float afBoxWidth=100, const tWString& asInitPath=_W(""));
 
-	cEdInputFile*		CreateInputAnim(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent=NULL, 
+	cEdInputFile*		CreateInputAnim(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent=NULL,
 										float afBoxWidth=100, const tWString& asInitPath=_W(""));
 
-	cEdInputFile*		CreateInputEntFile(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent=NULL, 
+	cEdInputFile*		CreateInputEntFile(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent=NULL,
 											float afBoxWidth=100, const tWString& asInitPath=_W(""));
 
-	cEdInputFile*		CreateInputParticleSystem(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent=NULL, 
+	cEdInputFile*		CreateInputParticleSystem(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent=NULL,
 													float afBoxWidth=100, const tWString& asInitPath=_W(""));
 
-	cEdInputTexture*	CreateInputMaterial(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent=NULL, 
+	cEdInputTexture*	CreateInputMaterial(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent=NULL,
 											float afBoxWidth=100, const tWString& asInitPath=_W(""));
 
-	cEdInputTexture*	CreateInputTexture(const cVector3f& avPos, const tWString& asLabel, eEdTexture aType, iWidget* apParent=NULL, 
+	cEdInputTexture*	CreateInputTexture(const cVector3f& avPos, const tWString& asLabel, eEdTexture aType, iWidget* apParent=NULL,
 											float afBoxWidth=100, const tWString& asInitPath=_W(""));
-	cEdInputTexture*	CreateInputTexture1D(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent=NULL, 
+	cEdInputTexture*	CreateInputTexture1D(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent=NULL,
 												float afBoxWidth=100, const tWString& asInitPath=_W(""));
-	cEdInputTexture*	CreateInputTexture2D(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent=NULL, 
+	cEdInputTexture*	CreateInputTexture2D(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent=NULL,
 												float afBoxWidth=100, const tWString& asInitPath=_W(""));
-	cEdInputTexture*	CreateInputCubeMap(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent=NULL, 
+	cEdInputTexture*	CreateInputCubeMap(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent=NULL,
 											float afBoxWidth=100, const tWString& asInitPath=_W(""));
 
-	cEdInputSound*		CreateInputSound(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent=NULL, 
+	cEdInputSound*		CreateInputSound(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent=NULL,
 											float afBoxWidth=100, const tWString& asInitPath=_W(""));
 	//------------------------------------------------------------------------------------
 
-	cEdInputNumber*		CreateInputNumber(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent=NULL, 
+	cEdInputNumber*		CreateInputNumber(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent=NULL,
 											float afBoxWidth=50, float afNumericAdd=0);
 
-	cEdInputEnum*		CreateInputEnum(const cVector3f& avPos, const tWString& asLabel, 
+	cEdInputEnum*		CreateInputEnum(const cVector3f& avPos, const tWString& asLabel,
 										iWidget* apParent=NULL, float afBoxWidth=100);
 
-	cEdInputVec2*		CreateInputVec2(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent=NULL, 
-										float afBoxWidth=50, const tWStringList& alstLabels=tWStringList(), 
+	cEdInputVec2*		CreateInputVec2(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent=NULL,
+										float afBoxWidth=50, const tWStringList& alstLabels=tWStringList(),
 										eEdInpStyle aStyle=eEdInpStyle_RowLabelOnTop, float afNumericAdd=0);
 
-	cEdInputVec3*		CreateInputVec3(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent=NULL, 
-										float afBoxWidth=50, const tWStringList& alstLabels=tWStringList(), 
+	cEdInputVec3*		CreateInputVec3(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent=NULL,
+										float afBoxWidth=50, const tWStringList& alstLabels=tWStringList(),
 										eEdInpStyle aStyle=eEdInpStyle_RowLabelOnTop, float afNumericAdd=0);
 
 	cEdInputColor*		CreateInputColor(const cVector3f& avPos, const tWString& asLabel, iWidget* apParent=NULL);
@@ -275,9 +275,9 @@ public:
 	iEdWindow* GetBackground() { return mpBackground; }
 	iEdWindow* GetWindow(const tWString&);
 
-	const cLayoutBlock* AddLayoutBlock(int alID, 
-										bool abRelX, bool abRelY, const cVector3f& avPos, 
-										bool abRelWidth, bool abRelHeight, const cVector2f& avSize, 
+	const cLayoutBlock* AddLayoutBlock(int alID,
+										bool abRelX, bool abRelY, const cVector3f& avPos,
+										bool abRelWidth, bool abRelHeight, const cVector2f& avSize,
 										iWidget* apParent=NULL);
 	const cLayoutBlock* GetLayoutBlock(int);
 
@@ -286,11 +286,11 @@ public:
 
 	////////////////////////////////////////////////////
 	// Pop Up handling
-	cGuiPopUpFilePicker* CreateLoadDialog(tWStringVec& avDestFilenames, const tWString& asStartPath, 
-											void* apCallbackObject, tGuiCallbackFunc apCallback, 
+	cGuiPopUpFilePicker* CreateLoadDialog(tWStringVec& avDestFilenames, const tWString& asStartPath,
+											void* apCallbackObject, tGuiCallbackFunc apCallback,
 											const tWString& asCategoryName, const tWStringList& alstCategoryStrings);
 
-	cGuiPopUpFilePicker* CreateSaveDialog(tWString& asFilename, const tWString& asStartPath, 
+	cGuiPopUpFilePicker* CreateSaveDialog(tWString& asFilename, const tWString& asStartPath,
 											void* apCallbackObject, tGuiCallbackFunc apCallback,
 											const tWString& asCategoryName, const tWString& asFilter);
 
@@ -312,7 +312,7 @@ protected:
 	void BroadcastMsgToWindows(eEdModuleMsg, void*);
 
 	void CreatePendingWindows();
-	
+
 	void OnCreateLayout();
 	void OnUpdate();
 

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -63,7 +63,7 @@ cLuxPlayerState_InteractGrab::cLuxPlayerState_InteractGrab(cLuxPlayer *apPlayer)
 
 cLuxPlayerState_InteractGrab::~cLuxPlayerState_InteractGrab()
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -93,7 +93,7 @@ void cLuxPlayerState_InteractGrab::OnEnterState(eLuxPlayerState aPrevState)
 	// Set the rotation as the current of the body
 	if(mpGrabData->mbGrabUseOffset)
 	{
-		m_mtxBodyRotation = cMath::MatrixRotate(mpGrabData->mvGrabRotationOffset, eEulerRotationOrder_XYZ);	
+		m_mtxBodyRotation = cMath::MatrixRotate(mpGrabData->mvGrabRotationOffset, eEulerRotationOrder_XYZ);
 	}
 	//////////////////////////////////
 	// Set rotation based on entity file offset
@@ -104,11 +104,11 @@ void cLuxPlayerState_InteractGrab::OnEnterState(eLuxPlayerState aPrevState)
 		cMatrixf mtxInvCamRot = cMath::MatrixInverse(mtxCamRot);
 
 		m_mtxBodyRotation = cMath::MatrixMul(mtxInvCamRot, mpCurrentBody->GetLocalMatrix().GetRotation());
-		
+
 		mvLocalBodyOffset = mpCurrentBody->GetLocalPosition() - mvCurrentFocusPos;
 		mvLocalBodyOffset = cMath::MatrixMul( mtxInvCamRot, mvLocalBodyOffset);
 	}
-	
+
 	if(mpGrabData->mbGrabUseDepth)
 	{
 		mfDepth = mpGrabData->mfGrabDepth;
@@ -117,7 +117,7 @@ void cLuxPlayerState_InteractGrab::OnEnterState(eLuxPlayerState aPrevState)
 	{
 		mfDepth = cMath::Vector3Dist(mvCurrentFocusPos, pCam->GetPosition())-0.08f;
 	}
-	
+
 
 
 	//////////////////////////////
@@ -138,7 +138,7 @@ void cLuxPlayerState_InteractGrab::OnEnterState(eLuxPlayerState aPrevState)
 		if(pBody==mpCurrentBody) pBody->SetGravity(false);
 		if(pBody==mpCurrentBody) pBody->SetCollideCharacter(false);
 		pBody->SetMass(pBody->GetMass() * mpGrabData->mfGrabMassMul);
-		
+
 		pBody->SetAngularVelocity(0);
 		pBody->SetLinearVelocity(0);
 
@@ -181,14 +181,14 @@ void cLuxPlayerState_InteractGrab::OnEnterState(eLuxPlayerState aPrevState)
 		cGrabbedSubMeshProperties *pSubProp = &mvSubMeshProperties[i];
 
 		cMaterial *pOldMat = pSubEnt->GetMaterial();
-		
+
 		//////////////
 		// Only make a transperant version if the material is solid diffuse
 		tString sOldMatName = cString::ToLowerCase(pOldMat->GetType()->GetName());
         if(sOldMatName == "soliddiffuse")
 		{
 			iMaterialType *pMatType = gpBase->mpEngine->GetGraphics()->GetMaterialType("translucent");
-			cMaterial* pCustomMat = hplNew( cMaterial, ("GrabTransCustom",	gpBase->mpEngine->GetGraphics(), 
+			cMaterial* pCustomMat = hplNew( cMaterial, ("GrabTransCustom",	gpBase->mpEngine->GetGraphics(),
 																			gpBase->mpEngine->GetResources(), pMatType) );
 			pCustomMat->SetDepthTest(true);
 			pCustomMat->SetBlendMode(eMaterialBlendMode_Mul);
@@ -196,9 +196,9 @@ void cLuxPlayerState_InteractGrab::OnEnterState(eLuxPlayerState aPrevState)
 			iTexture *pDiffTex = pOldMat->GetTexture(eMaterialTexture_Diffuse);
 			pDiffTex->IncUserCount();
 			pCustomMat->SetTexture(eMaterialTexture_Diffuse,pDiffTex);
-			
+
 			pCustomMat->Compile();
-			
+
 			pSubProp->mpCustomTransMaterial = pCustomMat;
 		}
 		else
@@ -235,7 +235,7 @@ void cLuxPlayerState_InteractGrab::OnLeaveState(eLuxPlayerState aNewState)
 	{
 		cSubMeshEntity *pSubEnt = pMeshEntity->GetSubMeshEntity(i);
 		cGrabbedSubMeshProperties *pSubProp = &mvSubMeshProperties[i];
-		
+
 		if(pSubProp->mpCustomTransMaterial)
 		{
 			pSubEnt->SetCustomMaterial(NULL, false);
@@ -274,7 +274,7 @@ void cLuxPlayerState_InteractGrab::OnLeaveState(eLuxPlayerState aNewState)
 
 void cLuxPlayerState_InteractGrab::Update(float afTimeStep)
 {
-	
+
 }
 
 void cLuxPlayerState_InteractGrab::PostUpdate(float afTimeStep)
@@ -292,10 +292,10 @@ void cLuxPlayerState_InteractGrab::PostUpdate(float afTimeStep)
 	float fDistance = cMath::Vector3Dist(pCam->GetPosition(), mpCurrentBody->GetLocalPosition());
 	if(fDistance > mfMaxDistance)
 	{
-		mpPlayer->ChangeState(mPreviousState);	
+		mpPlayer->ChangeState(mPreviousState);
 		return;
 	}
-	
+
 	/////////////////////////////////////
 	// Get the final body transform
 
@@ -315,18 +315,18 @@ void cLuxPlayerState_InteractGrab::PostUpdate(float afTimeStep)
 	{
 		vBasePos = cVector3f(0,0,-mfDepth) + mvLocalBodyOffset;
 	}
-	
+
 	//The final body matrix.
 	cMatrixf mtxGoal = cMath::MatrixMul(cMath::MatrixTranslate(vBasePos), m_mtxBodyRotation);
 	mtxGoal = cMath::MatrixMul(mtxCamTransform,mtxGoal);
-	
+
 	///////////////////////
 	//Force
 	cVector3f vWantedPos = mtxGoal.GetTranslation();
 	cVector3f vError = vWantedPos - mpCurrentBody->GetLocalPosition();
 
 	cVector3f vForce = mForcePid.Output(vError, afTimeStep) * mfMassSum;
-	
+
 	//Make sure force is not too large
 	vForce = cMath::Vector3MaxLength(vForce, mfMaxForce);
 
@@ -337,9 +337,9 @@ void cLuxPlayerState_InteractGrab::PostUpdate(float afTimeStep)
 	/////////////////////////
 	// Get the wanted speed
 	cVector3f vWantedRotSpeed=0;
-	
+
 	cMatrixf mtxGoalInv = cMath::MatrixInverse(mtxGoal);
-	
+
 	cVector3f vWantedUp = mtxGoalInv.GetUp();
 	cVector3f vWantedRight = mtxGoalInv.GetRight();
 
@@ -365,17 +365,17 @@ void cLuxPlayerState_InteractGrab::PostUpdate(float afTimeStep)
 	{
 		vWantedRotSpeed = (vWantedRotSpeed / fSpeed) * 6.0f;
 	}
-	
+
 	/////////////////////////
 	// Set speed by torque
 	cVector3f vRotError = vWantedRotSpeed - mpCurrentBody->GetAngularVelocity();
-		
+
 	cVector3f vTorque =  mSpeedTorquePid.Output(vRotError,afTimeStep);
 	vTorque = cMath::MatrixMul(mpCurrentBody->GetInertiaMatrix(), vTorque);
 
 	//Make sure force is not too large
 	vTorque = cMath::Vector3MaxLength(vTorque, mfMaxTorque);
-	
+
 	mpCurrentBody->AddTorque(vTorque * mpGrabData->mfTorqueMul);
 }
 
@@ -443,7 +443,7 @@ bool cLuxPlayerState_InteractGrab::OnDoAction(eLuxPlayerAction aAction,bool abPr
 			return false;
 		}
 	}
-	
+
 	return true;
 }
 
@@ -671,7 +671,7 @@ void cLuxPlayerState_InteractGrab::SaveToSaveData(iLuxPlayerState_SaveData* apSa
 	super_class::SaveToSaveData(apSaveData);
 	cLuxPlayerState_InteractGrab_SaveData *pData = static_cast<cLuxPlayerState_InteractGrab_SaveData*>(apSaveData);
 
-	
+
 	///////////////////////
 	// Save vars
 	kCopyToVar(pData, m_mtxBodyRotation);
@@ -691,7 +691,7 @@ void cLuxPlayerState_InteractGrab::LoadFromSaveDataBeforeEnter(cLuxMap *apMap, i
 
 	///////////////////////
 	// Setup before entering
-	
+
 }
 
 //-----------------------------------------------------------------------

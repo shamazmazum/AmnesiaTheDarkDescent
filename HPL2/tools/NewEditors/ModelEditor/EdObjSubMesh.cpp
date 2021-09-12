@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -81,22 +81,22 @@ bool cEngineSubMesh::CheckRayIntersect(iEdViewport* apViewport, cVector3f* apPos
 		return false;
 
 	cSubMeshEntity* pSubMesh = static_cast<cSubMeshEntity*>(mpObject);
-	return cEdHelper::CheckRaySubMeshEntityIntersect(apViewport->GetUnprojectedStart(), apViewport->GetUnprojectedEnd(), 
+	return cEdHelper::CheckRaySubMeshEntityIntersect(apViewport->GetUnprojectedStart(), apViewport->GetUnprojectedEnd(),
 															pSubMesh, apPos, apT, NULL, apTri);
 }
 
 //---------------------------------------------------------------------------
 
-void cEngineSubMesh::Draw(iEdViewport* apViewport, cRendererCallbackFunctions* apFunctions, 
+void cEngineSubMesh::Draw(iEdViewport* apViewport, cRendererCallbackFunctions* apFunctions,
 								bool abIsSelected, bool abIsActive, const cColor& aHighlightCol)
 {
 	if(abIsSelected==false)
 		return;
 
 	cSubMeshEntity* pSubMeshEntity = static_cast<cSubMeshEntity*>(mpObject);
-	apViewport->DrawSolidColorVertexBuffer(pSubMeshEntity->GetVertexBuffer(), 
-											pSubMeshEntity->GetModelMatrix(NULL), 
-											aHighlightCol, 
+	apViewport->DrawSolidColorVertexBuffer(pSubMeshEntity->GetVertexBuffer(),
+											pSubMeshEntity->GetModelMatrix(NULL),
+											aHighlightCol,
 											apFunctions);
 }
 
@@ -162,7 +162,7 @@ bool cTypeSubMesh::SetMesh(const tString& asFilename, bool abDeleteData,
 	{
 		//if(asFilename!="")
 		//	pEditor->ShowMessageBox(_W("Warning"), _W("Could not load mesh file: ") + cString::To16Char(asFilename), _W("Ok"), _W(""), NULL, NULL);
-		
+
 		mpMesh = NULL;
 
 		return false;
@@ -226,18 +226,18 @@ bool cTypeSubMesh::SetMesh(const tString& asFilename, bool abDeleteData,
 		iEdObjectType* pBoneType = mpWorld->GetTypeByName(_W("Bone"));
 
 		tIntList::const_iterator itBoneIDs = alstBoneIDs.begin();
-		
+
 		for(int i=0;i<pSkeleton->GetBoneNum();i++)
 		{
 			cBone* pBone = pSkeleton->GetBoneByIndex(i);
 			tWString sBoneName = cString::To16Char(pBone->GetName());
 
 			iEdObjectData* pData = NULL;
-			
+
 			if(bBoneDataEmpty || i>=(int)avBoneData.size())
 			{
 				pData = pBoneType->CreateData();
-			
+
 				int lBoneID;
 				if(bBoneIDsEmpty)
 					lBoneID = mpWorld->GetFreeID();
@@ -249,7 +249,7 @@ bool cTypeSubMesh::SetMesh(const tString& asFilename, bool abDeleteData,
 
 				pData->SetID(lBoneID);
 				pData->SetName(sBoneName);
-				
+
 				avBoneData.push_back(pData);
 			}
 			else
@@ -262,7 +262,7 @@ bool cTypeSubMesh::SetMesh(const tString& asFilename, bool abDeleteData,
 			int lParentBoneID = -1;
 			if(itParents!=mapBoneIDs.end())
 				lParentBoneID = itParents->second;
-			
+
 			pData->SetInt(eBoneInt_ParentBoneID, lParentBoneID);
 
 			// Insert on map for future parent search
@@ -482,7 +482,7 @@ void cEdObjSubMesh::SetMaterialFile(const tString& asMatFile)
 	else
 		msMatFile = asMatFile;
 
-	if(mpEngObject) 
+	if(mpEngObject)
 		static_cast<cSubMeshEntity*>(mpEngObject->GetObject())->SetCustomMaterial(pMat);
 }
 

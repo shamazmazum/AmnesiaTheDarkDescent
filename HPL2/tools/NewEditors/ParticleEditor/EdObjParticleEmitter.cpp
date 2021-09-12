@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -60,7 +60,7 @@ static ePEStartPosType ToStartPosType(const char *apString)
 	if(apString==NULL) return ePEStartPosType_Box;
 
 	tString sType = cString::ToLowerCase(apString);
-	
+
     if(sType == "box") return ePEStartPosType_Box;
 	else if(sType == "sphere") return ePEStartPosType_Sphere;
 
@@ -81,7 +81,7 @@ static tString StartPosTypeToString(ePEStartPosType aType)
 }
 
 	/////////////////////////
-	
+
 static eParticleEmitterCoordSystem ToCoordSystem(const char *apString)
 {
 	if(apString==NULL) return eParticleEmitterCoordSystem_World;
@@ -90,7 +90,7 @@ static eParticleEmitterCoordSystem ToCoordSystem(const char *apString)
 
 	if(sType=="world") return eParticleEmitterCoordSystem_World;
 	else if(sType=="local") return eParticleEmitterCoordSystem_Local;
-	
+
 	return eParticleEmitterCoordSystem_World;
 }
 
@@ -161,7 +161,7 @@ static tString DrawTypeToString(eEditorParticleEmitterType aType)
 
 	return "Point";
 }
-	
+
 	/////////////////////////
 
 static ePEGravityType ToGravityType(const char *apString)
@@ -202,7 +202,7 @@ static ePESubDivType ToSubDivType(const char *apString)
 
 	if(sType == "random") return ePESubDivType_Random;
 	else if(sType == "animation") return ePESubDivType_Animation;
-	
+
 	return ePESubDivType_Random;
 }
 
@@ -271,10 +271,10 @@ cTypeParticleEmitter::cTypeParticleEmitter() : iEdObjectType(_W("Particle Emitte
 
 	AddFloat(ePEFloat_StartTimeOffset, "StartTimeOffset", 0);
 	AddBool(ePEBool_Respawn, "Respawn");
-	
+
 	AddFloat(ePEFloat_WarmUpTime, "WarmUpTime");
 	AddInt(ePEInt_WarmUpStepsPerSec, "WarmUpStepsPerSec", 60);
-	
+
 	AddFloat(ePEFloat_MinPauseLength, "MinPauseLength");
 	AddFloat(ePEFloat_MaxPauseLength, "MaxPauseLength");
 	AddFloat(ePEFloat_MinPauseInterval, "MinPauseInterval");
@@ -653,7 +653,7 @@ bool cEdObjParticleEmitter::GetProperty(int alPropID, cVector3f& avX)
 		avX = GetMinStartVel(); break;
 	case ePEVec3f_MaxStartVel:
 		avX = GetMaxStartVel(); break;
-	
+
 	case ePEVec3f_MinStartAcc:
 		avX = GetMinStartAcc(); break;
 	case ePEVec3f_MaxStartAcc:
@@ -661,7 +661,7 @@ bool cEdObjParticleEmitter::GetProperty(int alPropID, cVector3f& avX)
 
 	case ePEVec3f_GravityAcc:
 		avX = GetGravityAcc(); break;
-	
+
 	case ePEVec3f_MinRevVel:
 		avX = GetMinRevVel(); break;
 	case ePEVec3f_MaxRevVel:
@@ -939,7 +939,7 @@ bool cEdObjParticleEmitter::SetProperty(int alPropID, const cVector3f& avX)
 		SetMinStartVel(avX); break;
 	case ePEVec3f_MaxStartVel:
 		SetMaxStartVel(avX); break;
-	
+
 	case ePEVec3f_MinStartAcc:
 		SetMinStartAcc(avX); break;
 	case ePEVec3f_MaxStartAcc:
@@ -947,7 +947,7 @@ bool cEdObjParticleEmitter::SetProperty(int alPropID, const cVector3f& avX)
 
 	case ePEVec3f_GravityAcc:
 		SetGravityAcc(avX); break;
-	
+
 	case ePEVec3f_MinRevVel:
 		SetMinRevVel(avX); break;
 	case ePEVec3f_MaxRevVel:

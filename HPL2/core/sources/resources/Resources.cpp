@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -61,7 +61,7 @@ namespace hpl {
 	//-----------------------------------------------------------------------
 
 	bool cResources::mbForceCacheLoadingAndSkipSaving = false;
-	bool cResources::mbCreateAndLoadCompressedMaps= false; 
+	bool cResources::mbCreateAndLoadCompressedMaps= false;
 
 	//-----------------------------------------------------------------------
 
@@ -91,7 +91,7 @@ namespace hpl {
 
 		STLDeleteAll(mlstXmlDocuments);
 		STLDeleteAll(mlstBinBuffers);
-		
+
 		hplDelete(mpFontManager);
 		hplDelete(mpScriptManager);
 		hplDelete(mpParticleManager);
@@ -105,24 +105,24 @@ namespace hpl {
 		hplDelete(mpAnimationManager);
 		hplDelete(mpVideoManager);
 		hplDelete(mpEntFileManager);
-		
+
 		Log(" All resources deleted\n");
 
 		hplDelete(mpFileSearcher);
-		
+
 		hplDelete(mpMeshLoaderHandler);
 		hplDelete(mpBitmapLoaderHandler);
 		hplDelete(mpWorldLoaderHandler);
 		hplDelete(mpVideoLoaderHandler);
 
 		if(mpLanguageFile) hplDelete(mpLanguageFile);
-		
+
 		mlstManagers.clear();
 		Log("--------------------------------------------------------\n\n");
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// MAP DATA VARS OBJECT
 	//////////////////////////////////////////////////////////////////////////
@@ -257,12 +257,12 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 
 	//////////////////////////////////////////////////////////////////////////
 	// PUBLIC METHODS
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
 
 	void cResources::Init(	cGraphics* apGraphics,cSystem *apSystem, cSound* apSound, cScene *apScene,
@@ -315,13 +315,13 @@ namespace hpl {
 		mpLowLevelResources->AddBitmapLoaders(mpBitmapLoaderHandler);
 		mpLowLevelResources->AddMeshLoaders(mpMeshLoaderHandler);
 		mpLowLevelResources->AddVideoLoaders(mpVideoLoaderHandler);
-		
+
 		//Add properitary formats directly
-        mpWorldLoaderHandler->AddLoader(hplNew(cWorldLoaderHplMap, () ));		
-		
+        mpWorldLoaderHandler->AddLoader(hplNew(cWorldLoaderHplMap, () ));
+
 		Log("--------------------------------------------------------\n\n");
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cResources::Update(float afTimeStep)
@@ -346,9 +346,9 @@ namespace hpl {
 
 	/**
 	 * \todo File searcher should check so if the dir is allready added and if so return false and not add
-	 * \param &asDir 
-	 * \param &asMask 
-	 * \return 
+	 * \param &asDir
+	 * \param &asMask
+	 * \return
 	 */
 	bool cResources::AddResourceDir(const tWString &asDir, bool abAddSubDirectories, const tString &asMask)
 	{
@@ -359,7 +359,7 @@ namespace hpl {
 	}
 
 	void cResources::ClearResourceDirs()
-	{	
+	{
 		mpFileSearcher->ClearDirectories();
 	}
 
@@ -412,7 +412,7 @@ namespace hpl {
 		tEntityLoaderMapIt it = m_mEntityLoaders.find(asName);
 		if(it == m_mEntityLoaders.end()){
 			Warning("No loader for type '%s' found!\n",asName.c_str());
-			
+
 			if(mpDefaultEntityLoader){
 				Log("Using default loader!\n");
 				return mpDefaultEntityLoader;
@@ -454,7 +454,7 @@ namespace hpl {
 
 		return it->second;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	bool cResources::LoadResourceDirsFile(const tString &asFile, const tWString &asAltPath)
@@ -502,7 +502,7 @@ namespace hpl {
 			Error("Could not load XML document '%s'\n",asFile.c_str());
 			return NULL;
 		}
-		
+
         iXmlDocument *pDoc = mpLowLevelResources->CreateXmlDocument();
 		if(pDoc->CreateFromFile(sPath)==false)
 		{
@@ -515,7 +515,7 @@ namespace hpl {
 
 		return pDoc;
 	}
-	
+
 	void cResources::DestroyXmlDocument(iXmlDocument* apDoc)
 	{
 		STLFindAndDelete(mlstXmlDocuments,apDoc);
@@ -543,14 +543,14 @@ namespace hpl {
 
 		return pFile;
 	}
-	
+
 	void cResources::DestroyBinaryBuffer(cBinaryBuffer* apFile)
 	{
 		STLFindAndDelete(mlstBinBuffers,apFile);
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	iLowLevelResources* cResources::GetLowLevel()
 	{
 		return mpLowLevelResources;

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -42,7 +42,7 @@ cVector2f iEdInput::mvFontSize = cVector2f(12);
 
 //------------------------------------------------------------------------
 
-iEdInput::iEdInput(iEdWindow* apWindow, 
+iEdInput::iEdInput(iEdWindow* apWindow,
 				   iWidget* apParent,
 				   eEdInpStyle aStyle)
 {
@@ -53,7 +53,7 @@ iEdInput::iEdInput(iEdWindow* apWindow,
 
 	if(apParent==NULL)
 		apParent = apWindow->GetBG();
-	
+
 	mpHandle = mpSet->CreateWidgetDummy(0, apParent);
 	mpHandle->SetUserData(this);
 
@@ -181,7 +181,7 @@ void iEdInputLabeled::SetLabel(const tWString& asLabel)
 
 //------------------------------------------------------------------------
 
-cEdInputBool::cEdInputBool(iEdWindow* apWindow, 
+cEdInputBool::cEdInputBool(iEdWindow* apWindow,
 						   const tWString& asLabel,
 						   iWidget* apParent) : iEdInput(apWindow, apParent)
 {
@@ -249,7 +249,7 @@ bool cEdInputBool::GetValue()
 
 //------------------------------------------------------------------------
 
-cEdInputText::cEdInputText(iEdWindow* apWindow, const tWString& asLabel, 
+cEdInputText::cEdInputText(iEdWindow* apWindow, const tWString& asLabel,
 						   float afTextBoxWidth,int alTBAmount, bool abNumeric,float afNumericAdd,
 						   iWidget* apParent, const tWStringList& alstInputLabels) : iEdInputLabeled(apWindow, asLabel, apParent)
 {
@@ -281,9 +281,9 @@ cEdInputText::cEdInputText(iEdWindow* apWindow, const tWString& asLabel,
 		// Setup TextBox control
 		cWidgetTextBox* pTB = mpSet->CreateWidgetTextBox(0,
 														 vTextBoxSize,
-														 _W(""), 
-														 mpHandle, 
-														 tbType, 
+														 _W(""),
+														 mpHandle,
+														 tbType,
 														 afNumericAdd,
 														 afNumericAdd!=0);
 
@@ -409,7 +409,7 @@ void cEdInputText::UpdateLayout()
 		mpL->SetPosition(0);
 		vPos.y += vLabelSize.y;
 	}
-	
+
 	float fMaxLabelLength = 0;
 	for(size_t i=0; i<mvL.size(); ++i)
 		if(fMaxLabelLength<mvL[i]->GetSize().x)
@@ -428,13 +428,13 @@ void cEdInputText::UpdateLayout()
 		case eEdInpStyle_RowLabelOnLeft:
 		case eEdInpStyle_RowLabelOnTop:
 			vInputPos = vPos + cVector3f(pL->GetSize().x,0,0);
-			
+
 			vPos = vInputPos + cVector3f(pTB->GetSize().x,0,0);
 			break;
 		case eEdInpStyle_ColumnLabelOnLeft:
 		case eEdInpStyle_ColumnLabelOnTop:
 			vInputPos = vPos + cVector3f(fMaxLabelLength,0,0);
-			
+
 			vPos.y = vInputPos.y + pTB->GetSize().y;
 			break;
 		}
@@ -472,11 +472,11 @@ kGuiCallbackDeclaredFuncEnd(cEdInputText, TBIdCheckerCallback);
 //------------------------------------------------------------------------
 
 cEdInputFile::cEdInputFile(iEdWindow* apWindow,
-						   const tWString& asLabel, 
+						   const tWString& asLabel,
 						   float afTextBoxWidth,
 						   const tWString& asCat,
 						   iWidget* apParent) : cEdInputText(apWindow,
-																asLabel, 
+																asLabel,
 																afTextBoxWidth,
 																1, false, 0,
 																apParent)
@@ -489,7 +489,7 @@ cEdInputFile::cEdInputFile(iEdWindow* apWindow,
 	mpBBrowse = mpSet->CreateWidgetButton(0, cVector2f(20), _W("..."), mpHandle, false);
 
 	mpBBrowse->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(BrowseButton_OnPressed));
-	
+
 	mbShowPath = false;
 
 	SetInitialPath(apWindow->GetEditor()->GetWorkingDir());
@@ -517,7 +517,7 @@ void cEdInputFile::UpdateLayout()
 	const cVector3f& vPos = pTB->GetLocalPosition();
 	const cVector2f& vSize = pTB->GetSize();
 	mpBBrowse->SetPosition(vPos+cVector3f(vSize.x+5,0,0));
-	
+
 	UpdateSize();
 }
 
@@ -529,7 +529,7 @@ void cEdInputFile::SetShowPath(bool abX)
 		return;
 
 	mbShowPath = abX;
-	
+
 	CopyValueToInput();
 }
 
@@ -619,7 +619,7 @@ bool cEdInputFile::Browser_OnOkay(iWidget* apWidget, const cGuiMessageData& aDat
 			msTempLoadedFile = mvTempLoadedFiles.front();
 
 		msFullPath = msTempLoadedFile;
-		
+
 		SetValue(msTempLoadedFile, true, true);
 	}
 	return true;
@@ -632,8 +632,8 @@ void cEdInputFile::ShowBrowser()
 {
 	cEdWindowHandler* pHandler = mpWindow->GetEditor()->GetWindowHandler();
 
-	cGuiPopUpFilePicker* pPicker = pHandler->CreateLoadDialog(mvTempLoadedFiles, msInitialPath, 
-																this, kGuiCallback(Browser_OnOkay), 
+	cGuiPopUpFilePicker* pPicker = pHandler->CreateLoadDialog(mvTempLoadedFiles, msInitialPath,
+																this, kGuiCallback(Browser_OnOkay),
 																msCategory, mlstFileTypes);
 }
 
@@ -650,7 +650,7 @@ cEdInputModel::cEdInputModel(iEdWindow* apWindow, const tWString& asLabel, bool 
 	tWString sType = _W("dae");
 	if(abAnim)
 		sType += _W("_anim");
-	
+
 	AddFileType(sType);
 }
 
@@ -707,9 +707,9 @@ bool cEdInputEntity::CheckFileIsValid(const tWString& asFile)
 
 //------------------------------------------------------------------------
 
-cEdInputTexture::cEdInputTexture(iEdWindow* apWindow, const tWString& asLabel, 
-								 float afTextBoxWidth, 
-								 bool abMaterialBrowser, eEdTexture aType, 
+cEdInputTexture::cEdInputTexture(iEdWindow* apWindow, const tWString& asLabel,
+								 float afTextBoxWidth,
+								 bool abMaterialBrowser, eEdTexture aType,
 								 iWidget* apParent) : cEdInputFile(apWindow, asLabel, afTextBoxWidth, _W("Textures"), apParent)
 {
 	mbMaterialBrowser = abMaterialBrowser;
@@ -882,9 +882,9 @@ float cEdInputNumber::GetValue()
 
 //------------------------------------------------------------------------
 
-cEdInputVec2::cEdInputVec2(iEdWindow* apWindow, const tWString& asLabel, 
-						   float afTextBoxWidth, const tWStringList& alstLabels, 
-						   iWidget* apParent, float afNumericAdd) : cEdInputText(apWindow, asLabel, afTextBoxWidth, 
+cEdInputVec2::cEdInputVec2(iEdWindow* apWindow, const tWString& asLabel,
+						   float afTextBoxWidth, const tWStringList& alstLabels,
+						   iWidget* apParent, float afNumericAdd) : cEdInputText(apWindow, asLabel, afTextBoxWidth,
 																				 2, true, afNumericAdd, apParent, alstLabels)
 {
 }
@@ -929,9 +929,9 @@ cVector2f cEdInputVec2::GetValue()
 
 //------------------------------------------------------------------------
 
-cEdInputVec3::cEdInputVec3(iEdWindow* apWindow, const tWString& asLabel, 
-						   float afTextBoxWidth, const tWStringList& alstLabels, 
-						   iWidget* apParent, float afNumericAdd) : cEdInputText(apWindow, asLabel, afTextBoxWidth, 
+cEdInputVec3::cEdInputVec3(iEdWindow* apWindow, const tWString& asLabel,
+						   float afTextBoxWidth, const tWStringList& alstLabels,
+						   iWidget* apParent, float afNumericAdd) : cEdInputText(apWindow, asLabel, afTextBoxWidth,
 																				 3, true, afNumericAdd, apParent, alstLabels)
 {
 }
@@ -1053,7 +1053,7 @@ void cEdInputEnum::CopyValueToInput()
 			break;
 		}
 	}
-	
+
 	mpCB->SetSelectedItem(lIndex,false,false);
 }
 
@@ -1088,7 +1088,7 @@ void cEdInputEnum::UpdateLayout()
 		mpL->SetPosition(0);
 		vPos.y += vLabelSize.y;
 	}
-	
+
 	mpCB->SetPosition(vPos);
 
 	UpdateSize();
@@ -1177,7 +1177,7 @@ void* cEdInputEnum::GetSelectedUserData()
 //------------------------------------------------------------------------
 
 cEdInputColor::cEdInputColor(iEdWindow* apWindow,
-							 const tWString& asLabel, 
+							 const tWString& asLabel,
 							 iWidget* apParent) : iEdInputLabeled(apWindow, asLabel, apParent, eEdInpStyle_RowLabelOnLeft)
 {
 	mCol = cColor(1,1);

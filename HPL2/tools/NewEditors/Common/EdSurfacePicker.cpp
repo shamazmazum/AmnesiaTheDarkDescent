@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -124,7 +124,7 @@ void cEdSurfacePicker::OnDraw(cRendererCallbackFunctions* apFunctions)
 		//apFunctions->GetLowLevelGfx()->DrawLine(mvIntersection, mvIntersection+mvAverageUp, cColor(0,1,1,1));
 		//apFunctions->GetLowLevelGfx()->DrawLine(mvIntersection, mvIntersection+mvRight, cColor(1,0,0,1));
 		//apFunctions->GetLowLevelGfx()->DrawLine(mvIntersection, mvIntersection+mvForward, cColor(0,0,1,1));
-		
+
 
 		/*
 		for(int i=0;i<(int)mvTrianglesToAverage.size();i+=3)
@@ -158,10 +158,10 @@ void cEdSurfacePicker::Iterate()
 	iEdViewport* pViewport = mpWorld->GetEditor()->GetFocusedViewport();
 	const cVector3f& vStart = pViewport->GetUnprojectedStart();
 	cVector3f vEnd = vStart + pViewport->GetUnprojectedDir()*mfRayLength;
-	
+
     cBoundingVolume lineBV;
 	lineBV.SetLocalMinMax(cMath::Vector3Min(vStart, vEnd), cMath::Vector3Max(vStart, vEnd));
-    
+
 	/////////////////////////////
 	// Set up variables
 	mfMinT = 9999.0f;
@@ -173,7 +173,7 @@ void cEdSurfacePicker::Iterate()
 
 	mvTriangle.clear();
 	int lTriangleIndex=-1;
-	
+
 	/////////////////////////////
 	// Get Containers
     cWorld *pWorld = mpWorld->GetEngWorld();
@@ -187,7 +187,7 @@ void cEdSurfacePicker::Iterate()
 	for(int i=0; i<2; ++i)
 	{
 		pContainers[i]->UpdateBeforeRendering();
-		IterateRenderableNode(pContainers[i]->GetRoot(), vStart, vEnd, &lineBV, &lTriangleIndex);       		
+		IterateRenderableNode(pContainers[i]->GetRoot(), vStart, vEnd, &lineBV, &lTriangleIndex);
 	}
 
 	if(mpClosestMeshEntity==NULL || lTriangleIndex==-1)
@@ -196,7 +196,7 @@ void cEdSurfacePicker::Iterate()
 	iVertexBuffer* pVB = mpClosestMeshEntity->GetSubMesh()->GetVertexBuffer();
 	float* pVertices = pVB->GetFloatArray(eVertexBufferElement_Position);
 	int lStride = pVB->GetElementNum(eVertexBufferElement_Position);
-	unsigned int* pIndices = pVB->GetIndices();		
+	unsigned int* pIndices = pVB->GetIndices();
 	for(int i=0;i<3;++i)
 	{
 		int lBaseIndex = pIndices[lTriangleIndex+i]*lStride;
@@ -256,7 +256,7 @@ void cEdSurfacePicker::IterateRenderableNode(iRenderableContainerNode *apNode, c
 	if(apNode->GetParent()!=NULL)
 	{
 		if(cMath::CheckAABBIntersection(apNode->GetMin(), apNode->GetMax(), apBV->GetMin(), apBV->GetMax())==false) return;
-	
+
 		if(abAveragingNormal==false && cMath::CheckPointInAABBIntersection(avStart, apNode->GetMin(), apNode->GetMax())==false)
 		{
 			float fT=0;
@@ -312,7 +312,7 @@ bool cEdSurfacePicker::CheckObjectIntersection(iRenderable *apObject, const cVec
 	cSubMeshEntity* pSubMesh = static_cast<cSubMeshEntity*>(apObject);
 
 	cVector3f vIntersection;
-	
+
 	if(cMath::CheckBVIntersection(*pObjectBV, *apBV)==false) return false;
 
 	if(abAveragingNormal)
@@ -322,7 +322,7 @@ bool cEdSurfacePicker::CheckObjectIntersection(iRenderable *apObject, const cVec
 	}
 
 	float fT=0;
-	
+
 	if(cMath::CheckPointInBVIntersection(avStart, *pObjectBV)==false)
 	{
 		if(cMath::CheckAABBLineIntersection(pObjectBV->GetMin(), pObjectBV->GetMax(), avStart, avEnd, &vIntersection, &fT)==false) return false;
@@ -333,7 +333,7 @@ bool cEdSurfacePicker::CheckObjectIntersection(iRenderable *apObject, const cVec
 	cMatrixf mtxInvModel = cMath::MatrixInverse(apObject->GetWorldMatrix());
 	bool bIntersect = cMath::CheckLineTriVertexBufferIntersection(	avStart, avEnd,mtxInvModel, apObject->GetVertexBuffer(),&vIntersection, &fT, &lTriIndex,true);
 	if(bIntersect==false || fT > mfMinT) return false;
-	
+
 	mfMinT = fT;
 	mvIntersection = vIntersection;
 	mpClosestMeshEntity = pSubMesh;
@@ -403,7 +403,7 @@ void cEdSurfacePicker::ComputeAverageNormal(const cVector3f& avBaseNormal)
 	}
 
 	if(vNormalsToAverage.empty()) return;
-	
+
 	mvAverageUp = 0;
 	int lNumNormals = (int)vNormalsToAverage.size();
 	float fOneOverNumNormals = 1.0f*(float)lNumNormals;

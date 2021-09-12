@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -120,7 +120,7 @@ void cParticleEditorWindowEmitterParams::OnInitLayout()
 		mpInpLength = CreateInputVec2(vPos, _W("Length(s)"), "InputLength", pGroup, 50, lstLabelMinMax);
 		vPos.y += mpInpLength->GetSize().y;
 		mpInpInterval = CreateInputVec2(vPos, _W("Interval(s)"), "InputInterval", pGroup, 50, lstLabelMinMax);
-		
+
 		pGroup = mpSet->CreateWidgetGroup(cVector3f(220,240,0.1f), cVector2f(200,175), _W("Offset"), pTab);
 		vPos = cVector3f(10,10,0.1f);
 		mpInpOffsetPos = CreateInputVec3(vPos, _W("Position(m)"), "InputPosition", pGroup, 50, lstLabelXYZ);
@@ -155,7 +155,7 @@ void cParticleEditorWindowEmitterParams::OnInitLayout()
 		vPos.x += mpInpSphStartMaxAng->GetSize().x + 20;
 		mpInpSphStartRadius = CreateInputVec2(vPos, _W("Radius(m)"), "InputRadius", pGroup, 50, lstLabelMinMax);
 	}
-    
+
 	//////////////////////////////////////////////////////
 	// Tab Movement
 	pTab = mpTFCategories->AddTab(_W("Movement"));
@@ -199,7 +199,7 @@ void cParticleEditorWindowEmitterParams::OnInitLayout()
 		mpInpSphVelMaxAng = CreateInputVec2(vPos, _W("Max Angles(deg)"), "InputSphVelMaxAngles", pGroup, 50,lstLabelXYZ);
 		vPos.x += mpInpSphVelMaxAng->GetSize().x + 20;
 		mpInpSphVelSpeed = CreateInputVec2(vPos, _W("Speed(m/s)"), "InputSphVelSpeed", pGroup, 50,lstLabelMinMax);
-		
+
 		pGroup = mpSet->CreateWidgetGroup(cVector3f(10,360,0.1f), cVector2f(480,150), _W("Acceleration"), pTab);
 		vPos = cVector3f(10,10,0.1f);
 		mpInpMinAcc = CreateInputVec3(vPos, _W("Min acceleration(m/s^2)"), "InputMinAccel", pGroup, 50,lstLabelXYZ);
@@ -339,7 +339,7 @@ void cParticleEditorWindowEmitterParams::OnInitLayout()
 		vPos.y += pInp->GetSize().y;
 		mpInpMaxRevVel = CreateInputVec3(vPos,_W("Max"), "InputMaxRevVel", pGroup, 50,lstLabelXYZ);
 	}
-	
+
 	//////////////////////////////////////////////////////
 	// Tab Collision
 	pTab = mpTFCategories->AddTab(_W("Collision"));
@@ -352,7 +352,7 @@ void cParticleEditorWindowEmitterParams::OnInitLayout()
         mpInpMaxCollisions = CreateInputVec2(vPos, _W("Max Collisions"), "InputCol", pGroup, 50,lstLabelMinMax);
 		pInp = mpInpMaxCollisions;
 		vPos.x += pInp->GetSize().x;
-		mpInpBounceAmount = CreateInputVec2(vPos, _W("Bounce Amount"), "InputBounce", pGroup, 50, lstLabelMinMax);	
+		mpInpBounceAmount = CreateInputVec2(vPos, _W("Bounce Amount"), "InputBounce", pGroup, 50, lstLabelMinMax);
 	}
 
 	//////////////////////////////////////////////////////
@@ -380,7 +380,7 @@ void cParticleEditorWindowEmitterParams::OnUpdate(float afTimeStep)
 	mpInpWarmUpStepsPerSec->SetValue((float)mpEmitter->GetWarmUpStepsPerSec(), false);
 
 	///////////////////////////////////////////////////////////////////////
-	// Tab General - Group Pause	
+	// Tab General - Group Pause
 	mpInpLength->SetValue(cVector2f(mpEmitter->GetMinPauseLength(), mpEmitter->GetMaxPauseLength()), false);
 	mpInpInterval->SetValue(cVector2f(mpEmitter->GetMinPauseInterval(), mpEmitter->GetMaxPauseInterval()), false);
 
@@ -397,7 +397,7 @@ void cParticleEditorWindowEmitterParams::OnUpdate(float afTimeStep)
 	// Tab Start - Group Box Start
 	mpInpBoxStartMinPos->SetValue(mpEmitter->GetMinStartPos(), false);
 	mpInpBoxStartMaxPos->SetValue(mpEmitter->GetMaxStartPos(), false);
-	
+
 	///////////////////////////////////////////////////////////////////////
 	// Tab Start - Group Sphere Start
 	mpInpSphStartMinAng->SetValue(mpEmitter->GetMinStartAngles(), false);
@@ -414,18 +414,18 @@ void cParticleEditorWindowEmitterParams::OnUpdate(float afTimeStep)
 	// Tab Movement - Group Gravity
 	mpInpGravType->SetValue(mpEmitter->GetGravityType(), false);
 	mpInpGravAcc->SetValue(mpEmitter->GetGravityAcc(), false);
-	
+
 	///////////////////////////////////////////////////////////////////////
 	// Tab Movement - Group Box Vel
 	mpInpMinVel->SetValue(mpEmitter->GetMinStartVel(), false);
 	mpInpMaxVel->SetValue(mpEmitter->GetMaxStartVel(), false);
-	
+
 	///////////////////////////////////////////////////////////////////////
 	// Tab Movement - Group Sphere Vel
 	mpInpSphVelMinAng->SetValue(mpEmitter->GetMinStartVelAngles(), false);
 	mpInpSphVelMaxAng->SetValue(mpEmitter->GetMaxStartVelAngles(), false);
 	mpInpSphVelSpeed->SetValue(cVector2f(mpEmitter->GetMinStartVelSpeed(), mpEmitter->GetMaxStartVelSpeed()), false);
-    
+
 	///////////////////////////////////////////////////////////////////////
 	// Tab Movement - Group Acceleration
 	mpInpMinAcc->SetValue(mpEmitter->GetMinStartAcc(), false);
@@ -509,7 +509,7 @@ void cParticleEditorWindowEmitterParams::OnUpdate(float afTimeStep)
 	mpInpUpdateRate->SetValue((float)mpEmitter->GetCollisionUpdateRate(), false);
 	mpInpMaxCollisions->SetValue(cVector2f(mpEmitter->GetMinCollisionMax(), mpEmitter->GetMaxCollisionMax()), false);
 	mpInpBounceAmount->SetValue(cVector2f(mpEmitter->GetMinBounceAmount(), mpEmitter->GetMaxBounceAmount()), false);
-	
+
 }
 
 //-------------------------------------------------------------
@@ -568,7 +568,7 @@ bool cParticleEditorWindowEmitterParams::WindowSpecificInputCallback(iEditorInpu
 
 	///////////////////////////////////////////////////////////////////////
 	// Tab Rendering
-	// General 
+	// General
 	else if(apInput==mpInpDrawType)
 		mpEmitter->SetDrawType((eEditorParticleEmitterType)mpInpDrawType->GetValue());
 
@@ -641,7 +641,7 @@ bool cParticleEditorWindowEmitterParams::WindowSpecificInputCallback(iEditorInpu
 
 	else if(apInput==mpInpMaxRevVel)
 		mpEmitter->SetMaxRevVel(mpInpMaxRevVel->GetValue());
-	
+
 
 	///////////////////////////////////////////////////////////////////////
 	// Tab Start

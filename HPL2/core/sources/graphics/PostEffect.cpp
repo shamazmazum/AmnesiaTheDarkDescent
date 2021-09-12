@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -33,7 +33,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	iPostEffectType::iPostEffectType(const tString& asName, cGraphics *apGraphics, cResources *apResources)
 	{
 		mpGraphics = apGraphics;
@@ -41,14 +41,14 @@ namespace hpl {
 
 		msName = asName;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	iPostEffectType::~iPostEffectType()
 	{
 
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -91,7 +91,7 @@ namespace hpl {
 		///////////////////////////
 		// Render
 		iTexture *pOutputTex = RenderEffect(apInputTexture, apFinalTempBuffer);
-		
+
 		//////////////////////////
 		// If last effect and final frame buffer has not been called, copy o rendertarget
 		if(mbIsLastEffect && mbFinalFrameBufferUsed == false)
@@ -109,7 +109,7 @@ namespace hpl {
 
 		return pOutputTex;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void iPostEffect::SetActive(bool abX)
@@ -120,7 +120,7 @@ namespace hpl {
 
 		OnSetActive(abX);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void iPostEffect::SetParams(iPostEffectParams *apSrcParams)
@@ -133,7 +133,7 @@ namespace hpl {
         GetTypeSpecificParams()->LoadFrom(apSrcParams);
 		OnSetParams();
 	}
-	
+
 	void iPostEffect::GetParams(iPostEffectParams *apDestParams)
 	{
 		if(mpType==NULL) return;
@@ -200,7 +200,7 @@ namespace hpl {
 			cVector2f vUvPos, vUvSize;
 			GetTextureUvPosAndSize(vTexSize,vUvPos, vUvSize);
 
-			cVector2l vTargetPos((int)(vUvPos.x+0.5f), (int)(vUvPos.y+0.5f));		
+			cVector2l vTargetPos((int)(vUvPos.x+0.5f), (int)(vUvPos.y+0.5f));
 			cVector2l vTargetSize((int)(vUvSize.x+0.5f), (int)(vUvSize.y+0.5f));
 
 			mpLowLevelGraphics->SetCurrentFrameBuffer(apFrameBuffer, vTargetPos, vTargetSize);
@@ -216,24 +216,24 @@ namespace hpl {
 		GetTextureUvPosAndSize(vTexSize,vUvPos,vUvSize);
 
 		mpCurrentComposite->DrawQuad(avPos,avSize,
-									cVector2f(vUvPos.x, (vTexSize.y - vUvSize.y)-vUvPos.y), 
+									cVector2f(vUvPos.x, (vTexSize.y - vUvSize.y)-vUvPos.y),
 									cVector2f(vUvPos.x + vUvSize.x,vTexSize.y - vUvPos.y),
 									abFlipY);
 	}
 
 	//-----------------------------------------------------------------------
 
-	void iPostEffect::DrawQuad(	const cVector3f& avPos,  const cVector2f& avSize, iTexture *apTexture0, iTexture *apTexture1, 
+	void iPostEffect::DrawQuad(	const cVector3f& avPos,  const cVector2f& avSize, iTexture *apTexture0, iTexture *apTexture1,
 								bool abFlipY0,bool abFlipY1)
 	{
 		cVector2f vTexSize[2] = {apTexture0->GetSizeFloat2D(), apTexture1->GetSizeFloat2D()};
 		cVector2f vTexMin[2], vTexMax[2];
-		
+
 		for(int i=0; i<2; ++i)
 		{
 			cVector2f vUvPos, vUvSize;
 			GetTextureUvPosAndSize(vTexSize[i],vUvPos,vUvSize);
-			vTexMin[i] = cVector2f(vUvPos.x, (vTexSize[i].y - vUvSize.y)-vUvPos.y); 
+			vTexMin[i] = cVector2f(vUvPos.x, (vTexSize[i].y - vUvSize.y)-vUvPos.y);
 			vTexMax[i] = cVector2f(vUvPos.x + vUvSize.x,vTexSize[i].y - vUvPos.y);
 		}
 

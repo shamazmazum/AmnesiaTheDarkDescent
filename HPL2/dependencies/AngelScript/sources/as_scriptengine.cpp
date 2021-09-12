@@ -993,7 +993,7 @@ int asCScriptEngine::CreateContext(asIScriptContext **context, bool isInternal)
 {
 	*context = asNEW(asCContext)(this, !isInternal);
 
-	// We need to make sure the engine has been 
+	// We need to make sure the engine has been
 	// prepared before any context is executed
 	PrepareEngine();
 
@@ -1670,7 +1670,7 @@ int asCScriptEngine::RegisterBehaviourToObjectType(asCObjectType *objectType, as
 	}
 	else if( behaviour == asBEHAVE_TEMPLATE_CALLBACK )
 	{
-		// Must be a template type 
+		// Must be a template type
 		if( !(func.objectType->flags & asOBJ_TEMPLATE) )
 		{
 			WriteMessage("", 0, 0, asMSGTYPE_ERROR, TXT_ILLEGAL_BEHAVIOUR_FOR_TYPE);
@@ -1895,7 +1895,7 @@ int asCScriptEngine::RegisterGlobalProperty(const char *declaration, void *point
 	prop->type        = type;
 
 	prop->SetRegisteredAddress(pointer);
-	
+
 	registeredGlobalProps.PushLast(prop);
 	currentGroup->globalProps.PushLast(prop);
 
@@ -2492,7 +2492,7 @@ int asCScriptEngine::ExecuteString(const char *module, const char *script, asISc
 	str = "void ExecuteString(){\n" + str + "\n;}";
 
 	r = builder.BuildString(str.AddressOf(), (asCContext*)exec);
-	
+
 	BuildCompleted();
 
 	if( r < 0 )
@@ -3592,11 +3592,11 @@ int asCScriptEngine::EndConfigGroup()
 
 int asCScriptEngine::RemoveConfigGroup(const char *groupName)
 {
-	// It is not allowed to remove a group that is still in use. 
+	// It is not allowed to remove a group that is still in use.
 
 	// It would be possible to change the code in such a way that
 	// the group could be removed even though it was still in use,
-	// but that would cause severe negative impact on runtime 
+	// but that would cause severe negative impact on runtime
 	// performance, since the VM would then have to be able handle
 	// situations where the types, functions, and global variables
 	// can be removed at any time.

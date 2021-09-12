@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -53,7 +53,7 @@ namespace hpl {
 
 		mpParent = NULL;
 		mpEntityParent = NULL;
-		
+
 		mqRotation = cQuaternion::Identity;
 		mvScale = cVector3f(1,1,1);
 		mvTranslation = cVector3f(0,0,0);
@@ -74,7 +74,7 @@ namespace hpl {
 			mpParent->RemoveChild(this);
 		}
 
-		
+
 		for(tEntity3DListIt EIt = mlstEntity.begin(); EIt != mlstEntity.end();++EIt)
 		{
 			iEntity3D* pEntity = *EIt;
@@ -86,7 +86,7 @@ namespace hpl {
 			cNode3D* pNode = *NIt;
 			pNode->mpParent = NULL;
 		}
-		
+
 		if(mbAutoDeleteChildren)
 		{
 			STLDeleteAll(mlstNode);
@@ -98,7 +98,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// PUBLIC METHODS
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	int cNode3D::SetVisible(bool abX, bool abCascade)
 	{
 		if(abCascade)
@@ -156,8 +156,8 @@ namespace hpl {
 	cEntity3DIterator cNode3D::GetEntityIterator()
 	{
 		return cEntity3DIterator(&mlstEntity);
-	}	
-	
+	}
+
 
 	//-----------------------------------------------------------------------
 
@@ -191,14 +191,14 @@ namespace hpl {
 	{
 		return m_mtxLocalTransform.GetTranslation();
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cMatrixf& cNode3D::GetLocalMatrix()
 	{
 		return m_mtxLocalTransform;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cVector3f cNode3D::GetWorldPosition()
@@ -252,7 +252,7 @@ namespace hpl {
 			SetPosition(avWorldPos);
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 
@@ -270,7 +270,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	const tString& cNode3D::GetName()
 	{
 		return msName;
@@ -282,7 +282,7 @@ namespace hpl {
 	{
 		return mpParent;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cNode3D::SetParent(cNode3D* apNode)
@@ -305,7 +305,7 @@ namespace hpl {
 		cQuaternion qRot = cMath::MatrixToQuaternion(cMath::MatrixRotate(avRot, aOrder));
 		AddRotation(qRot);
 	}
-	
+
 	void cNode3D::AddRotation(const cQuaternion& aqRotation)
 	{
 		mqRotation = cMath::QuaternionMul(aqRotation, mqRotation);
@@ -331,19 +331,19 @@ namespace hpl {
 
 		//Log("Startpos: %s",vPos.ToString().c_str());
 		//Log("World pos: %s\n",GetWorldMatrix().GetTranslation().ToString().c_str());
-		
+
 		//The animation rotation is applied before the local.
 		mtxTransform = cMath::MatrixMul(mtxTransform, cMath::MatrixQuaternion(mqRotation));
 
 		//Skip scale for now.
 		//mtxTransform = cMath::MatrixMul(cMath::MatrixScale(mvScale), mtxTransform);
-		
+
 		mtxTransform.SetTranslation(vPos + mvTranslation);
 
 		SetMatrix(mtxTransform,abSetChildrenUpdated);
 
 		//Log("World pos: %s\n",GetWorldMatrix().GetTranslation().ToString().c_str());
-		
+
 		//Reset values
 		mqRotation = cQuaternion::Identity;
 		mvScale = cVector3f(1,1,1);
@@ -371,7 +371,7 @@ namespace hpl {
 
 		SetMatrix(mtxTransform,abSetChildrenUpdated);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cNode3D::UpdateEntityChildren()
@@ -385,8 +385,8 @@ namespace hpl {
 			pEntity->SetTransformUpdated();
 		}
 	}
-	
-	
+
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -417,7 +417,7 @@ namespace hpl {
 		}
 	}
 	//-----------------------------------------------------------------------
-	
+
 	void cNode3D::SetWorldTransformUpdated()
 	{
 		//if(msName == "WeaponJoint") LogUpdate("  setworldtransform updated!\n");

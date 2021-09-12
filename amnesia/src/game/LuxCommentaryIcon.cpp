@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -115,7 +115,7 @@ cLuxCommentaryIcon::~cLuxCommentaryIcon()
 {
 	cWorld *pWorld = mpMap->GetWorld();
 	iPhysicsWorld *pPhysicsWorld = pWorld->GetPhysicsWorld();
-	
+
 	////////////////////
 	// Destroy physics
 	{
@@ -123,7 +123,7 @@ cLuxCommentaryIcon::~cLuxCommentaryIcon()
 		for(size_t i=0; i<mvBodies.size(); ++i)
 		{
 			iPhysicsBody *pBody = mvBodies[i];
-				
+
 			pWorld->GetPhysicsWorld()->DestroyBody(pBody);
 		}
 	}
@@ -136,9 +136,9 @@ cLuxCommentaryIcon::~cLuxCommentaryIcon()
 
 		//Lights
 		for(size_t i=0; i<mvLights.size(); ++i) pWorld->DestroyLight(mvLights[i]);
-		
+
 		//Particle systems
-		for(size_t i=0; i<mvParticleSystems.size(); ++i) 
+		for(size_t i=0; i<mvParticleSystems.size(); ++i)
 		{
 			cParticleSystem *pPS = mvParticleSystems[i];
 			if(pPS && pWorld->ParticleSystemExists(pPS)) pPS->Kill();
@@ -191,7 +191,7 @@ void cLuxCommentaryIcon::OnUpdate(float afTimeStep)
 		cSubMeshEntity *pSubEnt = mpMeshEntity->GetSubMeshEntity(i);
 		cSubMesh *pSubMesh = pSubEnt->GetSubMesh();
 		if(pSubMesh->GetName() != msRotateSubMesh) continue;
-		
+
 		cMatrixf mtxTrans = cMath::MatrixMul(mvSubMeshMatrix[i], cMath::MatrixRotate(mvRotAngle, eEulerRotationOrder_XYZ));
         pSubEnt->SetMatrix(mtxTrans);
 	}
@@ -210,7 +210,7 @@ bool cLuxCommentaryIcon::OnInteract(iPhysicsBody *apBody, const cVector3f &avPos
 		gpBase->mpEffectHandler->GetPlayCommentary()->Start(msTalker, msTopic, msSoundFile, mlID);
 	}
 	SetPlayingSound(!mbPlayingSound);
-	
+
 	return true;
 }
 
@@ -258,7 +258,7 @@ void cLuxCommentaryIcon::SetPlayingSound(bool abX)
 //-----------------------------------------------------------------------
 
 void cLuxCommentaryIcon::OnSetActive(bool abX)
-{	
+{
 	///////////////
 	//Bodies
 	for(size_t i=0; i<mvBodies.size(); ++i)
@@ -284,7 +284,7 @@ void cLuxCommentaryIcon::OnSetActive(bool abX)
 
 	///////////////////
 	//Particle systems
-	for(size_t i=0; i<mvParticleSystems.size(); ++i) 
+	for(size_t i=0; i<mvParticleSystems.size(); ++i)
 	{
 		cParticleSystem *pPS = mvParticleSystems[i];
 		if(pPS)
@@ -321,7 +321,7 @@ void cLuxCommentaryIcon::LoadCommentaryFile(const tString& asFile)
 	msTalker = pXmlDoc->GetAttributeString("Talker","");
 	msTopic = pXmlDoc->GetAttributeString("Topic","");
 	msSoundFile = pXmlDoc->GetAttributeString("SoundFile","");
-	
+
 	pResources->DestroyXmlDocument(pXmlDoc);
 }
 
@@ -387,7 +387,7 @@ void cLuxCommentaryIcon::SaveToSaveData(iLuxEntity_SaveData* apSaveData)
 	kCopyToVar(pData, msTalker);
 	kCopyToVar(pData, msTopic);
 	kCopyToVar(pData, msSoundFile);
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -406,7 +406,7 @@ void cLuxCommentaryIcon::LoadFromSaveData(iLuxEntity_SaveData* apSaveData)
 	kCopyFromVar(pData, msTalker);
 	kCopyFromVar(pData, msTopic);
 	kCopyFromVar(pData, msSoundFile);
-	
+
 }
 
 //-----------------------------------------------------------------------

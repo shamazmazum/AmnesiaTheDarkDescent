@@ -15,8 +15,8 @@
 class cOAL_Effect_Reverb : public cOAL_Effect
 {
 public:
-	cOAL_Effect_Reverb(bool abForceEFXReverb = false): 
-							mfDensity(1.0f), 
+	cOAL_Effect_Reverb(bool abForceEFXReverb = false):
+							mfDensity(1.0f),
 							mfDiffusion(1.0f),
 							mfGain(0.32f),
 							mfGainHF(0.89f),
@@ -59,7 +59,7 @@ public:
 		if ( abForceEFXReverb || !mbEAXReverb )
 		{
 			RUN_AL_FUNC ( alEffecti ( mlEffectId, AL_EFFECT_TYPE, AL_EFFECT_REVERB) );
-			mbStatus = !AL_ERROR_OCCURED;		
+			mbStatus = !AL_ERROR_OCCURED;
 		}
 	}
 
@@ -72,22 +72,22 @@ public:
 	inline float GetGainLF ( ) { return mfGainLF; }
 	inline float GetDecayTime ( ) { return mfDecayTime; }
 	inline float GetDecayHFRatio (  ) { return mfDecayHFRatio; }
-	inline float GetDecayLFRatio (  ) { return mfDecayLFRatio; } 
+	inline float GetDecayLFRatio (  ) { return mfDecayLFRatio; }
 	inline float GetReflectionsGain (  ) { return mfReflectionsGain; }
-	inline float GetReflectionsDelay(  ) { return mfReflectionsDelay; } 
+	inline float GetReflectionsDelay(  ) { return mfReflectionsDelay; }
 	inline float* GetReflectionsPan(  ) { return mfReflectionsPan; }
-	inline float GetLateReverbGain( ) { return mfLateReverbGain; } 
+	inline float GetLateReverbGain( ) { return mfLateReverbGain; }
 	inline float GetLateReverbDelay ( ) { return mfLateReverbDelay; }
 	inline float* GetLateReverbPan () { return mfLateReverbPan; }
 	inline float GetEchoTime () { return mfEchoTime; }
-	inline float GetEchoDepth () { return mfEchoDepth; } 
+	inline float GetEchoDepth () { return mfEchoDepth; }
 	inline float GetModulationTime () { return mfModulationTime; }
 	inline float GetModulationDepth () { return mfModulationDepth; }
 	inline float GetAirAbsorptionGainHF () { return mfAirAbsorptionGainHF; }
-	inline float GetHFReference () { return mfHFReference; } 
+	inline float GetHFReference () { return mfHFReference; }
 	inline float GetLFReference () { return mfLFReference; }
 	inline float GetRoomRolloffFactor () { return mfRoomRolloffFactor; }
-	inline ALboolean GetDecayHFLimit () { return mbDecayHFLimit; } 
+	inline ALboolean GetDecayHFLimit () { return mbDecayHFLimit; }
 
 	void SetDensity( float afDensity);
 	void SetDiffusion ( float afDiffusion);
@@ -112,7 +112,7 @@ public:
 	void SetLFReference (float afLFReference);
 	void SetRoomRolloffFactor (float afRoomRolloffFactor);
 	void SetDecayHFLimit (ALboolean abDecayHFLimit);
-	
+
 
 private:
 

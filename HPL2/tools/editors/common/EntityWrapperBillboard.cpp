@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -66,7 +66,7 @@ void cIconEntityBB::Update()
 			pParent->mbColorUpdated=false;
 			pBB->SetColor(pParent->GetBillboardColor());
 		}
-		
+
 		if(pParent->mbMatUpdated)
 		{
 			cMaterialManager* pManager = pParent->GetEditorWorld()->GetEditor()->GetEngine()->GetResources()->GetMaterialManager();
@@ -114,7 +114,7 @@ void cIconEntityBB::DestroyBB()
 
 //------------------------------------------------------------------------------
 
-static tString gsBillboardTypeString[] = 
+static tString gsBillboardTypeString[] =
 {
 	"Point",
 	"Axis",
@@ -128,7 +128,7 @@ cEntityWrapperTypeBillboard::cEntityWrapperTypeBillboard() : iEntityWrapperType(
 	GetPropVec3f(eObjVec3f_Scale)->SetSaved(false);
 
 	AddString(eBillboardStr_Type, "BillboardType", gsBillboardTypeString[0], ePropCopyStep_PreEnt);
-	
+
 	AddString(eBillboardStr_Material, "MaterialFile", "", ePropCopyStep_PreEnt);
 	AddBool(eBillboardBool_IsHalo, "IsHalo", false, ePropCopyStep_PreEnt);
 	AddVec2f(eBillboardVec2f_Size, "BillboardSize", 1, ePropCopyStep_PreEnt);
@@ -425,7 +425,7 @@ void cEntityWrapperBillboard::Draw(cEditorWindowViewport* apViewport, cRendererC
 
 	apFunctions->SetMatrix(NULL);
 	apFunctions->SetProgram(NULL);
-	
+
 	cBoundingVolume* pBV = mpEngineEntity->GetRenderBV();
 	apFunctions->GetLowLevelGfx()->DrawBoxMinMax(pBV->GetMin(), pBV->GetMax(), cColor(1,1));
 
@@ -566,7 +566,7 @@ void cEntityWrapperBillboard::SetConnectedLight(iEntityWrapperLight* apLight)
 {
 	if(mpConnectedLight==apLight)
 		return;
-    
+
 	mpConnectedLight = apLight;
 	msConnectedLightName = apLight?apLight->GetName():"";
 	mbBBUpdated=true;
@@ -611,7 +611,7 @@ void cEntityWrapperBillboard::SetAbsScale(const cVector3f& avScale, int alAxis)
 
 	iEntityWrapper::SetAbsScale(vScale, alAxis);
 */
-	
+
 	if(alAxis==2)
 		SetBillboardSize(cVector2f(avScale.z, mvBillboardSize.y));
 	else if(alAxis==1)
@@ -632,7 +632,7 @@ void cEntityWrapperBillboard::SetAbsScale(const cVector3f& avScale, int alAxis)
 				SetBillboardSize(cVector2f(avScale.x, mvBillboardSize.y));
 		}
 	}
-	
+
 
 	mlLastTransformedAxis = alAxis;
 }

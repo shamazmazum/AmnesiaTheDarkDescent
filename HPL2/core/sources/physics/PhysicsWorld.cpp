@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -52,7 +52,7 @@ namespace hpl {
 
 	iPhysicsWorld::~iPhysicsWorld()
 	{
-		
+
 	}
 
 	//-----------------------------------------------------------------------
@@ -60,7 +60,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// PUBLIC METHODS
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
 
 	void iPhysicsWorld::Update(float afTimeStep)
@@ -82,13 +82,13 @@ namespace hpl {
 		for(tPhysicsRopeListIt it = mlstRopes.begin(); it != mlstRopes.end(); ++it)
 		{
 			iPhysicsRope *pRope = *it;
-			
+
 			pRope->UpdateBeforeSimulate(afTimeStep);
 		}
 
 		////////////////////////////////////
 		//Update character bodies
-		START_TIMING(PhysicsCharacters)		
+		START_TIMING(PhysicsCharacters)
 		for(tCharacterBodyListIt CharIt = mlstCharBodies.begin(); CharIt != mlstCharBodies.end(); ++CharIt)
 		{
 			iCharacterBody *pBody = *CharIt;
@@ -97,7 +97,7 @@ namespace hpl {
 		}
 		STOP_TIMING(PhysicsCharacters)
 
-		
+
 		////////////////////////////////////
 		//Update the rigid bodies before simulation.
 		START_TIMING(BodyBeforeSimulate)
@@ -112,7 +112,7 @@ namespace hpl {
 				lstRemoveUpdateBodies.push_back(pBody);
 			}
 		}
-				
+
 		//Iterate remove list and remove all bodies in it from the update list.
         if(lstRemoveUpdateBodies.empty()==false)
 		{
@@ -124,14 +124,14 @@ namespace hpl {
 			}
 		}
 		STOP_TIMING(BodyBeforeSimulate)
-		
+
 
 		////////////////////////////////////
 		//Simulate the physics
-		START_TIMING(Simulate)				
+		START_TIMING(Simulate)
 		Simulate(afTimeStep);
-		STOP_TIMING(Simulate)	
-				
+		STOP_TIMING(Simulate)
+
 		////////////////////////////////////
 		//Update the joints after simulation.
 		for(tPhysicsJointListIt JointIt = mlstJoints.begin(); JointIt != mlstJoints.end(); )
@@ -143,7 +143,7 @@ namespace hpl {
 				++JointIt;
 				continue;
 			}
-            
+
 			if(pJoint->CheckBreakage())
 			{
 				JointIt = mlstJoints.erase(JointIt);
@@ -156,14 +156,14 @@ namespace hpl {
 		}
 		////////////////////////////////////
 		//Update the rigid bodies after simulation.
-		START_TIMING(BodyAfterSimulate)	
+		START_TIMING(BodyAfterSimulate)
 		for(tPhysicsBodySetIt BodyIt = m_setUpdateBodies.begin(); BodyIt != m_setUpdateBodies.end(); ++BodyIt)
 		{
 			iPhysicsBody *pBody = *BodyIt;
-			
+
 			pBody->UpdateAfterSimulate(afTimeStep);
 		}
-		STOP_TIMING(BodyAfterSimulate)	
+		STOP_TIMING(BodyAfterSimulate)
 
 		////////////////////////////////////
 		//Update Ropes after simulate
@@ -174,7 +174,7 @@ namespace hpl {
 			pRope->UpdateAfterSimulate(afTimeStep);
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void iPhysicsWorld::DestroyShape(iCollideShape *apShape)
@@ -187,11 +187,11 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	void iPhysicsWorld::DestroyBody(iPhysicsBody* apBody)
 	{
 		if(apBody->IsInUpdateList()) RemoveBodyFromUpdateList(apBody, true);
-				
+
 		tPhysicsBodyListIt it = mlstBodies.begin();
 		for(; it != mlstBodies.end(); ++it)
 		{
@@ -226,7 +226,7 @@ namespace hpl {
 		for(size_t i=0; i<mvTempBodies.size(); ++i)
 		{
 			iPhysicsBody *pBody = mvTempBodies[i];
-			
+
 			if(pBody->GetMass() > 0 && cMath::CheckBVIntersection(*apBV,*pBody->GetBoundingVolume()))
 			{
 				pBody->Enable();
@@ -244,7 +244,7 @@ namespace hpl {
 		apBody->SetInUpdateList(true);
 	}
 
-	//NOTE: Skipping removing dynamic bodies for now since they will need to be checked if enabled 
+	//NOTE: Skipping removing dynamic bodies for now since they will need to be checked if enabled
 	//		Still want to remove when destroying though.
 	void iPhysicsWorld::RemoveBodyFromUpdateList(iPhysicsBody *apBody, bool abDestroyingBody)
 	{
@@ -285,16 +285,16 @@ namespace hpl {
 
 	void iPhysicsWorld::DestroyCharacterBody(iCharacterBody* apBody)
 	{
-		STLFindAndDelete(mlstCharBodies, apBody);		
+		STLFindAndDelete(mlstCharBodies, apBody);
 	}
-		
+
 	iPhysicsBody *iPhysicsWorld::GetCharacterBody(const tString &asName)
 	{
 		return (iPhysicsBody*)STLFindByName(mlstCharBodies, asName);
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	iPhysicsMaterial* iPhysicsWorld::GetMaterialFromName(const tString &asName)
 	{
 		tPhysicsMaterialMapIt it = m_mapMaterials.find(asName);
@@ -312,7 +312,7 @@ namespace hpl {
 
 		return pMaterial;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cPhysicsMaterialIterator iPhysicsWorld::GetMaterialIterator()
@@ -332,7 +332,7 @@ namespace hpl {
 		for(tPhysicsRopeListIt it = mlstRopes.begin(); it != mlstRopes.end(); ++it)
 		{
 			iPhysicsRope* pRope = *it;
-			
+
 			if(pRope->GetUniqueID() == alID) return pRope;
 		}
 		return NULL;
@@ -344,17 +344,17 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	void iPhysicsWorld::DestroyAll()
 	{
 		STLDeleteAll(mlstCharBodies);
-		
+
 		//Bodies
 		tPhysicsBodyListIt it = mlstBodies.begin();
 		for(; it != mlstBodies.end(); ++it)
 		{
 			iPhysicsBody *pBody = *it;
-		
+
 			pBody->Destroy();
 			hplDelete(pBody);
 		}
@@ -371,7 +371,7 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	
+
 	void iPhysicsWorld::DestroyController(iPhysicsController *apController)
 	{
 		STLFindAndDelete(mlstControllers, apController);
@@ -420,15 +420,15 @@ namespace hpl {
 		for(size_t i=0; i < mvContactPoints.size(); i++)
 		{
 			apLowLevel->DrawSphere(mvContactPoints[i].mvPoint,0.2f, aPointColor);
-			apLowLevel->DrawLine(mvContactPoints[i].mvPoint, 
+			apLowLevel->DrawLine(mvContactPoints[i].mvPoint,
 								mvContactPoints[i].mvNormal * mvContactPoints[i].mfDepth *0.2f,
 								aLineColor);
 			//Log("Rendering\n");
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	bool iPhysicsWorld::CheckShapeWorldCollision(cVector3f *apPushVector,
 							iCollideShape* apShape, const cMatrixf& a_mtxTransform,
 							iPhysicsBody *apSkipBody, bool abSkipStatic, bool abIsCharacter,
@@ -453,14 +453,14 @@ namespace hpl {
 
 		int lBefore =0;
 		int lAfter =0;
-		
+
 		mvTempBodies.resize(0);
 		GetBodiesInBV(&boundingVolume, &mvTempBodies);
-		
+
 		for(size_t i=0; i<mvTempBodies.size(); ++i)
 		{
 			iPhysicsBody *pBody = mvTempBodies[i];
-			
+
 			if(pBody->IsActive()==false)continue;
 			if(pBody->IsCharacter() && abCollideCharacter==false) continue;
 			if(pBody == apSkipBody) continue;
@@ -468,7 +468,7 @@ namespace hpl {
 			if(abIsCharacter && pBody->GetCollideCharacter()==false) continue;
 			if(abIsCharacter==false && pBody->GetCollide()==false) continue;
 			if(alMinPushStrength > pBody->GetPushStrength()) continue;
-			if( (alCollideFlags & pBody->GetCollideFlags()) == 0)continue; 
+			if( (alCollideFlags & pBody->GetCollideFlags()) == 0)continue;
 
 			//Note: Still make this check, since GetBodiesInBV is not exact.
 			if(cMath::CheckBVIntersection(boundingVolume,*pBody->GetBoundingVolume())==false)
@@ -476,7 +476,7 @@ namespace hpl {
 				continue;
 
 			}
-			
+
 		   	collideData.SetMaxSize(32);
 			bool bRet = CheckShapeCollision(apShape,a_mtxTransform, pBody->GetShape(),pBody->GetLocalMatrix(),
 											collideData, 32, true);
@@ -484,13 +484,13 @@ namespace hpl {
 			if(bRet && apPushVector)
 			{
 				//if(abDebug) Log(" Collided with '%s'\n",pBody->GetName().c_str());
-					
+
 				if(apCallback) apCallback->OnCollision(pBody, &collideData);
 
 				for(int i=0; i< collideData.mlNumOfPoints; i++)
 				{
 					cCollidePoint &point = collideData.mvContactPoints[i];
-				
+
 					cVector3f vPush = point.mvNormal*point.mfDepth;
 
 					if(std::abs(apPushVector->x) < std::abs(vPush.x)) apPushVector->x = vPush.x;
@@ -501,7 +501,7 @@ namespace hpl {
 			if(bRet)bCollide = true;
 		}
 		//Log("--------------\n");
-		
+
 		return bCollide;
 	}
 

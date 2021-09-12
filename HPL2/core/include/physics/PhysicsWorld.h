@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -49,7 +49,7 @@ namespace hpl {
 
 	class cWorld;
 	class cBoundingVolume;
-	
+
 	typedef std::list<iCollideShape*> tCollideShapeList;
 	typedef tCollideShapeList::iterator tCollideShapeListIt;
 
@@ -76,9 +76,9 @@ namespace hpl {
 
 	typedef std::map<tString, iPhysicsMaterial*> tPhysicsMaterialMap;
 	typedef tPhysicsMaterialMap::iterator tPhysicsMaterialMapIt;
-		
+
 	typedef cSTLMapIterator<iPhysicsMaterial*, tPhysicsMaterialMap, tPhysicsMaterialMapIt> cPhysicsMaterialIterator;
-	
+
 	typedef cSTLIterator<iPhysicsBody*, tPhysicsBodyList, tPhysicsBodyListIt> cPhysicsBodyIterator;
 	typedef cSTLIterator<iPhysicsJoint*, tPhysicsJointList, tPhysicsJointListIt> cPhysicsJointIterator;
 
@@ -94,7 +94,7 @@ namespace hpl {
 		//! \name General
 		//########################################################################################
 		//! @{
-	
+
 		void Update(float afTimeStep);
 		virtual void Simulate(float afTimeStep)=0;
 
@@ -104,7 +104,7 @@ namespace hpl {
 		virtual void SetWorldSize(const cVector3f &avMin,const cVector3f &avMax)=0;
 		virtual cVector3f GetWorldSizeMin()=0;
 		virtual cVector3f GetWorldSizeMax()=0;
-		
+
 		virtual void SetGravity(const cVector3f& avGravity)=0;
 		virtual cVector3f GetGravity()=0;
 
@@ -126,7 +126,7 @@ namespace hpl {
 		virtual iCollideShape* CreateSphereShape(const cVector3f &avRadii, cMatrixf* apOffsetMtx)=0;
 		virtual iCollideShape* CreateCylinderShape(float afRadius, float afHeight, cMatrixf* apOffsetMtx)=0;
 		virtual iCollideShape* CreateCapsuleShape(float afRadius, float afHeight, cMatrixf* apOffsetMtx)=0;
-		
+
 		virtual iCollideShape* CreateMeshShape(iVertexBuffer *apVtxBuffer)=0;
 		/**
 		 * The buffer position must be pointing to where the data is saved!
@@ -136,13 +136,13 @@ namespace hpl {
 		 * The shape must be a mesh shape!
 		 */
 		virtual void SaveMeshShapeToBuffer(iCollideShape* apMeshShape, cBinaryBuffer *apBuffer)=0;
-		
+
 		virtual iCollideShape* CreateCompundShape(tCollideShapeVec &avShapes)=0;
 		virtual iCollideShape* CreateStaticSceneShape(tCollideShapeVec &avShapes, tMatrixfVec *apMatrices)=0;
 		void DestroyShape(iCollideShape *apShape);
-		
+
 		//! @}
-		
+
 		//########################################################################################
 		//! \name Joints
 		//########################################################################################
@@ -155,7 +155,7 @@ namespace hpl {
 											const cVector3f& avPivotPoint,const cVector3f& avPinDir,
 											iPhysicsBody* apParentBody, iPhysicsBody *apChildBody)=0;
 		virtual iPhysicsJointSlider* CreateJointSlider(const tString &asName,
-											const cVector3f& avPivotPoint,const cVector3f& avPinDir,			
+											const cVector3f& avPivotPoint,const cVector3f& avPinDir,
 											iPhysicsBody* apParentBody, iPhysicsBody *apChildBody)=0;
 		virtual iPhysicsJointScrew* CreateJointScrew(const tString &asName,
 											const cVector3f& avPivotPoint,const cVector3f& avPinDir,
@@ -164,9 +164,9 @@ namespace hpl {
 		iPhysicsJoint *GetJoint(const tString &asName);
 		bool JointExists(iPhysicsJoint* apJoint);
 		cPhysicsJointIterator GetJointIterator();
-		
+
 		//! @}
-		
+
 		//########################################################################################
 		//! \name Materials
 		//########################################################################################
@@ -177,7 +177,7 @@ namespace hpl {
 		cPhysicsMaterialIterator GetMaterialIterator();
 
 		//! @}
-		
+
 		//########################################################################################
 		//! \name Bodies
 		//########################################################################################
@@ -205,13 +205,13 @@ namespace hpl {
 		//! \name Misc
 		//########################################################################################
 		//! @{
-		
+
 		virtual iPhysicsRope* CreateRope(const tString &asName, const cVector3f &avStartPos, const cVector3f &avEndPos)=0;
 		iPhysicsRope* GetRope(const tString &asName);
 		iPhysicsRope* GetRopeFromUniqueID(int alID);
 		void DestroyRope(iPhysicsRope* apRope);
 
-		
+
 		//! @}
 
 		//########################################################################################
@@ -221,7 +221,7 @@ namespace hpl {
 
 		void SetLogDebug(bool abX){ mbLogDebug = abX;}
 		bool GetLogDebug(){ return mbLogDebug;}
-		
+
 		virtual iPhysicsController *CreateController(const tString &asName)=0;
 		void DestroyController(iPhysicsController *apController);
 
@@ -232,14 +232,14 @@ namespace hpl {
 		bool GetSaveContactPoints(){ return mbSaveContactPoints;}
 		void RenderContactPoints(iLowLevelGraphics *apLowLevel, const cColor& aPointColor, const cColor& aLineColor);
 
-		virtual void CastRay(iPhysicsRayCallback *apCallback, 
-							const cVector3f &avOrigin, const cVector3f& avEnd, 
+		virtual void CastRay(iPhysicsRayCallback *apCallback,
+							const cVector3f &avOrigin, const cVector3f& avEnd,
 							bool abCalcDist, bool abCalcNormal, bool abCalcPoint,
 							bool abUsePrefilter=false)=0;
 
-		virtual void RenderShapeDebugGeometry(	iCollideShape *apShape, const cMatrixf& a_mtxTransform, 
+		virtual void RenderShapeDebugGeometry(	iCollideShape *apShape, const cMatrixf& a_mtxTransform,
 												iLowLevelGraphics *apLowLevel, const cColor& aColor)=0;
-		
+
 		virtual void RenderDebugGeometry(iLowLevelGraphics *apLowLevel, const cColor& aColor)=0;
 
 		virtual bool CheckShapeCollision(	iCollideShape* apShapeA, const cMatrixf& a_mtxA,
@@ -250,13 +250,13 @@ namespace hpl {
 		bool CheckShapeWorldCollision(	cVector3f *apPushVector,
 										iCollideShape* apShape, const cMatrixf& a_mtxTransform,
 										iPhysicsBody *apSkipBody=NULL, bool abSkipStatic=false,
-										bool abIsCharacter=false, 
+										bool abIsCharacter=false,
 										iPhysicsWorldCollisionCallback *apCallback=NULL,
 										bool abCollideCharacter=true,
 										int alMinPushStrength=0,
-										tFlag alCollideFlags = eFlagBit_All, 
+										tFlag alCollideFlags = eFlagBit_All,
 										bool abDebug=false);
-		
+
 		void DestroyAll();
 
 		cWorld* GetWorld(){ return mpWorld;}

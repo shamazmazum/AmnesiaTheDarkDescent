@@ -34,9 +34,9 @@ public:
 	inline bool IsLocked() { return mpBoundSource != NULL; }
 
 	// Streaming Config stuff
-	static inline void SetBufferCount(unsigned int alBufferCount)	{ if(alBufferCount >= 1) mlBufferCount = alBufferCount; } 
+	static inline void SetBufferCount(unsigned int alBufferCount)	{ if(alBufferCount >= 1) mlBufferCount = alBufferCount; }
 	static inline void SetBufferSize(unsigned int alBufferSize)		{ if(alBufferSize >= STREAMING_BLOCK_SIZE) mlBufferSize = alBufferSize; }
-	
+
 	static inline unsigned int GetBufferSize()			{ return mlBufferSize; }
 	static inline unsigned int GetBufferCount()			{ return mlBufferCount; }
 

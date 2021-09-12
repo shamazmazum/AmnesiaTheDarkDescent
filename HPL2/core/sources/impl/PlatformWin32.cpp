@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -59,14 +59,14 @@ namespace hpl {
 
 	unsigned long cPlatform::GetFileSize(const tWString& asFileName)
 	{
-		/*__stat64 fileStat; 
-		int lErr = _wstat64( asFileName.c_str(), &fileStat ); 
-		if (lErr != 0) return 0; 
+		/*__stat64 fileStat;
+		int lErr = _wstat64( asFileName.c_str(), &fileStat );
+		if (lErr != 0) return 0;
 		return (unsigned long)fileStat.st_size; */
 
 		FILE *pFile = _wfopen(asFileName.c_str(),_W("rb"));
 		if(pFile==NULL)	return 0;
-		
+
 		fseek(pFile,0,SEEK_END);
 		long lFileSize = ftell(pFile);
 		rewind(pFile);
@@ -74,16 +74,16 @@ namespace hpl {
 		fclose(pFile);
 		return (unsigned long)lFileSize;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	bool cPlatform::CopyFileToBuffer(const tWString& asFileName, void *apBuffer, unsigned long alSize)
 	{
 		FILE *pFile = _wfopen(asFileName.c_str(),_W("rb"));
 		if(pFile==NULL)	return false;
-		
+
 		fread(apBuffer, sizeof(char), alSize, pFile);
-		
+
 		fclose(pFile);
 		return true;
 	}
@@ -125,7 +125,7 @@ namespace hpl {
 
 		return CreateDirectory(sPath.c_str(),NULL)==TRUE;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	bool cPlatform::RemoveFolder(const tWString& asPath, bool abDeleteAllFiles, bool abDeleteAllSubFolders)
@@ -175,7 +175,7 @@ namespace hpl {
 	{
 		tWString sDir = cString::ReplaceCharToW(asPath, _W("/"), _W("\\"));
 		DWORD lFileAttributes = GetFileAttributes(sDir.c_str());
-		
+
 		return (lFileAttributes != INVALID_FILE_ATTRIBUTES && (lFileAttributes & FILE_ATTRIBUTE_DIRECTORY) !=0);
 	}
 
@@ -185,12 +185,12 @@ namespace hpl {
 	{
 		wchar_t sOutFilePath[2048];
 		int x = GetFullPathNameW(asFilePath.c_str(),2048,sOutFilePath,NULL);
-		
+
 		return sOutFilePath;
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	FILE *cPlatform::OpenFile(const tWString& asFileName, const tWString asMode)
 	{
 		return _wfopen(asFileName.c_str(), asMode.c_str());
@@ -269,7 +269,7 @@ namespace hpl {
 		//The needed structs
 		intptr_t lHandle;
 		struct _wfinddata_t FileInfo;
-		
+
 
 		//Find the first file:
 		lHandle = _wfindfirst(sSpec, &FileInfo );
@@ -358,7 +358,7 @@ namespace hpl {
 			}
 
 		}
-		
+
 		//Close the handle to release reosuces and unlock files
 		_findclose(lHandle);
 	}
@@ -400,13 +400,13 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	void cPlatform::CreateMessageBoxBase(eMsgBoxType eType, const wchar_t* asCaption, const wchar_t* fmt, va_list ap)
 	{
 		wchar_t text[2048];
 
 		if (fmt == NULL)
-			return;	
+			return;
 		vswprintf(text, 2047, fmt, ap);
 
 		tWString sMess = _W("");
@@ -432,7 +432,7 @@ namespace hpl {
 
 		MessageBox( NULL, sMess.c_str(), asCaption, lType );
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -456,7 +456,7 @@ namespace hpl {
 	{
 		return hplNew(cTimerSDL, () );
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cDate cPlatform::GetDate()
@@ -467,7 +467,7 @@ namespace hpl {
 		struct tm* pClock;
 		pClock = localtime(&lTime);
 
-		return DateFromGMTime(pClock);		
+		return DateFromGMTime(pClock);
 	}
 
 	//-----------------------------------------------------------------------
@@ -487,7 +487,7 @@ namespace hpl {
 
 		SetClipboardData(CF_UNICODETEXT, clipbuffer);
 
-		GlobalUnlock(clipbuffer); 
+		GlobalUnlock(clipbuffer);
 
 		CloseClipboard();
 	}
@@ -505,7 +505,7 @@ namespace hpl {
 
 		if(pBuffer != NULL) sText = pBuffer;
 
-		GlobalUnlock(clipbuffer); 
+		GlobalUnlock(clipbuffer);
 
 		CloseClipboard();
 
@@ -517,7 +517,7 @@ namespace hpl {
 	tWString cPlatform::GetSystemSpecialPath(eSystemPath aPathType)
 	{
 		tWString sOutput = _W("");
-		
+
 		///////////////////////////
 		//Get the correction WIN32 varaible
 		int type;
@@ -531,7 +531,7 @@ namespace hpl {
 		///////////////////////////
 		//Get string
 		TCHAR sPath[2048];
-		if(SUCCEEDED(SHGetFolderPath(NULL, type | CSIDL_FLAG_CREATE, NULL,0,sPath))) 
+		if(SUCCEEDED(SHGetFolderPath(NULL, type | CSIDL_FLAG_CREATE, NULL,0,sPath)))
 		{
 			sOutput = tWString(sPath);
 		}
@@ -539,10 +539,10 @@ namespace hpl {
 		{
 			return _W("");
 		}
-		
+
 		///////////////////////////////////////
 		//Make sure the last char is a separator
-		if(	cString::GetLastCharW(sOutput) != _W("/") && 
+		if(	cString::GetLastCharW(sOutput) != _W("/") &&
 			cString::GetLastCharW(sOutput) != _W("\\"))
 		{
 			sOutput += _W("/");
@@ -589,10 +589,10 @@ namespace hpl {
 	{
 		return _W("");
 	}
-	
+
 	void cPlatform::GetDisplayResolution(int alDisplay, int& alHorizontal, int& alVertical)
 	{
-		if(alDisplay != 0) 
+		if(alDisplay != 0)
 		{
 			///////////
 			// Only main monitor supported
@@ -631,7 +631,7 @@ namespace hpl {
 	{
 		PROCESS_INFORMATION pi;
 		STARTUPINFO si;
-		
+
 		memset(&si,0,sizeof(si));
 		si.cb= sizeof(si);
 		si.wShowWindow = SW_SHOW;

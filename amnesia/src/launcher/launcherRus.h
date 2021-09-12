@@ -195,25 +195,25 @@ public:
   cUserInterface(int& alExitFlag, cConfigFile *apConfigFile, bool abConfigFileExists, bool abLastInitCrashed, const tString& asCardString, cQualityChooser* apChooser, const std::vector<cConfigFile*>& avPresets, cEngine* apEng) ;
   int Run();
 private:
-  int& mlExitFlag; 
-  cConfigFile* mpConfigFile; 
-  tVideoModeVec mvVModes; 
+  int& mlExitFlag;
+  cConfigFile* mpConfigFile;
+  tVideoModeVec mvVModes;
 public:
   void SetWidgetEnabled(Fl_Widget* apW, bool abX);
   void SetWidgetVisible(Fl_Widget* apW, bool abX);
 private:
-  cQualityChooser* mpQualityChooser; 
-  std::vector<cConfigFile*> mvPresets; 
-  tString msCardString; 
-  cEngine* mpEngine; 
+  cQualityChooser* mpQualityChooser;
+  std::vector<cConfigFile*> mvPresets;
+  tString msCardString;
+  cEngine* mpEngine;
 public:
   void CheckEqualsPreset();
 private:
-  bool mbSettingPreset; 
-  std::list<tString> mlstLabels; 
-  tString msTestString; 
-  tSoundDeviceVec mvSoundDevices; 
-  iSoundDeviceIdentifier* mpCurSndDev; 
-  tStringVec mvLanguageFiles; 
+  bool mbSettingPreset;
+  std::list<tString> mlstLabels;
+  tString msTestString;
+  tSoundDeviceVec mvSoundDevices;
+  iSoundDeviceIdentifier* mpCurSndDev;
+  tStringVec mvLanguageFiles;
 };
 #endif

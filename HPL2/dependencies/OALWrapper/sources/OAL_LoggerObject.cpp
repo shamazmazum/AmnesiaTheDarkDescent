@@ -46,7 +46,7 @@ void iOAL_LoggerObject::LogMsg(const string& asIDStr, eOAL_LogVerbose aVerbose, 
 
 	if(asMessage==NULL)
 		return;
-	
+
 	string sMessage;
 
 	char text[2048];
@@ -107,13 +107,13 @@ wstring BuildLogFilename ( const string& asFilename )
 	wstring wsName;
 	wstring wsTemp;
 	wsName = String2WString(asFilename);
-	
+
 	#if defined(WIN32)
 
 		WCHAR sPath[MAX_PATH];
-		if(SUCCEEDED(SHGetFolderPath(NULL, 
-			CSIDL_PERSONAL | CSIDL_FLAG_CREATE, 
-			NULL,0,sPath))) 
+		if(SUCCEEDED(SHGetFolderPath(NULL,
+			CSIDL_PERSONAL | CSIDL_FLAG_CREATE,
+			NULL,0,sPath)))
 		{
 			wsTemp = wstring(sPath).append(L"/").append(wsName);
 		}

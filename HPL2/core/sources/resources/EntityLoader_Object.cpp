@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -68,7 +68,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -103,7 +103,7 @@ namespace hpl {
 				a_setShapes.erase(it);
 			}
 		}
-		
+
 		////////////////////////////////////////
 		// Create final shape
 		if(vShapes.empty()) return NULL;
@@ -141,14 +141,14 @@ namespace hpl {
 
 		switch(type)
 		{
-		case eCollideShapeType_Box: 
+		case eCollideShapeType_Box:
 			return apPhysicsWorld->CreateBoxShape(vSize,&mtxOffset);
-		case eCollideShapeType_Sphere: 
+		case eCollideShapeType_Sphere:
 			return apPhysicsWorld->CreateSphereShape(vSize,&mtxOffset);
-		case eCollideShapeType_Cylinder: 
+		case eCollideShapeType_Cylinder:
 			mtxOffset = cMath::MatrixMul(mtxOffset, cMath::MatrixRotateZ(kPi2f));
 			return apPhysicsWorld->CreateCylinderShape(vSize.x,vSize.y,&mtxOffset);
-		case eCollideShapeType_Capsule: 
+		case eCollideShapeType_Capsule:
 			mtxOffset = cMath::MatrixMul(mtxOffset, cMath::MatrixRotateZ(kPi2f));
 			return apPhysicsWorld->CreateCapsuleShape(vSize.x,vSize.y,&mtxOffset);
 		}
@@ -157,12 +157,12 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	static iPhysicsBody * FindBody(int alID, tLoaderPhysicsBodyMap &a_setBodies)
 	{
 		tLoaderPhysicsBodyMapIt it = a_setBodies.find(alID);
 		if(it == a_setBodies.end()) return NULL;
-        
+
 		return it->second;
 	}
 
@@ -180,13 +180,13 @@ namespace hpl {
 		return ePhysicsJointType_Ball;
 	}
 
-	static iPhysicsJoint* CreateJoint(	const tString& asEntityName, 
+	static iPhysicsJoint* CreateJoint(	const tString& asEntityName,
 										cXmlElement *apJointElem, iPhysicsWorld *apPhysicsWorld,
 										tLoaderPhysicsBodyMap &a_setBodies,
 										const cMatrixf& a_mtxTransform,
 										const cVector3f& avScale)
 	{
-		
+
 		/////////////////////////////
 		//Get pin direction and pivot and transform according to entity
 		cVector3f vPivot = apJointElem->GetAttributeVector3f("WorldPos") * avScale;
@@ -194,7 +194,7 @@ namespace hpl {
 
 		vPivot = cMath::MatrixMul(a_mtxTransform, vPivot);
 		vPinDir = cMath::MatrixMul3x3(a_mtxTransform, vPinDir);
-		
+
 		/////////////////////////////
 		//Name and type
 		tString sJointName = asEntityName + "_" + apJointElem->GetAttributeString("Name");
@@ -209,13 +209,13 @@ namespace hpl {
 
 		iPhysicsBody *pParentBody = lParentID > 0 ? FindBody(lParentID,a_setBodies) : NULL;
 		iPhysicsBody *pChildBody = FindBody(lChildID,a_setBodies);
-		
+
 		if(pChildBody==NULL)
 		{
 			Error("Could not find child body with ID %d for joint '%s'\n", lChildID, sJointName.c_str());
 			return NULL;
 		}
-		
+
 		///////////////////////////
 		// Hinge
 		if(jointType == ePhysicsJointType_Hinge)
@@ -262,10 +262,10 @@ namespace hpl {
 		}
 
 
-		return NULL;	
+		return NULL;
 	}
 
-	
+
 	//-----------------------------------------------------------------------
 
 	static cMatrixf GetMatrixFromVectors(const cVector3f& avPos, const cVector3f& avRot, const cVector3f& avScale)
@@ -290,15 +290,15 @@ namespace hpl {
 		Error("No animation event named '%s'\n", asType.c_str());
 		return eAnimationEventType_LastEnum;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 
-	iEntity3D* cEntityLoader_Object::Load(	const tString &asName, int alID, bool abActive, cXmlElement *apRootElem, 
-											const cMatrixf &a_mtxTransform, const cVector3f &avScale, 
+	iEntity3D* cEntityLoader_Object::Load(	const tString &asName, int alID, bool abActive, cXmlElement *apRootElem,
+											const cMatrixf &a_mtxTransform, const cVector3f &avScale,
 											cWorld *apWorld, const tString &asFileName, const tWString &asFullPath, cResourceVarsObject *apInstanceVars)
 	{
-		////////////////////////////////////////	
+		////////////////////////////////////////
 		// Init
 		mvBodies.clear();
 		mvJoints.clear();
@@ -306,7 +306,7 @@ namespace hpl {
 		mvBodyExtraData.clear();
 
 		mvHapticShapes.clear();
-		
+
 		mvParticleSystems.clear();
 		mvBillboards.clear();
 		mvSoundEntities.clear();
@@ -314,11 +314,11 @@ namespace hpl {
 		mvBeams.clear();
 
 		tEntity3DList lstEntities;
-		
+
 		mpEntity = NULL;
 		mpMesh = NULL;
 
-		msFileName = asFileName; 
+		msFileName = asFileName;
 		mlID = alID;
 		mbActive = abActive;
 		mvScale = avScale;
@@ -327,7 +327,7 @@ namespace hpl {
 
 		iPhysicsWorld *pPhysicsWorld = apWorld->GetPhysicsWorld();
 
-		////////////////////////////////////////	
+		////////////////////////////////////////
 		// Load ModelData
 		cXmlElement* pModelDataElem = apRootElem->GetFirstElement("ModelData");
 		if(pModelDataElem==NULL){
@@ -342,7 +342,7 @@ namespace hpl {
 		BeforeLoad(apRootElem,a_mtxTransform,apWorld,apInstanceVars);
 
 
-		////////////////////////////////////////	
+		////////////////////////////////////////
 		// Load Mesh and create entity
 		cXmlElement *pMeshElem =NULL;
 		{
@@ -363,7 +363,7 @@ namespace hpl {
 
 			//Create entity
 			mpEntity = apWorld->CreateMeshEntity(asName, mpMesh, mbLoadAsStatic);
-			
+
 			if(mpMesh->GetSkeleton()!=NULL)
 				mpEntity->SetMatrix(cMath::MatrixScale(mvScale));
 
@@ -372,7 +372,7 @@ namespace hpl {
 			mpEntity->SetRenderFlagBit(eRenderableFlag_ShadowCaster,true); //<- Temp
 		}
 
-		////////////////////////////////////////	
+		////////////////////////////////////////
 		// Load sub meshes
 		{
 			bool bHasSkeleton = mpMesh->GetSkeleton()!=NULL;
@@ -395,7 +395,7 @@ namespace hpl {
 				if(bHasSkeleton==false)
 					lstEntities.push_back(pSubEntity);
 
-				
+
 				//////////////////////////
 				// Get transform matrix
 				if(bHasSkeleton==false)
@@ -403,17 +403,17 @@ namespace hpl {
 					cMatrixf mtxLocalTransform = GetMatrixFromVectors(	pSubMeshElem->GetAttributeVector3f("WorldPos")*mvScale,
 																		pSubMeshElem->GetAttributeVector3f("Rotation"),
 																		pSubMeshElem->GetAttributeVector3f("Scale")*mvScale);
-					
+
 					//mtxLocalTransform = cMath::MatrixMul(mtxLocalTransform, cMath::MatrixScale(mvScale));
 
 					pSubEntity->SetWorldMatrix(mtxLocalTransform);
 				}
-				
+
 				//////////////////////////
 				// Set the variables
 				int lID = pSubMeshElem->GetAttributeInt("ID",-1);
 				if(lID < 0) lID = pSubMeshElem->GetAttributeInt("SubMeshID"); //To support older files!
-				
+
 				pSubEntity->SetUniqueID(lID);
 
 
@@ -431,7 +431,7 @@ namespace hpl {
 			}
 		}
 
-		////////////////////////////////////////	
+		////////////////////////////////////////
 		// Animations
 		cXmlElement *pAnimationsElem  = pModelDataElem->GetFirstElement("Animations");
 		if(mbLoadAnimations && mpEntity && pAnimationsElem)
@@ -440,17 +440,17 @@ namespace hpl {
 			while(animElemIt.HasNext())
 			{
 				cXmlElement *pAnimElem = animElemIt.Next()->ToElement();
-				
+
 				tString sFile = pAnimElem->GetAttributeString("File");
 				tString sName = pAnimElem->GetAttributeString("Name");
 				float fSpeed = pAnimElem->GetAttributeFloat("Speed",1.0f);
 				float fSpecialEventTime = pAnimElem->GetAttributeFloat("SpecialEventTime",0.0f);
-				
+
 				if(cString::GetFilePath(sFile).length() <= 1)
 					sFile = cString::SetFilePath(sFile, cString::To8Char(cString::GetFilePathW(asFullPath) ) );
 
 				cAnimation *pAnim = apWorld->GetResources()->GetAnimationManager()->CreateAnimation(sFile);
-				
+
 				if(pAnim)
 				{
 					cAnimationState *pState = mpEntity->AddAnimation(pAnim, sName,fSpeed);
@@ -474,7 +474,7 @@ namespace hpl {
 		}
 
 
-		////////////////////////////////////////	
+		////////////////////////////////////////
 		// Load World entities
 		{
 			//List that contain light and billboard connections
@@ -551,7 +551,7 @@ namespace hpl {
 						//Scale the local position accoringly!
 						cVector3f vPos = pEntity->GetLocalPosition();
 						pEntity->SetPosition(vPos * mvScale);
-						
+
 						lstEntities.push_back(pEntity);
 					}
 				}
@@ -582,12 +582,12 @@ namespace hpl {
 			}
 		}
 
-		////////////////////////////////////////	
+		////////////////////////////////////////
 		// Copy entity list to other list
 		tEntity3DList lstTempEntities = lstEntities;
 
 
-		////////////////////////////////////////	
+		////////////////////////////////////////
 		// Load Bones
 		tNodeStateMap mapBoneStates;
 		if(mpMesh->GetSkeleton())
@@ -614,17 +614,17 @@ namespace hpl {
 					/////////////////////////////
 					//Add bones to list
                     mapBoneStates.insert(tNodeStateMap::value_type(lID, pBoneState));
-					
+
 					/////////////////////////////
 					//Add children to bone
 					LoadAndAttachChildren(pBoneElem, NULL, pBoneState, lstTempEntities, mapBoneStates, true, false);
 				}
 			}
 		}
-		
 
 
-		////////////////////////////////////////	
+
+		////////////////////////////////////////
 		// Load Shapes
 		tLoaderCollideShapeMap setShapes;
 
@@ -646,9 +646,9 @@ namespace hpl {
 				}
 			}
 		}
-			
 
-		////////////////////////////////////////	
+
+		////////////////////////////////////////
 		// Load Bodies
 		tLoaderPhysicsBodyMap setBodies;
 
@@ -707,9 +707,9 @@ namespace hpl {
 			{
 				if(mapBoneStates.size() != mpEntity->GetBoneStateNum())
 				{
-					Error("Loading entity %s: Skeletons in mesh file (%ls) and .ent file (%ls) differ! Probably caused by .ent not being up to date with mesh\n", 
-						asName.c_str(), 
-						mpMesh->GetFullPath().c_str(), 
+					Error("Loading entity %s: Skeletons in mesh file (%ls) and .ent file (%ls) differ! Probably caused by .ent not being up to date with mesh\n",
+						asName.c_str(),
+						mpMesh->GetFullPath().c_str(),
 						static_cast<iXmlDocument*>(apRootElem)->GetPath().c_str());
 				}
 				else
@@ -724,8 +724,8 @@ namespace hpl {
 				pPhysicsWorld->DestroyShape(shapeSetIt->second);
 			}
 		}
-		
-		////////////////////////////////////////	
+
+		////////////////////////////////////////
 		// Add all remaining entities directly to first body
 		if(mvBodies.empty()==false)
 		{
@@ -756,7 +756,7 @@ namespace hpl {
 		}
 
 
-		////////////////////////////////////////	
+		////////////////////////////////////////
 		// Set matrix on entity if there are no bodies.
 		if(mvBodies.size()<=0)
 		{
@@ -764,7 +764,7 @@ namespace hpl {
 				mpEntity->SetMatrix(cMath::MatrixMul(a_mtxTransform, cMath::MatrixScale(avScale)) );
 			else
 				mpEntity->SetMatrix(a_mtxTransform);
-			
+
 			//to make sure everything is in place.
 			mpEntity->UpdateLogic(0);
 		}
@@ -773,13 +773,13 @@ namespace hpl {
 			for(size_t i=0;i<mvBodies.size(); ++i)
 			{
 				iPhysicsBody *pBody = mvBodies[i];
-				
+
 				pBody->SetMatrix(cMath::MatrixMul(a_mtxTransform,pBody->GetLocalMatrix()));
 			}
 		}
 
 		if(pPhysicsWorld)
-		////////////////////////////////////////	
+		////////////////////////////////////////
 		// Load Joints
 		{
 			cXmlElement *JointsElem  = pModelDataElem->GetFirstElement("Joints");
@@ -802,7 +802,7 @@ namespace hpl {
 			}
 		}
 
-		////////////////////////////////////////	
+		////////////////////////////////////////
 		// Reset the unique ID (will mess with other entities otherwise)
 		// Do not want to do this with bodies!
 		for(tEntity3DListIt it = lstEntities.begin(); it != lstEntities.end(); ++it)
@@ -812,7 +812,7 @@ namespace hpl {
 		}
 
 
-		////////////////////////////////////////	
+		////////////////////////////////////////
 		// Final setup, start animation or go to ragdoll mode is possible
 		if(mpEntity->GetAnimationStateNum() >0)
 		{
@@ -822,18 +822,18 @@ namespace hpl {
 		{
 			mpEntity->SetSkeletonPhysicsActive(true);
 		}
-		
-		////////////////////////////////////////	
+
+		////////////////////////////////////////
 		// Load user variables();
 		LoadUserVariables(apRootElem);
-		
+
 		// After load virtual call.
 		// This is where the user adds extra stuff.
 		AfterLoad(apRootElem,a_mtxTransform,apWorld,apInstanceVars);
 
 		return mpEntity;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -841,7 +841,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	void cEntityLoader_Object::AttachEntityChild(iEntity3D *apParent, const cMatrixf& a_mtxInvParent, iEntity3D *apChild)
 	{
 		//Calculate local matrix
@@ -849,7 +849,7 @@ namespace hpl {
 		apChild->SetMatrix(mtxLocalTransform);
 
 		//Add the entity to parent and remove it from any other hierarchy it might be in.
-		if(apChild->GetEntityParent()) 
+		if(apChild->GetEntityParent())
 			apChild->GetEntityParent()->RemoveChild(apChild);
 		apParent->AddChild(apChild);
 	}
@@ -864,9 +864,9 @@ namespace hpl {
 		apChild->SetMatrix(mtxLocalTransform);
 
 		//Add the entity to parent and remove it from any other hierarchy it might be in.
-		if(apChild->GetParent()) 
+		if(apChild->GetParent())
 			apChild->GetParent()->RemoveEntity(apChild);
-		apBoneState->AddEntity(apChild);	
+		apBoneState->AddEntity(apChild);
 	}
 
 	//-----------------------------------------------------------------------
@@ -895,10 +895,10 @@ namespace hpl {
 		pBoneState->SetColliderBody(pColliderBody);
 		*/
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
-	void cEntityLoader_Object::LoadAndAttachChildren(	cXmlElement *apMainElem, iEntity3D *apEntityParent, cBoneState *apBoneStateParent, 
+
+	void cEntityLoader_Object::LoadAndAttachChildren(	cXmlElement *apMainElem, iEntity3D *apEntityParent, cBoneState *apBoneStateParent,
 														tEntity3DList& a_lstChildList, tNodeStateMap &a_mapBoneStates,
 														bool abRemoveAttachedChild, bool abIsBody)
 	{
@@ -919,7 +919,7 @@ namespace hpl {
 			cXmlElement *pChildElem = childIt.Next()->ToElement();
 
 			int lID = pChildElem->GetAttributeInt("ID");
-			
+
 			//////////////////////////////////
 			// Search for child entity
 			bool bFound = false;
@@ -945,8 +945,8 @@ namespace hpl {
 				}
 				else
 					AttachBoneChild(apBoneStateParent, mtxInvParent, pEntity);
-								
-				//Final stuff				
+
+				//Final stuff
 				if(abRemoveAttachedChild) a_lstChildList.erase(it);
 				bFound = true;
 				break;
@@ -991,7 +991,7 @@ namespace hpl {
 		}
 		return NULL;
 	}
-	
+
 	iLight* cEntityLoader_Object::GetLightFromName(const tString& asName)
 	{
 		for(size_t i=0; i<mvLights.size(); ++i)
@@ -1007,12 +1007,12 @@ namespace hpl {
 	void cEntityLoader_Object::SetBodyProperties(iPhysicsBody *apBody, cXmlElement *apElem)
 	{
 		apBody->SetMatrix(GetMatrixFromVectors(	apElem->GetAttributeVector3f("WorldPos") * mvScale,
-												apElem->GetAttributeVector3f("Rotation"), 
-												1.0f) 
+												apElem->GetAttributeVector3f("Rotation"),
+												1.0f)
 												);
 
 		apBody->SetMass(apElem->GetAttributeFloat("Mass",1.0f));
-		
+
 		apBody->SetAngularDamping(apElem->GetAttributeFloat("AngularDamping"));
 		apBody->SetLinearDamping(apElem->GetAttributeFloat("LinearDamping"));
 
@@ -1033,7 +1033,7 @@ namespace hpl {
 		apBody->SetVolatile(apElem->GetAttributeBool("Volatile",false));
 
 		apBody->SetUseSurfaceEffects(apElem->GetAttributeBool("UseSurfaceEffects",true));
-	
+
 		apBody->SetGravityCanAttachCharacter(apElem->GetAttributeBool("CanAttachCharacter",false));
 
 		apBody->SetUniqueID(apElem->GetAttributeInt("ID",-1));
@@ -1054,9 +1054,9 @@ namespace hpl {
 		pJoint->SetMaxMoveFreqSpeed(apJointElem->GetAttributeFloat("MaxMoveFreqSpeed",1.1f));
 		pJoint->SetMiddleMoveSpeed(apJointElem->GetAttributeFloat("MiddleMoveSpeed",1.0f));
 		pJoint->SetMiddleMoveVolume(apJointElem->GetAttributeFloat("MiddleMoveVolume",1.0f));
-		pJoint->SetMoveSpeedType(cString::ToLowerCase(apJointElem->GetAttributeString("MoveType","Linear")) == "angular" ? 
+		pJoint->SetMoveSpeedType(cString::ToLowerCase(apJointElem->GetAttributeString("MoveType","Linear")) == "angular" ?
 									ePhysicsJointSpeed_Angular : 	ePhysicsJointSpeed_Linear);
-		
+
 		pJoint->SetStickyMinLimit(apJointElem->GetAttributeBool("StickyMinLimit",false));
 		pJoint->SetStickyMaxLimit(apJointElem->GetAttributeBool("StickyMaxLimit",false));
 
@@ -1067,9 +1067,9 @@ namespace hpl {
 		pJoint->SetLimitAutoSleep(apJointElem->GetAttributeBool("LimitAutoSleep",false));
 		pJoint->SetLimitAutoSleepDist(apJointElem->GetAttributeFloat("LimitAutoSleepDist",0.02f));
 		pJoint->SetLimitAutoSleepNumSteps(apJointElem->GetAttributeInt("LimitAutoSleepNumSteps",10));
-		
+
 		pJoint->SetCollideBodies(apJointElem->GetAttributeBool("CollideBodies",true));
-		
+
 		pJoint->GetMaxLimit()->msSound = apJointElem->GetAttributeString("MaxLimitSound","");
 		pJoint->GetMaxLimit()->mfMaxSpeed = apJointElem->GetAttributeFloat("MaxLimitMaxSpeed",10.0f);
 		pJoint->GetMaxLimit()->mfMinSpeed = apJointElem->GetAttributeFloat("MaxLimit_MinSpeed",20.0f);
@@ -1094,7 +1094,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	ePhysicsControllerType GetControllerType(const char* apString)
 	{
 		if(apString == NULL) return ePhysicsControllerType_LastEnum;
@@ -1103,7 +1103,7 @@ namespace hpl {
 
 		if(sName == "Pid") return ePhysicsControllerType_Pid;
 		else if(sName == "Spring") return ePhysicsControllerType_Spring;
-		
+
 		return ePhysicsControllerType_LastEnum;
 	}
 
@@ -1116,10 +1116,10 @@ namespace hpl {
 		tString sName = apString;
 
 		if(sName == "JointAngle") return ePhysicsControllerInput_JointAngle;
-		else if(sName == "JointDist") return ePhysicsControllerInput_JointDist; 
+		else if(sName == "JointDist") return ePhysicsControllerInput_JointDist;
 		else if(sName == "LinearSpeed") return ePhysicsControllerInput_LinearSpeed;
 		else if(sName == "AngularSpeed")  return ePhysicsControllerInput_AngularSpeed;
-		
+
 		return ePhysicsControllerInput_LastEnum;
 	}
 
@@ -1132,8 +1132,8 @@ namespace hpl {
 		tString sName = apString;
 
 		if(sName == "Force") return ePhysicsControllerOutput_Force;
-		else if(sName == "Torque") return ePhysicsControllerOutput_Torque; 
-		
+		else if(sName == "Torque") return ePhysicsControllerOutput_Torque;
+
 		return ePhysicsControllerOutput_LastEnum;
 	}
 
@@ -1146,8 +1146,8 @@ namespace hpl {
 		tString sName = apString;
 
 		if(sName == "X") return ePhysicsControllerAxis_X;
-		else if(sName == "Y") return ePhysicsControllerAxis_Y; 
-		else if(sName == "Z") return ePhysicsControllerAxis_Z; 
+		else if(sName == "Y") return ePhysicsControllerAxis_Y;
+		else if(sName == "Z") return ePhysicsControllerAxis_Z;
 
 		return ePhysicsControllerAxis_LastEnum;
 	}
@@ -1161,8 +1161,8 @@ namespace hpl {
 		tString sName = apString;
 
 		if(sName == "OnMax") return ePhysicsControllerEnd_OnMax;
-		else if(sName == "OnMin") return ePhysicsControllerEnd_OnMin; 
-		else if(sName == "OnDest") return ePhysicsControllerEnd_OnDest; 
+		else if(sName == "OnMin") return ePhysicsControllerEnd_OnMin;
+		else if(sName == "OnDest") return ePhysicsControllerEnd_OnDest;
 
 		return ePhysicsControllerEnd_Null;
 	}
@@ -1170,7 +1170,7 @@ namespace hpl {
 	/////////////////////////
 
 
-	void cEntityLoader_Object::LoadController(iPhysicsJoint* apJoint,iPhysicsWorld *apPhysicsWorld, 
+	void cEntityLoader_Object::LoadController(iPhysicsJoint* apJoint,iPhysicsWorld *apPhysicsWorld,
 												TiXmlElement *apElem)
 	{
 		//////////////////////////////
@@ -1195,7 +1195,7 @@ namespace hpl {
 
 		ePhysicsControllerEnd CtrlEnd = GetControllerEnd(apElem->Attribute("EndType"));
 		tString sNextCtrl = cString::ToString(apElem->Attribute("NextController"),"");
-		
+
 		bool bLogInfo = cString::ToBool(apElem->Attribute("LogInfo"),false);
 
 		//Convert degrees to radians.
@@ -1218,7 +1218,7 @@ namespace hpl {
 		pController->SetActive(bActive);
 		pController->SetInputType(CtrlInput,CtrlInputAxis);
 		pController->SetDestValue(fDestValue);
-        
+
 		pController->SetOutputType(CtrlOutput,CtrlOutputAxis);
 		pController->SetMaxOutput(fMaxOutput);
 		pController->SetMulMassWithOutput(bMulMassWithOutput);
@@ -1251,7 +1251,7 @@ namespace hpl {
 		Warning("Animation event type '%s' does not exist!\n",apString);
 		return eAnimationEventType_LastEnum;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cEntityLoader_Object::LoadUserVariables(cXmlElement *apRootElem)
@@ -1267,6 +1267,6 @@ namespace hpl {
 
 		LoadVariables(pVarRootElem);
 	}
-	
+
 	//-----------------------------------------------------------------------
 }

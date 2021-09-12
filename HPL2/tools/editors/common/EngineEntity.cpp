@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -47,7 +47,7 @@ bool iEngineEntity::IsCulledByFrustum(cCamera* apCamera)
 	cFrustum* pFrustum = apCamera->GetFrustum();
 	if(pBV)
 		return (pFrustum->CollideBoundingVolume(pBV)!=eCollision_Outside)==false;
-	
+
 	return pFrustum->CollidePoint(mpParent->GetPosition())==false;
 }
 
@@ -91,8 +91,8 @@ bool iEngineEntity::CheckRayIntersect(cEditorWindowViewport* apViewport, cVector
 cBoundingVolume* iEngineEntity::GetRenderBV()
 {
 	if(mpEntity)
-		return mpEntity->GetBoundingVolume(); 
-	
+		return mpEntity->GetBoundingVolume();
+
 	return NULL;
 }
 //-----------------------------------------------------------------------
@@ -117,7 +117,7 @@ iEngineEntityMesh::~iEngineEntityMesh()
 	{
 		cWorld* pWorld = mpParent->GetEditorWorld()->GetWorld();
 		pWorld->DestroyMeshEntity((cMeshEntity*)mpEntity);
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------
@@ -161,7 +161,7 @@ bool iEngineEntityMesh::CheckRayIntersect(cEditorWindowViewport* apViewport, cVe
 	if(iEngineEntity::CheckRayIntersect(apViewport, apPos, apTriangle, apT)==false)
 		return false;
 
-	return cEditorHelper::CheckRayMeshEntityIntersect(apViewport->GetUnprojectedStart(), apViewport->GetUnprojectedEnd(), 
+	return cEditorHelper::CheckRayMeshEntityIntersect(apViewport->GetUnprojectedStart(), apViewport->GetUnprojectedEnd(),
 														(cMeshEntity*)mpEntity, apPos, apTriangle, apT);
 }
 
@@ -221,7 +221,7 @@ void iEngineEntityMesh::DrawProgram(cEditorWindowViewport* apViewport, cRenderer
 		apFunctions->SetMatrix(pSubMeshEntity->GetModelMatrix(NULL));
 		apFunctions->SetVertexBuffer(pSubMeshEntity->GetVertexBuffer());
 		apFunctions->GetLowLevelGfx()->SetColor(aCol);
-		
+
 		apFunctions->DrawCurrent();
 	}
 	apFunctions->SetMatrix(NULL);
@@ -351,7 +351,7 @@ cEngineEntityLoadedMeshAggregate::~cEngineEntityLoadedMeshAggregate()
 	for(int i=0;i<(int)mvParticleSystems.size();++i)
 		pWorld->DestroyParticleSystem(mvParticleSystems[i]);
 	for(int i=0;i<(int)mvSounds.size();++i)
-		pWorld->DestroySoundEntity(mvSounds[i]);	
+		pWorld->DestroySoundEntity(mvSounds[i]);
 }
 
 //-----------------------------------------------------------------------
@@ -421,7 +421,7 @@ cEngineEntityGeneratedMesh::cEngineEntityGeneratedMesh(iEntityWrapper* apParent,
 bool cEngineEntityGeneratedMesh::ReCreate(cMesh* apMesh)
 {
 	cWorld* pWorld = mpParent->GetEditorWorld()->GetWorld();
-	tString sName; 
+	tString sName;
 	if(mpEntity)
 	{
 		sName = mpEntity->GetName();
@@ -468,7 +468,7 @@ cBoundingVolume* iIconEntity::GetPickBV(cEditorWindowViewport* apViewport)
 {
 	if(mpIcon)
 		return mpIcon->GetPickBV(apViewport);
-	
+
 	return NULL;
 }
 
@@ -482,8 +482,8 @@ bool iIconEntity::CheckRayIntersect(cEditorWindowViewport* apViewport, cVector3f
 	return mpIcon && mpIcon->CheckRayIntersect(apViewport, apPos, apTriangle, apT);
 }
 
-void iIconEntity::Draw(cEditorWindowViewport* apViewport, 
-					  cRendererCallbackFunctions* apFunctions, 
+void iIconEntity::Draw(cEditorWindowViewport* apViewport,
+					  cRendererCallbackFunctions* apFunctions,
 					  bool abIsSelected,
 					  bool abIsActive,
 					  const cColor& aHighlightCol)

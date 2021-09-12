@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -109,7 +109,7 @@ void cLuxPropLoader_Wheel::LoadInstanceVariables(iLuxProp *apProp, cResourceVars
 
 		pWheel->mlSpinDir = ToSpinDir(apInstanceVars->GetVarString("SpinDir", "BothWays"));
 	}
-	
+
 	//Important that this is here so limits are set up properly!
 	int lStuckState = ToStuckState(apInstanceVars->GetVarString("StuckState", ""));
 	pWheel->SetStuckState(lStuckState, false);
@@ -132,7 +132,7 @@ cLuxProp_Wheel::cLuxProp_Wheel(const tString &asName, int alID, cLuxMap *apMap) 
 	mlStuckState = 0;//-1 = min, 1=max, 0= not stuck
 	mfAngle =0;
 	mfPrevAngle=0;
-	
+
 	mfJointAngle = 0;
 	mfPrevJointAngle = 0;
 
@@ -143,7 +143,7 @@ cLuxProp_Wheel::cLuxProp_Wheel(const tString &asName, int alID, cLuxMap *apMap) 
 
 	mbAutoMoving = false;
 	mfAutoMoveGoal = 0;
-	
+
 	mRotatePid.SetErrorNum(10);
 	mRotatePid.p = 10.0f;
 	mRotatePid.i = 0.0f;
@@ -186,13 +186,13 @@ bool cLuxProp_Wheel::OnInteract(iPhysicsBody *apBody, const cVector3f &avPos)
 
 	if(mlStuckState !=0 && mbInteractionDisablesStuck)
 		SetStuckState(0, true);
-	
+
 	if(mlStuckState ==0 && mbShowHints)
 		gpBase->mpHintHandler->Add("EntityWheel", kTranslate("Hints", "EntityWheel"), 0);
 
 	cLuxPlayerStateVars::SetupInteraction(apBody, avPos);
 	gpBase->mpPlayer->ChangeState(eLuxPlayerState_InteractWheel);
-	
+
 	return true;
 }
 
@@ -200,7 +200,7 @@ bool cLuxProp_Wheel::OnInteract(iPhysicsBody *apBody, const cVector3f &avPos)
 
 void cLuxProp_Wheel::OnResetProperties()
 {
-	
+
 }
 
 
@@ -238,7 +238,7 @@ void cLuxProp_Wheel::OnSetupAfterLoad(cWorld *apWorld)
 
 void cLuxProp_Wheel::UpdatePropSpecific(float afTimeStep)
 {
-	if(mfStuckSoundTimer >0) mfStuckSoundTimer-=afTimeStep; 
+	if(mfStuckSoundTimer >0) mfStuckSoundTimer-=afTimeStep;
 
 	UpdateAngle(afTimeStep);
 	UpdateCheckLimit(afTimeStep);
@@ -249,7 +249,7 @@ void cLuxProp_Wheel::UpdatePropSpecific(float afTimeStep)
 
 void cLuxProp_Wheel::BeforePropDestruction()
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -266,9 +266,9 @@ eLuxFocusCrosshair cLuxProp_Wheel::GetFocusCrosshair(iPhysicsBody *apBody, const
 float cLuxProp_Wheel::OnInteractDebugDraw(cGuiSet *apSet,iFontData *apFont, float afStartY)
 {
 	apSet->DrawFont(apFont,cVector3f(5,afStartY,5),12,cColor(1,1),_W("WheelAngle: %f, Max: %f, Min: %f"),cMath::ToDeg(mfAngle),
-						cMath::ToDeg(mfMaxLimit),cMath::ToDeg(mfMinLimit)); 
+						cMath::ToDeg(mfMaxLimit),cMath::ToDeg(mfMinLimit));
 	afStartY += 13.0f;
-	
+
 	return afStartY;
 }
 
@@ -327,7 +327,7 @@ void cLuxProp_Wheel::SetStuckState(int alState, bool abEffects)
 void cLuxProp_Wheel::SetAngle(float afX, bool abAutoMoveToAngle)
 {
 	if(afX == mfAngle) return;
-	
+
 	float fWantedAngle = afX;
 	if(fWantedAngle < mfMinLimit) fWantedAngle = mfMinLimit;
 	if(fWantedAngle > mfMaxLimit) fWantedAngle = mfMaxLimit;
@@ -421,17 +421,17 @@ void cLuxProp_Wheel::UpdateAngle(float afTimeStep)
 	{
 		if(mlSpinDir == 1)
 		{
-			SetMaxJointAngle(mfMaxLimit);	
+			SetMaxJointAngle(mfMaxLimit);
 			mpHingeJoint->SetMinAngle(fSpinVal - cMath::ToRad(0.5f));
 		}
 		else if(mlSpinDir == -1)
 		{
-			SetMinJointAngle(mfMinLimit);	
+			SetMinJointAngle(mfMinLimit);
 			mpHingeJoint->SetMaxAngle(fSpinVal + cMath::ToRad(0.5f));
 		}
 		else
 		{
-			SetMaxJointAngle(mfMaxLimit);	
+			SetMaxJointAngle(mfMaxLimit);
 			SetMinJointAngle(mfMinLimit);
 		}
 	}
@@ -448,7 +448,7 @@ void cLuxProp_Wheel::UpdateCheckLimit(float afTimeStep)
 	if(mlStuckState !=0) return;
 
 	if(mfMaxLimit ==0 && mfMinLimit==0) return;
-	
+
 	///////////////////////
 	//Max
 	if(mfAngle > (mfMaxLimit - mfMaxLimitRange))
@@ -488,7 +488,7 @@ void cLuxProp_Wheel::UpdateAutoRotation(float afTimeStep)
 			float fWantedSpeed = (mfAngle - mfAutoMoveGoal) * 10.0f  + (mfPrevAngle - mfAngle)*afTimeStep*1.0f;
 
 			//Log("Angle: %f Wanted: %f Diff: %f Speed: %f\n", cMath::ToDeg(mfAngle), cMath::ToDeg(mfAutoMoveGoal),cMath::Abs(mfAngle-mfAutoMoveGoal), fWantedSpeed);
-			
+
 			cVector3f vRotateDir = mpHingeJoint->GetPinDir();
 			cVector3f vBodyVel = mpWheelBody->GetAngularVelocity();
 			cVector3f vHingeVel = vRotateDir * cMath::Vector3Dot(vRotateDir, vBodyVel);
@@ -496,11 +496,11 @@ void cLuxProp_Wheel::UpdateAutoRotation(float afTimeStep)
 
 			cVector3f vTorque = mRotatePid.Output(vWantedVel - vHingeVel, afTimeStep);
 			vTorque = cMath::MatrixMul(mpWheelBody->GetInertiaMatrix(), vTorque);
-			
+
 			mpWheelBody->AddTorque(vTorque);
 		}
 	}
-	
+
 	//If there is an interaction, do not do any slow down
 	if(IsInteractedWith())
 	{
@@ -529,7 +529,7 @@ void cLuxProp_Wheel::SetMaxJointAngle(float afMaxAngle)
 
 	if(fDistToMax > kPif){//TOo far away, no need to set limit.
 		mpHingeJoint->SetMaxAngle(k2Pif);
-		return; 
+		return;
 	}
 
 	float fJointMax = mfJointAngle + fDistToMax; //Get the value of the joint maximum.
@@ -558,7 +558,7 @@ void cLuxProp_Wheel::SetMinJointAngle(float afMinAngle)
 
 	if(fDistToMax > kPif){//TOo far away, no need to set limit.
 		mpHingeJoint->SetMinAngle(-k2Pif);
-		return; 
+		return;
 	}
 
 	float fJointMax = mfJointAngle - fDistToMax; //Get the value of the joint minimum
@@ -587,9 +587,9 @@ void cLuxProp_Wheel::ChangeState(int alState, bool abEffects)
 	if(mbSkipMiddleState && alState==0) return;
 
 	mlCurrentState = alState;
-	
+
 	tString sSound = "";
-	
+
 	/////////////////
 	//Max
 	if(mlCurrentState == 1)
@@ -684,7 +684,7 @@ void cLuxProp_Wheel::SaveToSaveData(iLuxEntity_SaveData* apSaveData)
 
 	kCopyToVar(pData,mfLastToMin);
 	kCopyToVar(pData,mfLastToMax);
-	
+
 	kCopyToVar(pData,mlCurrentState);
 	kCopyToVar(pData,mlStuckState);
 
@@ -712,7 +712,7 @@ void cLuxProp_Wheel::LoadFromSaveData(iLuxEntity_SaveData* apSaveData)
 	//Init
 	super_class::LoadFromSaveData(apSaveData);
 	cLuxProp_Wheel_SaveData *pData = static_cast<cLuxProp_Wheel_SaveData*>(apSaveData);
-	
+
 	//////////////////
 	//Set variables
 	kCopyFromVar(pData,mfAngle);

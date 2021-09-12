@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -35,10 +35,10 @@ enum eLuxLoadScreenState
 class cLuxLoadScreenHandler : public iLuxUpdateable
 {
 friend class cLuxLoadScreenHandler_SaveData;
-public:	
+public:
 	cLuxLoadScreenHandler();
 	~cLuxLoadScreenHandler();
-	
+
 	void LoadFonts();
 
 	void OnStart();
@@ -55,7 +55,7 @@ public:
 	* Called when game loading is done. Must be called after DrawGameScreen has been called!
 	*/
 	void GameScreenLoadDone(const tString& asEndSound, float afLoadTime);
-	
+
 	void DrawGameScreen();
 	void DrawMenuScreen();
 	void DrawBlankScreen();
@@ -68,7 +68,7 @@ public:
 	* If alRandomNum > 1, then it will randomize between 1 and alRandom for each LoadScreen giving entry the suffix XX (eg 01). If <=1 then no suffix is added
 	*/
 	void SetupLoadText(const tString& asCat, const tString& asEntry, int alRandomNum, const tString& asImage);
-	
+
 	const tString& GetLoadTextCat(){ return msLoadTextCat;}
 	const tString& GetLoadTextEntry(){ return msLoadTextEntry;}
 	const tString& GetLoadTextImage(){ return msLoadTextImage;}
@@ -78,11 +78,11 @@ private:
 	void Exit();
 	tString GetGameScreenTextEntry();
 	void LoadCurrentImage(const tString &asImage);
-	    
+
 	void UpdateGameState(float afTimeStep);
 	void DrawGameState(float afFrameTime);
 	void DrawGameScreen(cGuiSet *apSet);
-	
+
 	//////////////////
 	// Data
 	cGui *mpGui;
@@ -94,7 +94,7 @@ private:
 	cGuiSet *mpGuiSet;
 
 	cGuiGfxElement* mpWhiteGfx;
-	
+
 	cVector2f mvScreenSize;
 	cVector2f mvGuiSetCenterSize;//Size of the part that is inside a 4:3 ratio!
 	cVector2f mvGuiSetSize;
@@ -118,7 +118,7 @@ private:
 	// Variables
 	cGuiGfxElement* mpCurrentImage;
 	tString msCurrentImage;
-	
+
 	tString msLoadTextCat;
 	tString msLoadTextEntry;
 	tString msLoadTextImage;

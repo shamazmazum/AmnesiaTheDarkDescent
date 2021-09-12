@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -86,7 +86,7 @@ namespace hpl {
 		else
 		{
 			pSound = FindSampleData(asName, sPath);
-		
+
 			if(pSound==NULL && sPath!=_W(""))
 			{
 				pSound = mpSound->GetLowLevel()->LoadSoundData(	asName,sPath,"",abStream, abLoopStream);
@@ -97,7 +97,7 @@ namespace hpl {
 				}
 			}
 		}
-				
+
 		//Do _not_ increase user count here since that is used when creating channel
 
 		//if(!pSound) Error("Couldn't load sound data '%s'\n",asName.c_str());
@@ -116,7 +116,7 @@ namespace hpl {
 	void cSoundManager::Destroy(iResourceBase* apResource)
 	{
 		apResource->DecUserCount();
-			
+
 		iSoundData *pData = static_cast<iSoundData *>(apResource);
 		if(pData->IsStream() && pData->HasUsers()==false)
 		{
@@ -133,14 +133,14 @@ namespace hpl {
 		for(tSoundDataListIt streamIt=mlstStreamData.begin(); streamIt != mlstStreamData.end(); ++streamIt)
 		{
 			iSoundData *pStream = *streamIt;
-			
+
 			Log("  destroying %p\n",pStream);
 			Log("   file '%s'\n", cString::To8Char(pStream->GetFullPath()).c_str());
 
 			hplDelete(pStream);
 		}
 		mlstStreamData.clear();
-		
+
 		/////////////////////
 		// Normal samples
 		tResourceBaseMapIt it = m_mapResources.begin();
@@ -152,7 +152,7 @@ namespace hpl {
 			it= m_mapResources.begin();
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -160,7 +160,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	iSoundData *cSoundManager::FindSampleData(const tString &asName, tWString &asFilePath)
 	{
 		iSoundData *pData=NULL;
@@ -170,7 +170,7 @@ namespace hpl {
 			for(tStringListIt it = mlstFileFormats.begin();it!=mlstFileFormats.end();++it)
 			{
 				tString sNewName = cString::SetFileExt(asName,*it);
-				
+
 				pData = static_cast<iSoundData*> (FindLoadedResource(sNewName, asFilePath));
 				if((pData==NULL && asFilePath!=_W("")) || pData!=NULL)break;
 			}

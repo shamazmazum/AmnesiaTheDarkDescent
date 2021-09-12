@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -128,7 +128,7 @@ void cEditorObjectIndexEntryTexture::BuildEntryName(tString& asEntryName)
 void cEditorObjectIndexEntryTexture::BuildThumbnail()
 {
 	bool bIsUpdated = IsUpdated();
-	
+
 	iEditorObjectIndex* pIndex = mpParentDir->GetIndex();
 	iEditorBase* pEditor = pIndex->GetEditor();
 	cEditorThumbnailBuilder* pTmbBuilder = pEditor->GetThumbnailBuilder();
@@ -147,7 +147,7 @@ void cEditorObjectIndexEntryTexture::BuildThumbnail()
 
 		if(bIsUpdated==false)
 			pIndex->SetRefreshThumbnails(true);
-	}	
+	}
 }
 
 //----------------------------------------------------------------------------------------
@@ -254,10 +254,10 @@ iEditorObjectIndexEntry* cEditorObjectIndexDirTextures::CreateEntry()
 
 //----------------------------------------------------------------------------------------
 
-cEditorObjectIndexTextures::cEditorObjectIndexTextures(iEditorBase* apEditor, const tWString& asBaseDir) : iEditorObjectIndex(apEditor, 
-																															  asBaseDir, 
-																															  _W("tls"), 
-																															  "Textures", 
+cEditorObjectIndexTextures::cEditorObjectIndexTextures(iEditorBase* apEditor, const tWString& asBaseDir) : iEditorObjectIndex(apEditor,
+																															  asBaseDir,
+																															  _W("tls"),
+																															  "Textures",
 																															  "Texture",
 																															  false)
 {
@@ -286,17 +286,17 @@ iEditorObjectIndexDir* cEditorObjectIndexTextures::CreateDir(iEditorObjectIndexD
 //----------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------
 
-cTextureBrowserIcon::cTextureBrowserIcon(cEditorWindowTextureBrowser* apBrowser,iWidget* apWidget, 
+cTextureBrowserIcon::cTextureBrowserIcon(cEditorWindowTextureBrowser* apBrowser,iWidget* apWidget,
 										 cEditorObjectIndexEntryTexture* apEntry)
 {
 	iEditorBase* pEditor = apBrowser->GetEditor();
 	cResources* pRes = pEditor->GetEngine()->GetResources();
 	cGraphics* pGfx = pEditor->GetEngine()->GetGraphics();
-	
+
 	mpBrowser = apBrowser;
 	mpEntry = apEntry;
 	mpSet = mpBrowser->GetEditor()->GetSet();
-	
+
 	int lWidth = mpEntry->GetTextureSize().x;
 	int lHeight = mpEntry->GetTextureSize().y;
 
@@ -308,7 +308,7 @@ cTextureBrowserIcon::cTextureBrowserIcon(cEditorWindowTextureBrowser* apBrowser,
 	mpIconBG->AddCallback(eGuiMessage_MouseDoubleClick, this, kGuiCallback(Frame_OnDoubleClick));
 	mpIconBG->SetBackgroundZ(0);
 	mpIconBG->SetBackGroundColor(cColor(1,1));
-	
+
 	///////////////////////////
 	// File name label
 	float fFrameMiddle = mpIconBG->GetSize().x*0.5f;
@@ -361,11 +361,11 @@ cTextureBrowserIcon::cTextureBrowserIcon(cEditorWindowTextureBrowser* apBrowser,
 			fScale = 128.0f/lHeight;
 	}
 
-	mpTexture = mpSet->CreateWidgetImage("", 
-										 cVector3f(65,65,0.1f) - cVector3f(lWidth*fScale,lHeight*fScale,0)*0.5f, 
+	mpTexture = mpSet->CreateWidgetImage("",
+										 cVector3f(65,65,0.1f) - cVector3f(lWidth*fScale,lHeight*fScale,0)*0.5f,
 										 cVector2f(lWidth*fScale, lHeight*fScale),
-										 eGuiMaterial_Diffuse, 
-										 false, 
+										 eGuiMaterial_Diffuse,
+										 false,
 										 mpIconBG);
 
 	cEditorThumbnailBuilder* pThbBuilder = pEditor->GetThumbnailBuilder();
@@ -474,10 +474,10 @@ kGuiCallbackDeclaredFuncEnd(cTextureBrowserIcon,Frame_OnDoubleClick);
 
 //----------------------------------------------------------------------------------------
 
-cEditorWindowTextureBrowser::cEditorWindowTextureBrowser(iEditorBase* apEditor, 
+cEditorWindowTextureBrowser::cEditorWindowTextureBrowser(iEditorBase* apEditor,
 														 eEditorTextureResourceType aType,
-														 const tWString& asStartDir, 
-														 tWString& asTextureFilename, 
+														 const tWString& asStartDir,
+														 tWString& asTextureFilename,
 														 void* apCallbackObject, tGuiCallbackFunc apCallback,
 														 const tWStringList& alstFilters) : iEditorWindowPopUp(apEditor, "Texture Browser",true,true,true, cVector2f(800,550)),
 																							iFileBrowser(asTextureFilename.empty()?asStartDir:cString::GetFilePathW(asTextureFilename)),
@@ -529,7 +529,7 @@ void cEditorWindowTextureBrowser::SetSelectedIcon(cTextureBrowserIcon* apIcon)
 		}
 
 		msTextureFilename = sFile;
-		mpLabelTextureFilename->SetText(cString::GetFileNameW(sFile));		
+		mpLabelTextureFilename->SetText(cString::GetFileNameW(sFile));
 	}
 }
 
@@ -576,7 +576,7 @@ void cEditorWindowTextureBrowser::OnInitLayout()
 {
 	iEditorWindowPopUp::OnInitLayout();
 	mpWindow->SetText(_W("Texture Browser"));
-	
+
 	mpComboBoxCurrentDirectory = mpSet->CreateWidgetComboBox(cVector3f(5,30,10), cVector2f(200,25), _W(""), mpWindow);
 	mpComboBoxCurrentDirectory->AddCallback(eGuiMessage_SelectionChange, this, kGuiCallback(CurrentDirectory_OnSelectionChange));
 
@@ -650,7 +650,7 @@ void cEditorWindowTextureBrowser::PopulateTextureList()
 	// Clear current icons and selection
 	STLDeleteAll(mvIcons);
 	mpSelectedIcon = NULL;
-    
+
 	//////////////////////////////
 	// Check if index exists
 	//bool bContentFilePresent = pDoc->CreateFromFile(sIndexFilename);
@@ -721,7 +721,7 @@ bool cEditorWindowTextureBrowser::CurrentDirectory_OnSelectionChange(iWidget* ap
 	int lSelection = mpComboBoxCurrentDirectory->GetSelectedItem();
 
 	tWString sDir;
-	
+
 	////////////////////////////////////////
 	// If selection is not last item, remove items from selection onwards, then navigate to selection
 	if(lSelection != lNumItems-1)
@@ -735,7 +735,7 @@ bool cEditorWindowTextureBrowser::CurrentDirectory_OnSelectionChange(iWidget* ap
 
 		NavigateTo(sDir);
 	}
-	
+
 	return true;
 }
 kGuiCallbackDeclaredFuncEnd(cEditorWindowTextureBrowser, CurrentDirectory_OnSelectionChange);

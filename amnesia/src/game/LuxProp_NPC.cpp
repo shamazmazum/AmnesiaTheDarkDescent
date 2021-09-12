@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -83,7 +83,7 @@ void cLuxPropLoader_NPC::LoadVariables(iLuxProp *apProp, cXmlElement *apRootElem
 				Error("Move head Bone '%s' does not exist in '%s'!\n", vBoneNameVec[i].c_str(), msFileName.c_str());
 				continue;
 			}
-			
+
 			//////////////////
 			//Multiplier
 			boneData.mfMul = vBoneMulVec[i];
@@ -96,7 +96,7 @@ void cLuxPropLoader_NPC::LoadVariables(iLuxProp *apProp, cXmlElement *apRootElem
 		}
 	}
 
-	
+
 	///////////////////////////
 	// General
 	pNPC->mfHeadMoveSpeedMul = GetVarFloat("HeadMoveSpeedMul", 0);
@@ -149,7 +149,7 @@ cLuxProp_NPC::~cLuxProp_NPC()
 
 void cLuxProp_NPC::AfterWorldLoad()
 {
-	if(msFollowPlayerArea == "") 
+	if(msFollowPlayerArea == "")
 	{
 		Warning("NPC '%s' does not have a follow player area!\n", msName.c_str());
 		return;
@@ -180,7 +180,7 @@ bool cLuxProp_NPC::OnInteract(iPhysicsBody *apBody, const cVector3f &avPos)
 
 void cLuxProp_NPC::OnSetupAfterLoad(cWorld *apWorld)
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -240,7 +240,7 @@ void cLuxProp_NPC::SetAwake(bool abX, bool abEffects)
 
 void cLuxProp_NPC::OnConnectionStateChange(iLuxEntity *apEntity, int alState)
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -289,7 +289,7 @@ void cLuxProp_NPC::UpdateHeadMovement(float afTimeStep)
 	////////////////////////////////
 	// Calculate angle to player
 	float fWantedAngle = 0;
-	
+
 	/////////////////////////////////
 	// If player is in area, look at him!
 	if(mbPlayerIsInArea && mbAwake && mbFollowPlayer)
@@ -302,7 +302,7 @@ void cLuxProp_NPC::UpdateHeadMovement(float afTimeStep)
 		vFwd.y =0; vFwd.Normalize();
 		vRight.y =0; vRight.Normalize();
 		vToPlayer.y=0; vToPlayer.Normalize();
-		
+
 		//Calculate angle and get correct sign.
 		fWantedAngle = cMath::Vector3Angle(vFwd, vToPlayer);
 		if(cMath::Vector3Dot(vRight, vToPlayer)<0)	fWantedAngle = -fWantedAngle;
@@ -318,7 +318,7 @@ void cLuxProp_NPC::UpdateHeadMovement(float afTimeStep)
 
 		//Calculate the turn speed and clamp to max
 		float fTurnSpeed = cMath::Clamp(mfHeadMoveSpeedMul * fAngleDist, -mfHeadMoveMaxSpeed, mfHeadMoveMaxSpeed);
-		
+
 		mfHeadAngle += fTurnSpeed * afTimeStep;
 	}
 
@@ -328,7 +328,7 @@ void cLuxProp_NPC::UpdateHeadMovement(float afTimeStep)
 	{
 		cLuxProp_NPC_HeadMoveBone& boneData = mvHeadMoveBones[i];
 		if(boneData.mlBoneIdx<0) continue;
-        
+
 		cBoneState *pBoneState = mpMeshEntity->GetBoneState(boneData.mlBoneIdx);
 
 		pBoneState->SetUsePreTransform(true);
@@ -407,7 +407,7 @@ void cLuxProp_NPC::LoadFromSaveData(iLuxEntity_SaveData* apSaveData)
 	//Init
 	super_class::LoadFromSaveData(apSaveData);
 	cLuxProp_NPC_SaveData *pData = static_cast<cLuxProp_NPC_SaveData*>(apSaveData);
-	
+
 	//////////////////
 	//Set variables
 	kCopyFromVar(pData, msFollowPlayerArea);

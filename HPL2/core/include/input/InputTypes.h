@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -297,7 +297,7 @@ namespace hpl {
 	struct cKeyPress
 	{
 		cKeyPress(){}
-		cKeyPress(eKey aKey, int alUnicode,int alModifier) 
+		cKeyPress(eKey aKey, int alUnicode,int alModifier)
 			: mKey(aKey), mlUnicode(alUnicode), mlModifier(alModifier) {}
 
 		eKey mKey;
@@ -349,7 +349,7 @@ namespace hpl {
 		eGamepadButton_27,
 		eGamepadButton_28,
 		eGamepadButton_29,
-		
+
 		eGamepadButton_LastEnum,
         // Pretty symbols for SDL2
         eGamepadButton_A = eGamepadButton_0,
@@ -381,7 +381,7 @@ namespace hpl {
 		eGamepadAxis_7,
 		eGamepadAxis_8,
 		eGamepadAxis_9,
-				
+
 		eGamepadAxis_LastEnum,
         // Pretty symbosl for SDL2
         eGamepadAxis_LeftX = eGamepadAxis_0,
@@ -397,7 +397,7 @@ namespace hpl {
 		eGamepadAxisRange_Dead,
 		eGamepadAxisRange_Positive,
 		eGamepadAxisRange_Negative,
-		
+
 		eGamepadAxisRange_LastEnum
 	};
 
@@ -435,7 +435,7 @@ namespace hpl {
 	enum eGamepadBall
 	{
 		eGamepadBall_0,
-		
+
 		eGamepadBall_LastEnum
 	};
 
@@ -444,7 +444,7 @@ namespace hpl {
 	struct cGamepadInputData
 	{
 		cGamepadInputData() : mlPadIndex(0), mInputType(eGamepadInputType_LastEnum), mlInputId(0), mfInputValue(0) {}
-		cGamepadInputData(int alPadIndex, eGamepadInputType aType, int alInputId, float afInputValue) 
+		cGamepadInputData(int alPadIndex, eGamepadInputType aType, int alInputId, float afInputValue)
 			: mlPadIndex(alPadIndex), mInputType(aType), mlInputId(alInputId), mfInputValue(afInputValue) {}
 
 		int mlPadIndex;

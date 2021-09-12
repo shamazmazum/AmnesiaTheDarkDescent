@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -47,7 +47,7 @@ namespace hpl {
 		//Format:
 		mvAttribFormat.push_back(WGL_DRAW_TO_PBUFFER_ARB);
 		mvAttribFormat.push_back(true);
-		
+
 		mvAttribFormat.push_back(WGL_BIND_TO_TEXTURE_RGBA_ARB);
 		mvAttribFormat.push_back(true);
 		//Use this if the texture is a rectangle: (nVidia only!)
@@ -60,19 +60,19 @@ namespace hpl {
 		mvAttribFormat.push_back(8);
 		mvAttribFormat.push_back(WGL_COLOR_BITS_ARB);
 		mvAttribFormat.push_back(32);
-		
+
 		//Buffer:
 		mvAttribBuffer.push_back(WGL_PBUFFER_LARGEST_ARB);
 		mvAttribBuffer.push_back(true);
 		mvAttribBuffer.push_back(WGL_TEXTURE_FORMAT_ARB);
 		mvAttribBuffer.push_back(WGL_TEXTURE_RGBA_ARB);
-		
+
 		mvAttribBuffer.push_back(WGL_TEXTURE_TARGET_ARB);
 		mvAttribBuffer.push_back(WGL_TEXTURE_2D_ARB);
 		//Use this if the texture is a rectangle: (nVidia only!)
 		//mvAttribBuffer.push_back(WGL_TEXTURE_RECTANGLE_NV);
-		
-		
+
+
 		mvAttribBuffer.push_back(WGL_MIPMAP_TEXTURE_ARB);
 		mvAttribBuffer.push_back(false);
 
@@ -91,7 +91,7 @@ namespace hpl {
 	{
 		#ifdef WIN32
 		//This should not be deleted if it is shared.
-		wglDeleteContext(mGLContext);				
+		wglDeleteContext(mGLContext);
 		wglReleasePbufferDCARB(mPBuffer, mDeviceContext);
 		wglDestroyPbufferARB(mPBuffer);
 		#elif defined(__linux__)
@@ -105,7 +105,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	bool cPBuffer::Init(unsigned int alWidth,unsigned int alHeight, cColor aCol)
 	{
 		#ifdef WIN32
@@ -124,7 +124,7 @@ namespace hpl {
 			Error("Couldn't find any pixel format!\n");
 			return false;
 		}
-				
+
 		//Create the buffer
 		mPBuffer = wglCreatePbufferARB(CurrentHdc, lFormat, mlWidth, mlHeight, &mvAttribBuffer[0]);
 		if (!mPBuffer)
@@ -152,24 +152,24 @@ namespace hpl {
 				Error("Error sharing lists.\n");
 			}
 		}
-		
+
 		//Check the real dimensions of the PBuffer
 		wglQueryPbufferARB(mPBuffer, WGL_PBUFFER_WIDTH_ARB, &mlWidth);
 		wglQueryPbufferARB(mPBuffer, WGL_PBUFFER_HEIGHT_ARB, &mlHeight);
-			
+
 		//Init some GL stuff with the Buffer.
 		#ifdef WIN32
 		HDC OldHDC = wglGetCurrentDC();
 		HGLRC OldGLRC = wglGetCurrentContext();
 		#endif
 		MakeCurrentContext();
-				
+
 		if(mbShareObjects)
 		{
 			cLowLevelGraphicsSDL* pSDLGfx = static_cast<cLowLevelGraphicsSDL*>(mpLowLevelGraphics);
 			pSDLGfx->SetupGL();
 		}
-		
+
 		mpLowLevelGraphics->SetClearColor(aCol);
 		mpLowLevelGraphics->ClearFrameBuffer(eClearFrameBufferFlag_Color);
 
@@ -192,9 +192,9 @@ namespace hpl {
 		//return glXMakeCurrent(dpy, gPBuffer, glCtx);
 		#endif
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	void cPBuffer::Bind()
 	{
 		#ifdef WIN32
@@ -203,11 +203,11 @@ namespace hpl {
 			Error("Error Binding pbuffer...\n");
 		}
 		#elif defined(__linux__)
-		#endif		
+		#endif
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	void cPBuffer::UnBind()
 	{
 		#ifdef WIN32

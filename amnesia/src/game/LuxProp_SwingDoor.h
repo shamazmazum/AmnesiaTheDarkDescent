@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -42,7 +42,7 @@ public:
 	int mlCurrentMeshEntity;
 
 
-    cEngineMeshEntity_SaveData mDamageMesh1;	
+    cEngineMeshEntity_SaveData mDamageMesh1;
 	cEngineMeshEntity_SaveData mDamageMesh2;
 };
 
@@ -65,7 +65,7 @@ class cLuxProp_SwingDoor : public iLuxProp
 {
 typedef iLuxProp super_class;
 friend class cLuxPropLoader_SwingDoor;
-public:	
+public:
 	cLuxProp_SwingDoor(const tString &asName, int alID, cLuxMap *apMap);
 	virtual ~cLuxProp_SwingDoor();
 
@@ -73,13 +73,13 @@ public:
 	//Genera
 	bool CanInteract(iPhysicsBody *apBody);
 	bool OnInteract(iPhysicsBody *apBody, const cVector3f &avPos);
-	
+
 	void OnSetupAfterLoad(cWorld *apWorld);
 
 	void OnResetProperties();
 
 	void UpdatePropSpecific(float afTimeStep);
-	
+
 	void BeforePropDestruction();
 
 	eLuxFocusCrosshair GetFocusCrosshair(iPhysicsBody *apBody, const cVector3f &avPos);
@@ -92,7 +92,7 @@ public:
 	//////////////////////
 	//Properties
 	iLuxInteractData_RotateBase* GetMoveBaseData(){ return &mSwingDoorData;}
-	
+
 	void SetClosed(bool abClosed, bool abEffects);
 	bool GetClosed(){ return mbClosed;}
 
@@ -143,7 +143,7 @@ private:
 	tString msLockOnSound;
 	tString msLockOffSound;
 	tString msInteractLockedSound;
-	
+
 	bool mbDisableBreakable;
 	bool mbBreakable;
 

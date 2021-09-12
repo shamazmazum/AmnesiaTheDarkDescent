@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -62,7 +62,7 @@ namespace hpl {
 		cVector3f mvIntersectNormal;
 		float mfClosestDist;
 	};
-	
+
 	//------------------------------------------
 
 	class cVerletParticle
@@ -78,10 +78,10 @@ namespace hpl {
 		void SetPosition(const cVector3f& avPos, bool abSetPrevPos);
 		void AddPosition(const cVector3f& avAdd, bool abSetPrevPos){ SetPosition(mvPosition+avAdd, abSetPrevPos); }
 		inline const cVector3f& GetPosition() const { return mvPosition; }
-		
+
 		inline void SetPrevPosition(const cVector3f& avPos) { mvPrevPosition = avPos; }
 		inline const cVector3f& GetPrevPosition() const { return mvPrevPosition; }
-		
+
 		inline void SetSmoothPosition(const cVector3f& avPos) { mvSmoothPosition = avPos;}
 		inline const cVector3f& GetSmoothPosition() const { return mvSmoothPosition;}
 
@@ -98,7 +98,7 @@ namespace hpl {
 	};
 
 	//------------------------------------------
-	
+
 	class iVerletParticleContainer
 	{
 		friend class cVerletParticleRayCallback;
@@ -119,7 +119,7 @@ namespace hpl {
 
 		void SetDamping(float afX);
 		float GetDamping(){ return mfDamping;}
-		
+
 		void SetParticleRadius(float afX);
 		float GetParticleRadius(){ return mfParticleRadius;}
 
@@ -134,13 +134,13 @@ namespace hpl {
 		inline int GetUpdateCount() const { return mlUpdateCount; }
 
 		cVerletParticleIterator GetParticleIterator(){ return cVerletParticleIterator(&mlstParticles); }
-		
+
 	protected:
 		virtual bool CheckParticleBodyCollision(iPhysicsBody *apBody)=0;
 		virtual bool CheckSpecificDataSleeping()=0;	//Tested when container is NOT sleeping
 		virtual bool CheckSpecificDataAwake()=0;		//Tested when container IS sleeping
 		virtual void SetSpecificDataSleeping(bool abSleeping)=0;
-		
+
 		void PreUpdate(float afTimeStep);
 
 		void UpdateLengthConstraint(cVerletParticle *apP1, cVerletParticle *apP2, float afLength);
@@ -152,7 +152,7 @@ namespace hpl {
 		int mlUniqueID;
 
 		cVerletParticleRayCallback *mpRayParticleCallback;
-		
+
 		tVerletParticleList mlstParticles;
 
 		bool mbCollide;
@@ -163,11 +163,11 @@ namespace hpl {
 		float mfSleepCheckSqrLimit;
 		int mlSleepCount;
 		int mlSleepMaxCount;
-                
+
 		cVector3f mvGravityForce;
 		float mfDamping;
 		float mfDampingMul;
-		
+
 		float mfParticleRadius;
 
 		float mfSlideAmount;

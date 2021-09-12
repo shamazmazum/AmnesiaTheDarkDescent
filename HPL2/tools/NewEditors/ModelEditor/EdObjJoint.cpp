@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -51,10 +51,10 @@ cTypeJoint::cTypeJoint() : iEdScnObjType(_W("Joint"), "")
 	AddFloat(eJointFloat_MaxMoveFreq, "MaxMoveFreq", 1.1f);
 	AddFloat(eJointFloat_MaxMoveFreqSpeed, "MaxMoveFreqSpeed", 0.7f);
 	AddFloat(eJointFloat_MaxMoveVolume, "MaxMoveVolume", 0.8f);
-	
+
 	AddFloat(eJointFloat_MiddleMoveSpeed, "MiddleMoveSpeed", 0.5f);
 	AddFloat(eJointFloat_MiddleMoveVolume, "MiddleMoveVolume", 0.5f);
-	
+
 	AddString(eJointStr_MinLimitSound, "MinLimitSound");
 	AddFloat(eJointFloat_MinLimitMinSpeed, "MinLimitMinSpeed");
 	AddFloat(eJointFloat_MinLimitMaxSpeed, "MinLimitMaxSpeed");
@@ -196,7 +196,7 @@ bool iEdObjJoint::GetProperty(int alPropID, float& afX)
 	default:
 		return iEdScnObject::GetProperty(alPropID, afX);
 	}
-	
+
 	return true;
 }
 
@@ -236,7 +236,7 @@ bool iEdObjJoint::GetProperty(int alPropID, tString& asX)
 	default:
 		return iEdScnObject::GetProperty(alPropID, asX);
 	}
-	
+
 	return true;
 }
 
@@ -301,7 +301,7 @@ bool iEdObjJoint::SetProperty(int alPropID, const float afX)
 	default:
 		return iEdScnObject::SetProperty(alPropID, afX);
 	}
-	
+
 	return true;
 }
 
@@ -341,7 +341,7 @@ bool iEdObjJoint::SetProperty(int alPropID, const tString& asX)
 	default:
 		return iEdScnObject::SetProperty(alPropID, asX);
 	}
-	
+
 	return true;
 }
 
@@ -395,7 +395,7 @@ int iEdObjJoint::GetParentBodyID()
 {
 	int lID = -1;
 	if(mpParentBody) lID = mpParentBody->GetID();
-	
+
 	return lID;
 }
 
@@ -403,7 +403,7 @@ int iEdObjJoint::GetChildBodyID()
 {
 	int lID = -1;
 	if(mpChildBody) lID = mpChildBody->GetID();
-	
+
 	return lID;
 }
 
@@ -433,7 +433,7 @@ iEdAction* iEdObjJoint::CreateSetChildBodyAction(cEdObjBody* apBody)
 void iEdObjJoint::AddToOutlineSpecific(cWidgetListBox* apList, int alLevel, tScnObjList& alstAddedChildren)
 {
 	cEdObjBody* vBodies[] = { GetParentBody(), GetChildBody() };
-	
+
 	tWString sJointConnectedEntryPrefix[] = { _W("Parent"), _W("Child") };
 
     for(int i=0;i<2;++i)

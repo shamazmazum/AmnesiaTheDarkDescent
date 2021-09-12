@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -40,7 +40,7 @@ namespace hpl {
 			it->second = asVal;
 			return;
 		}
-		
+
 		m_mapVars.insert(tParseVarMap::value_type(asName,asVal));
 	}
 
@@ -48,9 +48,9 @@ namespace hpl {
 	{
 		Add(asName, cString::ToString(alVal));
 	}
-	
+
 	void cParserVarContainer::Add(const tString& asName, float afVal)
-	{	
+	{
 		char sTemp[1024];
 		sprintf(sTemp, "%f", afVal);
 
@@ -74,13 +74,13 @@ namespace hpl {
 	{
 		tParseVarMapIt it = m_mapVars.find(asName);
 		if(it == m_mapVars.end()) return NULL;
-        
+
 		return &it->second;
 	}
 
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	void cParserVarContainer::Clear()
 	{
 		m_mapVars.clear();
@@ -93,7 +93,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	cParserSymbolText* iParserSymbol::ToText()
 	{
 		return static_cast<cParserSymbolText*>(this);
@@ -125,7 +125,7 @@ namespace hpl {
 
 	cPreprocessParser::cPreprocessParser()
 	{
-		
+
 	}
 
 	//-----------------------------------------------------------------------
@@ -142,7 +142,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	bool cPreprocessParser::Parse(const tString* apInput, tString *apOutput, cParserVarContainer *apVarContainer,const tWString& asDir)
 	{
 		//////////////////////////////
@@ -160,7 +160,7 @@ namespace hpl {
 		mProcess = eSymbolProcess_PureText;
 		mlCurrentRow =1;
 		mlRowCount =1;
-		
+
 		STLDeleteAll(mlstSymbols);
 		mlstSymbols.clear();
 
@@ -171,13 +171,13 @@ namespace hpl {
 		{
 			eSymbolProcess currentProcess = mProcess;
 			GetNextString();
-		
+
 		    ParseStringToSymbol(currentProcess, msCurrentString);
 		}
-		
+
 		//////////////////////////////
 		// Parse symbols into output
-		
+
 		mSymbolIt = mlstSymbols.begin();
 		if(mSymbolIt == mlstSymbols.end())
 		{
@@ -189,7 +189,7 @@ namespace hpl {
 		{
 		    if(ParseSymbol(mpCurrentSymbol)==false) return false;
 		}
-		
+
 		return true;
 	}
 
@@ -225,12 +225,12 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	bool cPreprocessParser::EndOfInput()
 	{
 		if(mlInputPos >= (int)mpCurrentInput->length()) return true;
-		
-		return false;	
+
+		return false;
 	}
 
 	//-----------------------------------------------------------------------
@@ -247,7 +247,7 @@ namespace hpl {
 	{
 		msCurrentString = "";
 		mlCurrentRow = mlRowCount;
-		do 
+		do
 		{
 			//Get character
 			char lChar = (*mpCurrentInput)[mlInputPos];
@@ -257,7 +257,7 @@ namespace hpl {
 			//if(lChar == '\n')		printf("char: newline\n");
 			//else if(lChar == '\r')	printf("char: return\n");
 			//else					printf("char: '%c'\n",lChar);
-			
+
 			//////////////////////////////////
 			// Look for symbols
             if(DivideWordsToSymbols(mProcess))
@@ -271,9 +271,9 @@ namespace hpl {
 						if( lChar=='\n' || lChar=='\r' || mProcess == eSymbolProcess_Variable)
 							mProcess = eSymbolProcess_PureText;
 					}
-					
+
 					mlInputPos++;
-					
+
 					//Dunno if the continue is used for anything...
 					//if(msCurrentString.size() ==0)
 					//	continue;
@@ -336,7 +336,7 @@ namespace hpl {
 							}
 						}
 					}
-					
+
 					mlInputPos++;
 					mProcess = eSymbolProcess_Line;
 					return;
@@ -357,7 +357,7 @@ namespace hpl {
 					msCurrentString += lChar;
 				}
 			}
-			
+
 			//////////////////////////////////
 			//Check if end of string is reached.
 			if(EndOfInput())
@@ -377,15 +377,15 @@ namespace hpl {
 		if(asString =="elseif") return eParserKeyword_Elseif;
 		if(asString =="endif")	return eParserKeyword_Endif;
 		if(asString =="include")return eParserKeyword_Include;
-		
+
 		return eParserKeyword_LastEnum;
 	}
-	
+
 	eParserOperator cPreprocessParser::StringToOperator(const tString& asString)
 	{
 		if(asString =="&&") return eParserOperator_And;
 		if(asString =="||") return eParserOperator_Or;
-		
+
 		return eParserOperator_LastEnum;
 	}
 
@@ -408,7 +408,7 @@ namespace hpl {
 			//Check so the variable is not used a space or empty
 			if(asString.size()==0) return true;
 			if(asString[0] == ' ' || asString[0] == '\t') return true;
-			
+
 			AddSymbol( hplNew(cParserSymbolVariable,(asString,mlCurrentRow) ) );
 		}
 		//////////////////////////////////////
@@ -418,13 +418,13 @@ namespace hpl {
 			//Check so the variable is not used a space or empty
 			if(asString.size()==0) return true;
 			if(asString[0] == ' ' || asString[0] == '\t') return true;
-			
+
 			///////////////////////
 			//Keyword
 			eParserKeyword lKeyword = StringToKeyword(asString);
 			if(lKeyword != eParserKeyword_LastEnum)
 			{
-				AddSymbol( hplNew(cParserSymbolKeyword,(lKeyword,mlCurrentRow) ) );	
+				AddSymbol( hplNew(cParserSymbolKeyword,(lKeyword,mlCurrentRow) ) );
 				return true;
 			}
 			///////////////////////
@@ -463,7 +463,7 @@ namespace hpl {
 			mpCurrentSymbol = NULL;
 			return;
 		}
-		
+
 		mpCurrentSymbol = *mSymbolIt;
 	}
 
@@ -490,12 +490,12 @@ namespace hpl {
 
 		switch(apSymbol->GetType())
 		{
-		case eParserSymbol_Text:		return ParseText(apSymbol->ToText()); 
+		case eParserSymbol_Text:		return ParseText(apSymbol->ToText());
 		case eParserSymbol_Variable:	return ParseVariable(apSymbol->ToVariable());
 		case eParserSymbol_Operator:	return ParseOperator(apSymbol->ToOperator());
 		case eParserSymbol_Keyword:		return ParseKeyword(apSymbol->ToKeyword());
 		}
-		
+
 		Error("Parser failed: Invalid symbol type %d on row %d!\n",apSymbol->GetType() ,apSymbol->mlRow);
 
 		return false;
@@ -511,9 +511,9 @@ namespace hpl {
 
 		return true;
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	bool cPreprocessParser::ParseVariable(cParserSymbolVariable *apVar)
 	{
 		tString *pVar = GetVar(apVar->msName);
@@ -532,7 +532,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	bool cPreprocessParser::ParseOperator(cParserSymbolOperator *apOp)
 	{
 		Error("Parser failed: Unexpected operator on row %d!\n", apOp->mlRow);
@@ -581,7 +581,7 @@ namespace hpl {
 			GetNextSymbol();
 			if(EndOfSymbols() || mpCurrentSymbol->GetType() != eParserSymbol_Operator)
 			{
-				break;	
+				break;
 			}
             else
 			{
@@ -599,7 +599,7 @@ namespace hpl {
 	{
 		if(apSymbol==NULL) return false;
 		if(apSymbol->GetType()!= eParserSymbol_Keyword) return false;
-		
+
 		for(int i=0; i<alAmount; ++i)
 		{
 			if(apSymbol->ToKeyword()->mKeyword == apKeywordArray[i]) return true;
@@ -610,13 +610,13 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	
+
 	bool cPreprocessParser::ParseKeyword(cParserSymbolKeyword *apKeyword)
 	{
 		eParserKeyword lKeyword = apKeyword->mKeyword;
 
 		//printf("Parsing keyword %d at row %d\n",apKeyword->mKeyword, apKeyword->mlRow);
-		
+
 		////////////////////////////////////////
 		//Ifdef
 		if(lKeyword == eParserKeyword_Ifdef)
@@ -628,14 +628,14 @@ namespace hpl {
 			bool bStatementWasTrue = false;
 			bool bHasFoundCorrectPassage = false;
             eParserKeyword currentKeyword = lKeyword;
-			
+
 			/////////////////////////////////////////////////
 			//Go through symbols until endif or end of symbols has been encountered
 			while( currentKeyword != eParserKeyword_Endif && EndOfSymbols()==false)
 			{
 				//printf(" current keyword: %d\n",currentKeyword);
 
-				if(	currentKeyword == eParserKeyword_Ifdef || 
+				if(	currentKeyword == eParserKeyword_Ifdef ||
 					currentKeyword == eParserKeyword_Elseif)
 				{
 					GetNextSymbol();
@@ -648,19 +648,19 @@ namespace hpl {
 				{
 					GetNextSymbol();
 				}
-				
+
 				/////////////////////////////
 				//Statement true, parse until endif is found
 				if( bHasFoundCorrectPassage == false &&
 					(bStatementWasTrue || currentKeyword ==eParserKeyword_Else) )
 				{
 					bHasFoundCorrectPassage = true;
-					while(	EndOfSymbols()==false && 
+					while(	EndOfSymbols()==false &&
 							KeyWordIsOfType(mpCurrentSymbol,vKeywords,lKeywordNum)==false )
 					{
 						ParseSymbol(mpCurrentSymbol);
 					}
-					
+
 				}
 				/////////////////////////////
 				//Statement NOT true. Skip parsing until next valid keyword.
@@ -668,7 +668,7 @@ namespace hpl {
 				{
 					int lIfDefCount =0;
 
-					while(	EndOfSymbols()==false && 
+					while(	EndOfSymbols()==false &&
 							(KeyWordIsOfType(mpCurrentSymbol,vKeywords,lKeywordNum)==false || lIfDefCount>0) )
 					{
 						//if an idef, we need to skip all else, elseif, etc until a endif is found.
@@ -684,14 +684,14 @@ namespace hpl {
 							}
 						}
 						GetNextSymbol();
-						
+
 					}
 				}
 				if(EndOfSymbols()==false)
 					currentKeyword = mpCurrentSymbol->ToKeyword()->mKeyword;
 			}
 			GetNextSymbol();
-			
+
 		}
 		////////////////////////////////////////
 		//Define
@@ -707,12 +707,12 @@ namespace hpl {
 					Error("Parser failed: Keyword define at row %d does not meet syntax: '@define var value'!\n", apKeyword->mlRow);
 					return false;
 				}
-				if(i==0)				
+				if(i==0)
 					pVarName = mpCurrentSymbol->ToVariable();
 				else
 					pVarVal = mpCurrentSymbol->ToVariable();
 			}
-			
+
             mParsingVars.Add(pVarName->msName, pVarVal->msName);
 			GetNextSymbol();
 		}
@@ -732,14 +732,14 @@ namespace hpl {
 				sPath = cString::SetFilePathW(cString::To16Char(sFile), msCurrentDirectory);
 			else
 				sPath = cString::To16Char(sFile);
-			
+
 			if(cPlatform::FileExists(sPath))
 			{
 				unsigned int lFileSize = cPlatform::GetFileSize(sPath);
 				tString sFileData;
 				sFileData.resize(lFileSize);
 				cPlatform::CopyFileToBuffer(sPath,&sFileData[0],lFileSize);
-				
+
 				*mpCurrentOutput += sFileData;
 			}
 			else
@@ -758,10 +758,10 @@ namespace hpl {
 			Error("Parser failed: Keyword %d at row %d is not valid!\n", lKeyword, apKeyword->mlRow);
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 }

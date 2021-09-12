@@ -117,7 +117,7 @@ static int StringCmp(const string &a, const string &b)
 	return cmp;
 }
 
-static void StringCmp_Generic(asIScriptGeneric * gen) 
+static void StringCmp_Generic(asIScriptGeneric * gen)
 {
   string * a = static_cast<string *>(gen->GetObject());
   string * b = static_cast<string *>(gen->GetArgAddress(0));
@@ -557,7 +557,7 @@ static void StringEqual_Generic(asIScriptGeneric *gen)
     *(bool*)gen->GetAddressOfReturnLocation() = r;
 }
 
-static void StringEquals_Generic(asIScriptGeneric * gen) 
+static void StringEquals_Generic(asIScriptGeneric * gen)
 {
 	string * a = static_cast<string *>(gen->GetObject());
 	string * b = static_cast<string *>(gen->GetArgAddress(0));

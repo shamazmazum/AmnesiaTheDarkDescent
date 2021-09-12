@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -54,7 +54,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// PUBLIC METHODS
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
 
 	iVertexBuffer* cMeshCreator::CreateWireframeVertexBuffer(iVertexBuffer *apSrc)
@@ -64,7 +64,7 @@ namespace hpl {
         pDest->ResizeIndices(apSrc->GetIndexNum()*4);
 		unsigned int* pDestArray = pDest->GetIndices();
 		int lDestCount=0;
-		
+
 		unsigned int* pIdxArray = apSrc->GetIndices();
 		for(int tri=0; tri < apSrc->GetIndexNum(); tri+=3)
 		{
@@ -73,7 +73,7 @@ namespace hpl {
 			for(int i=0; i<3; ++i)
 			{
 				int lNext = i+1 >=3 ? 0 : i+1;
-				pDestArray[lDestCount] = pTri[i]; 
+				pDestArray[lDestCount] = pTri[i];
 				pDestArray[lDestCount+1] = pTri[lNext];
                 lDestCount+=2;
 			}
@@ -85,7 +85,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	cMesh* cMeshCreator::CreateBox(const tString &asName,cVector3f avSize, const tString &asMaterial)
 	{
 		cMesh *pMesh = hplNew( cMesh, (asName, _W(""), mpResources->GetMaterialManager(), mpResources->GetAnimationManager()) );
@@ -102,8 +102,8 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	cMesh* cMeshCreator::CreatePlane(const tString& asName, const cVector3f& avCorner1, const cVector3f& avCorner2, 
-									 const cVector2f& avCorner1UV, const cVector2f& avCorner2UV, const cVector2f& avCorner3UV, const cVector2f& avCorner4UV, 
+	cMesh* cMeshCreator::CreatePlane(const tString& asName, const cVector3f& avCorner1, const cVector3f& avCorner2,
+									 const cVector2f& avCorner1UV, const cVector2f& avCorner2UV, const cVector2f& avCorner3UV, const cVector2f& avCorner4UV,
 									 const tString& asMaterial)
 	{
 		if(avCorner1==avCorner2)
@@ -181,7 +181,7 @@ namespace hpl {
 		{
 			vCoords[i]-=vFirstCorner;
 		}
-		
+
 		iVertexBuffer* pVtxBuffer = mpLowLevelGraphics->CreateVertexBuffer(
 								eVertexBufferType_Hardware,
 								eVertexBufferDrawType_Tri, eVertexBufferUsageType_Dynamic,4,6);
@@ -190,7 +190,7 @@ namespace hpl {
 		pVtxBuffer->CreateElementArray(eVertexBufferElement_Color0,eVertexBufferElementFormat_Float,4);
 		pVtxBuffer->CreateElementArray(eVertexBufferElement_Texture0,eVertexBufferElementFormat_Float,3);
 
-		cVector3f vTexCoords[4] = 
+		cVector3f vTexCoords[4] =
 		{
 			cVector3f(avCorner1UV.x, avCorner1UV.y,0),
 			cVector3f(avCorner2UV.x, avCorner2UV.y,0),			// Start Corner
@@ -206,13 +206,13 @@ namespace hpl {
 			pVtxBuffer->AddVertexVec3f(eVertexBufferElement_Normal,cVector3f(0,1,0));
 
 		}
-		
+
 		for(int i=0;i<3;i++) pVtxBuffer->AddIndex(i);
 		for(int i=2;i<5;i++) pVtxBuffer->AddIndex(i==4?0:i);
 
 		pVtxBuffer->Compile(eVertexCompileFlag_CreateTangents);
 
-		cMesh *pMesh = hplNew( cMesh, (asName, _W(""), mpResources->GetMaterialManager(), mpResources->GetAnimationManager()) ); 
+		cMesh *pMesh = hplNew( cMesh, (asName, _W(""), mpResources->GetMaterialManager(), mpResources->GetAnimationManager()) );
 
 		cSubMesh *pSubMesh = pMesh->CreateSubMesh("Main");
 
@@ -230,7 +230,7 @@ namespace hpl {
 	{
 		//////////////////////////////////////////////////
 		// Create vertex buffer
-		iVertexBuffer* pVtxBuffer = mpLowLevelGraphics->CreateVertexBuffer(eVertexBufferType_Hardware, eVertexBufferDrawType_Tri, 
+		iVertexBuffer* pVtxBuffer = mpLowLevelGraphics->CreateVertexBuffer(eVertexBufferType_Hardware, eVertexBufferDrawType_Tri,
 																	eVertexBufferUsageType_Static);
 		pVtxBuffer->CreateElementArray(eVertexBufferElement_Position,eVertexBufferElementFormat_Float,4);
 		pVtxBuffer->CreateElementArray(eVertexBufferElement_Normal,eVertexBufferElementFormat_Float,3);
@@ -287,7 +287,7 @@ namespace hpl {
 
 		// Create north pole slice triangles
 		WrapUpperCap(pVtxBuffer, 0, 1, alSections);
-		
+
 		// Create faces for inner slices
 		for(int i=0;i<alSlices-2;++i)
 			WrapSides(pVtxBuffer, 1+i*alSections, alSections);
@@ -297,9 +297,9 @@ namespace hpl {
 			int lLastVertex = pVtxBuffer->GetVertexNum()-1;
 			int lSliceStart = lLastVertex-alSections;
 
-			WrapLowerCap(pVtxBuffer, lLastVertex, lSliceStart, alSections); 
+			WrapLowerCap(pVtxBuffer, lLastVertex, lSliceStart, alSections);
 		}
-		
+
 		////////////////////////////////////////////////////////////
 		// Compile vertex buffer and create mesh
 		if(!pVtxBuffer->Compile(eVertexCompileFlag_CreateTangents))
@@ -315,14 +315,14 @@ namespace hpl {
 		pSubMesh->SetMaterial(pMat);
 		pSubMesh->SetVertexBuffer(pVtxBuffer);
 
-		return pMesh;		
+		return pMesh;
 	}
 
 	//-----------------------------------------------------------------------
 
 	cMesh* cMeshCreator::CreateCylinder(const tString& asName, const cVector2f &avSize, int alSections, const tString &asMaterial)
 	{
-		iVertexBuffer* pVtxBuffer = mpLowLevelGraphics->CreateVertexBuffer(eVertexBufferType_Hardware, eVertexBufferDrawType_Tri, 
+		iVertexBuffer* pVtxBuffer = mpLowLevelGraphics->CreateVertexBuffer(eVertexBufferType_Hardware, eVertexBufferDrawType_Tri,
 																	eVertexBufferUsageType_Static);
 		pVtxBuffer->CreateElementArray(eVertexBufferElement_Position,eVertexBufferElementFormat_Float,4);
 		pVtxBuffer->CreateElementArray(eVertexBufferElement_Normal,eVertexBufferElementFormat_Float,3);
@@ -398,7 +398,7 @@ namespace hpl {
 
 	cMesh* cMeshCreator::CreateCapsule(const tString &asName, const cVector2f &avSize, int alSections, int alSlices, const tString &asMaterial)
 	{
-		iVertexBuffer* pVtxBuffer = mpLowLevelGraphics->CreateVertexBuffer(eVertexBufferType_Hardware, eVertexBufferDrawType_Tri, 
+		iVertexBuffer* pVtxBuffer = mpLowLevelGraphics->CreateVertexBuffer(eVertexBufferType_Hardware, eVertexBufferDrawType_Tri,
 																	eVertexBufferUsageType_Static);
 		pVtxBuffer->CreateElementArray(eVertexBufferElement_Position,eVertexBufferElementFormat_Float,4);
 		pVtxBuffer->CreateElementArray(eVertexBufferElement_Normal,eVertexBufferElementFormat_Float,3);
@@ -526,7 +526,7 @@ namespace hpl {
 	{
 		//////////////////////////////////////////
 		// Create Vertex Buffer
-		iVertexBuffer* pVtxBuffer = mpLowLevelGraphics->CreateVertexBuffer(eVertexBufferType_Hardware, eVertexBufferDrawType_Tri, 
+		iVertexBuffer* pVtxBuffer = mpLowLevelGraphics->CreateVertexBuffer(eVertexBufferType_Hardware, eVertexBufferDrawType_Tri,
 																	eVertexBufferUsageType_Static);
 		pVtxBuffer->CreateElementArray(eVertexBufferElement_Position,eVertexBufferElementFormat_Float,4);
 		pVtxBuffer->CreateElementArray(eVertexBufferElement_Normal,eVertexBufferElementFormat_Float,3);
@@ -610,7 +610,7 @@ namespace hpl {
 		pSkyBox->CreateElementArray(eVertexBufferElement_Texture0,eVertexBufferElementFormat_Float,3);
 		pSkyBox->CreateElementArray(eVertexBufferElement_Position,eVertexBufferElementFormat_Float,4);
 
-					
+
 		float fSize = afSize;
 
 		for(int x=-1; x<=1;x++)
@@ -660,7 +660,7 @@ namespace hpl {
 						pSkyBox->AddVertexColor(eVertexBufferElement_Color0, cColor(1,1,1,1));
 						pSkyBox->AddVertexVec3f(eVertexBufferElement_Position, (vDir+vAdd[idx])*fSize);
 						pSkyBox->AddVertexVec3f(eVertexBufferElement_Texture0, vDir+vAdd[idx]);
-                        
+
 						vSide = vDir+vAdd[idx];
 						//Log("%d: (%.1f : %.1f : %.1f) ", i,vSide.x,  vSide.y,vSide.z);
 					}
@@ -668,7 +668,7 @@ namespace hpl {
 				}
 
 		for(int i=0;i<24;i++) pSkyBox->AddIndex(i);
-		
+
 		if(!pSkyBox->Compile(0))
 		{
 			hplDelete(pSkyBox);
@@ -676,7 +676,7 @@ namespace hpl {
 		}
 		return pSkyBox;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	iVertexBuffer* cMeshCreator::CreateBoxVertexBuffer(cVector3f avSize)
@@ -704,7 +704,7 @@ namespace hpl {
 					//Direction (could say inverse normal) of the quad.
 					cVector3f vDir(0);
 					cVector3f vSide(0);
-					
+
 					cVector3f vAdd[4];
 					if(std::abs(x)){
 						vDir.x = (float)x;
@@ -737,7 +737,7 @@ namespace hpl {
 					{
 						int idx = GetBoxIdx(i,x,y,z);
 						cVector3f vTex = GetBoxTex(i,x,y,z,vAdd);
-						
+
 						pBox->AddVertexColor(eVertexBufferElement_Color0, cColor(1,1,1,1));
 						pBox->AddVertexVec3f(eVertexBufferElement_Position, (vDir+vAdd[idx])*avSize);
 						pBox->AddVertexVec3f(eVertexBufferElement_Normal, vDir);
@@ -745,7 +745,7 @@ namespace hpl {
 						//texture coord
 						cVector3f vCoord = cVector3f((vTex.x+1)*0.5f,(vTex.y+1)*0.5f,0);
 						pBox->AddVertexVec3f(eVertexBufferElement_Texture0,vCoord);
-						
+
 						vSide = vDir+vAdd[idx];
 						//Log("%d: Tex: (%.1f : %.1f : %.1f) ", i,vTex.x,  vTex.y,vTex.z);
 						//Log("%d: (%.1f : %.1f : %.1f) ", i,vSide.x,  vSide.y,vSide.z);
@@ -760,7 +760,7 @@ namespace hpl {
 
 					//Log("\n");
 				}
-		
+
 		if(!pBox->Compile(eVertexCompileFlag_CreateTangents))
 		{
 			hplDelete(pBox);
@@ -785,7 +785,7 @@ namespace hpl {
 			vTex.x = vAdd[i].x;
 			vTex.y = vAdd[i].y;
 		}
-		
+
 		//Inverse for negative directions
 		if(x+y+z <0)
 		{
@@ -810,8 +810,8 @@ namespace hpl {
 		float fEnd = k2Pif-afAngleStep;
 		for(float fAngle=0; fAngle<=fEnd; fAngle+=afAngleStep)
 		{
-			cVector3f vPoint = cVector3f(cMath::RoundFloatToDecimals(afRadius*cos(fAngle), 6), 
-										 cMath::RoundFloatToDecimals(afHeight, 6), 
+			cVector3f vPoint = cVector3f(cMath::RoundFloatToDecimals(afRadius*cos(fAngle), 6),
+										 cMath::RoundFloatToDecimals(afHeight, 6),
 										 cMath::RoundFloatToDecimals(afRadius*sin(fAngle),6));
 			avVertices.push_back(vPoint);
 		}

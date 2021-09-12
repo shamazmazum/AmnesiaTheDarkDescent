@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -30,7 +30,7 @@
 class cLuxEnemyPathfinder;
 class cLuxEnemyMover;
 class cLuxProp_Object;
-	  
+
 //----------------------------------------------
 
 class cLuxEnemyPatrolNode
@@ -89,10 +89,10 @@ public:
 	void FromPathfinder(cLuxEnemyPathfinder *apPathfinder);
 	void ToPathfinder(cLuxEnemyPathfinder *apPathfinder);
 	void SetupPathfinder(cLuxEnemyPathfinder *apPathfinder);
-	
+
 	bool mbMoving;
 	cVector3f mvMoveGoalPos;
-	
+
 	cContainerVec<int> mvPathNodeIds;
 };
 
@@ -132,7 +132,7 @@ public:
 
 	bool mbHallucination;
 	float mfHallucinationEndDist;
-	
+
 	int mlCurrentState;
 	int mlNextState;
 	int mlPreviousState;
@@ -158,9 +158,9 @@ public:
 	float mfDarknessGlowAlphaGoal;
 
 	int mlAttackHitCounter;
-	
+
 	float mfFOVMul;
-	
+
 	tString msCurrentAnimName;
 	bool mbAnimationIsSpeedDependant;
 	float mfAnimationSpeedMul;
@@ -194,7 +194,7 @@ public:
 	cLuxEnemyPathfinder_SaveData mPathfinder;
 
 	cEngineCharacterBody_SaveData mCharBody;
-	
+
 	cEnginePS_SaveData* GetParticleSystem(cParticleSystem* apPS);
 
 	iLuxEntity* CreateEntity(cLuxMap *apMap);
@@ -216,7 +216,7 @@ enum eLuxEnemyState
 	eLuxEnemyState_Eat,
 
 	eLuxEnemyState_Hurt,
-	
+
 	eLuxEnemyState_Hunt,
 	eLuxEnemyState_HuntPause,
 	eLuxEnemyState_HuntWander,
@@ -286,7 +286,7 @@ enum eLuxEnemySoundState
 	eLuxEnemySoundState_Idle,
 	eLuxEnemySoundState_Alert,
 	eLuxEnemySoundState_Hunt,
-	
+
 	eLuxEnemySoundState_LastEnum
 };
 
@@ -328,10 +328,10 @@ typedef tLuxStateMessageList::iterator	tLuxStateMessageListIt;
 class cEnemyAttackDamageData
 {
 public:
-	cEnemyAttackDamageData() :	mfMinDamage(0),mfMaxDamage(0), mfForce(0),mfMaxImpulse(0),mlStrength(0), mfHitSpeed(3), 
+	cEnemyAttackDamageData() :	mfMinDamage(0),mfMaxDamage(0), mfForce(0),mfMaxImpulse(0),mlStrength(0), mfHitSpeed(3),
 								mDamageType(eLuxDamageType_BloodSplat),mWeaponHitType(eLuxWeaponHitType_Sword),
 								mbCheckPlayer(true), mbCheckProps(true), msHitSound("") {}
-	
+
 	float mfMinDamage;
 	float mfMaxDamage;
 	float mfForce;
@@ -351,7 +351,7 @@ class cEnemyAttackSizeData
 {
 public:
 	cEnemyAttackSizeData() : mlShapeIdx(-1), mvOffset(0) {}
-	
+
 	int mlShapeIdx;
 	cVector3f mvOffset;
 };
@@ -365,7 +365,7 @@ friend class iLuxEnemyLoader;
 friend class cLuxEnemy_WorldCollisionCallback;
 friend class cLuxEnemyMover;
 friend class cLuxEnemyPathfinder;
-public:	
+public:
 	iLuxEnemy(const tString &asName, int alID, cLuxMap *apMap, eLuxEnemyType aEnemyType);
 	virtual ~iLuxEnemy();
 
@@ -374,14 +374,14 @@ public:
 	void SetupAfterLoad(cWorld *apWorld);
 	void AfterWorldLoad();
 	void OnMapEnter();
-	
+
 	void OnUpdate(float afTimeStep);
 
 	void OnRenderSolid(cRendererCallbackFunctions* apFunctions);
 
 	bool CanInteract(iPhysicsBody *apBody);
 	bool OnInteract(iPhysicsBody *apBody, const cVector3f &avPos);
-	
+
 	void OnConnectionStateChange(iLuxEntity *apEntity, int alState);
 
 	eLuxFocusCrosshair GetFocusCrosshair(iPhysicsBody *apBody, const cVector3f &avPos);
@@ -398,14 +398,14 @@ public:
 
 	void SendMessage(eLuxEnemyMessage aType, float afTime=0, bool abLocalScope=false, const cVector3f& avX=0,float afX=0, int alX=0);
 
-	void PlayAnim(	const tString &asName, bool abLoop, float afFadeTime, 
+	void PlayAnim(	const tString &asName, bool abLoop, float afFadeTime,
 					bool abDependsOnSpeed=false, float afSpeedMul=1.0f,
 					bool abSyncWithPrevFrame=false,
 					bool abOverideMoveState=true,
 					bool abUseMoveAnimWhenCurrentIsOver=true);
 	void FadeOutCurrentAnim(float afFadeTime);
 	float ConvertAnimToAbsoluteTime(float afRelativeTimePostion);
-    
+
 	cSoundEntity* PlaySound(const tString &asName);
 
 	void SetPositionAtStartPos();
@@ -439,7 +439,7 @@ public:
 	bool IsInWater(){ return mbInWater;}
 	float GetWaterSurfaceY(){ return mfWaterSurfaceY;}
 	cSurfaceData* GetWaterSurfaceData(){ return mpWaterSurfaceData;}
-	
+
 	void SetInWater(bool abX){ mbInWater = abX;}
 	void SetWaterSurfaceY(float afX){ mfWaterSurfaceY = afX;}
 	void SetWaterSurfaceData(cSurfaceData* apData){ mpWaterSurfaceData = apData;}
@@ -473,7 +473,7 @@ public:
 
 	float GetActivationDistance() { return mfActivationDistance;}
 
-	const tString& GetHitSound(eLuxWeaponHitType aType){ return msHitSound[aType];}	
+	const tString& GetHitSound(eLuxWeaponHitType aType){ return msHitSound[aType];}
 	const tString& GetHitPS(eLuxWeaponHitType aType){ return msHitPS[aType];}
 
 	int GetBodyNum(){ return 1; }
@@ -493,7 +493,7 @@ public:
 	//////////////////////
 	//Callbacks
 	virtual bool InRangeOfFood(iPhysicsBody *apFoodBody);
-	
+
 	//////////////////////
 	//Data
 	cMeshEntity * GetMeshEntity(){ return mpMeshEntity;}
@@ -503,7 +503,7 @@ public:
 
 	cLuxEnemyPathfinder* GetPathFinder(){ return mpPathfinder;}
 	cLuxEnemyMover* GetMover(){ return mpMover;}
-	
+
 	//////////////////////
 	// Debug
 	float DrawDebug(cGuiSet *apSet,iFontData *apFont,float afStartY);
@@ -571,7 +571,7 @@ protected:
 	bool IsSeenByPlayer();
 	bool IsInPlayerFovAtFeetPos(const cVector3f& avFeetPos);
 	bool IsVisibleToPlayerAtFeetPos(const cVector3f& avFeetPos);
-	
+
 	cVector3f GetPlayerFeetPos();
 
 	float Dist2D(const cVector3f &avPos);
@@ -579,23 +579,23 @@ protected:
 	float DistToChar2D(iCharacterBody *apBody);
 	float AbsHeightDistToChar(iCharacterBody *apBody);
 	cVector3f GetDirection2D(const cVector3f &avPos);
-    
+
 	float DistToPlayer();
 	float DistToPlayer2D();
 	float DistToPlayer2D(const cVector3f& avPos);
 	float AbsHeightDistToPlayer();
 	cVector3f GetDirection2DToPlayer();
-	
+
 	//gets the cos of angle between player->enemy and player move dir. 1=directly towards, -1=directly away
 	float GetPlayerMovementTowardEnemyAmount();
-	
+
 	bool OutsideStartRadius();
 	bool InFOV(const cVector3f &avPos);
 	bool PlayerInFOV();
 
 	void OnSetActive(bool abX);
-	
-	
+
+
 	virtual float GetDamageMul(float afAmount, int alStrength)=0;
 	virtual void OnDamage(float afAmount, int alStrength){}
 	virtual void OnSetupAfterLoad(cWorld *apWorld)=0;
@@ -684,7 +684,7 @@ protected:
 	cSurfaceData* mpWaterSurfaceData;
 
 	eLuxEnemyPoseType mCurrentPose;
-	
+
 	//////////////
 	//Data
 	cWorld *mpWorld;
@@ -760,7 +760,7 @@ protected:
 	cEnemyAttackDamageData mNormalAttackDamage;
 	cEnemyAttackDamageData mBreakDoorAttackDamage;
 	cEnemyAttackSizeData mNormalAttackSize;
-	
+
 	iCharacterBody *mpCharBody;
 
 	cMeshEntity *mpMeshEntity;
@@ -769,7 +769,7 @@ protected:
 	std::vector<cParticleSystem*> mvParticleSystems;
 	std::vector<cBillboard*> mvBillboards;
 	std::vector<cBeam*> mvBeams;
-	
+
 	cLuxEnemyPathfinder *mpPathfinder;
 	cLuxEnemyMover *mpMover;
 
@@ -789,7 +789,7 @@ protected:
 	tString msFileName;
 	cMatrixf m_mtxOnLoadTransform;
 	cVector3f mvOnLoadScale;
-	
+
 private:
 	eLuxEnemyType mEnemyType;
 };
@@ -804,7 +804,7 @@ public:
 
 	void BeforeLoad(cXmlElement *apRootElem, const cMatrixf &a_mtxTransform,cWorld *apWorld, cResourceVarsObject *apInstanceVars);
 	void AfterLoad(cXmlElement *apRootElem, const cMatrixf &a_mtxTransform,cWorld *apWorld, cResourceVarsObject *apInstanceVars);
-	
+
 	virtual iLuxEnemy *CreateEnemy(const tString& asName, int alID, cLuxMap *apMap)=0;
 	virtual void LoadVariables(iLuxEnemy *apEnemy, cXmlElement *apRootElem)=0;
 	virtual void LoadInstanceVariables(iLuxEnemy *apEnemy, cResourceVarsObject *apInstanceVars)=0;

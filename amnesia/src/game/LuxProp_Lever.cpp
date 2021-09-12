@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -71,12 +71,12 @@ void cLuxPropLoader_Lever::LoadVariables(iLuxProp *apProp, cXmlElement *apRootEl
 	pLever->mbMaxLimitStuck = GetVarBool("MaxLimitStuck", false);
 
 	pLever->mfMiddleAngleAmount = GetVarFloat("MiddleAngleAmount", 0);
-	
+
 	pLever->mbAutoMoveToAngle = GetVarBool("AutoMoveToAngle", true);
 	pLever->mlAutoMoveGoal = ToAutoMoveGoal(GetVarString("AutoMoveGoal", "Middle"));
 	pLever->mfAutoMoveSpeedFactor = GetVarFloat("AutoMoveSpeedFactor", 2.0f);
 	pLever->mfAutoMoveMaxSpeed = GetVarFloat("AutoMoveMaxSpeed", 8.0f);
-	
+
 	pLever->msMinLimitSound = GetVarString("MinLimitSound", "");
 	pLever->msMaxLimitSound = GetVarString("MaxLimitSound", "");
 
@@ -185,7 +185,7 @@ bool cLuxProp_Lever::OnInteract(iPhysicsBody *apBody, const cVector3f &avPos)
 	gpBase->mpPlayer->ChangeState(eLuxPlayerState_InteractLever);
 
 	mRotatePid.Reset();
-	
+
 	return true;
 }
 
@@ -246,7 +246,7 @@ void cLuxProp_Lever::UpdatePropSpecific(float afTimeStep)
 
 void cLuxProp_Lever::BeforePropDestruction()
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -323,10 +323,10 @@ void cLuxProp_Lever::UpdateCheckStuckSound(float afTimeStep)
 
 	if(mfStuckSoundTimer >0)
 	{
-		mfStuckSoundTimer-=afTimeStep; 
+		mfStuckSoundTimer-=afTimeStep;
 		return;
 	}
-	
+
 	float fSpeedSqr = mpHingeJoint->GetChildBody()->GetAngularVelocity().SqrLength();
 	if(fSpeedSqr > 0.01f)
 	{
@@ -376,9 +376,9 @@ void cLuxProp_Lever::UpdateAutoMove(float afAngle, float afTimeStep)
 	if(mlAutoMoveGoal == 0) fGoalAngle = mfMiddleAngle;
 	else if(mlAutoMoveGoal == -1)	fGoalAngle = mfDefaultMinAngle + mfMinLimitRange/2.0f;
 	else if(mlAutoMoveGoal == 1)	fGoalAngle = mfDefaultMaxAngle - mfMaxLimitRange/2.0f;
-	
+
 	float fWantedSpeed = mfAutoMoveSpeedFactor * (afAngle - fGoalAngle);
-	
+
 	if(fWantedSpeed > mfAutoMoveMaxSpeed)	fWantedSpeed = mfAutoMoveMaxSpeed;
 	if(fWantedSpeed < -mfAutoMoveMaxSpeed)	fWantedSpeed = -mfAutoMoveMaxSpeed;
 
@@ -392,7 +392,7 @@ void cLuxProp_Lever::UpdateAutoMove(float afAngle, float afTimeStep)
 	//This is a bit wierd? (think need to have as removing might screw things up!)
 	mpLeverBody->SetAngularVelocity(vWantedVel);
 
-	
+
 	cVector3f vTorque = mRotatePid.Output(vWantedVel - vHingeVel, afTimeStep);
 	vTorque = cMath::MatrixMul(mpLeverBody->GetInertiaMatrix(), vTorque);
 
@@ -408,7 +408,7 @@ void cLuxProp_Lever::ChangeState(int alState, bool abEffects)
 	mlCurrentState = alState;
 
 	tString sSound = "";
-	
+
 	/////////////////
 	//Max
 	if(mlCurrentState == 1)
@@ -494,7 +494,7 @@ void cLuxProp_Lever::LoadFromSaveData(iLuxEntity_SaveData* apSaveData)
 	//Init
 	super_class::LoadFromSaveData(apSaveData);
 	cLuxProp_Lever_SaveData *pData = static_cast<cLuxProp_Lever_SaveData*>(apSaveData);
-	
+
 	//////////////////
 	//Set variables
 	kCopyFromVar(pData,mlCurrentState);
@@ -508,7 +508,7 @@ void cLuxProp_Lever::LoadFromSaveData(iLuxEntity_SaveData* apSaveData)
 //-----------------------------------------------------------------------
 
 void cLuxProp_Lever::SetupSaveData(iLuxEntity_SaveData *apSaveData)
-{	
+{
 	super_class::SetupSaveData(apSaveData);
 }
 

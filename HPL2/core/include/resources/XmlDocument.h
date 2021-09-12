@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -27,16 +27,16 @@
 namespace hpl {
 
 	//-------------------------------------
-	
+
 	enum eXmlNodeType
 	{
 		eXmlNodeType_Element,
 
 		eXmlNodeType_LastEnum
 	};
-	
+
 	//-------------------------------------
-	
+
 	class iXmlNode;
 	class cXmlElement;
 
@@ -50,7 +50,7 @@ namespace hpl {
 	public:
 		iXmlNode(eXmlNodeType aType, iXmlNode *apParent, const tString& asValue);
 		virtual ~iXmlNode();
-				
+
 		const tString& GetValue(){ return msValue;}
 		void SetValue(const tString& asValue){ msValue = asValue;}
 
@@ -68,7 +68,7 @@ namespace hpl {
 
 		iXmlNode* GetFirstOfType(eXmlNodeType aType);
 		iXmlNode* GetFirstOfType(eXmlNodeType aType, const tString& asName);
-		
+
 		cXmlNodeListIterator GetChildIterator();
 
 		void DestroyChildren();
@@ -80,9 +80,9 @@ namespace hpl {
 
 		tXmlNodeList mlstChildren;
 	};
-	
+
 	//-------------------------------------
-	
+
 	typedef std::map<tString, tString> tAttributeMap;
 	typedef tAttributeMap::iterator tAttributeMapIt;
 
@@ -91,9 +91,9 @@ namespace hpl {
 	public:
 		cXmlElement(const tString& asName, iXmlNode* apParent);
 		virtual ~cXmlElement();
-		
+
 		const char* GetAttribute(const tString& asName);
-		
+
 		tString GetAttributeString(const tString& asName, const tString& asDefault="");
 		float GetAttributeFloat(const tString& asName, float afDefault=0);
 		int GetAttributeInt(const tString& asName, int alDefault=0);
@@ -103,7 +103,7 @@ namespace hpl {
 		cColor GetAttributeColor(const tString& asName, const cColor& aDefault=cColor(0,0));
 
 		void SetAttribute(const tString& asName, const char* asVal);
-		
+
 		void SetAttributeString(const tString& asName, const tString& asVal);
 		void SetAttributeFloat(const tString& asName, float afVal);
 		void SetAttributeInt(const tString& asName, int alVal);
@@ -114,7 +114,7 @@ namespace hpl {
 
 
 		tAttributeMap* GetAttributeMap(){ return &m_mapAttributes;}
-		
+
 	private:
 		tAttributeMap m_mapAttributes;
 	};
@@ -129,7 +129,7 @@ namespace hpl {
 
 		void SetPath(const tWString& asPath) { msFile = asPath; }
 		const tWString& GetPath() { return msFile; }
-		
+
 		bool CreateFromFile(const tWString& asPath);
 		bool Save();
 		bool SaveToFile(const tWString& asPath);
@@ -147,7 +147,7 @@ namespace hpl {
 	private:
 		virtual bool LoadDataFromFile(const tWString& asPath)=0;
 		virtual bool SaveDataToFile(const tWString& asPath)=0;
-		
+
 		tWString msFile;
 
 		tString msErrorDesc;

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -27,7 +27,7 @@
 #include <vector>
 
 namespace hpl {
-	
+
 	class cMesh;
 
 	//------------------------------------------
@@ -40,11 +40,11 @@ namespace hpl {
 		eHaptXShapeModelType_Cylinder,
 		eHaptXShapeModelType_LastEnum
 	};
-	
+
 	class cHaptXShapeModel
 	{
 	public:
-		
+
 		std::vector<int> mvIndices;
 		std::vector<cVector3f> mvPositions;
 	};
@@ -71,7 +71,7 @@ namespace hpl {
 		bool IsRenderingActive();
 
 		bool ShapeIsInContact(iHapticShape *apShape);
-		
+
 		//---------------------------------------------------------
 
 		bool ButtonIsPressed(int alNum);
@@ -97,13 +97,13 @@ namespace hpl {
 			float afDynamicFriction=0.2f, float afStartingFriction=0.3f,
 			float afTangentStiffness=0.7f, float afStoppingFriction=0.1f);
 
-		iHapticSurface* CreateRoughSurface(const tString &asName, 
+		iHapticSurface* CreateRoughSurface(const tString &asName,
 			float afDeviation=0.1f, float afMean=0.5f,
 			float afDamping=0.0f, float afStiffness=0.9f,
 			float afDynamicFriction=0.2f, float afStartingFriction=0.3f,
 			float afTangentStiffness=0.7f, float afStoppingFriction=0.1f);
 
-		iHapticSurface* CreateStickySurface(const tString &asName, 
+		iHapticSurface* CreateStickySurface(const tString &asName,
 			float afDeadHeight=0.004f, float afStickyStiffness=0.6f,
 			float afDamping=0.0f, float afStiffness=0.9f,
 			float afDynamicFriction=0.2f, float afStartingFriction=0.3f,
@@ -117,7 +117,7 @@ namespace hpl {
 		iHapticShape* CreateCapsuleShape(const tString &asName, float afRadius, float afHeight, cMatrixf* apOffsetMtx);
 		iHapticShape* CreateMeshShape(const tString &asName, iVertexBuffer *apVtxBuffer);
 		iHapticShape* CreateCompundShape(const tString &asName, tHapticShapeVec &avShapes);
-		
+
 		iHapticShape* CreateShapeFromPhysicsBody(const tString &asName, iPhysicsBody *apBody);
 
 		//---------------------------------------------------------
@@ -129,20 +129,20 @@ namespace hpl {
 		iHapticForce* CreateViscosityForce(const cVector3f& avVelocity,float afMass, float afStiffness, float afDamping);
 
 		//---------------------------------------------------------
-		
+
 		//Haptx Specific
 		HaptX::HaptXInterface* GetInterface(){ return mpInterface;}
 		HaptX::iHapticDeviceID GetDeviceID(){ return mDeviceID;}
 
 		HaptX::SurfaceInfo * GetDefaultSurface(){ return mpDefaultSurfaceInfo;}
-	
+
 	private:
 		void cLowLevelHapticHaptX::ShapeModelToHaptXData(	eHaptXShapeModelType aType,
 															const cVector3f& avSize,
 															const cMatrixf& a_mtxTransform,
 															int *apIndices,int alIndexAdd,
 															HaptX::Vectors::Vec3f *apPostions);
-		
+
 		cHaptXShapeModel* CreateShapeModelFromMesh(cMesh *apMesh);
 		void CreateShapeModels();
 

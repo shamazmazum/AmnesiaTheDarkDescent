@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -334,21 +334,21 @@ void cEdEditModeSelect::OnUpdate()
 
 	cInput* pInput = mpEditor->GetEngine()->GetInput();
 	int lKeyModifiers = pInput->GetKeyboard()->GetModifier();
-	
+
 	mbShiftPressed = (lKeyModifiers&eKeyModifier_Shift)!=0;
 	mbCtrlPressed = (lKeyModifiers&eKeyModifier_Ctrl)!=0;
 	//mbCloneOnTransform = pInput->IsTriggerd("Duplicate");
 
 	mbPickThrough = pInput->GetMouse()->ButtonIsDown(eMouseButton_Right);
-	
+
 	if(mpCurrentSelector)
 		mpCurrentSelector->OnUpdate();
-	
+
 	if(mbUpdateEditPane)
 	{
 		mbUpdateEditPane = false;
 
-		if(mpEditPane) 
+		if(mpEditPane)
 		{
 			mpEditor->GetWindowHandler()->DestroyWindow(mpEditPane);
 			mpEditPane = NULL;
@@ -406,7 +406,7 @@ void cEdEditModeSelect::OnViewportMouseDown(const cViewportClick& aClick)
 		if(mpCurrentManipulator->IsBusy())
 		{
 			mpCurrentCompoundAction = BeginAction();
-			
+
 			if(mbCloneOnTransform)
 			{
 				mpCurrentCompoundAction->AddAction(mpSelection->CreateCloneObjectsAction(true));
@@ -449,14 +449,14 @@ void cEdEditModeSelect::OnDraw(const cModuleDrawData& aData)
 {
 	aData.mpFunctions->SetProgram(NULL);
 	aData.mpFunctions->SetTextureRange(NULL,0);
-	
+
 	aData.mpFunctions->SetMatrix(NULL);
 
 	mpSelection->OnDraw(aData);
 
 	if(mpCurrentManipulator && IsSelecting()==false && aData.mStep==eEdDrawStep_PostTrans) mpCurrentManipulator->OnDraw(aData);
 	if(mpCurrentSelector && IsManipulating()==false && aData.mStep==eEdDrawStep_PostTrans) mpCurrentSelector->Draw(aData);
-	
+
 	aData.mpFunctions->SetBlendMode(eMaterialBlendMode_None);
 	aData.mpFunctions->SetMatrix(NULL);
 
@@ -476,7 +476,7 @@ void cEdEditModeSelect::OnDraw(const cModuleDrawData& aData)
 		apFunctions->SetDepthTest(true);
 	}*/
 	//apFunctions->GetLowLevelGfx()->DrawLine(mvRayStart, mvRayEnd, cColor(0,1,0,1));
-	
+
 }
 
 
@@ -568,7 +568,7 @@ iEdSelector::~iEdSelector()
 {
 	if(mpSelect->GetCurrentSelector()==this)
 		mpSelect->SetCurrentSelector(NULL);
-	
+
 	hplDelete(mpRay);
 }
 
@@ -635,7 +635,7 @@ bool cEdSelectorMain::OnViewportMouseUp(const cViewportClick& aClick)
 	mbIsSelecting = false;
 
 	cEdWindowSelect* pWindow = static_cast<cEdWindowSelect*>(mpSelect->GetWindow());
-	
+
 	cEdSelection* pSelection = mpSelect->GetSelection();
 
 	////////////////////////////////////////////////////////
@@ -649,11 +649,11 @@ bool cEdSelectorMain::OnViewportMouseUp(const cViewportClick& aClick)
 	if(bRayPickingActive) pMethod = mpRay;
 
 	pPicker->SetPickMethod(pMethod);
-	
+
 	// Set up and perform picking
 	cUIPickFilter* pFilter = mpSelect->GetFilter();
 	pPicker->SetPickFilter(pFilter);
-	
+
 	pPicker->Update();
 
 	tScnObjList lstObjects;
@@ -661,7 +661,7 @@ bool cEdSelectorMain::OnViewportMouseUp(const cViewportClick& aClick)
 	/////////////////////////////////////////////////////
 	// Check if the selection has changed
 	iEdSelectMode* pMode = mpSelect->GetCurrentSelectMode();
-	
+
 	// Ray picking == single entity
 	if(bRayPickingActive)
 	{
@@ -710,7 +710,7 @@ bool cEdSelectorMain::OnViewportMouseUp(const cViewportClick& aClick)
 		for(int i=0;i<pPicker->GetNumPicks();++i)
 			lstObjects.push_back(pPicker->GetPick(i)->mpObject);
 	}
-	
+
 	if(pMode->IsSelectionUpdated(lstObjects))
 	{
 		const tScnObjList& lstObjectsToSelect = pMode->GetObjectsToSelect();
@@ -761,7 +761,7 @@ void cEdSelectorMain::Draw(const cModuleDrawData& aData)
 		aData.mpFunctions->GetLowLevelGfx()->DrawLineQuad(cRect2f((float)mMouseRect.x,(float)mMouseRect.y,
 															(float)mMouseRect.w,(float)mMouseRect.h),
 															1000,
-															cColor(1,1)); 
+															cColor(1,1));
 		aData.mpFunctions->SetNormalFrustumProjection();
 
 		aData.mpFunctions->GetLowLevelGfx()->PopMatrix(eMatrix_ModelView);
@@ -876,7 +876,7 @@ void cEdSelectorHighlighter::OnUpdate()
 
 	pPicker->SetPickFilter(mpFilter);
 	pPicker->SetPickMethod(mpRay);
-	
+
 	pPicker->Update();
 	mpObjectUnderPointer = pPicker->GetClosestPick();
 

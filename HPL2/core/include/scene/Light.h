@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -27,7 +27,7 @@
 class TiXmlElement;
 
 namespace hpl {
-	
+
 	//------------------------------------------
 
 	class iLowLevelGraphics;
@@ -43,9 +43,9 @@ namespace hpl {
 	class cSectorVisibilityContainer;
 	class cWorld;
 	class cVisibleRCNodeTracker;
-	
+
 	//------------------------------------------
-	
+
 	enum eLightType
 	{
 		eLightType_Point,
@@ -90,12 +90,12 @@ namespace hpl {
 		void UpdateLogic(float afTimeStep);
 
 		bool CheckObjectIntersection(iRenderable *apObject);
-		
+
 		eLightType GetLightType(){ return mLightType;}
 
 		iTexture *GetFalloffMap();
 		void SetFalloffMap(iTexture* apTexture);
-		
+
 		void SetGoboTexture(iTexture *apTexture);
 		iTexture* GetGoboTexture();
 
@@ -105,7 +105,7 @@ namespace hpl {
 
 		virtual bool IsVisible();
 		void OnChangeVisible();
-		
+
 		///////////////////////////////
 		//Renderable implementation:
 		cMaterial *GetMaterial(){ return NULL;}
@@ -152,7 +152,7 @@ namespace hpl {
 		void SetFlicker(const cColor& aOffCol, float afOffRadius,
 			float afOnMinLength, float afOnMaxLength,const tString &asOnSound,const tString &asOnPS,
 			float afOffMinLength, float afOffMaxLength,const tString &asOffSound,const tString &asOffPS,
-			bool abFade,	float afOnFadeMinLength, float afOnFadeMaxLength, 
+			bool abFade,	float afOnFadeMinLength, float afOnFadeMaxLength,
 							float afOffFadeMinLength, float afOffFadeMaxLength);
 
 		tString GetFlickerOffSound(){ return msFlickerOffSound;}
@@ -178,10 +178,10 @@ namespace hpl {
 		//Properties
 		const cColor& GetDiffuseColor(){ return mDiffuseColor; }
 		void SetDiffuseColor(cColor aColor);
-		
+
 		const cColor&  GetDefaultDiffuseColor(){ return mDefaultDiffuseColor;}
 		void SetDefaultDiffuseColor(const cColor& aColor) { mDefaultDiffuseColor = aColor; }
-		
+
 		const cColor& GetSpecularColor(){ return mSpecularColor; }
 		void SetSpecularColor(cColor aColor){ mSpecularColor = aColor; }
 
@@ -206,7 +206,7 @@ namespace hpl {
 		float GetShadowMapSlopeScaleBiasMul(){ return mfShadowMapSlopeScaleBiasMul;}
 		void SetShadowMapBiasMul(float afX){ mfShadowMapBiasMul = afX;}
 		void SetShadowMapSlopeScaleBiasMul(float afX){ mfShadowMapSlopeScaleBiasMul = afX;}
-		
+
 		virtual void SetRadius(float afX);
 		float GetRadius(){return mfRadius;}
 
@@ -226,7 +226,7 @@ namespace hpl {
 
         virtual void ExtraXMLProperties(TiXmlElement *apMainElem){}
 		virtual void UpdateBoundingVolume()=0;
-		
+
 		eLightType mLightType;
 
 		cTextureManager *mpTextureManager;
@@ -234,7 +234,7 @@ namespace hpl {
 		cWorld *mpWorld;
 
 		iTexture *mpFalloffMap;
-		
+
 		iTexture *mpGoboTexture;
 
 		eShadowMapResolution mShadowMapResolution;

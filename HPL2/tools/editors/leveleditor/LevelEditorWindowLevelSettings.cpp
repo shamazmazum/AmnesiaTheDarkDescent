@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -25,13 +25,13 @@
 
 //---------------------------------------------------------------------------------
 
-cLevelEditorWindowLevelSettings::cLevelEditorWindowLevelSettings(iEditorBase* apEditor) : iEditorWindowPopUp(apEditor, 
-																											"LevelSettings", 
-																											true, 
-																											false, 
-																											true, 
+cLevelEditorWindowLevelSettings::cLevelEditorWindowLevelSettings(iEditorBase* apEditor) : iEditorWindowPopUp(apEditor,
+																											"LevelSettings",
+																											true,
+																											false,
+																											true,
 																											cVector2f(300,150))
-{	
+{
 
 }
 
@@ -73,7 +73,7 @@ void cLevelEditorWindowLevelSettings::OnInitLayout()
 	mpWindow->SetText(_W("Level Settings"));
 
 	cWidgetTabFrame* pTabFrame = mpSet->CreateWidgetTabFrame(cVector3f(10,35,0.1f), mvSize-cVector2f(20,40), _W(""), mpWindow);
-	
+
 	////////////////////////////////////////////////////////
 	// SkyBox parameters tab
 	cWidgetTab* pTab = pTabFrame->AddTab(_W("SkyBox"));
@@ -87,7 +87,7 @@ void cLevelEditorWindowLevelSettings::OnInitLayout()
 	mpInpSkyboxTexture->SetBrowserSubType(eEditorTextureResourceType_CubeMap);
 	mpInpSkyboxTexture->SetLayoutStyle(eEditorInputLayoutStyle_RowLabelOnLeft);
 	mpInpSkyboxTexture->UpdateLayout();
-	
+
 	////////////////////////////////////////////////////////
 	// Global Fog parameters tab
 	pTab = pTabFrame->AddTab(_W("Fog"));
@@ -199,7 +199,7 @@ bool cLevelEditorWindowLevelSettings::ResetDecals(iWidget* apWidget, const cGuiM
 	if(lstDecalIDs.empty())
 		return true;
 
-	iEditorAction* pAction = hplNew(cEditorActionObjectSetProperty<int>,(pWorld, lstDecalIDs, pPropMaxTris, -1)); 
+	iEditorAction* pAction = hplNew(cEditorActionObjectSetProperty<int>,(pWorld, lstDecalIDs, pPropMaxTris, -1));
 	mpEditor->AddAction(pAction);
 
 	return true;

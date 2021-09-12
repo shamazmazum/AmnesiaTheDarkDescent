@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -74,15 +74,15 @@ namespace hpl {
 	class cXmlElement;
 	class cEntFile;
 	class cDummyRenderable;
-	
+
 
 	//-------------------------------------------------------------------
-	
+
 	typedef std::list<cEntFile*> tEntFileList;
 	typedef tEntFileList::iterator tEntFileListIt;
 
 	//-------------------------------------------------------------------
-	
+
 	class cTempAiNode
 	{
 	public:
@@ -91,7 +91,7 @@ namespace hpl {
 		tString msName;
 		int mlID;
 	};
-	
+
 	typedef std::list<cTempAiNode> tTempAiNodeList;
 	typedef std::list<cTempAiNode>::iterator tTempAiNodeListIt;
 
@@ -99,7 +99,7 @@ namespace hpl {
 	{
 	public:
 		tString msName;
-        tTempAiNodeList mlstNodes;		
+        tTempAiNodeList mlstNodes;
 	};
 
 	typedef std::map<tString,cTempNodeContainer*> tTempNodeContainerMap;
@@ -116,7 +116,7 @@ namespace hpl {
 		cMatrixf m_mtxTransform;
 		cVector3f mvSize;
 	};
-	
+
 	typedef std::map<tString, cAreaEntity*> tAreaEntityMap;
 	typedef tAreaEntityMap::iterator tAreaEntityMapIt;
 
@@ -132,13 +132,13 @@ namespace hpl {
 		cMatrixf& GetWorldMatrix(){ return m_mtxTransform;}
 		cMatrixf& GetLocalMatrix(){ return m_mtxTransform;}
 		void SetMatrix(const cMatrixf& a_mtxTrans){ m_mtxTransform = a_mtxTrans;}
-		
+
 		tString& GetName(){ return msName;}
 
 		cMatrixf m_mtxTransform;
 		tString msName;
 	};
-	
+
 	typedef std::list<cStartPosEntity*> tStartPosEntityList;
 	typedef std::list<cStartPosEntity*>::iterator tStartPosEntityListIt;
 
@@ -174,19 +174,19 @@ namespace hpl {
 		bool IsSoundEmitter(){ return mbIsSoundEmitter;}
 
 		iRenderableContainer* GetRenderableContainer(eWorldContainerType aType);
-		
+
 		cPhysics* GetPhysics(){ return mpPhysics;}
 		cResources* GetResources(){ return mpResources;}
 		cSound* GetSound(){ return mpSound;}
 		cSystem* GetSystem(){ return mpSystem;}
 		cHaptic* GetHaptic(){ return mpHaptic;}
 
-		iEntity3D* CreateEntity(const tString& asName, const cMatrixf &a_mtxTransform, 
+		iEntity3D* CreateEntity(const tString& asName, const cMatrixf &a_mtxTransform,
 								const tString& asFile, int alID = -1, bool abActive=true,
 								const cVector3f &avScale=cVector3f(1),
 								cResourceVarsObject *apInstanceVars=NULL,
 								bool abSkipNonStaticEntity=false);
-								
+
 		/**
 		 * Call this when all things have been added to set up things like physics world size.
 		 **/
@@ -208,7 +208,7 @@ namespace hpl {
 		iVertexBuffer *GetSkyBoxVertexBuffer(){ return mpSkyBoxVtxBuffer;}
 		bool GetSkyBoxActive(){ return mbSkyBoxActive;}
 		cColor GetSkyBoxColor(){ return mSkyBoxColor;}
-        
+
 		///// FOG ////////////////////////////////
 
 		void SetFogActive(bool abX){ mbFogActive = abX;}
@@ -226,22 +226,22 @@ namespace hpl {
 		bool GetFogCulling() { return mbFogCulling;}
 
 		///// AREA ////////////////////////////////
-		
+
 		cAreaEntity* CreateAreaEntity(const tString &asName);
 		cAreaEntity* GetAreaEntity(const tString &asName);
 		tAreaEntityMap* GetAreaEntityMap(){return &m_mapAreaEntities;}
 
 		///// MESH ENTITY METHODS ////////////////////
-		
+
 		cMeshEntity* CreateMeshEntity(const tString &asName,cMesh *apMesh, bool abStatic=false);
 		void DestroyMeshEntity(cMeshEntity* apMesh);
 		cMeshEntity* GetDynamicMeshEntity(const tString& asName);
-		
+
 		cMeshEntityIterator GetDynamicMeshEntityIterator();
 		cMeshEntityIterator GetStaticMeshEntityIterator();
-		
+
 		void DrawMeshBoundingBoxes(const cColor &aColor, bool abStatic);
-		
+
 		///// LIGHT METHODS ////////////////////
 
 		cLightPoint* CreateLightPoint(const tString &asName="",const tString &asGobo="", bool abStatic=false);
@@ -285,7 +285,7 @@ namespace hpl {
 		cParticleSystemIterator GetParticleSystemIterator(){ return cParticleSystemIterator(&mlstParticleSystems);}
 
 		///// GUISET ENTITY METHODS ////////////////////
-		
+
 		cGuiSetEntity* CreateGuiSetEntity(const tString& asName, cGuiSet *apSet, bool abStatic=false);
 		void DestroyGuiSetEntity(cGuiSetEntity* apObject);
 		cGuiSetEntity* GetGuiSetEntity(const tString& asName);
@@ -293,7 +293,7 @@ namespace hpl {
 		cGuiSetEntityIterator GetGuiSetEntityIterator();
 
 		///// ROPE ENTITY METHODS ////////////////////
-		
+
 		cRopeEntity* CreateRopeEntity(const tString& asName, iPhysicsRope *apRope, int alMaxSegments);
 		void DestroyRopeEntity(cRopeEntity* apRope);
 		cRopeEntity* GetRopeEntity(const tString& asName);
@@ -309,7 +309,7 @@ namespace hpl {
 
 		///// SOUND ENTITY METHODS ////////////////////
 
-		cSoundEntity* CreateSoundEntity(const tString &asName,const tString &asSoundEntity, 
+		cSoundEntity* CreateSoundEntity(const tString &asName,const tString &asSoundEntity,
 										bool abRemoveWhenOver);
 		void DestroySoundEntity(cSoundEntity* apEntity);
 		cSoundEntity* GetSoundEntity(const tString& asName);
@@ -320,7 +320,7 @@ namespace hpl {
 		cSoundEntityIterator GetSoundEntityIterator(){ return cSoundEntityIterator(&mlstSoundEntities);}
 
 		///// START POS ENTITY METHODS ////////////////
-		
+
 		cStartPosEntity* CreateStartPos(const tString &asName);
 		cStartPosEntity* GetStartPosEntity(const tString &asName);
 		cStartPosEntity* GetFirstStartPosEntity();
@@ -329,16 +329,16 @@ namespace hpl {
 
 		void GenerateAINodes(cAINodeGeneratorParams *apParams);
 
-		cAINodeContainer* CreateAINodeContainer(const tString &asName, 
-											const tString &asNodeName, 
+		cAINodeContainer* CreateAINodeContainer(const tString &asName,
+											const tString &asNodeName,
 											const cVector3f &avSize,
-											bool abNodeIsAtCenter, 
+											bool abNodeIsAtCenter,
 											int alMinEdges, int alMaxEdges, float afMaxEdgeDistance,
 											float afMaxHeight);
 
 		cAStarHandler* CreateAStarHandler(cAINodeContainer* apContainer);
 		void DestroyAStarHandler(cAStarHandler* apHandler);
-        
+
 		void AddAINode(const tString &asName, int alID, const tString &asType, const cVector3f &avPosition);
 		tTempAiNodeList* GetAINodeList(const tString &asType);
 
@@ -358,7 +358,7 @@ namespace hpl {
 	private:
 		void AddRenderableToContainer(iRenderable *apObject);
 		void RemoveRenderableFromContainer(iRenderable *apObject);
-		
+
 		void UpdateEntities(float afTimeStep);
 		void UpdateParticles(float afTimeStep);
 		void UpdateLights(float afTimeStep);
@@ -381,7 +381,7 @@ namespace hpl {
 		bool mbAutoDeletePhysicsWorld;
 
 		bool mbIsSoundEmitter;
-		
+
 		cVector3f mvWorldSize;
 
 		iRenderableContainer* mpRenderableContainer[2];
@@ -418,7 +418,7 @@ namespace hpl {
 		//tSoundEntityList mlstSoundEntityPool;<-Debugging
 
 		tEntFileList mlstEntFileCache;
-		
+
 		tAINodeContainerList mlstAINodeContainers;
 		tAStarHandlerList mlstAStarHandlers;
 		tTempNodeContainerMap m_mapTempNodes;

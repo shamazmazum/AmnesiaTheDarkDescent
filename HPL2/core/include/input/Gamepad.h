@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -34,53 +34,53 @@ namespace hpl {
 	public:
 		iGamepad(tString asName, int alIndex);
 		virtual ~iGamepad(){}
-		
+
 		/**
-		 * 
+		 *
 		 * \return the system name of the gamepad device
 		 */
 		virtual tString GetGamepadName()=0;
-		
+
 		/**
-		 * 
-		 * \return the number of buttons in the gamepad 
+		 *
+		 * \return the number of buttons in the gamepad
 		 */
 		virtual int GetNumButtons()=0;
 		/**
-		 * 
-		 * \return the number of axes in the gamepad 
+		 *
+		 * \return the number of axes in the gamepad
 		 */
 		virtual int GetNumAxes()=0;
 		/**
-		 * 
-		 * \return the number of hats in the gamepad 
+		 *
+		 * \return the number of hats in the gamepad
 		 */
 		virtual int GetNumHats()=0;
 		/**
-		 * 
-		 * \return the number of trackballs in the gamepad 
+		 *
+		 * \return the number of trackballs in the gamepad
 		 */
 		virtual int GetNumBalls()=0;
 		/**
-		 * 
+		 *
  		 * Can be checked many times to see all updated input
 		 * \return  inputs
 		 */
 		virtual cGamepadInputData GetInputUpdate()=0;
 		/**
-		 * 
+		 *
 		 * \return true If ANY input is updated
 		 */
 		virtual bool HasInputUpdates()=0;
 		/**
-		 * 
-		 * \param aButton The button to check 
-		 * \return true if pressed else false 
+		 *
+		 * \param aButton The button to check
+		 * \return true if pressed else false
 		 */
 		virtual bool ButtonIsDown(eGamepadButton aButton)=0;
 		/**
 		 * Can be checked many times to see all button presses
-		 * \return key that is currently pressed. eKey_NONE is no key. 
+		 * \return key that is currently pressed. eKey_NONE is no key.
 		 */
 		virtual cGamepadInputData GetButton()=0;
 		/**
@@ -104,12 +104,12 @@ namespace hpl {
 		 */
 		virtual float GetAxisValue(eGamepadAxis aAxis)=0;
 		/**
-		 * 
+		 *
 		 * \return Threshold indicating the at which start value input will be considered.
 		 */
 		virtual float GetAxisDeadZoneRadiusValue()=0;
 		/**
-		 * \param New value for the dead zone radius 
+		 * \param New value for the dead zone radius
 		 */
 		virtual void SetAxisDeadZoneRadiusValue(float afValue)=0;
 		/**
@@ -159,7 +159,7 @@ namespace hpl {
 		virtual cVector2l GetBallRelPos(eGamepadBall aBall)=0;
 		/**
 		 * \param aButton The button to change to string.
-		 * \return The name of the button as a string. 
+		 * \return The name of the button as a string.
 		 */
 		static tString ButtonToString(eGamepadButton aButton);
 		/**
@@ -169,7 +169,7 @@ namespace hpl {
 		static eGamepadButton StringToButton(const tString&);
 		/**
 		 * \param aButton The button to change to string.
-		 * \return The name of the button as a string. 
+		 * \return The name of the button as a string.
 		 */
 		static tString AxisToString(eGamepadAxis aAxis);
 		/**
@@ -179,7 +179,7 @@ namespace hpl {
 		static eGamepadAxis StringToAxis(const tString&);
 		/**
 		 * \param aButton The button to change to string.
-		 * \return The name of the button as a string. 
+		 * \return The name of the button as a string.
 		 */
 		static tString AxisRangeToString(eGamepadAxisRange aAxis);
 		/**
@@ -189,7 +189,7 @@ namespace hpl {
 		static eGamepadAxisRange StringToAxisRange(const tString&);
 		/**
 		 * \param aButton The hat to change to string.
-		 * \return The name of the hat as a string. 
+		 * \return The name of the hat as a string.
 		 */
 		static tString HatToString(eGamepadHat aButton);
 		/**
@@ -199,7 +199,7 @@ namespace hpl {
 		static eGamepadHat StringToHat(const tString&);
 		/**
 		 * \param aButton The hat state to change to string.
-		 * \return The name of the hat state as a string. 
+		 * \return The name of the hat state as a string.
 		 */
 		static tString HatStateToString(eGamepadHatState aButton);
 		/**
@@ -209,7 +209,7 @@ namespace hpl {
 		static eGamepadHatState StringToHatState(const tString&);
 		/**
 		 * \param aButton The trackball to change to string.
-		 * \return The name of the trackball as a string. 
+		 * \return The name of the trackball as a string.
 		 */
 		static tString BallToString(eGamepadBall aButton);
 		/**

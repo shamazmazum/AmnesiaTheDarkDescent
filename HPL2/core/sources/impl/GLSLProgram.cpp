@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -41,7 +41,7 @@ namespace hpl{
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	cGLSLProgram::cGLSLProgram(const tString& asName) : iGpuProgram(asName,eGpuProgramFormat_GLSL)
 	{
 		;
@@ -66,7 +66,7 @@ namespace hpl{
 		}
 		glDeleteProgram(mlHandle);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -74,7 +74,7 @@ namespace hpl{
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	bool cGLSLProgram::Link()
 	{
 		;
@@ -91,7 +91,7 @@ namespace hpl{
 		}
 
 		///////////////////////////////////////
-		//Link 
+		//Link
 		glLinkProgram(mlHandle);
 
 		///////////////////////////////////////
@@ -110,28 +110,28 @@ namespace hpl{
 		iGpuShader* pFragShader = mpShader[eGpuShaderType_Fragment];
 		if(pFragShader && pFragShader->GetSamplerUnitNum()>0)
 		{
-			
+
 			//Log("Setting up samplers in '%s'\n", msName.c_str());
 			glUseProgram(mlHandle);
-			
+
 			for(int i=0; i<pFragShader->GetSamplerUnitNum(); ++i)
 			{
 				tString &sSamplerName = pFragShader->GetSamplerUnit(i)->msName;
 				int lUnit = pFragShader->GetSamplerUnit(i)->mlUnit;
-				
+
 				//Log("Setting %s to %d\n",sSamplerName.c_str(), lUnit);
 				GLint lVarHandle = glGetUniformLocation(mlHandle,sSamplerName.c_str());
 				if(lVarHandle<0){
 					Error("Sampler %s does not exist, could not bind it to unit %d\n",sSamplerName.c_str(),lUnit);
 					continue;
 				}
-			
+
 				glUniform1i(lVarHandle, lUnit);
 			}
 
             glUseProgram(0);
 		}
-		
+
 		return true;
 	}
 
@@ -156,7 +156,7 @@ namespace hpl{
 		;
 
 		mlCurrentProgram = 0;
-		glUseProgram(0);	
+		glUseProgram(0);
 	}
 
 
@@ -224,7 +224,7 @@ namespace hpl{
 		{
 			if(mvParameters[alId].mlId >=0)
 			{
-				if(mvParameters[alId].mlId == lHandle) 
+				if(mvParameters[alId].mlId == lHandle)
 					return true;
 				else
 					return false;
@@ -236,13 +236,13 @@ namespace hpl{
 		{
 			mvParameters.resize(alId+1);
 		}
-		
+
 		////////////////////////
-		// Vector is big enough and id is not taken or already added, 
+		// Vector is big enough and id is not taken or already added,
 		// add it.
 		mvParameters[alId].mlId = lHandle;
 		mvParameters[alId].msName = asName;
-		
+
 		return true;
 	}
 
@@ -269,11 +269,11 @@ namespace hpl{
 		if(alVarId<0 || alVarId >= (int)mvParameters.size()) return false;
 
 		;
-		
+
 		if(mlCurrentProgram != mlHandle) Bind();
 
 		glUniform1f(mvParameters[alVarId].mlId, afX);
-	
+
 		return true;
 	}
 
@@ -286,7 +286,7 @@ namespace hpl{
 		;
 
 		if(mlCurrentProgram != mlHandle) Bind();
-		
+
 		glUniform2f(mvParameters[alVarId].mlId, afX, afY);
 
 		return true;
@@ -303,7 +303,7 @@ namespace hpl{
 		if(mlCurrentProgram != mlHandle) Bind();
 
 		glUniform3f(mvParameters[alVarId].mlId, afX, afY, afZ);
-		
+
 		return true;
 	}
 
@@ -318,7 +318,7 @@ namespace hpl{
 		if(mlCurrentProgram != mlHandle) Bind();
 
 		glUniform4f(mvParameters[alVarId].mlId, afX, afY, afZ,afW);
-		
+
 		return true;
 	}
 
@@ -331,7 +331,7 @@ namespace hpl{
 		;
 
 		if(mlCurrentProgram != mlHandle) Bind();
-		
+
 		glUniformMatrix4fv(mvParameters[alVarId].mlId, 1, true, aMtx.v);
 
 		return true;
@@ -339,7 +339,7 @@ namespace hpl{
 
 	//-----------------------------------------------------------------------
 
-	bool cGLSLProgram::SetMatrixf(int alVarId, eGpuShaderMatrix aType, 
+	bool cGLSLProgram::SetMatrixf(int alVarId, eGpuShaderMatrix aType,
 									eGpuShaderMatrixOp aOp)
 	{
 		;
@@ -348,15 +348,15 @@ namespace hpl{
 		return false;
 	}
 
-		
+
 	//-----------------------------------------------------------------------
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// PROTECTED METHODS
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	void cGLSLProgram::LogProgramInfoLog()
 	{
 		;
@@ -377,7 +377,7 @@ namespace hpl{
 			hplFree(infoLog);
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 }

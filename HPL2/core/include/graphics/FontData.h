@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -38,7 +38,7 @@ namespace hpl {
 	class cFrameSubImage;
 
 	//------------------------------------------------
-		
+
 	class cGlyph
 	{
 	public:
@@ -61,7 +61,7 @@ namespace hpl {
 		iFontData(const tString &asName, iLowLevelGraphics* apLowLevelGraphics);
 		~iFontData();
 
-		virtual bool CreateFromFontFile(const tWString &asFileName, int alSize,unsigned short alFirstChar, 
+		virtual bool CreateFromFontFile(const tWString &asFileName, int alSize,unsigned short alFirstChar,
 									unsigned short alLastChar)=0;
 
 		virtual bool CreateFromBitmapFile(const tWString &asFileName)=0;
@@ -82,8 +82,8 @@ namespace hpl {
 
 		/**
 		 * Used internally
-		 * \param alNum 
-		 * \return 
+		 * \param alNum
+		 * \return
 		 */
 		inline cGlyph* GetGlyph(int alNum)const { if(alNum<0 || alNum>=(int)mvGlyphs.size()) return NULL; return mvGlyphs[alNum];}
 
@@ -91,15 +91,15 @@ namespace hpl {
 		inline unsigned short GetLastChar(){ return mlLastChar;}
 
 		inline const cVector2f& GetSizeRatio()const{ return mvSizeRatio;}
-		
+
 		/**
 		 * Draw a string.
 		 * \param avPos Screen pos
 		 * \param avSize size of the characters
 		 * \param aCol color
 		 * \param mAlign alignment
-		 * \param fmt 
-		 * \param ... 
+		 * \param fmt
+		 * \param ...
 		 */
 		//void Draw(const cVector3f& avPos,const cVector2f& avSize, const cColor& aCol,eFontAlign mAlign,
 		//			const wchar_t* fmt,...);
@@ -111,35 +111,35 @@ namespace hpl {
 		 * \param avSize size of the characters
 		 * \param aCol color
 		 * \param aAlign alignment
-		 * \param asString 
+		 * \param asString
 		 * \return Extra number of rows generated.
 		 */
 		//int DrawWordWrap(cVector3f avPos,float afLength,float afFontHeight,cVector2f avSize,const cColor& aCol,
 		//					eFontAlign aAlign,	const tWString &asString);
 
-		
+
 		void GetWordWrapRows(float afLength,float afFontHeight,cVector2f avSize,const tWString& asString,
 								tWStringVec *apRowVec);
 
 		/**
 		 * Get height of the font.
-		 * \return 
+		 * \return
 		 */
 		inline float GetHeight()const{ return mfHeight; }
 
 		/**
 		 * Get the length in virtual screen size "pixels" of a formated string
 		 * \param avSize size of the characters
-		 * \param fmt 
-		 * \param ... 
-		 * \return 
+		 * \param fmt
+		 * \param ...
+		 * \return
 		 */
 		float GetLengthFmt(const cVector2f& avSize,const wchar_t* fmt,...);
 		/**
 		 * Get the length in virtual screen size "pixels" of a string
 		 * \param avSize size of the characters
-		 * \param sText 
-		 * \return 
+		 * \param sText
+		 * \return
 		 */
 		float GetLength(const cVector2f& avSize,const wchar_t* sText);
 
@@ -147,7 +147,7 @@ namespace hpl {
 		iLowLevelGraphics* mpLowLevelGraphics;
 		cResources* mpResources;
 		cGui *mpGui;
-		
+
 		tGlyphVec mvGlyphs;
 
 		float mfHeight;

@@ -78,7 +78,7 @@ protected:
 	ALint mlFrequency;
 	ALint mlChannels;
 	ALenum mFormat;
-	
+
 	std::wstring msFilename;
 };
 

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -56,14 +56,14 @@ private:
 	float mfRollAwakeSpeed;
 
 	float mfHeightAddGoal;
-	
+
 	float mfAwakenSanity;
-    
+
 	float mfSleepTime;
 
 	float mfSleepSpeedMul;
 	float mfWakeUpSpeedMul;
-	
+
 	tString msStartSound;
 	tString msAwakenSound;
 	tString msSleepLoopSound;
@@ -72,7 +72,7 @@ private:
 	tString msSleepRandomSound;
 	float mfSleepRandomMinTime;
 	float mfSleepRandomMaxTime;
-	
+
 	float mfHeightAdd;
 	float mfRoll;
 
@@ -152,7 +152,7 @@ private:
 
 	bool mbActive;
 	tString msFileName;
-	
+
 	tString msParticleSystem;
 	float mfHeightFromFeet;
 	float mfHeightAddMin;
@@ -185,7 +185,7 @@ public:
 
 private:
 	std::vector<cGuiGfxElement*> mvNoiseGfx;
-	float mfEffectStartHealth;	
+	float mfEffectStartHealth;
 	float mfMinMoveMul;
 	float mfMaxPantCount;
 	float mfPantSpeed;
@@ -197,7 +197,7 @@ private:
 	float mfNoiseAlpha;
 	float mfNoiseFreq;
 	cColor mNoiseColor;
-	
+
 	float mfPantCount;
 	float mfPantPosAdd;
 	float mfPantPosAddVel;
@@ -233,7 +233,7 @@ public:
 	~cLuxPlayerFlashback ();
 
 	void Reset();
-	
+
 	void Start(const tString &asFlashbackFile, const tString &asCallback);
 
 	void Update(float afTimeStep);
@@ -259,7 +259,7 @@ private:
 	tString msFlashbackFile;
 	tString msCallback;
 	tLuxFlashbackDataList mlstFlashbackQueue;
-	
+
 };
 
 //---------------------------------------------
@@ -276,7 +276,7 @@ public:
 	void Reset();
 
 	void SetTarget(const cVector3f &avTargetPos, float afSpeedMul, float afMaxSpeed, const tString& asAtTargetCallback);
-	
+
 	void SetActive(bool abX);
 	bool IsActive(){ return mbActive;}
 
@@ -322,12 +322,12 @@ private:
 	void UpdateInsaneEffects(float afTimeStep);
 	void UpdateCheckEnemySeen(float afTimeStep);
 	void UpdateHit(float afTimeStep);
-	
+
 	void UpdateInsanityVisuals(float afTimeStep);
 	void UpdateEnemySeenEffect(float afTimeStep);
 	void UpdateLosingSanity(float afTimeStep);
 	void UpdateLowSanity(float afTimeStep);
-	
+
 	float mfHitAlpha;
 	bool mbHitActive;
 	float mfSanityLostCount;
@@ -383,7 +383,7 @@ private:
 
 class cLuxPlayerLantern : public iLuxPlayerHelper
 {
-public:	
+public:
 	cLuxPlayerLantern(cLuxPlayer *apPlayer);
 	~cLuxPlayerLantern();
 
@@ -417,12 +417,12 @@ private:
 	tString msDisabledSound;
 	float mfLowerOilSpeed;
 	float mfFadeLightOilAmount;
-	
+
 	bool mbDisabled;
 	bool mbActive;
 	float mfAlpha;
 	cLightPoint *mpLight;
-	
+
 };
 
 //----------------------------------------------
@@ -506,13 +506,13 @@ private:
 	cGuiGfxElement *mpWhiteModGfx;
 
 	iFontData *mpFont;
-    	
+    
 	float mfFadeAlpha;
 	float mfTextAlpha1;
 	float mfTextAlpha2;
 	float mfTextOnScreenCount;
 	float mfWhiteCount;
-	
+
 	cLinearOscillation mFlashOscill;
 
 	cSoundEntry *mpVoiceEntry;
@@ -524,10 +524,10 @@ private:
 
 class cLuxPlayerLean : public iLuxPlayerHelper
 {
-public:	
+public:
 	cLuxPlayerLean(cLuxPlayer *apPlayer);
 	~cLuxPlayerLean();
-	
+
 	void CreateWorldEntities(cLuxMap *apMap);
 	void DestroyWorldEntities(cLuxMap *apMap);
 
@@ -567,7 +567,7 @@ public:
 class cLuxPlayerHudEffect_Splash
 {
 public:
-	cGuiGfxElement *mpImage;	
+	cGuiGfxElement *mpImage;
 	cVector3f mvPos;
 	cVector2f mvSize;
 	float mfAlpha;
@@ -594,7 +594,7 @@ public:
 	void OnDraw(float afFrameTime);
 	void Update(float afTimeStep);
 	void Reset();
-	
+
 private:
 	void DrawSplashes(float afFrameTime);
 	void UpdateSplashes(float afTimeStep);
@@ -621,10 +621,10 @@ private:
 
 class cLuxPlayerLightLevel : public iLuxPlayerHelper
 {
-public:	
+public:
 	cLuxPlayerLightLevel(cLuxPlayer *apPlayer);
 	~cLuxPlayerLightLevel();
-	
+
 	void OnStart();
 	void Update(float afTimeStep);
 	void Reset();
@@ -647,7 +647,7 @@ private:
 class cLuxPlayerInDarkness : public iLuxPlayerHelper
 {
 friend class cLuxPlayer_SaveData;
-public:	
+public:
 	cLuxPlayerInDarkness(cLuxPlayer *apPlayer);
 	~cLuxPlayerInDarkness();
 
@@ -671,7 +671,7 @@ private:
 	cSoundHandler *mpSoundHandler;
 
 	float mfMinDarknessLightLevel;
-	
+
 	float mfAmbientLightMinLightLevel;
 	float mfAmbientLightRadius;
 	float mfAmbientLightIntensity;

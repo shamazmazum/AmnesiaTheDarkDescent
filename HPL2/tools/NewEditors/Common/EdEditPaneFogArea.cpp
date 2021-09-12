@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -60,7 +60,7 @@ void cEdEditPaneFogArea::Create()
 	vPos.y += mpInpRotation->GetSize().y+5;
 	mpInpScale->SetPosition(vPos);
 	vPos.y += mpInpScale->GetSize().y+5;
-	
+
 
 	vPos = cVector3f(10,10,0.1f);
 	mpInpColor = CreateInputColor(vPos, _W("Color"), pTab);
@@ -69,11 +69,11 @@ void cEdEditPaneFogArea::Create()
 	vPos.y += mpInpStart->GetSize().y;
 	mpInpEnd = CreateInputNumber(vPos, _W("End"),  pTab);
 	vPos.y += mpInpEnd->GetSize().y;
-	mpInpFalloffExp = CreateInputNumber(vPos, _W("FalloffExp"),  pTab);	
+	mpInpFalloffExp = CreateInputNumber(vPos, _W("FalloffExp"),  pTab);
 	vPos.y += mpInpFalloffExp->GetSize().y;
-	mpInpShowBacksideWhenInside = CreateInputBool(vPos, _W("Show backside when inside"),  pTab);	
+	mpInpShowBacksideWhenInside = CreateInputBool(vPos, _W("Show backside when inside"),  pTab);
 	vPos.y += mpInpShowBacksideWhenInside->GetSize().y;
-	mpInpShowBacksideWhenOutside = CreateInputBool(vPos, _W("Show backside when outside"),  pTab);	
+	mpInpShowBacksideWhenOutside = CreateInputBool(vPos, _W("Show backside when outside"),  pTab);
 }
 
 //------------------------------------------------------------
@@ -140,7 +140,7 @@ bool cEdEditPaneFogArea::WindowSpecificInputCallback(iEdInput* apInput)
 	{
 		pAction = mpObject->CreateSetBoolAction(eFogAreaBool_ShownBacksideWhenOutside, mpInpShowBacksideWhenOutside->GetValue());
 	}
-	
+
 	AddAction(pAction);
 
 	return iEdScnObjEditPane::WindowSpecificInputCallback(apInput);

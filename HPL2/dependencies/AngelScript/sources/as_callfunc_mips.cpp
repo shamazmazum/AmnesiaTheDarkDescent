@@ -286,9 +286,9 @@ int CallSystemFunction(int id, asCContext *context, void *objectPointer)
 	int intArgs = 0;
 	for( size_t a = 0; a < descr->parameterTypes.GetLength(); a++ )
 	{
-		if (descr->parameterTypes[a].IsFloatType()) 
+		if (descr->parameterTypes[a].IsFloatType())
 			hostFlags |= argBit;
-		else 
+		else
 			intArgs++;
 		argBit <<= 1;
 	}

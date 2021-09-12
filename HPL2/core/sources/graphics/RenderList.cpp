@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -61,7 +61,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// PUBLIC METHODS
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
 
 	void cRenderList::Setup(float afFrameTime, cFrustum *apFrustum)
@@ -124,19 +124,19 @@ namespace hpl {
 			//If there is an intersection (which happens unless inside), use that. Else use world center
 			if(cMath::CheckAABBLineIntersection(pBV->GetMin(), pBV->GetMax(), mpFrustum->GetOrigin(), pBV->GetWorldCenter(), &vIntersectionPos, NULL)==false)
 			{
-				vIntersectionPos = pBV->GetWorldCenter();		
+				vIntersectionPos = pBV->GetWorldCenter();
 			}
-			
+
 			vIntersectionPos = cMath::MatrixMul(mpFrustum->GetViewMatrix(), vIntersectionPos);
-			apObject->SetViewSpaceZ(vIntersectionPos.z);			
+			apObject->SetViewSpaceZ(vIntersectionPos.z);
 		}
 		else
 		{
 			cVector3f vCameraPos = cMath::MatrixMul(mpFrustum->GetViewMatrix(), apObject->GetBoundingVolume()->GetWorldCenter());
 			apObject->SetViewSpaceZ(vCameraPos.z);
 		}
-		
-		
+
+
 
 		//////////////////////////////
 		// If objects uses occlusion queries, add it as such
@@ -144,7 +144,7 @@ namespace hpl {
 		{
 			mvOcclusionQueryObjects.push_back(apObject);
 		}
-        
+
 		//////////////////////////////
 		// Light, add to special list
 		if(renderType == eRenderableType_Light)
@@ -211,7 +211,7 @@ namespace hpl {
 
 	void cRenderList::Clear()
 	{
-		// Use resize instead of clear, because that way capacity is preserved and allocation is never 
+		// Use resize instead of clear, because that way capacity is preserved and allocation is never
 		// needed unless there is a need to increase the vector size.
 
 		mvOcclusionQueryObjects.resize(0);
@@ -237,24 +237,24 @@ namespace hpl {
 
 		Log("Trans Objects:\n");
 		for(size_t i=0; i<mvTransObjects.size(); ++i)
-			Log(" '%s' ViewspaceZ: %f LargeSurfacePlacement: %d Mat: '%s' RenderCount: %d\n", mvTransObjects[i]->GetName().c_str(), 
+			Log(" '%s' ViewspaceZ: %f LargeSurfacePlacement: %d Mat: '%s' RenderCount: %d\n", mvTransObjects[i]->GetName().c_str(),
 					mvTransObjects[i]->GetViewSpaceZ(),
 					mvTransObjects[i]->GetLargePlaneSurfacePlacement(),
-					mvTransObjects[i]->GetMaterial()->GetName().c_str(), 
+					mvTransObjects[i]->GetMaterial()->GetName().c_str(),
 					mvTransObjects[i]->GetRenderFrameCount());
 
 		Log("Solid Objects:\n");
 		for(size_t i=0; i<mvSolidObjects.size(); ++i)
 			Log(" '%s' Mat: '%s' RenderCount: %d\n", mvSolidObjects[i]->GetName().c_str(), mvSolidObjects[i]->GetMaterial()->GetName().c_str(), mvSolidObjects[i]->GetRenderFrameCount());
-		
+
 		Log("Decal Objects:\n");
 		for(size_t i=0; i<mvDecalObjects.size(); ++i)
 			Log(" '%s' Mat: '%s' RenderCount: %d\n", mvDecalObjects[i]->GetName().c_str(), mvDecalObjects[i]->GetMaterial()->GetName().c_str(), mvSolidObjects[i]->GetRenderFrameCount());
-		
+
 		Log("Illum Objects:\n");
 		for(size_t i=0; i<mvIllumObjects.size(); ++i)
 			Log(" '%s' Mat: '%s' RenderCount: %d\n", mvIllumObjects[i]->GetName().c_str(), mvIllumObjects[i]->GetMaterial()->GetName().c_str(), mvSolidObjects[i]->GetRenderFrameCount());
-	
+
 
 		Log("---------------------------------\n");
 	}
@@ -359,7 +359,7 @@ namespace hpl {
 		{
 			return apObjectA->GetModelMatrixPtr() < apObjectB->GetModelMatrixPtr();
 		}
-		
+
 		//////////////////////////
 		//Object
         return apObjectA < apObjectB;
@@ -378,16 +378,16 @@ namespace hpl {
 
 		//////////////////////////
 		//View space depth, no need to test further since Z should almost never be the same for two objects.
-		return apObjectA->GetViewSpaceZ() < apObjectB->GetViewSpaceZ();		
+		return apObjectA->GetViewSpaceZ() < apObjectB->GetViewSpaceZ();
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	static bool SortFunc_Decal(iRenderable* apObjectA, iRenderable *apObjectB)
 	{
 		cMaterial *pMatA = apObjectA->GetMaterial();
 		cMaterial *pMatB = apObjectB->GetMaterial();
-		
+
 		//////////////////////////
 		//Texture
 		if(pMatA->GetTexture(eMaterialTexture_Illumination) != pMatB->GetTexture(eMaterialTexture_Illumination))
@@ -408,7 +408,7 @@ namespace hpl {
 		{
 			return apObjectA->GetModelMatrixPtr() < apObjectB->GetModelMatrixPtr();
 		}
-		
+
 		//////////////////////////
 		//Vector (just so that order stays the same
         return apObjectA->GetWorldPosition()  < apObjectB->GetWorldPosition();
@@ -449,13 +449,13 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	typedef bool (*tSortRenderableFunc)(iRenderable*,iRenderable*); 
+	typedef bool (*tSortRenderableFunc)(iRenderable*,iRenderable*);
 
 	static tSortRenderableFunc vSortFunctions[eRenderListType_LastEnum] = {SortFunc_Z,SortFunc_Diffuse,SortFunc_Translucent,SortFunc_Decal,SortFunc_Illumination};
 
 	//-----------------------------------------------------------------------
 
-	
+
 	void cRenderList::CompileArray(eRenderListType aType)
 	{
 		tRenderableVec *pSourceVec = NULL;
@@ -465,7 +465,7 @@ namespace hpl {
 		else											pSourceVec = &mvSolidObjects;
 
 		mvSortedArrays[aType] = *pSourceVec;	//Should be fastest way to copy right, or use memcopy?
-		
+
 		std::sort(mvSortedArrays[aType].begin(), mvSortedArrays[aType].end(), vSortFunctions[aType]);
 	}
 
@@ -479,7 +479,7 @@ namespace hpl {
 		bool bHasLargeSurfacePlane = false;
 		float fClosestDist =0;
 		iRenderable *pLargeSurfaceObject = NULL;
-		
+
 		////////////////////////////////////
 		// Find the neareest surface plane
 		for(size_t i=0; i<mvTransObjects.size(); ++i)
@@ -491,7 +491,7 @@ namespace hpl {
 
 			cMaterial *pMat = pObject->GetMaterial();
             if(pMat->GetLargeTransperantSurface()==false) continue;
-			
+
 			/////////////////////////////////
 			// Check so sub mesh is one sided
 			cSubMeshEntity *pSubEnt = static_cast<cSubMeshEntity*>(pObject);
@@ -510,7 +510,7 @@ namespace hpl {
 			// Create surface normal and check if nearest.
 			cPlanef surfacePlane;
 			surfacePlane.FromNormalPoint(vSurfaceNormal, vSurfacePos);
-			
+
 			float fDist = cMath::PlaneToPointDist(surfacePlane, mpFrustum->GetOrigin());
 			if(fDist < fClosestDist || bHasLargeSurfacePlane==false)
 			{
@@ -529,19 +529,19 @@ namespace hpl {
 			for(size_t i=0; i<mvTransObjects.size(); ++i)
 			{
 				iRenderable *pObject = mvTransObjects[i];
-				
+
 				//If this is large plane, then set value to 0
 				if(pObject == pLargeSurfaceObject)
 				{
 					pObject->SetLargePlaneSurfacePlacement(0);
 					continue;
 				}
-				
+
 				float fDist = cMath::PlaneToPointDist(nearestSurfacePlane, pObject->GetBoundingVolume()->GetWorldCenter());
 				pObject->SetLargePlaneSurfacePlacement(fDist < 0 ? -1 : 1);
 
 				//Log(" %d Object: '%s' %d  Mat:'%s'\n",i, pObject->GetName().c_str(), pObject->GetLargePlaneSurfacePlacement(),  pLargeSurfaceObject->GetMaterial()->GetName().c_str());
-			}	
+			}
 		}
 		////////////////////////////////////
 		// Set all to same value.
@@ -555,7 +555,7 @@ namespace hpl {
 		}
 
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 }

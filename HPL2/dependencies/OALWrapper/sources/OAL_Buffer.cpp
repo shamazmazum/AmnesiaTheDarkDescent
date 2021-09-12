@@ -25,7 +25,7 @@
 //------------------------------------------------------------------
 
 ///////////////////////////////////////////////////////////
-//	
+//
 //
 ///////////////////////////////////////////////////////////
 
@@ -39,10 +39,10 @@ cOAL_Buffer::cOAL_Buffer(iOAL_AudioData* apParent) : iOAL_LowLevelObject("Buffer
 
 //------------------------------------------------------------------
 
-cOAL_Buffer::~cOAL_Buffer() 
+cOAL_Buffer::~cOAL_Buffer()
 {
 	DestroyLowLevelID();
-}		
+}
 
 //------------------------------------------------------------------
 
@@ -53,15 +53,15 @@ bool cOAL_Buffer::CreateLowLevelID ()
 
 	// Create a Buffer Object which will contain the Buffer name
 	RUN_AL_FUNC(alGenBuffers( 1, &mlObjectId);)
-	
+
 	return (!AL_ERROR_OCCURED && (IsValidObject()));
 }
 
 //------------------------------------------------------------------
 
 ///////////////////////////////////////////////////////////
-//	
-//	
+//
+//
 ///////////////////////////////////////////////////////////
 
 //------------------------------------------------------------------
@@ -75,7 +75,7 @@ bool cOAL_Buffer::DestroyLowLevelID ()
 	if ( IsValidObject() )
 	{
 		RUN_AL_FUNC(alDeleteBuffers( 1, &mlObjectId ));
-		
+
 		bSuccess = bSuccess && !AL_ERROR_OCCURED;
 	}
 	return bSuccess;
@@ -113,7 +113,7 @@ bool cOAL_Buffer::Feed(ALvoid* apPCMData, int alDataSize, double afStartTime)
 string cOAL_Sample::GetDebugInfo()
 {
 	char temp[200];
-		
+
 	sprintf(temp, "Sample %s, Time %f, channels: %d\n", msFileName.c_str(), mfTotalTime, mlChannels);
 	return string(temp);
 }

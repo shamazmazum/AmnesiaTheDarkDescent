@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -47,7 +47,7 @@ namespace hpl {
 		virtual bool IsTriggerd()=0;
 
 		/**
-		* 
+		*
 		* \return A value from the input, ie the relative mouse x position.
 		*/
 		virtual float GetValue()=0;
@@ -81,7 +81,7 @@ namespace hpl {
 		void AddKey(eKey aKey);
 		void AddMouseButton(eMouseButton aButton);
 		void AddGamepadButton(int alPadIndex, eGamepadButton aButton);
-		void AddGamepadAxis(int alPadIndex, eGamepadAxis aAxis, eGamepadAxisRange aRange, float afMinThreshold, float afMaxThreshold=1.0f); 
+		void AddGamepadAxis(int alPadIndex, eGamepadAxis aAxis, eGamepadAxisRange aRange, float afMinThreshold, float afMaxThreshold=1.0f);
 		void AddGamepadHat(int alPadIndex, eGamepadHat aHat, eGamepadHatState aHatState);
 
 		void AddSubAction(iSubAction *apSubAction);
@@ -121,7 +121,7 @@ namespace hpl {
 		iSubAction *GetSubAction(int alIdx){ return mvSubActions[alIdx];}
 		int GetSubActionNum(){ return (int)mvSubActions.size();}
 
-		
+
 		const tString& GetName(){ return msName;}
 		int GetId(){ return mlId; }
 	private:
@@ -140,7 +140,7 @@ namespace hpl {
 		double mfTimeCount;
 
 		tSubActionVec mvSubActions;
-		
+
 	};
 
 	//---------------------------------------------------------

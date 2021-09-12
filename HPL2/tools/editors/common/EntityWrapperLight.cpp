@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -34,8 +34,8 @@
 
 //------------------------------------------------------------------------------
 
-bool iEntityWrapperTypeLight::mbLightsVisible = true; 
-bool iEntityWrapperTypeLight::mbLightsActive = true; 
+bool iEntityWrapperTypeLight::mbLightsVisible = true;
+bool iEntityWrapperTypeLight::mbLightsActive = true;
 
 //------------------------------------------------------------------------------
 
@@ -57,7 +57,7 @@ void iIconEntityLight::Update()
 	iEditorWorld* pWorld = mpParent->GetEditorWorld();
 	iLight* pLight = (iLight*)mpEntity;
 	pLight->SetVisible(mpParent->IsVisible() && mpParent->IsActive() && mpParent->GetType()->IsActive());
-	
+
 	iEntityWrapperLight* pParent = (iEntityWrapperLight*)mpParent;
 	pParent->UpdateFlickerParams();
 
@@ -72,10 +72,10 @@ void iIconEntityLight::Update()
 void iEntityWrapperTypeLight::SetVisible(bool abX)
 {
 	if(mbLightsVisible==abX)
-		return; 
+		return;
 
-	mbLightsVisible = abX; 
-	mpWorld->SetVisibilityUpdated(); 
+	mbLightsVisible = abX;
+	mpWorld->SetVisibilityUpdated();
 }
 
 //------------------------------------------------------------------------------
@@ -83,10 +83,10 @@ void iEntityWrapperTypeLight::SetVisible(bool abX)
 void iEntityWrapperTypeLight::SetActive(bool abX)
 {
 	if(mbLightsActive==abX)
-		return; 
+		return;
 
-	mbLightsActive = abX; 
-	mpWorld->SetVisibilityUpdated(); 
+	mbLightsActive = abX;
+	mpWorld->SetVisibilityUpdated();
 }
 
 //------------------------------------------------------------------------------
@@ -655,7 +655,7 @@ void iEntityWrapperLight::AddConnectedBillboard(cEntityWrapperBillboard* apBB)
 void iEntityWrapperLight::RemoveConnectedBillboard(cEntityWrapperBillboard* apBB)
 {
 	if(apBB==NULL)return;
-	
+
 	mlstConnectedBBs.remove(apBB);
 	((iLight*)mpEngineEntity->GetEntity())->RemoveBillboard((cBillboard*)apBB->GetEngineEntity()->GetEntity());
 }
@@ -677,7 +677,7 @@ void iEntityWrapperLight::SetFalloffMap(const tString& asFalloffMap)
 		msFalloffMap = "";
 	}
 
-	((iLight*)mpEngineEntity->GetEntity())->SetFalloffMap(pTex);	
+	((iLight*)mpEngineEntity->GetEntity())->SetFalloffMap(pTex);
 }
 
 //------------------------------------------------------------------------------
@@ -692,7 +692,7 @@ void iEntityWrapperLight::SetGobo(const tString& asGoboFilename)
 	else
 		msGoboFilename = "";
 
-	((iLight*)mpEngineEntity->GetEntity())->SetGoboTexture(pTex);	
+	((iLight*)mpEngineEntity->GetEntity())->SetGoboTexture(pTex);
 }
 
 //------------------------------------------------------------------------------

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -47,7 +47,7 @@ namespace hpl {
 
 		void Update(float afTimeStep);
 		bool Init(cResources *apResources);
-		
+
 		void DestroyAllShapes();
 		void DestroyAll();
 
@@ -78,14 +78,14 @@ namespace hpl {
 		//! \name Input
 		//########################################################################################
 		//! @{
-		
+
 		virtual bool ButtonIsPressed(int alNum)=0;
 
 		virtual cVector3f GetHardwarePosition()=0;
 		virtual cVector3f GetHardwareRotation()=0;
 
 		cVector3f GetHardwarePosDelta();
-		
+
 		cVector2f GetProxyScreenPos(const cVector2f& avScreenSize);
 		cVector2f GetProxyScreenDeltaPos(const cVector2f& avScreenSize);
 
@@ -93,7 +93,7 @@ namespace hpl {
 		cVector2f GetVirtualMousePos();
 		void SetVirtualMousePosBounds(	const cVector2f &avMin,const cVector2f &avMax,
 											const cVector2f &avScreenSize);
-		
+
 		virtual cVector3f GetProxyPosition()=0;
 		virtual void SetProxyRadius(float afRadius)=0;
 		virtual float GetProxyRadius()=0;
@@ -109,27 +109,27 @@ namespace hpl {
 
 		virtual iHapticSurface* CreateSimpleSurface(const tString &asName,
 													float afDamping=0.0f, float afStiffness=0.9f)=0;
-		
+
 		virtual iHapticSurface* CreateFrictionalSurface(const tString &asName,
 														float afDamping=0.0f, float afStiffness=0.9f,
 														float afDynamicFriction=0.2f, float afStartingFriction=0.3f,
 														float afTangentStiffness=0.7f, float afStoppingFriction=0.1f)=0;
-		
-		virtual iHapticSurface* CreateRoughSurface(const tString &asName, 
+
+		virtual iHapticSurface* CreateRoughSurface(const tString &asName,
 													float afDeviation=0.1f, float afMean=0.5f,
 													float afDamping=0.0f, float afStiffness=0.9f,
 													float afDynamicFriction=0.2f, float afStartingFriction=0.3f,
 													float afTangentStiffness=0.7f, float afStoppingFriction=0.1f)=0;
-		
-		virtual iHapticSurface* CreateStickySurface(const tString &asName, 
+
+		virtual iHapticSurface* CreateStickySurface(const tString &asName,
 													float afDeadHeight=0.004f, float afStickyStiffness=0.6f,
 													float afDamping=0.0f, float afStiffness=0.9f,
 													float afDynamicFriction=0.2f, float afStartingFriction=0.3f,
 													float afTangentStiffness=0.7f, float afStoppingFriction=0.1f)=0;
-		
+
 		iHapticSurface* GetSurfaceFromName(const tString &asName);
 
-		
+
 
 		//! @}
 
@@ -176,7 +176,7 @@ namespace hpl {
 		virtual void UpdateLowLevel(float afTimeStep)=0;
 
 		cResources *mpResources;
-	
+
 		cCamera *mpCamera;
 		cVector3f mvCameraOffset;
 

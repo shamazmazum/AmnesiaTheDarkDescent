@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -74,13 +74,13 @@ bool cEngineEntitySubMesh::CheckRayIntersect(cEditorWindowViewport* apViewport, 
 	if(iEngineEntity::CheckRayIntersect(apViewport, apPos, apTri)==false)
 		return false;
 
-	return cEditorHelper::CheckRaySubMeshEntityIntersect(apViewport->GetUnprojectedStart(), apViewport->GetUnprojectedEnd(), 
+	return cEditorHelper::CheckRaySubMeshEntityIntersect(apViewport->GetUnprojectedStart(), apViewport->GetUnprojectedEnd(),
 															(cSubMeshEntity*)mpEntity, apPos, apT, NULL, apTri);
 }
 
 //---------------------------------------------------------------------------
 
-void cEngineEntitySubMesh::Draw(cEditorWindowViewport* apViewport, cRendererCallbackFunctions* apFunctions, 
+void cEngineEntitySubMesh::Draw(cEditorWindowViewport* apViewport, cRendererCallbackFunctions* apFunctions,
 								bool abIsSelected, bool abIsActive, const cColor& aHighlightCol)
 {
 	if(abIsSelected==false)
@@ -149,7 +149,7 @@ bool cEntityWrapperTypeSubMesh::SetMesh(const tString& asFilename, bool abDelete
 	{
 		if(asFilename!="")
 			pEditor->ShowMessageBox(_W("Warning"), _W("Could not load mesh file: ") + cString::To16Char(asFilename), _W("Ok"), _W(""), NULL, NULL);
-		
+
 		mpMesh = NULL;
 
 		return false;
@@ -214,9 +214,9 @@ bool cEntityWrapperTypeSubMesh::SetMesh(const tString& asFilename, bool abDelete
 		for(int i=0;i<pSkeleton->GetBoneNum();i++)
 		{
 			cBone* pBone = pSkeleton->GetBoneByIndex(i);
-			
+
 			iEntityWrapperData* pData = NULL;
-			
+
 			if(bBoneDataEmpty || i>=(int)avBoneData.size())
 			{
 				pData = pBoneType->CreateData();
@@ -243,7 +243,7 @@ bool cEntityWrapperTypeSubMesh::SetMesh(const tString& asFilename, bool abDelete
 			int lParentBoneID = -1;
 			if(itParents!=mapBoneIDs.end())
 				lParentBoneID = itParents->second;
-			
+
 			pData->SetInt(eBoneInt_ParentBoneID, lParentBoneID);
 
 			// Insert on map for future parent search
@@ -479,7 +479,7 @@ void cEntityWrapperSubMesh::SetMaterialFile(const tString& asMatFile)
 	else
 		msMatFile = asMatFile;
 
-	if(mpEngineEntity) 
+	if(mpEngineEntity)
 		((cSubMeshEntity*)mpEngineEntity->GetEntity())->SetCustomMaterial(pMat);
 }
 

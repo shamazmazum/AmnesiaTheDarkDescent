@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -61,7 +61,7 @@ namespace hpl {
 	};
 
 	//-----------------------------------------
-	
+
 	enum eRenderer
 	{
 		eRenderer_Main,
@@ -69,7 +69,7 @@ namespace hpl {
 		eRenderer_Simple,
 		eRenderer_LastEnum,
 	};
-	
+
 	//-----------------------------------------
 
 	enum eMatrix
@@ -91,13 +91,13 @@ namespace hpl {
 
 	//-----------------------------------------
 
-	
+
 	typedef tFlag tAnimTransformFlag;
 
 	#define eAnimTransformFlag_Translate	(0x00000001)
 	#define eAnimTransformFlag_Rotate		(0x00000002)
 	#define eAnimTransformFlag_Scale		(0x00000004)
-	
+
 	#define klNumOfAnimTransformFlags (2)
 
 	const tAnimTransformFlag kvAnimTransformFlags[] = {eAnimTransformFlag_Translate, eAnimTransformFlag_Rotate};
@@ -169,7 +169,7 @@ namespace hpl {
 		eTextureFunc_Add,
 		eTextureFunc_Substract,
 		eTextureFunc_AddSigned,
-		eTextureFunc_Interpolate, 
+		eTextureFunc_Interpolate,
 		eTextureFunc_Dot3RGB,
 		eTextureFunc_Dot3RGBA,
 		eTextureFunc_LastEnum
@@ -184,10 +184,10 @@ namespace hpl {
 		eStencilFunc_Less,
 		eStencilFunc_LessOrEqual,
 		eStencilFunc_Greater,
-		eStencilFunc_GreaterOrEqual, 
-		eStencilFunc_Equal, 
-		eStencilFunc_NotEqual, 
-		eStencilFunc_Always, 
+		eStencilFunc_GreaterOrEqual,
+		eStencilFunc_Equal,
+		eStencilFunc_NotEqual,
+		eStencilFunc_Always,
 		eStencilFunc_LastEnum
 	};
 
@@ -200,11 +200,11 @@ namespace hpl {
 
 	enum eStencilOp
 	{
-		eStencilOp_Keep, 
-		eStencilOp_Zero, 
-		eStencilOp_Replace, 
-		eStencilOp_Increment, 
-		eStencilOp_Decrement, 
+		eStencilOp_Keep,
+		eStencilOp_Zero,
+		eStencilOp_Replace,
+		eStencilOp_Increment,
+		eStencilOp_Decrement,
 		eStencilOp_Invert,
 		eStencilOp_IncrementWrap,
 		eStencilOp_DecrementWrap,
@@ -219,10 +219,10 @@ namespace hpl {
 		eDepthTestFunc_Less,
 		eDepthTestFunc_LessOrEqual,
 		eDepthTestFunc_Greater,
-		eDepthTestFunc_GreaterOrEqual, 
-		eDepthTestFunc_Equal, 
-		eDepthTestFunc_NotEqual, 
-		eDepthTestFunc_Always, 
+		eDepthTestFunc_GreaterOrEqual,
+		eDepthTestFunc_Equal,
+		eDepthTestFunc_NotEqual,
+		eDepthTestFunc_Always,
 		eDepthTestFunc_LastEnum
 	};
 
@@ -234,10 +234,10 @@ namespace hpl {
 		eAlphaTestFunc_Less,
 		eAlphaTestFunc_LessOrEqual,
 		eAlphaTestFunc_Greater,
-		eAlphaTestFunc_GreaterOrEqual, 
-		eAlphaTestFunc_Equal, 
-		eAlphaTestFunc_NotEqual, 
-		eAlphaTestFunc_Always, 
+		eAlphaTestFunc_GreaterOrEqual,
+		eAlphaTestFunc_Equal,
+		eAlphaTestFunc_NotEqual,
+		eAlphaTestFunc_Always,
 		eAlphaTestFunc_LastEnum
 	};
 
@@ -291,7 +291,7 @@ namespace hpl {
 
 		eGraphicCaps_LastEnum
 	};
-	
+
 	//-----------------------------------------
 
 
@@ -471,7 +471,7 @@ namespace hpl {
 		eGpuShaderType_Fragment,
 		eGpuShaderType_LastEnum
 	};
-	
+
 	enum eGpuShaderMatrix
 	{
 		eGpuShaderMatrix_View,
@@ -492,7 +492,7 @@ namespace hpl {
 
 	//-----------------------------------------
 
-	
+
 	enum ePixelFormat
 	{
 			ePixelFormat_Unknown,
@@ -525,7 +525,7 @@ namespace hpl {
 	};
 
 	//-----------------------------------------
-	
+
 	enum eFontAlign
 	{
 		eFontAlign_Left,
@@ -537,14 +537,14 @@ namespace hpl {
 	//---------------------------------------
 
 	enum eFrameBufferAttachment
-	{	
-		eFrameBufferAttachment_RenderBuffer,	
+	{
+		eFrameBufferAttachment_RenderBuffer,
 		eFrameBufferAttachment_Texture,
 		eFrameBufferAttachment_LastEnum
 	};
 
 	//---------------------------------------
-	
+
 	enum eMaterialTexture
 	{
 		eMaterialTexture_Diffuse,
@@ -571,7 +571,7 @@ namespace hpl {
 
 	enum eMaterialBlendMode
 	{
-		eMaterialBlendMode_None, 
+		eMaterialBlendMode_None,
 		eMaterialBlendMode_Add,
 		eMaterialBlendMode_Mul,
 		eMaterialBlendMode_MulX2,
@@ -619,9 +619,9 @@ namespace hpl {
 	};
 
 	//---------------------------------------
-	
+
 	enum eShadowMapResolution
-	{	
+	{
 		eShadowMapResolution_Low,
 		eShadowMapResolution_Medium,
 		eShadowMapResolution_High,
@@ -631,13 +631,13 @@ namespace hpl {
 	//---------------------------------------
 
 	enum eShadowMapQuality
-	{	
+	{
 		eShadowMapQuality_Low,
 		eShadowMapQuality_Medium,
 		eShadowMapQuality_High,
 		eShadowMapQuality_LastEnum,
 	};
-	
+
 	//---------------------------------------
 
 	enum eParallaxQuality
@@ -687,7 +687,7 @@ namespace hpl {
 	#define eRenderableFlag_VisibleInReflection		(0x00000002)
 	#define eRenderableFlag_VisibleInNonReflection	(0x00000004)
 	#define eRenderableFlag_ContainerDebug			(0x00000008)
-	
+
 	//---------------------------------------
 
 	typedef tFlag tRenderListCompileFlag;
@@ -700,7 +700,7 @@ namespace hpl {
 
 	enum eRenderListType
 	{
-		eRenderListType_Z,	
+		eRenderListType_Z,
 		eRenderListType_Diffuse,
 		eRenderListType_Translucent,
 		eRenderListType_Decal,
@@ -711,7 +711,7 @@ namespace hpl {
 	//---------------------------------------
 
 	class cMaterial;
-	
+
 	typedef std::vector<cMaterial*> tMaterialVec;
 	typedef tMaterialVec::iterator tMaterialVecIt;
 
@@ -741,7 +741,7 @@ namespace hpl {
 	};
 
 	//---------------------------------------
-	
+
 	class iRenderable;
 
 	typedef std::vector<iRenderable*> tRenderableVec;
@@ -775,7 +775,7 @@ namespace hpl {
 
 	typedef std::vector<cVertexBonePair> tVertexBonePairVec;
 	typedef tVertexBonePairVec::iterator tVertexBonePairVecIt;
-	
+
 	//---------------------------------------
 
 	class cVertex
@@ -788,7 +788,7 @@ namespace hpl {
 			tex = avTex;
 			col = aCol;
 		}
-		
+
 		cVertex(const cVector3f &avPos,const cColor &aCol )
 		{
 			pos = avPos;
@@ -801,10 +801,10 @@ namespace hpl {
 		cVector3f norm;
         cColor col;
 	};
-	
+
 	typedef std::list<cVertex> tVertexList;
 	typedef tVertexList::iterator tVertexListIt;
-	
+
 	typedef std::vector<cVertex> tVertexVec;
 	typedef tVertexVec::iterator tVertexVecIt;
 
@@ -812,7 +812,7 @@ namespace hpl {
 
 	class iOcclusionQuery;
 	class iVertexBuffer;
-	
+
 	class cOcclusionQueryObject
 	{
 	public:
@@ -863,7 +863,7 @@ namespace hpl {
 	};
 
 	//---------------------------------------
-	
+
 	class iGpuShader;
 	class iGpuProgram;
 
@@ -895,7 +895,7 @@ namespace hpl {
 	extern tVertexElementFlag GetVertexElementFlagFromEnum(eVertexBufferElement aElement);
 	extern int GetVertexFormatByteSize(eVertexBufferElementFormat aFormat);
 	extern int GetVertexElementTextureUnit(eVertexBufferElement aElement);
-	
+
 	extern int GetChannelsInPixelFormat(ePixelFormat aFormat);
 	extern int GetBytesPerPixel(ePixelFormat aFormat);
 	extern bool PixelFormatIsCompressed(ePixelFormat aFormat);

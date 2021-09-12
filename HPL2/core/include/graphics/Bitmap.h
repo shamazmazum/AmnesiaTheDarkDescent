@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -36,11 +36,11 @@ namespace hpl {
 		void SetData(const unsigned char* apData, int alSize);
 
 		unsigned char *mpData;
-		int mlSize;	
+		int mlSize;
 	};
 
 	//-----------------------------------------
-	
+
 	class cBitmap
 	{
 	public:
@@ -53,7 +53,7 @@ namespace hpl {
 		inline int GetDepth() const { return mvSize.z;}
 
 		void SetSize(const cVector3l& avSize){ mvSize = avSize; }
-        
+
 		inline ePixelFormat GetPixelFormat() const { return mPixelFormat;}
 		inline char GetBytesPerPixel() const { return mlBytesPerPixel; }
 		inline int GetNumOfMipMaps() const { return mlNumOfMipMaps;}
@@ -61,7 +61,7 @@ namespace hpl {
 
 		void SetPixelFormat(ePixelFormat aFormat){ mPixelFormat = aFormat;}
 		void SetBytesPerPixel(char alBpp){ mlBytesPerPixel = alBpp;}
-		
+
 		cBitmapData* GetData(int alImage, int alMipMapLevel);
 		void SetUpData(int alNumOfImages, int alNumOfMipmaps);
 		inline bool IsCompressed() const { return mbDataIsCompressed;}
@@ -71,7 +71,7 @@ namespace hpl {
 		void SetFileName(const tWString& asFileName) { msFileName = asFileName;}
 
 		void CreateData(const cVector3l& avSize, ePixelFormat aFormat, int alImage, int alMipMap);
-	
+
 		void Clear( const cColor& aColor,int alImage, int alMipMap);
 
 		void Blit(	cBitmap *apSrc,
@@ -80,10 +80,10 @@ namespace hpl {
 					int alDestImage=0, int alDestMipMap=0,
 					int alSrcImage=0, int alSrcMipMap=0);
 
-		
-		
+
+
 	private:
-		void CopyPixel(	unsigned char* apDest, ePixelFormat aDestFormat, 
+		void CopyPixel(	unsigned char* apDest, ePixelFormat aDestFormat,
 						unsigned char* apSrc, ePixelFormat aSrcFormat);
 		unsigned char* ConvertDataToFormat(unsigned char* apPixelData, ePixelFormat aSrcFormat, ePixelFormat aDestFormat);
 		unsigned char* ConvertDataToRGBA(unsigned char* apPixelData, ePixelFormat aFormat);
@@ -97,7 +97,7 @@ namespace hpl {
 		ePixelFormat mPixelFormat;
 
 		char mlBytesPerPixel;
-		
+
 		int mlNumOfImages;
 		int mlNumOfMipMaps;
 	};

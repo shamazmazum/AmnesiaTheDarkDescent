@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -37,7 +37,7 @@ cRotateManipulator::cRotateManipulator() : iScnObjManipulator(_W("GenericRotate"
 	mbTransformStarted = false;
 
 	mfUsedAxisLength = mfAxisBaseLength;
-	
+
 	float fWidth = kPif*0.15f;
 	float fHalfWidth = fWidth*0.5f;
 	float fPi3_2 = kPif*1.5f;
@@ -60,7 +60,7 @@ cRotateManipulator::cRotateManipulator() : iScnObjManipulator(_W("GenericRotate"
 		mvAxisMouseOver[i] = false;
 		mvAxisSelected[i] = false;
 	}
-	
+
 	mColorSelected = cColor(1,1,0,1);
 	mColorMouseOver = cColor(0.5f,0.5f,0,1);
 
@@ -153,11 +153,11 @@ void cRotateManipulator::CheckMouseOverAxis()
 			lClosestIntIndex = 0;
 		else
 			lClosestIntIndex = 1;
-		
+
 		for(int i=0;i<2;++i)
 			vIntersectionSphCoords[i] = cMath::GetSphericalCoordsFromPoint3D(0,vIntersection[i]);
 
-		
+
 		cMatrixf mtxTransform = cMath::MatrixMul(mpTargetObject->GetTranslationMatrix(),
 												 mpTargetObject->GetRotationMatrix());
 		mvMouseDownCoords = cMath::MatrixMul(mtxTransform, vIntersection[lClosestIntIndex]);
@@ -224,7 +224,7 @@ void cRotateManipulator::CheckMouseOverAxis()
 	mvScreenSpaceTangentVector.Normalize();
 
 	mvDisplacement = 0;
-	
+
 }
 
 //----------------------------------------------------------------
@@ -269,8 +269,8 @@ void cRotateManipulator::OnDraw(const cModuleDrawData& aData)
 	aData.mpFunctions->SetMatrix(NULL);
 
 	cVector3f vPos, vSize;
-	aData.mpViewport->GetViewSpacePositionAndSize(mpTargetObject->GetTranslation(), 0.25f, vPos, vSize); 
-	
+	aData.mpViewport->GetViewSpacePositionAndSize(mpTargetObject->GetTranslation(), 0.25f, vPos, vSize);
+
 	/*DEBUG*/
 	//apFunctions->GetLowLevelGfx()->DrawLine(mvEditVectorStart, mvEditVectorEnd, cColor(1));
 
@@ -278,8 +278,8 @@ void cRotateManipulator::OnDraw(const cModuleDrawData& aData)
 	//apFunctions->GetLowLevelGfx()->DrawSphere(mvEditVectorEnd, 0.2f, cColor(1,0,0,1));
 
 	//apFunctions->GetLowLevelGfx()->DrawSphere(mpSelection->GetCenterTranslation(), mfUsedAxisLength, cColor(1));
-	
-	
+
+
 	DrawAxes(aData.mpViewport, aData.mpFunctions, vSize.x);
 
 	aData.mpFunctions->SetMatrix(NULL);
@@ -311,12 +311,12 @@ void cRotateManipulator::DrawAxes(iEdViewport* apViewport, cRendererCallbackFunc
 
 
 	apFunctions->GetLowLevelGfx()->SetClipPlaneActive(0,true);
-	
-	apFunctions->GetLowLevelGfx()->DrawSphere(0, afAxisLength, 
+
+	apFunctions->GetLowLevelGfx()->DrawSphere(0, afAxisLength,
 											  col[0],
-											  col[1], 
+											  col[1],
 											  col[2]);
-	
+
 	apFunctions->GetLowLevelGfx()->SetClipPlaneActive(0,false);
 
 
@@ -333,7 +333,7 @@ cMatrixf& cRotateManipulator::GetTransformMatrix()
 	mmtxTransformMatrix = cMath::MatrixInverse(mmtxTransformMatrix);
 	//	mpSelection->mbTransformed = false;
 	//}
-	
+
 	return mmtxTransformMatrix;
 }
 
@@ -341,7 +341,7 @@ cMatrixf& cRotateManipulator::GetTransformMatrix()
 
 void cRotateManipulator::UpdateTransformation()
 {
-	if(mvAxisSelected[0]==false && 
+	if(mvAxisSelected[0]==false &&
 	   mvAxisSelected[1]==false &&
 	   mvAxisSelected[2]==false)
 		return;
@@ -367,7 +367,7 @@ void cRotateManipulator::UpdateTransformation()
 
 	fRotationAmount = cMath::Vector3Dot(mvDisplacement,mvScreenSpaceTangentVector);
 	fRotationAmount = cEdGrid::GetSnappedValue(fRotationAmount, true, cMath::ToRad(15));
-	
+
 	if(mvAxisSelected[0])
 	{
 		mvDisplacement = cVector3f(fRotationAmount,0,0);
@@ -376,14 +376,14 @@ void cRotateManipulator::UpdateTransformation()
 	{
 		mvDisplacement = cVector3f(0,fRotationAmount,0);
 	}
-	else if(mvAxisSelected[2]) 
+	else if(mvAxisSelected[2])
 	{
 		mvDisplacement = cVector3f(0,0,fRotationAmount);
 	}
 
 	cMatrixf mtxRotation = cMath::MatrixRotate(mvDisplacement, eEulerRotationOrder_XYZ);
 	mtxRotation = cMath::MatrixMul(mmtxOldRotation, mtxRotation);
-	
+
 	mpTargetObject->SetRotationMatrix(mtxRotation);
 }
 

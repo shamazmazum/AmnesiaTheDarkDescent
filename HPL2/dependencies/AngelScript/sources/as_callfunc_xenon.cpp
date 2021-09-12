@@ -110,8 +110,8 @@ _ppcFunc:
 		std     r25,-40h(r1)
 		std     r24,-48h(r1)
 		std     r23,-50h(r1)
-		std     r22,-58h(r1)        
-		std     r21,-60h(r1)        
+		std     r22,-58h(r1)
+		std     r21,-60h(r1)
 		// Move stack pointer
         stwu    r1,-0A0h(r1)
 
@@ -303,10 +303,10 @@ ppcArgIsFloat:
 		ppcLoadFloatRegUpd:
 		stfs	fr0, 0(r31)			// push on the statck
 		addi	r31, r31, 8			// inc stack by 1 reg
-		
+
 		addi r22, r22, 1			// Increment used float register count
-		addi r23, r23, 1			// Increment used int register count - a float reg eats up a GPR		
-		addi r29, r29, 4			// Increment rArgsPtr		
+		addi r23, r23, 1			// Increment used int register count - a float reg eats up a GPR
+		addi r29, r29, 4			// Increment rArgsPtr
 		addi r26, r26, 4			// Increment rStackPtr
 		b ppcNextArg				// Call next arg
 
@@ -391,8 +391,8 @@ ppcArgIsDouble:
 		ppcLoadDoubleRegUpd:
 		stfd	fr0, 0(r31)			// push on the statck
 		addi	r31, r31, 8			// inc stack by 1 reg
-		
-		addi r22, r22, 1			// Increment used float register count		
+
+		addi r22, r22, 1			// Increment used float register count
 		addi r23, r23, 1			// Increment used int register count
 		addi r29, r29, 8			// Increment rArgsPtr
 		addi r26, r26, 8			// Increment rStackPtr
@@ -422,8 +422,8 @@ ppcArgsEnd:
 		ld     r25,-40h(r1)
 		ld     r24,-48h(r1)
 		ld     r23,-50h(r1)
-		ld     r22,-58h(r1)        
-		ld     r21,-60h(r1) 
+		ld     r22,-58h(r1)
+		ld     r21,-60h(r1)
 		blr
 	}
 }
@@ -445,7 +445,7 @@ void stackArgs(const asDWORD *pArgs, int& iNumIntArgs, int& iNumFloatArgs, int& 
 
 		if ( ppcArgsType[iArg] == ppcFLOATARG )
 		{
-			// stow float			
+			// stow float
 			*((float*) pDstArgs) = *((float*) pSrcArgs);
 			pSrcArgs += 4;
 			pDstArgs += 4;
@@ -481,7 +481,7 @@ asQWORD CallCDeclFunction(const asDWORD* pArgs, int iArgSize, asDWORD dwFunc)
 	// Put the arguments in the correct places in the ppcArgs array
 	if ( iArgSize > 0 )
 		stackArgs( pArgs, iIntArgs, iFloatArgs, iDoubleArgs );
-	
+
 	return ppcFunc( ppcArgs, iArgSize, dwFunc);
 }
 
@@ -565,7 +565,7 @@ int CallSystemFunction(int iId, asCContext* pContext, void* pObjectPointer)
 
 	asCScriptEngine*            pEngine  = pContext->engine;
 	asCScriptFunction*          pDescr   = pEngine->scriptFunctions[iId];
-	asSSystemFunctionInterface* pSysFunc = pDescr->sysFuncIntf;	
+	asSSystemFunctionInterface* pSysFunc = pDescr->sysFuncIntf;
 
 	int iCallConv = pSysFunc->callConv;
 	if ( iCallConv == ICC_GENERIC_FUNC
@@ -707,7 +707,7 @@ int CallSystemFunction(int iId, asCContext* pContext, void* pObjectPointer)
 	asBYTE * pCurStackArgValue	= (asBYTE*)pArgs;
 
 	for( int iParam = 0; iParam < paramCount ; iParam++ )
-	{		
+	{
 		iArgsPtr++;
 
 		if (pDescr->parameterTypes[iParam].IsFloatType() && !pDescr->parameterTypes[iParam].IsReference())
@@ -747,7 +747,7 @@ int CallSystemFunction(int iId, asCContext* pContext, void* pObjectPointer)
 		// if it is a variable argument, account for the typeID
 		// implicitly add another parameter (AFTER the parameter above), for the TypeID
 		if( IsVariableArgument(pDescr->parameterTypes[iParam]) )
-		{			
+		{
 			iArgsPtr++;
 
 			*pCurArgType++ = ppcINTARG;

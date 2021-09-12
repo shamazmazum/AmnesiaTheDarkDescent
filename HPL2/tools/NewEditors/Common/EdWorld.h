@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -203,7 +203,7 @@ public:
 class iProp
 {
 public:
-	iProp(iEdObjectType* apOwnerType, int alVarType, int alID, 
+	iProp(iEdObjectType* apOwnerType, int alVarType, int alID,
 			const tString& asName, bool abSave) : mpOwnerType(apOwnerType), mlVarType(alVarType), mlID(alID), msName(asName), mbSave(abSave)
 	{}
 
@@ -218,7 +218,7 @@ public:
 
 	/**
 	 * Creates a specific value. Each derived class must implement this method.
-	 * \return 
+	 * \return
 	 */
 	virtual iPropVal* CreateValue()=0;
 
@@ -244,31 +244,31 @@ public:
 
 	/**
 	 * Gets property value from an Object
-	 * \param iEdObject* 
+	 * \param iEdObject*
 	 */
 	virtual void GetFromObject(iEdObject*)=0;
 	/**
 	 * Sets property value to an Object
-	 * \param iEdObject* 
+	 * \param iEdObject*
 	 */
 	virtual void SetToObject(iEdObject*)=0;
 
 
 	/**
 	 * Load value from a XML element
-	 * \param cXmlElement* 
+	 * \param cXmlElement*
 	 */
 	virtual void Load(cXmlElement*)=0;
 	/**
 	 * Save value to a XML element
-	 * \param cXmlElement* 
+	 * \param cXmlElement*
 	 */
 	virtual void Save(cXmlElement*);
 
 protected:
 	/**
 	 * Type specific saving routines
-	 * \param cXmlElement* 
+	 * \param cXmlElement*
 	 */
 	virtual void SaveSpecific(cXmlElement*)=0;
 
@@ -633,13 +633,13 @@ public:
 	 */
 	const tWString& GetName() { return msName; }
 	/**
-	 * Returns the type's full name, in the form "supertype1name.supertype2name. ... supertypeNname.typename" 
+	 * Returns the type's full name, in the form "supertype1name.supertype2name. ... supertypeNname.typename"
 	 */
 	tWString GetFullName();
 
 	/**
 	 *
-	 * \return 
+	 * \return
 	 */
 	const tString& GetXmlElementName() { return msXmlElementName; }
 
@@ -652,7 +652,7 @@ public:
 
 	/**
 	 *
-	 * \param iEdObjectType* 
+	 * \param iEdObjectType*
 	 * \return Most restrictive type between calling type and argument type.
 	 */
 	iEdObjectType* GetMostRestrictiveType(iEdObjectType*);
@@ -663,12 +663,12 @@ public:
 	 */
 	virtual iEdObjectType* GetTypeByName(const tWString&);
 	/**
-	 *	Gets the type matching the ID given. 
+	 *	Gets the type matching the ID given.
 	 *  This should spread through the whole type hierarchy until the type is found.
 	 */
 	virtual iEdObjectType* GetTypeByID(const tIntVec&);
 	/**
-	 *	Gets the most appropriate type to load the given XML element. 
+	 *	Gets the most appropriate type to load the given XML element.
 	 *  This should spread through the whole type hierarchy until the type is found.
 	 */
 	virtual iEdObjectType* GetTypeByXmlElement(cXmlElement*);
@@ -687,7 +687,7 @@ public:
 	const tEdObjTypeVec& GetChildren();
 	/**
 	 *
-	 * \return 
+	 * \return
 	 */
 	virtual iEdObjectData* CreateData();
 	virtual bool SetUpCreationData(iEdObjectData*) { return true; }
@@ -740,9 +740,9 @@ protected:
 
 	/**
 	 *
-	 * \return 
+	 * \return
 	 */
-	virtual iEdObjectData* CreateTypeSpecificData()=0; 
+	virtual iEdObjectData* CreateTypeSpecificData()=0;
 
 
 	////////////////////////////////////////////
@@ -773,7 +773,7 @@ private:
 
 	/**
 	 * Sets Data object to default values
-	 * \param iEdObjectData* 
+	 * \param iEdObjectData*
 	 */
 	void CreateValuesInData(iEdObjectData*);
 
@@ -902,7 +902,7 @@ public:
 	// Clone
 	iEdObjectData* CreateCopyData();
 	virtual tIntVec GetCloneIDs();
-	virtual iEdObject* Clone(const tIntVec& avIDs, bool abCallPostDeploy=true, bool abDestroyData=true, 
+	virtual iEdObject* Clone(const tIntVec& avIDs, bool abCallPostDeploy=true, bool abDestroyData=true,
 								const tWString& asNamePrefix=_W(""), const tWString& asNameSuffix=_W(""));
 	virtual void SetUpCloneData(iEdObjectData*, const tIntVec&) {}
 
@@ -915,7 +915,7 @@ public:
 
 	virtual bool SetProperty(int, const int)				{ return false; }
 	virtual bool SetProperty(int, const float)				{ return false; }
-	virtual bool SetProperty(int, const bool)				{ return false; }			
+	virtual bool SetProperty(int, const bool)				{ return false; }
 	virtual bool SetProperty(int, const tString&)			{ return false; }
 	virtual bool SetProperty(int, const cColor&)			{ return false; }
 	virtual bool SetProperty(int, const cVector2f&)			{ return false; }
@@ -1035,32 +1035,32 @@ public:
 
 	/**
 	 * Adds a type to the World, as a child of the root type
-	 * \param iEdObjectType* 
+	 * \param iEdObjectType*
 	 */
 	bool AddType(iEdObjectType*);
 
 	/**
 	 *
-	 * \return 
+	 * \return
 	 */
 	iEdObjectType* GetRootType() { return mpRootType; }
 
 	/**
 	 *
-	 * \param tWString& 
-	 * \return 
+	 * \param tWString&
+	 * \return
 	 */
 	iEdObjectType* GetTypeByName(const tWString&);
 	/**
 	 *
-	 * \param int 
-	 * \return 
+	 * \param int
+	 * \return
 	 */
 	iEdObjectType* GetTypeByID(const tIntVec&);
 	/**
 	 *
-	 * \param cXmlElement* 
-	 * \return 
+	 * \param cXmlElement*
+	 * \return
 	 */
 	iEdObjectType* GetTypeByXmlElement(cXmlElement*);
 
@@ -1068,9 +1068,9 @@ public:
 
 	/**
 	 *
-	 * \param iEdObjectType* 
-	 * \param apParent 
-	 * \return 
+	 * \param iEdObjectType*
+	 * \param apParent
+	 * \return
 	 */
 	bool IsIDAvailable(int);
 	bool IsNameAvailable(const tWString&);
@@ -1082,20 +1082,20 @@ public:
 
 	/**
 	 *
-	 * \param iEdObjectData* 
-	 * \return 
+	 * \param iEdObjectData*
+	 * \return
 	 */
 	iEdObject* CreateObjFromData(iEdObjectData*);
 	/**
 	 *
-	 * \param cXmlElement* 
-	 * \return 
+	 * \param cXmlElement*
+	 * \return
 	 */
 	iEdObject* CreateObjFromXmlElement(cXmlElement*);
 
 	/**
 	 *
-	 * \param iEdObject* 
+	 * \param iEdObject*
 	 */
 	void DestroyObj(iEdObject*);
 
@@ -1111,14 +1111,14 @@ public:
 
 	/**
 	 *
-	 * \param tWString& 
-	 * \return 
+	 * \param tWString&
+	 * \return
 	 */
 	virtual bool LoadFromFile(const tWString&);
 	/**
 	 *
-	 * \param tWString& 
-	 * \return 
+	 * \param tWString&
+	 * \return
 	 */
 	virtual bool SaveToFile(const tWString&);
 	virtual bool Save();
@@ -1144,8 +1144,8 @@ public:
 
 	/**
 	 *
-	 * \param alID 
-	 * \return 
+	 * \param alID
+	 * \return
 	 */
 	iEdObject* GetObject(int);
 	iEdObject* GetObject(const tWString&);
@@ -1167,7 +1167,7 @@ public:
 
 	int GetFreeID();
 
-	
+
 	////////////////////////////////////////////////////////////////////////
 	// Object management actions
 	virtual iEdAction* CreateActionCreateObject(iEdObjectData*);
@@ -1240,7 +1240,7 @@ protected:
 	tEdObjectNameMap	mmapObjectNames;
 
 	tIDRedirectMap		mmapIDRedirections;
-	
+
 	tNameCountMap		mmapNameCount;
 
 	tEdObjectList		mlstUpdatedObjects;

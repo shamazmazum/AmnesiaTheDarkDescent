@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -109,7 +109,7 @@ cIndexedFile* cFileIndex::GetIndexedFile(int alIdx, bool abSkipRedirect)
 		tIDRedirectMap::iterator it = mmapRedirector.find(alIdx);
 		if(it!=mmapRedirector.end())
 			lID = it->second;
-		
+
 		return GetIndexedFile(lID, true);
 	}
 
@@ -135,7 +135,7 @@ void cFileIndex::Load(cXmlElement* apParent)
 	cXmlElement* pIndexElem = apParent->GetFirstElement("FileIndex_" + msName);
 	if(pIndexElem==NULL)
 		return;
-	
+
 	cXmlNodeListIterator it = pIndexElem->GetChildIterator();
 	while(it.HasNext())
 	{
@@ -184,7 +184,7 @@ void cFileIndex::Import(cXmlElement* apParent)
 	cXmlElement* pIndexElem = apParent->GetFirstElement("FileIndex_" + msName);
 	if(pIndexElem==NULL)
 		return;
-	
+
 	mmapRedirector.clear();
 
 	cXmlNodeListIterator it = pIndexElem->GetChildIterator();
@@ -226,7 +226,7 @@ void cFileIndex::PostImport()
 void cFileIndex::CleanUpFiles()
 {
 	mlstFiles.sort(SortIndexedFiles);
-	
+
 	int i=0;
 	tIndexedFileListIt it = mlstFiles.begin();
 	for(;it!=mlstFiles.end();++it)
@@ -306,7 +306,7 @@ iPropVal::iPropVal(iProp* apProp)
 
 void iPropVal::Save(cXmlElement* apElement)
 {
-	if(mpProp->IsSaved()) 
+	if(mpProp->IsSaved())
 		SaveSpecific(apElement);
 }
 
@@ -595,7 +595,7 @@ iEdObjectType::iEdObjectType(const tWString& asName, const tString& asXmlElement
 {
 	msName = asName;
 	msXmlElementName = asXmlElementName;
-	
+
 	mpParentType = NULL;
 	mpWorld = NULL;
 
@@ -1280,10 +1280,10 @@ bool iEdObjectData::Save(cXmlElement* apParentElem)
 iEdObject* iEdObjectData::CreateObject()
 {
 	iEdObject* pObject = CreateTypeSpecificObject();
-	
+
 	if(pObject==NULL || pObject->Create()==false)
 	{
-		Error("Could not create object %ls of type %ls, with ID: %d\n", 
+		Error("Could not create object %ls of type %ls, with ID: %d\n",
 				msName.c_str(), GetType()->GetFullName().c_str(), mlID);
 
 		if(pObject)
@@ -1575,7 +1575,7 @@ iEdObject* iEdObject::Clone(const tIntVec& avIDs, bool abCallPostDestroy, bool a
 	pCloneData->SetName(GetWorld()->GenerateValidName(asNamePrefix + msName + asNameSuffix, false));
 
 	SetUpCloneData(pCloneData, avIDs);
-	
+
 	iEdObject* pClone = GetWorld()->CreateObjFromData(pCloneData);
 	if(abCallPostDestroy)
 		pClone->PostDeployAll(abDestroyData);
@@ -1589,7 +1589,7 @@ bool iEdObject::Save(cXmlElement* apParentElement)
 {
 	if(apParentElement==NULL)
 	{
-		Error("Failed saving of entity named %s of type %s - no parent element found\n", 
+		Error("Failed saving of entity named %s of type %s - no parent element found\n",
 				GetName().c_str(), mpType->GetXmlElementName().c_str());
 		return false;
 	}
@@ -1597,7 +1597,7 @@ bool iEdObject::Save(cXmlElement* apParentElement)
 	iEdObjectData* pData = CreateCopyData();
 	if(pData->Save(apParentElement)==false)
 	{
-		Error("Failed saving of entity named %s of type %s\n", 
+		Error("Failed saving of entity named %s of type %s\n",
 				pData->GetName().c_str(), mpType->GetXmlElementName().c_str());
 		return false;
 	}
@@ -1690,7 +1690,7 @@ iEdAction* iEdObject::SetUpAction(iEdAction* apAction)
 {
 	/*if(apAction && apAction->Init()==false)
 	{
-		Error("Entity %s with type %ls created invalid action \"%ls\"\n", 
+		Error("Entity %s with type %ls created invalid action \"%ls\"\n",
 			GetName().c_str(), GetType()->GetFullName().c_str(), apAction->GetName().c_str());
 		hplDelete(apAction);
 
@@ -1796,7 +1796,7 @@ iEdWorld::~iEdWorld()
 
 void iEdWorld::Compile()
 {
-	
+
 }
 
 void iEdWorld::SetBGColor(const cColor& aCol)
@@ -1840,8 +1840,8 @@ iEdObjectType* iEdWorld::GetTypeByName(const tWString& asName)
 {
 	if(asName.empty()) return NULL;
 
-	return mpRootType? 
-			mpRootType->GetTypeByName(asName) : 
+	return mpRootType?
+			mpRootType->GetTypeByName(asName) :
 			NULL;
 }
 
@@ -1849,8 +1849,8 @@ iEdObjectType* iEdWorld::GetTypeByID(const tIntVec& avID)
 {
 	if(avID.empty()) return NULL;
 
-	return mpRootType? 
-			mpRootType->GetTypeByID(avID) : 
+	return mpRootType?
+			mpRootType->GetTypeByID(avID) :
 			NULL;
 }
 
@@ -1858,8 +1858,8 @@ iEdObjectType* iEdWorld::GetTypeByXmlElement(cXmlElement* apElement)
 {
 	if(apElement==NULL)	return NULL;
 
-	iEdObjectType* pType =	mpRootType? 
-										mpRootType->GetTypeByXmlElement(apElement) : 
+	iEdObjectType* pType =	mpRootType?
+										mpRootType->GetTypeByXmlElement(apElement) :
 										NULL;
 	if(pType==NULL)
 		Error("Not proper type found for loading element with value %s\n", apElement->GetValue().c_str());
@@ -1930,17 +1930,17 @@ tWString iEdWorld::GenerateValidName(const tWString& asName, bool abTreatWholeNa
 			}
 			else
 				lIndex = 0;
-			
+
 			sBaseName = cString::SubW(asName, 0, lIndex-1);
 		}
 	}
-	
+
 	do
 	{
 		sGeneratedName = sBaseName + _W("_") + cString::ToStringW(++lNumericSuffix);
 	}
 	while(IsNameAvailable(sGeneratedName)==false);
-	
+
 	return sGeneratedName;
 }
 
@@ -1949,7 +1949,7 @@ tWString iEdWorld::GenerateValidName(const tWString& asName, bool abTreatWholeNa
 iEdObject* iEdWorld::CreateObjFromData(iEdObjectData* apData)
 {
 	if(apData==NULL) return NULL;
-	
+
 	// Check if the ID is taken, give a new one if so
 	int lDataID = apData->GetID();
 	if(IsIDAvailable(lDataID)==false)
@@ -2025,14 +2025,14 @@ void iEdWorld::DestroyObj(iEdObject* apObj)
 bool iEdWorld::AddObject(iEdObject* apObj)
 {
 	if(apObj==NULL)	return false;
-	
+
 	int lID = apObj->GetID();
 	const tWString& sName = apObj->GetName();
 
 	mmapObjects.insert(tEdObjectMap::value_type(lID, apObj));
 	mmapObjectNames.insert(tEdObjectNameMap::value_type(sName, apObj));
 
-	
+
 
 	// Call on add stuff.
 	//apObj->OnAddToWorld();
@@ -2095,8 +2095,8 @@ void iEdWorld::CreateLoadWorldDialog()
 	if(sStartPath.empty())
 		sStartPath = msLastUsedPath;
 
-	mpEditor->GetWindowHandler()->CreateLoadDialog(mvDestFilenames, sStartPath, 
-													this, kGuiCallback(LoadWorldCallback), 
+	mpEditor->GetWindowHandler()->CreateLoadDialog(mvDestFilenames, sStartPath,
+													this, kGuiCallback(LoadWorldCallback),
 													msName, tWStringList(1,_W("*.")+msFileExt));
 }
 
@@ -2106,8 +2106,8 @@ void iEdWorld::CreateSaveWorldDialog()
 	if(sStartPath.empty())
 		sStartPath = msLastUsedPath;
 
-	mpEditor->GetWindowHandler()->CreateSaveDialog(msFilename, sStartPath, 
-													this, kGuiCallback(SaveWorldCallback), 
+	mpEditor->GetWindowHandler()->CreateSaveDialog(msFilename, sStartPath,
+													this, kGuiCallback(SaveWorldCallback),
 													msName, _W("*.")+msFileExt);
 }
 
@@ -2165,7 +2165,7 @@ bool iEdWorld::SaveToFile(const tWString& asFileName)
 	pDoc->SetPath(msFilename);
 
 	if(mpSessionData) mpSessionData->Save(pDoc);
-	
+
 	bool bSaveOK = SaveContentsToXmlDoc(pDoc);
 
 	if(bSaveOK && pDoc->Save())
@@ -2549,7 +2549,7 @@ void iEdWorld::OnReset()
 	mlObjIDCounter = -1;
 
 	SetBGColor(cColor(0.3f, 1));
-	
+
 	ClearObjects();
 }
 
@@ -2567,7 +2567,7 @@ void iEdWorld::OnUpdate()
 		return;
 
 	//Log("-------------EdWorld::OnUpdate starts. Size %d\n", mlstUpdatedObjects.size());
-	
+
 	tEdObjectList lstPendingObjects;
 	tEdObjectListIt it = mlstUpdatedObjects.begin();
 	for(;it!=mlstUpdatedObjects.end();++it)

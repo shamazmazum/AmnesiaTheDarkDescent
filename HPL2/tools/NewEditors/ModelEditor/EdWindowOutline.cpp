@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -39,8 +39,8 @@
 //#include "../common/EditorHelper.h"
 
 
-#include <algorithm>        
-  
+#include <algorithm>
+
 //------------------------------------------------------------------------------------
 
 /////////////////////////////////////////////////////////////////////////
@@ -50,8 +50,8 @@
 //------------------------------------------------------------------------------------
 
 /*
-cEdWindowOutlineHelper::cEdWindowOutlineHelper(cEdWindowOutline* apWindow, tIntList& alstIDs) : iEdPopUp(apWindow->GetEditor(), 
-																										 _W("Attach helper window")), 
+cEdWindowOutlineHelper::cEdWindowOutlineHelper(cEdWindowOutline* apWindow, tIntList& alstIDs) : iEdPopUp(apWindow->GetEditor(),
+																										 _W("Attach helper window")),
 																										  mlstTempIDs(alstIDs)
 {
 	mpCallbackObject = NULL;
@@ -435,7 +435,7 @@ void cEdWindowOutline::OnUpdate()
 
 	UpdateEditPanel();
 
-	//if(IsActive()) 
+	//if(IsActive())
 	//{
 		//PopulateList();
 		/*
@@ -537,7 +537,7 @@ bool cEdWindowOutline::InputCallback(iWidget* apWidget, const cGuiMessageData& a
 	{
 		bShowHelper = true;
 		pCallback = kGuiCallback(SetAttachmentsCallback);
-		
+
 		lstObjects = pObj->GetChildren();
 	}
 	else if(apWidget==mpHelperList)
@@ -558,11 +558,11 @@ bool cEdWindowOutline::InputCallback(iWidget* apWidget, const cGuiMessageData& a
 	bool bCreateHelper=false;
 	bool bHelperMultiSelect=false;
 	tGuiCallbackFunc pCallback = NULL;
-	
+
 	int lExcludedID = -1;
 	//if(mpListObjects->GetLastPerformedAction()==eListBoxActionType_SingleDeselect)
 	//	lExcludedID = mvIDList[mpListObjects->GetDeselectedItem()];
-			
+
 	for(int i=0;i<mpListObjects->GetMultiSelectionNum();++i)
 	{
 		int lIndex = mpListObjects->GetMultiSelection(i);
@@ -572,7 +572,7 @@ bool cEdWindowOutline::InputCallback(iWidget* apWidget, const cGuiMessageData& a
 	}
 
 	mlstTempIDs.clear();
-	
+
 	cEdWindowOutlineHelper* pHelper = NULL;
 	iEditorAction* pAction = NULL;
 
@@ -580,10 +580,10 @@ bool cEdWindowOutline::InputCallback(iWidget* apWidget, const cGuiMessageData& a
 	{
 		PopulateList();
 	}
-	
+
 	else if(apWidget==mpBDetach)
 	{
-		//if(pEnt) 
+		//if(pEnt)
 		//	pAction = hplNew(cEditorActionEntityDetachChildren,(mpEditor->GetWorld(), pEnt->GetParent()->GetID(), lstIDs));
 	}
 	else if(apWidget==mpBAttachParent)
@@ -656,7 +656,7 @@ bool cEdWindowOutline::AttachParentBodyCallback(iWidget* apWidget, const cGuiMes
 		pBody = static_cast<cEdObjBody*>(mlstHelperObjects.front());
 
 	mpEditor->AddAction(pJoint->CreateSetParentBodyAction(pBody));
-	
+
 	return true;
 }
 kGuiCallbackDeclaredFuncEnd(cEdWindowOutline, AttachParentBodyCallback);
@@ -687,7 +687,7 @@ bool cEdWindowOutline::SetAttachmentsCallback(iWidget* apWidget, const cGuiMessa
 	iEdScnObject* pObj = GetSelectedObject();
 	if(pObj)
 		mpEditor->AddAction(pObj->CreateAddChildrenAction(mlstHelperObjects));
-	
+
 	return true;
 }
 kGuiCallbackDeclaredFuncEnd(cEdWindowOutline, SetAttachmentsCallback);
@@ -717,7 +717,7 @@ iEdScnObject* cEdWindowOutline::GetSelectedObject()
 
 void cEdWindowOutline::PushEditButtonsState()
 {
-	bool* vButtonState[] = 
+	bool* vButtonState[] =
 	{
 		&mbAttachChildEnabled,
 		&mbAttachParentEnabled,
@@ -749,7 +749,7 @@ void cEdWindowOutline::PushEditButtonsState()
 
 void cEdWindowOutline::PopEditButtonsState()
 {
-	bool* vButtonState[] = 
+	bool* vButtonState[] =
 	{
 		&mbAttachChildEnabled,
 		&mbAttachParentEnabled,
@@ -814,7 +814,7 @@ void cEdWindowOutline::ShowHelperPane(const tScnObjTypeVec& avAttachableTypes, c
 	mpHelperPane = mpSet->CreateWidgetDummy(mpGroupPanel->GetLocalPosition() + cVector3f(mpGroupPanel->GetSize().x + 10, 0, 0), GetBG());
 
 	cVector3f vPos = cVector3f(0,0,1);
-	
+
 	mpHelperList = mpSet->CreateWidgetListBox(vPos, cVector2f(210, 330), mpHelperPane);
 	mpHelperList->AddCallback(eGuiMessage_SelectionChange, this, kGuiCallback(InputCallback));
 	mpHelperList->SetAllowMultiSelection(abMulti);
@@ -825,8 +825,8 @@ void cEdWindowOutline::ShowHelperPane(const tScnObjTypeVec& avAttachableTypes, c
 	tWString vButtonStrings[] = { _W("OK"), _W("Cancel") };
 	for(int i=0;i<2;i++)
 	{
-		cWidgetButton* pButton = mpSet->CreateWidgetButton(vPos + cVector3f(30+i*55.0f,0,0), 
-															cVector2f(50,25), 
+		cWidgetButton* pButton = mpSet->CreateWidgetButton(vPos + cVector3f(30+i*55.0f,0,0),
+															cVector2f(50,25),
 															vButtonStrings[i], mpHelperPane);
 		pButton->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(HelperButton_OnPressed));
 
@@ -840,7 +840,7 @@ void cEdWindowOutline::ShowHelperPane(const tScnObjTypeVec& avAttachableTypes, c
 	{
 		mpFilter->SetTypeFilter(avAttachableTypes[i], true);
 	}
-	
+
 	PopulateHelperList();
 
 	//mpFilter

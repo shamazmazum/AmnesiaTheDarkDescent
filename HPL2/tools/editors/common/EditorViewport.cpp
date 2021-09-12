@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -32,22 +32,22 @@ cVector2f iEditorViewport::mvCamPlanes = cVector2f(0.05f, 1000.0f);
 
 float iViewportCameraZoomFunc::GetOrthoViewSizeFromZoom(float afX)
 {
-	return mfMaxDistance*exp(-afX); 
+	return mfMaxDistance*exp(-afX);
 }
 
-float iViewportCameraZoomFunc::GetDistToTargetFromZoom(float afX) 
+float iViewportCameraZoomFunc::GetDistToTargetFromZoom(float afX)
 {
 	return mfMaxDistance*exp(-afX);
 }
 
-float iViewportCameraZoomFunc::GetZoomFromDistToTarget(float afX) 
-{ 
-	return log(mfMaxDistance/afX); 
+float iViewportCameraZoomFunc::GetZoomFromDistToTarget(float afX)
+{
+	return log(mfMaxDistance/afX);
 }
 
-float iViewportCameraZoomFunc::GetZoomFromOrthoViewSize(float afX) 
-{ 
-	return log(mfMaxDistance/afX); 
+float iViewportCameraZoomFunc::GetZoomFromOrthoViewSize(float afX)
+{
+	return log(mfMaxDistance/afX);
 }
 
 //-------------------------------------------------------------
@@ -67,7 +67,7 @@ cEditorViewportCamera::cEditorViewportCamera(iEditorViewport* apViewport)
 	mvTargetSphCoords = 0;
 
 	mfOrthoViewSize = 0;
-    
+
 	mvTargetPosition = 0;
 	mvCameraPosition = 0;
 
@@ -223,7 +223,7 @@ void cEditorViewportCamera::SetCameraSphCoords(const cVector2f& avSphCoords)
 	if(mvCameraSphCoords==avSphCoords) return;
 
 	mvCameraSphCoords = avSphCoords;
-	
+
 	mbCameraPosNeedsUpdate = true;
 	mbCameraUpdated = true;
 }
@@ -235,7 +235,7 @@ void cEditorViewportCamera::SetTargetPosition(const cVector3f& avTargetPos)
 	if(mvTargetPosition == avTargetPos)	return;
 
 	mvTargetPosition = avTargetPos;
-	
+
 	mbTargetSphCoordsNeedUpdate = true;
 	mbTargetPosUpdated = true;
 	mbCameraUpdated = true;
@@ -248,7 +248,7 @@ void cEditorViewportCamera::SetTargetSphCoords(const cVector2f& avSphCoords)
 	if(mvTargetSphCoords==avSphCoords) return;
 
 	mvTargetSphCoords = avSphCoords;
-	
+
 	mbTargetPosNeedsUpdate = true;
 	mbCameraUpdated = true;
 }
@@ -259,9 +259,9 @@ const cVector3f& cEditorViewportCamera::GetCameraPosition()
 {
 	if(mbCameraPosNeedsUpdate)
 	{
-		if(mCamType==eEditorCameraType_Orbit) 
+		if(mCamType==eEditorCameraType_Orbit)
 			mvCameraPosition = cMath::GetPoint3DFromSphericalCoords(mvTargetPosition, mfDistToTarget, GetCameraSphCoords());
-		
+
 		mbCameraPosNeedsUpdate = false;
 	}
 
@@ -275,7 +275,7 @@ const cVector2f& cEditorViewportCamera::GetCameraSphCoords()
 	if(mbCameraSphCoordsNeedUpdate)
 	{
 		mvCameraSphCoords = cMath::GetSphericalCoordsFromPoint3D(mvTargetPosition, mvCameraPosition);
-		
+
 		mbCameraSphCoordsNeedUpdate = false;
 	}
 
@@ -290,7 +290,7 @@ const cVector3f& cEditorViewportCamera::GetTargetPosition()
 	{
 		if(mCamType==eEditorCameraType_Fly)
 			mvTargetPosition = cMath::GetPoint3DFromSphericalCoords(mvCameraPosition, mfDistToTarget, GetTargetSphCoords());
-		
+
 		mbTargetPosNeedsUpdate = false;
 	}
 
@@ -328,7 +328,7 @@ const cVector2f& cEditorViewportCamera::GetTargetSphCoords()
 void cEditorViewportCamera::FetchSettings()
 {
 	iEditorBase* pEditor = mpViewport->GetEditorBase();
-	
+
 	mfMinZoom = 0;
 	mfMaxZoom = 5.5f;
 	mfTrackFactor = cString::ToFloat(pEditor->GetSetting("TrackFactor").c_str(), 0.005f);
@@ -336,7 +336,7 @@ void cEditorViewportCamera::FetchSettings()
 	mfMouseWheelZoomFactor = cString::ToFloat(pEditor->GetSetting("MouseWheelZoom").c_str(), 0.1f);
 	mfTumbleFactor = cString::ToFloat(pEditor->GetSetting("TumbleFactor").c_str(), 0.005f);
 
-	mfTrackMouseMaxDistanceToTarget = 40;	
+	mfTrackMouseMaxDistanceToTarget = 40;
 }
 
 //-------------------------------------------------------------
@@ -414,13 +414,13 @@ void cEditorViewportCamera::Track(const cVector2f& avParams)
 	if(IsOrtho() || mbLockToGrid)
 	{
 		cEditorGrid* pGrid = mpViewport->GetGrid();
-		if(cMath::CheckPlaneLineIntersection(pGrid->GetPlane(), 
-											vRayStart, 
-											vRayEnd, 
+		if(cMath::CheckPlaneLineIntersection(pGrid->GetPlane(),
+											vRayStart,
+											vRayEnd,
 											&mvTrackNewMousePos, NULL)==false)
 		{
 			mvTrackNewMousePos = pGrid->GetProjectedPosOnPlane(vRayEnd + vRayDir*vRayEnd.v[pGrid->GetPlaneNormal()]);
-		}		
+		}
 		cVector3f vNewTargetPosition = mvTrackRefTargetPos - mvTrackNewMousePos+mvTrackRefMousePos;
 		cVector3f vDiff = GetSmoothedDisplacement(vNewTargetPosition-mvTargetPosition, 4);
 
@@ -428,13 +428,13 @@ void cEditorViewportCamera::Track(const cVector2f& avParams)
 	}
 	else
 	{
-		vDisplacement = (mpEngineCamera->GetUp()*avParams.y + 
+		vDisplacement = (mpEngineCamera->GetUp()*avParams.y +
 						 mpEngineCamera->GetRight()*(-avParams.x))*mfTrackFactor;
 		mvTargetPosition += vDisplacement;
 	}
-	
+
 	mvCameraPosition = mvTargetPosition - vCamTargetOffset;
-	
+
 	mbTargetPosUpdated = true;
 	mbCameraUpdated = true;
 }
@@ -636,7 +636,7 @@ void cEditorViewportCamera::OnGridUpdated()
 
 	cVector3f vTargetPos = GetTargetPosition();
 	cVector3f vCamTargetOffset = vTargetPos-GetCameraPosition();
-	
+
 	mvTargetPosition = mpViewport->GetGrid()->GetProjectedPosOnPlane(vTargetPos);
 	mvCameraPosition = mvTargetPosition - vCamTargetOffset;
 
@@ -834,7 +834,7 @@ void iEditorViewport::SetRenderMode(eRenderer aMode)
 		aMode = eRenderer_WireFrame;
 
 	mRenderMode = aMode;
-	
+
 	iRenderer* pRenderer = mpGfx->GetRenderer(mRenderMode);
 	mpEngineViewport->SetRenderer(pRenderer);
 	SetClearColor(mpEditorBase->GetEditorWorld()->GetBGDefaultColor());
@@ -845,11 +845,11 @@ void iEditorViewport::SetRenderMode(eRenderer aMode)
 void iEditorViewport::SetFrameBuffer(iFrameBuffer* apFB)
 {
 	if(apFB==NULL || mpFB==apFB) return;
-	
+
 	mpFB = apFB;
 	iFrameBufferAttachment* pColorBuffer = mpFB->GetColorBuffer(0);
 	if(pColorBuffer) mpRenderTarget = pColorBuffer->ToTexture();
-	
+
 	mpEngineViewport->SetFrameBuffer(mpFB);
 	mbViewportNeedsUpdate = true;
 }
@@ -869,10 +869,10 @@ void iEditorViewport::UpdateViewport()
 	if(pImg) pGui->DestroyGfx(pImg);
 
 	////////////////////////////////////////////
-	// Set updated one	
+	// Set updated one
 	pImg = pGui->CreateGfxTexture(mpRenderTarget, false, eGuiMaterial_Diffuse, cColor(1,1), true, mvUVStart, mvUVEnd);
 	mpImgViewport->SetImage(pImg);
-	
+
 	mbViewportNeedsUpdate = false;
 }
 
@@ -916,7 +916,7 @@ void iEditorViewport::SetEngineViewportPositionAndSize(const cVector2l& avPos, c
 	cVector2f vPosFloat = cVector2f((float)mvEngineViewportPos.x, (float)mvEngineViewportPos.y);
 	cVector2f vSizeFloat = cVector2f((float)mvEngineViewportSize.x, (float)mvEngineViewportSize.y);
 
-	mvUVStart = (vPosFloat+cVector2f(0,vSizeFloat.y)) / 
+	mvUVStart = (vPosFloat+cVector2f(0,vSizeFloat.y)) /
 				vFBSizeFloat;
 
 	if(mvUVStart.y>=1.0f) mvUVStart.y-=1.0f;
@@ -977,7 +977,7 @@ cVector2l iEditorViewport::GetMouseViewportPositionInt()
 const cVector3f& iEditorViewport::GetUnprojectedStart()
 {
 	UpdateUnprojection();
-	
+
 	return mvUnprojectedStart;
 }
 
@@ -986,7 +986,7 @@ const cVector3f& iEditorViewport::GetUnprojectedStart()
 const cVector3f& iEditorViewport::GetUnprojectedDir()
 {
 	UpdateUnprojection();
-	
+
 	return mvUnprojectedDir;
 }
 
@@ -1014,7 +1014,7 @@ const cVector3f& iEditorViewport::GetMouseWorldPosition(bool abForceUpdate)
 	{
 		const cVector3f& vStart = GetUnprojectedStart();
 		const cVector3f& vEnd = GetUnprojectedEnd();
-		
+
 		if(cMath::CheckPlaneLineIntersection(mpGrid->GetPlane(), vStart,vEnd, &mvMouseWorldPos,NULL)==false)
 		{
 			const cVector3f& vDir = GetUnprojectedDir();
@@ -1036,7 +1036,7 @@ const cVector3f& iEditorViewport::GetGridCenter()
 		return mCamera.GetCameraPosition();
 	default:
 		return mCamera.GetTargetPosition();
-	}    
+	}
 }
 
 //-------------------------------------------------------------
@@ -1060,7 +1060,7 @@ void iEditorViewport::SetClearColor(const cColor& aX)
 	cColor clearCol = aX;
 	if(mRenderMode==eRenderer_Main)
 		clearCol = cColor(0,1);
-	
+
 	mpEngineViewport->GetRenderSettings()->mClearColor = clearCol;
 }
 
@@ -1162,7 +1162,7 @@ void iEditorViewport::UpdateUnprojection()
 
 	const cVector2f& vMouseViewportPos = GetMouseViewportPosition();
 	const cVector2f& vViewportSize = GetGuiViewportSize();
-	
+
 	if(cMath::CheckPointInRectIntersection(vMouseViewportPos, cRect2f(0,0,vViewportSize.x, vViewportSize.y)))
 	{
 		cCamera* pCam = mCamera.GetEngineCamera();

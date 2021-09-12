@@ -43,8 +43,8 @@ private:
 
 	int GetUnpackedSourceId(int alHandle);
 	int GetUnpackedRefCount(int alHandle);
-	
-	bool mbManageVoices; 
+
+	bool mbManageVoices;
 
 	int mlNumOfVoices;
 	int mlAvailableVoices;
@@ -60,6 +60,6 @@ private:
 };
 
 
-#endif 
+#endif
 
 

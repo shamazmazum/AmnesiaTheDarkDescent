@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -59,7 +59,7 @@ void cLuxPropLoader_LevelDoor::LoadVariables(iLuxProp *apProp, cXmlElement *apRo
 void cLuxPropLoader_LevelDoor::LoadInstanceVariables(iLuxProp *apProp, cResourceVarsObject *apInstanceVars)
 {
 	cLuxProp_LevelDoor  *pLevelDoor = static_cast<cLuxProp_LevelDoor*>(apProp);
-	
+
 	pLevelDoor->msTextEntry = apInstanceVars->GetVarString("TextEntry","");
 	pLevelDoor->msMapFile = apInstanceVars->GetVarString("MapFile","");
 	pLevelDoor->msStartPos = apInstanceVars->GetVarString("StartPos","");
@@ -133,7 +133,7 @@ bool cLuxProp_LevelDoor::OnInteract(iPhysicsBody *apBody, const cVector3f &avPos
 
 void cLuxProp_LevelDoor::OnSetupAfterLoad(cWorld *apWorld)
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -175,10 +175,10 @@ tWString cLuxProp_LevelDoor::GetFocusText()
 			float fP = ((float)pSavedMap->mlCurrentCompletionAmount / (float)pSavedMap->mlTotalCompletionAmount) *100.0f;
 			lPercent = (int)fP;
 		}
-		
+
 		sStr += cString::ToStringW(lPercent)+_W("% ")+kTranslate("CompletionCount", "Completed");
 	}*/
-	
+
 	return sStr;
 }
 
@@ -193,7 +193,7 @@ void cLuxProp_LevelDoor::SetLocked(bool abLocked)
 
 void cLuxProp_LevelDoor::OnConnectionStateChange(iLuxEntity *apEntity, int alState)
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -266,7 +266,7 @@ void cLuxProp_LevelDoor::LoadFromSaveData(iLuxEntity_SaveData* apSaveData)
 	//Init
 	super_class::LoadFromSaveData(apSaveData);
 	cLuxProp_LevelDoor_SaveData *pData = static_cast<cLuxProp_LevelDoor_SaveData*>(apSaveData);
-	
+
 	//////////////////
 	//Set variables
 	kCopyFromVar(pData, msTextEntry);

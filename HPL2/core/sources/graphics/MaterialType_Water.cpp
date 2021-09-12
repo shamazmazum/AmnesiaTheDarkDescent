@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -45,7 +45,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// DEFINES
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//------------------------------
 	// Variables
 	//------------------------------
@@ -68,7 +68,7 @@ namespace hpl {
 	#define eFeature_Diffuse_CubeMapReflection		eFlagBit_1
 	#define eFeature_Diffuse_ReflectionFading		eFlagBit_2
 	#define eFeature_Diffuse_Fog					eFlagBit_3
-	
+
 	#define kDiffuseFeatureNum 4
 
 	static cProgramComboFeature vDiffuseFeatureVec[] =
@@ -82,9 +82,9 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// TRANSLUCENT
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//--------------------------------------------------------------------------
-	
+
 	cMaterialType_Water::cMaterialType_Water(cGraphics *apGraphics, cResources *apResources) : iMaterialType(apGraphics, apResources)
 	{
 		mbIsTranslucent = true;
@@ -93,7 +93,7 @@ namespace hpl {
 		AddUsedTexture(eMaterialTexture_NMap);
 		AddUsedTexture(eMaterialTexture_CubeMap);
 
-		
+
 		AddVarFloat("RefractionScale", 0.1f, "The amount reflection and refraction is offset by ripples in water.");
 		AddVarFloat("FrenselBias", 0.2f, "Bias for Fresnel term. values: 0-1. Higher means that more of reflection is seen when looking straight at water.");
 		AddVarFloat("FrenselPow", 8.0f, "The higher the 'sharper' the reflection is, meaning that it is only clearly seen at sharp angles.");
@@ -106,7 +106,7 @@ namespace hpl {
 		AddVarBool("HasReflection", true, "If a reflection should be shown or not.");
 		AddVarBool("OcclusionCullWorldReflection", true, "If occlusion culling should be used on reflection.");
 		AddVarBool("LargeSurface", true, "If the water will cover a large surface and will need special sorting when rendering other transperant objects.");
-		
+
 		mbHasTypeSpecifics[eMaterialRenderMode_Diffuse] = true;
 		mbHasTypeSpecifics[eMaterialRenderMode_DiffuseFog] = true;
 	}
@@ -136,10 +136,10 @@ namespace hpl {
 		defaultVars.Add("UseNormals");
 		defaultVars.Add("UseNormalMapping");
 		if(iRenderer::GetRefractionEnabled())	defaultVars.Add("UseRefraction");
-        				
-		mpProgramManager->SetupGenerateProgramData(	eMaterialRenderMode_Diffuse,"Diffuse","deferred_base_vtx.glsl", "water_surface_frag.glsl", 
+
+		mpProgramManager->SetupGenerateProgramData(	eMaterialRenderMode_Diffuse,"Diffuse","deferred_base_vtx.glsl", "water_surface_frag.glsl",
 											vDiffuseFeatureVec,kDiffuseFeatureNum, defaultVars);
-		
+
 
 		////////////////////////////////
 		//Set up variable ids
@@ -185,12 +185,12 @@ namespace hpl {
 			{
 			case 0: return apMaterial->GetTexture(eMaterialTexture_Diffuse);
 			case 1: return apMaterial->GetTexture(eMaterialTexture_NMap);
-			case 2: 
+			case 2:
 					if(iRenderer::GetRefractionEnabled())
 						return mpGraphics->GetRenderer(eRenderer_Main)->GetRefractionTexture();
 					else
 						return NULL;
-			case 3: 
+			case 3:
 					if(iRenderer::GetRefractionEnabled())
 					{
 						if(apMaterial->GetTexture(eMaterialTexture_CubeMap))
@@ -214,9 +214,9 @@ namespace hpl {
 	{
 		return NULL;
 	}
-	
+
 	//--------------------------------------------------------------------------
-	
+
 	iGpuProgram* cMaterialType_Water::GetGpuProgram(cMaterial *apMaterial, eMaterialRenderMode aRenderMode, char alSkeleton)
 	{
 		////////////////////////////
@@ -232,7 +232,7 @@ namespace hpl {
 			cMaterialType_Water_Vars *pVars = static_cast<cMaterialType_Water_Vars*>(apMaterial->GetVars());
 
 			tFlag lFlags =0;
-			
+
 			if(iRenderer::GetRefractionEnabled())
 			{
 				if(pVars->mbHasReflection)								lFlags |= eFeature_Diffuse_Reflection;
@@ -241,7 +241,7 @@ namespace hpl {
 
 			if(pVars->mfReflectionFadeEnd>0)						lFlags |= eFeature_Diffuse_ReflectionFading;
 			if(aRenderMode == eMaterialRenderMode_DiffuseFog)		lFlags |= eFeature_Diffuse_Fog;
-			
+
 			return mpProgramManager->GenerateProgram(eMaterialRenderMode_Diffuse,lFlags);
 		}
 
@@ -256,10 +256,10 @@ namespace hpl {
 		//Diffuse
 		if(aRenderMode == eMaterialRenderMode_Diffuse)
 		{
-			
+
 		}
 	}
-	
+
 	//--------------------------------------------------------------------------
 
 	void cMaterialType_Water::SetupMaterialSpecificData(eMaterialRenderMode aRenderMode, iGpuProgram* apProgram, cMaterial *apMaterial,iRenderer *apRenderer)
@@ -304,7 +304,7 @@ namespace hpl {
 				{
 					apProgram->SetVec2f(kVar_avReflectionMapSizeMul, cVector2f(1.0f / (float)iRenderer::GetReflectionSizeDiv()) );
 				}
-				
+
 				//////////////////////////////
 				//Reflection fading
 				if(pVars->mfReflectionFadeEnd > 0)
@@ -315,7 +315,7 @@ namespace hpl {
 			}
 		}
 	}
-	
+
 	//--------------------------------------------------------------------------
 
 	void cMaterialType_Water::SetupObjectSpecificData(eMaterialRenderMode aRenderMode, iGpuProgram* apProgram, iRenderable *apObject,iRenderer *apRenderer)
@@ -347,7 +347,7 @@ namespace hpl {
 			pVars = (cMaterialType_Water_Vars*)CreateSpecificVariables();
 			apMaterial->SetVars(pVars);
 		}
-				
+
 		pVars->mbHasReflection = apVars->GetVarBool("HasReflection", true);
 		pVars->mfRefractionScale = apVars->GetVarFloat("RefractionScale", 0.1f);
 		pVars->mfFrenselBias = apVars->GetVarFloat("FrenselBias", 0.2f);
@@ -393,8 +393,8 @@ namespace hpl {
 		//Set if has specific variables
 		apMaterial->SetHasSpecificSettings(eMaterialRenderMode_Diffuse, true);
 		apMaterial->SetHasSpecificSettings(eMaterialRenderMode_DiffuseFog, true);
-		
-		
+
+
 		/////////////////////////////////////
 		//Set up the blend mode
 		if(iRenderer::GetRefractionEnabled())
@@ -420,7 +420,7 @@ namespace hpl {
 			}
 		}
 	}
-	
+
 	//--------------------------------------------------------------------------
 
 

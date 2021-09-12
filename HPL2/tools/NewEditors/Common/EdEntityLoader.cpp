@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -41,9 +41,9 @@ cEdEntityLoader::cEdEntityLoader(cResources* apResources) : cEntityLoader_Object
 
 //-----------------------------------------------------------------------
 
-cMeshEntity* cEdEntityLoader::LoadEntFile(int alID, const tString& asName, 
-										  const tString& asFilename, cWorld* apWorld, 
-										  bool abLoadAnims, bool abLoadParticles, 
+cMeshEntity* cEdEntityLoader::LoadEntFile(int alID, const tString& asName,
+										  const tString& asFilename, cWorld* apWorld,
+										  bool abLoadAnims, bool abLoadParticles,
 										  bool abLoadBillboards, bool abLoadSounds, bool abLoadLights)
 {
 	tWString sFullPath = mpResources->GetFileSearcher()->GetFilePath(asFilename);
@@ -55,7 +55,7 @@ cMeshEntity* cEdEntityLoader::LoadEntFile(int alID, const tString& asName,
 	if(pDoc==NULL)
 		return NULL;
 
-	pEntity = LoadEntityFromElement(alID, 
+	pEntity = LoadEntityFromElement(alID,
 									asName,
 									pDoc,
 									apWorld,
@@ -67,7 +67,7 @@ cMeshEntity* cEdEntityLoader::LoadEntFile(int alID, const tString& asName,
 									abLoadSounds,
 									abLoadLights);
 
-	
+
 	mpResources->DestroyXmlDocument(pDoc);
 
 	return pEntity;
@@ -75,7 +75,7 @@ cMeshEntity* cEdEntityLoader::LoadEntFile(int alID, const tString& asName,
 //-----------------------------------------------------------------------
 
 cMeshEntity* cEdEntityLoader::LoadEntityFromElement(int alID, const tString& asName, cXmlElement* apElement,
-														cWorld* apWorld, const tString& asFilename, const tWString& asFullPath, 
+														cWorld* apWorld, const tString& asFilename, const tWString& asFullPath,
 														bool abLoadAnims, bool abLoadParticles, bool abLoadBillboards, bool abLoadSounds, bool abLoadLights)
 {
 	mbLoadAnimations = abLoadAnims;
@@ -91,8 +91,8 @@ cMeshEntity* cEdEntityLoader::LoadEntityFromElement(int alID, const tString& asN
 											   cMatrixf::Identity,
 											   cVector3f(1),
 											   apWorld,
-											   asFilename, 
-											   asFullPath, 
+											   asFilename,
+											   asFullPath,
 											   NULL);
 
 

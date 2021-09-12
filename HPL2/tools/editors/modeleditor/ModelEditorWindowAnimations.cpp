@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -118,7 +118,7 @@ void cModelEditorWindowAnimations::OnInitLayout()
 
 	/////////////////////////////////
 	// Animation Event Attributes
-	mpInpEventTime = CreateInputNumber(cVector3f(15,15,0.1f), _W("Time"),"", mpGEvent); 
+	mpInpEventTime = CreateInputNumber(cVector3f(15,15,0.1f), _W("Time"),"", mpGEvent);
 	mpInpEventType = CreateInputEnum(mpInpEventTime->GetPosition() + cVector2f(0,mpInpEventTime->GetSize().y), _W("Type"), "", tWStringList(), mpGEvent);
 	mpInpEventType->AddValue(_W("PlaySound"));
 	mpInpEventType->AddValue(_W("Step"));
@@ -253,7 +253,7 @@ bool cModelEditorWindowAnimations::WindowSpecificInputCallback(iEditorInput* apI
 	}
 	else if(apInput==mpInpAnimFile)
 	{
-		pAnim->SetFile(cString::To8Char(mpInpAnimFile->GetValue()));		
+		pAnim->SetFile(cString::To8Char(mpInpAnimFile->GetValue()));
 	}
 	else if(apInput==mpInpAnimSpeed)
 	{
@@ -275,7 +275,7 @@ bool cModelEditorWindowAnimations::WindowSpecificInputCallback(iEditorInput* apI
 	{
 		pEvent->SetValue(cString::To8Char(mpInpEventValue->GetValue()));
 	}
-	
+
 
 	return true;
 }
@@ -347,7 +347,7 @@ void cModelEditorWindowAnimations::UpdateEventInputs()
 	cAnimationWrapper* pAnim =NULL;
 	if(lSelectedAnim!=-1)
 	pAnim = &mvTempAnimations[mpListAnimations->GetSelectedItem()];
-	
+
 	int lSelectedItem = mpListEvents->GetSelectedItem();
 	float fEventTime = 0;
 	tString sType = "";

@@ -23,11 +23,11 @@ int UpdaterThread(void*);
 
 //-----------------------------------------------------------------------------------
 
-cOAL_SourceManager::cOAL_SourceManager() : mpStreamListMutex(NULL), 
+cOAL_SourceManager::cOAL_SourceManager() : mpStreamListMutex(NULL),
 										   mpUpdaterThread(NULL),
-										   mbUseThreading(false), 
-										   mlNumOfVoices(0), 
-										   mlAvailableVoices(0), 
+										   mbUseThreading(false),
+										   mlNumOfVoices(0),
+										   mlAvailableVoices(0),
 										   mbManageVoices(true)
 {
 }
@@ -44,7 +44,7 @@ bool cOAL_SourceManager::Initialize ( bool abManageVoices, int alNumSourcesHint,
 	FUNC_USES_AL;
 	// First we must count how many sources are available
 	ALuint lTempSource[256];
-    
+
 	LogMsg("",eOAL_LogVerbose_Medium, eOAL_LogMsg_Info, "Initializing Source Manager...\n" );
 	LogMsg("",eOAL_LogVerbose_Medium, eOAL_LogMsg_Info, "Calculating Max Sources\n" );
 
@@ -66,12 +66,12 @@ bool cOAL_SourceManager::Initialize ( bool abManageVoices, int alNumSourcesHint,
 	LogMsg("", eOAL_LogVerbose_Medium, eOAL_LogMsg_Info, "Created %d Low Level Sources, %d hinted\n", mlNumOfVoices, alNumSourcesHint);
 
 	RUN_AL_FUNC(alDeleteSources ( mlNumOfVoices, lTempSource ));
-	
+
 	mbManageVoices = abManageVoices;
 	mlAvailableVoices = mlNumOfVoices;
 	mbUseThreading = abUseThread;
 
-	// Then create the cOAL_Source list accordingly 
+	// Then create the cOAL_Source list accordingly
 
 	LogMsg("", eOAL_LogVerbose_Medium, eOAL_LogMsg_Info, "Creating High Level Sources\n" );
 
@@ -100,7 +100,7 @@ bool cOAL_SourceManager::Initialize ( bool abManageVoices, int alNumSourcesHint,
 
 		LogMsg("", eOAL_LogVerbose_Medium, eOAL_LogMsg_Info, "Done\n" );
 	}
-	
+
 	return true;
 
 }
@@ -110,7 +110,7 @@ bool cOAL_SourceManager::Initialize ( bool abManageVoices, int alNumSourcesHint,
 void cOAL_SourceManager::Destroy()
 {
 	// If we are using the Updater thread, kill it
-	if(mbUseThreading)							
+	if(mbUseThreading)
 	{
 		LogMsg("", eOAL_LogVerbose_Medium, eOAL_LogMsg_Info,"Stopping updater thread...\n" );
 		mbUseThreading = false;
@@ -148,14 +148,14 @@ cOAL_Source* cOAL_SourceManager::GetSource(int alSourceHandle, bool abSkipRefCou
 	//Unpack source ID and refcount from the source
 	int lHandleId = GetUnpackedSourceId(alSourceHandle);
 	int lHandleRefCount = GetUnpackedRefCount(alSourceHandle);
-	
+
 	//////////////////////////////////
 	//Check so handle is valid and not out of bounds
 	if( (lHandleId < 0) || (lHandleId >= (int)mvSources.size()) )
 		return NULL;
-    
+
 	cOAL_Source* pSource = mvSources[lHandleId];
-	
+
 	//////////////////////////////////
 	// Check so that ref count is valid. (this will invalidate sources have been changed)
 	if(abSkipRefCountCheck==false)
@@ -220,7 +220,7 @@ void cOAL_SourceManager::UpdateStreaming()
 		while (it!=mlstStreamingSources.end())
 		{
 			cOAL_Source* pSource = *it;
-			
+
 			pSource->Lock();
 			{
 				if(pSource->GetSourceType()!=eOAL_AudioDataType_Stream )
@@ -230,7 +230,7 @@ void cOAL_SourceManager::UpdateStreaming()
 					pSource->Update();
 					++it;
 				}
-				
+
 			}
 			pSource->Unlock();
 		}
@@ -247,7 +247,7 @@ cOAL_Source* cOAL_SourceManager::GetAvailableSource ( unsigned int alPriority, i
 	int lLowestPrioSource = -1;
 	unsigned int lLowestPrio = alPriority;
 	unsigned int lPriority;
-	
+
 	bool bFreeSourceFound = false;
 	eOAL_SourceStatus status;
 
@@ -255,9 +255,9 @@ cOAL_Source* cOAL_SourceManager::GetAvailableSource ( unsigned int alPriority, i
 	// Debug stuff:
 	if(!mbManageVoices)
 		alNumOfVoices = 1;
-	
+
 	////////////////////
-	//If number of available voices, are less than the number wanted voices, 
+	//If number of available voices, are less than the number wanted voices,
 	//then need to try and get voices from already active ones.
 	//Loop through and inactivate voices until the number wanted is available.
 	while(mlAvailableVoices < alNumOfVoices)
@@ -272,7 +272,7 @@ cOAL_Source* cOAL_SourceManager::GetAvailableSource ( unsigned int alPriority, i
 			pSource->Lock();
 				lPriority = pSource->GetPriority();
 			pSource->Unlock();
-			
+
 			if(lPriority < lLowestPrio)
 			{
 				lLowestPrio = lPriority;
@@ -304,12 +304,12 @@ cOAL_Source* cOAL_SourceManager::GetAvailableSource ( unsigned int alPriority, i
 		for(int i=0; i<(int)mvSources.size(); ++i )
 		{
 			pSource = mvSources[i];
-			
+
 			pSource->Lock();
 				status = pSource->GetSourceStatus();
 			pSource->Unlock();
 
-			if(status == eOAL_SourceStatus_Free) 
+			if(status == eOAL_SourceStatus_Free)
 			{
 				lSourceHandle = i;
 				break;
@@ -330,7 +330,7 @@ cOAL_Source* cOAL_SourceManager::GetAvailableSource ( unsigned int alPriority, i
 int UpdaterThread(void* alUnusedArg)
 {
 	cOAL_SourceManager* pSourceManager = gpDevice->GetSourceManager();
-	
+
 	int lWaitTime = pSourceManager->GetThreadWaitTime();
 
 	while(pSourceManager->IsThreadAlive())
@@ -338,7 +338,7 @@ int UpdaterThread(void* alUnusedArg)
 		//	While the thread lives, perform the update
         pSourceManager->UpdateStreaming();
 		//	And rest a bit
-		SDL_Delay(lWaitTime);			
+		SDL_Delay(lWaitTime);
 	}
 	return 0;
 }
@@ -363,7 +363,7 @@ void cOAL_SourceManager::Log( eOAL_LogVerbose aVerboseLevelReq, eOAL_LogMsg aMes
 	vsprintf(text, asMessage, ap);
 	va_end(ap);
 
-	
+
 	switch(aMessageType)
 	{
 	case eOAL_LogMsg_Command:

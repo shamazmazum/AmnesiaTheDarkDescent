@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -83,8 +83,8 @@ void cEditorWindowEntityEditBoxPrimitive::Create()
     ////////////////////////////////////////
 	// Properties in Tab 'Specific'
 	AddPrimitivePropertySet(mpTabPrimitive);
-	
-	
+
+
 	switch(mpEntity->GetPrimitiveType())
 	{
 	case eEditorPrimitiveType_Plane:
@@ -204,7 +204,7 @@ bool cEditorWindowEntityEditBoxPrimitive::InputCallback(iWidget* apWidget, const
 	if(apWidget==mpTBMaterial)
 	{
 		cMaterial* pMat;
-		if(bEmptyString || 
+		if(bEmptyString ||
 			cEditorHelper::LoadResourceFile(eEditorResourceType_Material, sFilename, (void**)&pMat))
 			pAction = mpEntity->CreateSetPropertyActionString(ePrimitiveStr_Material, sFilename);
 			//pAction = hplNew(cEditorActionPrimitiveSetStringProperty,(pWorld, lID, ePrimitiveStringProperty_Material,sFilename));
@@ -229,7 +229,7 @@ bool cEditorWindowEntityEditBoxPrimitive::InputCallback(iWidget* apWidget, const
 	{
 		pAction = hplNew(cEditorActionPrimitivePlaneSetBoolProperty,(pWorld,lID, ePrimitivePlaneBoolProperty_AlignToWorld, mpCBAlignToWorld->IsChecked()));
 	}
-	
+
 
 	mpEditor->AddAction(pAction);
 
@@ -265,7 +265,7 @@ bool cEditorWindowEntityEditBoxPrimitive::WindowSpecificInputCallback(iEditorInp
 	iEditorWorld* pWorld = mpEditor->GetEditorWorld();
 	int lID = mpEntity->GetID();
 
-	
+
 	if(apInput==mpInpAlignToWorld)
 	{
 		pAction = mpEntity->CreateSetPropertyActionBool(ePrimitivePlaneBool_AlignToWorld, mpInpAlignToWorld->GetValue());
@@ -284,7 +284,7 @@ bool cEditorWindowEntityEditBoxPrimitive::WindowSpecificInputCallback(iEditorInp
 	else if(apInput==mpInpMaterial)
 	{
 		tString sFile = cString::To8Char(mpInpMaterial->GetValue());
-		if(mpInpMaterial->GetValue()==_W("") || 
+		if(mpInpMaterial->GetValue()==_W("") ||
 			cEditorHelper::LoadResourceFile(eEditorResourceType_Material, sFile, NULL))
 			pAction = mpEntity->CreateSetPropertyActionString(ePrimitiveStr_Material, sFile);
 		//pAction = hplNew(cEditorActionPrimitiveSetStringProperty,(pWorld, lID, ePrimitiveStringProperty_Material, cString::To8Char(mpInpMaterial->GetValue())));
@@ -302,7 +302,7 @@ bool cEditorWindowEntityEditBoxPrimitive::WindowSpecificInputCallback(iEditorInp
 		pAction = mpEntity->CreateSetPropertyActionFloat(ePrimitivePlaneFloat_TextureAngle, cMath::ToRad(mpInpTextureAngle->GetValue()));
 	}
 
-	
+
 	mpEditor->AddAction(pAction);
 
 	return true;

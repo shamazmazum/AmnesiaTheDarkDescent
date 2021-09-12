@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -154,7 +154,7 @@ bool cEntityWrapperBone::GetProperty(int alPropID, int& alX)
 	default:
 		return iEntityWrapper::GetProperty(alPropID, alX);
 	}
-	
+
 	return true;
 }
 
@@ -272,7 +272,7 @@ void cEntityWrapperBone::RemoveChildBone(cEntityWrapperBone* apBone)
 
 //----------------------------------------------------------------------
 
-void cEntityWrapperBone::Draw(cEditorWindowViewport* apViewport, cRendererCallbackFunctions* apFunctions, 
+void cEntityWrapperBone::Draw(cEditorWindowViewport* apViewport, cRendererCallbackFunctions* apFunctions,
 							  iEditorEditMode* apEditMode, bool abIsSelected, const cColor& aHighlightCol, const cColor& aDisabledCol)
 {
 	iEntityWrapper::Draw(apViewport, apFunctions, apEditMode, abIsSelected);
@@ -295,7 +295,7 @@ void cEntityWrapperBone::DrawBone(cEditorWindowViewport* apViewport, cRendererCa
 		apFunctions->SetMatrix(NULL);
 
 		apFunctions->SetTexture(0, NULL);
-			
+
 		apFunctions->SetVertexBuffer(mpVBBone);
 		apFunctions->DrawCurrent();
 	}
@@ -354,9 +354,9 @@ void cEntityWrapperBone::CreateLinkToParent()
 
 	cMeshCreator* pCreator = GetEditorWorld()->GetEditor()->GetEngine()->GetGraphics()->GetMeshCreator();
     cMesh* pMesh = pCreator->CreateCone("", cVector2f(0.01f, fLength), 4, "editor_rect.mat");
-	
+
 	mpVBBone = pMesh->GetSubMesh(0)->GetVertexBuffer()->CreateCopy(eVertexBufferType_Hardware, eVertexBufferUsageType_Dynamic,
-																	eVertexElementFlag_Normal | eVertexElementFlag_Position | 
+																	eVertexElementFlag_Normal | eVertexElementFlag_Position |
 																	eVertexElementFlag_Color0 | eVertexElementFlag_Texture0);
 
 	hplDelete(pMesh);

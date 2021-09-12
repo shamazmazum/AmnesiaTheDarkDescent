@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -45,14 +45,14 @@ cEditorEditModeSelectTool::cEditorEditModeSelectTool(eSelectToolMode aToolMode, 
 		mvAxisColor[i] = cColor(0,1);
 		mvAxisColor[i].v[i] = 1;
 	}
-	
+
 	mColorSelected = cColor(1,1,0,1);
 	mColorMouseOver = cColor(0.5f,0.5f,0,1);
 
 	mfAxisBaseLength = 3;
 	mfUsedAxisLength = 3;
 	mfOrthoAxisPercentSize = 0.2f;
-	
+
 	Reset();
 }
 
@@ -79,7 +79,7 @@ bool cEditorEditModeSelectTool::OnViewportMouseDown(int alButtons)
 {
 	if((alButtons&eGuiMouseButton_Left)==0 || CheckAxisSelected()==false)
 		return false;
-	
+
 	iEditorBase* pEditor = mpEditMode->GetEditor();
 	pEditor->SetFlags(eEditorFlag_Editing, true);
 
@@ -124,7 +124,7 @@ void cEditorEditModeSelectTool::Reset()
 }
 
 //----------------------------------------------------------------------
-	
+
 bool cEditorEditModeSelectTool::CheckAxisSelected()
 {
 	bool bAnySelected = false;
@@ -193,20 +193,20 @@ void cEditorEditModeSelectTool::Draw(cEditorWindowViewport* apViewport,cRenderer
 	//apFunctions->GetLowLevelGfx()->DrawSphere(mvEditVectorEnd, 0.2f, cColor(1,0,0,1));
 
 	//apFunctions->GetLowLevelGfx()->DrawSphere(mpSelection->GetCenterTranslation(), mfUsedAxisLength, cColor(1));
-	
-	
+
+
 	DrawAxes(apViewport, apFunctions, fAxisLength);
 
 	apFunctions->SetMatrix(NULL);
 }
 
 //----------------------------------------------------------------------
- 
+
 void cEditorEditModeSelectTool::BuildEditPlane()
 {
 		cVector3f vNormal;
 		cVector3f vForward = mpEditMode->GetEditor()->GetFocusedViewport()->GetCamera()->GetForward();
-		
+
 		if(mvAxisSelected[eSelectToolAxis_X])
 		{
 			if(mvAxisSelected[eSelectToolAxis_Y])
@@ -227,7 +227,7 @@ void cEditorEditModeSelectTool::BuildEditPlane()
 		{
 			vNormal = vForward;
 		}
-		
+
 		mEditingPlane.FromNormalPoint(vNormal, mpSelection->GetCenterTranslation());
 
 		//Log("Edit plane : %s %s\n", vNormal.ToString().c_str(), mpSelection->GetCenterTranslation().ToString().c_str());

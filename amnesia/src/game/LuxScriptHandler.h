@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -30,7 +30,7 @@ using namespace std;
 
 class cLuxScriptHandler : public iLuxUpdateable
 {
-public:	
+public:
 	cLuxScriptHandler();
 	~cLuxScriptHandler();
 
@@ -82,11 +82,11 @@ private:
 	static void __stdcall SetLocalVarInt(string& asName, int alVal);
 	static void __stdcall SetLocalVarFloat(string& asName, float afVal);
 	static void __stdcall SetLocalVarString(string& asName, const string& asVal);
-	
+
 	static void __stdcall AddLocalVarInt(string& asName, int alVal);
 	static void __stdcall AddLocalVarFloat(string& asName, float afVal);
 	static void __stdcall AddLocalVarString(string& asName, string& asVal);
-	
+
 	static int __stdcall GetLocalVarInt(string& asName);
 	static float __stdcall GetLocalVarFloat(string& asName);
 	static string& __stdcall GetLocalVarString(string& asName);
@@ -119,7 +119,7 @@ private:
 	// Map
 	static void __stdcall ChangeMap(string& asMapName, string& asStartPos, string& asStartSound, string& asEndSound);
 	static void __stdcall ClearSavedMaps();
-	
+
 	/**
 	 * This caches all current textures and models and they are not released until destroy is called. If there is already cached data it is destroyed.
 	 */
@@ -138,13 +138,13 @@ private:
 	static void __stdcall SetFogActive(bool abActive);
 	static void __stdcall SetFogColor(float afR, float afG, float afB, float afA);
 	static void __stdcall SetFogProperties(float afStart, float afEnd, float afFalloffExp, bool abCulling);
-	
+
 	/**
 	 * If alRandomNum > 1, then it will randomize between 1 and alRandom for each LoadScreen giving entry the suffix XX (eg 01). If <=1 then no suffix is added
 	 */
 	static void __stdcall SetupLoadScreen(string &asTextCat, string &asTextEntry, int alRandomNum, string &asImageFile);
-	
-	
+
+
 	// Effect
 	static void __stdcall FadeIn(float afTime);
 	static void __stdcall FadeOut(float afTime);
@@ -155,10 +155,10 @@ private:
 	static void __stdcall StartEffectFlash(float afFadeIn, float afWhite, float afFadeOut);
 	static void __stdcall StartEffectEmotionFlash(string &asTextCat, string &asTextEntry, string &asSound);
 	static void __stdcall SetInDarknessEffectsActive(bool abX);
-	
+
 	//This adds a voice + effect to be played. It is okay to call this many times in order to play many voices in a row. The EffectVoiceOverCallback is not called until ALL voices have finished.
 	static void __stdcall AddEffectVoice(	string& asVoiceFile, string& asEffectFile,
-											string& asTextCat, string& asTextEntry, bool abUsePostion, 
+											string& asTextCat, string& asTextEntry, bool abUsePostion,
 											string& asPosEnitity, float afMinDistance, float afMaxDistance);
 	static void __stdcall StopAllEffectVoices(float afFadeOutTime);
 	static bool __stdcall GetEffectVoiceActive();
@@ -167,14 +167,14 @@ private:
 	*/
 	static void __stdcall SetEffectVoiceOverCallback(string& asFunc);
 	static bool __stdcall GetFlashbackIsActive();
-		
+
 	static void __stdcall StartPlayerSpawnPS(string& asSPSFile);
 	static void __stdcall StopPlayerSpawnPS();
 
 	static void __stdcall PlayGuiSound(string& asSoundFile, float afVolume);
 
 	static void __stdcall StartScreenShake(float afAmount, float afTime, float afFadeInTime,float afFadeOutTime);
-	
+
 
 	// Insanity
 	static void __stdcall SetInsanitySetEnabled(string& asSet, bool abX);
@@ -182,7 +182,7 @@ private:
 	static void __stdcall StartInsanityEvent(string& asEventName);
 	static void __stdcall StopCurrentInsanityEvent();
 	static bool __stdcall InsanityEventIsActive();
-	
+
 
 	static void __stdcall UnlockAchievement(string& asName);
 
@@ -192,12 +192,12 @@ private:
 	static void __stdcall SetPlayerCrouching(bool abCrouch);
 	static void __stdcall AddPlayerBodyForce(float afX, float afY, float afZ, bool abUseLocalCoords);
 	static void __stdcall ShowPlayerCrossHairIcons(bool abX);
-	
+
 	static void __stdcall SetPlayerPos(float afX, float afY, float afZ);
 	static float __stdcall GetPlayerPosX();
 	static float __stdcall GetPlayerPosY();
 	static float __stdcall GetPlayerPosZ();
-	
+
 	static void __stdcall SetPlayerSanity(float afSanity);
 	static void __stdcall AddPlayerSanity(float afSanity);
 	static float __stdcall GetPlayerSanity();
@@ -262,7 +262,7 @@ private:
 	 * Only called in the pickup diary callback! If true the journal displays the entry else not.
 	 */
 	static void __stdcall ReturnOpenJournal(bool abOpenJournal);
-	
+
 
 	// Quest
 	static void __stdcall AddQuest(string& asName, string& asNameAndTextEntry);
@@ -279,7 +279,7 @@ private:
 	static void __stdcall RemoveHint(string& asName);
 	static void __stdcall BlockHint(string& asName);
 	static void __stdcall UnBlockHint(string& asName);
-	
+
 	// Inventory
 	static void __stdcall ExitInventory();
 	static void __stdcall SetInventoryDisabled(bool abX);
@@ -287,14 +287,14 @@ private:
 	* if life time is <=0 then the life time is calculated based on string length.
 	*/
 	static void __stdcall SetInventoryMessage(string &asTextCategory, string &asTextEntry, float afTime);
-	
+
 	static void __stdcall GiveItem(string& asName, string& asType, string& asSubTypeName, string& asImageName, float afAmount);
 	static void __stdcall RemoveItem(string& asName);
 	static bool __stdcall HasItem(string& asName);
 
 	//This is meant to be used for debug mostly as it creates the actual item and then destroys i.
 	static void __stdcall GiveItemFromFile(string& asName, string& asFileName);
-	
+
 	/**
 	* Callback syntax: MyFunc(string &in asItemA, string &in asItemB)
 	*/
@@ -320,13 +320,13 @@ private:
 	static void __stdcall PlaySoundAtEntity(string& asSoundName, string& asSoundFile, string& asEntity, float afFadeTime, bool abSaveSound);
 	static void __stdcall FadeInSound(string& asSoundName, float afFadeTime, bool abPlayStart);
 	static void __stdcall StopSound(string& asSoundName, float afFadeTime);
-	
+
 	static void __stdcall PlayMusic(string& asMusicFile, bool abLoop, float afVolume, float afFadeTime, int alPrio, bool abResume);
 	static void __stdcall StopMusic(float afFadeTime, int alPrio);
-	
+
 	static void __stdcall FadeGlobalSoundVolume(float afDestVolume, float afTime);
 	static void __stdcall FadeGlobalSoundSpeed(float afDestSpeed, float afTime);
-	
+
 	static void __stdcall SetLightVisible(string& asLightName, bool abVisible);
 	/**
 	 * -1 for color or radius means keeping the value.
@@ -380,14 +380,14 @@ private:
 	/**
 	 * Rotates the prop up to a set speed. If OffsetArea = "", then center of body is used.
 	 */
-	static void __stdcall RotatePropToSpeed(string& asName, float afAcc, float afGoalSpeed, float afAxisX, float afAxisY, float afAxisZ, bool abResetSpeed, string& asOffsetArea);	
-	static void __stdcall StopPropMovement(string& asName);	
-	
+	static void __stdcall RotatePropToSpeed(string& asName, float afAcc, float afGoalSpeed, float afAxisX, float afAxisY, float afAxisZ, bool abResetSpeed, string& asOffsetArea);
+	static void __stdcall StopPropMovement(string& asName);
+
 	static void __stdcall AttachPropToProp(string& asPropName, string& asAttachName, string& asAttachFile, float afPosX, float afPosY, float afPosZ, float afRotX, float afRotY, float afRotZ);
 	static void __stdcall AddAttachedPropToProp(string& asPropName, string& asAttachName, string& asAttachFile, float afPosX, float afPosY, float afPosZ, float afRotX, float afRotY, float afRotZ);
 	static void __stdcall RemoveAttachedPropFromProp(string& asPropName, string& asAttachName);
 
-	
+
 	static void __stdcall SetLampLit(string& asName, bool abLit, bool abEffects);
 	static void __stdcall SetSwingDoorLocked(string& asName, bool abLocked, bool abEffects);
 	static void __stdcall SetSwingDoorClosed(string& asName, bool abClosed, bool abEffects);
@@ -405,14 +405,14 @@ private:
 	* State: 0=not stuck 1 = at max -1= at min
 	*/
 	static void __stdcall SetPropObjectStuckState(string& asName, int alState);
-	
+
 	static void __stdcall SetWheelAngle(string& asName, float afAngle, bool abAutoMove);
 	static void __stdcall SetWheelStuckState(string& asName, int alState, bool abEffects);
 	static void __stdcall SetLeverStuckState(string& asName, int alState, bool abEffects);
 	static void __stdcall SetWheelInteractionDisablesStuck(string& asName, bool abX);
 	static void __stdcall SetLeverInteractionDisablesStuck(string& asName, bool abX);
 	static int __stdcall GetLeverState(string& asName);
-	
+
 	static void __stdcall SetMultiSliderStuckState(string& asName, int alStuckState, bool abEffects);
 	/**
 	 * Called when state changes Syntax: MyFunc(string &in asEntity, int alState)
@@ -443,7 +443,7 @@ private:
 	 * Pose can be "Biped" or "Quadruped"
 	 */
 	static void __stdcall ChangeManPigPose(string& asName, string& asPoseType);
-	
+
 	static void __stdcall SetTeslaPigFadeDisabled(string& asName, bool abX);
 	static void __stdcall SetTeslaPigSoundDisabled(string& asName, bool abX);
 	static void __stdcall SetTeslaPigEasyEscapeDisabled(string& asName, bool abX);
@@ -460,7 +460,7 @@ private:
 	 */
 	static void __stdcall PlayPropAnimation(string& asProp, string& asAnimation, float afFadeTime, bool abLoop, string &asCallback);
 
-	
+
 	/**
 	 * State is 0 -1 where 0 is close and 1 is open. Any intermediate value is also valid!
 	 */
@@ -501,8 +501,8 @@ private:
 
 
 	// TEMP
-	/*static void __stdcall CreateRope(	string& asName, 
-										string& asStartArea, string& asEndArea, 
+	/*static void __stdcall CreateRope(	string& asName,
+										string& asStartArea, string& asEndArea,
 										string& asStartBody, string& asEndBody,
 										float afMinTotalLength, float afMaxTotalLength,
 										float afSegmentLength, float afDamping,

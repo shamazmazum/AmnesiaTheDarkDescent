@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -64,7 +64,7 @@ cLuxPlayerState_Ladder::~cLuxPlayerState_Ladder()
 
 void cLuxPlayerState_Ladder::OnEnterState(eLuxPlayerState aPrevState)
 {
-	
+
 	/////////////////////////////////////
 	// Load the data
 	mpLadder = cLuxPlayerStateVars::mpLadder;
@@ -73,7 +73,7 @@ void cLuxPlayerState_Ladder::OnEnterState(eLuxPlayerState aPrevState)
 	/////////////////////////////////////
 	// Get data
 	iCharacterBody *pCharBody = mpPlayer->GetCharacterBody();
-	
+
 	/////////////////////////////////////
 	// Set up player
 	mpPlayer->ChangeMoveState(eLuxMoveState_Normal);
@@ -103,13 +103,13 @@ void cLuxPlayerState_Ladder::OnEnterState(eLuxPlayerState aPrevState)
 	mfPitchMinLimit = mpPlayer->GetCamera()->GetPitchMinLimit();
 	mfPitchMaxLimit = mpPlayer->GetCamera()->GetPitchMaxLimit();
 
-	/////////////////////////////////////		
+	/////////////////////////////////////
 	//Different time if player is above the ladder.
 	float fTime = 0.5f;
 	if(mpPlayer->GetCharacterBody()->GetPosition().y > mpLadder->GetMaxY()) fTime = 1.2f;
 
 	mfTimeCount = fTime;
-	
+
 	/////////////////////////////////////
 	//Get the goal position and then add used to get there
 	mvGoalPos = mvStartPosition;
@@ -228,7 +228,7 @@ void cLuxPlayerState_Ladder::Update(float afTimeStep)
 		if(pCharBody->CheckCharacterFits(mvCharPosition,false,0,NULL,kEpsilonf)==false)
 		{
 			mfMoveMul =0;
-			return;	
+			return;
 		}
 
 		/////////////////////////////////
@@ -253,7 +253,7 @@ void cLuxPlayerState_Ladder::Update(float afTimeStep)
 				mbPlayedSound = true;
 			}
 		}
-		
+
 		/////////////////////////////////
 		//Update character body
 		pCharBody->SetPosition(mvCharPosition);
@@ -261,7 +261,7 @@ void cLuxPlayerState_Ladder::Update(float afTimeStep)
 
 		/////////////////////////////////
 		//Get the rays that will be tested to see if something solid was hit when clibming down.
-        cVector3f vGroundRayStart1 = pCharBody->GetFeetPosition() + cVector3f(0,0.05f,0) + 
+        cVector3f vGroundRayStart1 = pCharBody->GetFeetPosition() + cVector3f(0,0.05f,0) +
 									mpLadder->GetForward()*pCharBody->GetSize().x*0.7f;
 		cVector3f vGroundRayEnd1 = vGroundRayStart1 - cVector3f(0,0.1f,0);
 
@@ -278,10 +278,10 @@ void cLuxPlayerState_Ladder::Update(float afTimeStep)
 		}
 		///////////////////////////
 		//Check if at bottom
-		else if(	mfMoveMul < 0 && 
+		else if(	mfMoveMul < 0 &&
 					(  (mvCharPosition.y - pCharBody->GetSize().y/2) < mpLadder->GetMinY() ||
 					    pCharBody->CheckRayIntersection(vGroundRayStart1, vGroundRayEnd1,NULL,NULL) ||
-						pCharBody->CheckRayIntersection(vGroundRayStart2, vGroundRayEnd2,NULL,NULL) 
+						pCharBody->CheckRayIntersection(vGroundRayStart2, vGroundRayEnd2,NULL,NULL)
 					)
 				)
 		{
@@ -346,7 +346,7 @@ bool cLuxPlayerState_Ladder::OnMove(eCharDir aDir, float afMul)
 
 	mfMoveMul = afMul;
 
-	return false;	
+	return false;
 }
 
 //-----------------------------------------------------------------------
@@ -416,7 +416,7 @@ bool cLuxPlayerState_Ladder::OnDoAction(eLuxPlayerAction aAction,bool abPressed)
 	{
 		return true;
 	}
-	
+
 	return false;
 }
 
@@ -525,7 +525,7 @@ void cLuxPlayerState_Ladder::SaveToSaveData(iLuxPlayerState_SaveData* apSaveData
 		pData->mlLadderID = mpLadder->GetID();
 	else
 		pData->mlLadderID = -1;
-	
+
 	kCopyToVar(pData, mlState);
 	kCopyToVar(pData, mvStartPosition);
 
@@ -572,7 +572,7 @@ void cLuxPlayerState_Ladder::LoadFromSaveDataBeforeEnter(cLuxMap *apMap, iLuxPla
 	{
 		mpLadder = static_cast<cLuxArea_Ladder*>(pEntity);
 	}
-	
+
 	kCopyFromVar(pData, mvStartPosition);
 
 	cLuxPlayerStateVars::SetupLadder(mpLadder, mvStartPosition);
@@ -590,7 +590,7 @@ void cLuxPlayerState_Ladder::LoadFromSaveDataAfterEnter(cLuxMap *apMap, iLuxPlay
 	///////////////////////
 	// Load vars
 	kCopyFromVar(pData, mlState);
-	
+
 	kCopyFromVar(pData, mfTimeCount);
 
 	kCopyFromVar(pData, mvCharPosition);

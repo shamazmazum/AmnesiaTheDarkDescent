@@ -22,7 +22,7 @@ extern cOAL_Device* gpDevice;
 using namespace std;
 
 //////////////////////////////////////////////////////////////////
-////	OAL_Test_Sample_Play ( const cOAL_Sample* apSample )		
+////	OAL_Test_Sample_Play ( const cOAL_Sample* apSample )
 ////	- Plays a loaded Sample and waits till it ends playing
 //////////////////////////////////////////////////////////////////
 
@@ -33,9 +33,9 @@ void OAL_Test_Sample_Play ( cOAL_Sample* apSample )
 	{
 		cOAL_Source* pTmpSource;
 		int lSampleState = 0;
-        
+
 		pTmpSource = (*gpSourceList)[0];
-		
+
 		pTmpSource->PlaySample( apSample, false, 1.0f );
 		while (pTmpSource->GetSourceStatus() == eOALSourceStatus_Busy_Playing )
 		{}
@@ -60,7 +60,7 @@ void OAL_Test_Stream_Play ( cOAL_Stream* apStream )
 		OAL_Source_Stop ( OAL_ALL );
 
 		pTempSource = (*gpSourceList)[0];
-        
+
 		pTempSource->PlayStream( apStream, false, 1.0f );
 
 		while (pTempSource->GetSourceStatus() == eOALSourceStatus_Busy_Playing )
@@ -74,8 +74,8 @@ void OAL_Test_Stream_Play ( cOAL_Stream* apStream )
 
 
 //////////////////////////////////////////////////////////////////
-////	int OAL_Sample_Play ( int alSource, const cOAL_Sample* apSample )		
-////	-	Begins play of a loaded Sample on the specified source. If alSource == OAL_FREE, 
+////	int OAL_Sample_Play ( int alSource, const cOAL_Sample* apSample )
+////	-	Begins play of a loaded Sample on the specified source. If alSource == OAL_FREE,
 ////		it looks for a free source if there is any, if not, it selects that which has the lowest
 ////		priority below the sample's own prio
 //////////////////////////////////////////////////////////////////
@@ -88,8 +88,8 @@ int OAL_Sample_Play (	int alSource, cOAL_Sample* apSample, float afVolume, bool 
 }
 
 //////////////////////////////////////////////////////////////////
-////	int OAL_Stream_Play ( int alSource, const cOAL_Stream* apStream, float afVolume, bool abStartPaused )		
-////	-	Begins play of an open Stream on the specified source. If alSource == OAL_FREE, 
+////	int OAL_Stream_Play ( int alSource, const cOAL_Stream* apStream, float afVolume, bool abStartPaused )
+////	-	Begins play of an open Stream on the specified source. If alSource == OAL_FREE,
 ////		it looks for a free source if there is any, if not, it selects the source with lowest prio
 //////////////////////////////////////////////////////////////////
 
@@ -100,7 +100,7 @@ int OAL_Stream_Play ( int alSource, cOAL_Stream* apStream, float afVolume, bool 
 }
 
 //////////////////////////////////////////////////////////////////
-////	void OAL_Source_Stop ( int alSource )		
+////	void OAL_Source_Stop ( int alSource )
 ////	-	Stops the specified source.
 //////////////////////////////////////////////////////////////////
 
@@ -134,7 +134,7 @@ void OAL_Source_SetGain ( int alSource, float afVolume )
 	}
 }
 //////////////////////////////////////////////////////////////////
-////	void OAL_Source_SetPitch ( int alSource, const float afPitch )		
+////	void OAL_Source_SetPitch ( int alSource, const float afPitch )
 ////	-	Sets pitch value for specified source
 //////////////////////////////////////////////////////////////////
 
@@ -152,7 +152,7 @@ void OAL_Source_SetPitch ( int alSource, float afPitch )
 }
 
 //////////////////////////////////////////////////////////////////
-////	void OAL_Source_SetPaused ( int alSource, bool abPaused )		
+////	void OAL_Source_SetPaused ( int alSource, bool abPaused )
 ////	-	Pauses the specified source.
 //////////////////////////////////////////////////////////////////
 
@@ -169,7 +169,7 @@ void OAL_Source_SetPaused ( int alSource, bool abPaused )
 }
 
 //////////////////////////////////////////////////////////////////
-////	void OAL_Source_SetLoop ( int alSource, bool abPaused )		
+////	void OAL_Source_SetLoop ( int alSource, bool abPaused )
 ////	-	Pauses the specified source.
 //////////////////////////////////////////////////////////////////
 
@@ -328,7 +328,7 @@ unsigned int OAL_Source_GetPriority ( const int alSource )
 		lPriority = pSource->GetPriority();
 		pSource->Unlock();
 	}
-	
+
 	return lPriority;
 
 }
@@ -354,7 +354,7 @@ const bool	OAL_Source_IsPlaying ( const int alSource )
 	}
 	return bIsPlaying;
 }
-	
+
 
 const bool	OAL_Source_IsBufferUnderrun ( const int alSource )
 {
@@ -365,7 +365,7 @@ const bool	OAL_Source_IsBufferUnderrun ( const int alSource )
 void	OAL_Source_SetElapsedTime( const int alSource, double afTime )
 {
 	if (gpDevice == NULL) return;
-	
+
 	cOAL_Source* pSource = gpDevice->GetSource(alSource);
 	if (pSource)
 	{
@@ -386,7 +386,7 @@ double	OAL_Source_GetElapsedTime( const int alSource )
 		fElapsedTime = pSource->GetElapsedTime();
 		pSource->Unlock();
 	}
-	
+
 	return fElapsedTime;
 }
 
@@ -460,7 +460,7 @@ void OAL_Source_Log ( int alSourceId, int alMessageType,  const char* asMessage,
 	char text[2048];
 	va_list ap;
 	if (asMessage == NULL)
-		return;	
+		return;
 	va_start(ap, asMessage);
 	vsprintf(text, asMessage, ap);
 	va_end(ap);
@@ -469,12 +469,12 @@ void OAL_Source_Log ( int alSourceId, int alMessageType,  const char* asMessage,
 
 	string sMess = "";
 	sMess += text;
-	
+
 	char sBuffer[255];
 
 	sprintf(sBuffer, "./OAL/OAL_Source_%d.log", alSourceId);
     string sFileName(sBuffer);
-	
+
     FILE* fSourceLog = OpenFile(sFileName,"a");
 
 	if (fSourceLog != NULL)

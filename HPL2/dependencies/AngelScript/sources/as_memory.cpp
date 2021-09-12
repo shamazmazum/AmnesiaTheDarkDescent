@@ -83,7 +83,7 @@ asCMemoryMgr::~asCMemoryMgr()
 
 void asCMemoryMgr::FreeUnusedMemory()
 {
-	// It's necessary to protect the scriptNodePool from multiple 
+	// It's necessary to protect the scriptNodePool from multiple
 	// simultaneous accesses, as the parser is used by several methods
 	// that can be executed simultaneously.
 	ENTERCRITICALSECTION(cs);
@@ -95,8 +95,8 @@ void asCMemoryMgr::FreeUnusedMemory()
 
 	LEAVECRITICALSECTION(cs);
 
-	// The engine already protects against multiple threads 
-	// compiling scripts simultaneously so this pool doesn't have 
+	// The engine already protects against multiple threads
+	// compiling scripts simultaneously so this pool doesn't have
 	// to be protected again.
 	for( n = 0; n < (signed)byteInstructionPool.GetLength(); n++ )
 		userFree(byteInstructionPool[n]);
@@ -116,7 +116,7 @@ void *asCMemoryMgr::AllocScriptNode()
 
 	LEAVECRITICALSECTION(cs);
 
-#if defined(AS_DEBUG) 
+#if defined(AS_DEBUG)
 	return ((asALLOCFUNCDEBUG_t)(userAlloc))(sizeof(asCScriptNode), __FILE__, __LINE__);
 #else
 	return userAlloc(sizeof(asCScriptNode));
@@ -141,7 +141,7 @@ void *asCMemoryMgr::AllocByteInstruction()
 	if( byteInstructionPool.GetLength() )
 		return byteInstructionPool.PopLast();
 
-#if defined(AS_DEBUG) 
+#if defined(AS_DEBUG)
 	return ((asALLOCFUNCDEBUG_t)(userAlloc))(sizeof(cByteInstruction), __FILE__, __LINE__);
 #else
 	return userAlloc(sizeof(cByteInstruction));

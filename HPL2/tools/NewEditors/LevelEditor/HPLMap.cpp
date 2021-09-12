@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -78,7 +78,7 @@ bool cLevelEditorSessionData::Save(cXmlElement* apElem)
 	iEditor* pEditor = mpWorld->GetEditor();
 	cXmlElement* pDataElem = apElem->CreateChildElement("EditorSession");
 
-	
+
 	cXmlElement* pViewportsData = pDataElem->CreateChildElement("ViewportConfig");
 
 	int lFocused = 0;
@@ -103,13 +103,13 @@ bool cLevelEditorSessionData::Save(cXmlElement* apElem)
 		for(;it!=clipPlanes.end();++it)
 		{
 			cEdClipPlane* pPlane = it->second;
-			
+
 			pPlane->Save(pXmlClipPlanes);
 		}
 
 		//pXmlClipPlanes->SetAttributeInt("Focused");
 	}
-	
+
 
 	return true;
 }
@@ -129,7 +129,7 @@ cMapObjExtension::~cMapObjExtension()
 	{
 		if(mpGroup)	SetGroup(NULL, true);
 	}
-		
+
 }
 
 void cMapObjExtension::SetGroup(cEdGroup* apGroup, bool abRemoveFromOld)
@@ -237,9 +237,9 @@ cLevelEditorStaticObjectCombo* cHplMap::GetStaticObjectCombo(int alComboID)
 
 //-------------------------------------------------------------------------
 
-int cHplMap::GetStaticObjectComboNum() 
-{ 
-	return (int)mlstStaticObjectCombos.size(); 
+int cHplMap::GetStaticObjectComboNum()
+{
+	return (int)mlstStaticObjectCombos.size();
 }
 
 //-------------------------------------------------------------------------
@@ -257,7 +257,7 @@ cEdGroup* cHplMap::AddGroup(int alID, bool abAddToList)
 	}
 
 	mbGroupsChanged = true;
-	
+
 	return pGroup;
 }
 
@@ -360,7 +360,7 @@ iEdSessionData* cHplMap::CreateSessionData()
 bool cHplMap::LoadContentsFromXmlDoc(iXmlDocument* apDoc)
 {
 	cXmlElement* pMapDataElement = apDoc->GetFirstElement("MapData");
-	
+
 	SetFogActive(pMapDataElement->GetAttributeBool("FogActive"));
 	SetFogCulling(pMapDataElement->GetAttributeBool("FogCulling"));
 	SetFogColor(pMapDataElement->GetAttributeColor("FogColor"));

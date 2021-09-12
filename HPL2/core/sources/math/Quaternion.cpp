@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -63,12 +63,12 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// PUBLIC METHODS
 	//////////////////////////////////////////////////////////////////////////
-	
+
 
 	const cQuaternion cQuaternion::Identity = cQuaternion(1.0f,0.0f,0.0f,0.0f);
 
 	//-----------------------------------------------------------------------
-	
+
 	void cQuaternion::Normalize()
 	{
 		float fLen = w*w + v.x*v.x + v.y*v.y + v.z*v.z;
@@ -78,7 +78,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	void cQuaternion::ToRotationMatrix(cMatrixf &a_mtxDest) const
 	{
 		cMatrixf mtxA;
@@ -146,7 +146,7 @@ namespace hpl {
 			*apkQuat[k] = (a_mtxRot.m[k][i]+a_mtxRot.m[i][k])*fRoot;
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cQuaternion::FromAngleAxis(float afAngle, const cVector3f &avAxis)
@@ -175,7 +175,7 @@ namespace hpl {
 		return qOut;
 	}
 	//-----------------------------------------------------------------------
-	
+
 	cQuaternion cQuaternion::operator-(const cQuaternion &aqB) const
 	{
 		cQuaternion qOut;
@@ -188,12 +188,12 @@ namespace hpl {
 	cQuaternion cQuaternion::operator*(const cQuaternion &aqB) const
 	{
 		cQuaternion qOut;
-		
+
 		qOut.w = w * aqB.w - v.x * aqB.v.x - v.y * aqB.v.y - v.z * aqB.v.z;
 		qOut.v.x = w * aqB.v.x + v.x * aqB.w + v.y * aqB.v.z - v.z * aqB.v.y;
 		qOut.v.y = w * aqB.v.y + v.y * aqB.w + v.z * aqB.v.x - v.x * aqB.v.z;
 		qOut.v.z = w * aqB.v.z + v.z * aqB.w + v.x * aqB.v.y - v.y * aqB.v.x;
-		
+
 		return qOut;
 	}
 

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -42,7 +42,7 @@ namespace hpl {
 
 	cSkeleton::~cSkeleton()
 	{
-		//All bones are deleted in this call. 
+		//All bones are deleted in this call.
 		//No need to delete the bones in the containers.
 		hplDelete(mpRootBone);
 	}
@@ -54,7 +54,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	void cSkeleton::AddBone(cBone* apBone)
 	{
 		mvBones.push_back(apBone);
@@ -83,7 +83,7 @@ namespace hpl {
 								mvBones[i]->GetName(),i));
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cBone* cSkeleton::GetRootBone()
@@ -97,12 +97,12 @@ namespace hpl {
 	{
 		return mvBones[alIndex];
 	}
-	
+
 	cBone* cSkeleton::GetBoneByName(const tString &asName)
 	{
 		int alIdx = GetBoneIndexByName(asName);
 		if(alIdx <0) return NULL;
-		
+
 		return mvBones[alIdx];
 	}
 	cBone* cSkeleton::GetBoneBySid(const tString &asSid)
@@ -113,7 +113,7 @@ namespace hpl {
 		}
 		return NULL;
 	}
-	
+
 	int cSkeleton::GetBoneIndexByName(const tString &asName)
 	{
 		tBoneIdxNameMapIt it = m_mapBonesIdxByName.find(asName);

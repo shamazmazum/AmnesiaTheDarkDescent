@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -53,7 +53,7 @@ bool iEngineObject::IsCulledByFrustum(cCamera* apCamera)
 	cFrustum* pFrustum = apCamera->GetFrustum();
 	if(pBV)
 		return (pFrustum->CollideBoundingVolume(pBV)!=eCollision_Outside)==false;
-	
+
 	return pFrustum->CollidePoint(mpParent->GetTranslation())==false;
 }
 
@@ -72,8 +72,8 @@ bool iEngineObject::CheckRayBoundingVolumeIntersect(iEdViewport* apViewport, cVe
 {
 	cBoundingVolume* pBV = GetPickBV(apViewport);
 
-	return cMath::CheckAABBLineIntersection(pBV->GetMin(), pBV->GetMax(), 
-											apViewport->GetUnprojectedStart(), apViewport->GetUnprojectedEnd(), 
+	return cMath::CheckAABBLineIntersection(pBV->GetMin(), pBV->GetMax(),
+											apViewport->GetUnprojectedStart(), apViewport->GetUnprojectedEnd(),
 											apPos, apT);
 }
 
@@ -99,8 +99,8 @@ bool iEngineObject::CheckRayIntersect(iEdViewport* apViewport, cVector3f* apPos,
 cBoundingVolume* iEngineObject::GetRenderBV()
 {
 	if(mpObject)
-		return mpObject->GetBoundingVolume(); 
-	
+		return mpObject->GetBoundingVolume();
+
 	return NULL;
 }
 //-----------------------------------------------------------------------
@@ -125,7 +125,7 @@ iEngineMesh::~iEngineMesh()
 	{
 		cWorld* pWorld = mpParent->GetWorld()->GetEngWorld();
 		pWorld->DestroyMeshEntity((cMeshEntity*)mpObject);
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------
@@ -171,7 +171,7 @@ bool iEngineMesh::CheckRayIntersect(iEdViewport* apViewport, cVector3f* apPos, t
 		return false;
 
 	cMeshEntity* pObj = static_cast<cMeshEntity*>(mpObject);
-	return cEdHelper::CheckRayMeshEntityIntersect(apViewport->GetUnprojectedStart(), apViewport->GetUnprojectedEnd(), 
+	return cEdHelper::CheckRayMeshEntityIntersect(apViewport->GetUnprojectedStart(), apViewport->GetUnprojectedEnd(),
 													pObj, apPos, apTriangle, apT);
 }
 
@@ -221,7 +221,7 @@ void iEngineMesh::DrawProgram(iEdViewport* apViewport, cRendererCallbackFunction
 		apFunctions->SetMatrix(pSubMeshEntity->GetModelMatrix(NULL));
 		apFunctions->SetVertexBuffer(pSubMeshEntity->GetVertexBuffer());
 		apFunctions->GetLowLevelGfx()->SetColor(aCol);
-		
+
 		apFunctions->DrawCurrent();
 	}
 	apFunctions->SetMatrix(NULL);
@@ -418,7 +418,7 @@ cBoundingVolume* iIconObject::GetPickBV(iEdViewport* apViewport)
 {
 	if(mpIcon)
 		return mpIcon->GetPickBV(apViewport);
-	
+
 	return NULL;
 }
 
@@ -438,13 +438,13 @@ bool iIconObject::CheckRayIntersect(iEdViewport* apViewport, cVector3f* apPos, t
 
 //-----------------------------------------------------------------------
 
-void iIconObject::Draw(iEdViewport* apViewport, 
-					  cRendererCallbackFunctions* apFunctions, 
+void iIconObject::Draw(iEdViewport* apViewport,
+					  cRendererCallbackFunctions* apFunctions,
 					  bool abIsSelected,
 					  bool abIsActive,
 					  const cColor& aHighlightCol)
 {
-	if(mpIcon) 
+	if(mpIcon)
 		mpIcon->DrawIcon(apViewport, apFunctions, abIsSelected, mpParent->IsEnabled(), aHighlightCol);
 }
 

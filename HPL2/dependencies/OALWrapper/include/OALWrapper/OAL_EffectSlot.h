@@ -50,7 +50,7 @@ private:
 	cOAL_EFXManager* mpEFXManager;
 
 	SDL_mutex*		mpMutex;
-    
+
 };
 
 #endif	// _OAL_EFFECTSLOT_H

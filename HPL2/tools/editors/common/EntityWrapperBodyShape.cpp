@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -132,7 +132,7 @@ iEntityWrapper* cEntityWrapperDataBodyShape::CreateSpecificEntity()
 //---------------------------------------------------------------------------
 
 cEntityWrapperBodyShape::cEntityWrapperBodyShape(iEntityWrapperData* apData) : iEntityWrapper(apData)
-												
+
 {
 	mpParentBody = NULL;
 	mpVBShape = NULL;
@@ -220,10 +220,10 @@ void cEntityWrapperBodyShape::Draw(	cEditorWindowViewport* apViewport, cRenderer
 
 //	apFunctions->SetTexture(0, mvTextures[(mpParentBody!=NULL)][abIsSelected]);
 //	apFunctions->GetLowLevelGfx()->SetColor(cColor(0,1,0,0.1f));
-	
+
 //	apFunctions->SetVertexBuffer(mpShapeVtxBuffer);
 //	apFunctions->DrawCurrent();
-	
+
 //	apFunctions->GetLowLevelGfx()->SetBlendActive(false);
 //	apFunctions->DrawCurrent(eVertexBufferDrawType_LineStrip);
 
@@ -246,18 +246,18 @@ void cEntityWrapperBodyShape::SaveToElement(cXmlElement* apElement)
 	switch(mShapeType)
 	{
 	case eEditorBodyShape_Box:
-		sShapeType = "Box"; 
+		sShapeType = "Box";
 		break;
-	case eEditorBodyShape_Sphere:	
-		sShapeType = "Sphere"; 
+	case eEditorBodyShape_Sphere:
+		sShapeType = "Sphere";
 		break;
-	case eEditorBodyShape_Cylinder:	
-		sShapeType = "Cylinder"; 
+	case eEditorBodyShape_Cylinder:
+		sShapeType = "Cylinder";
 		break;
-	case eEditorBodyShape_Capsule:	
-		sShapeType = "Capsule"; 
+	case eEditorBodyShape_Capsule:
+		sShapeType = "Capsule";
 		break;
-	default:						
+	default:
 		break;
 	}
 	apElement->SetAttributeString("ShapeType", sShapeType);
@@ -298,7 +298,7 @@ bool cEntityWrapperBodyShape::EntitySpecificFilterCheck(bool abPassAll, bool abP
 {
 	if(HasParentBody())
 		return abPassType && abPassAll==false;
-	
+
 	return iEntityWrapper::EntitySpecificFilterCheck(abPassAll, abPassType);
 }
 
@@ -343,7 +343,7 @@ void cEntityWrapperBodyShape::SetAbsScale(const cVector3f& avScale, int alAxis)
 	}
 
 	//Log("Shape processed input scale = %s\n", vScale.ToFileString().c_str());
-	
+
 	iEntityWrapper::SetAbsScale(vScale, alAxis);
 	if(mpEngineEntity)
 		((cEngineEntityGeneratedMesh*)mpEngineEntity)->ReCreate(CreateShape());

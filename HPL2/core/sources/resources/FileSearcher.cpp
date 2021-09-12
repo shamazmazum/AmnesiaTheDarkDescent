@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -36,7 +36,7 @@ namespace hpl {
 	cFileSearcherEntry::cFileSearcherEntry(const tWString& asPath)
 	{
 		msPath = asPath;
-        
+
 		tWString sSepp = _W("/\\");
 		cString::GetStringVecW(msPath,mvPathDirs,&sSepp);
 	}
@@ -68,7 +68,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	void cFileSearcher::AddDirectory(const tWString& asSearchPath, const tString &asMask, bool abAddSubDirectories)
 	{
 		//Make the path with only "/" and lower case.
@@ -79,13 +79,13 @@ namespace hpl {
 		tWStringList lstFileNames;
 
 		cPlatform::FindFilesInDir(lstFileNames,sPath, cString::To16Char(asMask));
-			
+
 		for(tWStringListIt it = lstFileNames.begin();it!=lstFileNames.end();it++)
 		{
 			tWString& sFile = *it;
 			tString sLowFile = cString::ToLowerCase(cString::To8Char(sFile));
 			tWString sFilePath = cString::ReplaceCharToW( cPlatform::GetFullFilePath( cString::SetFilePathW(sFile,sPath)), _W("\\"),_W("/"));;
-			
+
 			//Check if file and path already exist
 			tFilePathMapIt pathIt = m_mapFiles.find(sLowFile);
 			if(pathIt != m_mapFiles.end() && pathIt->second.msPath == sFilePath)
@@ -98,14 +98,14 @@ namespace hpl {
 			//	cString::GetHash(cString::To8Char(sFilePath)), cString::GetHashW(sFilePath));
 			m_mapFiles.insert(tFilePathMap::value_type(sLowFile, cFileSearcherEntry(sFilePath) ));
 		}
-		
+
 		//////////////////////////////////
 		//Search sub directories if set.
 		if(abAddSubDirectories)
 		{
 			tWStringList lstDirNames;
 			cPlatform::FindFoldersInDir(lstDirNames,sPath,false);
-			
+
 			for(tWStringListIt it = lstDirNames.begin();it!=lstDirNames.end();it++)
 			{
 				tWString sNewPath = cString::SetFilePathW(*it, sPath);
@@ -138,7 +138,7 @@ namespace hpl {
 			if(apEqualCount) *apEqualCount = 0;
 			return msNull;
 		}
-		
+
 		//////////////////////
 		//Count the number of files with same name
 		//if 1, just return it.
@@ -155,10 +155,10 @@ namespace hpl {
 
 		tWStringVec vWantedDirs;
 		tWString sSepp =_W("/\\");
-		
+
 		int lBestEqualCount = 0;
         tFilePathMapIt bestEqualIt = it;
-        
+
 		cString::GetStringVecW(sWantedPath, vWantedDirs,&sSepp);
 
 		//Iterate according to count and compare
@@ -200,7 +200,7 @@ namespace hpl {
 			if(lMaxCount > lBestEqualCount)
 			{
 				lBestEqualCount = lMaxCount;
-                bestEqualIt = it;				
+                bestEqualIt = it;
 			}
 		}
 

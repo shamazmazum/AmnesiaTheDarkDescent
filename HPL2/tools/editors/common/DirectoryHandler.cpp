@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -70,7 +70,7 @@ cDirectoryHandler::cDirectoryHandler(iEditorBase* apEditor)
 	msWorkingDir = cPlatform::GetWorkingDir();
 	msWorkingDir = cString::AddSlashAtEndW(msWorkingDir);
 	msWorkingDir = cString::ReplaceCharToW(msWorkingDir, _W("\\"), _W("/"));
-	tWString sSep = _W("/");  
+	tWString sSep = _W("/");
 	cString::GetStringVecW(msWorkingDir, mvWorkingDirPathSteps, &sSep);
 
 	// Create the base personal folders
@@ -129,7 +129,7 @@ bool cDirectoryHandler::AddLookUpDir(int alCategory, const tWString& asDir,
 {
 	if(cPlatform::FolderExists(asDir)==false)
 	{
-		cPlatform::CreateMessageBox(_W("Error"), _W("Could not find lookup folder: %ls"), 
+		cPlatform::CreateMessageBox(_W("Error"), _W("Could not find lookup folder: %ls"),
 										cString::ReplaceCharToW(asDir,_W("\\"),_W("/")).c_str());
 		return false;
 	}

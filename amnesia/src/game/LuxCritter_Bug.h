@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -40,7 +40,7 @@ class cLuxCritter_Bug : public iLuxProp_CritterBase
 typedef iLuxProp_CritterBase super_class;
 friend class cLuxPropLoader_Critter_Bug;
 friend class cLuxCritter_BugRayCallback;
-public:	
+public:
 	cLuxCritter_Bug(const tString &asName, int alID, cLuxMap *apMap);
 	virtual ~cLuxCritter_Bug();
 
@@ -50,11 +50,11 @@ public:
 
 	//////////////////////
 	//Properties
-	
+
 	//////////////////////
 	//Connection callbacks
 	void OnConnectionStateChange(iLuxEntity *apEntity, int alState){}
-	
+
 	//////////////////////
 	//Save data stuff
 	iLuxEntity_SaveData* CreateSaveData();
@@ -66,14 +66,14 @@ public:
 private:
 	void UpdateVelocity(float afTimeStep);
 	void UpdateMovement(float afTimeStep);
-	
+
 	//General
-	
+
 	//Vars
 	float mfPlaySoundCount;
 	float mfPauseCount;
 	bool mbPaused;
-	
+
 	//Data
 	float mfMaxSpeed;
 	float mfMaxSpeedNormal;

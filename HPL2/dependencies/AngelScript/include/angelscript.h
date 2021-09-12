@@ -353,7 +353,7 @@ struct asSFuncPtr
 		// The largest known method point is 20 bytes (MSVC 64bit),
 		// but with 8byte alignment this becomes 24 bytes. So we need
 		// to be able to store at least that much.
-		char dummy[25]; 
+		char dummy[25];
 		struct {asMETHOD_t   mthd; char dummy[25-sizeof(asMETHOD_t)];} m;
 		struct {asFUNCTION_t func; char dummy[25-sizeof(asFUNCTION_t)];} f;
 	} ptr;
@@ -422,7 +422,7 @@ struct asSMessageInfo
   #else // statically linked library
     #define AS_API
   #endif
-#elif defined(__GNUC__) 
+#elif defined(__GNUC__)
   #if defined(ANGELSCRIPT_EXPORT)
     #define AS_API __attribute__((visibility ("default")))
   #else
@@ -1021,9 +1021,9 @@ struct asSMethodPtr<SINGLE_PTR_SIZE+2*sizeof(int)>
 		if( sizeof(void*) == 4 )
 		{
 			// Method pointers for virtual inheritance is not supported,
-			// as it requires the location of the vbase table, which is 
+			// as it requires the location of the vbase table, which is
 			// only available to the C++ compiler, but not in the method
-			// pointer. 
+			// pointer.
 
 			// You can get around this by forward declaring the class and
 			// storing the sizeof its method pointer in a constant. Example:

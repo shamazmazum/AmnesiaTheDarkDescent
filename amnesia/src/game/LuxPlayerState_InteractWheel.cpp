@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -44,7 +44,7 @@ cLuxPlayerState_InteractWheel::cLuxPlayerState_InteractWheel(cLuxPlayer *apPlaye
 
 cLuxPlayerState_InteractWheel::~cLuxPlayerState_InteractWheel()
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -70,17 +70,17 @@ void cLuxPlayerState_InteractWheel::RenderSolid(cRendererCallbackFunctions* apFu
 
 	cVector3f vPinDir = mpCurrentJoint->GetPinDir();
 	vPinDir = cMath::MatrixMul(mpCurrentBody->GetInertiaMatrix(), vPinDir);
-	
+
 	cVector3f vPivot = mpCurrentJoint->GetPivotPoint();
 	//apFunctions->GetLowLevelGfx()->DrawLine(vPivot, vPivot+cVector3f(1,0,0)*vAxes.x*10, cColor(1,0,0,1));
 	//apFunctions->GetLowLevelGfx()->DrawLine(vPivot, vPivot+cVector3f(0,1,0)*vAxes.y*10, cColor(0,1,0,1));
 	//apFunctions->GetLowLevelGfx()->DrawLine(vPivot, vPivot+cVector3f(0,0,1)*vAxes.z*-10, cColor(0,0,1,1));
 
 	apFunctions->GetLowLevelGfx()->DrawLine(vPivot, vPivot+vPinDir*10, cColor(0,0,1,1));
-	
+
 	//apFunctions->GetLowLevelGfx()->DrawLine(vPivot, vPivot+mpCurrentJoint->GetPinDir(), cColor(0,0,1,1));
-	//apFunctions->GetLowLevelGfx()->DrawLine(mpCurrentBody->GetLocalPosition(), 
-	//										mpCurrentBody->GetLocalPosition() + mpCurrentBody->GetAngularVelocity(), 
+	//apFunctions->GetLowLevelGfx()->DrawLine(mpCurrentBody->GetLocalPosition(),
+	//										mpCurrentBody->GetLocalPosition() + mpCurrentBody->GetAngularVelocity(),
 	//										cColor(0,0,1,1));
 
 }
@@ -124,7 +124,7 @@ float cLuxPlayerState_InteractWheel::GetSpeedAdd(cCamera *apCam)
 	float fProperPosCount =0;
 
 	cVector3f vTanCenterVec[2]={0,0};
-	
+
 	//Iterate the latest 10 moveadds, get tanget (both dirs) and for each tangent dir calculate
 	//prev_pos + tan and add to that tan center vec accu,
 	for(std::list<cVector2f>::iterator it = mlstMoveAdds.begin(); it != mlstMoveAdds.end(); ++it)
@@ -153,12 +153,12 @@ float cLuxPlayerState_InteractWheel::GetSpeedAdd(cCamera *apCam)
 
 		fProperPosCount += 1;
 	}
-	
+
 	//The the median tan center vec
 	float fTanCenterDist[2]={0,0};
 	for(int i=0; i<2; ++i)
 	{
-		fTanCenterDist[i] = (vTanCenterVec[i] / fProperPosCount).Length();	
+		fTanCenterDist[i] = (vTanCenterVec[i] / fProperPosCount).Length();
 	}
 
 	//Get the direction of the rotation and also make sure there is some rotation going on.
@@ -171,21 +171,21 @@ float cLuxPlayerState_InteractWheel::GetSpeedAdd(cCamera *apCam)
 
 	//If too far from center, there is no real rotation made, so skip the movement.
     if(fMinDist > 0.75f) return 0;
-	
+
 	///////////////////////////////
 	//Get the rotate direction based on the pin.
 	cCamera *pCam = mpPlayer->GetCamera();
-	
+
 	cVector3f vFwd = pCam->GetForward();
 	cVector3f vPinDir = mpCurrentJoint->GetPinDir();
-	
+
 	if(cMath::Vector3Dot(vPinDir, vFwd) < 0) fDirMul = -fDirMul;
 
 
 	///////////////////////////////
 	//Calculate the speed
 	float fLength = mvMouseAdd.Length();
-	
+
 	return fDirMul *fLength* 1.0f;
 }
 

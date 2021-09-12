@@ -2,23 +2,23 @@
    AngelCode Scripting Library
    Copyright (c) 2003-2010 Andreas Jonsson
 
-   This software is provided 'as-is', without any express or implied 
-   warranty. In no event will the authors be held liable for any 
+   This software is provided 'as-is', without any express or implied
+   warranty. In no event will the authors be held liable for any
    damages arising from the use of this software.
 
-   Permission is granted to anyone to use this software for any 
-   purpose, including commercial applications, and to alter it and 
+   Permission is granted to anyone to use this software for any
+   purpose, including commercial applications, and to alter it and
    redistribute it freely, subject to the following restrictions:
 
-   1. The origin of this software must not be misrepresented; you 
+   1. The origin of this software must not be misrepresented; you
       must not claim that you wrote the original software. If you use
-      this software in a product, an acknowledgment in the product 
+      this software in a product, an acknowledgment in the product
       documentation would be appreciated but is not required.
 
-   2. Altered source versions must be plainly marked as such, and 
+   2. Altered source versions must be plainly marked as such, and
       must not be misrepresented as being the original software.
 
-   3. This notice may not be removed or altered from any source 
+   3. This notice may not be removed or altered from any source
       distribution.
 
    The original version of this library can be located at:
@@ -37,19 +37,19 @@
 
 BEGIN_AS_NAMESPACE
 
-asCGlobalProperty::asCGlobalProperty() 
-{ 
-	memory = 0; 
-	memoryAllocated = false; 
-	realAddress = 0; 
+asCGlobalProperty::asCGlobalProperty()
+{
+	memory = 0;
+	memoryAllocated = false;
+	realAddress = 0;
 	initFunc = 0;
 
 	refCount.set(1);
 }
 
 asCGlobalProperty::~asCGlobalProperty()
-{ 
-	if( memoryAllocated ) { asDELETEARRAY(memory); } 
+{
+	if( memoryAllocated ) { asDELETEARRAY(memory); }
 	if( initFunc )
 		initFunc->Release();
 }
@@ -64,14 +64,14 @@ void asCGlobalProperty::Release()
 {
 	gcFlag = false;
 
-	// The property doesn't delete itself. The  
+	// The property doesn't delete itself. The
 	// engine will do that at a later time
 	if( refCount.atomicDec() == 2 && initFunc )
 	{
 		// Since the initFunc holds references to the property,
 		// we'll release it when we reach refCount 2. This will
 		// break the circle and allow the engine to free the property
-		// without the need for the GC to attempt finding circular 
+		// without the need for the GC to attempt finding circular
 		// references.
 		initFunc->Release();
 		initFunc = 0;
@@ -79,33 +79,33 @@ void asCGlobalProperty::Release()
 }
 
 void *asCGlobalProperty::GetAddressOfValue()
-{ 
-	return (memoryAllocated || realAddress) ? memory : &storage; 
+{
+	return (memoryAllocated || realAddress) ? memory : &storage;
 }
 
 // The global property structure is responsible for allocating the storage
 // method for script declared variables. Each allocation is independent of
 // other global properties, so that variables can be added and removed at
 // any time.
-void asCGlobalProperty::AllocateMemory() 
-{ 
-	if( type.GetSizeOnStackDWords() > 2 ) 
-	{ 
-		memory = asNEWARRAY(asDWORD, type.GetSizeOnStackDWords()); 
-		memoryAllocated = true; 
-	} 
+void asCGlobalProperty::AllocateMemory()
+{
+	if( type.GetSizeOnStackDWords() > 2 )
+	{
+		memory = asNEWARRAY(asDWORD, type.GetSizeOnStackDWords());
+		memoryAllocated = true;
+	}
 }
 
-void asCGlobalProperty::SetRegisteredAddress(void *p) 
-{ 
-	realAddress = p; 	
+void asCGlobalProperty::SetRegisteredAddress(void *p)
+{
+	realAddress = p;
 	if( type.IsObject() && !type.IsReference() && !type.IsObjectHandle() )
 	{
-		// The global property is a pointer to a pointer 
+		// The global property is a pointer to a pointer
 		memory = &realAddress;
-	} 
+	}
 	else
-		memory = p; 
+		memory = p;
 }
 
 void *asCGlobalProperty::GetRegisteredAddress() const

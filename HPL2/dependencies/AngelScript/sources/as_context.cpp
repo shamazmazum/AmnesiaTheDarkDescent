@@ -80,7 +80,7 @@ public:
 	~asCDebugStats()
 	{
 /*
-		// This code writes out some statistics for the VM. 
+		// This code writes out some statistics for the VM.
 		// It's useful for determining what needs to be optimized.
 
 		_mkdir("AS_DEBUG");
@@ -389,7 +389,7 @@ int asCContext::Unprepare()
 		stringFunction = 0;
 	}
 #endif
-	
+
 	return 0;
 }
 
@@ -510,7 +510,7 @@ void *asCContext::GetAddressOfReturnValue()
 	// An object is stored in the objectRegister
 	if( !dt->IsReference() && dt->IsObject() )
 	{
-		// Need to dereference objects 
+		// Need to dereference objects
 		if( !dt->IsObjectHandle() )
 			return *(void**)&regs.objectRegister;
 		return &regs.objectRegister;
@@ -826,7 +826,7 @@ int asCContext::SetArgObject(asUINT arg, void *obj)
 			if( obj && beh->addref )
 				engine->CallObjectMethod(obj, beh->addref);
 		}
-		else 
+		else
 		{
 			obj = engine->CreateScriptObjectCopy(obj, engine->GetTypeIdFromDataType(*dt));
 		}
@@ -866,8 +866,8 @@ void *asCContext::GetAddressOfArg(asUINT arg)
 
 	// We should return the address of the location where the argument value will be placed
 
-	// All registered types are always sent by reference, even if  
-	// the function is declared to receive the argument by value.	
+	// All registered types are always sent by reference, even if
+	// the function is declared to receive the argument by value.
 	return &regs.stackFramePointer[offset];
 }
 
@@ -892,7 +892,7 @@ int asCContext::Abort()
 // interface
 int asCContext::Suspend()
 {
-	// This function just sets some internal flags and is safe 
+	// This function just sets some internal flags and is safe
 	// to call from a secondary thread, even if the library has
 	// been built without multi-thread support.
 
@@ -986,7 +986,7 @@ int asCContext::Execute()
 
 			// Call the function directly
 			CallSystemFunction(currentFunction->id, this, 0);
-			
+
 			// Was the call successful?
 			if( status == asEXECUTION_ACTIVE )
 			{
@@ -1193,7 +1193,7 @@ void asCContext::CallScriptFunction(asCScriptFunction *func)
 			}
 
 			regs.stackPointer = stackBlocks[stackIndex] + (stackBlockSize<<stackIndex) - func->GetSpaceNeededForArguments() - (func->objectType ? AS_PTR_SIZE : 0);
-		} 
+		}
 
 		// Copy the function arguments to the new stack space
 		int numDwords = func->GetSpaceNeededForArguments() + (func->objectType ? AS_PTR_SIZE : 0);
@@ -1223,12 +1223,12 @@ void asCContext::CallInterfaceMethod(asCScriptFunction *func)
 
 	asCObjectType *objType = obj->objType;
 
-	// TODO: optimize: The object type should have a list of only those methods that 
+	// TODO: optimize: The object type should have a list of only those methods that
 	//                 implement interface methods. This list should be ordered by
 	//                 the signatureId so that a binary search can be made, instead
 	//                 of a linear search.
 	//
-	//                 When this is done, we must also make sure the signatureId of a 
+	//                 When this is done, we must also make sure the signatureId of a
 	//                 function never changes, e.g. when if the signature functions are
 	//                 released.
 
@@ -1368,7 +1368,7 @@ void asCContext::ExecuteNext()
 		l_bc += 1 + AS_PTR_SIZE;
 		break;
 
-	// Load the address of a global variable in the register, then  
+	// Load the address of a global variable in the register, then
 	// copy the value of the global variable into a local variable
 	case asBC_LdGRdR4:
 		*(void**)&regs.valueRegister = (void*)(size_t)asBC_PTRARG(l_bc);
@@ -2222,7 +2222,7 @@ void asCContext::ExecuteNext()
 			// Pop address of destination pointer from the stack
 			void **d = (void**)*(size_t*)l_sp;
 			l_sp += AS_PTR_SIZE;
-			
+
 			// Read wanted pointer from the stack
 			void *s = (void*)*(size_t*)l_sp;
 
@@ -2879,7 +2879,7 @@ void asCContext::ExecuteNext()
 				}
 				else
 				{
-					// The object register should already be null, so there  
+					// The object register should already be null, so there
 					// is no need to clear it if the cast is unsuccessful
 					asASSERT( regs.objectRegister == 0 );
 				}
@@ -2930,7 +2930,7 @@ void asCContext::ExecuteNext()
 		break;
 
 	case asBC_u64TOf:
-#if _MSC_VER <= 1200 // MSVC6 
+#if _MSC_VER <= 1200 // MSVC6
 		{
 			// MSVC6 doesn't permit UINT64 to double
 			asINT64 v = *(asINT64*)(l_fp - asBC_SWORDARG1(l_bc));
@@ -2951,7 +2951,7 @@ void asCContext::ExecuteNext()
 		break;
 
 	case asBC_u64TOd:
-#if _MSC_VER <= 1200 // MSVC6 
+#if _MSC_VER <= 1200 // MSVC6
 		{
 			// MSVC6 doesn't permit UINT64 to double
 			asINT64 v = *(asINT64*)(l_fp - asBC_SWORDARG0(l_bc));
@@ -3142,7 +3142,7 @@ void asCContext::ExecuteNext()
 
 					// TODO: JIT: We should return from this function if the jitFunction tells us to
 					(currentFunction->jitFunction)(&regs, jitOffset-1);
-				
+
 					l_bc = regs.programPointer;
 					l_sp = regs.stackPointer;
 					l_fp = regs.stackFramePointer;

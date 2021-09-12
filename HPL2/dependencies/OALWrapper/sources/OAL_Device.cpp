@@ -31,10 +31,10 @@ using namespace std;
 //-------------------------------------------------------------------------
 
 //////////////////////////////////////////////
-// Human readable extension names 
+// Human readable extension names
 
-string sExtensionNames[NUM_EXTENSIONS+1] = 
-{ 
+string sExtensionNames[NUM_EXTENSIONS+1] =
+{
 	string("ALC_EXT_CAPTURE" ),
 	string("ALC_EXT_EFX"),
 	string("ALC_ENUMERATION_EXT"),
@@ -53,9 +53,9 @@ string sExtensionNames[NUM_EXTENSIONS+1] =
 
 //-------------------------------------------------------------------------
 
-cOAL_Device::cOAL_Device ( ) : mpDevice(NULL), 
+cOAL_Device::cOAL_Device ( ) : mpDevice(NULL),
 							   mpContext(NULL),
-							   mpSourceManager(NULL), 
+							   mpSourceManager(NULL),
 							   mpEFXManager(NULL),
 							   mbEFXActive(false),
 							   mlEFXSends(0)
@@ -89,7 +89,7 @@ bool cOAL_Device::Init( cOAL_Init_Params& acParams )
 	cOAL_Stream::SetBufferCount(acParams.mlStreamingBufferCount);
 	LogMsg("",eOAL_LogVerbose_High, eOAL_LogMsg_Info, "\tSetting queue length to %d buffers\n",cOAL_Stream::GetBufferCount());
 
-	
+
 	LogMsg("",eOAL_LogVerbose_Low, eOAL_LogMsg_Info, "Attempting to open device...\n" );
 	// Open the device, if fails return false
 	if(acParams.msDeviceName.empty())
@@ -102,9 +102,9 @@ bool cOAL_Device::Init( cOAL_Init_Params& acParams )
 		LogMsg("",eOAL_LogVerbose_Low, eOAL_LogMsg_Error, "Error opening device\n" );
 		return false;
 	}
-	
+
 	LogMsg("",eOAL_LogVerbose_Low, eOAL_LogMsg_Info, "Success.\n" );
-	
+
 	// Get ALC extensions ( ie EFX )
 	LogMsg("",eOAL_LogVerbose_Low, eOAL_LogMsg_Info, "Checking present ALC extensions\n" );
 	for (int i = 0; i < NUM_ALC_EXTENSIONS; ++i)
@@ -116,7 +116,7 @@ bool cOAL_Device::Init( cOAL_Init_Params& acParams )
 		}
 	}
 
-	ALCint lAttrList[] = 
+	ALCint lAttrList[] =
 	{
 		ALC_FREQUENCY,		acParams.mlOutputFreq,
 #ifdef __APPLE__
@@ -215,7 +215,7 @@ bool cOAL_Device::Init( cOAL_Init_Params& acParams )
 		LogMsg("",eOAL_LogVerbose_None, eOAL_LogMsg_Error, "Error creating Source Manager\n");
 		return false;
 	}
-	
+
 	return true;
 }
 
@@ -241,7 +241,7 @@ void cOAL_Device::Close ()
 			delete (*it);
 		mlstSamples.clear();
 	}
-	
+
 	LogMsg("",eOAL_LogVerbose_Low, eOAL_LogMsg_Info, "Cleaning up Streams...\n" );
 	{
 		for (tStreamListIt it=mlstStreams.begin();it!=mlstStreams.end(); ++it )
@@ -249,7 +249,7 @@ void cOAL_Device::Close ()
 		mlstStreams.clear();
 	}
 
-	if(mpSourceManager) 
+	if(mpSourceManager)
 	{
 		LogMsg("",eOAL_LogVerbose_Low, eOAL_LogMsg_Info, "Cleaning up Source Manager...\n" );
 		mpSourceManager->Destroy();
@@ -285,7 +285,7 @@ bool cOAL_Device::RegainContext()
 	if (mpContext == NULL)
 		return false;
 	bool bSuccess = RUN_ALC_FUNC((alcMakeContextCurrent(mpContext) == AL_TRUE));
-	
+
 	if (bSuccess)
 	{
 		RUN_ALC_FUNC(alcProcessContext(mpContext));
@@ -334,7 +334,7 @@ static eOAL_SampleFormat DetectFormatByMagic(const void* apBuffer, size_t aSize)
 	{
 		return eOAL_SampleFormat_Wav;
 	}
-	return eOAL_SampleFormat_Unknown;	
+	return eOAL_SampleFormat_Unknown;
 }
 
 //-------------------------------------------------------------------------
@@ -363,7 +363,7 @@ cOAL_Sample* cOAL_Device::LoadSample(const wstring& asFilename, eOAL_SampleForma
 		default:
 			return NULL;
 	}
-	
+
 	if(pSample->CreateFromFile(asFilename) )
 		mlstSamples.push_back(pSample);
 	else
@@ -394,7 +394,7 @@ cOAL_Sample* cOAL_Device::LoadSampleFromBuffer(const void* apBuffer, size_t aSiz
 		default:
 			return NULL;
 	}
-	
+
 	if(pSample->CreateFromBuffer(apBuffer, aSize) )
 		mlstSamples.push_back(pSample);
 	else
@@ -492,7 +492,7 @@ void  cOAL_Device::UnloadSample(cOAL_Sample* apSample)
 {
 	if(apSample == NULL)
 		return;
-	
+
 	mlstSamples.remove(apSample);
 	delete apSample;
 }
@@ -503,7 +503,7 @@ void cOAL_Device::UnloadStream(cOAL_Stream* apStream)
 {
 	if(apStream == NULL)
 		return;
-    
+
 	mlstStreams.remove(apStream);
 	delete apStream;
 }
@@ -559,7 +559,7 @@ void cOAL_Device::SetListenerOrientation(const float* apForward, const float* ap
 	FUNC_USES_AL;
 
 	float fOrientation[6] = { apForward[0], apForward[1], apForward[2], apUp[0], apUp[1], apUp[2] };
-	
+
 	RUN_AL_FUNC(alListenerfv ( AL_ORIENTATION, fOrientation ));
 }
 
@@ -575,7 +575,7 @@ void cOAL_Device::SetListenerOrientation(const float* apForward, const float* ap
 
 int cOAL_Device::PlaySample( int alSource, cOAL_Sample *apSample, int alPriority, float afVolume, bool abStartPaused )
 {
-	if (apSample == NULL) 
+	if (apSample == NULL)
 		return -1;
 
 	cOAL_Source *pSource = NULL;
@@ -614,7 +614,7 @@ int cOAL_Device::PlayStream( int alSource, cOAL_Stream *apStream, float afVolume
 		pSource = mpSourceManager->GetAvailableSource( 256, apStream->GetChannels() );
 	else
 		pSource = mpSourceManager->GetSource(alSource,true);
-	
+
 	if (pSource == NULL)
 		return -1;
 
@@ -646,11 +646,11 @@ cOAL_Source* cOAL_Device::GetSource( int alSourceHandle )
 
 //-------------------------------------------------------------------------
 
-string& cOAL_Device::GetExtensionName(int alWhich) 
-{ 
-	if( (alWhich >= 0) && (alWhich < NUM_EXTENSIONS)) 
-		return sExtensionNames[alWhich]; 
-	else 
+string& cOAL_Device::GetExtensionName(int alWhich)
+{
+	if( (alWhich >= 0) && (alWhich < NUM_EXTENSIONS))
+		return sExtensionNames[alWhich];
+	else
 		return sExtensionNames[NUM_EXTENSIONS];
 }
 
@@ -662,7 +662,7 @@ string cOAL_Device::GetDefaultDeviceName()
 	FUNC_USES_ALC;
 
 	string sDev = alcGetString(NULL, ALC_DEFAULT_DEVICE_SPECIFIER);
-	
+
 	return sDev;
 }
 
@@ -753,7 +753,7 @@ void cOAL_Device::Log( eOAL_LogVerbose aVerboseLevelReq, eOAL_LogMsg aMessageTyp
 	vsprintf(text, asMessage, ap);
 	va_end(ap);
 
-	
+
 	switch(aMessageType)
 	{
 	case eOAL_LogMsg_Command:

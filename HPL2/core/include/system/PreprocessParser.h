@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -29,7 +29,7 @@ namespace hpl {
 	typedef std::map<tString, tString> tParseVarMap;
 	typedef tParseVarMap::iterator tParseVarMapIt;
 
-	
+
 	class cParserVarContainer
 	{
 	public:
@@ -38,7 +38,7 @@ namespace hpl {
 		void Add(const tString& asName, float afVal);
 		bool Remove(const tString& asName);
 		tString* Get(const tString& asName);
-		
+
 		tParseVarMap* GetMapPtr(){ return &m_mapVars;}
 
 		void Clear();
@@ -82,7 +82,7 @@ namespace hpl {
 	class cParserSymbolKeyword;
 	class cParserSymbolOperator;
 	class cParserSymbolVariable;
-	
+
 	class iParserSymbol
 	{
 	public:
@@ -120,7 +120,7 @@ namespace hpl {
 
 		eParserKeyword mKeyword;
 	};
-	
+
 	class cParserSymbolOperator : public iParserSymbol
 	{
 	public:
@@ -150,9 +150,9 @@ namespace hpl {
 		eSymbolProcess_Variable,
 		eSymbolProcess_LastEnum,
 	};
-	
+
 	//---------------------------------------
-	
+
 	typedef std::list<iParserSymbol*> tParserSymbolList;
 	typedef tParserSymbolList::iterator tParserSymbolListIt;
 
@@ -169,7 +169,7 @@ namespace hpl {
 
 		cParserVarContainer* GetEnvVarContainer(){ return &mEnvironmentVars;}
 		cParserVarContainer* GetParsingVarContainer(){ return &mParsingVars;}
-		
+
 	private:
 		bool CharIsVariableValid(char alChar);
 		bool VariableExists(const tString &asName);
@@ -180,7 +180,7 @@ namespace hpl {
 		eParserKeyword StringToKeyword(const tString& asString);
 		eParserOperator StringToOperator(const tString& asString);
 		bool ParseStringToSymbol(eSymbolProcess aProcess, const tString& asString);
-		
+
 		bool EndOfSymbols();
 		void GetNextSymbol();
 		bool ParseBooleanDefineStatement(bool& abStatmentValue);
@@ -194,7 +194,7 @@ namespace hpl {
 		cParserVarContainer *mpCurrentVars;
 		cParserVarContainer mEnvironmentVars;
 		cParserVarContainer mParsingVars;
-		
+
 		tWString msCurrentDirectory;
         const tString *mpCurrentInput;
 		tString *mpCurrentOutput;
@@ -205,11 +205,11 @@ namespace hpl {
 		eSymbolProcess mProcess;
 		int mlCurrentRow;
 		int mlRowCount;
-		
+
 		tParserSymbolList mlstSymbols;
 		iParserSymbol *mpCurrentSymbol;
 		tParserSymbolListIt mSymbolIt;
-	
+
 	};
 
 };

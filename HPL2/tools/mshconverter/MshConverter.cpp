@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -118,7 +118,7 @@ void ParseCommandLine(const tString &asCommandLine)
 		if(bCatchNextAsPathNodeFile)
 		{
 			gsPathNodeSetupFile = cString::To16Char(sArg);
-			
+
 			bCatchNextAsPathNodeFile = false;
 			continue;
 		}*/
@@ -184,7 +184,7 @@ int GetFileVersion(const tWString &asFile)
 {
 	FILE *pFile = cPlatform::OpenFile(asFile, _W("rb"));
 	if(pFile==NULL) return -1;
-    
+
 	int lOut;
 	fread(&lOut, sizeof(int), 1, pFile); //Magic number
 	fread(&lOut, sizeof(int), 1, pFile); // File version
@@ -198,7 +198,7 @@ tWString GetCacheFileExt(int alFileType)
 	if(alFileType == 0) return _W("msh");
 	if(alFileType == 1) return _W("anm");
 	if(alFileType == 2) return _W("map_cache");
-	
+
 	return _W("non_existing_ext");
 }
 
@@ -210,9 +210,9 @@ void GenerateAIPaths(cWorld *apWorld)
 	{
 		cPathNodeData& data = gvPathNodeData[i];
 
-		apWorld->CreateAINodeContainer( data.msName, data.msNodeName, 
+		apWorld->CreateAINodeContainer( data.msName, data.msNodeName,
 			data.mvBodySize, data.mbNodeAtCenter,
-			data.mlMinEdges , data.mlMaxEdges , 
+			data.mlMinEdges , data.mlMaxEdges ,
 			data.mfMaxEdgeDistance, data.mfMaxHeight);
 	}
 }
@@ -227,13 +227,13 @@ bool ConvertFile(const tWString &asFile)
 		Error("Could not find file %s\n", cString::To8Char(asFile).c_str());
 		return false;
 	}
-	
-	//Check if cache file exists, is newer and correct version. 
+
+	//Check if cache file exists, is newer and correct version.
 	//If so, skip it
 	tWString sCacheFileExt = GetCacheFileExt(glFileType);
 	tWString sMSHPath = cString::SetFileExtW(asFile, sCacheFileExt);
 	if(	gbForce == false &&
-		cPlatform::FileExists(sMSHPath) && 
+		cPlatform::FileExists(sMSHPath) &&
 		cPlatform::FileModifiedDate(sMSHPath) > cPlatform::FileModifiedDate(asFile) &&
 		GetFileVersion(sMSHPath) == GetCacheFileWantedVersion(glFileType))
 	{
@@ -255,7 +255,7 @@ bool ConvertFile(const tWString &asFile)
 	if(glFileType == 2)
 	{
 		tWorldLoadFlag lFlags =0;
-		
+
 		if(gbGenerateAIPaths)
 		{
 			//Do nothing?
@@ -322,9 +322,9 @@ void ConvertFilesInDir(const tWString &asDir, const tWString &asMask)
 	{
 		ConvertFile(cString::SetFilePathW(*it, asDir) );
 	}
-	
+
 	if(gbDirs_SubDirs==false) return;
-	
+
 	//////////////////////////
 	//Iterate folders and convert
 	tWStringList lstFolders;
@@ -346,7 +346,7 @@ void ConvertInDirs()
 
 	tWString sDir = cString::GetFilePathW(gsFilePath);
 	tWString sMask = cString::GetFileNameW(gsFilePath);
-	
+
 	ConvertFilesInDir(sDir, sMask);
 }
 
@@ -465,7 +465,7 @@ void Exit()
 
 	cEngineInitVars vars;
 	gpEngine = CreateHPLEngine(eHplAPI_OpenGL, 0, &vars);
-	
+
 	ParseCommandLine(asCommandLine);
 	Init();
 
@@ -474,15 +474,15 @@ void Exit()
 	if(gbDirs)	ConvertInDirs();
 	else		ConvertFile();
 
-	printf("\n-------- MSH CONVERSION DONE! -----------\n");		
-	
+	printf("\n-------- MSH CONVERSION DONE! -----------\n");
+
 	Exit();
 	DestroyHPLEngine(gpEngine);
 
 #ifdef WIN32
 	if(hBlackBoxLib) FreeLibrary(hBlackBoxLib);
 #endif
-	
+
 	return 0;
 }
 

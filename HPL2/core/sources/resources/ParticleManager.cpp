@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -57,7 +57,7 @@ namespace hpl {
 
 		Log(" Done with particles\n");
 
-		
+
 	}
 
 	//-----------------------------------------------------------------------
@@ -86,7 +86,7 @@ namespace hpl {
 				EndLoad();
 				return NULL;
 			}
-			
+
 			cParticleSystemData *pPSData = hplNew( cParticleSystemData, (sFile,	mpResources,mpGraphics) );
 
 			if(pPSData->LoadFromFile(sPath)==false)
@@ -101,7 +101,7 @@ namespace hpl {
 
 			pData = pPSData;
 		}
-				
+
 
 		pData->IncUserCount();
         cParticleSystem* pPS = pData->Create(asName,avSize);
@@ -111,9 +111,9 @@ namespace hpl {
 
 		EndLoad();
 
-		return pPS;		
+		return pPS;
 	}
-    
+
 	//-----------------------------------------------------------------------
 
 	cParticleSystem* cParticleManager::CreatePS(const tString& asName, const tString& asDataName, cXmlElement* apElement, cVector3f avSize)
@@ -149,7 +149,7 @@ namespace hpl {
 		return pPS;
 	}
 
-	//-----------------------------------------------------------------------	
+	//-----------------------------------------------------------------------
 
 	void cParticleManager::AddData(cParticleSystemData *apData)
 	{
@@ -162,7 +162,7 @@ namespace hpl {
 	{
 		tString sFile = cString::SetFileExt(asFile,"ps");
 		tWString sPath = mpFileSearcher->GetFilePath(sFile);
-		
+
 		cParticleSystemData *pData = static_cast<cParticleSystemData*>(GetResource(sPath));
 		if(pData == NULL)
 		{
@@ -200,7 +200,7 @@ namespace hpl {
 			apResource->DecUserCount();
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////

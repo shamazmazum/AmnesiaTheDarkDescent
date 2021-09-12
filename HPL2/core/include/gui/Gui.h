@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -28,13 +28,13 @@
 #include "system/SystemTypes.h"
 
 namespace hpl {
-	
+
 	class cResources;
 	class cGraphics;
 	class cSound;
 	class cScene;
 	class cInput;
-	
+
 	class cGuiSet;
 	class cGuiSkin;
 	class cGuiGfxElement;
@@ -46,7 +46,7 @@ namespace hpl {
 
 	typedef std::map<tString, cGuiSkin*> tGuiSkinMap;
 	typedef tGuiSkinMap::iterator tGuiSkinMapIt;
-	
+
 	//-------------------------------------
 
 	typedef std::map<tString, eGuiSkinGfx> tGuiSkinGfxMap;
@@ -82,7 +82,7 @@ namespace hpl {
 		///////////////////////////////
 		// Skins
 		cGuiSkin* CreateSkin(const tString& asFile);
-		
+
 		eGuiSkinGfx GetSkinGfxFromString(const tString& asType);
 		eGuiSkinFont GetSkinFontFromString(const tString& asType);
 		eGuiSkinAttribute GetSkinAttributeFromString(const tString& asType);
@@ -103,31 +103,31 @@ namespace hpl {
 		///////////////////////////////
 		// Graphics creation
 		cGuiGfxElement* CreateGfxFilledRect(const cColor& aColor, eGuiMaterial aMaterial, bool abAddToList=true);
-		
+
 		cGuiGfxElement* CreateGfxImage(	const tString &asFile,eGuiMaterial aMaterial,
 										const cColor& aColor=cColor(1,1), bool abAddToList=true);
-		
+
 		cGuiGfxElement* CreateGfxTexture(	const tString &asFile,eGuiMaterial aMaterial,
 											eTextureType aTextureType = eTextureType_2D,
-											const cColor& aColor=cColor(1,1), 
+											const cColor& aColor=cColor(1,1),
 											bool abMipMaps=false,
 											bool abAddToList=true);
-		
-		cGuiGfxElement* CreateGfxTexture(	iTexture *apTexture, bool abAutoDestroyTexture, 
+
+		cGuiGfxElement* CreateGfxTexture(	iTexture *apTexture, bool abAutoDestroyTexture,
 											eGuiMaterial aMaterial,
 											const cColor& aColor=cColor(1,1),bool abAddToList=true,
 											const cVector2f& avStartUV=0, const cVector2f& avEndUV=1);
-		
-		
+
+
 		/**
 		 * Loads several images asFile+00, etc. Used for animations.Must have extension!
 		 */
 		cGuiGfxElement* CreateGfxImageBuffer(	const tString &asFile,eGuiMaterial aMaterial,
 												bool abCreateAnimation=true,
 												const cColor& aColor=cColor(1,1), bool abAddToList=true);
-		
+
 		void DestroyGfx(cGuiGfxElement* apGfx);
-		
+
 		///////////////////////////////
 		// Input sending TODO (need some other way to pass key modifiers, but this will do now)
 		bool SendMousePos(const cVector2l &avPos, const cVector2l &avRel);
@@ -139,7 +139,7 @@ namespace hpl {
 		bool SendKeyRelease(const cKeyPress& keyPress);
 
 		bool SendGamepadInput(const cGamepadInputData& aInput);
-		
+
 		bool SendUIArrowPress(eUIArrow aX);
 		bool SendUIArrowRelease(eUIArrow aX);
 

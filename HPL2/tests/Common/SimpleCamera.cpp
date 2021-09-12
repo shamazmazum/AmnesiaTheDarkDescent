@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -31,7 +31,7 @@ cSimpleCamera::cSimpleCamera(const tString& asAppName,cEngine *apGame, cWorld *a
 	///////////////////////////////////////////
 	//Add actions
 	mpEngine->GetInput()->CreateAction("Escape",0)->AddKey(eKey_Escape);
-	
+
 	mpEngine->GetInput()->CreateAction("Forward",1)->AddKey(eKey_W);
 	mpEngine->GetInput()->CreateAction("Backward",2)->AddKey(eKey_S);
 	mpEngine->GetInput()->CreateAction("Right",3)->AddKey(eKey_D);
@@ -58,13 +58,13 @@ cSimpleCamera::cSimpleCamera(const tString& asAppName,cEngine *apGame, cWorld *a
 	mpEngine->GetInput()->GetLowLevel()->RelativeMouse(true);
 
 	//mpEngine->GetGraphics()->GetLowLevel()->ShowCursor(true);
-	
+
 	///////////////////////////////////////////
 	// Create Camera
 
 	mpCamera = mpEngine->GetScene()->CreateCamera(eCameraMoveMode_Fly);
 	mpCamera->SetPosition(avStartPos);
-	
+
 	mpCamera->SetFarClipPlane(1000);
 	mpCamera->SetNearClipPlane(0.05f);
 	//mpCamera->SetProjectionType(eProjectionType_Orthographic);
@@ -75,7 +75,7 @@ cSimpleCamera::cSimpleCamera(const tString& asAppName,cEngine *apGame, cWorld *a
 
 	///////////////////////////////////////////
 	// Create Viewport
-	
+
 	mpViewport = mpEngine->GetScene()->CreateViewport(mpCamera, apWorld);
 	//mpViewport = mpEngine->GetScene()->CreateViewport(NULL, NULL);
 
@@ -83,7 +83,7 @@ cSimpleCamera::cSimpleCamera(const tString& asAppName,cEngine *apGame, cWorld *a
 	//mpViewport->GetRenderSettings()->mClearColor = cColor(0.7f,1);
 
 	mpEngine->GetScene()->SetCurrentListener(mpViewport);
-	
+
 	///////////////////////////////////////////
 	//Gui and font
 	mpGui = mpEngine->GetGui();
@@ -99,7 +99,7 @@ cSimpleCamera::cSimpleCamera(const tString& asAppName,cEngine *apGame, cWorld *a
 	mpViewport->AddGuiSet(mpGuiSet);
 	mpGui->SetFocus(mpGuiSet);
 	mpGuiSet->SetDrawMouse(false);
-	
+
 	//Debug:
 	//mpGui->SetFocus(mpGuiSet);
 	//mpGuiSet->SetDrawMouse(true);
@@ -171,7 +171,7 @@ void cSimpleCamera::ListContainerNodeData(iRenderableContainerNode *apNode, int 
 		{
 			iRenderable *pObject = *it;
 			//if(pObject->GetRenderType() != eRenderableType_ParticleEmitter) continue;
-			Log("%s  '%s' Size: (%s) Pos: (%s)\n", GetSpaces(alLevel), pObject->GetName().c_str(), pObject->GetBoundingVolume()->GetSize().ToString().c_str(), 
+			Log("%s  '%s' Size: (%s) Pos: (%s)\n", GetSpaces(alLevel), pObject->GetName().c_str(), pObject->GetBoundingVolume()->GetSize().ToString().c_str(),
 													pObject->GetBoundingVolume()->GetWorldCenter().ToString().c_str());
 		}
 	}
@@ -198,13 +198,13 @@ void cSimpleCamera::Update(float afFrameTime)
 	{
 		mpEngine->Exit();
 	}
-	
+
 	mfTakeFrameTimeCount -= afFrameTime;
 	if(mfTakeFrameTimeCount <0)
 	{
 		mfTakeFrameTimeCount = 1;
 		mlstFrameTimes.push_back(mpEngine->GetAvgFrameTimeInMS());
-		
+
 		double fTotalFrame =0;
 		if(mlstFrameTimes.size() > 10) mlstFrameTimes.pop_front();
 		std::list<float>::iterator it = mlstFrameTimes.begin();
@@ -214,7 +214,7 @@ void cSimpleCamera::Update(float afFrameTime)
 		}
 		mfAvgFrameTime = (float)(fTotalFrame / (double)mlstFrameTimes.size());
 	}
-	
+
 
 	//Not really needed.
 	/*if(mpEngine->GetInput()->BecameTriggerd("MouseMode"))
@@ -226,7 +226,7 @@ void cSimpleCamera::Update(float afFrameTime)
 	{
 		tWString sFileName = _W("");
 		int lCount = 0;
-		
+
 		do{
 			sFileName = _W("Screen_")+cString::To16Char(msAppName)+_W("_");
 			if(lCount >= 100)		sFileName += _W("")+cString::ToStringW(lCount);
@@ -238,7 +238,7 @@ void cSimpleCamera::Update(float afFrameTime)
 
 		}
 		while(cPlatform::FileExists(sFileName));
-		
+
 		cBitmap *pBmp = mpEngine->GetGraphics()->GetLowLevel()->CopyFrameBufferToBitmap();
 		mpEngine->GetResources()->GetBitmapLoaderHandler()->SaveBitmap(pBmp,sFileName,0);
 		hplDelete(pBmp);
@@ -274,11 +274,11 @@ void cSimpleCamera::Update(float afFrameTime)
 
 		cVector2l vAbsRel = mpEngine->GetInput()->GetMouse()->GetRelPosition();
 		cVector2f vRel = cVector2f((float)vAbsRel.x,(float)vAbsRel.y) / mpEngine->GetGraphics()->GetLowLevel()->GetScreenSizeFloat();
-		
+
 		if(mbCameraInMouseMode)
 		{
 			if(mpCamera->GetUp().y < 0)	vRel.x = -vRel.x;
-			
+
 			//////////////////////
 			// Camera Rotation
 			if( (mpEngine->GetInput()->IsTriggerd("RightMouse") && !bAltDown) ||
@@ -303,8 +303,8 @@ void cSimpleCamera::Update(float afFrameTime)
 			{
 				mfMouseCameraDistance += vRel.y * mfMouseCameraDistance * 3.2f;
 			}
-		
-			
+
+
 
 			if(mfMouseCameraDistance > 100) mfMouseCameraDistance = 100;
 			if(mfMouseCameraDistance < 0.01f) mfMouseCameraDistance = 0.01f;
@@ -345,10 +345,10 @@ void cSimpleCamera::Update(float afFrameTime)
 							mpEngine->GetInput()->GetMouse()->GetRelPosition());
 
 
-		
+
 		while(mpEngine->GetInput()->GetKeyboard()->KeyIsPressed())
 			mpGui->SendKeyPress(mpEngine->GetInput()->GetKeyboard()->GetKey());
-		
+
 		if(!bAltDown)
 		{
 			if(mpEngine->GetInput()->BecameTriggerd("LeftMouse"))
@@ -357,30 +357,30 @@ void cSimpleCamera::Update(float afFrameTime)
 				mpGui->SendMouseClickUp(eGuiMouseButton_Left);
 			if(mpEngine->GetInput()->DoubleTriggerd("LeftMouse", 0.3f))
 				mpGui->SendMouseDoubleClick(eGuiMouseButton_Left);
-			
+
 			if(mpEngine->GetInput()->BecameTriggerd("WheelUp"))
 				mpGui->SendMouseClickDown(eGuiMouseButton_WheelUp);
 			if(mpEngine->GetInput()->BecameTriggerd("WheelDown"))
 				mpGui->SendMouseClickDown(eGuiMouseButton_WheelDown);
 		}
-		
+
 		return;
 	}
 	/////////////////////////
 	// Normal mode
 	else
 	{
-		float fMul = mpEngine->GetStepSize();	
-		
+		float fMul = mpEngine->GetStepSize();
+
 		if(mbMatrixFlyCamera)
 		{
 			cVector3f vCamPos = mpCamera->GetPosition();
 			cMatrixf mtxCamRotate = mpCamera->GetRotationMatrix();
-			
+
 			cVector3f vRight = mtxCamRotate.GetRight();
 			cVector3f vUp = mtxCamRotate.GetUp();
 			cVector3f vFwd = mtxCamRotate.GetForward()*-1;
-			
+
 			////////////////////
 			//Position
 			cVector3f vAdd(0);
@@ -398,7 +398,7 @@ void cSimpleCamera::Update(float afFrameTime)
 			cVector3f vRot(0);
 			if(mpEngine->GetInput()->IsTriggerd(7)) vRot.z += 1.2 * fMul;
 			if(mpEngine->GetInput()->IsTriggerd(8)) vRot.z += -1.2 * fMul;
-			
+
 			cVector2l vAbsRel = mpEngine->GetInput()->GetMouse()->GetRelPosition();
 			cVector2f vRel = cVector2f((float)vAbsRel.x,(float)vAbsRel.y) / mpEngine->GetGraphics()->GetLowLevel()->GetScreenSizeFloat();
 			vRot.y += vRel.x * 1.7f;
@@ -408,10 +408,10 @@ void cSimpleCamera::Update(float afFrameTime)
 			cVector3f vRotateAxis = vRight*vRot.x + vUp*vRot.y + vFwd*vRot.z;
 			float fRotateLength = vRotateAxis.Length();
 			vRotateAxis.Normalize();
-			
+
 			cQuaternion qRot; qRot.FromAngleAxis(fRotateLength, vRotateAxis);
 			mtxCamRotate = cMath::MatrixMul(mtxCamRotate, cMath::MatrixQuaternion(qRot)); //Needs to be reversed order because this matrix is an inverse.
-			
+
 			/////////////////////
 			//Update camera
 			mpCamera->SetRotationMatrix(mtxCamRotate);
@@ -474,7 +474,7 @@ void cSimpleCamera::SetMouseMode(bool abActive)
 	{
 		mvMouseCameraPos = mpCamera->GetPosition() + mpCamera->GetForward() * 9.0f;
 		mfMouseCameraDistance = 9.0f;
-		
+
 		mvMouseCameraAngles.x = mpCamera->GetPitch();
 		mvMouseCameraAngles.y = mpCamera->GetYaw();
 
@@ -499,7 +499,7 @@ void cSimpleCamera::SetMatrixFlyCamera(bool abX)
 	{
 		mpCamera->SetRotateMode(eCameraRotateMode_Matrix);
 	}
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -525,22 +525,22 @@ void cSimpleCamera::CalculateMouseCamera()
 
 	vForward = cMath::Vector3Normalize(vCameraPos);
 	cVector3f vHelper = cMath::Vector3Normalize(vExtraPos);
-	
+
 	vRight = cMath::Vector3Cross(cVector3f(0,1,0), vHelper);
 	vRight.Normalise();
 
 	vUp = cMath::Vector3Cross(vForward, vRight);
 	vUp.Normalise();
-	
+
 	mpCamera->SetPosition(mvMouseCameraPos + vCameraPos);
 	mpCamera->SetUp(vUp);
 	mpCamera->SetRight(vRight);
 	mpCamera->SetForward(vForward);*/
-	
+
 	cMatrixf mtxCamRotation = cMath::MatrixRotate(mvMouseCameraAngles*-1 , eEulerRotationOrder_ZYX);
 	mpCamera->SetRotationMatrix(mtxCamRotation);
 	mpCamera->SetPosition(mvMouseCameraPos + vCameraPos);
-		
+
 	/*mpCamera->SetPosition(mvMouseCameraPos + vCameraPos);
 	mpCamera->SetPitch(mvMouseCameraAngles.x);
 	mpCamera->SetYaw(mvMouseCameraAngles.y);*/

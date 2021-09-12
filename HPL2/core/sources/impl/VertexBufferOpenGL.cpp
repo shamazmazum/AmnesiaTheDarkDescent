@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -62,7 +62,7 @@ namespace hpl {
 
 		return 0;
 	}
-	
+
 	unsigned int  GetGLTypeFromVertexFormat(eVertexBufferElementFormat aFormat)
 	{
 		switch(aFormat)
@@ -87,7 +87,7 @@ namespace hpl {
 
 		case eVertexBufferDrawType_Quad:		return GL_QUADS;
 		case eVertexBufferDrawType_QuadStrip:	return GL_QUAD_STRIP;
-		
+
 		case eVertexBufferDrawType_Line:		return GL_LINES;
 		case eVertexBufferDrawType_LineStrip:	return GL_LINE_STRIP;
 		case eVertexBufferDrawType_LineLoop:	return GL_LINE_LOOP;
@@ -120,7 +120,7 @@ namespace hpl {
 		case eVertexBufferElementFormat_Byte:	mpByteArray = hplNew(tByteVec, ());	break;
 		}
 	}
-	
+
 	cVtxBufferGLElementArray::~cVtxBufferGLElementArray()
 	{
 		if(mpByteArray)	hplDelete(mpByteArray);
@@ -179,7 +179,7 @@ namespace hpl {
 		}
 		return 0;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -208,7 +208,7 @@ namespace hpl {
 
 	iVertexBufferOpenGL::~iVertexBufferOpenGL()
 	{
-		STLDeleteAll(mvElementArrays);	
+		STLDeleteAll(mvElementArrays);
 	}
 
 	//-----------------------------------------------------------------------
@@ -233,7 +233,7 @@ namespace hpl {
 		pElement->mFormat = aFormat;
 		pElement->mlElementNum = alElementNum;
 		pElement->mlProgramVarIndex = alProgramVarIndex;
-		 
+		
 		if(mlReservedVtxSize > 0) pElement->Reserve(alElementNum * mlReservedVtxSize);
 
 		mvElementArrayIndex[aType] = (char)mvElementArrays.size();
@@ -248,7 +248,7 @@ namespace hpl {
 
 		pElement->PushBack(&avVtx.x);
 		pElement->PushBack(&avVtx.y);
-		
+
 		if(pElement->mlElementNum > 2)
 			pElement->PushBack(&avVtx.z);
 		if(pElement->mlElementNum > 3)
@@ -275,7 +275,7 @@ namespace hpl {
 	void iVertexBufferOpenGL::AddVertexColor(eVertexBufferElement aType,const cColor& aColor)
 	{
 		cVtxBufferGLElementArray *pElement = GetElementArray(aType);
-        
+
 		if(pElement->mFormat == eVertexBufferElementFormat_Float)
 		{
 			pElement->PushBack(&aColor.r);
@@ -333,7 +333,7 @@ namespace hpl {
 			cVtxBufferGLElementArray *pTangentElement = GetElementArray(eVertexBufferElement_Texture1Tangent);
 
 			pTangentElement->Resize(GetVertexNum()*4);
-			
+
 			cMath::CreateTriTangentVectors((float*)pTangentElement->GetArrayPtr(),
 											&mvIndexArray[0], GetIndexNum(),
 
@@ -390,19 +390,19 @@ namespace hpl {
 		///////////////
 		//Get position
 		float *pPosArray = (float*)GetElementArray(eVertexBufferElement_Position)->GetArrayPtr();
-		
+
 		///////////////
 		//Get normal
 		float *pNormalArray = NULL;
 		cVtxBufferGLElementArray *pNormalElement = GetElementArray(eVertexBufferElement_Normal);
 		if(pNormalElement) pNormalArray = (float*)pNormalElement->GetArrayPtr();
-		
+
 		///////////////
 		//Get tangent
 		float *pTangentArray = NULL;
 		cVtxBufferGLElementArray *pTangentElement = GetElementArray(eVertexBufferElement_Texture1Tangent);
 		if(pTangentElement)	pTangentArray = (float*)pTangentElement->GetArrayPtr();
-	
+
 		//////////////////////
 		// Get variables
 		int lVtxNum = GetVertexNum();
@@ -422,7 +422,7 @@ namespace hpl {
 			if(pPosArray)
 			{
 				float* pPos = &pPosArray[i*lVtxStride];
-				
+
 				cVector3f vPos = cMath::MatrixMul(a_mtxTransform, cVector3f(pPos[0],pPos[1],pPos[2]));
 				pPos[0] = vPos.x; pPos[1] = vPos.y; pPos[2] = vPos.z;
 
@@ -431,7 +431,7 @@ namespace hpl {
 					pExtraPos[0] = vPos.x; pExtraPos[1] = vPos.y; pExtraPos[2] = vPos.z;
 				}
 			}
-		
+
 			//////////////////
 			// Normals
 			if(pNormalArray)
@@ -460,7 +460,7 @@ namespace hpl {
 		tVertexElementFlag vtxFlag = eVertexElementFlag_Position;
 		if(pNormalArray) vtxFlag |= eVertexElementFlag_Normal;
 		if(pTangentArray) vtxFlag |= eVertexElementFlag_Texture1;
-		
+
 		UpdateData(vtxFlag ,false);
 	}
 
@@ -469,7 +469,7 @@ namespace hpl {
 	int iVertexBufferOpenGL::GetElementNum(eVertexBufferElement aElement)
 	{
 		cVtxBufferGLElementArray *pElement = GetElementArray(aElement);
-		if(pElement==NULL) return 0;	
+		if(pElement==NULL) return 0;
 
 		return pElement->mlElementNum;
 	}
@@ -479,7 +479,7 @@ namespace hpl {
 	eVertexBufferElementFormat iVertexBufferOpenGL::GetElementFormat(eVertexBufferElement aElement)
 	{
 		cVtxBufferGLElementArray *pElement = GetElementArray(aElement);
-		if(pElement==NULL) return eVertexBufferElementFormat_LastEnum;	
+		if(pElement==NULL) return eVertexBufferElementFormat_LastEnum;
 
 		return pElement->mFormat;
 	}
@@ -489,7 +489,7 @@ namespace hpl {
 	int iVertexBufferOpenGL::GetElementProgramVarIndex(eVertexBufferElement aElement)
 	{
 		cVtxBufferGLElementArray *pElement = GetElementArray(aElement);
-		if(pElement==NULL) return 0;	
+		if(pElement==NULL) return 0;
 
 		return pElement->mlProgramVarIndex;
 	}
@@ -499,23 +499,23 @@ namespace hpl {
 	float* iVertexBufferOpenGL::GetFloatArray(eVertexBufferElement aElement)
 	{
 		cVtxBufferGLElementArray *pElement = GetElementArray(aElement);
-        if(pElement==NULL) return NULL;	
-		
+        if(pElement==NULL) return NULL;
+
 		return (float*)pElement->GetArrayPtr();
 	}
-	
+
 	int* iVertexBufferOpenGL::GetIntArray(eVertexBufferElement aElement)
 	{
 		cVtxBufferGLElementArray *pElement = GetElementArray(aElement);
-		if(pElement==NULL) return NULL;	
+		if(pElement==NULL) return NULL;
 
 		return (int*)pElement->GetArrayPtr();
 	}
-	
+
 	unsigned char* iVertexBufferOpenGL::GetByteArray(eVertexBufferElement aElement)
 	{
 		cVtxBufferGLElementArray *pElement = GetElementArray(aElement);
-		if(pElement==NULL) return NULL;	
+		if(pElement==NULL) return NULL;
 
 		return (unsigned char*)pElement->GetArrayPtr();
 	}
@@ -566,13 +566,13 @@ namespace hpl {
 		{
 			cVtxBufferGLElementArray *pSrcElement = mvElementArrays[i];
 			if( (pSrcElement->mFlag & alVtxToCopy) == 0) continue;
-			
+
 			pVtxBuff->CreateElementArray(pSrcElement->mType,pSrcElement->mFormat,pSrcElement->mlElementNum,pSrcElement->mlProgramVarIndex);
 			cVtxBufferGLElementArray *pDestElement = pVtxBuff->GetElementArray(pSrcElement->mType);
 
 			pDestElement->Resize(pSrcElement->Size());
 
-			memcpy(	pDestElement->GetArrayPtr(), pSrcElement->GetArrayPtr(), 
+			memcpy(	pDestElement->GetArrayPtr(), pSrcElement->GetArrayPtr(),
 					pSrcElement->Size() * GetVertexFormatByteSize(pSrcElement->mFormat));
 		}
 
@@ -614,7 +614,7 @@ namespace hpl {
 		if(mbHasShadowDouble)	return lSize / 2;
 		else					return lSize;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	int iVertexBufferOpenGL::GetIndexNum()
@@ -630,7 +630,7 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	
+
 	//-----------------------------------------------------------------------
 
 }

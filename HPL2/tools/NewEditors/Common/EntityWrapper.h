@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -154,7 +154,7 @@ public:
 
 	/**
 	 * Creates a specific value. Each derived class must implement this method.
-	 * \return 
+	 * \return
 	 */
 	virtual iPropVal* CreateValue()=0;
 
@@ -179,29 +179,29 @@ public:
 
 	/**
 	 * Gets property value from EntityWrapper
-	 * \param iEntityWrapper* 
+	 * \param iEntityWrapper*
 	 */
 	virtual void GetFromEntity(iEntityWrapper*)=0;
 	/**
 	 * Sets property value to EntityWrapper
-	 * \param iEntityWrapper* 
+	 * \param iEntityWrapper*
 	 */
 	virtual void SetToEntity(iEntityWrapper*)=0;
 
 
 	/**
 	 * Load value from a XML element
-	 * \param cXmlElement* 
+	 * \param cXmlElement*
 	 */
 	virtual void Load(cXmlElement*)=0;
 	/**
 	 * Save value to a XML element
-	 * \param cXmlElement* 
+	 * \param cXmlElement*
 	 */
 	virtual void Save(cXmlElement*);
 	/**
 	 * Type specific saving routines
-	 * \param cXmlElement* 
+	 * \param cXmlElement*
 	 */
 	virtual void SaveSpecific(cXmlElement*)=0;
 
@@ -528,12 +528,12 @@ public:
 
 	/**
 	 * Creates an EntityWrapperData object
-	 * \return 
+	 * \return
 	 */
 	iEntityWrapperData* CreateData();
 	/**
 	 * Sets Data object to default values
-	 * \param iEntityWrapperData* 
+	 * \param iEntityWrapperData*
 	 */
 	void CreateValuesInData(iEntityWrapperData*);
 
@@ -592,11 +592,11 @@ public:
 	iProp* GetPropByTypeAndID(eVariableType, int);
 	iProp* GetPropByName(const tString&);
 
-	
+
 	/**
-	 * Gets a vector of integer IDs that represent the types that can be attached to 
+	 * Gets a vector of integer IDs that represent the types that can be attached to
 	 * entities of this type, if any.
-	 * \return 
+	 * \return
 	 */
 	const tIntVec& GetAttachableTypes() { return mvAttachableTypes; }
 
@@ -615,10 +615,10 @@ protected:
 
 	void AddProperty(iProp*, ePropCopyStep);
 
-	
+
 	/**
 	 * Creates Data objects of a specific type. This needs to be implemented by every child class
-	 * \return 
+	 * \return
 	 */
 	virtual iEntityWrapperData* CreateSpecificData()=0;
 
@@ -665,7 +665,7 @@ public:
 
 	/**
 	 * Any setup that must be done after creating the data object must go here
-	 * \return 
+	 * \return
 	 */
 	virtual bool PostCreateSetUp(){ return true; }
 
@@ -677,7 +677,7 @@ public:
 
 	/**
 	 * Creates an EntityWrapper object
-	 * \return 
+	 * \return
 	 */
 	virtual iEntityWrapper* CreateEntity();
 
@@ -723,18 +723,18 @@ protected:
 
 	/**
 	 * Helper to save children as xml child elements with an ID attribute
-	 * \param cXmlElement* 
+	 * \param cXmlElement*
 	 */
 	void SaveChildren(cXmlElement*);
 	/**
 	 * Helper to load children in the format saved by SaveChildren
-	 * \param cXmlElement* 
+	 * \param cXmlElement*
 	 */
 	void LoadChildren(cXmlElement*);
 
 	/**
 	 * Creates an EntityWrapper object of a specific type. All final derived classes must implement this.
-	 * \return 
+	 * \return
 	 */
 	virtual iEntityWrapper* CreateSpecificEntity()=0;
 
@@ -760,7 +760,7 @@ protected:
 //	Base for Entity objects. EntityWrapper represents an actual entity object in the map.
 //	Can have an engine entity associated to it, or an Icon object.
 //	All editor operations work on objects derived from this base class.
-//	Has methods for transforming, interface for setting and getting Properties, cloning helpers, 
+//	Has methods for transforming, interface for setting and getting Properties, cloning helpers,
 //	and basic action creators.
 //
 class iEntityWrapper
@@ -831,7 +831,7 @@ public:
 	// Transforms
 	void SetLastTransformedAxis(int alX) { mlLastTransformedAxis = alX; }
 	virtual void SetAbsPosition(const cVector3f& avPosition);
-	virtual void SetAbsScale(const cVector3f& avScale, int alAxis=-1); 
+	virtual void SetAbsScale(const cVector3f& avScale, int alAxis=-1);
 	virtual void SetAbsRotation(const cVector3f& avRotation);
 
 	virtual const cVector3f& GetPosition() { return mvPosition; }
@@ -844,9 +844,9 @@ public:
 	const cMatrixf& GetTranslateMatrix() { return mmtxTranslate; }
 	const cMatrixf& GetRotateMatrix() { return mmtxRotate; }
 	const cMatrixf& GetScaleMatrix() { return mmtxScale; }
-	
+
 	void SnapToGrid();
-	
+
 	virtual void UpdateMatrix();
 	virtual void UpdateEntity();
 
@@ -860,7 +860,7 @@ public:
 	bool IsSelected() { return mbSelected; }
 
 	bool IsInsideFrustum(cFrustum* apFrustum);
-	
+
 	virtual cRect2l GetClipRectangle(cEditorWindowViewport* apViewport);
 
 	virtual bool CheckRayIntersect(cEditorWindowViewport* apViewport, cVector3f* apPos, tVector3fVec* apTriangle, float* apT=NULL);
@@ -988,36 +988,36 @@ protected:
 	// Helper
 	/**
 	 * Draws the texture in apGfx in a billboard style, ie always facing to the camera
-	 * \param *apGfx 
-	 * \param avWorldPosition 
-	 * \param avSize 
-	 * \param aColor 
-	 * \param apViewport 
-	 * \param apFunctions 
+	 * \param *apGfx
+	 * \param avWorldPosition
+	 * \param avSize
+	 * \param aColor
+	 * \param apViewport
+	 * \param apFunctions
 	 */
-	void DrawBillboard(iTexture *apGfx, const cVector3f& avWorldPosition,const cVector2f& avSize,const cColor& aColor,  
+	void DrawBillboard(iTexture *apGfx, const cVector3f& avWorldPosition,const cVector2f& avSize,const cColor& aColor,
 						cEditorWindowViewport* apViewport, cRendererCallbackFunctions* apFunctions);
 
-	
+
 	/**
 	 * Draws an arrow pointing upwards using the amtxTransform reference system
-	 * \param apViewport 
-	 * \param apFunctions 
-	 * \param amtxTransform 
-	 * \param afLength 
-	 * \param abKeepConstantSize 
-	 * \param avHeadSizeRatio 
-	 * \param aCol 
-	 * \param afOrthoConstant 
-	 * \param afPerspConstant 
+	 * \param apViewport
+	 * \param apFunctions
+	 * \param amtxTransform
+	 * \param afLength
+	 * \param abKeepConstantSize
+	 * \param avHeadSizeRatio
+	 * \param aCol
+	 * \param afOrthoConstant
+	 * \param afPerspConstant
 	 */
-	void DrawArrow(cEditorWindowViewport* apViewport, 
-				   cRendererCallbackFunctions* apFunctions, 
-				   const cMatrixf& amtxTransform, 
-				   float afLength, 
-				   bool abKeepConstantSize, 
-				   const cVector2f& avHeadSizeRatio, 
-				   const cColor& aCol, 
+	void DrawArrow(cEditorWindowViewport* apViewport,
+				   cRendererCallbackFunctions* apFunctions,
+				   const cMatrixf& amtxTransform,
+				   float afLength,
+				   bool abKeepConstantSize,
+				   const cVector2f& avHeadSizeRatio,
+				   const cColor& aCol,
 				   float afOrthoConstant=0.1f, float afPerspConstant=4);
 
 
@@ -1030,7 +1030,7 @@ protected:
 	tString msName;
 
 	tString msFilename;
-	
+
 	cEntityIcon*	mpIcon;
 	iEngineEntity*	mpEngineEntity;
 
@@ -1041,7 +1041,7 @@ protected:
 	tEntityWrapperList mlstChildren;
 
 	bool mbEntityUpdated;
-	
+
 	bool mbTranslationUpdated;
 	bool mbRotationUpdated;
 	bool mbScaleUpdated;
@@ -1085,7 +1085,7 @@ protected:
 
 ///////////////////////////////////////////////////////////////////////////
 // iEntityWrapperTypeUserDefinedEntity
-//	Base for User Defined Entity Types. User Defined Entities hold a number of parameters that 
+//	Base for User Defined Entity Types. User Defined Entities hold a number of parameters that
 //	are set by the user, and read from a config file.
 //
 class iEntityWrapperTypeUserDefinedEntity : public iEntityWrapperType
@@ -1105,7 +1105,7 @@ protected:
 
 ///////////////////////////////////////////////////////////////////////////
 // iEntityWrapperDataUserDefinedEntity
-//	Base for User Defined Entity Data objects. 
+//	Base for User Defined Entity Data objects.
 //
 class iEntityWrapperDataUserDefinedEntity : public iEntityWrapperData
 {
@@ -1165,7 +1165,7 @@ protected:
 class iEntityWrapperTypeAggregate : public iEntityWrapperType
 {
 public:
-	iEntityWrapperTypeAggregate(int alType, const tWString& asName, 
+	iEntityWrapperTypeAggregate(int alType, const tWString& asName,
 									 const tString& asElementName, const tString& asComponentElementName,
 									 bool abDestroyComponentsOnDeletion=true);
 
@@ -1192,7 +1192,7 @@ public:
 
 	void CopyFromEntity(iEntityWrapper*);
 	void CopyToEntity(iEntityWrapper*, int);
-	
+
 	bool Load(cXmlElement*);
 	bool SaveSpecific(cXmlElement*);
 

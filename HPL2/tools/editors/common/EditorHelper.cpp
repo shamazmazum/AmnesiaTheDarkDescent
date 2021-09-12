@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -40,8 +40,8 @@ cVector2f cEditorHelper::GetInvYMousePos(const cVector2f& avMousePos, const cVec
 }
 
 bool cEditorHelper::CheckEntityAgainstRay(iEntityWrapper* apEntity, iEntityWrapper* apCurrentPickedEntity,
-											const cVector3f& avRayBVMin, const cVector3f& avRayBVMax, 
-											const cVector3f& avRayStart, const cVector3f& avRayEnd, 
+											const cVector3f& avRayBVMin, const cVector3f& avRayBVMax,
+											const cVector3f& avRayStart, const cVector3f& avRayEnd,
 											float* apfMinDistance, cVector3f* apIntersectionPos, tVector3fVec* apTriangle)
 {
 	return false;
@@ -63,7 +63,7 @@ bool cEditorHelper::CheckEntityAgainstRay(iEntityWrapper* apEntity, iEntityWrapp
 	if(apEntity->CheckRayBoundingVolumeIntersection(avRayStart, avRayEnd, &vIntersectionPos)==false ||
 		apEntity->CheckRayAccurateIntersection(avRayStart,avRayEnd, &vIntersectionPos, &vTriangleHit)==false)
 		return false;
-	
+
 	// Get distance to intersection. If distance is smaller than previous, set as picked.
 	// Also do this if entity has higher priority
 	bool bEntityHasHigherPrio = false;
@@ -86,21 +86,21 @@ bool cEditorHelper::CheckEntityAgainstRay(iEntityWrapper* apEntity, iEntityWrapp
 
 //----------------------------------------------------------------------
 
-bool cEditorHelper::CheckEntityAgainstBox(iEntityWrapper* apEntity, 
-											const cRect2l& aMouseRect, const cVector2l& avViewportSize, 
+bool cEditorHelper::CheckEntityAgainstBox(iEntityWrapper* apEntity,
+											const cRect2l& aMouseRect, const cVector2l& avViewportSize,
 											cFrustum* apFrustum)
 {
 	/*
 	if(apEntity==NULL)
 		return false;
 
-	cBoundingVolume* pBV = apEntity->GetPickBV(apEntity->GetEditorWorld()->GetEditor()->GetFocusedViewport()->GetCamera());		
+	cBoundingVolume* pBV = apEntity->GetPickBV(apEntity->GetEditorWorld()->GetEditor()->GetFocusedViewport()->GetCamera());
 
 	if(apFrustum->CollideBoundingVolume(pBV)!=eCollision_Outside)
 	{
 		cRect2l entClipRect;
 		cMath::GetClipRectFromBV(entClipRect,*pBV,apFrustum,avViewportSize, apFrustum->GetFOV()*0.5f);
-		
+
 		return cMath::CheckRectIntersection(entClipRect,aMouseRect);
 	}
 */
@@ -132,7 +132,7 @@ void cEditorHelper::CalculateRayBoundingBox(const cVector3f& avStart, const cVec
 }
 
 
-bool cEditorHelper::CheckScreenSpaceMouseMeshIntersect(cCamera* apCamera, const cVector2f& avMousePos,  
+bool cEditorHelper::CheckScreenSpaceMouseMeshIntersect(cCamera* apCamera, const cVector2f& avMousePos,
 													   const cVector3f& avRayStart, const cVector3f& avRayEnd,
 													   const cVector2f& avViewportSize, cMeshEntity* apMesh,
 													   cVector3f* apIntersectionPos, tVector3fVec* apTriangle)
@@ -146,7 +146,7 @@ bool cEditorHelper::CheckScreenSpaceMouseMeshIntersect(cCamera* apCamera, const 
 	// Get Matrices
 	cMatrixf mtxCameraViewMatrix = apCamera->GetViewMatrix();
 	cMatrixf mtxCameraProjMatrix = apCamera->GetProjectionMatrix();
-	
+
 	cVector3f vMeshIntersectPos;
 	cVector3f vOldMeshIntersectPos;
 	float fOldDistance = 999999999.0f;
@@ -157,9 +157,9 @@ bool cEditorHelper::CheckScreenSpaceMouseMeshIntersect(cCamera* apCamera, const 
 		cSubMeshEntity* pSubMesh = apMesh->GetSubMeshEntity(i);
 		cMatrixf mtxSubMeshWorldMatrix = pSubMesh->GetWorldMatrix();
 
-		bIntersect = bIntersect || CheckScreenSpaceMouseSubMeshIntersect(GetInvYMousePos(avMousePos, avViewportSize), 
-																		 avRayStart, 
-																		 avRayEnd, 
+		bIntersect = bIntersect || CheckScreenSpaceMouseSubMeshIntersect(GetInvYMousePos(avMousePos, avViewportSize),
+																		 avRayStart,
+																		 avRayEnd,
 																		 avViewportSize,
 																		 pSubMesh,
 																		 mtxCameraViewMatrix,
@@ -177,7 +177,7 @@ bool cEditorHelper::CheckScreenSpaceMouseMeshIntersect(cCamera* apCamera, const 
 			}
 		}
 	}
-	
+
 	if(bIntersect && apIntersectionPos)
 		*apIntersectionPos = vMeshIntersectPos;
 
@@ -189,7 +189,7 @@ bool cEditorHelper::CheckScreenSpaceMouseMeshIntersect(cCamera* apCamera, const 
 bool cEditorHelper::CheckScreenSpaceMouseSubMeshIntersect(const cVector2f& avInvYMousePos,
 														  const cVector3f& avRayStart, const cVector3f& avRayEnd,
                                                           const cVector2f& avViewportSize, cSubMeshEntity* apSubMesh,
-														  const cMatrixf& amtxCameraViewMatrix, 
+														  const cMatrixf& amtxCameraViewMatrix,
 														  const cMatrixf& amtxCameraProjMatrix,
 														  const cMatrixf& amtxSubMeshWorldMatrix,
 														  cVector3f* apIntersectionPos,
@@ -204,8 +204,8 @@ bool cEditorHelper::CheckScreenSpaceMouseSubMeshIntersect(const cVector2f& avInv
 	//Get Vertex Buffer
 	iVertexBuffer* pVtxBuffer = apSubMesh->GetVertexBuffer();
 
-	bIntersect = CheckScreenSpaceMouseVertexBufferIntersect(avInvYMousePos, 
-															avRayStart, avRayEnd, 
+	bIntersect = CheckScreenSpaceMouseVertexBufferIntersect(avInvYMousePos,
+															avRayStart, avRayEnd,
 															avViewportSize, pVtxBuffer,
 															amtxCameraViewMatrix,
 															amtxCameraProjMatrix,
@@ -305,7 +305,7 @@ bool cEditorHelper::CheckRayMeshEntityIntersect(const cVector3f& avRayStart, con
 			cSubMeshEntity* pSubMesh = apObject->GetSubMeshEntity(lHitSubMeshIndex);
 			float* pVertices = pSubMesh->GetSubMesh()->GetVertexBuffer()->GetFloatArray(eVertexBufferElement_Position);
 			int lStride = pSubMesh->GetSubMesh()->GetVertexBuffer()->GetElementNum(eVertexBufferElement_Position);
-			unsigned int* pIndices = pSubMesh->GetSubMesh()->GetVertexBuffer()->GetIndices();		
+			unsigned int* pIndices = pSubMesh->GetSubMesh()->GetVertexBuffer()->GetIndices();
 			for(int i=0;i<3;++i)
 			{
 				int lBaseIndex = pIndices[lHitTriIndex+i]*lStride;
@@ -336,7 +336,7 @@ bool cEditorHelper::CheckRaySubMeshEntityIntersect(const cVector3f& avRayStart, 
 			apTriangle->clear();
 			float* pVertices = apObject->GetSubMesh()->GetVertexBuffer()->GetFloatArray(eVertexBufferElement_Position);
 			int lStride = apObject->GetSubMesh()->GetVertexBuffer()->GetElementNum(eVertexBufferElement_Position);
-			unsigned int* pIndices = apObject->GetSubMesh()->GetVertexBuffer()->GetIndices();		
+			unsigned int* pIndices = apObject->GetSubMesh()->GetVertexBuffer()->GetIndices();
 			for(int i=0;i<3;++i)
 			{
 				int lBaseIndex = pIndices[lTriIndex+i]*lStride;
@@ -405,7 +405,7 @@ void cEditorHelper::GetTrianglesInsideClipPlanes(std::vector<cPlanef>& avPlanes,
 					cVector3f& vVertex2 = vTriangle[(k+1)%3];
 
 					cVector3f vIntersection;
-					
+
 					for(int l=0;l<(int)avPlanes.size();++l)
 					{
 						cPlanef& plane = avPlanes[l];
@@ -419,7 +419,7 @@ void cEditorHelper::GetTrianglesInsideClipPlanes(std::vector<cPlanef>& avPlanes,
 						}
 					}
 				}
-				
+
 				if(bAddTriangle && lEdgeFails<3)
 				{
 					avTriangles.push_back(vTriangle[0]);
@@ -437,7 +437,7 @@ void cEditorHelper::GetTrianglesInsideClipPlanes(std::vector<cPlanef>& avPlanes,
 	*/
 }
 
-void cEditorHelper::GetTrianglesIntersectingSphere(const cVector3f& avSphereCenter, float afRadius, tSubMeshEntityVec& avSubMeshes, const cVector3f& avBaseNormal, 
+void cEditorHelper::GetTrianglesIntersectingSphere(const cVector3f& avSphereCenter, float afRadius, tSubMeshEntityVec& avSubMeshes, const cVector3f& avBaseNormal,
 												   tVector3fVec& avTriangles, tVector3fVec& avNormals)
 {
 	cBoundingVolume bv;
@@ -453,7 +453,7 @@ void cEditorHelper::GetTrianglesIntersectingSphere(const cVector3f& avSphereCent
 		cSubMeshEntity* pSubMeshEnt = *it;
 		cBoundingVolume *pObjectBV = pSubMeshEnt->GetBoundingVolume();
 
-		if(cMath::CheckBVIntersection(*pObjectBV, bv)==false) continue;		
+		if(cMath::CheckBVIntersection(*pObjectBV, bv)==false) continue;
 
 		cMatrixf mtxInvWorldMatrix = cMath::MatrixInverse(pSubMeshEnt->GetWorldMatrix());
 		cVector3f vTransSphCenter = cMath::MatrixMul(mtxInvWorldMatrix, avSphereCenter);
@@ -519,7 +519,7 @@ void cEditorHelper::GetTrianglesIntersectingSphere(const cVector3f& avSphereCent
 				}
 
 			}
-			
+
 			if(bAddTriangle)
 			{
 				avTriangles.push_back(vTriVertices[0]);
@@ -539,7 +539,7 @@ void cEditorHelper::GetIDsFromEntityList(const tEntityWrapperList &alstEntities,
 {
 	if(abClearList)
 		alstEntityIDs.clear();
-	
+
 	tEntityWrapperList::const_iterator it = alstEntities.begin();
 	for(;it!=alstEntities.end();++it)
 	{
@@ -550,10 +550,10 @@ void cEditorHelper::GetIDsFromEntityList(const tEntityWrapperList &alstEntities,
 
 //----------------------------------------------------------------------------------
 
-bool cEditorHelper::LoadEntityFile(int alID, 
-								   const tString& asName, 
-								   const tString& asFilename, 
-								   cMeshEntity** apEntity, 
+bool cEditorHelper::LoadEntityFile(int alID,
+								   const tString& asName,
+								   const tString& asFilename,
+								   cMeshEntity** apEntity,
 								   bool abLoadAsTemp)
 {
 	if(asFilename=="")
@@ -581,15 +581,15 @@ bool cEditorHelper::LoadEntityFile(int alID,
 		return false;
 	}
 
-	pEntity = (cMeshEntity*) mpEditor->GetEngineEntityLoader()->Load(asName, 
+	pEntity = (cMeshEntity*) mpEditor->GetEngineEntityLoader()->Load(asName,
 																	 alID,
-																	 true, 
-																	 pDoc, 
+																	 true,
+																	 pDoc,
 																	 cMatrixf::Identity,
 																	 cVector3f(1),
 																	 pWorld,
-																	 asFilename, 
-																	 sFullPath, 
+																	 asFilename,
+																	 sFullPath,
 																	 NULL);
 
 	pRes->DestroyXmlDocument(pDoc);
@@ -659,7 +659,7 @@ bool cEditorHelper::LoadTextureResource(eEditorTextureResourceType aTexType, con
 			pTexture->SetFrameTime(afFrameTime);
 		}
 	}
-	
+
 	if(apTexture==NULL)
 	{
 		if(pTexture) pManager->Destroy(pTexture);
@@ -683,7 +683,7 @@ bool cEditorHelper::LoadResourceFile(eEditorResourceType aResType, const tString
     cResources* pResources = mpEditor->GetEngine()->GetResources();
 	iResourceManager* pManager = NULL;
 	void* pResource = NULL;
-	
+
 	switch(aResType)
 	{
 	case eEditorResourceType_Material:
@@ -735,14 +735,14 @@ bool cEditorHelper::LoadResourceFile(eEditorResourceType aResType, const tString
 //----------------------------------------------------------------------------------
 
 void cEditorHelper::DrawBillboard(iTexture *apGfx, const cVector3f& avWorldPosition,
-									const cVector2f& avSize, const cColor& aColor, 
+									const cVector2f& avSize, const cColor& aColor,
 									cEditorWindowViewport* apViewport, cRendererCallbackFunctions* apFunctions)
 {
 	apFunctions->SetModelViewMatrix(cMatrixf::Identity);
 
 	cVector3f vViewSpacePos;
-	cVector3f vViewSpaceSize; 
-	
+	cVector3f vViewSpaceSize;
+
 	GetViewSpacePosAndSize(apViewport->GetCamera(), avWorldPosition, avSize, vViewSpacePos, vViewSpaceSize);
 
 	// TODO: I have to turn cull mode off because the quad is drawn facing away to the camera :S
@@ -772,7 +772,7 @@ void cEditorHelper::DrawPyramid(cRendererCallbackFunctions* apFunctions, const c
 	cVector3f vForward = cMath::Vector3Cross(vNormal, vRight);
 	vForward.Normalize();
 
-	cVector3f vVertices[4] = 
+	cVector3f vVertices[4] =
 	{
 		avBaseCenter + (vRight+vForward)*afHalfWidth,
 		avBaseCenter + (vRight-vForward)*afHalfWidth,
@@ -820,7 +820,7 @@ iVertexBuffer* cEditorHelper::CreatePyramidVtxBuffer(cGraphics* apGfx, const cVe
 	cVector3f vForward = cMath::Vector3Cross(vNormal, vRight);
 	vForward.Normalize();
 
-	cVector3f vVertices[5] = 
+	cVector3f vVertices[5] =
 	{
 		avTip,
 		avBaseCenter + (vRight+vForward)*afHalfWidth,
@@ -829,7 +829,7 @@ iVertexBuffer* cEditorHelper::CreatePyramidVtxBuffer(cGraphics* apGfx, const cVe
 		avBaseCenter + (vRight*(-1)+vForward)*afHalfWidth,
 	};
 
-	unsigned int vIndices[12] = 
+	unsigned int vIndices[12] =
 	{
 		0, 1, 2,
 		0, 2, 3,
@@ -854,14 +854,14 @@ iVertexBuffer* cEditorHelper::CreatePyramidVtxBuffer(cGraphics* apGfx, const cVe
 		pVB->AddVertexVec3f(eVertexBufferElement_Normal, vFaceNormal);
 		pVB->AddVertexVec3f(eVertexBufferElement_Normal, vFaceNormal);
 		pVB->AddVertexVec3f(eVertexBufferElement_Normal, vFaceNormal);
-		
+
 		pVB->AddIndex(vIndices[i*3]);
 		pVB->AddIndex(vIndices[i*3+1]);
 		pVB->AddIndex(vIndices[i*3+2]);
 	}
 
 	pVB->Compile(0);
-	
+
 
 	return pVB;
 }

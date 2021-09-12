@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -36,14 +36,14 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	static bool HasDebug(iRenderable *apRenderable)
-	{	
+	{
 		return apRenderable->GetRenderFlagBit(eRenderableFlag_ContainerDebug);
 	}
 
 	//-----------------------------------------------------------------------
 
 	static bool gbLog = false;
-	
+
 	//-----------------------------------------------------------------------
 
 	static tString gsTempSpaces="";
@@ -51,7 +51,7 @@ namespace hpl {
 	static const char *GetSpaces(int alNum)
 	{
 		gsTempSpaces.resize(alNum,'\t');
-		return gsTempSpaces.c_str();		
+		return gsTempSpaces.c_str();
 	}
 
 	//-----------------------------------------------------------------------
@@ -81,17 +81,17 @@ namespace hpl {
 
 		//if(	vMin.x == avNodeMin.x || vMin.y == avNodeMin.y || vMin.z == avNodeMin.z ||
 		//	vMax.x == avNodeMax.x || vMax.y == avNodeMax.y || vMax.z == avNodeMax.z)
-		if(	cMath::Abs(vMin.x - avNodeMin.x)<kEpsilonf || 
-			cMath::Abs(vMin.y - avNodeMin.y)<kEpsilonf || 
+		if(	cMath::Abs(vMin.x - avNodeMin.x)<kEpsilonf ||
+			cMath::Abs(vMin.y - avNodeMin.y)<kEpsilonf ||
 			cMath::Abs(vMin.z - avNodeMin.z)<kEpsilonf ||
-			
-			cMath::Abs(vMax.x - avNodeMax.x)<kEpsilonf || 
-			cMath::Abs(vMax.y - avNodeMax.y)<kEpsilonf || 
+
+			cMath::Abs(vMax.x - avNodeMax.x)<kEpsilonf ||
+			cMath::Abs(vMax.y - avNodeMax.y)<kEpsilonf ||
 			cMath::Abs(vMax.z - avNodeMax.z)<kEpsilonf)
 		{
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -125,10 +125,10 @@ namespace hpl {
 		return apObjectA->GetBoundingVolume()->GetWorldCenter().z < apObjectB->GetBoundingVolume()->GetWorldCenter().z;
 	}
 
-	typedef bool (*tSortFunc)(iRenderable*,iRenderable*); 
+	typedef bool (*tSortFunc)(iRenderable*,iRenderable*);
 	static tSortFunc gvSortFunctions[3] = {SortFunc_X, SortFunc_Y,SortFunc_Z};
 
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -155,13 +155,13 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// NODE
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	cRCNode_DynBoxTree::cRCNode_DynBoxTree()
 	{
 		mpParent = NULL;
@@ -215,7 +215,7 @@ namespace hpl {
 				mbRecalculateAABB = true;
 
 				///////////////////////////////////////////
-				//Check if any child nodes are leaves and if so the total number of objects are 
+				//Check if any child nodes are leaves and if so the total number of objects are
 				// less then split threshold. If so, delete that node.
 				if(HasChildNodes())
 				{
@@ -226,7 +226,7 @@ namespace hpl {
 					int lLowerObjectLimit = mpContainer->mlSplitThreshold;
 					//int lLowerObjectLimit = (mpContainer->mlSplitThreshold*2)/3;
 					//int lLowerObjectLimit = mpContainer->mlSplitThreshold - 2;
-					
+
 					//Check if nodes are leaves and if they have few enough objects
 					if(	pChild1->HasChildNodes()==false && pChild2->HasChildNodes()==false &&
 						(pChild1->GetObjectNum() + pChild2->GetObjectNum() + GetObjectNum() < lLowerObjectLimit))
@@ -234,7 +234,7 @@ namespace hpl {
 						if(gbLog){
 							Log("  Collection garbage!\n");
 						}
-						
+
 						//Iterate child nodes
 						tRenderableContainerNodeListIt nodeIt = mlstChildNodes.begin();
 						for(; nodeIt != mlstChildNodes.end(); ++nodeIt)
@@ -246,7 +246,7 @@ namespace hpl {
 							for(; objIt != pChildNode->mlstObjects.end(); ++objIt)
 							{
 								iRenderable *pObject = *objIt;
-								
+
 								pObject->SetRenderContainerNode(this);
 								mlstObjects.push_back(pObject);
 							}
@@ -262,14 +262,14 @@ namespace hpl {
 				/////////////////////////////
 				//Recalculate the split axis this time if there is enough objects
 				// or if a node was deleted.
-				if((int)mlstObjects.size() >= mpContainer->mlSplitThreshold)	
+				if((int)mlstObjects.size() >= mpContainer->mlSplitThreshold)
 				{
 					mbRecalculateSplitAxis = true;
 				}
 			}
 			////////////////
 			//Just decrement the counter.
-			else 
+			else
 			{
 				--mlGarbageCollectCount;
 			}
@@ -301,7 +301,7 @@ namespace hpl {
 
 			//Sphere center and radius
 			mvCenter = (mvMax + mvMin) *0.5f;
-			mfRadius = (mvMax - mvMin).Length()*0.5f;            
+			mfRadius = (mvMax - mvMin).Length()*0.5f;
 		}
 
 		//////////////////////////////////
@@ -321,7 +321,7 @@ namespace hpl {
 				mbRecalculateSplit = true;
 			}
 		}
-		
+
 		//////////////////////////////////
 		// Recalculate the split properties
 		if(mbRecalculateSplit)
@@ -329,9 +329,9 @@ namespace hpl {
 			if(gbLog){
 				Log(" Recalculating split for node %d\n", this);
 			}
-			
+
 			mbRecalculateSplit = false;
-			
+
 			////////////////////////////////////////
 			// Get the split axis (only do once or else the tree will become a mess!)
 			if(mbRecalculateSplitAxis)
@@ -342,12 +342,12 @@ namespace hpl {
 
 				float fLongestSide = vNodeSize.x;
 				mlSplitAxis =0;
-				if(fLongestSide < vNodeSize.y){	
+				if(fLongestSide < vNodeSize.y){
 					fLongestSide = vNodeSize.y;
 					mlSplitAxis = 1;
 				}
-				if(fLongestSide < vNodeSize.z){	
-					fLongestSide = vNodeSize.z;	
+				if(fLongestSide < vNodeSize.z){
+					fLongestSide = vNodeSize.z;
 					mlSplitAxis = 2;
 				}
 			}
@@ -358,7 +358,7 @@ namespace hpl {
 
 			/*cVector3f vPosSum=0;
 			float fWeightSum=0;
-			
+
 			//Objects
 			if(mlstObjects.empty()==false)
 			{
@@ -379,7 +379,7 @@ namespace hpl {
 				for(; it != mlstChildNodes.end(); ++it)
 				{
 					cRCNode_DynBoxTree *pChildNode = static_cast<cRCNode_DynBoxTree*>(*it);
-					
+
 					float fObjNum = (float)pChildNode->mlstObjects.size();
 					vPosSum += pChildNode->mvMeanPosition * fObjNum;
                     fWeightSum += fObjNum;
@@ -388,9 +388,9 @@ namespace hpl {
 
 			mvMeanPosition = vPosSum / fWeightSum;
             mfSplitPlane = mvMeanPosition.v[mlSplitAxis];*/
-		
-			
-			
+
+
+
 			float fPosSum =0;
 			float fWeightSum = 0;
 
@@ -420,7 +420,7 @@ namespace hpl {
                     if(pChildNode->mlSplitAxis == mlSplitAxis)
 					{
 						fPosSum += pChildNode->mfSplitPlane * fPosMul;
-						fWeightSum += fPosMul;	
+						fWeightSum += fPosMul;
 					}
 					//Else just use AABB center
 					else
@@ -471,23 +471,23 @@ namespace hpl {
 				///////////////////////////////////
 				// Setup before objects are added
 				cVector3f vNodeSize = GetMax() - GetMin();
-				
+
 				std::vector<iRenderable*> vTempObjects;
 				vTempObjects.resize(mlstObjects.size());
 
 				int lCount =0;
 				for(tRenderableListIt it = mlstObjects.begin(); it != mlstObjects.end(); ++it,++lCount)
 				{
-					vTempObjects[lCount] = *it;	
+					vTempObjects[lCount] = *it;
 				}
-				
+
 				mlstObjects.clear();
 
 				tRenderableList lstChildObjects[2];
-			
-				
+
+
 				///////////////////////////////////
-				// Iterate 
+				// Iterate
 				for(size_t i=0; i<vTempObjects.size(); ++i)
 				{
 					iRenderable *pObject = vTempObjects[i];
@@ -498,12 +498,12 @@ namespace hpl {
 					// If object is intersecting then add to this node, else add to a child.
 					if(lSplitGroup == 2)
 					{
-						mlstObjects.push_back(pObject);	
+						mlstObjects.push_back(pObject);
 						if(gbLog){
 							Log("  Object '%s'/%d stay put\n", pObject->GetName().c_str(), pObject);
 						}
 					}
-					else 
+					else
 					{
 						//Add to child list
 						lstChildObjects[lSplitGroup].push_back(pObject);
@@ -532,17 +532,17 @@ namespace hpl {
 					// Make sure to create mean position here too! ( can remove later on?)
 					for(int i=0; i<2; ++i)
 					{
-						cRCNode_DynBoxTree* pChildNode = hplNew( cRCNode_DynBoxTree, () ); 
+						cRCNode_DynBoxTree* pChildNode = hplNew( cRCNode_DynBoxTree, () );
 						pChildNode->mpContainer = mpContainer;
 						pChildNode->mpParent = this;
 
 						mlstChildNodes.push_back(pChildNode);
-						
-                        pChildNode->mvMeanPosition =0;                        
+
+                        pChildNode->mvMeanPosition =0;
 						for(tRenderableListIt it = lstChildObjects[i].begin(); it != lstChildObjects[i].end(); ++it)
 						{
 							iRenderable *pObject = *it;
-							
+
 							pChildNode->mlstObjects.push_back(pObject);
 
 							pChildNode->mvMeanPosition += pObject->GetBoundingVolume()->GetWorldCenter();
@@ -584,7 +584,7 @@ namespace hpl {
 		// Remove object from list and clears node list
 		STLFindAndRemove(mlstObjects, apObject);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cRCNode_DynBoxTree::RecalculateSplit()
@@ -610,7 +610,7 @@ namespace hpl {
 		if(mbObjectMoved) return;
 
 		mbObjectMoved = true;
-		cRCNode_DynBoxTree* pParentNode = static_cast<cRCNode_DynBoxTree*>(mpParent);       
+		cRCNode_DynBoxTree* pParentNode = static_cast<cRCNode_DynBoxTree*>(mpParent);
 		if(pParentNode) pParentNode->ObjectMoved();
 	}
 
@@ -621,7 +621,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	cRenderableContainer_DynBoxTree::cRenderableContainer_DynBoxTree()
 	{
 		mlSplitThreshold = 30;		//Number of objects a node should have before split.
@@ -652,7 +652,7 @@ namespace hpl {
 
 		mpObjectCalllback = hplNew( cDynBoxTreeObjectCallback, (this) );
 	}
-	
+
 	cRenderableContainer_DynBoxTree::~cRenderableContainer_DynBoxTree()
 	{
 		hplDelete( mpObjectCalllback );
@@ -665,13 +665,13 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	void cRenderableContainer_DynBoxTree::Add(iRenderable *apRenderable)
 	{
 		if(gbLog || HasDebug(apRenderable)){
 			Log("Adding object '%s' / %d\n",apRenderable->GetName().c_str(), apRenderable);
 		}
-	
+
 		///////////////////////////////////////////
 		//Get the node where object is to be added and then add it there.
 		cRCNode_DynBoxTree *pNode = GetAddNode(&mRoot, apRenderable);
@@ -711,7 +711,7 @@ namespace hpl {
 		{
 			m_setObjectsToUpdate.erase(apRenderable);
 		}
-		
+
 		//////////////////////////////////
 		// Get the node where the object is
 		cRCNode_DynBoxTree *pNode = static_cast<cRCNode_DynBoxTree*>(apRenderable->GetRenderContainerNode());	//Assume one node only
@@ -742,7 +742,7 @@ namespace hpl {
 			}
 			CheckNodeAABBNeedsUpdateIterative(pNode,apRenderable);
 		}
-		
+
 		////////////////////////
 		//Remove callbacks
 		apRenderable->SetRenderContainerNode(NULL);
@@ -790,22 +790,22 @@ namespace hpl {
 
 		RenderDebugNode(apFunctions, &mRoot,0);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
 	// PRIVATE METHODS
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	void cRenderableContainer_DynBoxTree::AddNodeObjectsToRoot(cRCNode_DynBoxTree *apNode)
 	{
 		tRenderableListIt objIt = apNode->mlstObjects.begin();
 		for(; objIt != apNode->mlstObjects.end(); ++objIt)
 		{
 			iRenderable *pObject = *objIt;
-			
+
 			pObject->SetRenderContainerNode(&mRoot);
 			mRoot.mlstObjects.push_back(pObject);
 		}
@@ -814,7 +814,7 @@ namespace hpl {
 		for(; nodeIt != apNode->mlstChildNodes.end(); ++nodeIt)
 		{
 			cRCNode_DynBoxTree *pChildNode = static_cast<cRCNode_DynBoxTree*>(*nodeIt);
-			
+
 			AddNodeObjectsToRoot(pChildNode);
 		}
 	}
@@ -831,7 +831,7 @@ namespace hpl {
 			for(; it != m_setObjectsToUpdate.end(); ++it)
 			{
 				iRenderable *pObject = *it;
-				
+
 				UpdateObjectInContainer(pObject);
 			}
             m_setObjectsToUpdate.clear();
@@ -843,7 +843,7 @@ namespace hpl {
 		if(mlRebuildCount >0) return;
 
 		mlRebuildCount = mlMaxRebuildCount;
-		
+
 		tRenderableContainerNodeListIt it = mRoot.mlstChildNodes.begin();
 		for(; it != mRoot.mlstChildNodes.end(); ++it)
 		{
@@ -881,7 +881,7 @@ namespace hpl {
 			apFunctions->GetLowLevelGfx()->DrawBoxMinMax(vMin, vMax,LevelColor[alLevel % 10]);
 
 		}
-				
+
 
 		tRenderableContainerNodeListIt childIt = apNode->GetChildNodeList()->begin();
 		for(; childIt != apNode->GetChildNodeList()->end(); ++childIt)
@@ -898,7 +898,7 @@ namespace hpl {
 		cRCNode_DynBoxTree *pParent = static_cast<cRCNode_DynBoxTree*>(apRemoveNode->GetParent());
 		if(pParent == NULL) return;
 
-		
+
 		if(gbLog){
 			Log(" Remove node %d from parent %d\n", apRemoveNode, pParent);
 		}
@@ -910,9 +910,9 @@ namespace hpl {
 		////////////////////////////////////
 		// Get Remaining child node and then clear child node list
 		cRCNode_DynBoxTree *pChild = static_cast<cRCNode_DynBoxTree*>(pParent->mlstChildNodes.front());
-		
+
         pParent->mlstChildNodes.clear();
-		
+
 		////////////////////////////////////
 		// Move the objects from the remaining child in parent to parent
 		if(pChild->HasObjects())
@@ -929,7 +929,7 @@ namespace hpl {
 
 				//Set new node
 				pChildObject->SetRenderContainerNode(pParent);
-				
+
 				pParent->mlstObjects.push_back(pChildObject);
 			}
 		}
@@ -950,12 +950,12 @@ namespace hpl {
 				if(gbLog) Log("   %d\n", pChild_ChildNode);
 
 				//Set new parent and add to parents child node list
-                pChild_ChildNode->SetParent(pParent);				
+                pChild_ChildNode->SetParent(pParent);
                 pParent->mlstChildNodes.push_back(pChild_ChildNode);
 			}
 
 			//Clear all nodes, else they will be deleted later on
-			pChild->mlstChildNodes.clear();	
+			pChild->mlstChildNodes.clear();
 		}
 
 		if(gbLog){
@@ -984,17 +984,17 @@ namespace hpl {
 
 			//Calculate a new AABB size
 			apNode->RecalculateAABB();
-			
+
 			//Check if parent needs update too
 			cRCNode_DynBoxTree *pParent = static_cast<cRCNode_DynBoxTree*>(apNode->GetParent());
 			if(pParent)
 				CheckNodeAABBNeedsUpdateIterative(pParent, apObject);
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
-	
+
 	cRCNode_DynBoxTree *cRenderableContainer_DynBoxTree::GetAddNode(cRCNode_DynBoxTree *apStartNode, iRenderable *apObject)
 	{
 		mpTempNode = NULL; //Where the node is placed.
@@ -1012,7 +1012,7 @@ namespace hpl {
 			Log(" Testing node %d. Inside: %d Intersect: %d (%s)-(%s) vs (%s)-(%s)\n",	apNode,
 																			cMath::CheckAABBInside(pBV->GetMin(),pBV->GetMax(), apNode->mvMin, apNode->mvMax)?1:0,
 																			cMath::CheckAABBIntersection(pBV->GetMin(),pBV->GetMax(), apNode->mvMin, apNode->mvMax)?1:0,
-																			pBV->GetMin().ToString().c_str(), pBV->GetMax().ToString().c_str(), 
+																			pBV->GetMin().ToString().c_str(), pBV->GetMax().ToString().c_str(),
 																			apNode->mvMin.ToString().c_str(), apNode->mvMax.ToString().c_str());
 		}
 		/////////////////////////////
@@ -1040,15 +1040,15 @@ namespace hpl {
 		// Calculate what group the new object belongs to
 		cVector3f vNodeSize = apNode->GetMax() - apNode->GetMin();
 		int lSplitGroup = GetSplitGroup(apObject,apNode->mfSplitPlane, apNode->mlSplitAxis ,vNodeSize);
-		
-		
+
+
 		/////////////////////////////
 		// If object is intersecting then add to this node, else add to a child.
 		if(lSplitGroup == 2)
 		{
 			mpTempNode = apNode;
 		}
-		else 
+		else
 		{
 			//Assuming always two children!
 			if(lSplitGroup==0)	AddObjectToNodeIterative(static_cast<cRCNode_DynBoxTree*>(apNode->mlstChildNodes.front()),apObject);
@@ -1086,7 +1086,7 @@ namespace hpl {
 			//Calculate how much the object crosses over on each side
 			float fAboveDist = fMaxVal - afSplitPlane;
 			float fBelowDist = afSplitPlane - fMinVal;
-			
+
 			float fNodeSize = GetAxisFromVec(avNodeSize, alAxis);	//Using the size of entire node since it one side might be very small.
 
 			/////////////////////
@@ -1098,16 +1098,16 @@ namespace hpl {
 				fMinDist = fBelowDist;
 				lDestDir =0;
 			}
-			
+
 			/////////////////////
 			//Check if the amount of cross over is small enough to not treat it as an intersection.
 			float fMinCrossOverAmount = fMinDist / fNodeSize;
 			if(fMinCrossOverAmount <= mfMaxIntersectionAmount) return lDestDir;
-			
+
 			return 2;
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 
@@ -1115,7 +1115,7 @@ namespace hpl {
 	{
 		const bool bUpdateLog=false;
 		//bool bUpdateLog= HasDebug(apObject);
-	
+
 
 		////////////////////////////////////////////
 		//Get Node of correct type
@@ -1124,7 +1124,7 @@ namespace hpl {
 
 		pNode->ObjectMoved();	//Notify the node that an object moved inside it.
 
-		if(bUpdateLog) 
+		if(bUpdateLog)
 			Log("------- Updating %s. Node: %d -------\n",apObject->GetName().c_str(), pNode);
 
 
@@ -1141,7 +1141,7 @@ namespace hpl {
 				Log(" Still inside AABB, not doing anything!\n");
 				Log("---------------------\n");
 			}
-			return; 
+			return;
 		}
 
 		////////////////////////////////////////////
@@ -1165,7 +1165,7 @@ namespace hpl {
 			if(bUpdateLog) Log("  Moving node\n");
 
 			//Notify the new node that an object moved inside it.
-			pNewNode->ObjectMoved();	
+			pNewNode->ObjectMoved();
 
 			//Decrease container rebuild count.
 			mlRebuildCount--;
@@ -1224,7 +1224,7 @@ namespace hpl {
 			cMath::CheckAABBInside(apBV->GetMin(), apBV->GetMax(), apNode->GetMin(), apNode->GetMax()))
 		{
 			mpCheckForFitTempNode = apNode;
-			return; 
+			return;
 		}
 
 		///////////////////////////////////////////
@@ -1233,9 +1233,9 @@ namespace hpl {
 		CheckForFitIterative(pParent, apBV);
 	}
 
-	
+
 	//-----------------------------------------------------------------------
 
-	
+
 
 }

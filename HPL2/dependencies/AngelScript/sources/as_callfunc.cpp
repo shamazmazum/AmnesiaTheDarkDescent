@@ -128,7 +128,7 @@ int PrepareSystemFunctionGeneric(asCScriptFunction *func, asSSystemFunctionInter
 int PrepareSystemFunction(asCScriptFunction *func, asSSystemFunctionInterface *internal, asCScriptEngine *engine)
 {
 #ifdef AS_MAX_PORTABILITY
-	// This should never happen, as when AS_MAX_PORTABILITY is on, all functions 
+	// This should never happen, as when AS_MAX_PORTABILITY is on, all functions
 	// are asCALL_GENERIC, which are prepared by PrepareSystemFunctionGeneric
 	asASSERT(false);
 #endif
@@ -144,7 +144,7 @@ int PrepareSystemFunction(asCScriptFunction *func, asSSystemFunctionInterface *i
 	else if( func->returnType.IsObject() )
 	{
 		asDWORD objType = func->returnType.GetObjectType()->flags;
-	
+
 		// Only value types can be returned by value
 		asASSERT( objType & asOBJ_VALUE );
 
@@ -280,7 +280,7 @@ int PrepareSystemFunction(asCScriptFunction *func, asSSystemFunctionInterface *i
 			if( !(func->parameterTypes[n].GetObjectType()->flags & (asOBJ_APP_CLASS | asOBJ_APP_PRIMITIVE | asOBJ_APP_FLOAT)) )
 			{
 				engine->WriteMessage("", 0, 0, asMSGTYPE_INFORMATION, func->GetDeclarationStr().AddressOf());
-	
+
 				asCString str;
 				str.Format(TXT_CANNOT_PASS_TYPE_s_BY_VAL, func->parameterTypes[n].GetObjectType()->name.AddressOf());
 				engine->WriteMessage("", 0, 0, asMSGTYPE_ERROR, str.AddressOf());
@@ -292,7 +292,7 @@ int PrepareSystemFunction(asCScriptFunction *func, asSSystemFunctionInterface *i
 			// It's not safe to pass objects by value because different registers
 			// will be used depending on the memory layout of the object
 #ifdef COMPLEX_OBJS_PASSED_BY_REF
-			if( !(func->parameterTypes[n].GetObjectType()->flags & COMPLEX_MASK) )	
+			if( !(func->parameterTypes[n].GetObjectType()->flags & COMPLEX_MASK) )
 #endif
 			{
 				engine->WriteMessage("", 0, 0, asMSGTYPE_INFORMATION, func->GetDeclarationStr().AddressOf());

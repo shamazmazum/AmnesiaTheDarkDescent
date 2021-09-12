@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -51,7 +51,7 @@ private:
 class iLuxHandObject
 {
 friend class cLuxHandObjectLoader;
-public:	
+public:
 	iLuxHandObject(const tString& asName, cLuxPlayerHands *apHands);
 	~iLuxHandObject();
 
@@ -78,22 +78,22 @@ public:
 
 	//Returning true, means go to hand mode
 	virtual bool DoAction(eLuxPlayerAction aAction, bool abPressed)=0;
-	
+
 	//Returning true, means go to idle mode
 	virtual bool AnimationIsOver()=0;
 
 	////////////////////////
 	//Properties
 	const tString& GetName(){ return msName;}
-	
+
 	cMeshEntity *GetMeshEntity(){ return mpMeshEntity; }
-	
+
 	const tString& GetAttachBoneName(){ return msAttachBoneName; }
 
 	const tString& GetAnimIdle(){ return msHandsAnim_Idle; }
 	const tString& GetAnimDraw(){ return msHandsAnim_Draw; }
 	const tString& GetAnimHolster(){ return msHandsAnim_Holster;}
-	
+
 protected:
 	virtual void LoadImplementedVars(cXmlElement *apVarsElem)=0;
 
@@ -106,7 +106,7 @@ protected:
 	// Data
 	cLuxPlayerHands *mpHands;
     tString msName;
-	
+
 	tString msModelFile;
 	cMatrixf m_mtxOffset;
 

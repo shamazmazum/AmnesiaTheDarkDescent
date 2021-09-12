@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -75,7 +75,7 @@ namespace hpl {
 	{
 	public:
 		cProgramComboProgram() : mpProgram(NULL), mlUserCount(0) {}
-		
+
 		void DestroyProgram();
 
 		iGpuProgram* mpProgram;
@@ -84,12 +84,12 @@ namespace hpl {
 
 	typedef std::map<unsigned int, cProgramComboProgram*> tProgramComboProgramMap;
 	typedef tProgramComboProgramMap::iterator tProgramComboProgramMapIt;
-	
+
 	//---------------------------------------------------
 
 	class cProgramComboSettingsVar
 	{
-	public: 
+	public:
 		cProgramComboSettingsVar(){}
 		cProgramComboSettingsVar(const tString& asName, const tString& asValue) : msName(asName), msValue(asValue) {}
 
@@ -106,9 +106,9 @@ namespace hpl {
 
 		tString msVtxShader;
 		tString msFragShader;
-		
+
 		std::vector<cProgramComboFeature> mvFeatures;
-		std::vector<cProgramComboSettingsVar> mvDefaultVars;       		
+		std::vector<cProgramComboSettingsVar> mvDefaultVars;       
 	};
 
 	//---------------------------------------------------
@@ -124,29 +124,29 @@ namespace hpl {
 		iGpuProgram* GenerateProgram(int alMainMode, int alFlags);
 		int GetGenerateCombinationNum(int alMainMode){ return mvCombinationNum[alMainMode]; }
 
-		void SetupGenerateProgramData(int alMainMode, const tString &asModeName, 
+		void SetupGenerateProgramData(int alMainMode, const tString &asModeName,
 								const tString &asVtxShaderName, const tString &asFragShaderName,
-								cProgramComboFeature *apFeatures, int alFeatureNum, 
+								cProgramComboFeature *apFeatures, int alFeatureNum,
 								cParserVarContainer &avDefaultVars);
 
 		void AddGenerateProgramVariableId(const tString& asVarName, int alId, int alMainMode);
 
 		void DestroyGeneratedProgram(int alMainMode, iGpuProgram* apProgram);
 		void DestroyGeneratedShader(int alMainMode, iGpuShader* apShader, eGpuShaderType aType);
-		
+
 		iGpuShader *CreateShader(const tString& asName, eGpuShaderType aType, cParserVarContainer *apVars, bool abAddtoList);
 		iGpuProgram *CreateProgram(const tString& asName, bool abAddtoList);
-		
+
 		/**
 		 * Do NOT use these to destroy program create with SetupProgramModeData
 		 */
 		void DestroyShader(iGpuShader * apShader);
 		void DestroyProgram(iGpuProgram * apProgram);
-		
+
 		iGpuProgram* CreateProgramFromShaders(	const tString &asProgramName,
 												const tString &asVtxShaderName, const tString &asFragShaderName,
 												cParserVarContainer *apVars,bool abAddtoList);
-		iGpuProgram* CreateProgramFromShaders(	const tString &asProgramName, iGpuShader *apVtxShader,iGpuShader *apFragShader, 
+		iGpuProgram* CreateProgramFromShaders(	const tString &asProgramName, iGpuShader *apVtxShader,iGpuShader *apFragShader,
 												bool abAddtoList);
 
 		void DestroyShadersAndPrograms();
@@ -155,7 +155,7 @@ namespace hpl {
 		tString GenerateProgramName(int alMainMode, int alBitFlags);
 
 		iGpuShader* GetShaderForCombo(int alMainMode, int alBitFlags, const tString& asShaderName, tFlag aShaderType);
-		iGpuShader* CreateShaderFromFeatures(	const tString& asShaderFile, tFlag aShaderType, int alBitFlags, cProgramComboFeature* apFeatures, int alFeatureNum, 
+		iGpuShader* CreateShaderFromFeatures(	const tString& asShaderFile, tFlag aShaderType, int alBitFlags, cProgramComboFeature* apFeatures, int alFeatureNum,
 												cProgramComboSettingsVar *apDefaultVars, int alDefaultVarsNum);
 
 

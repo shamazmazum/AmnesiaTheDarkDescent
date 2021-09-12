@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -72,7 +72,7 @@ namespace hpl {
 		// - If this is the topmost menu, clear the AttentionWidget
 		// - And hides the menu
 
-		if(IsSubmenuOpen()) 
+		if(IsSubmenuOpen())
 			mpHighlightedItem->GetChildMenu()->Hide();
 
         SetHighlightedItem(NULL);
@@ -106,7 +106,7 @@ namespace hpl {
 	{
 		float fLeftBorderWidth = mvGfxBorders[0]->GetImageSize().x;
 		float fRightBorderWidth = mvGfxBorders[1]->GetImageSize().x;
-		
+
 		return mvSize.x - (fLeftBorderWidth+fRightBorderWidth);
 	}
 
@@ -166,17 +166,17 @@ namespace hpl {
 		float fItemWidth = GetMenuItemWidth();
 
 		// This computes the width of all non text items
-		float fNonTextWidth =	mfItemHPadding + mfItemCheckIconSize + mfItemTextLeftPadding +  
+		float fNonTextWidth =	mfItemHPadding + mfItemCheckIconSize + mfItemTextLeftPadding +
 								mfItemTextRightPadding + mfItemArrowIconSize + mfItemHPadding;
 
 		/////////////////////////////////////////////////////////////////
 		// Update MenuItem now. This also sets up check and arrow icons and text offset
 
 		// Check if all items need to be updated with new Width (if text length is greater than the reserved width...)
-		if(afItemTextWidth > fItemWidth-fNonTextWidth) 
+		if(afItemTextWidth > fItemWidth-fNonTextWidth)
 		{
 			fItemWidth = afItemTextWidth + fNonTextWidth;
-			
+
 			for(tWidgetMenuItemVectorIt it = mvMenuItems.begin(); it != mvMenuItems.end(); ++it)
 			{
 				cWidgetMenuItem* pItem = *it;
@@ -194,7 +194,7 @@ namespace hpl {
 
 		// Set text and check icon offsets, these should not change
 		SetTextPos(cVector3f(	mfItemHPadding + mfItemCheckIconSize + mfItemTextLeftPadding,
-								mfItemVPadding, 
+								mfItemVPadding,
 								0.2f));
 		SetCheckPos(cVector3f(	mfItemHPadding,
 								mfItemVPadding,
@@ -209,12 +209,12 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-    
+
 	void cWidgetContextMenu::OnDraw(float afTimeStep, cGuiClipRegion *apClipRegion)
 	{
 		////////////////////////////////
 		// Background and borders
-		DrawBordersAndCorners(	 mpGfxBackground, mvGfxBorders, mvGfxCorners, 
+		DrawBordersAndCorners(	 mpGfxBackground, mvGfxBorders, mvGfxCorners,
 								GetGlobalPosition(),
 								mvSize);
 
@@ -225,7 +225,7 @@ namespace hpl {
 	void cWidgetContextMenu::OnUpdate(float afTimeStep)
 	{
 		////////////////////////////////////////////////
-		// Checks if should hide (ie if parent menu highlights some item other 
+		// Checks if should hide (ie if parent menu highlights some item other
 		// than this menu's parent item, or if SetMustHide(true) has been called)
 
 		if(IsVisible() && mpParentItem!=NULL && GetParentMenu()->GetHightlightedItem()!=mpParentItem)

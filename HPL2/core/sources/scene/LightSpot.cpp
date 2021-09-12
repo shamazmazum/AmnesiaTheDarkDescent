@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -34,25 +34,25 @@
 #include "system/String.h"
 
 namespace hpl {
-	
+
 	static const cMatrixf g_mtxTextureUnitFix(	0.5f,0,   0,   0.5f,
 												0,   0.5f,0,   0.5f,
 												0,   0,   0.5f,0.5f,
 												0,   0,   0,   1.0f
 												);
-			
+
 	//////////////////////////////////////////////////////////////////////////
 	// CONSTRUCTORS
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	cLightSpot::cLightSpot(tString asName, cResources *apResources) : iLight(asName,apResources)
 	{
 		mbProjectionUpdated = true;
 		mbViewProjUpdated = true;
 		mbFrustumUpdated = true;
-		
+
         mLightType = eLightType_Spot;
 
 		mpFrustum = hplNew( cFrustum, () );
@@ -70,7 +70,7 @@ namespace hpl {
 		mfCosHalfFOV = cos(mfFOV*0.5f);
 
 		mbFovUpdated = true;
-		
+
 		m_mtxView = cMatrixf::Identity;
 		m_mtxViewProj = cMatrixf::Identity;
 		m_mtxProjection = cMatrixf::Identity;
@@ -81,24 +81,24 @@ namespace hpl {
 
 		UpdateBoundingVolume();
 	}
-	
+
 	cLightSpot::~cLightSpot()
 	{
 		if(mpSpotFalloffMap) mpTextureManager->Destroy(mpSpotFalloffMap);
 
 		hplDelete(mpFrustum);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
 	// PUBLIC METHODS
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
 
 	void cLightSpot::SetRadius(float afX)
-	{ 
+	{
 		mfRadius = afX;
 
 		UpdateBoundingVolume();
@@ -109,16 +109,16 @@ namespace hpl {
 	}
 
 	void cLightSpot::SetFOV(float afAngle)
-	{ 
+	{
 		mfFOV = afAngle;
 		mbProjectionUpdated = true;
 
 		mfTanHalfFOV = tan(mfFOV*0.5f);
 		mfCosHalfFOV = cos(mfFOV*0.5f);
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	const cMatrixf& cLightSpot::GetViewMatrix()
 	{
 		if(mlViewMatrixCount != GetTransformUpdateCount())
@@ -149,17 +149,17 @@ namespace hpl {
 			float D = -1.0f;
 			float C = -(2.0f*fFar*fNear) / (fFar - fNear);
 			float Z = -(fFar + fNear)/(fFar - fNear);
-			
+
 			float X = 0;
 			float Y = 0;
-			
+
 			m_mtxProjection = cMatrixf(
 				A,0,X,0,
 				0,B,Y,0,
 				0,0,Z,C,
 				0,0,D,0);
 
-			mbProjectionUpdated = false;	
+			mbProjectionUpdated = false;
 			mbViewProjUpdated = true;
 			mbFrustumUpdated = true;
 		}
@@ -168,14 +168,14 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	const cMatrixf& cLightSpot::GetViewProjMatrix()
 	{
 		if(mlViewProjMatrixCount != GetTransformUpdateCount() || mbViewProjUpdated || mbProjectionUpdated)
 		{
 			m_mtxViewProj = cMath::MatrixMul(GetProjectionMatrix(),GetViewMatrix());
 			m_mtxViewProj = cMath::MatrixMul(g_mtxTextureUnitFix, m_mtxViewProj);
-			
+
 			mlViewProjMatrixCount = GetTransformUpdateCount();
 			mbViewProjUpdated = false;
 		}
@@ -228,7 +228,7 @@ namespace hpl {
 
 		return GetFrustum()->CollideBoundingVolume(apBV)!= eCollision_Outside;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	bool cLightSpot::CollidesWithFrustum(cFrustum *apFrustum)
@@ -241,10 +241,10 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// PRIVATE METHODS
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
 
-	
+
 	static eTextureAnimMode GetAnimMode(const tString& asType)
 	{
 		if(cString::ToLowerCase(asType) == "none") return eTextureAnimMode_None;
@@ -272,8 +272,8 @@ namespace hpl {
 		{
 			pTex = mpTextureManager->Create2D(sTexture,true);
 		}
-		
-		
+
+
 		if(pTex)
 		{
 			SetGoboTexture(pTex);
@@ -292,5 +292,5 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 }

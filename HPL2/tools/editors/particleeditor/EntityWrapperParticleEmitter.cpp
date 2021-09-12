@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -59,7 +59,7 @@ static ePEStartPosType ToStartPosType(const char *apString)
 	if(apString==NULL) return ePEStartPosType_Box;
 
 	tString sType = cString::ToLowerCase(apString);
-	
+
     if(sType == "box") return ePEStartPosType_Box;
 	else if(sType == "sphere") return ePEStartPosType_Sphere;
 
@@ -80,7 +80,7 @@ static tString StartPosTypeToString(ePEStartPosType aType)
 }
 
 	/////////////////////////
-	
+
 static eParticleEmitterCoordSystem ToCoordSystem(const char *apString)
 {
 	if(apString==NULL) return eParticleEmitterCoordSystem_World;
@@ -89,7 +89,7 @@ static eParticleEmitterCoordSystem ToCoordSystem(const char *apString)
 
 	if(sType=="world") return eParticleEmitterCoordSystem_World;
 	else if(sType=="local") return eParticleEmitterCoordSystem_Local;
-	
+
 	return eParticleEmitterCoordSystem_World;
 }
 
@@ -160,7 +160,7 @@ static tString DrawTypeToString(eEditorParticleEmitterType aType)
 
 	return "Point";
 }
-	
+
 	/////////////////////////
 
 static ePEGravityType ToGravityType(const char *apString)
@@ -201,7 +201,7 @@ static ePESubDivType ToSubDivType(const char *apString)
 
 	if(sType == "random") return ePESubDivType_Random;
 	else if(sType == "animation") return ePESubDivType_Animation;
-	
+
 	return ePESubDivType_Random;
 }
 
@@ -299,10 +299,10 @@ static tString PartSpinTypeToString(ePEPartSpinType aType)
 
 	AddFloat(ePEFloat_StartTimeOffset, "StartTimeOffset", 0);
 	AddBool(ePEBool_Respawn, "Respawn");
-	
+
 	AddFloat(ePEFloat_WarmUpTime, "WarmUpTime");
 	AddInt(ePEInt_WarmUpStepsPerSec, "WarmUpStepsPerSec", 60);
-	
+
 	AddFloat(ePEFloat_MinPauseLength, "MinPauseLength");
 	AddFloat(ePEFloat_MaxPauseLength, "MaxPauseLength");
 	AddFloat(ePEFloat_MinPauseInterval, "MinPauseInterval");
@@ -493,12 +493,12 @@ cEntityWrapperDataParticleEmitter::cEntityWrapperDataParticleEmitter(iEntityWrap
 
 	mfMinVelMaximum = 0;
 	mfMaxVelMaximum = 0;
-	
+
 	mbUsesDirection = false;
 
 	mGravityType = ePEGravityType_None;
 	mvGravityAcc = 0;
-	
+
 	mbUsePartSpin = false;
 	mPartSpinType = ePEPartSpinType_Constant;
 	mfMinSpinRange = 0;
@@ -523,7 +523,7 @@ cEntityWrapperDataParticleEmitter::cEntityWrapperDataParticleEmitter(iEntityWrap
 	mfEndRelSize = 1;
 	mfMiddleRelSizeTime = 0;
 	mfMiddleRelSizeLength = 0;
-	
+
 	mMinStartColor = 1;
 	mMaxStartColor = 1;
 	mStartRelColor = 1;
@@ -628,7 +628,7 @@ void cEntityWrapperDataParticleEmitter::CopyFromEntity(iEntityWrapper* apEntity)
 	mfMinVelMaximum = pEnt->GetMinVelMaximum();
 	mfMaxVelMaximum = pEnt->GetMaxVelMaximum();
 
-	
+
 	////////////////////////////////////////////////////
 	// Rotation
 	mbUsePartSpin = pEnt->GetUsePartSpin();
@@ -659,7 +659,7 @@ void cEntityWrapperDataParticleEmitter::CopyFromEntity(iEntityWrapper* apEntity)
 	mfEndRelSize = pEnt->GetEndRelSize();
 	mfMiddleRelSizeTime = pEnt->GetMiddleRelSizeTime();
 	mfMiddleRelSizeLength = pEnt->GetMiddleRelSizeLength();
-	
+
 	////////////////////////////////////////////////////
 	// Color
 	mMinStartColor = pEnt->GetMinStartColor();
@@ -749,12 +749,12 @@ void cEntityWrapperDataParticleEmitter::CopyToEntity(iEntityWrapper* apEntity)
 	pEnt->SetMaxStartAcc(mvMaxStartAcc);
 	pEnt->SetMinVelMaximum(mfMinVelMaximum);
 	pEnt->SetMaxVelMaximum(mfMaxVelMaximum);
-	
+
 	pEnt->SetUsesDirection(mbUsesDirection);
 
 	pEnt->SetGravityType(mGravityType);
 	pEnt->SetGravityAcc(mvGravityAcc);
-	
+
 	pEnt->SetUsePartSpin(mbUsePartSpin);
 	pEnt->SetPartSpinType(mPartSpinType);
 	pEnt->SetMinSpinRange(mfMinSpinRange);
@@ -779,7 +779,7 @@ void cEntityWrapperDataParticleEmitter::CopyToEntity(iEntityWrapper* apEntity)
 	pEnt->SetEndRelSize(mfEndRelSize);
 	pEnt->SetMiddleRelSizeTime(mfMiddleRelSizeTime);
 	pEnt->SetMiddleRelSizeLength(mfMiddleRelSizeLength);
-	
+
 	pEnt->SetMinStartColor(mMinStartColor);
 	pEnt->SetMaxStartColor(mMaxStartColor);
 	pEnt->SetStartRelColor(mStartRelColor);
@@ -877,7 +877,7 @@ void cEntityWrapperDataParticleEmitter::Load(cXmlElement* apElement)
 
 	mGravityType = GetGravityType(apElement->GetAttributeString("GravityType").c_str());
 	mvGravityAcc = apElement->GetAttributeVector3f("GravityAcc");
-	
+
 	/////////////////////////////////
 	// Rotation
 	mbUsePartSpin = apElement->GetAttributeBool("UsePartSpin");
@@ -910,12 +910,12 @@ void cEntityWrapperDataParticleEmitter::Load(cXmlElement* apElement)
 	mfEndRelSize = apElement->GetAttributeFloat("EndRelSize");
 	mfMiddleRelSizeTime = apElement->GetAttributeFloat("MiddleRelSizeTime");
 	mfMiddleRelSizeLength = apElement->GetAttributeFloat("MiddleRelSizeLength");
-	
+
 	/////////////////////////////////
 	// Color
 	mMinStartColor = apElement->GetAttributeColor("MinStartColor");
 	mMaxStartColor = apElement->GetAttributeColor("MaxStartColor");
-	
+
 	mStartRelColor = apElement->GetAttributeColor("StartRelColor");
 	mMiddleRelColor = apElement->GetAttributeColor("MiddleRelColor");
 	mEndRelColor = apElement->GetAttributeColor("EndRelColor");
@@ -950,7 +950,7 @@ void cEntityWrapperDataParticleEmitter::Load(cXmlElement* apElement)
 	mfAnimLength = apElement->GetAttributeFloat("AnimationLength");
 
 	mvSubDivAmount = apElement->GetAttributeVector2f("SubDiv");
-	mSubDivType = GetSubDivType(apElement->GetAttribute("SubDivType")); 
+	mSubDivType = GetSubDivType(apElement->GetAttribute("SubDivType"));
 }
 */
 //----------------------------------------------------------------------
@@ -1193,7 +1193,7 @@ bool cEntityWrapperParticleEmitter::GetProperty(int alPropID, cVector3f& avX)
 		avX = GetMinStartVel(); break;
 	case ePEVec3f_MaxStartVel:
 		avX = GetMaxStartVel(); break;
-	
+
 	case ePEVec3f_MinStartAcc:
 		avX = GetMinStartAcc(); break;
 	case ePEVec3f_MaxStartAcc:
@@ -1201,7 +1201,7 @@ bool cEntityWrapperParticleEmitter::GetProperty(int alPropID, cVector3f& avX)
 
 	case ePEVec3f_GravityAcc:
 		avX = GetGravityAcc(); break;
-	
+
 	case ePEVec3f_MinRevVel:
 		avX = GetMinRevVel(); break;
 	case ePEVec3f_MaxRevVel:
@@ -1479,7 +1479,7 @@ bool cEntityWrapperParticleEmitter::SetProperty(int alPropID, const cVector3f& a
 		SetMinStartVel(avX); break;
 	case ePEVec3f_MaxStartVel:
 		SetMaxStartVel(avX); break;
-	
+
 	case ePEVec3f_MinStartAcc:
 		SetMinStartAcc(avX); break;
 	case ePEVec3f_MaxStartAcc:
@@ -1487,7 +1487,7 @@ bool cEntityWrapperParticleEmitter::SetProperty(int alPropID, const cVector3f& a
 
 	case ePEVec3f_GravityAcc:
 		SetGravityAcc(avX); break;
-	
+
 	case ePEVec3f_MinRevVel:
 		SetMinRevVel(avX); break;
 	case ePEVec3f_MaxRevVel:

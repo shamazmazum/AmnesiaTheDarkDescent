@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -79,11 +79,11 @@ public:
 	{
 
 	}
-	
+
 	void AfterLoad(cXmlElement *apRootElem, const cMatrixf &a_mtxTransform,cWorld *apWorld, cResourceVarsObject *apInstanceVars)
 	{
 		gvBodies = mvBodies;
-		
+
 		gvBodyStartMatrix.resize(gvBodies.size());
 		for(size_t i=0; i<gvBodies.size(); ++i)
 		{
@@ -151,10 +151,10 @@ public:
 
 	void DrawSkeletonRec(cRendererCallbackFunctions *apFunctions, cNode3D *apBoneState)
 	{
-		cVector3f vCameraSpacePos = cMath::MatrixMul(apFunctions->GetFrustum()->GetViewMatrix(), apBoneState->GetWorldPosition());		
+		cVector3f vCameraSpacePos = cMath::MatrixMul(apFunctions->GetFrustum()->GetViewMatrix(), apBoneState->GetWorldPosition());
 		float fSize = cMath::Min(-0.01f * vCameraSpacePos.z, 0.03f);
 		apFunctions->GetLowLevelGfx()->DrawSphere(apBoneState->GetWorldPosition(),fSize,cColor(1,0,0,1));
-		
+
 		//Draw bone bounding radii
 		/*int lBoneIdx = gpEntity->GetBoneStateIndexFromPtr(static_cast<cBoneState*>(apBoneState));
 		if(lBoneIdx >0)
@@ -162,8 +162,8 @@ public:
 			float fRadius = gpEntity->GetMesh()->GetBoneBoundingRadius(lBoneIdx);
 			apFunctions->GetLowLevelGfx()->DrawSphere(apBoneState->GetWorldPosition(),fRadius,cColor(0,1,0,1));
 		}*/
-		
-		
+
+
 		cNode3DIterator it = apBoneState->GetChildIterator();
 		while(it.HasNext())
 		{
@@ -172,7 +172,7 @@ public:
 			DrawSkeletonRec(apFunctions, pChild);
 		}
 	}
-	
+
 	void OnPostSolidDraw(cRendererCallbackFunctions *apFunctions)
 	{
 		apFunctions->SetDepthTest(true);
@@ -197,14 +197,14 @@ public:
 				cSubMeshEntity *pSubEnt = gpEntity->GetSubMeshEntity(i);
 				cSubMesh *pSubMesh = pSubEnt->GetSubMesh();
 				iVertexBuffer *pVtxBuff = pSubMesh->GetVertexBuffer();
-				
+
 				tIntVec vVtxBindCount;
 				vVtxBindCount.resize(pVtxBuff->GetVertexNum(), 0);
 
 				for(int i=0; i<pSubMesh->GetVertexBonePairNum(); ++i)
 				{
 					cVertexBonePair *pPair = &pSubMesh->GetVertexBonePair(i);
-					
+
                     vVtxBindCount[pPair->vtxIdx]++;
 				}
 
@@ -220,11 +220,11 @@ public:
 
 					float *pNrm = &pNrmArray[i * pVtxBuff->GetElementNum(eVertexBufferElement_Normal)];
 					cVector3f vNrm(pNrm[0],pNrm[1],pNrm[2]);
-                    
+
 					vPos = cMath::MatrixMul(pSubEnt->GetWorldMatrix(), vPos);
 					cVector3f vCamPos = cMath::MatrixMul(gpSimpleCamera->GetCamera()->GetViewMatrix(), vPos);
 
-					// Check if bad 
+					// Check if bad
 					bool bTooManyBinds = lCount > 4;
 
 					float fSqrLen = vNrm.SqrLength();
@@ -239,7 +239,7 @@ public:
 					else if(bBadNormal)
 						apFunctions->GetLowLevelGfx()->DrawSphere(vPos,fRadius, cColor(0,1,0));
 				}
-  			}	
+  			}
 		}
 
 		if(gbDrawBoundingBox)
@@ -249,10 +249,10 @@ public:
 			for(int i=0; i<gpEntity->GetSubMeshEntityNum(); ++i)
 			{
 				cSubMeshEntity *pSubEnt = gpEntity->GetSubMeshEntity(i);
-				
+
 				cBoundingVolume *pBV = pSubEnt->GetBoundingVolume();
 				apFunctions->GetLowLevelGfx()->DrawBoxMinMax(pBV->GetMin(),pBV->GetMax(), cColor(1,1));
-				
+
 				cVector3f vLocalCenter = (pBV->GetLocalMin() + pBV->GetLocalMax())/2.0f;
 
 				cVector3f  vWorldCenter;
@@ -298,18 +298,18 @@ public:
 			float fStart = fSize *0.5f * (float)lNum + fSize;
 			float fEnd = fSize *0.5f* (float)-lNum - fSize;
 			float fY = 0;//gpFloor->GetWorldPosition().y + 0.05f;
-			
+
 			for(int i=-lNum/2; i<lNum/2+1;++i)
 			{
 				float fPos = fSize * (float)i;
 				apFunctions->GetLowLevelGfx()->DrawLine(cVector3f(fPos,fY,fStart),cVector3f(fPos,fY,fEnd),cColor(0.5f,1));
 				apFunctions->GetLowLevelGfx()->DrawLine(cVector3f(fStart,fY,fPos),cVector3f(fEnd,fY,fPos),cColor(0.5f,1));
 			}
-			
+
 		}
 
 		//apFunctions->GetLowLevelGfx()->DrawBoxMinMax(gpEntity->GetBoundingVolume()->GetMin(),gpEntity->GetBoundingVolume()->GetMax(),cColor(1,1,1,1));
-		
+
 		if(gbPhysicsActive && gbDrawPhysicsDebug)
 		{
 			mpPhysicsWorld->RenderDebugGeometry(apFunctions->GetLowLevelGfx(),cColor(1,1,1,1));
@@ -319,7 +319,7 @@ public:
 			{
 				iPhysicsJoint *pJoint = gvJoints[i];
 				if(mpPhysicsWorld->JointExists(pJoint)==false) continue;
-                
+
 				cVector3f vPivot = pJoint->GetPivotPoint();
 				apFunctions->GetLowLevelGfx()->DrawSphere(vPivot,0.2f,cColor(1,0,0,1));
 				apFunctions->GetLowLevelGfx()->DrawLine(vPivot,vPivot + pJoint->GetPinDir()*0.25 ,cColor(0,1,0,1));
@@ -336,12 +336,12 @@ public:
 			apFunctions->SetDepthTest(true);
 		}
    	}
-	
+
 	void OnPostTranslucentDraw(cRendererCallbackFunctions *apFunctions)
 	{
 
 	}
-	
+
 	cWorld *mpWorld;
 	iPhysicsWorld *mpPhysicsWorld;
 	cBodyPicker *mpBodyPicker;
@@ -375,7 +375,7 @@ public:
 		mpCBLightCastShadows = NULL;
 		mpCBPhysicsActive = NULL;
 		mpCBRotateModel = NULL;
-		
+
 		////////////////////////////////
 		// Rendering setup
 		gpEngine->GetResources()->GetMaterialManager()->SetTextureFilter(eTextureFilter_Trilinear);
@@ -388,7 +388,7 @@ public:
 		////////////////////////////////
 		// Create world
 		mpWorld = gpEngine->GetScene()->CreateWorld("Test");
-		
+
 		////////////////////////////////
 		// Create physics world
 		gpEngine->GetPhysics()->LoadSurfaceData("materials.cfg");
@@ -400,12 +400,12 @@ public:
 
 		mpWorld->SetPhysicsWorld(mpPhysicsWorld);
 
-		
+
 		////////////////////////////////
 		// Setup sky box
 		mpWorld->SetSkyBoxColor(cColor(0.0f, 1.0f));
 		mpWorld->SetSkyBoxActive(true);
-		
+
 		////////////////////////////////
 		// Render callback
 		renderCallback.mpWorld = mpWorld;
@@ -416,7 +416,7 @@ public:
 		// Create meshes
 		cMesh *pMesh =NULL;
 		cMeshEntity *pBox = NULL;
-				
+
 		/////////////////
 		//Floor
 		pMesh = gpEngine->GetResources()->GetMeshManager()->CreateMesh("modelview_rect.dae");
@@ -440,12 +440,12 @@ public:
 		cMatrixf mtxOffset = cMath::MatrixTranslate(cVector3f(0,-0.05f,0));
 		iCollideShape *pShape = mpPhysicsWorld->CreateBoxShape(cVector3f(12,0.1f, 12),&mtxOffset);
 		gpFloorBody = mpPhysicsWorld->CreateBody("Floor", pShape);
-		
-		
+
+
 		/////////////////
 		//Entity
 		gpEntity = NULL;
-		if(gsModelFile != "") 
+		if(gsModelFile != "")
 			LoadModel(gsModelFile);
 		else
 			mpLowLevelGraphics->SetWindowCaption("ModelView - No model loaded!");
@@ -462,7 +462,7 @@ public:
 
 			pLightSpot = mpWorld->CreateLightSpot("SpotLight"+cString::ToString(i),"");
 			pLightSpot->SetDiffuseColor(cColor(1,1,1,1.0f));
-			
+
 			//Key
 			if(i==0)
 			{
@@ -485,7 +485,7 @@ public:
 				pLightSpot->SetVisible(false);
 				vPos = cVector3f(-1,4,-6);
 			}
-			
+
 			//Rest
 			pLightSpot->SetFOV(cMath::ToRad(110.0f));
 			pLightSpot->SetAspect(1.0f);
@@ -505,7 +505,7 @@ public:
 		gpLightBox->SetSize(cVector3f(50.0f));
 		gpLightBox->SetDiffuseColor(cColor(0.35f,1.0f));
 
-			
+
 		/////////////////////////////////
 		// Compile world
 		mpWorld->Compile(false);
@@ -515,13 +515,13 @@ public:
 
 		mpTexDiffuseNull = gpEngine->GetResources()->GetTextureManager()->Create2D("modelview_diffuse_null.jpg",true);
 		mpTexNMapNull = gpEngine->GetResources()->GetTextureManager()->Create2D("modelview_nmap_null.jpg",true);
-		
+
 		/////////////////////////////////
 		// Init variables
 		msCurrentFilePath = _W("");
 		mfModelRotation =0;
 	}
-	
+
 	//--------------------------------------------------------------
 
 	void SetupView()
@@ -567,10 +567,10 @@ public:
 
 		for(size_t i=0; i< mvMaterialData.size(); ++i)
 		{
-			
+
 			if(mvMaterialData[i].msName == sProperName) return &mvMaterialData[i];
 		}
-		
+
 		if(abShowErrorMess)
 		{
 			cPlatform::CreateMessageBox(_W("Error!"),_W("Could not find material data for '%ls'\n"), cString::To16Char(asName).c_str());
@@ -587,10 +587,10 @@ public:
 		case eMaterialTexture_Diffuse:	vExt.push_back(_W(""));
 										break;
 		case eMaterialTexture_Alpha:	vExt.push_back(_W("alpha"));
-										break;	
+										break;
 		case eMaterialTexture_NMap:		vExt.push_back(_W("nrm"));
 										vExt.push_back(_W("bump"));
-										break;	
+										break;
 		case eMaterialTexture_Height:	vExt.push_back(_W("height"));
 										break;
 		case eMaterialTexture_Illumination:		vExt.push_back(_W("illum"));
@@ -610,31 +610,31 @@ public:
 	{
 		/////////////////////////
 		// Get the paths
-		tWString sPath = gpEngine->GetResources()->GetFileSearcher()->GetFilePath(pMesh->GetName());		
+		tWString sPath = gpEngine->GetResources()->GetFileSearcher()->GetFilePath(pMesh->GetName());
 		if(sPath == _W("")){
 			FatalError("Could not find path for mesh file '%s'\n", pMesh->GetName().c_str());
 		}
-		
+
 		tWString sDir = cString::GetFilePathW(sPath);
 		tWString sMatPath = cString::SetFilePathW(cString::To16Char(asName), sDir);
 
 		Log("Creating material file: '%s'\n", cString::To8Char(sMatPath).c_str());
-		
+
 		/////////////////////////
 		// Create Xml document
 		iXmlDocument *pXmlDoc = gpEngine->GetResources()->GetLowLevel()->CreateXmlDocument("Material");
-		
+
 		/////////////////////////
 		// Main
 		cXmlElement *pMainElem = pXmlDoc->CreateChildElement("Main");
 		pMainElem->SetAttributeString("Type","SolidDiffuse");
 		pMainElem->SetAttributeString("PhysicsMaterial","Default");
 		pMainElem->SetAttributeString("DepthTest", "True");
-		
+
 		/////////////////////////
 		// TextureUnits
 		cXmlElement *pTexUnitsElem = pXmlDoc->CreateChildElement("TextureUnits");
-		
+
 		//Iterate the texture types
 		for(int i=0; i<eMaterialTexture_LastEnum; ++i)
 		{
@@ -643,7 +643,7 @@ public:
 			eMaterialTexture textureType = (eMaterialTexture)i;
 			tString sElementName = gpEngine->GetResources()->GetMaterialManager()->GetTextureString(textureType);
 			tWStringVec vExt = GetTextureExtensions(textureType);
-			
+
 			///////////////////////
 			//Get the file name
 			bool bFoundFile = false;
@@ -657,7 +657,7 @@ public:
 					if(vExt[j] != _W("")) sFilePath += _W("_") + vExt[j];
 					sFilePath =	cString::SetFilePathW(sFilePath, sDir);
 					sFilePath = cString::SetFileExtW(sFilePath, cString::To16Char(*it));
-					
+
 					//Log("Test: '%s'\n",cString::To8Char(sFilePath).c_str());
 					if(cPlatform::FileExists(sFilePath))
 					{
@@ -697,12 +697,12 @@ public:
 			{
 				cMaterialUserVariable* pUserVar = pMatType->GetUserVariable(i);
 				cXmlElement *pVarElem = pSpecificVariablesElem->CreateChildElement("Var");
-				
+
 				pVarElem->SetAttributeString("Name", pUserVar->msName);
 				pVarElem->SetAttributeString("Value", pUserVar->msValue);
 			}
 		}
-		
+
 
 		/////////////////////////
 		// Save
@@ -711,9 +711,9 @@ public:
 
 		gpEngine->GetResources()->AddResourceDir(sDir, false, "*.*");
 	}
-	
+
 	//--------------------------------------------------------------
-	
+
 	bool DirectoryHasImageFile(const tWString& asPath, const tString& asMatName)
 	{
 		tWString sFileName = cString::To16Char(cString::SetFilePath(cString::SetFileExt(asMatName,""),""));
@@ -724,19 +724,19 @@ public:
 		for(tStringVecIt it = apFileFormatsVec->begin();it!=apFileFormatsVec->end();++it)
 		{
 			tWString sNewName = cString::SetFileExtW(sFilePath,cString::To16Char(*it));
-			
+
 			if(cPlatform::FileExists(sNewName))
 			{
 				Log("  Found texture '%s'\n", cString::To8Char(sNewName).c_str());
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
 	//--------------------------------------------------------------
-	
+
 	void LoadMaterialData(cMesh *pMesh)
 	{
 		mvMaterialData.clear();
@@ -772,14 +772,14 @@ public:
 			if(pExistingMatData)
 			{
 				Log(" Already found material data!\n");
-				if(pMat==NULL) 
+				if(pMat==NULL)
 				{
 					pExistingMatData->mpMat->IncUserCount();
 					pSubMesh->SetMaterial(pExistingMatData->mpMat);
 				}
 				continue;
 			}
-			
+
 			mvMaterialData.push_back(cMaterialData());
 			cMaterialData *pMatData = &mvMaterialData[mvMaterialData.size()-1];
 			pMatData->msName =  cString::GetFileName(cString::SetFileExt(sMatName,""));
@@ -804,19 +804,19 @@ public:
 
 				tString sMeshPath = cString::GetFilePath(cString::To8Char(pMesh->GetFullPath()));
 				tString sMatPath = cString::SetFilePath(sMatName, sMeshPath);
-				
+
 				pMat = gpEngine->GetResources()->GetMaterialManager()->CreateMaterial(sMatPath);
 				if(pMat==NULL) FatalError("Created material '%s' could not be loaded!\n",sMatPath.c_str());
 
 				pMatData->mpMat = pMat;
 				pSubMesh->SetMaterial(pMat);
-				
+
 				for(int j=0; j<eMaterialTexture_LastEnum; ++j)
 				{
 					pMatData->mvMaterialTextures[j] = pMat->GetTexture((eMaterialTexture)j);
 				}
-				
-			}	
+
+			}
 		}
 	}
 
@@ -835,13 +835,13 @@ public:
 			{
 				mpPhysicsWorld->DestroyBody(gvBodies[i]);
 			}
-			
+
 			for(size_t i=0; i<gvSoundEntities.size(); ++i)
 				mpWorld->DestroySoundEntity(gvSoundEntities[i]);
-			
+
 			for(size_t i=0; i<gvParticleSystems.size(); ++i)
 				mpWorld->DestroyParticleSystem(gvParticleSystems[i]);
-			
+
 			for(size_t i=0; i<gvBillboards.size(); ++i)
 				mpWorld->DestroyBillboard(gvBillboards[i]);
 
@@ -877,7 +877,7 @@ public:
 			if(pMesh==NULL) FatalError("Could not load '%s'\n", asFileName.c_str());
 			gpEntity = mpWorld->CreateMeshEntity("Model",pMesh,false);
 			gpEntity->SetRenderFlagBit(eRenderableFlag_ShadowCaster, true);
-			
+
 			cMatrixf mtxTransform = cMatrixf::Identity;
 			//mtxTransform = cMath::MatrixScale(0.848f);
 			//mtxTransform = cMath::MatrixRotate(cVector3f(0,kPi2f,0),eEulerRotationOrder_XYZ);
@@ -896,7 +896,7 @@ public:
 			//mtxTransform = cMath::MatrixScale(0.3f);
 			//mtxTransform = cMath::MatrixRotate(cVector3f(0,kPi2f,0),eEulerRotationOrder_XYZ);
 			//mtxTransform.SetTranslation(cVector3f(0,1,0));
-			
+
 			gpEntity = (cMeshEntity*)mpWorld->CreateEntity("Model",mtxTransform,asFileName,-1,true, cVector3f(1.0f) );
 			if(gpEntity==NULL) FatalError("Could not load '%s'\n", asFileName.c_str());
 			pMesh = gpEntity->GetMesh();
@@ -904,7 +904,7 @@ public:
 
 		gpFloor->SetPosition(cVector3f(0,gpEntity->GetBoundingVolume()->GetMin().y - 0.5f ,0));
 		gpFloorBody->SetPosition(gpFloor->GetWorldPosition());
-		
+
 		if(pMesh)
 		{
 			LoadMaterialData(pMesh);
@@ -917,7 +917,7 @@ public:
 		{
 			gpEntity->Play(glCurrentAnimaiton,true,true);
 		}
-		
+
 		///////////////////////////////
 		// If skeleton and no animation turn on skeleton physics
 		if(pMesh->GetSkeleton() && gpEntity->GetAnimationStateNum()>0)
@@ -946,12 +946,12 @@ public:
 			cSubMeshEntity *pSubEnt = gpEntity->GetSubMeshEntity(i);
 			cSubMesh *pSubMesh = pMesh->GetSubMesh(i);
 			int lPolygons = pSubMesh->GetVertexBuffer()->GetVertexNum()/3;
-			
+
 			Log("   Name: '%s' \n", pSubMesh->GetName().c_str());
 			Log("   Material: '%s' \n", pSubMesh->GetMaterialName().c_str());
 			Log("   Polycount: %d\n", lPolygons);
 			Log("   -----\n");
-			
+
 			lTotalPolygons += lPolygons;
 		}
 		Log("  Total Polycount: %d\n", lTotalPolygons);
@@ -963,7 +963,7 @@ public:
 			Log("   Name: '%s' Parent: '%s'\n",pNode->GetName().c_str(), pParent ? pParent->GetName().c_str() : "None");
 			Log("    Local Transform: %s\n", pNode->GetLocalMatrix().ToString().c_str());
 		}
-		
+
 		//ANIMATION DATA
         if(pMesh->GetAnimationNum() > 0)
 		{
@@ -973,7 +973,7 @@ public:
 			for(int i=0; i<pMesh->GetAnimationNum(); ++i)
 			{
 				cAnimation *pAnim = pMesh->GetAnimation(i);
-				
+
 				Log("  Name: '%s'\n", pAnim->GetName().c_str());
 				Log("  Tracks: %d\n", pAnim->GetTrackNum());
 				Log("  Length: %f\n", pAnim->GetLength());
@@ -1051,18 +1051,18 @@ public:
 						pKnee1Frame->rotation.v.z / pKnee2Frame->rotation.v.z, pKnee1Frame->rotation.w / pKnee2Frame->rotation.w
 						);
 				}*/
-				
+
 
 
 				Log(" -----\n");
 			}
 
-			
+
 		}
 
-		
 
-		
+
+
 
 
 		//SKELETON DATA
@@ -1079,17 +1079,17 @@ public:
 
 				Log("   Name: '%s' Pos: (%s)\n", pBone->GetName().c_str(), pBone->GetLocalTransform().GetTranslation().ToString().c_str());
 				//Log("   BindPos: %s\n", pBone->GetLocalTransform().ToString().c_str());
-			
+
 				//Log(" -----\n");
 			}
 		}
-		
+
 
 
 		Log("---------------------------------------\n");
 
 	}
-	
+
 	//--------------------------------------------------------------
 
 	void CreatePhysicaModelFromMesh(cMesh *apMesh, cMeshEntity *apEntity, const cMatrixf& a_mtxTransform)
@@ -1118,7 +1118,7 @@ public:
 			else
 			{
 				iCollideShape *pShape = pSubMesh->CreateCollideShape(mpPhysicsWorld);
-				
+
 				if(pShape != NULL)
 				{
 					pBody = mpPhysicsWorld->CreateBody("Body",pShape);
@@ -1129,7 +1129,7 @@ public:
 			if(pBody==NULL) continue;
 
 			pBody->SetMass(0);
-			
+
 			gvBodies.push_back(pBody);
 
 			gvBodyStartMatrix.push_back(pBody->GetWorldMatrix());
@@ -1139,7 +1139,7 @@ public:
 	//--------------------------------------------------------------
 
 	void InitGuiAfterLoad()
-	{	
+	{
 		if(gpEntity==NULL) return;
 	}
 
@@ -1148,7 +1148,7 @@ public:
 	void ResetEntitySubMeshes()
 	{
 		if(gpEntity == NULL) return;
-		
+
 		cMesh *pMesh = gpEntity->GetMesh();
 		for(int i=0; i< pMesh->GetSubMeshNum(); ++i)
 		{
@@ -1160,11 +1160,11 @@ public:
 
 			for(int j=0; j<eMaterialTexture_LastEnum; ++j)
 			{
-				pMat->SetTexture((eMaterialTexture)j, pMatData->mvMaterialTextures[j]);				
+				pMat->SetTexture((eMaterialTexture)j, pMatData->mvMaterialTextures[j]);
 			}
 		}
 	}
-	
+
 	//--------------------------------------------------------------
 
 	void SetupMaterialTextureCheckBoxes()
@@ -1187,11 +1187,11 @@ public:
 
 			cMaterialData *pMatData = GetMaterialData(pSubMesh->GetMaterialName(), true);
 			if(pMatData == NULL)continue;
-			
+
 			for(int j=0; j<eMaterialTexture_LastEnum; ++j)
 			{
 				//If any sub mesh has this texture, enable the check button.
-				if(pMatData->mvMaterialTextures[j]) 
+				if(pMatData->mvMaterialTextures[j])
 				{
 					mpCBMaterialTexture[j]->SetEnabled(true);
 					mpCBMaterialTexture[j]->SetChecked(true);
@@ -1210,7 +1210,7 @@ public:
 		for(int i=0; i<gpEntity->GetAnimationStateNum(); ++i)
 		{
 			cAnimationState *pAnimation = gpEntity->GetAnimationState(i);
-            
+
 			mpCBAnimations->AddItem(cString::To16Char(pAnimation->GetName()).c_str());
 		}
 
@@ -1255,7 +1255,7 @@ public:
 		if(gvBodies.empty()) return;
 
 		SetRagdollActive(gbPhysicsActive);
-		
+
 		if(gbPhysicsActive)
 		{
 			for(size_t i=0; i<gvBodies.size(); ++i)
@@ -1277,7 +1277,7 @@ public:
 				//pBody->SetMatrix(gvBodyStartMatrix[i]);
 			}
 		}
-		
+
 		if(gpEntity) gpEntity->SetMatrix(cMatrixf::Identity);
 		mfModelRotation =0;
 	}
@@ -1307,7 +1307,7 @@ public:
 		vGroupSize.x = vSize.x - 20;
 		cVector3f vPos = cVector3f(pSet->GetVirtualSize().x - vSize.x - 3, 3, 0);
 		mpOptionWindow = pSet->CreateWidgetWindow(0,vPos,vSize,_W("ModelView Toolbar") );
-		
+
 		///////////////////////////
 		//Frame
 		cWidgetFrame *pRootFrame = pSet->CreateWidgetFrame(cVector3f(5, 30, 0.1f), cVector2f(vSize.x-10, vSize.y-40), true, mpOptionWindow,false,true);
@@ -1350,7 +1350,7 @@ public:
 			pCheckBox = pSet->CreateWidgetCheckBox(vGroupPos,vCheckSize,_W("Draw grid"),pGroup);
 			pCheckBox->SetChecked(gbDrawGrid);
 			pCheckBox->AddCallback(eGuiMessage_CheckChange,this, kGuiCallback(ChangeDrawGrid));
-			
+
 			cVector3f vAddPos(vCheckSize.x, 0,0);
 			pCheckBox = pSet->CreateWidgetCheckBox(vGroupPos + vAddPos,vCheckSize,_W("Draw axes"),pGroup);
 			pCheckBox->SetChecked(gbDrawAxes);
@@ -1361,7 +1361,7 @@ public:
 			pCheckBox = pSet->CreateWidgetCheckBox(vGroupPos,vCheckSize,_W("Draw floor"),pGroup);
 			pCheckBox->SetChecked(gpFloor->IsVisible());
 			pCheckBox->AddCallback(eGuiMessage_CheckChange,this, kGuiCallback(ChangeDrawFloor));
-			
+
 			vGroupPos.y += 22;
 
 			pCheckBox = pSet->CreateWidgetCheckBox(vGroupPos,vCheckSize,_W("Show bad vertices"),pGroup);
@@ -1381,7 +1381,7 @@ public:
 			pComboBox->SetSelectedItem(0);
 			pComboBox->AddCallback(eGuiMessage_SelectionChange,this, kGuiCallback(ChangeBackgroundColor));
 			vGroupPos.y += 22;
-			
+
 			//Group end
 			vGroupSize.y = vGroupPos.y + 5;
 			pGroup->SetSize(vGroupSize);
@@ -1574,7 +1574,7 @@ public:
 			pSlider->SetValue( (int)(gpLightBox->GetDiffuseColor().r * 255.0 + 0.5f));
 			pLabel = pSet->CreateWidgetLabel(vGroupPos, vSize, _W("Intensity:"), pGroup);
 			vGroupPos.y += 22;
-			
+
 			vGroupPos.y += 5;
 
 			//Light Active
@@ -1594,7 +1594,7 @@ public:
 			pCheckBox->SetChecked(gbDrawGrid);
 			pCheckBox->AddCallback(eGuiMessage_CheckChange,this, kGuiCallback(ChangeLightVisible));
 			mpCBLightVisible = pCheckBox;
-			
+
 			//Shadows
 			cVector3f vAddPos(vCheckSize.x, 0,0);
 			pCheckBox = pSet->CreateWidgetCheckBox(vGroupPos + vAddPos,vCheckSize,_W("Shadows"),pGroup);
@@ -1623,21 +1623,21 @@ public:
 			}
 
 			pComboBox->SetSelectedItem(0);
-			
-			
-					
+
+
+
 			//Group end
 			vGroupSize.y = vGroupPos.y + 5;
 			pGroup->SetSize(vGroupSize);
 			vPos.y += vGroupSize.y + 15;
 		}
-				
-		
+
+
 		InitGuiAfterLoad();
 	}
-	
+
 	//--------------------------------------------------------------
-	
+
 	bool PressLoadModel(iWidget* apWidget,const cGuiMessageData& aData)
 	{
 		mvPickedFiles.clear();
@@ -1649,7 +1649,7 @@ public:
 
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,PressLoadModel)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,PressLoadModel)
 
 	bool PressReload(iWidget* apWidget,const cGuiMessageData& aData)
 	{
@@ -1662,9 +1662,9 @@ public:
 
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,PressReload)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,PressReload)
 
-	
+
 	bool LoadModelFromFilePicker(iWidget* apWidget,const cGuiMessageData& aData)
 	{
 		if(mvPickedFiles.empty()) return true;
@@ -1673,40 +1673,40 @@ public:
 
 		msCurrentFilePath = cString::GetFilePathW(sFilePath);
 		gpEngine->GetResources()->AddResourceDir(msCurrentFilePath,false);
-		
+
 		gsModelFile = cString::To8Char(sFilePath);
-		LoadModel(gsModelFile);  
+		LoadModel(gsModelFile);
 		SetupMaterialTextureCheckBoxes();
 		SetupAnimationComboBox();
 		InitGuiAfterLoad();
 
-		return true;		
+		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,LoadModelFromFilePicker)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,LoadModelFromFilePicker)
 
 
 	//--------------------------------------------------------------
-	
+
 	bool ChangeDrawGrid(iWidget* apWidget,const cGuiMessageData& aData)
 	{
 		gbDrawGrid = aData.mlVal == 1;
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeDrawGrid)  
-	
+	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeDrawGrid)
+
 	bool ChangeDrawAxes(iWidget* apWidget,const cGuiMessageData& aData)
 	{
 		gbDrawAxes = aData.mlVal == 1;
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeDrawAxes)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeDrawAxes)
 
 	bool ChangeDrawFloor(iWidget* apWidget,const cGuiMessageData& aData)
 	{
 		gpFloor->SetVisible(aData.mlVal == 1);
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeDrawFloor)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeDrawFloor)
 
 	bool ChangeShowInvalidVertices(iWidget* apWidget,const cGuiMessageData& aData)
 	{
@@ -1714,7 +1714,7 @@ public:
 		return true;
 	}
 	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeShowInvalidVertices)
-	
+
 	bool ChangeBackgroundColor(iWidget* apWidget,const cGuiMessageData& aData)
 	{
 		cColor gvBGColors[] = {cColor(0,1),cColor(0.5f,1),cColor(1,1) };
@@ -1730,14 +1730,14 @@ public:
 		gpLightBox->SetVisible(gbAmbientLight);
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeAmbientLight)  
-	
+	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeAmbientLight)
+
 	bool ChangeAmbientColor(iWidget* apWidget,const cGuiMessageData& aData)
 	{
 		gpLightBox->SetDiffuseColor(cColor( ((float)aData.mlVal) / 255.0f, 1.0f ));
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeAmbientColor)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeAmbientColor)
 
 	bool ChangeSSAOActive(iWidget* apWidget,const cGuiMessageData& aData)
 	{
@@ -1749,7 +1749,7 @@ public:
 	}
 	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeSSAOActive)
 
-		
+
 	bool ChangeBloomActive(iWidget* apWidget,const cGuiMessageData& aData)
 	{
 		gpPostEffectComp->GetPostEffect(0)->SetActive(aData.mlVal == 1);
@@ -1767,7 +1767,7 @@ public:
 
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeRotateModel) 
+	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeRotateModel)
 
 	bool ChangeShowAABB(iWidget* apWidget,const cGuiMessageData& aData)
 	{
@@ -1775,24 +1775,24 @@ public:
 
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeShowAABB) 	
+	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeShowAABB)
 
-	
+
 	bool ChangeMaterialTexture(iWidget* apWidget,const cGuiMessageData& aData)
 	{
 		if(gpEntity==NULL) return true;
-		
+
 		eMaterialTexture texType = (eMaterialTexture)apWidget->GetUserValue();
-		
+
 		cMesh *pMesh = gpEntity->GetMesh();
 		for(int i=0; i< pMesh->GetSubMeshNum(); ++i)
 		{
 			cSubMesh *pSubMesh = pMesh->GetSubMesh(i);
 			cMaterial *pMat = pSubMesh->GetMaterial();
-			
+
 			cMaterialData *pMatData = GetMaterialData(pSubMesh->GetMaterialName(), true);
 			if(pMatData == NULL) continue;
-			
+
 			if(aData.mlVal == 1)
 			{
 				pMat->SetTexture(texType, pMatData->mvMaterialTextures[texType]);
@@ -1803,14 +1803,14 @@ public:
 				else if(texType == eMaterialTexture_NMap)	pMat->SetTexture(texType,mpTexNMapNull);
 				else										pMat->SetTexture(texType,NULL);
 			}
-			
+
 			pMat->Compile();
 		}
 
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeMaterialTexture) 
-		
+	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeMaterialTexture)
+
 
 
 	//--------------------------------------------------------------
@@ -1837,22 +1837,22 @@ public:
 		return true;
 	}
 	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeCurrentLight)
-	
+
 	bool ChangeLightVisible(iWidget* apWidget,const cGuiMessageData& aData)
 	{
 		gvLights[mlCurrentLight]->SetVisible(aData.mlVal == 1);
 		return true;
 	}
-	
+
 	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeLightVisible)
-	
+
 	bool ChangeLightShadow(iWidget* apWidget,const cGuiMessageData& aData)
 	{
 		gvLights[mlCurrentLight]->SetCastShadows(aData.mlVal == 1);
 		return true;
 	}
 	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeLightShadow)
-	
+
 	bool ChangeLightColor(iWidget* apWidget,const cGuiMessageData& aData)
 	{
 		cColor aCol = gvLights[mlCurrentLight]->GetDiffuseColor();
@@ -1862,32 +1862,32 @@ public:
 		aCol.v[lIdx] = fVal;
 
 		gvLights[mlCurrentLight]->SetDiffuseColor(aCol);
-			
+
 		return true;
 	}
 	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeLightColor)
-	
+
 
 	//--------------------------------------------------------------
-	
+
 	bool ChangeDrawDebug(iWidget* apWidget,const cGuiMessageData& aData)
 	{
 		gbDrawPhysicsDebug = aData.mlVal == 1;
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeDrawDebug)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeDrawDebug)
 
-		
+
 	bool ChangePhysicsActive(iWidget* apWidget,const cGuiMessageData& aData)
 	{
 		gbPhysicsActive = aData.mlVal == 1;
 		SetPhysicsActive(gbPhysicsActive);
-		
+
 		if(gbPhysicsActive) mpCBRotateModel->SetChecked(false);
 
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,ChangePhysicsActive)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,ChangePhysicsActive)
 
 	bool ChangeAccuracy(iWidget* apWidget,const cGuiMessageData& aData)
 	{
@@ -1897,16 +1897,16 @@ public:
 	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeAccuracy)
 
 	//--------------------------------------------------------------
-	
+
 	bool ChangeDrawSkeleton(iWidget* apWidget,const cGuiMessageData& aData)
 	{
 		gbDrawSkeleton = aData.mlVal == 1;
 
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeDrawSkeleton)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeDrawSkeleton)
 
-		
+
 	bool PressAddAnimation(iWidget* apWidget,const cGuiMessageData& aData)
 	{
 		if(gpEntity == NULL) return true;
@@ -1918,10 +1918,10 @@ public:
 		pPicker->AddFilter(lCat,_W("*.dae_anim"));
 		pPicker->AddFilter(lCat,_W("*.fbx"));
 
-		
+
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,PressAddAnimation)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,PressAddAnimation)
 
 	bool LoadAnimationFromFilePicker(iWidget* apWidget,const cGuiMessageData& aData)
 	{
@@ -1933,7 +1933,7 @@ public:
 		gpEngine->GetResources()->AddResourceDir(msCurrentFilePath,false);
 
 		tString sAnimFile = cString::To8Char(cString::GetFileNameW(sFilePath));
-		
+
 		cAnimation *pAnim = gpEngine->GetResources()->GetAnimationManager()->CreateAnimation(sAnimFile);
 		if(pAnim == NULL)
 		{
@@ -1947,18 +1947,18 @@ public:
 		gpEntity->GetAnimationState(lAnimNum-1)->SetLoop(true);
 
 		SetupAnimationComboBox();
-		
-		return true;		
+
+		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,LoadAnimationFromFilePicker)  
-	
+	kGuiCallbackFuncEnd(cSimpleUpdate,LoadAnimationFromFilePicker)
+
 	bool ChangeAnimation(iWidget* apWidget,const cGuiMessageData& aData)
 	{
 		if(gpEntity == NULL) return true;
 		if(gpEntity->GetAnimationStateNum() <=0) return true;
-		
+
 		glCurrentAnimaiton = aData.mlVal;
-		
+
 		if(glAnimationState != 0 && glCurrentAnimaiton > 0 && glCurrentAnimaiton < gpEntity->GetAnimationStateNum())
 		{
 			for(int i=0; i<gpEntity->GetAnimationStateNum(); ++i)
@@ -1967,10 +1967,10 @@ public:
 					gpEntity->GetAnimationState(i)->SetSpeed(gpEntity->GetAnimationState(i)->GetBaseSpeed());
 				else
 					gpEntity->GetAnimationState(i)->SetSpeed(0);
-				
+
 				gpEntity->GetAnimationState(i)->SetActive(false);
 			}
-			
+
 			gpEntity->GetAnimationState(glCurrentAnimaiton)->SetActive(true);
 		}
 
@@ -1978,7 +1978,7 @@ public:
 	}
 	kGuiCallbackFuncEnd(cSimpleUpdate,ChangeAnimation)
 
-	
+
 	bool PressStopButton(iWidget* apWidget,const cGuiMessageData& aData)
 	{
 		if(gpEntity == NULL) return true;
@@ -1988,7 +1988,7 @@ public:
 		gpEntity->Stop();
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,PressStopButton)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,PressStopButton)
 
 	bool PressPauseButton(iWidget* apWidget,const cGuiMessageData& aData)
 	{
@@ -1997,13 +1997,13 @@ public:
 
 		glAnimationState =2;
 		if(gpEntity->GetAnimationStateNum() <= 0) return true;
-		
+
 		for(int i=0; i<gpEntity->GetAnimationStateNum(); ++i)
 			gpEntity->GetAnimationState(i)->SetSpeed(0);
-		
+
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,PressPauseButton)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,PressPauseButton)
 
 	bool PressPlayButton(iWidget* apWidget,const cGuiMessageData& aData)
 	{
@@ -2022,7 +2022,7 @@ public:
 		glAnimationState =1;
 		return true;
 	}
-	kGuiCallbackFuncEnd(cSimpleUpdate,PressPlayButton)  
+	kGuiCallbackFuncEnd(cSimpleUpdate,PressPlayButton)
 
 	//--------------------------------------------------------------
 
@@ -2041,7 +2041,7 @@ public:
 			pSet->DrawFont(pFont,cVector3f(5,fY,0),14,cColor(1,1),	_W("Texture memory usage: %d kb / %.1f Mb"),
 							lTexMem, ((float)lTexMem) / 1024.0);
 			fY += 16;
-			
+
 			//pSet->DrawFont(pFont,cVector3f(5,50,0),14,cColor(1,1),
 			//	_W("Angle: %f"),gvJoints[0]->GetAngle());
 
@@ -2098,9 +2098,9 @@ public:
 						lRow++;
 					}
 				}
-				if(vSoundNames.empty()==false) fY+=13.0f * lRow;	
+				if(vSoundNames.empty()==false) fY+=13.0f * lRow;
 			}
-			
+
 			//////////////////////////////
 			// Draw entity properties
 			if(gpEntity)
@@ -2136,7 +2136,7 @@ public:
 		if(gbRotateModel && gpEntity)
 		{
 			mfModelRotation += kPif * 0.15f * afTimeStep;
-            
+
 			if(gvBodies.empty())
 			{
 				gpEntity->SetMatrix(cMath::MatrixRotateY(mfModelRotation));
@@ -2150,7 +2150,7 @@ public:
 					pBody->SetMatrix(mtxTrans);
 				}
 			}
-			
+
 		}
 
 		//////////////////////////////////////////
@@ -2165,7 +2165,7 @@ public:
 			if(mBodyPicker.mpPickedBody)
 			{
 				//Get pos of start.
-				mBodyPicker.mvPos = cMath::MatrixMul(mBodyPicker.mpPickedBody->GetLocalMatrix(), 
+				mBodyPicker.mvPos = cMath::MatrixMul(mBodyPicker.mpPickedBody->GetLocalMatrix(),
 					mBodyPicker.mvLocalPos);
 
 				//Get Drag pos
@@ -2174,7 +2174,7 @@ public:
 				renderCallback.mvDragPos = pCam->GetPosition() + vDir*mBodyPicker.mfDist;
 
 				//Spring testing:
-				cVector3f vForce = (renderCallback.mvDragPos - mBodyPicker.mvPos)*20 - 
+				cVector3f vForce = (renderCallback.mvDragPos - mBodyPicker.mvPos)*20 -
 					(mBodyPicker.mpPickedBody->GetLinearVelocity()*0.4f);
 
 
@@ -2207,7 +2207,7 @@ public:
 		{
 			if(mBodyPicker.mpPickedBody) mBodyPicker.mpPickedBody->SetAutoDisable(true);
 			mBodyPicker.Clear();
-		}		
+		}
 
 	}
 
@@ -2217,18 +2217,18 @@ public:
 
 	~cSimpleUpdate()
 	{
-	
+
 	}
 
 public:
 	iLowLevelGraphics* mpLowLevelGraphics;
 	cWorld* mpWorld;
 	iPhysicsWorld *mpPhysicsWorld;
-	
+
 	cSimpleRenderCallback renderCallback;
 	cBodyPicker mBodyPicker;
 
-	
+
 	cWidgetWindow *mpOptionWindow;
 
 	tWStringVec mvPickedFiles;
@@ -2277,7 +2277,7 @@ int hplMain(const tString &asCommandline)
 #if __APPLE__
 	tWString sEditorDir = cPlatform::GetWorkingDir();
 	sEditorDir = cString::AddSlashAtEndW(sEditorDir);
-	
+
 	tString gameDir = FindGameResources();
 	if (gameDir.empty())
 	{
@@ -2286,7 +2286,7 @@ int hplMain(const tString &asCommandline)
 #endif
 
 	//iResourceBase::SetLogCreateAndDelete(true);
-	//iGpuProgram::SetLogDebugInformation(true); 
+	//iGpuProgram::SetLogDebugInformation(true);
 	cRendererDeferred::SetGBufferType(eDeferredGBuffer_32Bit);
 	cRendererDeferred::SetNumOfGBufferTextures(3);
 	cRendererDeferred::SetSSAOLoaded(true);
@@ -2322,7 +2322,7 @@ int hplMain(const tString &asCommandline)
 	gpEngine->SetLimitFPS(false);
 	gpEngine->GetGraphics()->GetLowLevel()->SetVsyncActive(false);
 	gpEngine->SetWaitIfAppOutOfFocus(true);
-	
+
 
 	if(asCommandline != "")
 	{
@@ -2334,7 +2334,7 @@ int hplMain(const tString &asCommandline)
 		if(sDir != _W(""))
 			gpEngine->GetResources()->AddResourceDir(sDir,false);
 	}
-	
+
 	//Add resources
 #ifdef USERDIR_RESOURCES
 	gpEngine->GetResources()->LoadResourceDirsFile("resources.cfg", sUserResourceDir);
@@ -2344,13 +2344,13 @@ int hplMain(const tString &asCommandline)
 #ifdef __APPLE__
 	gpEngine->GetResources()->AddResourceDir(sEditorDir + _W("viewer/"), true);
 #endif
-	
+
 	//Add updates
 	cSimpleUpdate Update;
 	gpEngine->GetUpdater()->AddUpdate("Default", &Update);
-	
+
 	gpSimpleCamera = hplNew(cSimpleCamera, (Update.GetName(),gpEngine, Update.mpWorld, 10, cVector3f(0,0,9), true) );
-	
+
 	gpEngine->GetUpdater()->AddUpdate("Default", gpSimpleCamera);
 
 	Update.SetupView();
@@ -2358,7 +2358,7 @@ int hplMain(const tString &asCommandline)
 	//Run the engine
 	gpEngine->Run();
 
-	
+
 	hplDelete (gpSimpleCamera);
 
 	//Delete the engine

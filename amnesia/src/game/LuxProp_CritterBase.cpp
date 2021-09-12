@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -103,8 +103,8 @@ bool cLuxCritterRayCallback::OnIntersect(iPhysicsBody *pBody, cPhysicsRayParams 
 		mpBody = pBody;
 	}
 	mbIntersected = true;
-    
-	
+
+
 	return true;
 }
 
@@ -124,7 +124,7 @@ iLuxProp_CritterBase::iLuxProp_CritterBase(const tString &asName,int alID, cLuxM
 	mvGroundNormal =cVector3f(0,1,0);
 
 	mbUseRayCollision = true;
-	
+
 	mpRayCallback = hplNew(cLuxCritterRayCallback, (this));
 
 	mbColliding = false;
@@ -152,7 +152,7 @@ iLuxProp_CritterBase::~iLuxProp_CritterBase()
 bool iLuxProp_CritterBase::CanInteract(iPhysicsBody *apBody)
 {
 	return false;
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -176,7 +176,7 @@ void iLuxProp_CritterBase::OnSetupAfterLoad(cWorld *apWorld)
 		mvBaseMatrices[i] = mpMeshEntity->GetSubMeshEntity(i)->GetLocalMatrix();
 	}
 
-	
+
 	mvSwarmPoint = mpBody->GetWorldPosition();
 
 	if(mpMeshEntity->GetAnimationStateNum() >0)
@@ -222,7 +222,7 @@ void iLuxProp_CritterBase::UpdatePropSpecific(float afTimeStep)
 
 	UpdateCritterSpecific(afTimeStep);
 
-	UpdateMovement(afTimeStep);	
+	UpdateMovement(afTimeStep);
 	UpdateMesh(afTimeStep);
 
 }
@@ -248,7 +248,7 @@ void iLuxProp_CritterBase::OnRenderSolid(cRendererCallbackFunctions* apFunctions
 	iPhysicsWorld *pPhysicsWorld = mpWorld->GetPhysicsWorld();
 
 	pPhysicsWorld->RenderShapeDebugGeometry(mpBody->GetShape(), mpBody->GetLocalMatrix(), apFunctions->GetLowLevelGfx(), cColor(1,1));
-	
+
 	apFunctions->GetLowLevelGfx()->DrawLine(mpBody->GetLocalPosition(), mpBody->GetLocalPosition()+mvGroundNormal*0.5f,cColor(1,0,0,1));
 	cVector3f vFwdDir = cMath::Vector3Normalize(mvVel==0 ? mlstFwdDirs.back() : mvVel);
 	apFunctions->GetLowLevelGfx()->DrawLine(mpBody->GetLocalPosition(), mpBody->GetLocalPosition()+vFwdDir*0.5f,cColor(0,1,0,1));
@@ -274,7 +274,7 @@ void iLuxProp_CritterBase::OnHealthChange()
 {
 	///////////////
 	// Death
-	if(mfHealth <=0) 
+	if(mfHealth <=0)
 	{
 		cWorld *pWorld = mpMap->GetWorld();
 
@@ -380,10 +380,10 @@ bool iLuxProp_CritterBase::Attack(const cVector3f& avDir)
 	if(mpDamageShape==NULL) return false;
 
 	bool bHit = gpBase->mpMapHelper->ShapeDamage(mpDamageShape, GetAttackMatrix(avDir), mpBody->GetLocalPosition(),
-												mvAttackDamageMinMax.x, mvAttackDamageMinMax.y, 
-												mvAttackForce.x, mvAttackForce.y, mlAttackStrength, 3, 
+												mvAttackDamageMinMax.x, mvAttackDamageMinMax.y,
+												mvAttackForce.x, mvAttackForce.y, mlAttackStrength, 3,
 												eLuxDamageType_BloodSplat, eLuxWeaponHitType_Sword,
-												false, true, false, false);	
+												false, true, false, false);
 	if(bHit)
 	{
 		PlaySound("CritterAttack",msAttackHitSound,true, true);
@@ -444,12 +444,12 @@ cVector3f iLuxProp_CritterBase::GetTowardPlayerAdd(bool abDependOnDistance, floa
 void iLuxProp_CritterBase::UpdateMovement(float afTimeStep)
 {
 	if(mvVel ==0) return;
-	
+
 	////////////////////////
 	// Move the body
 	cVector3f vVelAdd = mvVel * afTimeStep;
 	cVector3f vGravityAdd = mvGravityVel * afTimeStep;
-	
+
 	if(mbUseRayCollision)
 	{
 		CheckRayCollision(vVelAdd, vGravityAdd, afTimeStep);
@@ -469,7 +469,7 @@ void iLuxProp_CritterBase::UpdateMesh(float afTimeStep)
 		mlstFwdDirs.push_back(cMath::Vector3Normalize(mvVel));
 		if(mlstFwdDirs.size() > 20) mlstFwdDirs.pop_front();
 	}
-	
+
 	////////////////////////////
 	// Get smooth forward
 	cVector3f vForward = cVector3f(0,0,1);
@@ -480,7 +480,7 @@ void iLuxProp_CritterBase::UpdateMesh(float afTimeStep)
 		{
 			vTotalFwd += *it;
 		}
-		
+
 		vForward = vTotalFwd / (float)mlstFwdDirs.size();
 	}
 
@@ -492,14 +492,14 @@ void iLuxProp_CritterBase::UpdateMesh(float afTimeStep)
 	for(tVector3fListIt it = mlstUpDirs.begin(); it != mlstUpDirs.end(); ++it)
 	{
 		vTotalUp += *it;
-	}	
+	}
 	cVector3f vUp = vTotalUp / (float)mlstUpDirs.size();
-	
+
 	////////////////////////////
 	// Create matrix
 	cVector3f vRight;
 	CreateOrthoVectors(vRight, vUp, vForward);
-	
+
 	cMatrixf mtxRotate = cMatrixf::Identity;
 	mtxRotate.SetForward(vForward);
 	mtxRotate.SetUp(vUp);
@@ -519,7 +519,7 @@ void iLuxProp_CritterBase::UpdateMesh(float afTimeStep)
 		{
 			cMatrixf mtxLocal = cMath::MatrixMul(cMath::MatrixMul(mtxRotate.GetTranspose(),m_mtxMeshOffset), mvBaseMatrices[i]);
 			//cMatrixf mtxLocal = cMath::MatrixMul(mtxRotate.GetTranspose(),mvBaseMatrices[i]);
-			
+
 			mpMeshEntity->GetSubMeshEntity(i)->SetMatrix(mtxLocal);
 		}
 	}
@@ -556,7 +556,7 @@ void iLuxProp_CritterBase::UpdateMesh(float afTimeStep)
 				mlAnimState =0;
 			}
 		}
-        
+
 	}
 }
 
@@ -576,7 +576,7 @@ void iLuxProp_CritterBase::CheckRayCollision(const cVector3f& avVelAdd,const cVe
 
 		cVector3f vDir = cMath::Vector3Normalize(avVelAdd);
 		cVector3f vExtraAdd = vDir * mpBody->GetBoundingVolume()->GetSize().x * 0.5f;
-		
+
 		pPhysicsWorld->CastRay(mpRayCallback, vPos, vPos + avVelAdd + vExtraAdd, false,true,true, true);
 		if(mpRayCallback->GetIntersected())
 		{
@@ -618,7 +618,7 @@ void iLuxProp_CritterBase::CheckShapeCollision(const cVector3f& avVelAdd,const c
 {
 	iPhysicsWorld *pPhysicsWorld = mpWorld->GetPhysicsWorld();
 	cVector3f vPos = mpBody->GetWorldPosition();
-	
+
 
 	mbColliding = false;
 
@@ -641,11 +641,11 @@ void iLuxProp_CritterBase::CheckShapeCollision(const cVector3f& avVelAdd,const c
 			if(vPushVec != 0)
 			{
 				vPos += vPushVec;
-				
+
 				cVector3f vPushDir = cMath::Vector3Normalize(vPushVec);
 
 				OnShapeCollision(vPushVec, afTimeStep);
-				
+
 				mvVel = mvVel - vPushDir * cMath::Vector3Dot(vPushDir, mvVel);
 			}
 			//mvVel.y=0;
@@ -662,7 +662,7 @@ void iLuxProp_CritterBase::CheckShapeCollision(const cVector3f& avVelAdd,const c
 		if(bCollide)
 		{
 			mbColliding = true;
-			
+
 			if(vPushVec != 0)
 			{
 				vPos += vPushVec;
@@ -676,7 +676,7 @@ void iLuxProp_CritterBase::CheckShapeCollision(const cVector3f& avVelAdd,const c
 			}
 		}
 	}
-	
+
 	mpBody->SetPosition(vPos);
 }
 
@@ -716,7 +716,7 @@ void iLuxProp_CritterBase::SaveToSaveData(iLuxEntity_SaveData* apSaveData)
 	kCopyToVar(pData,mvGroundNormal);
 	kCopyToVar(pData,mbColliding);
 	kCopyToVar(pData,mbUpdateAnimation);
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -727,7 +727,7 @@ void iLuxProp_CritterBase::LoadFromSaveData(iLuxEntity_SaveData* apSaveData)
 	//Init
 	super_class::LoadFromSaveData(apSaveData);
 	iLuxProp_CritterBase_SaveData *pData = static_cast<iLuxProp_CritterBase_SaveData*>(apSaveData);
-	
+
 	//////////////////
 	//Set variables
 	kCopyFromVar(pData,mvVel);

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -40,7 +40,7 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	iResourceManager::iResourceManager(cFileSearcher *apFileSearcher, 
+	iResourceManager::iResourceManager(cFileSearcher *apFileSearcher,
 										iLowLevelResources *apLowLevelResources,
 										iLowLevelSystem *apLowLevelSystem)
 	{
@@ -81,7 +81,7 @@ namespace hpl {
 	{
 		return cResourceBaseIterator(&m_mapResources);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	class cSortResources
@@ -93,7 +93,7 @@ namespace hpl {
 			{
 				return apResourceA->GetUserCount() > apResourceB->GetUserCount();
 			}
-			
+
 			return apResourceA->GetTime() > apResourceB->GetTime();
 		}
 	};
@@ -109,7 +109,7 @@ namespace hpl {
 		//Add resources to a vector
 		std::vector<iResourceBase*> vResources;
 		vResources.reserve(m_mapResources.size());
-		
+
 		tResourceBaseMapIt it = m_mapResources.begin();
 		for(;it != m_mapResources.end();++it)
 		{
@@ -118,13 +118,13 @@ namespace hpl {
 
 		//Sort the sounds according to num of users and then time.
 		std::sort(vResources.begin(), vResources.end(), cSortResources());
-		
+
 		//Log("-------------Num: %d-----------------\n",vResources.size());
 		for(size_t i=alMaxToKeep; i<vResources.size(); ++i)
 		{
 			iResourceBase *pRes = vResources[i];
-			//Log("%s count:%d time:%d\n",pRes->GetName().c_str(), 
-			//							pRes->GetUserCount(), 
+			//Log("%s count:%d time:%d\n",pRes->GetName().c_str(),
+			//							pRes->GetUserCount(),
 			//							pRes->GetTime());
 
 			if(pRes->HasUsers()==false)
@@ -137,27 +137,27 @@ namespace hpl {
 		//Log("End Num Of: %d\n",m_mapHandleResources.size());
 
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	void iResourceManager::DestroyAll()
 	{
 		tResourceBaseMapIt it = m_mapResources.begin();
 		while(it != m_mapResources.end())
 		{
 			//Log("Start destroy...");
-			
+
 			iResourceBase* pResource = it->second;
-			
+
 			//Log(" res: %d ...", pResource);
 			//Log(" res: '%s' / '%s': %d ...",pResource->GetName().c_str(), cString::To8Char(pResource->GetFullPath()).c_str(),pResource->GetUserCount());
 
 			while(pResource->HasUsers()) pResource->DecUserCount();
-			
+
 			Destroy(pResource);
 
 			it = m_mapResources.begin();
-			
+
 			//Log(" Done!\n");
 		}
 	}
@@ -167,18 +167,18 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// PROTECTED METHODS
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
 
 	void iResourceManager::BeginLoad(const tString& asFile)
 	{
 		mlTimeStart = cPlatform::GetApplicationTime();
-		
+
 		//Log("Begin resource: %s\n",asFile.c_str());
 
 		mlTabCount++;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void iResourceManager::EndLoad()
@@ -187,7 +187,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	iResourceBase* iResourceManager::FindLoadedResource(const tString &asName, tWString &asFilePath,int *apEqualCount)
 	{
 		asFilePath = mpFileSearcher->GetFilePath(asName, apEqualCount);
@@ -201,7 +201,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	tString iResourceManager::GetTabs()
 	{
 		tString sTabs ="";
@@ -212,7 +212,7 @@ namespace hpl {
 	void iResourceManager::AddResource(iResourceBase* apResource, bool abLog, bool abAddToSet)
 	{
 		tString sName = cString::ToLowerCase(apResource->GetName());
-		
+
 		if(abAddToSet)
 		{
 			int lHash = cString::GetHashW(apResource->GetFullPath());
@@ -220,17 +220,17 @@ namespace hpl {
 		}
 
 		//Log("Adding %d, '%s' hash: %u\n",apResource,cString::To8Char(apResource->GetFullPath()).c_str(), lHash);
-		
+
 		if(abLog && iResourceBase::GetLogCreateAndDelete())
 		{
 			unsigned long lTime = cPlatform::GetApplicationTime() - mlTimeStart;
             Log("%sLoaded resource %s in %d ms\n",GetTabs().c_str(), apResource->GetName().c_str(),lTime);
 			apResource->SetLogDestruction(true);
 		}
-		
+
 		//Log("End resource: %s\n",apResource->GetName().c_str());
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void iResourceManager::RemoveResource(iResourceBase* apResource)

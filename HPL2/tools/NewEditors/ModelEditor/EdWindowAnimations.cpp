@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -40,7 +40,7 @@ void cEdWindowAnimations::OnSetActive(bool abX)
 		const tAnimWrapperVec& vAnimations = pEnt->GetAnimations();
 
 		mlstTempAnimations.clear();
-		mlstTempAnimations.insert(mlstTempAnimations.end(), 
+		mlstTempAnimations.insert(mlstTempAnimations.end(),
 									vAnimations.begin(), vAnimations.end());
 	}
 }
@@ -120,7 +120,7 @@ void cEdWindowAnimations::OnCreateLayout()
 
 	/////////////////////////////////
 	// Animation Event Attributes
-	mpInpEventTime = CreateInputNumber(cVector3f(15,15,0.1f), _W("Time"), mpGEvent); 
+	mpInpEventTime = CreateInputNumber(cVector3f(15,15,0.1f), _W("Time"), mpGEvent);
 	mpInpEventType = CreateInputEnum(mpInpEventTime->GetPosition() + cVector2f(0,mpInpEventTime->GetSize().y), _W("Type"), mpGEvent);
 	mpInpEventType->AddValue(_W("PlaySound"));
 	mpInpEventType->AddValue(_W("Step"));
@@ -265,7 +265,7 @@ bool cEdWindowAnimations::WindowSpecificInputCallback(iEdInput* apInput)
 	}
 	else if(apInput==mpInpAnimFile)
 	{
-		pAnim->SetFile(mpInpAnimFile->GetValue8Char());		
+		pAnim->SetFile(mpInpAnimFile->GetValue8Char());
 	}
 	else if(apInput==mpInpAnimSpeed)
 	{

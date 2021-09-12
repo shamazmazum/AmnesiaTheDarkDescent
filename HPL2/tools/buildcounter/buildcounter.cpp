@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
 		return -1;
 
 	cDate date = cPlatform::GetDate();
-	gsBuildId = cString::ToString(date.year) + cString::ToString(date.month+1,2) + cString::ToString(date.month_day,2) + 
+	gsBuildId = cString::ToString(date.year) + cString::ToString(date.month+1,2) + cString::ToString(date.month_day,2) +
 					cString::ToString(date.hours,2) + cString::ToString(date.minutes,2) + cString::ToString(date.seconds,2);
 
 	if(WriteVersionFiles()==false)
@@ -90,7 +90,7 @@ bool ParseInputFile(const tString& asPath)
 			buffer[lLineLength-1]='\0';
 
 		tString sLine = tString(buffer);
-		
+
 		tStringVec vStringsInLine;
 		vStringsInLine = cString::GetStringVec(sLine, vStringsInLine, separators);
 		if(vStringsInLine.size()<2)
@@ -132,7 +132,7 @@ bool WriteVersionFiles()
 	tString sHeader;
 	tString sBody;
 	tString sFooter;
-	
+
 	tString sName = "BuildID_"+gsAppName;
 	tWString sFileName = cString::To16Char(sName);
 
@@ -145,9 +145,9 @@ bool WriteVersionFiles()
 
 	////////////////////////////////////////////////////
 	// Header file
-	tWString sFile = cString::AddSlashAtEndW(cString::To16Char(gsLocalPath)) + 
-					 cString::AddSlashAtEndW(cString::To16Char(gsProjectIncludePath)) + 
-					 cString::AddSlashAtEndW(cString::To16Char(gsOutHeaderPath)) + 
+	tWString sFile = cString::AddSlashAtEndW(cString::To16Char(gsLocalPath)) +
+					 cString::AddSlashAtEndW(cString::To16Char(gsProjectIncludePath)) +
+					 cString::AddSlashAtEndW(cString::To16Char(gsOutHeaderPath)) +
 					 sFileName + _W(".h");
 	printf("Looking for header file %ws\n", sFile.c_str());
 	if(cPlatform::FileExists(sFile)==false)
@@ -164,9 +164,9 @@ bool WriteVersionFiles()
 		sBody += "\n";
 		sBody += "const char* GetBuildID_" + gsAppName + "();\n";
 		sBody += "\n";
-    
+
 		sFooter = "\n#endif //"+sHeaderName+"\n";
-		
+
 		fprintf(pOutputFile, sHeader.c_str());
 		fprintf(pOutputFile, sBody.c_str());
 		fprintf(pOutputFile, sFooter.c_str());
@@ -179,9 +179,9 @@ bool WriteVersionFiles()
 	////////////////////////////////////////////////////
 	// Source file
 	{
-		sFile = cString::AddSlashAtEndW(cString::To16Char(gsLocalPath)) + 
+		sFile = cString::AddSlashAtEndW(cString::To16Char(gsLocalPath)) +
 				cString::AddSlashAtEndW(cString::To16Char(gsOutSourcePath)) +
-				sFileName + _W("_") + 
+				sFileName + _W("_") +
 				cString::To16Char(cPlatform::GetPlatformName()) + _W(".cpp");
 		pOutputFile = cPlatform::OpenFile(sFile, _W("w+"));
 		if(pOutputFile==NULL)
@@ -190,7 +190,7 @@ bool WriteVersionFiles()
 		sBody = "#include \"" + cString::AddSlashAtEnd(gsOutHeaderPath) + sName + ".h\"\n";
 		sBody +="\n";
 		sBody += "static char gsBuildID[16] = \"" + gsBuildId + "\";\n";
-				
+
 		sBody +="\n";
 		sBody += "const char* GetBuildID_" + gsAppName + "()\n";
 		sBody +="{\n";

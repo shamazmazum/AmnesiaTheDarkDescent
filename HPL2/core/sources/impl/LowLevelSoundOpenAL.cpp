@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -51,7 +51,7 @@ namespace hpl {
 	void iLowLevelSound::PopulateAvailableSoundDevices(tSoundDeviceVec& avSoundDeviceVec)
 	{
 		STLDeleteAll(avSoundDeviceVec);
-	
+
 		bool bDefaultFound = false;
 		tStringVec vDeviceNames = OAL_Info_GetOutputDevices();
 		for(int i=0;i<(int)vDeviceNames.size();++i)
@@ -109,13 +109,13 @@ namespace hpl {
 	{
 		cOpenALSoundData* pSoundData = hplNew( cOpenALSoundData, (asName,abStream) );
 		pSoundData->SetLoopStream(abLoopStream);
-		
+
 		if(pSoundData->CreateFromFile(asFilePath)==false)
 		{
 			hplDelete(pSoundData);
 			return NULL;
 		}
-		
+
 		return pSoundData;
 	}
 
@@ -132,12 +132,12 @@ namespace hpl {
 		}
 	}
 	//-----------------------------------------------------------------------
-	
+
 	void cLowLevelSoundOpenAL::UpdateSound(float afTimeStep)
 	{
 		OAL_Update();
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cLowLevelSoundOpenAL::SetListenerAttributes(const cVector3f &avPos,const cVector3f &avVel,
@@ -175,9 +175,9 @@ namespace hpl {
 
 		OAL_Listener_SetAttributes ( avPos.v, mvListenerVelocity.v, (mvListenerForward*(-1)).v, mvListenerUp.v );
 	}
-	
+
 	//-----------------------------------------------------------------------
-		
+
 	void cLowLevelSoundOpenAL::SetListenerAttenuation (bool abEnabled)
 	{
 		mbListenerAttenuation = abEnabled;
@@ -189,7 +189,7 @@ namespace hpl {
 	{
 		OAL_SetRollOffFactor ( afFactor );
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void cLowLevelSoundOpenAL::SetVolume(float afVolume)
@@ -209,7 +209,7 @@ namespace hpl {
 */
 	//-----------------------------------------------------------------------
 
-	void cLowLevelSoundOpenAL::Init(int alSoundDeviceID, bool abUseEnvAudio,int alMaxChannels, 
+	void cLowLevelSoundOpenAL::Init(int alSoundDeviceID, bool abUseEnvAudio,int alMaxChannels,
 									int alStreamUpdateFreq, bool abUseThreading, bool abUseVoiceManagement,
 									int alMaxMonoSourceHint, int alMaxStereoSourceHint,
 									int alStreamingBufferSize, int alStreamingBufferCount, bool abEnableLowLevelLog)
@@ -219,7 +219,7 @@ namespace hpl {
 		//cOpenALSoundEnvironment* pEnv = hplNew(cOpenALSoundEnvironment,());
 
 		mbLogSounds = abEnableLowLevelLog;
-		
+
 		Log(" Initializing OpenAL\n");
 
 		cOAL_Init_Params initParams;
@@ -266,14 +266,14 @@ namespace hpl {
 		if(alSoundDeviceID>=0 && alSoundDeviceID<(int)vSndDevices.size())
 		{
 			iSoundDeviceIdentifier* pDev = vSndDevices[alSoundDeviceID];
-				
+
 			initParams.msDeviceName = pDev->GetName();
 		}
 		else
 		{
 			/////////////////////////////////////////////////////////////
 			// If not, 2 options:
-			//  - ID == -1 : pick first valid default device, meaning the first default in the 
+			//  - ID == -1 : pick first valid default device, meaning the first default in the
 			//                  filtered list, or if no default is found, first one in line
 			//  - ID == -2 : pick first default device, meaning first default in the full
 			//                  available device list
@@ -315,7 +315,7 @@ namespace hpl {
 			for(int i=0;i<(int)vValidSndDevices.size();++i)
 			{
 				iSoundDeviceIdentifier* pDev = vValidSndDevices[i];
-				
+
 				initParams.msDeviceName = pDev->GetName();
 
 				mbInitialized = OAL_Init(initParams);
@@ -389,10 +389,10 @@ namespace hpl {
 
 		mlCurrentSoundDevID = alSoundDeviceID;
 		Log("Success!\n");
-	
+
 		OAL_SetDistanceModel(eOAL_DistanceModel_None);
 
-		
+
 		//Log("  Device name: %s\n", OAL_Info_GetDeviceName() );
 		Log("  Number of mono sources: %d\n", OAL_Info_GetNumSources());
 		Log("  Streaming setup: %d Buffers x %d bytes each\n", OAL_Info_GetStreamBufferCount(), OAL_Info_GetStreamBufferSize());
@@ -423,12 +423,12 @@ namespace hpl {
 				Log("  Setting up Environmental Audio...Failed.\n");
 		}
 		#endif
-			      
-				
+			
+
 		//Default listener settings.
 		float Pos[3] = {0,0,0};
 		float Vel[3] = {0,0,0};
-				
+
 		mvListenerForward = cVector3f(0,0,1);
 		mvListenerUp = cVector3f(0,1,0);
 
@@ -465,12 +465,12 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	iSoundEnvironment* cLowLevelSoundOpenAL::LoadSoundEnvironment(const tString &asFilePath)
 	{
 		if (!mbEnvAudioEnabled)
 			return NULL;
-		
+
 		/////////////////////////////////////////////
 		///Check if sound already exist
 		iSoundEnvironment *pSE = GetSoundEnvironmentFromFileName(asFilePath);
@@ -497,7 +497,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	void cLowLevelSoundOpenAL::SetSoundEnvironment ( iSoundEnvironment* apSoundEnv )
 	{
 		if (!mbEnvAudioEnabled)
@@ -509,7 +509,7 @@ namespace hpl {
 			//if (mbNullEffectAttached == false)
 			//{
 			//	mbNullEffectAttached = true;
-		
+
 				OAL_Effect_Reverb_SetDensity(mpEffect, 0);
 				OAL_Effect_Reverb_SetDiffusion(mpEffect, 0);
 				OAL_Effect_Reverb_SetEchoTime (mpEffect, 0);
@@ -691,7 +691,7 @@ namespace hpl {
 			pEnv.SetRoomRolloffFactor(pSrcEnv->GetRoomRolloffFactor()*fOneMinusT + pDstEnv->GetRoomRolloffFactor()*afT);
 			pEnv.SetDecayHFLimit(pDstEnv->GetDecayHFLimit());
 		}
-		
+
 		SetSoundEnvironment(&pEnv);
 
 	}

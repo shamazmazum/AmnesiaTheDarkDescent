@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -43,7 +43,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// BLANK MATERIAL
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
 
 	class cMaterialManagerBlankMaterialType_Vars : public iMaterialVars
@@ -77,9 +77,9 @@ namespace hpl {
 
 		void CompileMaterialSpecifics(cMaterial *apMaterial){}
 	};
-	
+
 	cMaterialManagerBlankMaterialType gBlankMaterialType;
-    
+
 
 	//-----------------------------------------------------------------------
 
@@ -158,7 +158,7 @@ namespace hpl {
 
 	void cMaterialManager::Update(float afTimeStep)
 	{
-		
+
 	}
 
 	//-----------------------------------------------------------------------
@@ -186,7 +186,7 @@ namespace hpl {
 	{
 		if(aFilter == mTextureFilter) return;
 		mTextureFilter = aFilter;
-		
+
 		tResourceBaseMapIt it = m_mapResources.begin();
 		for(; it != m_mapResources.end(); ++it)
 		{
@@ -201,7 +201,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	void cMaterialManager::SetTextureAnisotropy(float afX)
 	{
 		if(afX <1.0 || mpGraphics->GetLowLevel()->GetCaps(eGraphicCaps_AnisotropicFiltering)==0)
@@ -320,7 +320,7 @@ namespace hpl {
 			Error("Type not found.\n");
 			return NULL;
 		}
-        
+
 		/////////////////////////////
 		// Get General Propertries
 		bool bDepthTest = pMain->GetAttributeBool("DepthTest", true);
@@ -334,7 +334,7 @@ namespace hpl {
 		{
 			cMaterial* pMat = hplNew( cMaterial, (asName, asPath, mpGraphics, mpResources, &gBlankMaterialType) );
 			pMat->SetPhysicsMaterial(sPhysicsMatName);
-			
+
 			mpResources->DestroyXmlDocument(pDoc);
 			return pMat;
 		}
@@ -349,7 +349,7 @@ namespace hpl {
 			return NULL;
 		}
 		cMaterial* pMat = hplNew( cMaterial, (asName, asPath, mpGraphics, mpResources, pMatType) );
-		
+
 		pMat->SetDepthTest(bDepthTest);
 		pMat->SetPhysicsMaterial(sPhysicsMatName);
         if(pMatType->IsTranslucent())
@@ -365,7 +365,7 @@ namespace hpl {
 		}
 
 		//Log("Material %s\n",asName.c_str());
-		
+
 		for(int i=0; i< pMatType->GetUsedTextureNum(); ++i)
 		{
 			cMaterialUsedTexture* pUsedTexture = pMatType->GetUsedTexture(i);
@@ -373,7 +373,7 @@ namespace hpl {
 
 			tString sTextureType = GetTextureString(pUsedTexture->mType);
 			//Log("Trying to load type: %s\n",sTextureType.c_str());
-			
+
 			cXmlElement* pTexChild = pTexRoot->GetFirstElement(sTextureType.c_str());
 			if(pTexChild==NULL){
 				//Log(" Texture unit element missing!\n");
@@ -387,12 +387,12 @@ namespace hpl {
 			bool bMipMaps = pTexChild->GetAttributeBool("MipMaps", true);
 			bool bCompress = pTexChild->GetAttributeBool("Compress", false);
 			eTextureWrap wrap = GetWrap(pTexChild->GetAttributeString("Wrap", ""));
-			
+
 			eTextureAnimMode animMode = GetAnimMode(pTexChild->GetAttributeString("AnimMode", "None"));
 			float fFrameTime = pTexChild->GetAttributeFloat("AnimFrameTime", 1.0f);
-			
+
 			if(sFile=="") continue;
-			
+
 			if(cString::GetFilePath(sFile).length() <= 1)
 			{
 				sFile = cString::SetFilePath(sFile, cString::To8Char(cString::GetFilePathW(asPath)));
@@ -406,7 +406,7 @@ namespace hpl {
 			}
 			else
 			{
-				
+
 				if(type == eTextureType_1D)
 				{
 					pTex = mpResources->GetTextureManager()->Create1D(sFile,bMipMaps,
@@ -445,7 +445,7 @@ namespace hpl {
 			pTex->SetAnimMode(animMode);
 
 			pTex->SetWrapSTR(wrap);
-			
+
 			pTex->SetFilter(mTextureFilter);
 			pTex->SetAnisotropyDegree(mfTextureAnisotropy);
 
@@ -462,8 +462,8 @@ namespace hpl {
 			{
 				cXmlElement* pAnimElem = it.Next()->ToElement();
 
-				eMaterialUvAnimation animType = GetUvAnimType(pAnimElem->GetAttributeString("Type").c_str());	
-				eMaterialAnimationAxis animAxis = GetAnimAxis(pAnimElem->GetAttributeString("Axis").c_str());	
+				eMaterialUvAnimation animType = GetUvAnimType(pAnimElem->GetAttributeString("Type").c_str());
+				eMaterialAnimationAxis animAxis = GetAnimAxis(pAnimElem->GetAttributeString("Axis").c_str());
 				float fSpeed = pAnimElem->GetAttributeFloat("Speed",0);
 				float fAmp = pAnimElem->GetAttributeFloat("Amplitude",0);
 
@@ -477,17 +477,17 @@ namespace hpl {
 		cXmlElement* pUserVarsRoot = pDoc->GetFirstElement("SpecificVariables");
 		cResourceVarsObject userVars;
 		if(pUserVarsRoot) userVars.LoadVariables(pUserVarsRoot);
-		
+
 		pMatType->LoadVariables(pMat, &userVars);
-		
-		
+
+
 		///////////////////////////
 		//End
-		
+
 		mpResources->DestroyXmlDocument(pDoc);
-			
+
 		pMat->Compile();
-		
+
 		return pMat;
 	}
 
@@ -503,7 +503,7 @@ namespace hpl {
 		return eTextureType_2D;
 	}
 	//-----------------------------------------------------------------------
-	
+
 	tString cMaterialManager::GetTextureString(eMaterialTexture aType)
 	{
 		switch(aType)
@@ -521,7 +521,7 @@ namespace hpl {
 
 		return "";
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	eTextureWrap cMaterialManager::GetWrap(const tString& asType)
@@ -559,27 +559,27 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	eMaterialUvAnimation cMaterialManager::GetUvAnimType(const char* apString)
 	{
-		if(apString==NULL){ 
+		if(apString==NULL){
 			Error("Uv animation attribute Type does not exist!\n");
 			return eMaterialUvAnimation_LastEnum;
 		}
-		
+
 		tString sLow = cString::ToLowerCase(apString);
-		
+
 		if(sLow == "translate") return eMaterialUvAnimation_Translate;
 		if(sLow == "sin") return eMaterialUvAnimation_Sin;
 		if(sLow == "rotate") return eMaterialUvAnimation_Rotate;
-		
+
 		Error("Invalid uv animation type %s\n",apString);
 		return eMaterialUvAnimation_LastEnum;
 	}
-	
+
 	eMaterialAnimationAxis cMaterialManager::GetAnimAxis(const char* apString)
 	{
-		if(apString==NULL){ 
+		if(apString==NULL){
 			Error("Uv animation attribute Axis does not exist!\n");
 			return eMaterialAnimationAxis_LastEnum;
 		}

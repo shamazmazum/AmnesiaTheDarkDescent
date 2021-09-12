@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -79,19 +79,19 @@ void cEditorEditModeSelectToolTranslate::CheckMouseOverAxis()
 		vPlaneIntersect[i] = 99999999999.0f;
 
 		bRayIntersectedAxis[i] = cMath::CheckAABBLineIntersection(mvAxisMin[i],
-															  mvAxisMax[i], 
+															  mvAxisMax[i],
 															  mvTransformedRayStart,
 															  mvTransformedRayEnd,
 															  &vAxisIntersect[i],
 															  NULL) ||
 							 cMath::CheckAABBLineIntersection(mvHeadMin[i],
-															  mvHeadMax[i], 
+															  mvHeadMax[i],
 															  mvTransformedRayStart,
 															  mvTransformedRayEnd,
 															  &vHeadIntersect[i],
 															  NULL);
-		
-		bRayIntersectedPlane[i] = cMath::CheckAABBLineIntersection(mvAxesPlaneBoxMin, 
+
+		bRayIntersectedPlane[i] = cMath::CheckAABBLineIntersection(mvAxesPlaneBoxMin,
 																   mvAxesPlaneBoxMax[i],
 																   mvTransformedRayStart,
 																   mvTransformedRayEnd,
@@ -116,7 +116,7 @@ void cEditorEditModeSelectToolTranslate::CheckMouseOverAxis()
 			}
 			else
 				bRayIntersectedAxis[i] = false;
-		
+
 			float fDistToPlane = cMath::Vector3DistSqr(mvTransformedRayStart, vPlaneIntersect[i]);
 			if(fDistToPlane < fMinDist)
 			{
@@ -129,7 +129,7 @@ void cEditorEditModeSelectToolTranslate::CheckMouseOverAxis()
 
 	mvAxisMouseOver[eSelectToolAxis_X] = bRayIntersectedAxis[eSelectToolAxis_X] || bRayIntersectedPlane[0] || bRayIntersectedPlane[2];
 	mvAxisMouseOver[eSelectToolAxis_Y] = bRayIntersectedAxis[eSelectToolAxis_Y] || bRayIntersectedPlane[0] || bRayIntersectedPlane[1];
-	mvAxisMouseOver[eSelectToolAxis_Z] = bRayIntersectedAxis[eSelectToolAxis_Z] || bRayIntersectedPlane[1] || bRayIntersectedPlane[2];	
+	mvAxisMouseOver[eSelectToolAxis_Z] = bRayIntersectedAxis[eSelectToolAxis_Z] || bRayIntersectedPlane[1] || bRayIntersectedPlane[2];
 }
 
 //----------------------------------------------------------------
@@ -141,7 +141,7 @@ cMatrixf& cEditorEditModeSelectToolTranslate::GetTransformMatrix()
 	mmtxTransformMatrix = cMath::MatrixTranslate(mpSelection->GetCenterTranslation()*-1);
 	//	mpSelection->mbTransformed = false;
 	//}
-	
+
 	return mmtxTransformMatrix;
 }
 
@@ -166,12 +166,12 @@ void cEditorEditModeSelectToolTranslate::UpdateTransformation()
 
 		for(int i=eSelectToolAxis_X; i<eSelectToolAxis_LastEnum; ++i)
 		{
-			if(mvAxisSelected[i]==false) 
+			if(mvAxisSelected[i]==false)
 				vDisplacement.v[i] = 0;
 		}
 
 		mvEditVectorEnd = mvEditVectorStart + vDisplacement;
-		
+
 		mpSelection->SetRelativeTranslation(vDisplacement, cEditorGrid::GetSnapToGrid());
 
 		mpEditMode->GetEditor()->SetLayoutNeedsUpdate(true);
@@ -207,7 +207,7 @@ void cEditorEditModeSelectToolTranslate::UpdateToolBoundingVolume()
 	mvAxisMin[eSelectToolAxis_X] = cVector3f(0,-fAxisHalfWidth,-fAxisHalfWidth);
 	mvAxisMin[eSelectToolAxis_Y] = cVector3f(-fAxisHalfWidth,0, -fAxisHalfWidth);
 	mvAxisMin[eSelectToolAxis_Z] = cVector3f(-fAxisHalfWidth,-fAxisHalfWidth,0);
-	
+
 	mvAxisMax[eSelectToolAxis_X] = mvAxisMin[eSelectToolAxis_X] + cVector3f(fAxisLength,fAxisWidth,fAxisWidth);
 	mvAxisMax[eSelectToolAxis_Y] = mvAxisMin[eSelectToolAxis_Y] + cVector3f(fAxisWidth,fAxisLength,fAxisWidth);
 	mvAxisMax[eSelectToolAxis_Z] = mvAxisMin[eSelectToolAxis_Z] + cVector3f(fAxisWidth,fAxisWidth,fAxisLength);
@@ -219,7 +219,7 @@ void cEditorEditModeSelectToolTranslate::UpdateToolBoundingVolume()
 	mvHeadMax[eSelectToolAxis_X] = mvHeadMin[eSelectToolAxis_X] + cVector3f(fHeadLength,fHeadWidth,fHeadWidth);
 	mvHeadMax[eSelectToolAxis_Y] = mvHeadMin[eSelectToolAxis_Y] + cVector3f(fHeadWidth,fHeadLength,fHeadWidth);
 	mvHeadMax[eSelectToolAxis_Z] = mvHeadMin[eSelectToolAxis_Z] + cVector3f(fHeadWidth,fHeadWidth,fHeadLength);
-	
+
 
 	mvAxesPlaneBoxMin = 0;
 	mvAxesPlaneBoxMax[0] = cVector3f(mfUsedAxisLength,mfUsedAxisLength,0) * 0.2f;
@@ -257,7 +257,7 @@ void cEditorEditModeSelectToolTranslate::DrawAxes(cEditorWindowViewport* apViewp
 	mvArrowQuads[3][2].pos = cVector3f(0,0,0);
 	mvArrowQuads[3][3].pos = cVector3f(-fX,-fYZ,-fYZ);
 
-	
+
 	cMatrixf mtxTransform = cMath::MatrixTranslate(mpSelection->GetCenterTranslation());
 	apFunctions->SetMatrix(&mtxTransform);
 

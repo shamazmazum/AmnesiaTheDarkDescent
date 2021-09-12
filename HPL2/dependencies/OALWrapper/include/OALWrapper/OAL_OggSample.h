@@ -10,7 +10,7 @@
 	@author Luis Rodero
 	@date 2006-10-02
 	@version 0.1
-	Derived class for containing Ogg Vorbis Sample data 
+	Derived class for containing Ogg Vorbis Sample data
 */
 
 #ifndef _OAL_OGGSAMPLE_H

@@ -37,7 +37,7 @@ cOAL_Sample::cOAL_Sample() : iOAL_AudioData(eOAL_AudioDataType_Sample,1)
 
 //------------------------------------------------------------------
 
-cOAL_Sample::~cOAL_Sample() 
+cOAL_Sample::~cOAL_Sample()
 {
 	if(mlstBoundSources.empty()==false)
 	{
@@ -49,12 +49,12 @@ cOAL_Sample::~cOAL_Sample()
 		}
 		mlstBoundSources.clear();
 	}
-}		
+}
 
 //------------------------------------------------------------------
 
 ///////////////////////////////////////////////////////////
-//	
+//
 //
 ///////////////////////////////////////////////////////////
 
@@ -70,7 +70,7 @@ ALuint* cOAL_Sample::GetOALBufferPointer()
 string cOAL_Sample::GetDebugInfo()
 {
 	char temp[200];
-		
+
 	sprintf(temp, "Sample %s, Time %f, channels: %d\n", msFileName.c_str(), mfTotalTime, mlChannels);
 	return string(temp);
 }
@@ -99,7 +99,7 @@ void cOAL_Sample::Log( eOAL_LogVerbose aVerboseLevelReq, eOAL_LogMsg aMessageTyp
 
 	sprintf(sampleId, "Sample %s - ", msFilename.c_str());
 
-	
+
 	switch(aMessageType)
 	{
 	case eOAL_LogMsg_Command:

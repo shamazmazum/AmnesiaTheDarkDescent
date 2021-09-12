@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -41,7 +41,7 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	iPhysicsRope::iPhysicsRope(const tString &asName,iPhysicsWorld *apWorld, const cVector3f &avStartPos , const cVector3f &avEndPos) 
+	iPhysicsRope::iPhysicsRope(const tString &asName,iPhysicsWorld *apWorld, const cVector3f &avStartPos , const cVector3f &avEndPos)
 		: iVerletParticleContainer(asName, apWorld)
 	{
 		//Add start and end particles.
@@ -86,7 +86,7 @@ namespace hpl {
 		mfFirstSegmentLength = mfTotalLength;
 
 		mlMaxIterations = 3;
-		
+
 		mbHasUpdated = false;
 	}
 
@@ -107,7 +107,7 @@ namespace hpl {
 		hplDelete(mpRayParticleCallback);
 	}
 
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -115,11 +115,11 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	void iPhysicsRope::UpdateBeforeSimulate(float afTimeStep)
 	{
 		mbHasUpdated = true;
-		
+
 		PreUpdate(afTimeStep);
 		if(mbSleeping)
 		{
@@ -138,16 +138,16 @@ namespace hpl {
 
 		UpdateAttachedBodies(afTimeStep);
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	void iPhysicsRope::UpdateAfterSimulate(float afTimeStep)
 	{
 		if(mbSleeping) return;
 
 		CalculateSmoothPositions(afTimeStep);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void iPhysicsRope::SetMotorActive(bool abX)
@@ -194,7 +194,7 @@ namespace hpl {
 		if(abRemoveContainerFromBody)
 			apBody->RemoveAttachedVerletContainer(this);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void iPhysicsRope::SetAttachedStartBody(iPhysicsBody *apBody)
@@ -203,12 +203,12 @@ namespace hpl {
 
 		//TODO: Need to change inverse mass of start particle, if body mass > 0?
 	}
-	
+
 	void iPhysicsRope::SetAttachedEndBody(iPhysicsBody *apBody)
 	{
 		SetAttachedBody(1, GetEndParticle(), apBody);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void iPhysicsRope::SetTotalLength(float afX)
@@ -244,7 +244,7 @@ namespace hpl {
 		BuildRopeParticles();
 		SetSleeping(false);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void iPhysicsRope::RenderDebug(iLowLevelGraphics *apLowLevel)
@@ -274,7 +274,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// PRIVATE METHODS
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
 
 	bool iPhysicsRope::CheckParticleBodyCollision(iPhysicsBody *apBody)
@@ -310,7 +310,7 @@ namespace hpl {
 	}
 
 	bool iPhysicsRope::CheckSpecificDataAwake()
-	{	
+	{
 		if(mbMotorActive) return true;
 
 		for(int i=0; i<2; ++i)
@@ -335,9 +335,9 @@ namespace hpl {
 			}
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	void iPhysicsRope::UpdateMovement(float afTimeStep)
 	{
 		for(tVerletParticleListIt it = mlstParticles.begin(); it != mlstParticles.end(); ++it)
@@ -353,7 +353,7 @@ namespace hpl {
 	void iPhysicsRope::UpdateMotorAndAutoMove(float afTimeStep)
 	{
 		float fVel =0;
-		
+
 		//////////////////
 		// Update Motor
 		if(mbMotorActive)
@@ -368,7 +368,7 @@ namespace hpl {
 			fTotalLength += fVel * afTimeStep;
 
 			SetTotalLength(fTotalLength);
-			
+
 			if(cMath::Abs(mfMotorWantedLength - fTotalLength) < 0.02f)
 			{
 				mbMotorActive = false;
@@ -380,12 +380,12 @@ namespace hpl {
 		{
 			float fTotalLength =  GetTotalLength();
 			mfAutoMoveSpeed += mfAutoMoveAcc*afTimeStep;
-            
+
 			if(mfAutoMoveSpeed > mfAutoMoveMaxSpeed)	mfAutoMoveSpeed = mfAutoMoveMaxSpeed;
 			if(mfAutoMoveSpeed < -mfAutoMoveMaxSpeed)	mfAutoMoveSpeed = -mfAutoMoveMaxSpeed;
 
 			fTotalLength += mfAutoMoveSpeed * afTimeStep;
-			
+
 			bool bStop = false;
 			if(fTotalLength > mfMaxTotalLength){
 				fTotalLength = mfMaxTotalLength;
@@ -403,7 +403,7 @@ namespace hpl {
 
 			SetTotalLength(fTotalLength);
 		}
-		
+
 		//////////////////
 		// Update sound
 		if(mpMotorSoundEntity==NULL && fVel==0) return;
@@ -414,9 +414,9 @@ namespace hpl {
 
 		if(mpMotorSoundEntity && pNormalWorld->SoundEntityExists(mpMotorSoundEntity, mlMotorSoundEntityID)==false)
 		{
-			mpMotorSoundEntity = NULL;	
+			mpMotorSoundEntity = NULL;
 		}
-		
+
 		///////////////////////
 		//Sound is playing. Check if speed is under the stop speed
 		if(mpMotorSoundEntity && cMath::Abs(fVel) < mfMotorSoundStopSpeed)
@@ -440,7 +440,7 @@ namespace hpl {
 		}
 	}
 
-	
+
 	//-----------------------------------------------------------------------
 
 	void iPhysicsRope::UpdateAttachedParticlePositions(float afTimeStep)
@@ -448,7 +448,7 @@ namespace hpl {
 		for(int i=0; i<2; ++i)
 		{
 			if(mvAttachedBody[i].mpBody==NULL) continue;
-            
+
 			cVector3f vPos = cMath::MatrixMul(mvAttachedBody[i].mpBody->GetLocalMatrix(), mvAttachedBody[i].mvBodyLocalPos);
 
 			mvAttachedBody[i].mpParticle->SetPosition(vPos, false);
@@ -466,7 +466,7 @@ namespace hpl {
 			//Log("%s Updating body %d\n",msName.c_str() ,i);
 
 			iPhysicsBody *pBody = mvAttachedBody[i].mpBody;
-			
+
 			cVector3f vWantedPos = mvAttachedBody[i].mpParticle->GetPosition();
 			cVector3f vCurrentPos = cMath::MatrixMul(pBody->GetLocalMatrix(), mvAttachedBody[i].mvBodyLocalPos);
 			cVector3f vError = vWantedPos - vCurrentPos;
@@ -474,7 +474,7 @@ namespace hpl {
 			mForcePid[i].p = mfStrength;
 			mForcePid[i].i = 0;
 			mForcePid[i].d = mfStrength * 0.1f * mfStiffness;
-			
+
 			cVector3f vForce = mForcePid[i].Output(vError, afTimeStep);
 
 			cVector3f vLocalPos = vCurrentPos - pBody->GetLocalPosition();
@@ -511,7 +511,7 @@ namespace hpl {
 
 				UpdateLengthConstraint(pPrevPart, pPart, fLength);
 			}
-						
+
 			pPrevPart = pPart;
 		}
 
@@ -519,18 +519,18 @@ namespace hpl {
 		return;
 		it = mlstParticles.begin();
 		for(int lCount = 0; it != mlstParticles.end(); ++it, ++lCount)
-		{	
+		{
 			cVerletParticle *pPart = *it;
 
 			if(mbCollideAttachments==false && (pPart == GetStartParticle() || pPart == GetEndParticle()))
 			{
 				continue;
 			}
-			
+
 			if(pPart->GetInvMass() != 0) UpdateParticleCollisionConstraint(pPart, pPart->GetPrevPosition(), mfParticleRadius);
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	void iPhysicsRope::CalculateSmoothPositions(float afTimeStep)
@@ -552,7 +552,7 @@ namespace hpl {
 		for(float fCount = 0; it != mlstParticles.end(); ++it, ++fCount)
 		{
 			cVerletParticle *pPart = *it;
-			
+
 			float fT = fCount / fMaxCount;
 
 			cVector3f vAdd = vAddPos[0]*(1-fT) + vAddPos[1]*fT;
@@ -562,7 +562,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	void iPhysicsRope::BuildRopeParticles()
 	{
 		////////////////////////
@@ -597,7 +597,7 @@ namespace hpl {
 		{
 			mfFirstSegmentLength = mfTotalLength;
 		}
-		
+
 		//Log("Wanted num: %d | total len: %f | first set len: %f | seg len: %f \n", lWantedNum, mfTotalLength, mfFirstSegmentLength, mfSegmentLength);
 
 		if(lWantedNum == lParticleNum) return;
@@ -627,7 +627,7 @@ namespace hpl {
 
 			float fLength = mfFirstSegmentLength + mfSegmentLength*((float)lAddCount-1);
 
-			tVerletParticleListIt it = mlstParticles.begin(); 
+			tVerletParticleListIt it = mlstParticles.begin();
 			it++;
 
 			for(; lAddCount>0; --lAddCount)
@@ -646,12 +646,12 @@ namespace hpl {
 	void iPhysicsRope::SetAttachedBody(int alIdx, cVerletParticle *apParticle, iPhysicsBody *apBody)
 	{
 		mForcePid[alIdx].Reset();
-		
+
 		if(mvAttachedBody[alIdx].mpBody)
 		{
 			mvAttachedBody[alIdx].mpBody->RemoveAttachedVerletContainer(this);
 		}
-		
+
 		apBody->AddAttachedVerletContainer(this);
 
 		mvAttachedBody[alIdx].mpBody = apBody;
@@ -660,7 +660,7 @@ namespace hpl {
 		cMatrixf mtxInvBody = cMath::MatrixInverse(apBody->GetLocalMatrix());
 		mvAttachedBody[alIdx].mvBodyLocalPos = cMath::MatrixMul(mtxInvBody, apParticle->GetPosition());
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cVector3f iPhysicsRope::GetStartDirection()

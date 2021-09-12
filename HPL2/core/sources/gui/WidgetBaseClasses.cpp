@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -34,12 +34,12 @@
 namespace hpl {
 
 	static tWString gsNullText(_W(""));
-    
+
     tWString iFileBrowser::msGameDir = _W("");
     tWString iFileBrowser::msPersonalDir = _W("");
 
 	tWStringVec iFileBrowser::mvSizeStrings = tWStringVec();
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// ITEM PROPERTY
 	//////////////////////////////////////////////////////////////////////////
@@ -62,7 +62,7 @@ namespace hpl {
 	}
 
 	//------------------------------------------------------------------------
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// ITEM CLASS
 	//////////////////////////////////////////////////////////////////////////
@@ -191,7 +191,7 @@ namespace hpl {
 		tWidgetItemVecIt it = mvItems.begin();
 		for(; it != mvItems.end(); ++it,++lCount)
 		{
-			if(lCount == alX) 
+			if(lCount == alX)
 			{
 				hplDelete(*it);
 				mvItems.erase(it);
@@ -209,7 +209,7 @@ namespace hpl {
 		tWidgetItemVecIt it = mvItems.begin();
 		for(; it != mvItems.end(); ++it)
 		{
-			if((*it)->GetText() == asItem) 
+			if((*it)->GetText() == asItem)
 			{
 				hplDelete(*it);
 				mvItems.erase(it);
@@ -228,7 +228,7 @@ namespace hpl {
 
 		UpdateProperties();
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cWidgetItem* iWidgetItemContainer::GetItem(int alX) const
@@ -272,7 +272,7 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	
+
 	//-----------------------------------------------------------------------
 
 	iFileBrowser::iFileBrowser(const tWString& asStartPath, bool abAddHiddenFiles)
@@ -347,7 +347,7 @@ namespace hpl {
 	int iFileBrowser::AddCategory(const tWString &asCategory, const tWString &asFilter)
 	{
 		cFileBrowserCategory* pCat = hplNew(cFileBrowserCategory, ());
-		
+
 		pCat->msName = asCategory;
 
 		mvCategories.push_back(pCat);
@@ -366,7 +366,7 @@ namespace hpl {
 		if(alCategoryId>=0 && alCategoryId<(int)mvCategories.size())
 		{
 			mvCategories[alCategoryId]->mvFilters.push_back(asFilter);
-			
+
 			OnAddFilter();
 		}
 	}
@@ -381,7 +381,7 @@ namespace hpl {
 
 	void iFileBrowser::GetFilesAndFoldersInCurrentPath(int alCategoryIndex, tWStringList& alstDestination)
 	{
-		if(alCategoryIndex<0 || 
+		if(alCategoryIndex<0 ||
 		   alCategoryIndex>=(int)mvCategories.size()) return;
 
 		alstDestination.clear();
@@ -405,7 +405,7 @@ namespace hpl {
 
 		alstDestination.insert(alstDestination.end(),lstFolders.begin(), lstFolders.end());
 		alstDestination.insert(alstDestination.end(),lstFiles.begin(), lstFiles.end());
-		
+
 	}
 
 	//-------------------------------------------------------------------------
@@ -413,8 +413,8 @@ namespace hpl {
 
 	/** This method returns the file type
 	 *
-	 * \param &asFilename 
-	 * \return 
+	 * \param &asFilename
+	 * \return
 	 */
 	eFileBrowserFileType iFileBrowser::GetFileTypeByName(const tWString &asFilename)
 	{
@@ -437,16 +437,16 @@ namespace hpl {
 			}
 		}
 
-		return eFileBrowserFileType_Other;		
+		return eFileBrowserFileType_Other;
 	}
 
 	//-------------------------------------------------------------------------
 
-	
+
 
 	//-------------------------------------------------------------------------
 
-	/** Go to the specified path, be it a special folder, a child dir from current dir, 
+	/** Go to the specified path, be it a special folder, a child dir from current dir,
 	 *	a dir relative to the working directory, or a valid absolute path.
 	 * \param asPath Path to navigate to
 	 * \return true if success (valid path provided)
@@ -506,11 +506,11 @@ namespace hpl {
 
 		return true;
 	}
-    
+
 	//-------------------------------------------------------------------------
 
 	/**This method makes the current directory go up one level
-	 * Top == special folders 
+	 * Top == special folders
 	 * \return true on success
 	 */
 	bool iFileBrowser::NavigateUp()
@@ -522,7 +522,7 @@ namespace hpl {
 
 	/** Sets current path based on a string
 	 *
-	 * \param &asPath 
+	 * \param &asPath
 	 */
 	void iFileBrowser::SetPathFromString(const tWString &asPath)
 	{
@@ -557,8 +557,8 @@ namespace hpl {
 
 	/** Returns file size in an eye friendly format
 	 *
-	 * \param alSize 
-	 * \return 
+	 * \param alSize
+	 * \return
 	 */
 	tWString iFileBrowser::GetHumanReadableSize(unsigned long alSize)
 	{
@@ -589,7 +589,7 @@ namespace hpl {
 
 		for(int i=0; i<(int)mvCurrentDirFullPath.size();++i)
 			sPath += cString::AddSlashAtEndW(mvCurrentDirFullPath[i]);
-		
+
 		return sPath;
 	}
 

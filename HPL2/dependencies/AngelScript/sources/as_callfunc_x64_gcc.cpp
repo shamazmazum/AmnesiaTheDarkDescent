@@ -133,7 +133,7 @@ static asQWORD __attribute ((__noinline__)) X64_CallFunction( const asDWORD* pAr
 		".cfi_def_cfa_register r15 \n"
 #endif
 
-		// Skip the first 128 bytes on the stack frame, called "red zone",	
+		// Skip the first 128 bytes on the stack frame, called "red zone",
 		// that might be used by the compiler to store temporary values
 		"  sub $128, %%rsp \n"
 
@@ -576,35 +576,35 @@ int CallSystemFunction( int id, asCContext *context, void *objectPointer )
 #endif
 
 	// Store the returned value in our stack
-	if( descr->returnType.IsObject() && !descr->returnType.IsReference() ) 
+	if( descr->returnType.IsObject() && !descr->returnType.IsReference() )
 	{
-		if( descr->returnType.IsObjectHandle() ) 
+		if( descr->returnType.IsObjectHandle() )
 		{
 			context->regs.objectRegister = ( void * )( size_t )retQW;
 
-			if( sysFunc->returnAutoHandle && context->regs.objectRegister ) 
+			if( sysFunc->returnAutoHandle && context->regs.objectRegister )
 			{
 				engine->CallObjectMethod( context->regs.objectRegister, descr->returnType.GetObjectType()->beh.addref );
 			}
-		} 
+		}
 		else
 		{
-			if ( !sysFunc->hostReturnInMemory && ( descr->returnType.GetObjectType()->flags & asOBJ_APP_CLASS_CA ) != asOBJ_APP_CLASS_CA ) 
+			if ( !sysFunc->hostReturnInMemory && ( descr->returnType.GetObjectType()->flags & asOBJ_APP_CLASS_CA ) != asOBJ_APP_CLASS_CA )
 			{
-				if ( sysFunc->hostReturnSize == 1 ) 
+				if ( sysFunc->hostReturnSize == 1 )
 				{
 					*( asDWORD * )retPointer = ( asDWORD )retQW;
-				} 
-				else if ( sysFunc->hostReturnSize == 2 ) 
+				}
+				else if ( sysFunc->hostReturnSize == 2 )
 				{
 					*( asQWORD * )retPointer = retQW;
-				} 
-				else if ( sysFunc->hostReturnSize == 3 ) 
+				}
+				else if ( sysFunc->hostReturnSize == 3 )
 				{
 					*( asQWORD * )retPointer			 = retQW;
 					*( ( ( asDWORD * )retPointer ) + 2 ) = ( asDWORD )retQW2;
-				} 
-				else 
+				}
+				else
 				{
 					*( asQWORD * )retPointer			 = retQW;
 					*( ( ( asQWORD * )retPointer ) + 1 ) = retQW2;
@@ -614,43 +614,43 @@ int CallSystemFunction( int id, asCContext *context, void *objectPointer )
 			// Store the object in the register
 			context->regs.objectRegister = retPointer;
 		}
-	} 
-	else 
+	}
+	else
 	{
 		// Store value in valueRegister
-		if( sysFunc->hostReturnFloat ) 
+		if( sysFunc->hostReturnFloat )
 		{
-			if( sysFunc->hostReturnSize == 1 ) 
+			if( sysFunc->hostReturnSize == 1 )
 			{
 				*(asDWORD*)&context->regs.valueRegister = GetReturnedFloat();
-			} 
-			else 
+			}
+			else
 			{
 				context->regs.valueRegister = GetReturnedDouble();
 			}
-		} 
-		else if ( sysFunc->hostReturnSize == 1 ) 
+		}
+		else if ( sysFunc->hostReturnSize == 1 )
 		{
 			*( asDWORD * )&context->regs.valueRegister = ( asDWORD )retQW;
-		} 
-		else 
+		}
+		else
 		{
 			context->regs.valueRegister = retQW;
 		}
 	}
 
-	if( sysFunc->hasAutoHandles ) 
+	if( sysFunc->hasAutoHandles )
 	{
 		args = context->regs.stackPointer;
-		if( callConv >= ICC_THISCALL && !objectPointer ) 
+		if( callConv >= ICC_THISCALL && !objectPointer )
 		{
 			args += AS_PTR_SIZE;
 		}
 
 		int spos = 0;
-		for( n = 0; n < ( int )descr->parameterTypes.GetLength(); n++ ) 
+		for( n = 0; n < ( int )descr->parameterTypes.GetLength(); n++ )
 		{
-			if( sysFunc->paramAutoHandles[n] && (*(size_t*)&args[spos] != 0) ) 
+			if( sysFunc->paramAutoHandles[n] && (*(size_t*)&args[spos] != 0) )
 			{
 				// Call the release method on the type
 				engine->CallObjectMethod( ( void * )*( size_t * )&args[spos], descr->parameterTypes[n].GetObjectType()->beh.release );
@@ -660,7 +660,7 @@ int CallSystemFunction( int id, asCContext *context, void *objectPointer )
 			if( descr->parameterTypes[n].IsObject() && !descr->parameterTypes[n].IsObjectHandle() && !descr->parameterTypes[n].IsReference() )
 			{
 				spos += AS_PTR_SIZE;
-			} 
+			}
 			else
 			{
 				spos += descr->parameterTypes[n].GetSizeOnStackDWords();

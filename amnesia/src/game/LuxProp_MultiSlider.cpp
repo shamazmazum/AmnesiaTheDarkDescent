@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -63,13 +63,13 @@ void cLuxPropLoader_MultiSlider::LoadVariables(iLuxProp *apProp, cXmlElement *ap
 	pMultiSlider->mfStickToStateMaxDist = GetVarFloat("StickToStateMaxDist", 0.1f);
 
 	pMultiSlider->mbCanInteractWithStaticBody = GetVarBool("CanInteractWithStaticBody", true);
-	
+
 	pMultiSlider->mbAutoMoveToCurrentState = GetVarBool("AutoMoveToCurrentState", true);
 	pMultiSlider->mfAutoMoveSpeedFactor = GetVarFloat("AutoMoveSpeedFactor", 2);
 	pMultiSlider->mfAutoMoveMaxSpeed = GetVarFloat("AutoMoveMaxSpeed", 8);
-	
+
 	pMultiSlider->msChangeStateSound = GetVarString("ChangeStateSound", "");
-	
+
 	pMultiSlider->msStuckSound = GetVarString("StuckSound", "");
 }
 //-----------------------------------------------------------------------
@@ -156,7 +156,7 @@ bool cLuxProp_MultiSlider::OnInteract(iPhysicsBody *apBody, const cVector3f &avP
 	gpBase->mpPlayer->ChangeState(eLuxPlayerState_InteractSlide);
 
 	mAutoMovePid.Reset();
-	
+
 	return true;
 }
 
@@ -215,7 +215,7 @@ void cLuxProp_MultiSlider::UpdatePropSpecific(float afTimeStep)
 
 void cLuxProp_MultiSlider::BeforePropDestruction()
 {
-	
+
 }
 
 //-----------------------------------------------------------------------
@@ -246,7 +246,7 @@ void cLuxProp_MultiSlider::SetStuckState(int alState, bool abEffects)
 		float fPos = mvStates[mlStuckState].mfPos;
 		float fMin = mlStuckState==0 ? fPos : fPos - 0.05f;
 		float fMax = mlStuckState==(int)mvStates.size()-1 ? fPos : fPos + 0.05f;
-		
+
 		mpSliderJoint->SetMinDistance(fMin);
 		mpSliderJoint->SetMaxDistance(fMax);
 	}
@@ -283,10 +283,10 @@ void cLuxProp_MultiSlider::UpdateCheckStuckSound(float afTimeStep)
 
 	if(mfStuckSoundTimer >0)
 	{
-		mfStuckSoundTimer-=afTimeStep; 
+		mfStuckSoundTimer-=afTimeStep;
 		return;
 	}
-	
+
 	float fSpeedSqr = mpSliderJoint->GetChildBody()->GetLinearVelocity().SqrLength();
 	if(fSpeedSqr > 0.01f)
 	{
@@ -321,14 +321,14 @@ void cLuxProp_MultiSlider::UpdateCheckNewState(float afPos, float afTimeStep)
 void cLuxProp_MultiSlider::UpdateAutoMove(float afPos, float afTimeStep)
 {
 	if(IsInteractedWith() || mbAutoMoveToCurrentState==false || mlStuckState!=-1 || mlCurrentState==-1) return;
-	
+
 	///////////////////////////
 	// Get the wanted speed
     float fGoalPos = mvStates[mlCurrentState].mfPos;
-	
+
 	float fWantedSpeed = mfAutoMoveSpeedFactor * (fGoalPos - afPos);
 	if(cMath::Abs(fWantedSpeed)<0.003f) return;
-	
+
 	if(fWantedSpeed > mfAutoMoveMaxSpeed)	fWantedSpeed = mfAutoMoveMaxSpeed;
 	if(fWantedSpeed < -mfAutoMoveMaxSpeed)	fWantedSpeed = -mfAutoMoveMaxSpeed;
 
@@ -337,14 +337,14 @@ void cLuxProp_MultiSlider::UpdateAutoMove(float afPos, float afTimeStep)
 	cVector3f vMoveDir = mpSliderJoint->GetPinDir();
 	cVector3f vBodyVel = mpSliderBody->GetLinearVelocity();
 	float fSliderSpeed = cMath::Vector3Dot(vMoveDir, vBodyVel);
-	
+
 	//mpMultiSliderBody->SetAngularVelocity(vWantedVel);
-	
+
 	float fForceSize = mAutoMovePid.Output(fWantedSpeed - fSliderSpeed, afTimeStep);
 	fForceSize *= mpSliderBody->GetMass();
 
 	//Log("Pos: %f Goal: %f Wanted: %f current: %f Force: %f\n", afPos,fGoalPos, fWantedSpeed, fSliderSpeed, fForceSize);
-	
+
 	mpSliderBody->AddForce(vMoveDir*fForceSize);
 }
 
@@ -419,7 +419,7 @@ void cLuxProp_MultiSlider::LoadFromSaveData(iLuxEntity_SaveData* apSaveData)
 	//Init
 	super_class::LoadFromSaveData(apSaveData);
 	cLuxProp_MultiSlider_SaveData *pData = static_cast<cLuxProp_MultiSlider_SaveData*>(apSaveData);
-	
+
 	//////////////////
 	//Set variables
 	kCopyFromVar(pData,mlCurrentState);
@@ -431,7 +431,7 @@ void cLuxProp_MultiSlider::LoadFromSaveData(iLuxEntity_SaveData* apSaveData)
 //-----------------------------------------------------------------------
 
 void cLuxProp_MultiSlider::SetupSaveData(iLuxEntity_SaveData *apSaveData)
-{	
+{
 	super_class::SetupSaveData(apSaveData);
 }
 

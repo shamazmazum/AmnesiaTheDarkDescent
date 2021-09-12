@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -46,8 +46,8 @@ namespace hpl {
 	cSDLFontData::cSDLFontData(const tString &asName,iLowLevelGraphics* apLowLevelGraphics)
 		: iFontData(asName,apLowLevelGraphics)
 	{
-	
-	
+
+
 	}
 
 	//-----------------------------------------------------------------------
@@ -68,7 +68,7 @@ namespace hpl {
 		// Load xml file
 		FILE *pFile = cPlatform::OpenFile(asFileName, _W("rb"));
 		if(pFile==NULL) return false;
-		
+
 		TiXmlDocument *pXmlDoc = hplNew( TiXmlDocument,() );
 		if(pXmlDoc->LoadFile(pFile)==false)
 		{
@@ -111,7 +111,7 @@ namespace hpl {
 		////////////////////////////////////////////
 		// Load bitmaps
 		std::vector<cFrameTexture*> vFrameTextures;
-		
+
 		TiXmlElement *pPagesRootElem = pRootElem->FirstChildElement("pages");
 
 		int lCount=0;
@@ -130,7 +130,7 @@ namespace hpl {
 				hplDelete(pXmlDoc);
 				return false;
 			}
-			
+
 			//Make a fix here so we get a white luminence and alpha filled with data.
 			if(pBitmap->GetPixelFormat() == ePixelFormat_Luminance)
 			{
@@ -191,13 +191,13 @@ namespace hpl {
 
 			//Get the bitmap where the character graphics is
 			cFrameTexture* pFrameTexture = vFrameTextures[lPage];
-			
+
 			cFrameSubImage *pImage = pFrameTexture->CreateCustomImage(cVector2l(lX, lY),cVector2l(lW,lH));
-            
+
 			//Create glyph and place it correctly.
             cGlyph *pGlyph = CreateGlyph(pImage,cVector2l(lXOffset,lYOffset),cVector2l(lW,lH),
 										cVector2l(lBase,lLineHeight),lAdvance);
-			
+
 			mvGlyphs[lId] = pGlyph;
 
 		}
@@ -207,10 +207,10 @@ namespace hpl {
 		hplDelete(pXmlDoc);
 		return true;
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
-	bool cSDLFontData::CreateFromFontFile(const tWString &asFileName, int alSize, unsigned short alFirstChar, 
+
+	bool cSDLFontData::CreateFromFontFile(const tWString &asFileName, int alSize, unsigned short alFirstChar,
 											unsigned short alLastChar)
 	{
 		/*SetFullPath(asFileName);
@@ -219,32 +219,32 @@ namespace hpl {
 
 		mlFirstChar = alFirstChar;
 		mlLastChar = alLastChar;
-		
+
 		TTF_Font* pFont = TTF_OpenFont(cString::To8Char(asFileName).c_str(), alSize);
 		if(pFont==NULL){
 			Error("Error when opening '%s': %s\n",asFileName.c_str(),TTF_GetError());
 			return false;
 		}
-		
+
 		//Create bitmaps from all of the characters and create
-		//Images from those. 
+		//Images from those.
 		for(int i=alFirstChar; i<=alLastChar;i++)
 		{
 			unsigned short lUniCode = i;
 			//char c = (char)i;
-			
+
 			//if(c == 'ˆ')lUniCode = 'o';
 			//else if(c == '÷')lUniCode = 'O';
 
             pGlyph = RenderGlyph(pFont, lUniCode, alSize);
 			AddGlyph(pGlyph);
 		}
-		
+
 		//Get the properties
 		mfHeight = (float)TTF_FontHeight(pFont);
 
 		mvSizeRatio = 1;
-		
+
 		//Cleanup
 		TTF_CloseFont(pFont);
 
@@ -259,31 +259,31 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	/*cGlyph* cSDLFontData::RenderGlyph(TTF_Font* apFont,unsigned short aChar, int alFontSize)
 	{
 		//If the font is saved to disk, then load the bitmap from disk instead.
-		
+
 		cVector2l vMin;
 		cVector2l vMax;
 		int lAdvance=0;
-		
+
 		TTF_GlyphMetrics(apFont, aChar, &vMin.x, &vMax.x, &vMin.y, &vMax.y, &lAdvance);
 
 		//Create the bitmap we want to draw upon
 		cVector2l vSize = vMax - vMin;
 		cBitmap *pBmp = hplNew(cBitmap, () );
-		//TODO: Create and fill bitmap		
+		//TODO: Create and fill bitmap
 		//pBmp->CreateData(cVector3l(vSize.x, vSize.y,1),ePixelFormat_RGBA,0,0);
 		//pBmp->Clear(cColor(0,1),0,0);
-		
+
 		//create a surface with the glyph
 		SDL_Color Col;Col.r=255;Col.g=255;Col.b=255;
 		SDL_Surface* pGlyphSurface = TTF_RenderGlyph_Blended(apFont,aChar,Col);
 
-		SDL_Surface* pTempSurface = SDL_CreateRGBSurface(	SDL_SWSURFACE, vSize.x, vSize.y,32, 
+		SDL_Surface* pTempSurface = SDL_CreateRGBSurface(	SDL_SWSURFACE, vSize.x, vSize.y,32,
 															0x000000ff,0x0000ff00,0x00ff0000,0xff000000);
-        
+
 		//Blit the surface using blending. This way it should create a nice
 		//b&w image where the font is white.
 		//TODO: Get Surface data and do a raw data blit.
@@ -296,15 +296,15 @@ namespace hpl {
 		//So we get some alpha bledning.
 		int lBmpSize = 4;
 		unsigned char* PixBuffer = (unsigned char*)pTempSurface->pixels;
-		
+
 		//Should not be needed:
 		for(int y=0;y<vSize.y;y++)
 			for(int x=0;x<vSize.x;x++)
 			{
-				unsigned char* Pix = &PixBuffer[y*pBmp->GetWidth()*lBmpSize + 
+				unsigned char* Pix = &PixBuffer[y*pBmp->GetWidth()*lBmpSize +
 					x*lBmpSize];
 
-				Pix[3] = Pix[0];	
+				Pix[3] = Pix[0];
 			}
 		pBmp->SetSize(cVector3l(vSize.x, vSize.y,1));
 		pBmp->SetPixelFormat(ePixelFormat_RGBA);
@@ -320,7 +320,7 @@ namespace hpl {
 			FatalError("Couldn't create image for bitmap\n");
 			return NULL;
 		}
-		
+
 		////////////////////////////////////
 		//Create the Glyph
 		int lHeight = TTF_FontHeight(apFont);

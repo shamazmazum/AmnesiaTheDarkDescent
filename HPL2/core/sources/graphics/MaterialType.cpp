@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -51,12 +51,12 @@ namespace hpl {
 
 		mbIsTranslucent = false;
 		mbIsDecal = false;
-		
+
 		for(int i=0; i<eMaterialRenderMode_LastEnum; ++i)
 		{
 			mbHasTypeSpecifics[i] = false;
 		}
-		
+
 		//Need to do this to support NULL materials (that do not use graphical stuff)
 		if(mpGraphics && mpResources)
 			mpProgramManager = hplNew( cProgramComboManager, ("",mpGraphics, mpResources,eMaterialRenderMode_LastEnum ));
@@ -74,15 +74,15 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 	// PUBLIC METHODS
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
 
 	void iMaterialType::SetName(const tString& asName)
-	{ 
+	{
 		msName = asName;
 		mpProgramManager->SetName(asName);
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cMaterialUserVariable* iMaterialType::GetUserVariable(int alIdx)
@@ -101,7 +101,7 @@ namespace hpl {
 			if(pVar->msName==asName)
 				return pVar;
 		}
-		
+
 		return NULL;
 	}
 
@@ -112,9 +112,9 @@ namespace hpl {
 		DestroyData();
 		LoadData();
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// PROTECTED METHODS
 	//////////////////////////////////////////////////////////////////////////
@@ -130,7 +130,7 @@ namespace hpl {
 
 	//-----------------------------------------------------------------------
 
-	void iMaterialType::AddVar(const tString& asName, eVariableType aType, const tString& asDefaultValue, const tString& asDesc, 
+	void iMaterialType::AddVar(const tString& asName, eVariableType aType, const tString& asDefaultValue, const tString& asDesc,
 							   const tStringVec& avEnumValues)
 	{
 		cMaterialUserVariable userVariable;
@@ -159,24 +159,24 @@ namespace hpl {
 
 	void iMaterialType::AddVarVec2(const tString& asName, const cVector2f& avDefaultValue, const tString& asDesc)
 	{
-		tString sValue = cString::ToString(avDefaultValue.x, -1, true) + " " + 
+		tString sValue = cString::ToString(avDefaultValue.x, -1, true) + " " +
 						 cString::ToString(avDefaultValue.y, -1, true);
 		AddVar(asName, eVariableType_Vec2, sValue, asDesc);
 	}
 
 	void iMaterialType::AddVarVec3(const tString& asName, const cVector3f& avDefaultValue, const tString& asDesc)
 	{
-		tString sValue = cString::ToString(avDefaultValue.x, -1, true) + " " + 
-						 cString::ToString(avDefaultValue.y, -1, true) + " " + 
+		tString sValue = cString::ToString(avDefaultValue.x, -1, true) + " " +
+						 cString::ToString(avDefaultValue.y, -1, true) + " " +
 						 cString::ToString(avDefaultValue.z, -1, true);
 		AddVar(asName, eVariableType_Vec3, sValue, asDesc);
 	}
 
 	void iMaterialType::AddVarColor(const tString& asName, const cColor& aDefaultValue, const tString& asDesc)
 	{
-		tString sValue = cString::ToString(aDefaultValue.r, -1, true) + " " + 
-						 cString::ToString(aDefaultValue.g, -1, true) + " " + 
-						 cString::ToString(aDefaultValue.b, -1, true) + " " + 
+		tString sValue = cString::ToString(aDefaultValue.r, -1, true) + " " +
+						 cString::ToString(aDefaultValue.g, -1, true) + " " +
+						 cString::ToString(aDefaultValue.b, -1, true) + " " +
 						 cString::ToString(aDefaultValue.a, -1, true);
 		AddVar(asName, eVariableType_Color, sValue, asDesc);
 	}

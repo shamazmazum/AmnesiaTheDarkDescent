@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -155,7 +155,7 @@ void cQualityChooser::BuildDatabase()
 			const tString& sModelName = mvModels[i]->GetName();
 			printf("%s\n", sModelName.c_str());
 		}
-			
+
 		//mmapModels.insert(std::pair<cVideoCardManufacturer*, std::vector<cVideoCardModel*> >(pManufacturer, vModels));
 	//}
 }
@@ -209,7 +209,7 @@ void cQualityChooser::ParseManufacturer(tStringVec& avCardStringVec)
 void cQualityChooser::ParseModel(tStringVec& avCardStringVec)
 {
 	mpCurrentModel = NULL;
-	
+
 	//ParseManufacturer(avCardStringVec);
 	//if(mpCurrentManufacturer==NULL)
 	//	return;
@@ -317,15 +317,15 @@ void cQualityChooser::ParseSeries(tStringVec& avCardStringVec)
 			std::vector<tString> vCodeStrings;
 			vCodeStrings.push_back(cString::ToLowerCase(cString::Sub(sCode, 0, lPrefixCount)));
 			vCodeStrings.push_back(cString::ToLowerCase(cString::Sub(sCode, lPrefixCount+lNumericCount,lSuffixCount)));
-			
+
 			/////////////////////////////////////////
 			// Check prefix and suffix match
 			for(int k=0;k<(int)vCardStrings.size();++k)
 			{
 				const tString& sCardString = vCardStrings[k];
 				const tString& sCodeString = vCodeStrings[k];
-				
-				if(sCodeString.find(alphaWildcard)==tString::npos && 
+
+				if(sCodeString.find(alphaWildcard)==tString::npos &&
 					(sCardString.length()!=sCodeString.length() || sCardString.length()>sCodeString.length()))
 				{
 					bPrefixSuffixMatch = false;
@@ -334,7 +334,7 @@ void cQualityChooser::ParseSeries(tStringVec& avCardStringVec)
 
 				for(int c=0;c<(int)sCodeString.size();++c)
 				{
-					if(sCodeString[c]!=alphaWildcard && 
+					if(sCodeString[c]!=alphaWildcard &&
 						sCardString[c]!=sCodeString[c])
 					{
 						bPrefixSuffixMatch = false;
@@ -361,7 +361,7 @@ void cQualityChooser::ParseSeries(tStringVec& avCardStringVec)
 
 			for(int c=0;c<(int)sCodeNumber.size();++c)
 			{
-				if(sCodeNumber[c]!=numWildcard && 
+				if(sCodeNumber[c]!=numWildcard &&
 					sCardNumber[c]!=sCodeNumber[c])
 				{
 					bSeriesFound = false;

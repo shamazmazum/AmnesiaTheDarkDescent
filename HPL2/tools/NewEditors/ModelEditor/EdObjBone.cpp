@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -122,7 +122,7 @@ bool cEdObjBone::GetProperty(int alPropID, int& alX)
 	default:
 		return iEdScnObject::GetProperty(alPropID, alX);
 	}
-	
+
 	return true;
 }
 
@@ -245,7 +245,7 @@ void cEdObjBone::OnDraw(const cModuleDrawData& aData)
 {
 	//iEdScnObject::Draw(apViewport, apFunctions, apEditMode, abIsSelected);
 	cColor colJoint = mbSelected?cColor(0,1,0,1):cColor(1,0,0,1);
-	
+
 	if(aData.mStep==eEdDrawStep_PostSolid)
 	{
 		aData.mpFunctions->SetDepthTest(false);
@@ -288,9 +288,9 @@ void cEdObjBone::CreateLinkToParent()
 
 	cMeshCreator* pCreator = GetWorld()->GetEditor()->GetEngine()->GetGraphics()->GetMeshCreator();
     cMesh* pMesh = pCreator->CreateCone("", cVector2f(0.01f, fLength), 4, "editor_rect.mat");
-	
+
 	mpVBBone = pMesh->GetSubMesh(0)->GetVertexBuffer()->CreateCopy(eVertexBufferType_Hardware, eVertexBufferUsageType_Dynamic,
-																	eVertexElementFlag_Normal | eVertexElementFlag_Position | 
+																	eVertexElementFlag_Normal | eVertexElementFlag_Position |
 																	eVertexElementFlag_Color0 | eVertexElementFlag_Texture0);
 
 	hplDelete(pMesh);

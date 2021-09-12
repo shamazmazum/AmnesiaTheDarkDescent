@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -68,7 +68,7 @@ void cEdEditModeDecals::OnViewportMouseUp(const cViewportClick& aClick)
 		iEdObjectData* pCreationData = CreateObjectData();
 
 		iEdAction* pAction = mpEditor->GetWorld()->CreateActionCreateObject(pCreationData);
-		mpEditor->AddAction(pAction);		
+		mpEditor->AddAction(pAction);
 	}
 
 	UpdateDecalParams();
@@ -95,10 +95,10 @@ void cEdEditModeDecals::OnUpdate()
 	cMatrixf mtxRotation = cMath::MatrixMul(cMath::MatrixInverse(mtxSurfaceRot), cMath::MatrixRotate(mvCreatorLocalRotation, eEulerRotationOrder_XYZ));
 	cMatrixf mtxOrientation = mtxRotation.GetTranspose();
 
-	cEdObjDecal::BuildDecalVertexBuffer(GetWorld()->GetEngWorld(), pCreator, 
+	cEdObjDecal::BuildDecalVertexBuffer(GetWorld()->GetEngWorld(), pCreator,
 											pPicker->GetPositionInSurface(), GetCreatorScale(), mfOffset,
 											mtxOrientation.GetRight(), mtxOrientation.GetUp(), mtxOrientation.GetForward(),
-											sMaterial, pWin->GetColor(), 
+											sMaterial, pWin->GetColor(),
 											pWin->GetSubDivisions(), mlCurrentSubDiv, cTypeDecal::GetGlobalMaxTriangles(),
 											pPicker, pPicker->GetAffectedTypes());
 }
@@ -108,7 +108,7 @@ void cEdEditModeDecals::OnUpdate()
 void cEdEditModeDecals::OnDraw(const cModuleDrawData& aData)
 {
 	aData.mpFunctions->SetTextureRange(NULL,0);
-	
+
 	cDecalCreator* pCreator = mpEditor->GetEngine()->GetGraphics()->GetDecalCreator();
 	pCreator->DrawDebug(aData.mpFunctions, true, false);
 }
@@ -127,7 +127,7 @@ void cEdEditModeDecals::OnSetActive(bool abX)
 void cEdEditModeDecals::UpdateDecalParams()
 {
 	/////////////////////////////////////////////
-	// Randomize if needed and update parameters 
+	// Randomize if needed and update parameters
 	cEdWindowDecals* pWin = static_cast<cEdWindowDecals*>(mpWindow);
 	UpdateLocalRotation();
 	UpdateCreatorScale();
@@ -175,7 +175,7 @@ bool cEdEditModeDecals::SetUpCreationData(iEdObjectData* apData)
 	// Set material file index
 	cIndexedFile* pMat = cTypeDecal::mpIndex->CreateIndexedFile(sMaterial);
 	apData->SetInt(eDecalInt_FileIndex, pMat->mlID);
-	
+
 	//////////////////////////////////////////////////
 	// Set up remaining decal parameters
 	cDecalCreator* pCreator = mpEditor->GetEngine()->GetGraphics()->GetDecalCreator();

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -120,7 +120,7 @@ cEdVarInstance* iEdVar::CreateInstance()
 
 iEdVarInput::iEdVarInput(cEdVarInstance* apVar, iEdInput* apInput)
 {
-	mpVar = apVar; 
+	mpVar = apVar;
 	mpInput = apInput;
 	mpPanel = NULL;
 
@@ -239,11 +239,11 @@ iEdVarInput* cEdVarBool::CreateSpecificInput(iEdWindow* apWindow, iWidget* apPar
 
 //--------------------------------------------------------------------------------
 
-cEdVarInputBool::cEdVarInputBool(cEdVarInstance* apVar, 
-									iEdWindow* apWindow, 
+cEdVarInputBool::cEdVarInputBool(cEdVarInstance* apVar,
+									iEdWindow* apWindow,
 									iWidget* apParent) : iEdVarInput(apVar,
-																	 apWindow->CreateInputBool(0,apVar->GetVarType()->GetName(), 
-																										 
+																	 apWindow->CreateInputBool(0,apVar->GetVarType()->GetName(),
+																										
 																										apParent))
 {
 }
@@ -312,10 +312,10 @@ iEdVarInput* cEdVarFloat::CreateSpecificInput(iEdWindow* apWindow, iWidget* apPa
 
 cEdVarInputFloat::cEdVarInputFloat(cEdVarInstance* apVar,
 										   iEdWindow* apWindow,
-										   iWidget* apParent) : iEdVarInput(apVar, 
+										   iWidget* apParent) : iEdVarInput(apVar,
 																				apWindow->CreateInputNumber(0,
 																											apVar->GetVarType()->GetName(),
-																											
+
 																											apParent,
 																											50,0.1f))
 {
@@ -449,7 +449,7 @@ cEdVarInputString::cEdVarInputString(cEdVarInstance* apVar,
 											 iEdWindow* apWindow,
 											 iWidget* apParent) : iEdVarInput(apVar,
 																				  apWindow->CreateInputString(0,apVar->GetVarType()->GetName(),  apParent, 160))
-																									
+
 {
 }
 
@@ -518,7 +518,7 @@ iEdVarInput* cEdVarVector2f::CreateSpecificInput(iEdWindow* apWindow, iWidget* a
 cEdVarInputVector2f::cEdVarInputVector2f(cEdVarInstance* apVar,
 												 iEdWindow* apWindow,
 												 iWidget* apParent) : iEdVarInput(apVar,
-																					  apWindow->CreateInputVec2(0,apVar->GetVarType()->GetName(), 
+																					  apWindow->CreateInputVec2(0,apVar->GetVarType()->GetName(),
 																												 apParent, 50, tWStringList(),eEdInpStyle_RowLabelOnTop, 0.1f))
 {
 }
@@ -811,7 +811,7 @@ eEdResourceType cEdVarFile::GetBrowserTypeFromElement(cXmlElement* apElement)
 {
 	tString sType = apElement->GetAttributeString("ResType", "Custom");
 
-	tString vResStrings[] = 
+	tString vResStrings[] =
 	{
 		"Material",
 		"Texture",
@@ -881,7 +881,7 @@ cEdVarInputFile::cEdVarInputFile(cEdVarInstance* apVar,
 										 iEdWindow* apWindow,
 										 iWidget* apParent) : iEdVarInput(apVar,
 																			apWindow->CreateInputFile(0,apVar->GetVarType()->GetName(), _W(""), apParent, 100))
-																									
+
 {
 	cEdInputFile* pInput = (cEdInputFile*)mpInput;
 	cEdVarFile* pFile = (cEdVarFile*)apVar->GetVarType();
@@ -991,7 +991,7 @@ const tWString& iEdClass::GetFullName()
 {
 	if(msFullName.empty())
 	{
-		if(mpParent) 
+		if(mpParent)
 			msFullName = mpParent->GetFullName() + _W(".");
 
 		msFullName += msName;
@@ -1344,7 +1344,7 @@ cEdClassInstance* cEdClassInstance::CreateCopy()
 {
 	cEdClassInstance* pCopy = CreateSpecificCopy();
 	pCopy->CopyFromInstance(this);
-	
+
 	return pCopy;
 }
 

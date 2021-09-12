@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -47,14 +47,14 @@ namespace hpl {
 	class iMutex;
 
 	//------------------------------------------------------
-	
+
 	class cFPSCounter
 	{
 	public:
 		cFPSCounter(iLowLevelSystem* apLowLevelSystem);
-		
+
 		void AddFrame();
-		
+
 		float mfFPS;
 		float mfUpdateRate;
 	private:
@@ -72,7 +72,7 @@ namespace hpl {
 		cSetupVarContainer();
 
 		void AddString(const tString& asName, const tString& asValue);
-		
+
 		void AddInt(const tString& asName, int alValue);
 		void AddFloat(const tString& asName, float afValue);
 		void AddBool(const tString& asName, bool abValue);
@@ -83,12 +83,12 @@ namespace hpl {
 		int GetInt(const tString& asName,int alDefault);
 		bool GetBool(const tString& asName, bool abDefault);
 	private:
-		std::map<tString, tString>  m_mapVars; 
+		std::map<tString, tString>  m_mapVars;
 		tString msBlank;
 	};
 
 	//---------------------------------------------------
-	    
+
 	extern cEngine* CreateHPLEngine(eHplAPI aApi, tFlag alHplModuleFlags, cEngineInitVars *apVars);
 	extern void DestroyHPLEngine(cEngine* apGame);
 
@@ -109,12 +109,12 @@ namespace hpl {
 		 */
 		void Run();
 		/**
-		 * Exists the game. 
+		 * Exists the game.
 		 * \todo is this a good way to do it? Should game be global. If so, make a singleton.
 		 */
 		void Exit();
 		bool GetGameIsDone();
-		
+
 		cScene* GetScene(){ return mpScene;}
 		cResources* GetResources(){ return mpResources;}
 		cUpdater* GetUpdater(){ return mpUpdater;}
@@ -127,7 +127,7 @@ namespace hpl {
 		cGui* GetGui(){ return mpGui;}
 		cHaptic* GetHaptic(){ return mpHaptic;}
 		cGenerate* GetGenerate(){ return mpGenerate;}
-		
+
 		void ResetLogicTimer();
 		void SetUpdatesPerSec(int alUpdatesPerSec);
 		int GetUpdatesPerSec();
@@ -160,7 +160,7 @@ namespace hpl {
 
 		static void SetDeviceWasPlugged() { mbDevicePlugged = true; }
 		static void SetDeviceWasRemoved() { mbDeviceRemoved = true; }
-		
+
 		///// SCRIPT VAR METHODS ////////////////////
 
 		cScriptVar* CreateLocalVar(const tString& asName);
@@ -177,7 +177,7 @@ namespace hpl {
 		eVariableType GetEngineTypeFromString(const tString& asType);
 		eVariableType GetEngineTypeFromStringW(const tWString& asType);
 		const tString& GetEngineTypeString(eVariableType aType) { return mvEngineTypeStrings[aType]; }
-		
+
 
 	private:
 		void UpdateFrameTimer();
@@ -205,9 +205,9 @@ namespace hpl {
 		iMutex *mpMutex;
 
 		cFPSCounter* mpFPSCounter;
-		
+
 		iTimer *mpFrameTimer;
-		
+
 		bool mbLimitFPS;
 
 		tScriptVarMap m_mapLocalVars;
@@ -221,7 +221,7 @@ namespace hpl {
 
 		static bool mbDevicePlugged;
 		static bool mbDeviceRemoved;
-        
+
 		tStringVec mvEngineTypeStrings;
 
 		//Modules that Game connnect to:

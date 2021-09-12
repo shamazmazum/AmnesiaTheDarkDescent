@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -196,7 +196,7 @@ bool cModelEditor::MainMenu_ItemClick(iWidget* apWidget, const cGuiMessageData& 
 	}
 	else if(apWidget==mpMainMenuAnimations)
 	{
-		mpWindowAnimations->SetActive(true);		
+		mpWindowAnimations->SetActive(true);
 	}
 	/////////////////////////////////////////////////////////////////
 	// Menu Item "View.Outline"
@@ -207,7 +207,7 @@ bool cModelEditor::MainMenu_ItemClick(iWidget* apWidget, const cGuiMessageData& 
 		AddWindow(pWin);
 		pWin->SetActive(true);
 	}
-	
+
 	return true;
 }
 kGuiCallbackDeclaredFuncEnd(cModelEditor, MainMenu_ItemClick);
@@ -241,7 +241,7 @@ bool cModelEditor::OnChangeFlags(int alFlags)
 			AddWindow(mpTestWindow);
 			mpTestWindow->SetPosition(GetLayoutVec3f(eLayoutVec3_ViewportAreaPos));
 			mpTestWindow->SetSize(GetLayoutVec2f(eLayoutVec2_ViewportAreaSize));
-			mpTestWindow->SetActive(true);			
+			mpTestWindow->SetActive(true);
 		}
 		else
 		{
@@ -272,7 +272,7 @@ void cModelEditor::UpdateEditMenu()
 	/*mpMainMenuUndo->SetEnabled( !mpActionHandler->IsDoneActionsListEmpty());
 	mpMainMenuRedo->SetEnabled( !mpActionHandler->IsUndoneActionsListEmpty());
 
-	bool bHasSelectedObjects = (mpCurrentEditMode==mvEditModes[eModelEditorEditMode_Select] && 
+	bool bHasSelectedObjects = (mpCurrentEditMode==mvEditModes[eModelEditorEditMode_Select] &&
 							   mpSelection->IsEmpty()==false);
 
 	mpMainMenuDelete->SetEnabled(bHasSelectedObjects);
@@ -291,7 +291,7 @@ void cModelEditor::OnInit()
 	msDefaultTypeName = lstTypes.front();
 	cEntityCustomVarHelper::GetSubTypesByTypeName(GetCustomVarDefinition(eCustomVarDefinition_Entity), msDefaultTypeName, lstSubTypes, msDefaultSubTypeName);
 	*/
-	
+
 	AddEditMode(hplNew(cEditorEditModeSelect,(this, mpEditorWorld)));
 	AddEditMode(hplNew(cEditorEditModeLights,(this, mpEditorWorld)));
 	AddEditMode(hplNew(cEditorEditModeBillboards,(this, mpEditorWorld)));
@@ -318,7 +318,7 @@ void cModelEditor::OnInitLayout()
     ///////////////////////////////////
 	// Lower Toolbar
 	mpLowerToolbar->SetPosition(cVector3f(GetLayoutVec3f(eLayoutVec3_ViewportAreaPos).x, mvScreenSize.y-50,1));
-	
+
 	SetCurrentEditMode(GetEditMode("Select"));
 
 	mpWindowAnimations = hplNew(cModelEditorWindowAnimations,(this));
@@ -335,7 +335,7 @@ void cModelEditor::OnSetUpDirectories()
 {
 	const tWString& sWorkingDir = GetWorkingDir();
 
-	mpDirHandler->AddLookUpDir(eDir_Maps, sWorkingDir + mpMainConfig->GetStringW("Directories", "MapsDir", _W("maps")), true); 
+	mpDirHandler->AddLookUpDir(eDir_Maps, sWorkingDir + mpMainConfig->GetStringW("Directories", "MapsDir", _W("maps")), true);
 }
 
 //--------------------------------------------------------------------
@@ -374,7 +374,7 @@ void cModelEditor::OnPostUpdateLayout()
 
 		if(sRecent==_W(""))
 			break;
-		
+
 		if(cPlatform::FileExists(sRecent))
 		{
 			cWidgetMenuItem* pItem = mpMainMenuRecent->AddMenuItem(sRecent);
@@ -406,7 +406,7 @@ void cModelEditor::OnInitInput()
 void cModelEditor::OnLoadConfig()
 {
 	//////////////////////////////////////////////////////////////
-	// Set up loading stuff that is specific to this editor, 
+	// Set up loading stuff that is specific to this editor,
 	// and stuff like log filename (this is done pre engine creation)
 	tWString sConfigFile = GetHomeDir() + _W("ModelEditor.cfg");
 
@@ -471,7 +471,7 @@ void cModelEditor::OnSaveConfig()
 
 		if(sRecent==_W(""))
 			break;
-		
+
 		if(cPlatform::FileExists(sRecent))
 		{
 			mpLocalConfig->SetString("Misc", "RecentFile" + cString::ToString(++i), (const tString&)cString::To8Char(sRecent));
@@ -495,9 +495,9 @@ bool cModelEditor::MeshImport_Callback(iWidget* apWidget, const cGuiMessageData&
 	{
 		tWString sFilenameFullPath = mvLoadFilenames.front();
 		tString sFilename = cString::To8Char(sFilenameFullPath);
-		
+
 		msImportedMeshFilename = cString::To16Char(cString::Sub(sFilename, 0, cString::GetLastStringPos(sFilename, "."))) + _W(".ent");
-		
+
 		iEditorAction* pAction = hplNew( cModelEditorActionMeshLoad,( (cModelEditorWorld*)mpEditorWorld, sFilename));
 		AddAction(pAction);
 
@@ -514,13 +514,13 @@ kGuiCallbackDeclaredFuncEnd(cModelEditor, MeshImport_Callback);
 
 void cModelEditor::AppSpecificLoad(iXmlDocument* apDoc)
 {
-	
+
 }
 
 void cModelEditor::AppSpecificSave(iXmlDocument* apDoc)
 {
 	apDoc->SetValue("Entity");
-	
+
 	////////////////////////////////////////
 	// TODO: Save user settings data here
 	/*
@@ -553,33 +553,33 @@ cWidgetMainMenu* cModelEditor::CreateMainMenu()
 	// Setup main menu
 	cWidgetMenuItem* pItem = NULL;
 	cWidgetMenuItem* pSubItem = NULL;
-    
+
 	// File menu
 	pItem = pMenu->AddMenuItem(_W("File"));
 	mpMainMenuNew = pItem->AddMenuItem(_W("New"));
 	mpMainMenuNew->AddCallback(eGuiMessage_ButtonPressed,this,kGuiCallback(MainMenu_ItemClick));
-	
+
 	pItem->AddSeparator();
-	
+
 	mpMainMenuLoad = pItem->AddMenuItem(_W("Open"));
 	mpMainMenuLoad->AddCallback(eGuiMessage_ButtonPressed,this,kGuiCallback(MainMenu_ItemClick));
-	
+
 	pItem->AddSeparator();
-	
+
 	mpMainMenuSave = pItem->AddMenuItem(_W("Save"));
 	mpMainMenuSave->AddCallback(eGuiMessage_ButtonPressed,this,kGuiCallback(MainMenu_ItemClick));
 	mpMainMenuSave->AddShortcut(eKeyModifier_Ctrl,eKey_S);
-	
+
 	mpMainMenuSaveAs = pItem->AddMenuItem(_W("Save as"));
 	mpMainMenuSaveAs->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(MainMenu_ItemClick));
-	
+
 	pItem->AddSeparator();
 
 	mpMainMenuImport = pItem->AddMenuItem(_W("Import Mesh"));
 	mpMainMenuImport->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(MainMenu_ItemClick));
-	
+
 	pItem->AddSeparator();
-	
+
 	mpMainMenuRecent = pItem->AddMenuItem(_W("Open Recent"));
 
 	pItem->AddSeparator();
@@ -593,7 +593,7 @@ cWidgetMainMenu* cModelEditor::CreateMainMenu()
 #elif defined(__APPLE__)
 	mpMainMenuExit->AddShortcut(eKeyModifier_Ctrl, eKey_Q);
 #endif
-    
+
 	// Edit menu
 	pItem = pMenu->AddMenuItem(_W("Edit"));
 	mpMainMenuUndo =  pItem->AddMenuItem(_W("Undo"));
@@ -614,7 +614,7 @@ cWidgetMainMenu* cModelEditor::CreateMainMenu()
 	pItem = pMenu->AddMenuItem(_W("View"));
 	mpMainMenuOutline = pItem->AddMenuItem(_W("Outline"));
 	mpMainMenuOutline->AddCallback(eGuiMessage_ButtonPressed, this, kGuiCallback(MainMenu_ItemClick));
-	
+
 	// Settings menu
 	pItem = pMenu->AddMenuItem(_W("Settings"));
 	mpMainMenuUserSettings = pItem->AddMenuItem(_W("User defined variables"));

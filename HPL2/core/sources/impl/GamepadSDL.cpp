@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -31,7 +31,7 @@
 #endif
 
 namespace hpl {
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// CONSTRUCTORS
 	//////////////////////////////////////////////////////////////////////////
@@ -42,7 +42,7 @@ namespace hpl {
 	float cGamepadSDL::mfDeadZoneRadius = 3200.0f*cGamepadSDL::mfInvAxisMax;
 
 	//-----------------------------------------------------------------------
-	
+
 	cGamepadSDL::cGamepadSDL(cLowLevelInputSDL *apLowLevelInputSDL, int alIndex) : iGamepad("SDL Portable Gamepad", alIndex)
 	{
 		mpLowLevelInputSDL = apLowLevelInputSDL;
@@ -69,7 +69,7 @@ namespace hpl {
 		}
 		//ClearKeyList();
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	//////////////////////////////////////////////////////////////////////////
@@ -115,10 +115,10 @@ namespace hpl {
 		{
 			SDL_Event *pEvent = &(*it);
 
-			if(pEvent->type != SDL_JOYAXISMOTION	&& 
+			if(pEvent->type != SDL_JOYAXISMOTION	&&
 				pEvent->type != SDL_JOYBUTTONUP		&&
 				pEvent->type != SDL_JOYBUTTONDOWN	&&
-				pEvent->type != SDL_JOYHATMOTION	&& 
+				pEvent->type != SDL_JOYHATMOTION	&&
 				pEvent->type != SDL_JOYBALLMOTION	||
 				pEvent->jaxis.which		!= mlIndex	&&
 				pEvent->jbutton.which	!= mlIndex	&&
@@ -134,10 +134,10 @@ namespace hpl {
 				float fAxisValue = SDLToAxisValue(pEvent->jaxis.value);
 
 				if(axis < 0 || axis >= GetNumAxes()) continue;
-				
+
 				if(cMath::Abs(fAxisValue) < mfDeadZoneRadius)
 					fAxisValue = 0.0f;
-				
+
 				if(fAxisValue!=mvAxisArray[axis])
 				{
 					inputUpdate = cGamepadInputData(mlIndex, eGamepadInputType_Axis, axis, fAxisValue);
@@ -164,7 +164,7 @@ namespace hpl {
 			else if(pEvent->type==SDL_JOYBALLMOTION)
 			{
 				eGamepadBall ball = SDLToBall(pEvent->jball.ball);
-				
+
 				if(ball < 0 || ball >= GetNumBalls()) continue;
 
 				cVector2l vDelta = cVector2l(pEvent->jball.xrel, pEvent->jball.yrel);
@@ -175,7 +175,7 @@ namespace hpl {
 			{
 				eGamepadButton button = SDLToButton(pEvent->jbutton.button);
 				inputUpdate = cGamepadInputData(mlIndex, eGamepadInputType_Button, button, 0.0f);
-				
+
 				if(button < 0 || button >= GetNumButtons()) continue;
 
 				bool bPressed;
@@ -344,7 +344,7 @@ namespace hpl {
 		mlstHatStateChanges.pop_front();
 		return change;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	cVector2l cGamepadSDL::GetBallAbsPos(eGamepadBall aBall)
@@ -366,15 +366,15 @@ namespace hpl {
 
 		return 0;
 	}
-	
+
 	//-----------------------------------------------------------------------
 
 	/////////////////////////////////////////////////////////////////////////
 	// PRIVATE METHODS
 	/////////////////////////////////////////////////////////////////////////
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	eGamepadButton cGamepadSDL::SDLToButton(Uint8 alButton)
 	{
 		return static_cast<eGamepadButton>(alButton);
@@ -389,7 +389,7 @@ namespace hpl {
 	{
 		return cMath::Clamp((float)alAxisValue*mfInvAxisMax, -1.0f, 1.0f);
 	}
-	
+
 	eGamepadHat cGamepadSDL::SDLToHat(Uint8 alHat)
 	{
 		return static_cast<eGamepadHat>(alHat);

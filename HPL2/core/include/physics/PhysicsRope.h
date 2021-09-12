@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -35,13 +35,13 @@ namespace hpl {
 	class iPhysicsBody;
 	class iCollideShape;
 	class cVerletParticle;
-		
+
 	class iPhysicsRope;
 
 	class cSoundEntity;
-	
+
 	//------------------------------------------
-	
+
 	class cPhysicsRopeAttachment
 	{
 	public:
@@ -65,7 +65,7 @@ namespace hpl {
 
 		void RemoveAttachedBody(iPhysicsBody *apBody, bool abRemoveContainerFromBody=true);
 
-        
+
 		/////////////////////////////
 		// Motor
         void SetMotorActive(bool abX);
@@ -101,7 +101,7 @@ namespace hpl {
 		float GetAutoMoveAcc(){ return mfAutoMoveAcc;}
 		float GetAutoMoveMaxSpeed(){ return mfAutoMoveMaxSpeed;}
 		float GetAutoMoveSpeed(){ return mfAutoMoveSpeed;}
-        
+
 		/////////////////////////////
 		// Properties
 		cVerletParticle* GetStartParticle(){ return mlstParticles.front();}
@@ -114,7 +114,7 @@ namespace hpl {
 		iPhysicsBody* GetAttachedEndBody(){ return mvAttachedBody[1].mpBody;}
 
 		cPhysicsRopeAttachment* GetAttachment(int alIdx){ return &mvAttachedBody[alIdx]; }
-		
+
 		void SetTotalLength(float afX);
 		float GetTotalLength(){ return mfTotalLength;}
 
@@ -147,20 +147,20 @@ namespace hpl {
 		bool CheckSpecificDataSleeping();
 		bool CheckSpecificDataAwake();
 		void SetSpecificDataSleeping(bool abSleeping);
-		
+
 		void UpdateMovement(float afTimeStep);
 		void UpdateMotor(float afTimeStep);
 		void UpdateMotorAndAutoMove(float afTimeStep);
-		
+
 		void UpdateAttachedParticlePositions(float afTimeStep);
 		void UpdateAttachedBodies(float afTimeStep);
 		void UpdateConstraints(float afTimeStep);
 		void CalculateSmoothPositions(float afTimeStep);
-		
+
 		void BuildRopeParticles();
 
 		void SetAttachedBody(int alIdx, cVerletParticle *apParticle, iPhysicsBody *apBody);
-		
+
 		cVector3f GetStartDirection();
 
 		cPidControllerVec3 mForcePid[2];
@@ -199,7 +199,7 @@ namespace hpl {
 
 		float mfStrength;
 		float mfStiffness;
-		
+
 		bool mbHasUpdated;
 	};
 };

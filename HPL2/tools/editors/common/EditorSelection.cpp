@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -65,7 +65,7 @@ void cEditorSelection::AddEntity(iEntityWrapper* apEntity)
 
 		UpdateCenter();
 
-		if(mlstEntities.size()==1) 
+		if(mlstEntities.size()==1)
 			mvCenterRotation = apEntity->GetRotation();
 		else
 			mvCenterRotation = 0;
@@ -95,9 +95,9 @@ void cEditorSelection::RemoveEntity(iEntityWrapper* apEntity)
 
 		UpdateCenter();
 
-		if(mlstEntities.size()==1) 
+		if(mlstEntities.size()==1)
 			mvCenterRotation = mlstEntities.front()->GetRotation();
-		
+
 		apEntity->SetSelected(false);
 
 		mbSelectionUpdated = true;
@@ -130,7 +130,7 @@ void cEditorSelection::ClearEntities()
 	mvSelectionMin =  99999999.0f;
 	mvCenterTranslation = 0;
 	mvCenterRotation = 0;
-	
+
 
 	mvCenterOldRotation = 0;
 
@@ -215,7 +215,7 @@ void cEditorSelection::UpdateCenter()
 
 	cVector3f vSelectionMax = mvSelectionMax;
 	cVector3f vSelectionMin = mvSelectionMin;
-	
+
 	tEntityWrapperListIt it = mlstEntities.begin();
 	for(;it!=mlstEntities.end();++it)
 	{
@@ -225,7 +225,7 @@ void cEditorSelection::UpdateCenter()
 		if(pBV)
 			cMath::ExpandAABB(mvSelectionMin,mvSelectionMax, pBV->GetMin(),pBV->GetMax());
 
-		cMath::ExpandAABB(vSelectionMin,vSelectionMax, pEnt->GetPosition(),pEnt->GetPosition());		
+		cMath::ExpandAABB(vSelectionMin,vSelectionMax, pEnt->GetPosition(),pEnt->GetPosition());
 	}
 	mvCenterTranslation = (vSelectionMin + vSelectionMax)*0.5f;
 }
@@ -241,12 +241,12 @@ void cEditorSelection::SetRelativeTranslation(const cVector3f& avPosition, bool 
 	{
 		iEntityWrapper* pEnt = *it;
 		cVector3f vReferenceTranslation = *itTranslation;
-		
+
 		pEnt->SetAbsPosition(vReferenceTranslation + avPosition);
 
 		if(abUseSnap)
 			pEnt->SnapToGrid();
-		
+
 		pEnt->UpdateEntity();
 
 		++itTranslation;
@@ -270,7 +270,7 @@ void cEditorSelection::SetRelativeRotation(const cVector3f& avRotation, bool abU
 
     cVector3f vNewRotation = cMath::MatrixToEulerAngles(mtxNewRotation, eEulerRotationOrder_XYZ);
 
-	
+
 	vAddRotation = vNewRotation - mvCenterOldRotation;
 
 	tEntityWrapperListIt it = mlstEntities.begin();
@@ -281,7 +281,7 @@ void cEditorSelection::SetRelativeRotation(const cVector3f& avRotation, bool abU
 		iEntityWrapper* pEnt = *it;
 		cVector3f vReferenceRotation = *itRotation;
 
-				
+
 		pEnt->SetAbsRotation(vReferenceRotation + vAddRotation);
 		pEnt->UpdateEntity();
 
@@ -314,12 +314,12 @@ void cEditorSelection::SetRelativeScale(const cVector3f& avScale, bool abUseSnap
 		iEntityWrapper* pEnt = *it;
 		cVector3f vReferenceScale = *itScale;
 		cVector3f vNewScale = vReferenceScale + avScale;
-		
+
 		if(abUseSnap)
 			SnapScale(vNewScale);
 
 		pEnt->SetAbsScale(vNewScale, lAxis);
-		
+
 		pEnt->UpdateEntity();
 
 		++itScale;
@@ -341,11 +341,11 @@ void cEditorSelection::UpdateReferenceTransforms()
 	while(itEntities!= mlstEntities.end())
 	{
 		iEntityWrapper* pEnt = *itEntities;
-		
+
 		*itTranslations = pEnt->GetPosition();
 		*itRotations = pEnt->GetRotation();
 		*itScales = pEnt->GetScale();
-		
+
 		++itEntities;
 		++itTranslations;
 		++itRotations;
@@ -368,11 +368,11 @@ void cEditorSelection::FallToReferenceTransforms()
 	while(itEntities!= mlstEntities.end())
 	{
 		iEntityWrapper* pEnt = *itEntities;
-		
+
 		pEnt->SetAbsPosition(*itTranslations);
 		pEnt->SetAbsRotation(*itRotations);
 		pEnt->SetAbsScale(*itScales);
-		
+
 		++itEntities;
 		++itTranslations;
 		++itRotations;

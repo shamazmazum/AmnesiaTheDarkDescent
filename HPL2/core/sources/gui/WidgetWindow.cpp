@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -80,7 +80,7 @@ namespace hpl {
 	//////////////////////////////////////////////////////////////////////////
 
 	//-----------------------------------------------------------------------
-	
+
 	void cWidgetWindow::SetStatic(bool abX)
 	{
 		mbStatic = abX;
@@ -92,7 +92,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	void cWidgetWindow::SetDrawLabel(bool abX)
 	{
 		mbDrawLabel = abX;
@@ -109,7 +109,7 @@ namespace hpl {
 	//-----------------------------------------------------------------------
 
 	bool cWidgetWindow::ButtonPressed(iWidget* apWidget, const cGuiMessageData& aData)
-	{	
+	{
 		int i;
 		for(i=0; i<1; ++i) if(mvButtons[i] == apWidget) break;
 
@@ -117,7 +117,7 @@ namespace hpl {
 		if(i == 0)			// Close Button
 		{
 			ProcessMessage(eGuiMessage_WindowClose, cGuiMessageData());
-			
+
 			if(mbCloseButtonDisablesWindow)
 			{
 				SetEnabled(false);
@@ -125,7 +125,7 @@ namespace hpl {
 				if(mpSet->GetAttentionWidget() == this) mpSet->SetAttentionWidget(NULL);
 			}
 		}
-		
+
 		return true;
 	}
 	kGuiCallbackDeclaredFuncEnd(cWidgetWindow,ButtonPressed)
@@ -215,7 +215,7 @@ namespace hpl {
 		if(mbDrawLabel)
 		{
 			cColor col = mbFocused? cColor(1,1) : cColor(0.6f,0.3f);
-			mpSet->DrawGfx(	mpGfxLabel,GetGlobalPosition() + 
+			mpSet->DrawGfx(	mpGfxLabel,GetGlobalPosition() +
 							cVector3f(mvGfxCorners[0]->GetActiveSize().x,mvGfxCorners[0]->GetActiveSize().y,0.2f),
 							vLabelSize, col);
 		}
@@ -232,7 +232,7 @@ namespace hpl {
 	}
 
 	//-----------------------------------------------------------------------
-	
+
 	bool cWidgetWindow::OnMouseMove(const cGuiMessageData& aData)
 	{
 		if(mbMoving) SetGlobalPosition(mvRelMousePos + cVector3f(aData.mvPos.x, aData.mvPos.y,0));
@@ -252,7 +252,7 @@ namespace hpl {
 		labelRect.h = mpLabelFont->mvSize.y + mvLabelTextOffset.y*2;
 		labelRect.x = GetGlobalPosition().x + mvGfxCorners[0]->GetActiveSize().x;
 		labelRect.y = GetGlobalPosition().y + mvGfxCorners[0]->GetActiveSize().y;
-		
+
 		////////////////////////////////
 		// Check for collision
 		if(cMath::CheckPointInRectIntersection(aData.mvPos,labelRect) && aData.mlVal & eGuiMouseButton_Left)
@@ -263,7 +263,7 @@ namespace hpl {
 			mvRelMousePos = GetPosRelativeToMouse(aData);
 			mvRelMousePos.z = GetGlobalPosition().z;
 		}
-		
+
 		return true;
 	}
 
@@ -280,7 +280,7 @@ namespace hpl {
 				mbMoving = false;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -290,13 +290,13 @@ namespace hpl {
 	{
 		return false;
 	}
-	
+
 	//-----------------------------------------------------------------------
-	
+
 	bool cWidgetWindow::OnMouseLeave(const cGuiMessageData& aData)
 	{
 		cVector3f vLastGlobal = GetGlobalPosition();
-		
+
 		if(mbMoving)
 		{
 			SetGlobalPosition(mvRelMousePos + cVector3f(aData.mvPos.x, aData.mvPos.y,0));
@@ -308,7 +308,7 @@ namespace hpl {
 				mbMoving = false;
 			}
 		}
-		
+
 		return false;
 	}
 

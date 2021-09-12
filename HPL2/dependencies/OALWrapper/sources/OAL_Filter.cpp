@@ -11,10 +11,10 @@
 
 extern cOAL_Device* gpDevice;
 
-cOAL_Filter::cOAL_Filter () : iOAL_LowLevelObject("Filter"), 
-							  mfGain(1.0f), 
-							  mfGainHF(1.0f), 
-							  mfGainLF(1.0f), 
+cOAL_Filter::cOAL_Filter () : iOAL_LowLevelObject("Filter"),
+							  mfGain(1.0f),
+							  mfGainHF(1.0f),
+							  mfGainLF(1.0f),
 							  mType(eOALFilterType_Null)
 {
 	mbStatus = CreateLowLevelID();
@@ -36,7 +36,7 @@ bool cOAL_Filter::CreateLowLevelID()
 
 	// Create a Filter Object
 	RUN_AL_FUNC(alGenFilters ( 1, &mlObjectId );)
-	
+
 	return (!AL_ERROR_OCCURED && (IsValidObject()));
 }
 
@@ -51,7 +51,7 @@ bool cOAL_Filter::DestroyLowLevelID()
 	if ( IsValidObject() )
 	{
 		RUN_AL_FUNC(alDeleteFilters( 1, &mlObjectId ));
-		
+
 		bSuccess = bSuccess && !AL_ERROR_OCCURED;
 	}
 	return bSuccess;

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -24,11 +24,11 @@
 #include "physics/PhysicsMaterial.h"
 
 namespace hpl {
-	
+
 	#define eRollAxisFlag_X		1
 	#define eRollAxisFlag_Y		2
 	#define eRollAxisFlag_Z		4
-	
+
     class cPhysics;
 	class iPhysicsWorld;
 	class iPhysicsBody;
@@ -41,7 +41,7 @@ namespace hpl {
 	{
 	friend class cSurfaceData;
 	public:
-		
+
 		float GetMinSpeed(){ return mfMinSpeed;}
 
 		const tString& GetSoundName(){ return msSoundName;}
@@ -49,7 +49,7 @@ namespace hpl {
 
 		const tString& GetPSName(){ return msPSName;}
 		void SetPSName(const tString& asName){ msPSName =asName;}
-		
+
 		int GetPSPrio(){ return mlPSPrio;}
 		void SetPSPrio(int alPrio){ mlPSPrio = alPrio;}
 
@@ -76,7 +76,7 @@ namespace hpl {
 		void OnImpact(float afSpeed,const cVector3f &avPos,int alContacts,  iPhysicsBody *apBody);
 		void OnSlide(float afSpeed,const cVector3f &avPos,int alContacts, iPhysicsBody *apBody,
 						iPhysicsBody *apSlideAgainstBody);
-		void CreateImpactEffect(float afSpeed,const cVector3f &avPos,int alContacts, 
+		void CreateImpactEffect(float afSpeed,const cVector3f &avPos,int alContacts,
 								cSurfaceData *apSecondSurface, iPhysicsWorld *apPhysicsWorld);
 
 		void UpdateRollEffect(iPhysicsBody *apBody);
@@ -124,7 +124,7 @@ namespace hpl {
 		iPhysicsMaterial *ToMaterial(iPhysicsWorld *apWorld);
 
 		/**
-		 * This must be added with the largest speed first.	
+		 * This must be added with the largest speed first.
 		**/
 		cSurfaceImpactData* CreateImpactData(float afMinSpeed);
 		cSurfaceImpactData* GetImpactData(int alIdx);
@@ -132,13 +132,13 @@ namespace hpl {
 		/**
 		* Gets the the appropriate impact data depending on speed. It gets the data with highest speed not higher than afSpeed
 		* \param afSpeed The speed value.
-		* \return 
+		* \return
 		*/
 		cSurfaceImpactData* GetImpactDataFromSpeed(float afSpeed);
-		
+
 
 		/**
-		* This must be added with the largest speed first.	
+		* This must be added with the largest speed first.
 		**/
 		cSurfaceImpactData* CreateHitData(float afMinSpeed);
 		cSurfaceImpactData* GetHitData(int alIdx);
@@ -146,18 +146,18 @@ namespace hpl {
 		/**
 		 * Gets the the appropriate hit data depending on speed. It gets the data with highest speed not higher than afSpeed
 		 * \param afSpeed The speed value.
-		 * \return 
+		 * \return
 		 */
 		cSurfaceImpactData* GetHitDataFromSpeed(float afSpeed);
 
 		iHapticSurface* GetHapticSurface(){return mpHapticSurface;}
 		void SetHapticSurface(iHapticSurface* apSurface){mpHapticSurface  = apSurface;}
-		
+
 	protected:
 		cResources *mpResources;
 		cPhysics *mpPhysics;
 		tString msName;
-		
+
 		//Properties
 		ePhysicsMaterialCombMode mFrictionMode;
 		ePhysicsMaterialCombMode mElasticityMode;

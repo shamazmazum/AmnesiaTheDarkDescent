@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -30,14 +30,14 @@ namespace hpl {
 	class cWorld;
 
 	//--------------------------------
-	
+
 	typedef tFlag tAIFreePathFlag;
 
 	#define eAIFreePathFlag_SkipStatic	 (0x00000001)
 	#define eAIFreePathFlag_SkipDynamic	 (0x00000002)
 	#define eAIFreePathFlag_SkipVolatile (0x00000004)
 
-	
+
 	//--------------------------------
 	class cAINode;
 
@@ -67,10 +67,10 @@ namespace hpl {
 		inline cAINodeEdge* GetEdge(int alIdx) { return &mvEdges[alIdx];}
 
 		const cVector3f& GetPosition(){ return mvPosition;}
-		
+
 		const tString& GetName(){ return msName;}
 		int GetID(){ return mlID; }
-		
+
 	private:
 		tString msName;
 		int mlID;
@@ -85,15 +85,15 @@ namespace hpl {
 
 	typedef std::list<cAINode*> tAINodeList;
 	typedef tAINodeList::iterator tAINodeListIt;
-	
+
 	typedef std::map<tString,cAINode*> tAINodeNameMap;
 	typedef tAINodeNameMap::iterator tAINodeNameMapIt;
 
 	typedef std::map<int,cAINode*> tAINodeIDMap;
 	typedef tAINodeIDMap::iterator tAINodeIDMapIt;
-	
+
 	//--------------------------------
-	
+
 	class iAIFreePathCallback
 	{
 	public:
@@ -108,21 +108,21 @@ namespace hpl {
 	public:
 		void Reset();
 		void SetFlags(tAIFreePathFlag aFlags){ mFlags = aFlags;}
-		
+
 		bool BeforeIntersect(iPhysicsBody *pBody);
 		bool OnIntersect(iPhysicsBody *pBody,cPhysicsRayParams *apParams);
-		
+
 		bool Intersected();
 
 		iAIFreePathCallback *mpCallback;
-	
+
 	private:
 		bool mbIntersected;
 		tAIFreePathFlag mFlags;
 	};
 
 	//--------------------------------
-	
+
 	class cAIGridNode
 	{
 	public:
@@ -136,7 +136,7 @@ namespace hpl {
 	{
 	public:
 		cAINodeIterator(cAINodeContainer *apContainer, const cVector3f &avPos, float afRadius);
-		
+
 		bool HasNext();
 		cAINode *Next();
 
@@ -155,7 +155,7 @@ namespace hpl {
 	};
 
 	//--------------------------------
-		
+
 	class cAINodeContainer
 	{
 	friend class cAINodeIterator;
@@ -168,7 +168,7 @@ namespace hpl {
 		const tString& GetName(){ return msName;}
 
 		const cVector3f& GetCollideSize(){ return mvSize;}
-		
+
 		/**
 		 * Reserves spaces for nodes.
 		 * \param alReserveSpace Number of nodes to reserve space for.
@@ -214,22 +214,22 @@ namespace hpl {
 
 		/**
 		 * Returns a node iterator. Note that the radius is not checked, some nodes may lie outside.
-		 * \param &avPosition 
-		 * \param afRadius 
-		 * \return 
+		 * \param &avPosition
+		 * \param afRadius
+		 * \return
 		 */
 		cAINodeIterator GetNodeIterator(const cVector3f &avPosition, float afRadius);
 
 		/**
 		 * Checks for a free path using the containers collide size.
-		 * \param &avStart 
-		 * \param &avEnd 
+		 * \param &avStart
+		 * \param &avEnd
 		 * \param alRayNum The max number of rays cast, -1 = maximum
 		 * \param alFlags Set Flags for the ray casting.
 		 * \param apCallback Check for every body and overrides alFlags.
-		 * \return 
+		 * \return
 		 */
-		bool FreePath(const cVector3f &avStart, const cVector3f &avEnd, int alRayNum=-1, 
+		bool FreePath(const cVector3f &avStart, const cVector3f &avEnd, int alRayNum=-1,
 						tAIFreePathFlag aFlags=0, iAIFreePathCallback *apCallback=NULL);
 
 
@@ -243,10 +243,10 @@ namespace hpl {
 		* Sets the min number of end node added to a node. This overrides max distance when needed.
 		*/
 		void SetMinEdges(int alX){ mlMinNodeEnds = alX;}
-		
+
 		/**
 		 * Sets the max distance for an end node.
-		 * \param afX 
+		 * \param afX
 		 */
 		void SetMaxEdgeDistance(float afX){ mfMaxEndDistance = afX;}
 

@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -36,10 +36,10 @@ static tString gsIndexVersion = "3";
 
 //-------------------------------------------------------------------
 
-iEdObjectIndex::iEdObjectIndex(iEditor* apEditor, 
-									   const tWString& asBaseFolder, 
-									   const tWString& asIndexExt, 
-									   const tString& asIndexTypeName, 
+iEdObjectIndex::iEdObjectIndex(iEditor* apEditor,
+									   const tWString& asBaseFolder,
+									   const tWString& asIndexExt,
+									   const tString& asIndexTypeName,
 									   const tString& asEntryTypeName,
 									   bool abCreateSubDirs)
 {
@@ -50,7 +50,7 @@ iEdObjectIndex::iEdObjectIndex(iEditor* apEditor,
 	msEntryTypeName = asEntryTypeName;
 
 	mpRootDir = NULL;
-	
+
 	int lLastSlashPos = cString::GetLastStringPosW(msBaseFolderFullPath, _W("/"));
 	if(lLastSlashPos==msBaseFolderFullPath.size()-1)
 	{
@@ -60,7 +60,7 @@ iEdObjectIndex::iEdObjectIndex(iEditor* apEditor,
 	}
 
 	msBaseFolder = cString::SubW(msBaseFolderFullPath, lLastSlashPos+1);
-	
+
 	msFilename = mpEditor->GetTempDir() + msBaseFolder + _W(".") + msIndexExt;
 
 	mbUpdated = false;
@@ -121,7 +121,7 @@ bool iEdObjectIndex::Refresh()
 		if(mpRootDir)
 			mpRootDir->CreateFromDir(NULL, _W(""), mbCreateSubCategories);
 	}
-		
+
 	if(mbUpdated)
 	{
 		mbUpdated=false;
@@ -134,7 +134,7 @@ bool iEdObjectIndex::Refresh()
 	{
 		mbRefreshThumbnails = false;
 		mpEditor->GetEngine()->GetResources()->AddResourceDir(mpEditor->GetThumbnailDir(), false);
-		
+
 		pBuilder->CleanUp();
 	}
 
@@ -151,12 +151,12 @@ bool iEdObjectIndex::Refresh()
 void iEdObjectIndex::AddFilesInDir(tWStringList& asFileList, const tWString& asFolder, const tWString& asLocalPath, bool abAddFilesInSubDirs)
 {
 	/////////////////////////////////////////////////////////////
-	// Scan given dir for files using the filters 
+	// Scan given dir for files using the filters
 	tWStringList lstFiles;
 	for(int i=0;i<(int)mvFileFilters.size();++i)
 	{
 		tWString sFilter = mvFileFilters[i];
-		cPlatform::FindFilesInDir(lstFiles, asFolder, mvFileFilters[i]); 
+		cPlatform::FindFilesInDir(lstFiles, asFolder, mvFileFilters[i]);
 	}
 	lstFiles.sort();
 
@@ -225,7 +225,7 @@ bool iEdObjectIndexDir::CreateFromDir(iEdObjectIndexDir* apParentDir, const tWSt
 		return false;
 
 	mpParentDir = apParentDir;
-	Clear();	
+	Clear();
 
 	msDirName = asRelPath;
 
@@ -300,7 +300,7 @@ bool iEdObjectIndexDir::Refresh(cXmlElement* apElement, bool abAddSubDirs)
 	bool bUpdated = false;
 
 	Clear();
-	
+
 	cResources* pRes = mpIndex->GetEditor()->GetEngine()->GetResources();
 	tWStringList lstFiles;
 	tWStringList lstDirs;
@@ -397,7 +397,7 @@ bool iEdObjectIndexDir::Refresh(cXmlElement* apElement, bool abAddSubDirs)
 					tWStringListIt it = find(lstDirs.begin(),lstDirs.end(), sRelPath);
 					if (it == lstDirs.end()) {
 						Warning("Error finding Directory %ls in list for path %ls\n",sRelPath.c_str(), sFullPath.c_str());
-					} else {						
+					} else {
 						lstDirs.erase(it);
 					}
 				}
@@ -407,7 +407,7 @@ bool iEdObjectIndexDir::Refresh(cXmlElement* apElement, bool abAddSubDirs)
 				}
 			}
 		}
-	
+
 
 		if(lstDirs.empty()==false)
 		{
@@ -429,7 +429,7 @@ bool iEdObjectIndexDir::Refresh(cXmlElement* apElement, bool abAddSubDirs)
 
 	mpIndex->SetUpdated(bUpdated);
 
-	
+
 
 	return true;
 }
@@ -441,7 +441,7 @@ iEdObjectIndexEntry* iEdObjectIndexDir::GetEntry(const tString& asIndex)
 	tIndexEntryMapIt it = mmapEntries.find(asIndex);
 	if(it!=mmapEntries.end())
 		return it->second;
-	
+
 	return NULL;
 }
 
@@ -472,7 +472,7 @@ void iEdObjectIndexDir::Save(cXmlElement* apIndexElement, bool abSaveSubDirs)
 			iEdObjectIndexDir* pDir = itSubDirs->second;
 
 			cXmlElement* pXmlDir = pDirs->CreateChildElement("Dir");
-			
+
 			pDir->Save(pXmlDir, abSaveSubDirs);
 		}
 	}
@@ -489,7 +489,7 @@ void iEdObjectIndexDir::Save(cXmlElement* apIndexElement, bool abSaveSubDirs)
 iEdObjectIndexEntry::iEdObjectIndexEntry(iEdObjectIndexDir* apParentDir)
 {
 	mpParentDir = apParentDir;
-	
+
 	mbRemoved = false;
 	mbUpdated = false;
 }
@@ -598,7 +598,7 @@ void iEdObjectIndexEntry::BuildEntryName(tString& asEntryName)
 	int lDotPos = cString::GetLastStringPos(asEntryName, ".");
 	asEntryName = cString::Sub(asEntryName,0,lDotPos);
 	asEntryName = cString::GetFileName(asEntryName);
-	
+
 	/*
 	int lBaseFolderLength = 0;
 	iEdObjectIndex* pIndex = mpParentDir->GetIndex();

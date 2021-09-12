@@ -1,18 +1,18 @@
 /*
  * Copyright © 2009-2020 Frictional Games
- * 
+ *
  * This file is part of Amnesia: The Dark Descent.
- * 
+ *
  * Amnesia: The Dark Descent is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version. 
+ * (at your option) any later version.
 
  * Amnesia: The Dark Descent is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Amnesia: The Dark Descent.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -76,7 +76,7 @@ enum eEdInputCallback
 class iEdInput
 {
 public:
-	iEdInput(iEdWindow* apWindow, 
+	iEdInput(iEdWindow* apWindow,
 				iWidget* apParent=NULL,
 				eEdInpStyle aStyle=eEdInpStyle_ColumnLabelOnTop);
 	virtual ~iEdInput();
@@ -145,8 +145,8 @@ typedef tInputList::iterator tInputListIt;
 class iEdInputLabeled : public iEdInput
 {
 public:
-	iEdInputLabeled(iEdWindow* apWindow, 
-						const tWString& asLabel, 
+	iEdInputLabeled(iEdWindow* apWindow,
+						const tWString& asLabel,
 						iWidget* apParent=NULL,
 						eEdInpStyle aStyle=eEdInpStyle_RowLabelOnTop);
 	virtual ~iEdInputLabeled();
@@ -168,8 +168,8 @@ protected:
 class cEdInputBool : public iEdInput
 {
 public:
-	cEdInputBool(iEdWindow* apWindow, 
-					 const tWString& asLabel, 
+	cEdInputBool(iEdWindow* apWindow,
+					 const tWString& asLabel,
 					 iWidget* apParent=NULL);
 	virtual ~cEdInputBool();
 
@@ -180,7 +180,7 @@ public:
 	void UpdateValue();
 	void CopyValueToInput();
 
-	void SetValue(bool abX, bool abGenerateCallback = true, bool abCopyToInput = true, bool abSkipChecks = false); 
+	void SetValue(bool abX, bool abGenerateCallback = true, bool abCopyToInput = true, bool abSkipChecks = false);
 	bool GetValue();
 
 	void UpdateSize();
@@ -200,10 +200,10 @@ protected:
 class cEdInputText :public iEdInputLabeled
 {
 public:
-	cEdInputText(iEdWindow* apWindow, 
-					 const tWString& asLabel, 
-					 float afTextBoxWidth, 
-					 int alAmount, 
+	cEdInputText(iEdWindow* apWindow,
+					 const tWString& asLabel,
+					 float afTextBoxWidth,
+					 int alAmount,
 					 bool abNumeric,
 					 float afNumericAdd=0,
 					 iWidget* apParent=NULL,
@@ -253,8 +253,8 @@ public:
 					   float afNumericAdd=0) : cEdInputText(apWindow, asLabel, afTextBoxWidth, 1, true, afNumericAdd, apParent)
 	{
 	}
-	
-	void SetValue(float afX, bool abGenerateCallback = true, bool abCopyToInput = true, bool abSkipChecks = false); 
+
+	void SetValue(float afX, bool abGenerateCallback = true, bool abCopyToInput = true, bool abSkipChecks = false);
 	float GetValue();
 
 protected:
@@ -278,7 +278,7 @@ public:
 					 iWidget* apParent=NULL,
 					 float afNumericAdd=0);
 
-	void SetValue(const cVector2f& avX, bool abGenerateCallback = true, bool abCopyToInput = true, bool abSkipChecks = false); 
+	void SetValue(const cVector2f& avX, bool abGenerateCallback = true, bool abCopyToInput = true, bool abSkipChecks = false);
 	cVector2f GetValue();
 };
 
@@ -300,7 +300,7 @@ public:
 					 iWidget* apParent=NULL,
 					 float afNumericAdd=0);
 
-	void SetValue(const cVector3f& avX, bool abGenerateCallback = true, bool abCopyToInput = true, bool abSkipChecks = false); 
+	void SetValue(const cVector3f& avX, bool abGenerateCallback = true, bool abCopyToInput = true, bool abSkipChecks = false);
 	cVector3f GetValue();
 };
 
@@ -327,7 +327,7 @@ public:
 	void SetShowPath(bool abX);
 	bool GetShowPath() { return mbShowPath; }
 
-	void SetValue(const tWString& asX, bool abGenerateCallback=true, bool abCopyToInput=true, bool abSkipChecks = false, bool abCheckValidFile=true); 
+	void SetValue(const tWString& asX, bool abGenerateCallback=true, bool abCopyToInput=true, bool abSkipChecks = false, bool abCheckValidFile=true);
 
 	const tWString& GetFullPath() { return msFullPath; }
 
@@ -350,7 +350,7 @@ protected:
 	// Data
 
 	cWidgetButton* mpBBrowse;
-	
+
 	tWStringVec mvTempLoadedFiles;
 	tWString msTempLoadedFile;
 	tWString msInitialPath;
@@ -438,7 +438,7 @@ class cEdInputEnum : public iEdInputLabeled
 {
 public:
 	cEdInputEnum(iEdWindow* apWindow,
-					const tWString& asLabel, 
+					const tWString& asLabel,
 					float afComboBoxWidth,
 					iWidget* apParent=NULL);
 
@@ -451,10 +451,10 @@ public:
 	bool IsClearing() { return mbClearing; }
 
 	int GetNumValues();
-	void SetValue(int, bool abGenerateCallback=true, bool abCopyToInput=true, bool abSkipChecks = false); 
-	void SetValue(const tWString&, bool abGenerateCallback=true, bool abCopyToInput=true, bool abSkipChecks = false); 
+	void SetValue(int, bool abGenerateCallback=true, bool abCopyToInput=true, bool abSkipChecks = false);
+	void SetValue(const tWString&, bool abGenerateCallback=true, bool abCopyToInput=true, bool abSkipChecks = false);
 	int GetValue();
-	
+
 	const tWString& GetEnumValue(int alIndex);
 	const tWString& GetSelectedEnumValue();
 	tString GetSelectedEnumValue8Char();
@@ -485,13 +485,13 @@ protected:
 class cEdInputColor : public iEdInputLabeled
 {
 public:
-	cEdInputColor(iEdWindow* apWindow, 
-					const tWString& asLabel, 
+	cEdInputColor(iEdWindow* apWindow,
+					const tWString& asLabel,
 					iWidget* apParent=NULL);
 
 	iWidget* GetInputWidget(int alIdx=0) { return mpFColor; }
 
-	void SetValue(const cColor& aCol, bool abGenerateCallback=true, bool abCopyToInput=true, bool abSkipChecks = false); 
+	void SetValue(const cColor& aCol, bool abGenerateCallback=true, bool abCopyToInput=true, bool abSkipChecks = false);
 	const cColor& GetValue();
 
 	void UpdateValue();
