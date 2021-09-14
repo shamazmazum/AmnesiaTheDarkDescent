@@ -214,7 +214,7 @@ set(HPL2_INCLUDES
     PRIVATE ${THEORA_INCLUDE_DIR}
     PRIVATE ${DEVIL_INCLUDE_DIR}
     PRIVATE ${GLEW_INCLUDE_DIRS}
-    PRIVATE ${OPENCL_INCLUDE_DIR}
+    PRIVATE ${OPENGL_INCLUDE_DIR}
     PUBLIC ../dependencies/include
     PUBLIC ../dependencies/AngelScript/include
     PUBLIC ../dependencies/Newton/include
