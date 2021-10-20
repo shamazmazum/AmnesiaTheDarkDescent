@@ -218,9 +218,6 @@ set(HPL2_INCLUDES
     PUBLIC ../dependencies/include
     PUBLIC ../dependencies/AngelScript/include
     PUBLIC ../dependencies/Newton/include
-    PRIVATE /usr/local/include
-    PRIVATE /usr/X11R6/include
-    PRIVATE /usr/X11R6/include/X11
 )
 
 target_include_directories(HPL2
