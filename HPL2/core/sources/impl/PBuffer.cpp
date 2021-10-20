@@ -174,7 +174,7 @@ namespace hpl {
 		mpLowLevelGraphics->ClearFrameBuffer(eClearFrameBufferFlag_Color);
 
 		wglMakeCurrent(OldHDC,OldGLRC);
-#elif defined(__linux__) || defined(__FreeBSD__)
+#elif defined(__linux__) || defined(__FreeBSD__) || defined(__OpenBSD__)
 		return false;
 #endif
 

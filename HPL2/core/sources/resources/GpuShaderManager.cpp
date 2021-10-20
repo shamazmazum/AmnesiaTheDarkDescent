@@ -60,6 +60,8 @@ namespace hpl {
         mpPreprocessParser->GetEnvVarContainer()->Add("OS_Linux");
 #elif defined(__FreeBSD__)
         mpPreprocessParser->GetEnvVarContainer()->Add("OS_FreeBSD");
+#elif defined(__OpenBSD__)
+        mpPreprocessParser->GetEnvVarContainer()->Add("OS_OpenBSD");
 #endif
 	}
 

@@ -35,7 +35,7 @@
 #include "SDL/SDL.h"
 #endif
 
-#if defined(__linux__) || defined (__FreeBSD__)
+#if defined(__linux__) || defined (__FreeBSD__) || defined (__OpenBSD__)
 #include <sys/types.h>
 #endif
 #include <unistd.h>
@@ -414,7 +414,7 @@ namespace hpl {
 
 	ePlatform cPlatform::GetPlatform()
 	{
-#if defined(__linux__) || defined(__FreeBSD__)
+#if defined(__linux__) || defined(__FreeBSD__) || defined(__OpenBSD__)
 		return ePlatform_Linux;
 #elif defined(__APPLE__)
         return ePlatform_Mac;
@@ -428,6 +428,8 @@ namespace hpl {
 	tString cPlatform::msName = "Linux x86_64";
 #elif defined(__FreeBSD__)
 	tString cPlatform::msName = "FreeBSD x86_64";
+#elif defined(__OpenBSD__)
+	tString cPlatform::msName = "OpenBSD x86_64";
 #elif defined(__linux__)
     tString cPlatform::msName = "Linux x86";
 #elif defined(__APPLE__) && (defined(__PPC__) || defined(__ppc__))
