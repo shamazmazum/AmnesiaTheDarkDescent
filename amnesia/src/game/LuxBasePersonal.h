@@ -32,7 +32,7 @@
 #define PERSONAL_RELATIVEROOT _W("")
 #define PERSONAL_RELATIVEPIECES
 #define PERSONAL_RELATIVEPIECES_COUNT 0
-#elif defined(__linux__) || defined(__FreeBSD__)
+#elif defined(__linux__) || defined(__FreeBSD__) || defined(__OpenBSD__)
 #define PERSONAL_RELATIVEROOT _W(".frictionalgames/")
 #define PERSONAL_RELATIVEPIECES _W(".frictionalgames"),
 #define PERSONAL_RELATIVEPIECES_COUNT 1

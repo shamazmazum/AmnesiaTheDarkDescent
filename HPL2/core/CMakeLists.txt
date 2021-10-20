@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 3.0)
 project(HPL2)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-if (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
+if (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD" OR ${CMAKE_SYSTEM_NAME} MATCHES "OpenBSD")
   set(LINUX ON)
   set(LINUX ON PARENT_SCOPE)
 endif()
@@ -218,6 +218,9 @@ set(HPL2_INCLUDES
     PUBLIC ../dependencies/include
     PUBLIC ../dependencies/AngelScript/include
     PUBLIC ../dependencies/Newton/include
+    PRIVATE /usr/local/include
+    PRIVATE /usr/X11R6/include
+    PRIVATE /usr/X11R6/include/X11
 )
 
 target_include_directories(HPL2
@@ -227,7 +230,6 @@ target_include_directories(HPL2
 if(LINUX)
   set(PLATFORM_LIBS
     pthread
-    dl
     )
 endif()
 

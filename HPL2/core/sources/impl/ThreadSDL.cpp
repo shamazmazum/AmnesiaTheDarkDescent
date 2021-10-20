@@ -91,7 +91,7 @@ namespace hpl {
 #else
 		/** investigate further on other linux distros and mac os x
 		 * As right now Priority range seems to be 0 .. 0 in linux */
-#if defined(__linux__) || defined(__FreeBSD__)
+#if defined(__linux__) || defined(__FreeBSD__) || defined(__OpenBSD__)
 		struct sched_param param;
 		param.sched_priority = TranslateEnginePrio(aPrio);
 		int ret = pthread_setschedparam(SDL_GetThreadID(mpThreadHandle),SCHED_OTHER,&param);
