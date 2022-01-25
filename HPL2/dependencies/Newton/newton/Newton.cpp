@@ -5037,7 +5037,7 @@ void NewtonBodySetMatrix(const NewtonBody* bodyPtr, const dFloat* matrixPtr)
 {
 	dgBody *body;
 	body = (dgBody *)bodyPtr;
-	dgMatrix matrix (*((dgMatrix*) matrixPtr));
+	dgMatrix matrix = array2matrix(matrixPtr);
 
 
 	TRACE_FUNTION(__FUNCTION__);
