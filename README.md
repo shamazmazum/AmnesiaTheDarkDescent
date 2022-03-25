@@ -46,7 +46,7 @@ ones:
 * DevIL
 * GLEW
 
-All this libraries can be found in FreeBSD ports.
+All these libraries can be found in FreeBSD ports.
 
 ## Additional notes
 
