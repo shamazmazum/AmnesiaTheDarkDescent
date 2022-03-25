@@ -208,16 +208,15 @@ add_library(HPL2 STATIC
 )
 
 set(HPL2_INCLUDES
-    PUBLIC include
-    #Important that this is before dependencies so the correct OpenAL headers are used
-    PRIVATE ${OALWRAPPER_INCLUDE_DIR}
-    PRIVATE ${THEORA_INCLUDE_DIR}
-    PRIVATE ${DEVIL_INCLUDE_DIR}
-    PRIVATE ${GLEW_INCLUDE_DIRS}
-    PRIVATE ${OPENGL_INCLUDE_DIR}
-    PUBLIC ../dependencies/include
-    PUBLIC ../dependencies/AngelScript/include
-    PUBLIC ../dependencies/Newton/include
+  PUBLIC include
+  PUBLIC ../dependencies/include
+  PUBLIC ../dependencies/AngelScript/include
+  PUBLIC ../dependencies/Newton/include
+  PRIVATE ${OALWRAPPER_INCLUDE_DIR}
+  PRIVATE ${THEORA_INCLUDE_DIR}
+  PRIVATE ${DEVIL_INCLUDE_DIR}
+  PRIVATE ${GLEW_INCLUDE_DIRS}
+  PRIVATE ${OPENGL_INCLUDE_DIR}
 )
 
 target_include_directories(HPL2
