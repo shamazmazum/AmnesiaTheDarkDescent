@@ -2516,7 +2516,7 @@ NewtonCollision* NewtonCreateBox(const NewtonWorld* newtonWorld, dFloat dx, dFlo
 	world = (Newton *)newtonWorld;
 	dgMatrix matrix (dgGetIdentityMatrix());
 	if (offsetMatrix) {
-		 matrix = *((dgMatrix*) offsetMatrix);
+		 matrix = array2matrix(offsetMatrix);
 	}
 	return (NewtonCollision*) world->CreateBox (dx, dy, dz, shapeID, matrix);
 }
@@ -2552,7 +2552,7 @@ NewtonCollision* NewtonCreateSphere(const NewtonWorld* newtonWorld, dFloat radiu
 	world = (Newton *)newtonWorld;
 	dgMatrix matrix (dgGetIdentityMatrix());
 	if (offsetMatrix) {
-		 matrix = *((dgMatrix*) offsetMatrix);
+		 matrix = array2matrix(offsetMatrix);
 	}
 
 	radiusX = dgAbsf (radiusX);
@@ -2592,7 +2592,7 @@ NewtonCollision* NewtonCreateCone(const NewtonWorld* newtonWorld, dFloat radius,
 	world = (Newton *)newtonWorld;
 	dgMatrix matrix (dgGetIdentityMatrix());
 	if (offsetMatrix) {
-		 matrix = *((dgMatrix*) offsetMatrix);
+		 matrix = array2matrix(offsetMatrix);
 	}
 	return (NewtonCollision*) world->CreateCone (radius, height, shapeID, matrix);
 }
@@ -2625,7 +2625,7 @@ NewtonCollision* NewtonCreateCapsule(const NewtonWorld* newtonWorld, dFloat radi
 	world = (Newton *)newtonWorld;
 	dgMatrix matrix (dgGetIdentityMatrix());
 	if (offsetMatrix) {
-		 matrix = *((dgMatrix*) offsetMatrix);
+		 matrix = array2matrix(offsetMatrix);
 	}
 	return (NewtonCollision*) world->CreateCapsule (radius, height, shapeID, matrix);
 }
@@ -2656,7 +2656,7 @@ NewtonCollision* NewtonCreateCylinder(const NewtonWorld* newtonWorld, dFloat rad
 	world = (Newton *)newtonWorld;
 	dgMatrix matrix (dgGetIdentityMatrix());
 	if (offsetMatrix) {
-		 matrix = *((dgMatrix*) offsetMatrix);
+		 matrix = array2matrix(offsetMatrix);
 	}
 	return (NewtonCollision*) world->CreateCylinder (radius, height, shapeID, matrix);
 }
@@ -2688,7 +2688,7 @@ NewtonCollision* NewtonCreateChamferCylinder(const NewtonWorld* newtonWorld, dFl
 	world = (Newton *)newtonWorld;
 	dgMatrix matrix (dgGetIdentityMatrix());
 	if (offsetMatrix) {
-		 matrix = *((dgMatrix*) offsetMatrix);
+		 matrix = array2matrix(offsetMatrix);
 	}
 	return (NewtonCollision*) world->CreateChamferCylinder (radius, height, shapeID, matrix);
 }
@@ -2744,7 +2744,7 @@ NewtonCollision* NewtonCreateConvexHull(const NewtonWorld* newtonWorld, int coun
 	world = (Newton *)newtonWorld;
 	dgMatrix matrix (dgGetIdentityMatrix());
 	if (offsetMatrix) {
-		 matrix = *((dgMatrix*) offsetMatrix);
+		 matrix = array2matrix(offsetMatrix);
 	}
 	tolerance = ClampValue (tolerance, dgFloat32 (0.0f), dgFloat32 (0.125f));
 	return (NewtonCollision*) world->CreateConvexHull (count, vertexCloud, strideInBytes, tolerance, shapeID, matrix);
