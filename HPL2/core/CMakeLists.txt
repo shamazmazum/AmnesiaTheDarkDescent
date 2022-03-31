@@ -1,6 +1,11 @@
 cmake_minimum_required (VERSION 3.0)
 project(HPL2)
 
+# ewomer: for debugging with cmake_print_variables
+include(CMakePrintHelpers)
+
+option(ENABLE_SDL2 "Enable linking against the SDL2 library" ON)
+
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 if (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD" OR ${CMAKE_SYSTEM_NAME} MATCHES "OpenBSD")
   set(LINUX ON)
@@ -199,6 +204,12 @@ find_package(Theora REQUIRED)
 find_package(Devil REQUIRED)
 find_package(GLEW REQUIRED)
 
+# setup SDL2
+
+if(ENABLE_SDL2)
+    find_package(SDL2 REQUIRED)
+endif(ENABLE_SDL2)
+
 # setup HPL2 compile target
 
 add_library(HPL2 STATIC
@@ -217,6 +228,7 @@ set(HPL2_INCLUDES
   PRIVATE ${DEVIL_INCLUDE_DIR}
   PRIVATE ${GLEW_INCLUDE_DIRS}
   PRIVATE ${OPENGL_INCLUDE_DIR}
+  PUBLIC ${SDL2_INCLUDE_DIRS}
 )
 
 target_include_directories(HPL2
@@ -225,8 +237,7 @@ target_include_directories(HPL2
 
 if(LINUX)
   set(PLATFORM_LIBS
-    pthread
-    )
+    pthread)
 endif()
 
 target_link_libraries(HPL2
@@ -240,4 +251,5 @@ target_link_libraries(HPL2
   ${DEVIL_LIBRARY}
   z
   ${PLATFORM_LIBS}
+  ${SDL2_LIBRARIES}
   )
