@@ -16,6 +16,9 @@ build
 # Ignore IDE (Usually clion created) cmake build directories.
 cmake-build*/**
 
+# Ignore VSCode workspace fiels
+*.code-workspace
+
 # Ignore OS specific files
 .DS_Store
 
