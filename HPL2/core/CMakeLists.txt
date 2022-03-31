@@ -4,8 +4,6 @@ project(HPL2)
 # ewomer: for debugging with cmake_print_variables
 include(CMakePrintHelpers)
 
-option(ENABLE_SDL2 "Enable linking against the SDL2 library" ON)
-
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 if (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD" OR ${CMAKE_SYSTEM_NAME} MATCHES "OpenBSD")
   set(LINUX ON)
@@ -206,9 +204,7 @@ find_package(GLEW REQUIRED)
 
 # setup SDL2
 
-if(ENABLE_SDL2)
-    find_package(SDL2 REQUIRED)
-endif(ENABLE_SDL2)
+find_package(SDL2 REQUIRED)
 
 # setup HPL2 compile target
 
