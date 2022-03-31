@@ -1,0 +1,28 @@
+## Generic ignore patterns
+# Ignore the build and lib dirs
+build
+
+# Ignore any executables
+*.exe
+
+# Ignore CMake/IDE generated files
+.codelite
+.idea
+.vscode
+*.project
+*.workspace
+
+
+# Ignore IDE (Usually clion created) cmake build directories.
+cmake-build*/**
+
+# Ignore OS specific files
+.DS_Store
+
+# Ignore editor backup files
+*~
+*.orig
+
+## HPL2/Amnesia specific ignore patterns
+HPL2/core/include/ResourcesLocation.h
+BuildID*
