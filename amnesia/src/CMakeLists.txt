@@ -1,6 +1,9 @@
 cmake_minimum_required (VERSION 3.0)
 project(Lux)
 
+# ewomer: for debugging with cmake_print_variables
+include(CMakePrintHelpers)
+
 # Well, first of all, disable some harmless warnings, which are really
 # hard to get rid off (they are overall in the code).
 set(CMAKE_CXX_FLAGS
