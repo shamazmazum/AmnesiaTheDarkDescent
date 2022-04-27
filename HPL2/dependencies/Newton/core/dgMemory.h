@@ -75,7 +75,7 @@ dgInt32 dgGetMemoryUsed ();
 
 class dgMemoryAllocator
 {
-#if defined (_WIN_64_VER) || defined (_MINGW_64_VER) || defined (__linux__) || defined (_MAC_VER) || defined (__FreeBSD__) || defined (__OpenBSD__)
+#if defined (_WIN_64_VER) || defined (_MINGW_64_VER) || defined (__linux__) || defined (_MAC_VER) || defined (__FreeBSD__) || defined (__OpenBSD__) || defined (__NetBSD__)
 		#define DG_MEMORY_GRANULARITY_BITS		6
 	#else
 		#define DG_MEMORY_GRANULARITY_BITS		5

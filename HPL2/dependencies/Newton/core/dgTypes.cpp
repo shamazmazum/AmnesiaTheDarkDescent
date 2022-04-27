@@ -297,7 +297,7 @@ void dgApi GetMinMax (dgVector &minOut, dgVector &maxOut, const dgFloat32* const
 
 #endif
 
-#if defined (__linux__) || defined (_MINGW_32_VER) || defined (_MINGW_64_VER) || defined (__FreeBSD__) || defined(__OpenBSD__)
+#if defined (__linux__) || defined (_MINGW_32_VER) || defined (_MINGW_64_VER) || defined (__FreeBSD__) || defined(__OpenBSD__) || defined (__NetBSD__)
 /*	#define cpuid(func,ax,bx,cx,dx)	__asm__ __volatile__ ("cpuid": "=a" (ax), "=b" (bx), "=c" (cx), "=d" (dx) : "a" (func)); */
 
 #ifndef __x86_64__
