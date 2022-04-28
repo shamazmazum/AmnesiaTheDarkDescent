@@ -30,7 +30,7 @@ static inline void dgThreadYield()
 		Sleep(0);
 #endif
 
-#if defined (__linux__) || defined (_MAC_VER) || defined (__FreeBSD__) || defined (__OpenBSD__)
+#if defined (__linux__) || defined (_MAC_VER) || defined (__FreeBSD__) || defined (__OpenBSD__) || defined (__NetBSD__)
 #ifndef _MAC_IPHONE
         sched_yield();
 #endif
@@ -46,7 +46,7 @@ static inline void dgSpinLock (dgInt32 *spin)
 		}
 	#endif
 
-#if defined (__linux__) || defined (__FreeBSD__) || defined(__OpenBSD__)
+#if defined (__linux__) || defined (__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
 		while(! __sync_bool_compare_and_swap((int32_t*)spin, 0, 1) ) {
 			sched_yield();
 		}
@@ -74,7 +74,7 @@ static inline void dgInterlockedIncrement (dgInt32* Addend )
 		InterlockedIncrement((long*) Addend);
 	#endif
 
-#if defined (__linux__) || defined (__FreeBSD__) || defined (__OpenBSD__)
+#if defined (__linux__) || defined (__FreeBSD__) || defined (__OpenBSD__) || defined(__NetBSD__)
 		__sync_fetch_and_add ((int32_t*)Addend, 1 );
 #endif
 
@@ -91,7 +91,7 @@ static inline void dgInterlockedDecrement(dgInt32* Addend)
 		InterlockedDecrement((long*) Addend);
 	#endif
 
-#if defined (__linux__) || defined (__FreeBSD__) || defined(__OpenBSD__)
+#if defined (__linux__) || defined (__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
 		__sync_fetch_and_sub ((int32_t*)Addend, 1 );
 #endif
 
@@ -122,7 +122,7 @@ dgThreads::dgThreads()
 		memset (m_threadhandles, 0, sizeof (m_threadhandles));
 	#endif
 
-#if defined (__linux__) || defined (__FreeBSD__) || defined (__OpenBSD__)
+#if defined (__linux__) || defined (__FreeBSD__) || defined (__OpenBSD__) || defined (__NetBSD__)
 		m_numberOfCPUCores = sysconf(_SC_NPROCESSORS_ONLN);
 
 		m_numOfThreads = 0;
@@ -230,7 +230,7 @@ void dgThreads::CreateThreaded (dgInt32 threads)
 	#endif
 
 
-#if defined (__linux__) || defined (__FreeBSD__) || defined (__OpenBSD__)
+#if defined (__linux__) || defined (__FreeBSD__) || defined (__OpenBSD__) || defined (__NetBSD__)
 		if ((threads > 1) && (m_numberOfCPUCores > 1)) {
 			#ifdef _MAC_IPHONE
 				m_numOfThreads = 0;
@@ -292,7 +292,7 @@ void dgThreads::DestroydgThreads()
 		m_numOfThreads = 0;
 	#endif
 
-#if defined (__linux__) || defined (_MAC_VER) || defined(__FreeBSD__) || defined(__OpenBSD__)
+#if defined (__linux__) || defined (_MAC_VER) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
 
 		while(m_workInProgress > 0){
 			usleep(100000);
@@ -343,7 +343,7 @@ dgInt32 dgThreads::SubmitJob(dgWorkerThread* const job)
 			LeaveCriticalSection(&m_criticalSection);
 		#endif
 
-#if defined (__linux__) || defined (_MAC_VER) || defined (__FreeBSD__) || defined (__OpenBSD__)
+#if defined (__linux__) || defined (_MAC_VER) || defined (__FreeBSD__) || defined (__OpenBSD__) || defined (__NetBSD__)
 			dgInterlockedIncrement(&m_workInProgress);
 			while ( m_emptySlot == 0 ) {
 				dgThreadYield();
@@ -365,7 +365,7 @@ dgInt32 dgThreads::SubmitJob(dgWorkerThread* const job)
 #if (defined (_WIN_32_VER) || defined (_WIN_64_VER) || defined (_MINGW_32_VER) || defined (_MINGW_64_VER))
 	dgUnsigned32 _stdcall dgThreads::ThreadExecute(void *param)
 #endif
-#if defined (__linux__) || defined (_MAC_VER) || defined (__FreeBSD__) || defined (__OpenBSD__)
+#if defined (__linux__) || defined (_MAC_VER) || defined (__FreeBSD__) || defined (__OpenBSD__) || defined (__NetBSD__)
 	void* dgThreads::ThreadExecute(void *param)
 #endif
 {
@@ -393,7 +393,7 @@ dgInt32  dgThreads::GetWork(dgWorkerThread** job)
 		LeaveCriticalSection(&m_criticalSection);
 	#endif
 
-#if defined (__linux__) || defined (_MAC_VER) || defined (__FreeBSD__) || defined (__OpenBSD__)
+#if defined (__linux__) || defined (_MAC_VER) || defined (__FreeBSD__) || defined (__OpenBSD__) || defined (__NetBSD__)
 		for (;;) {
 			while ( m_workToDo == 0 ) {
 				dgThreadYield();

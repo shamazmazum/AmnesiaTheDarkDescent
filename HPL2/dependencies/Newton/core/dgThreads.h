@@ -75,7 +75,7 @@ private:
 	static dgUnsigned32 _stdcall ThreadExecute(void *Param);
 #endif
 
-#if defined (__linux__) || defined (_MAC_VER) || defined (__FreeBSD__) || defined (__OpenBSD__)
+#if defined (__linux__) || defined (_MAC_VER) || defined (__FreeBSD__) || defined (__OpenBSD__) || defined (__NetBSD__)
 	static void* ThreadExecute(void *Param);
 #endif
 
@@ -95,7 +95,7 @@ private:
 	HANDLE m_threadhandles[DG_MAXIMUN_THREADS];
 #endif
 
-#if defined (__linux__) || defined (_MAC_VER) || defined (__FreeBSD__) || defined (__OpenBSD__)
+#if defined (__linux__) || defined (_MAC_VER) || defined (__FreeBSD__) || defined (__OpenBSD__) || defined (__NetBSD__)
 	bool m_exit;
 	dgInt32 m_emptySlot;
 	dgInt32 m_workToDo;
