@@ -468,7 +468,7 @@
 	#define STDCALL
 
 	// Linux specific
-#if defined(__linux__) || defined(__FreeBSD__) || defined(__OpenBSD__)
+#if defined(__linux__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
 		#define THISCALL_RETURN_SIMPLE_IN_MEMORY
 		#define CDECL_RETURN_SIMPLE_IN_MEMORY
 		#define STDCALL_RETURN_SIMPLE_IN_MEMORY
@@ -587,7 +587,7 @@
         #define AS_WINDOWS_THREADS
 
 	// Linux
-#elif defined(__linux__) || defined(__FreeBSD__) || defined(__OpenBSD__)
+#elif defined(__linux__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
 		#if defined(i386) && !defined(__LP64__)
 			#define THISCALL_RETURN_SIMPLE_IN_MEMORY
 			#define CDECL_RETURN_SIMPLE_IN_MEMORY
@@ -612,7 +612,7 @@
 		#endif
 
 	// Free BSD
-	#elif defined(__FreeBSD__) || defined(__OpenBSD__)
+	#elif defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
 		#define AS_BSD
 		#if defined(i386) && !defined(__LP64__)
 			#define AS_X86

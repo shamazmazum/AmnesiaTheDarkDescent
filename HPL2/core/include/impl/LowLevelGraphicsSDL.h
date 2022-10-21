@@ -37,7 +37,7 @@
 #endif
 
 // Include these AFTER SDL
-#if defined(__linux__) || defined(__FreeBSD__) || defined (__OpenBSD__)
+#if defined(__linux__) || defined(__FreeBSD__) || defined (__OpenBSD__) || defined(__NetBSD__)
 #include <GL/glx.h>
 #endif
 
