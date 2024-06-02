@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.0)
+cmake_minimum_required (VERSION 3.10)
 project(Lux)
 
 # ewomer: for debugging with cmake_print_variables
