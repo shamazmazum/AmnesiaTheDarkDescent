@@ -793,15 +793,16 @@ iEntity3D* iLuxEnemy::GetAttachEntity()
 void iLuxEnemy::GiveDamage(float afAmount, int alStrength)
 {
 	if(mfHealth > 0)
+    {
+        if(alStrength < mlToughness-1)			afAmount =0;
+        else if(alStrength == mlToughness-1)	afAmount *= 0.5;
 
-	if(alStrength < mlToughness-1)			afAmount =0;
-	else if(alStrength == mlToughness-1)	afAmount *= 0.5;
+        afAmount *= GetDamageMul(afAmount, alStrength);
+        mfHealth -= afAmount;
 
-	afAmount *= GetDamageMul(afAmount, alStrength);
-
-	mfHealth -= afAmount;
-
-	gpBase->mpDebugHandler->AddMessage(_W("Enemy damage ") + cString::ToStringW(afAmount), false);
+        gpBase->mpDebugHandler->AddMessage(
+            _W("Enemy damage ") + cString::ToStringW(afAmount), false);
+    }
 
 	if(mfHealth <=0)
 	{
