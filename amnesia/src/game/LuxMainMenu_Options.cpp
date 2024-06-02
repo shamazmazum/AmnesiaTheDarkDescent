@@ -802,6 +802,7 @@ void cLuxMainMenu_Options::AddAdvancedGfxOptions(cWidgetDummy* apDummy)
 
 	//////////////
 	// Setup gamepad navigation
+    /*
 	mpCBTextureFilter; mpCBAnisotropy; mpCBParallaxQuality;
 
 	mpChBShadows; mpCBShadowQuality; mpCBShadowRes;
@@ -813,6 +814,7 @@ void cLuxMainMenu_Options::AddAdvancedGfxOptions(cWidgetDummy* apDummy)
 
 	mpChEdgeSmooth;  mpChBWorldReflection;
 	mpChBRefraction;
+    */
 
 	{
 		mpCBTextureFilter->SetFocusNavigation(eUIArrow_Right, mpCBAnisotropy);
