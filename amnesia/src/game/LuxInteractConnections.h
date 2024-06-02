@@ -39,6 +39,7 @@ class iLuxInteractConnection;
 class iLuxInteractConnection_SaveData : public iSerializable
 {
 	kSerializableClassInit(iLuxInteractConnection_SaveData)
+    virtual ~iLuxInteractConnection_SaveData(){}
 public:
 	virtual iLuxInteractConnection* CreateConnection(cLuxMap *apMap)=0;
 	virtual void FromConnection(iLuxInteractConnection* apConnection);
