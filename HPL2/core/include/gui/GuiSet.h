@@ -97,7 +97,8 @@ namespace hpl {
 	class cGuiRenderObjectCompare
 	{
 	public:
-		bool operator()(const cGuiRenderObject& aObjectA, const cGuiRenderObject& aObjectB);
+		bool operator()(const cGuiRenderObject& aObjectA,
+						const cGuiRenderObject& aObjectB) const;
 	};
 
 	typedef std::multiset<cGuiRenderObject,cGuiRenderObjectCompare> tGuiRenderObjectSet;

@@ -33,7 +33,7 @@ namespace hpl {
 
 	//-----------------------------------------
 
-    struct VideoComp : public std::function<bool (cVideoMode, cVideoMode)> {
+    struct VideoComp {
         bool operator() (const cVideoMode& aVM1, const cVideoMode& aVM2) const;
     };
 
